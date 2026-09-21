@@ -10,10 +10,57 @@
     *, *::before, *::after { box-sizing: inherit; }
     body { margin: 0; background: #fafafa; }
     .topbar { display: none; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(250, 250, 250, 0.92);
+      border-bottom: 1px solid #d7dee8;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+    .site-header-inner {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .brand strong { font-size: 1.02rem; letter-spacing: -0.01em; color: #152033; }
+    .brand span { color: #5a6a7e; font-size: 0.84rem; }
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: #152033;
+      font-size: 0.92rem;
+      text-decoration: none;
+    }
+    .nav a:hover { background: #e8f0f8; }
+    .nav a.active {
+      background: #1a4f8b;
+      color: #fff;
+      border-color: #1a4f8b;
+    }
+
     .raisd-header {
       max-width: 1460px;
       margin: 0 auto;
-      padding: 24px 20px 0;
+      padding: 20px 20px 0;
       font-family: system-ui, -apple-system, Segoe UI, sans-serif;
     }
     .raisd-header h1 {
@@ -31,13 +78,26 @@
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Portal API</strong>
+        <span>OpenAPI · ERD · DFD</span>
+      </div>
+      <nav class="nav" aria-label="Docs">
+        <a href="./diagrams/">Overview</a>
+        <a href="./diagrams/erd.html">ERD</a>
+        <a href="./diagrams/dfd.html">DFD</a>
+        <a class="active" href="./index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
   <header class="raisd-header">
     <h1>Raisd Portal API</h1>
     <p>
       Published OpenAPI:
       <a href="./openapi.yaml">openapi.yaml</a>
-      · ERD &amp; DFD:
-      <a href="./diagrams/">diagrams/</a>
       · Spec repo:
       <a href="https://github.com/raisd-campus/portal-api-docs">portal-api-docs</a>
       · Service (private):
