@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
   title: Raisd Portal API
-  version: 0.1.0
+  version: 0.2.0
   summary: Stage-1 HTTP face of the campus Portal API
   description: |
-    Bearer-authenticated RPC over the student `PortalApi` surface.
+    Bearer-authenticated RPC over the student-portal `PortalApi` surface.
 
     Portals (applicant, student, lecturer, staff) call this service only.
     They never talk to Postgres or the existing CMS directly.
@@ -14,9 +14,89 @@ info:
     - Mutating calls return `cms.acknowledged: true` with `cms.mode: stub`.
     - CAP-53 will replace the stub with a live CMS adapter.
 
+    **Frontend consumers (today)**
+    - `student-portal` is the only implemented UI. It calls every method below
+      via React Query hooks except `getPortalRecordGraph` (tests/internals).
+    - `applicant-portal`, `lecturer-portal`, and `staff-portal` are stubs.
+    - HTTP transport: `createHttpPortalApi` → `POST /v1/auth/login` then
+      `POST /v1/portal/{method}` with `{ "args": [...] }`.
+    - Scenario switches in the UI recreate the client (new login); they do not
+      yet call `POST /v1/auth/scenario` or `POST /v1/auth/logout`.
+
     **Typical flow**
     1. `POST /v1/auth/login`
     2. `POST /v1/portal/{method}` with `Authorization: Bearer <accessToken>`
+
+    **Blocked over HTTP (404)**
+    `dispose`, `selectStudentScenario`, `runDevelopmentAction`, and any
+    `_`-prefixed name. Use `POST /v1/auth/scenario` instead of
+    `selectStudentScenario`.
+
+    **PortalApi method catalog (55 methods from student-portal)**
+
+    | Method | Args (`args` array) | Returns | Area | Frontend |
+    |--------|---------------------|---------|------|----------|
+    | `getImmigration` | `optional ProgrammeEnrolmentReadInput` | `ImmigrationResponse` | immigration | Immigration page |
+    | `getOnlineForms` | `optional ProgrammeEnrolmentReadInput` | `OnlineFormsResponse` | online-forms | Online forms list + nav badge |
+    | `getOnlineForm` | `OnlineFormInput (+ enrolment)` | `OnlineFormContext or null` | online-forms | Form entry |
+    | `getOnlineFormSubmission` | `OnlineFormSubmissionInput (+ enrolment)` | `OnlineFormSubmissionResponse` | online-forms | Submission view |
+    | `startOnlineForm` | `OnlineFormInput` | `OnlineFormSubmissionResponse` | online-forms | Start form |
+    | `saveOnlineFormDraft` | `SaveOnlineFormDraftInput` | `OnlineFormSubmissionResponse` | online-forms | Autosave draft |
+    | `submitOnlineForm` | `SubmitOnlineFormInput` | `OnlineFormSubmissionResponse` | online-forms | Submit |
+    | `withdrawOnlineForm` | `OnlineFormSubmissionInput` | `OnlineFormSubmissionResponse` | online-forms | Withdraw |
+    | `sendOnlineFormMessage` | `SendOnlineFormMessageInput` | `OnlineFormSubmissionResponse` | online-forms | Case message |
+    | `markOnlineFormRead` | `MarkOnlineFormReadInput` | `OnlineFormSubmissionResponse` | online-forms | Mark read |
+    | `getAnnouncements` | `optional ProgrammeEnrolmentReadInput` | `AnnouncementsResponse` | announcements | Announcements list |
+    | `getAnnouncement` | `AnnouncementInput (+ enrolment)` | `AnnouncementResponse` | announcements | Announcement detail |
+    | `getUniversityPolicies` | `optional ProgrammeEnrolmentReadInput` | `UniversityPoliciesResponse` | policies | University policies |
+    | `getLecturerReview` | `LecturerReviewInput (+ enrolment)` | `LecturerReviewResponse` | lecturer-review | Lecturer review form |
+    | `submitLecturerReview` | `SubmitLecturerReviewInput` | `LecturerReviewResponse` | lecturer-review | Submit review |
+    | `getDashboard` | `optional ProgrammeEnrolmentReadInput` | `DashboardResponse` | dashboard | Home dashboard |
+    | `getAcademicPerformance` | `optional ProgrammeEnrolmentReadInput` | `AcademicPerformanceResponse` | academic | Performance |
+    | `getAcademicModules` | `optional ProgrammeEnrolmentReadInput` | `AcademicModulesResponse` | academic | Modules list |
+    | `getAcademicTimetable` | `AcademicTimetableInput (+ enrolment)` | `AcademicTimetableResponse` | academic | Timetable + attendance |
+    | `getAcademicGraduation` | `optional ProgrammeEnrolmentReadInput` | `AcademicGraduationResponse` | academic | Graduation |
+    | `getAcademicStudyPlan` | `optional ProgrammeEnrolmentReadInput` | `AcademicStudyPlanResponse` | academic | Study plan |
+    | `getAcademicModuleRegistration` | `optional ProgrammeEnrolmentReadInput` | `AcademicModuleRegistrationResponse` | registration | Module registration |
+    | `getModuleRegistrationFeePreview` | `ModuleRegistrationFeePreviewInput` | `ModuleRegistrationFeePreviewResponse` | registration | Fee preview |
+    | `confirmModuleRegistrations` | `ConfirmModuleRegistrationsInput` | `AcademicModuleRegistrationResponse` | registration | Confirm registration |
+    | `getAcademicContext` | `optional ProgrammeEnrolmentReadInput` | `AcademicContextResponse` | academic | App shell / profile context |
+    | `getAcademicModuleDetail` | `AcademicModuleDetailInput (+ enrolment)` | `AcademicModuleDetailResponse` | academic | Module detail |
+    | `getAcademicModuleAttendance` | `AcademicModuleDetailInput (+ enrolment)` | `AcademicModuleAttendanceResponse` | academic | Module attendance |
+    | `getAcademicModuleMaterials` | `AcademicModuleDetailInput (+ enrolment)` | `AcademicModuleMaterialsResponse` | materials | Materials list |
+    | `getAcademicModuleMaterialDetail` | `AcademicModuleMaterialDetailInput (+ enrolment)` | `AcademicModuleMaterialDetailResponse` | materials | Material detail |
+    | `submitAssignment` | `SubmitAssignmentInput (file)` | `AcademicModuleMaterialsResponse` | materials | Submit assignment |
+    | `deleteAssignmentSubmission` | `DeleteAssignmentSubmissionInput` | `AcademicModuleMaterialsResponse` | materials | Delete submission |
+    | `getPersonalProfile` | `optional ProgrammeEnrolmentReadInput` | `PersonalProfileResponse` | profile | Personal profile |
+    | `updatePersonalProfile` | `UpdatePersonalProfileInput` | `PersonalProfileResponse` | profile | Update personal |
+    | `getAcademicProfile` | `optional ProgrammeEnrolmentReadInput` | `AcademicProfileResponse` | profile | Academic profile |
+    | `getDocumentsProfile` | `optional ProgrammeEnrolmentReadInput` | `DocumentsProfileResponse` | profile | Documents |
+    | `getPrivacySecurity` | `optional ProgrammeEnrolmentReadInput` | `PrivacySecurityResponse` | profile | Privacy & security |
+    | `getServices` | `optional ProgrammeEnrolmentReadInput` | `ServicesResponse` | services | Services list / sidebar |
+    | `getServicePage` | `ServicePageInput (+ enrolment)` | `ServicePageResponse` | services | Service page |
+    | `getResumeProfile` | `optional ProgrammeEnrolmentReadInput` | `ResumeProfileResponse` | profile | Resume |
+    | `updateResumeProfile` | `UpdateResumeProfileInput` | `ResumeProfileResponse` | profile | Update resume |
+    | `getPortfolioProfile` | `optional ProgrammeEnrolmentReadInput` | `PortfolioProfileResponse` | profile | Portfolio |
+    | `createPortfolioProject` | `CreatePortfolioProjectInput (artwork file)` | `PortfolioProject` | profile | Create project |
+    | `updatePortfolioProject` | `UpdatePortfolioProjectInput` | `PortfolioProject` | profile | Update project |
+    | `deletePortfolioProject` | `DeletePortfolioProjectInput` | `void` | profile | Delete project |
+    | `getCommunity` | `optional ProgrammeEnrolmentReadInput` | `CommunityResponse` | community | Community directory |
+    | `getCalendarMonth` | `CalendarMonthInput (+ enrolment)` | `CalendarMonthResponse` | calendar | Calendar panel |
+    | `getFinanceStatement` | `optional ProgrammeEnrolmentReadInput` | `FinanceStatementResponse` | finance | Finance statement |
+    | `submitFinancePaymentProof` | `SubmitFinancePaymentProofInput (file)` | `FinanceStatementResponse` | finance | Upload proof |
+    | `deleteFinancePaymentProof` | `DeleteFinancePaymentProofInput` | `FinanceStatementResponse` | finance | Delete proof |
+    | `getPortalRecordGraph` | `(none)` | `PortalRecordGraph` | internal | Tests / internals only |
+    | `getChatConversations` | `optional ProgrammeEnrolmentReadInput` | `ConversationListResponse` | chat | Chat list |
+    | `getChatConversation` | `conversationId, optional ProgrammeEnrolmentReadInput` | `ConversationDetailResponse` | chat | Chat thread |
+    | `markChatConversationRead` | `conversationId, optional ProgrammeEnrolmentReadInput` | `ConversationSummary` | chat | Mark read |
+    | `sendChatMessage` | `SendChatMessageInput` | `ChatMutationResult` | chat | Send message |
+    | `deleteChatMessage` | `conversationId, messageId, optional ProgrammeEnrolmentReadInput` | `ChatMutationResult` | chat | Delete message |
+
+    Shared optional scope on many reads:
+    `{ "programmeEnrolmentId": "<id>" | null }` (`ProgrammeEnrolmentReadInput`).
+
+    File arguments use `PortalFile` (`__portalFile: true`, `name`, `type`, `size`,
+    optional `contentBase64`) instead of a browser `File`.
   contact:
     name: Raisd working group
     email: iman.suherman@raisd.co
@@ -31,11 +111,11 @@ servers:
 
 tags:
   - name: Health
-    description: Liveness and service metadata
+    description: Liveness, metadata, and published docs
   - name: Auth
     description: Demo student sessions
   - name: Portal
-    description: RPC over PortalApi methods
+    description: RPC over PortalApi methods used by student-portal
 
 paths:
   /health:
@@ -58,6 +138,48 @@ paths:
                 cms: stub
                 time: "2026-09-21T09:25:12.975Z"
 
+  /openapi.yaml:
+    get:
+      tags: [Health]
+      operationId: getOpenApiDocument
+      summary: OpenAPI document
+      description: Returns this OpenAPI YAML from the control-plane repository root.
+      security: []
+      responses:
+        "200":
+          description: OpenAPI 3.1 YAML
+          content:
+            application/yaml:
+              schema:
+                type: string
+        "503":
+          description: Spec file not packaged in this deployment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /docs:
+    get:
+      tags: [Health]
+      operationId: getSwaggerUi
+      summary: Swagger UI
+      description: Interactive explorer for this API (same UI as GitHub Pages).
+      security: []
+      responses:
+        "200":
+          description: HTML Swagger UI
+          content:
+            text/html:
+              schema:
+                type: string
+        "503":
+          description: Docs HTML not packaged in this deployment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
   /v1/meta:
     get:
       tags: [Health]
@@ -71,6 +193,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MetaResponse"
+              example:
+                service: portal-api
+                version: 0.1.0
+                scenarios:
+                  - mid-programme
+                  - first-semester-registration
+                  - new-student-pass
+                  - graduation-ready
+                defaultScenarioId: first-semester-registration
+                cmsMode: stub
+                docs: /docs
+                openapi: /openapi.yaml
+                note: Sessions use MockPortalApi until CAP-53 connects the existing CMS.
 
   /v1/auth/login:
     post:
@@ -80,6 +215,7 @@ paths:
       description: |
         Issues a bearer token bound to a student scenario.
         No password yet — stage-1 demo auth only.
+        Used by `createHttpPortalApi` in student-portal.
       security: []
       requestBody:
         required: false
@@ -108,6 +244,7 @@ paths:
       tags: [Auth]
       operationId: logout
       summary: End the current session
+      description: Available on the server; student-portal HTTP client does not call this yet.
       security:
         - bearerAuth: []
       responses:
@@ -130,6 +267,10 @@ paths:
       tags: [Auth]
       operationId: switchScenario
       summary: Switch the demo student scenario on the current session
+      description: |
+        Preferred remote alternative to MockPortalApi.selectStudentScenario
+        (which is blocked over HTTP). The student-portal UI currently recreates
+        the HTTP client (new login) instead of calling this endpoint.
       security:
         - bearerAuth: []
       requestBody:
@@ -167,13 +308,23 @@ paths:
       summary: Call a PortalApi method
       description: |
         Body is always `{ "args": [ ... ] }` matching the TypeScript
-        `PortalApi` method signature in the student portal.
+        `PortalApi` method signature in student-portal
+        (`src/services/portal-api.ts`).
 
-        File arguments may be sent as:
-        `{ "__portalFile": true, "name": "...", "type": "...", "size": 0, "contentBase64": "..." }`.
+        Most methods take a single object argument (`args: [input]`).
+        Exceptions:
+        - `getPortalRecordGraph` → `args: []`
+        - `getChatConversation` / `markChatConversationRead` →
+          `args: [conversationId, input?]`
+        - `deleteChatMessage` → `args: [conversationId, messageId, input?]`
+
+        File arguments may be sent as `PortalFile`.
 
         Successful responses wrap the method result:
         `{ "result": <PortalApi return value>, "cms": { "acknowledged": true, "mode": "stub", "note": "..." } }`.
+
+        See the info description for the full method catalog derived from the
+        student-portal frontend.
       security:
         - bearerAuth: []
       parameters:
@@ -191,20 +342,377 @@ paths:
               $ref: "#/components/schemas/PortalCallRequest"
             examples:
               getDashboard:
-                summary: Dashboard for the active enrolment
+                summary: getDashboard
+                value:
+                  args:
+                    - {}
+              getImmigration:
+                summary: getImmigration
+                value:
+                  args:
+                    - {}
+              getOnlineForms:
+                summary: getOnlineForms
+                value:
+                  args:
+                    - {}
+              getOnlineForm:
+                summary: getOnlineForm
+                value:
+                  args:
+                    - formId: form-visa-renewal
+              getOnlineFormSubmission:
+                summary: getOnlineFormSubmission
+                value:
+                  args:
+                    - submissionId: sub-1
+              startOnlineForm:
+                summary: startOnlineForm
+                value:
+                  args:
+                    - formId: form-visa-renewal
+              saveOnlineFormDraft:
+                summary: saveOnlineFormDraft
+                value:
+                  args:
+                    - submissionId: sub-1
+                      answers:
+                        field-1: value
+                      revision: 0
+              submitOnlineForm:
+                summary: submitOnlineForm
+                value:
+                  args:
+                    - submissionId: sub-1
+                      revision: 1
+              withdrawOnlineForm:
+                summary: withdrawOnlineForm
+                value:
+                  args:
+                    - submissionId: sub-1
+              sendOnlineFormMessage:
+                summary: sendOnlineFormMessage
+                value:
+                  args:
+                    - submissionId: sub-1
+                      text: Please advise.
+                      attachments:
+                        []
+                      clientMessageId: client-1
+              markOnlineFormRead:
+                summary: markOnlineFormRead
+                value:
+                  args:
+                    - submissionId: sub-1
+                      throughSequence: 3
+              getAnnouncements:
+                summary: getAnnouncements
                 value:
                   args:
                     - {}
               getAnnouncement:
-                summary: One announcement by id
+                summary: getAnnouncement
                 value:
                   args:
                     - announcementId: ann-1
+              getUniversityPolicies:
+                summary: getUniversityPolicies
+                value:
+                  args:
+                    - {}
+              getLecturerReview:
+                summary: getLecturerReview
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+                      lecturerId: lec-1
+              submitLecturerReview:
+                summary: submitLecturerReview
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+                      lecturerId: lec-1
+                      questionnaireId: q-1
+                      questionnaireVersion: 1
+                      answers:
+                        q1: 5
+                      feedback: Clear lectures.
+              getAcademicPerformance:
+                summary: getAcademicPerformance
+                value:
+                  args:
+                    - {}
+              getAcademicModules:
+                summary: getAcademicModules
+                value:
+                  args:
+                    - {}
+              getAcademicTimetable:
+                summary: getAcademicTimetable
+                value:
+                  args:
+                    - semesterId: null
+              getAcademicGraduation:
+                summary: getAcademicGraduation
+                value:
+                  args:
+                    - {}
+              getAcademicStudyPlan:
+                summary: getAcademicStudyPlan
+                value:
+                  args:
+                    - {}
+              getAcademicModuleRegistration:
+                summary: getAcademicModuleRegistration
+                value:
+                  args:
+                    - {}
+              getModuleRegistrationFeePreview:
+                summary: getModuleRegistrationFeePreview
+                value:
+                  args:
+                    - studyPeriodId: sp-1
+                      moduleOfferingIds:
+                        - off-1
+                        - off-2
+              confirmModuleRegistrations:
+                summary: confirmModuleRegistrations
+                value:
+                  args:
+                    - studyPeriodId: sp-1
+                      moduleOfferingIds:
+                        - off-1
+                        - off-2
+              getAcademicContext:
+                summary: getAcademicContext
+                value:
+                  args:
+                    - {}
+              getAcademicModuleDetail:
+                summary: getAcademicModuleDetail
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+              getAcademicModuleAttendance:
+                summary: getAcademicModuleAttendance
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+              getAcademicModuleMaterials:
+                summary: getAcademicModuleMaterials
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+              getAcademicModuleMaterialDetail:
+                summary: getAcademicModuleMaterialDetail
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+                      moduleLearningItemId: item-1
+              submitAssignment:
+                summary: submitAssignment
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+                      moduleLearningItemId: item-1
+                      file:
+                        __portalFile: true
+                        name: essay.pdf
+                        type: application/pdf
+                        size: 1024
+                        contentBase64: ""
+              deleteAssignmentSubmission:
+                summary: deleteAssignmentSubmission
+                value:
+                  args:
+                    - moduleId: mod-1
+                      semesterId: sem-1
+                      moduleLearningItemId: item-1
+              getPersonalProfile:
+                summary: getPersonalProfile
+                value:
+                  args:
+                    - {}
+              updatePersonalProfile:
+                summary: updatePersonalProfile
+                value:
+                  args:
+                    - contactNumber: "+60 12-345 6789"
+                      maritalStatus: single
+                      emailAddress: student@example.com
+                      permanentAddress:
+                        addressLine: 1 Example St
+                        city: Kuala Lumpur
+                        postcode: "50000"
+                        state: WP
+                        country: MY
+                      currentAddress:
+                        addressLine: 1 Example St
+                        city: Kuala Lumpur
+                        postcode: "50000"
+                        state: WP
+                        country: MY
+                      emergencyContacts:
+                        - name: Parent
+                          relationship: Parent
+                          contactNumber: "+60 12-000 0000"
+              getAcademicProfile:
+                summary: getAcademicProfile
+                value:
+                  args:
+                    - {}
+              getDocumentsProfile:
+                summary: getDocumentsProfile
+                value:
+                  args:
+                    - {}
+              getPrivacySecurity:
+                summary: getPrivacySecurity
+                value:
+                  args:
+                    - {}
+              getServices:
+                summary: getServices
+                value:
+                  args:
+                    - {}
+              getServicePage:
+                summary: getServicePage
+                value:
+                  args:
+                    - slug: student-support
+              getResumeProfile:
+                summary: getResumeProfile
+                value:
+                  args:
+                    - {}
+              updateResumeProfile:
+                summary: updateResumeProfile
+                value:
+                  args:
+                    - professionalSummary: Student designer.
+                      workExperiences:
+                        []
+                      educations:
+                        []
+                      skills:
+                        []
+                      recognitions:
+                        []
+              getPortfolioProfile:
+                summary: getPortfolioProfile
+                value:
+                  args:
+                    - {}
+              createPortfolioProject:
+                summary: createPortfolioProject
+                value:
+                  args:
+                    - name: Studio project
+                      createdOn: "2025-06-01"
+                      description: A studio piece.
+                      toolsUsed:
+                        - Figma
+                      artwork:
+                        __portalFile: true
+                        name: art.jpg
+                        type: image/jpeg
+                        size: 2048
+              updatePortfolioProject:
+                summary: updatePortfolioProject
+                value:
+                  args:
+                    - id: proj-1
+                      name: Studio project
+                      createdOn: "2025-06-01"
+                      description: Updated.
+                      toolsUsed:
+                        - Figma
+                      artwork: null
+              deletePortfolioProject:
+                summary: deletePortfolioProject
+                value:
+                  args:
+                    - projectId: proj-1
+              getCommunity:
+                summary: getCommunity
+                value:
+                  args:
+                    - {}
+              getCalendarMonth:
+                summary: getCalendarMonth
+                value:
+                  args:
+                    - semesterId: sem-1
+                      month: 2026-09
+              getFinanceStatement:
+                summary: getFinanceStatement
+                value:
+                  args:
+                    - {}
+              submitFinancePaymentProof:
+                summary: submitFinancePaymentProof
+                value:
+                  args:
+                    - invoiceId: inv-1
+                      amountMinor: 150000
+                      transferDate: 2026-09-01
+                      bankReference: TRX-123
+                      file:
+                        __portalFile: true
+                        name: receipt.pdf
+                        type: application/pdf
+                        size: 4096
+              deleteFinancePaymentProof:
+                summary: deleteFinancePaymentProof
+                value:
+                  args:
+                    - invoiceId: inv-1
+              getPortalRecordGraph:
+                summary: getPortalRecordGraph
+                value:
+                  args:
+                    []
+              getChatConversations:
+                summary: getChatConversations
+                value:
+                  args:
+                    - {}
               getChatConversation:
-                summary: Conversation detail (first arg is conversationId)
+                summary: getChatConversation
                 value:
                   args:
                     - conv-1
+                    - {}
+              markChatConversationRead:
+                summary: markChatConversationRead
+                value:
+                  args:
+                    - conv-1
+                    - {}
+              sendChatMessage:
+                summary: sendChatMessage
+                value:
+                  args:
+                    - target:
+                        kind: personal
+                        personId: person-1
+                      text: Hello
+                      attachments:
+                        []
+              deleteChatMessage:
+                summary: deleteChatMessage
+                value:
+                  args:
+                    - conv-1
+                    - msg-1
                     - {}
       responses:
         "200":
@@ -259,7 +767,9 @@ components:
 
     PortalMethod:
       type: string
-      description: Methods exposed by the student PortalApi interface
+      description: |
+        Methods exposed by the student PortalApi interface
+        (55 methods; matches student-portal frontend hooks).
       enum:
         - getImmigration
         - getOnlineForms
@@ -338,7 +848,7 @@ components:
 
     MetaResponse:
       type: object
-      required: [service, version, scenarios, defaultScenarioId, cmsMode]
+      required: [service, version, scenarios, defaultScenarioId, cmsMode, docs, openapi]
       properties:
         service:
           type: string
@@ -353,6 +863,12 @@ components:
         cmsMode:
           type: string
           example: stub
+        docs:
+          type: string
+          example: /docs
+        openapi:
+          type: string
+          example: /openapi.yaml
         note:
           type: string
 
@@ -380,6 +896,394 @@ components:
         studentProfileId:
           type: string
 
+    ProgrammeEnrolmentReadInput:
+      type: object
+      description: Optional enrolment scope shared by most student-portal reads
+      additionalProperties: false
+      properties:
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    OnlineFormInput:
+      type: object
+      required: [formId]
+      additionalProperties: false
+      properties:
+        formId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    OnlineFormSubmissionInput:
+      type: object
+      required: [submissionId]
+      additionalProperties: false
+      properties:
+        submissionId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    SaveOnlineFormDraftInput:
+      allOf:
+        - $ref: "#/components/schemas/OnlineFormSubmissionInput"
+        - type: object
+          required: [answers, revision]
+          properties:
+            answers:
+              type: object
+              additionalProperties: true
+            revision:
+              type: integer
+              minimum: 0
+
+    SubmitOnlineFormInput:
+      allOf:
+        - $ref: "#/components/schemas/OnlineFormSubmissionInput"
+        - type: object
+          required: [revision]
+          properties:
+            revision:
+              type: integer
+              minimum: 0
+
+    SendOnlineFormMessageInput:
+      allOf:
+        - $ref: "#/components/schemas/OnlineFormSubmissionInput"
+        - type: object
+          required: [text, attachments, clientMessageId]
+          properties:
+            text:
+              type: string
+              maxLength: 10000
+            attachments:
+              type: array
+              items:
+                type: object
+            clientMessageId:
+              type: string
+
+    MarkOnlineFormReadInput:
+      allOf:
+        - $ref: "#/components/schemas/OnlineFormSubmissionInput"
+        - type: object
+          required: [throughSequence]
+          properties:
+            throughSequence:
+              type: integer
+              minimum: 0
+
+    AnnouncementInput:
+      type: object
+      required: [announcementId]
+      properties:
+        announcementId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    LecturerReviewInput:
+      type: object
+      required: [moduleId, semesterId, lecturerId]
+      properties:
+        moduleId:
+          type: string
+        semesterId:
+          type: string
+        lecturerId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    SubmitLecturerReviewInput:
+      allOf:
+        - $ref: "#/components/schemas/LecturerReviewInput"
+        - type: object
+          required: [questionnaireId, questionnaireVersion, answers, feedback]
+          properties:
+            questionnaireId:
+              type: string
+            questionnaireVersion:
+              type: integer
+              minimum: 1
+            answers:
+              type: object
+              additionalProperties:
+                type: integer
+                minimum: 1
+                maximum: 5
+            feedback:
+              type: string
+              maxLength: 2000
+
+    AcademicTimetableInput:
+      type: object
+      properties:
+        semesterId:
+          type: ["string", "null"]
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    AcademicModuleDetailInput:
+      type: object
+      required: [moduleId, semesterId]
+      properties:
+        moduleId:
+          type: string
+        semesterId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    AcademicModuleMaterialDetailInput:
+      allOf:
+        - $ref: "#/components/schemas/AcademicModuleDetailInput"
+        - type: object
+          required: [moduleLearningItemId]
+          properties:
+            moduleLearningItemId:
+              type: string
+
+    SubmitAssignmentInput:
+      allOf:
+        - $ref: "#/components/schemas/AcademicModuleMaterialDetailInput"
+        - type: object
+          required: [file]
+          properties:
+            file:
+              $ref: "#/components/schemas/PortalFile"
+
+    DeleteAssignmentSubmissionInput:
+      $ref: "#/components/schemas/AcademicModuleMaterialDetailInput"
+
+    ModuleRegistrationSelectionInput:
+      type: object
+      required: [studyPeriodId, moduleOfferingIds]
+      properties:
+        studyPeriodId:
+          type: string
+        moduleOfferingIds:
+          type: array
+          minItems: 1
+          items:
+            type: string
+
+    ModuleRegistrationFeePreviewInput:
+      $ref: "#/components/schemas/ModuleRegistrationSelectionInput"
+
+    ConfirmModuleRegistrationsInput:
+      $ref: "#/components/schemas/ModuleRegistrationSelectionInput"
+
+    ServicePageInput:
+      type: object
+      required: [slug]
+      properties:
+        slug:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    CalendarMonthInput:
+      type: object
+      required: [semesterId, month]
+      properties:
+        semesterId:
+          type: string
+        month:
+          type: string
+          pattern: "^\\d{4}-(0[1-9]|1[0-2])$"
+          example: "2026-09"
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    PersonalAddress:
+      type: object
+      required: [addressLine, country, state, city, postcode]
+      properties:
+        addressLine:
+          type: string
+        country:
+          type: string
+        state:
+          type: string
+        city:
+          type: string
+        postcode:
+          type: string
+
+    UpdatePersonalProfileInput:
+      type: object
+      required:
+        - contactNumber
+        - maritalStatus
+        - emailAddress
+        - permanentAddress
+        - currentAddress
+        - emergencyContacts
+      properties:
+        contactNumber:
+          type: string
+        maritalStatus:
+          type: string
+          enum: [single, married, divorced, widowed]
+        emailAddress:
+          type: string
+          format: email
+        permanentAddress:
+          $ref: "#/components/schemas/PersonalAddress"
+        currentAddress:
+          $ref: "#/components/schemas/PersonalAddress"
+        emergencyContacts:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [name, relationship, contactNumber]
+            properties:
+              name:
+                type: string
+              relationship:
+                type: string
+              contactNumber:
+                type: string
+
+    UpdateResumeProfileInput:
+      type: object
+      required: [professionalSummary, workExperiences, educations, skills, recognitions]
+      properties:
+        professionalSummary:
+          type: ["string", "null"]
+        workExperiences:
+          type: array
+          items:
+            type: object
+        educations:
+          type: array
+          items:
+            type: object
+        skills:
+          type: array
+          items:
+            type: object
+        recognitions:
+          type: array
+          items:
+            type: object
+
+    CreatePortfolioProjectInput:
+      type: object
+      required: [name, createdOn, description, toolsUsed, artwork]
+      properties:
+        name:
+          type: string
+        createdOn:
+          type: string
+          format: date
+        description:
+          type: string
+        toolsUsed:
+          type: array
+          items:
+            type: string
+        artwork:
+          $ref: "#/components/schemas/PortalFile"
+
+    UpdatePortfolioProjectInput:
+      type: object
+      required: [id, name, createdOn, description, toolsUsed, artwork]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdOn:
+          type: string
+          format: date
+        description:
+          type: string
+        toolsUsed:
+          type: array
+          items:
+            type: string
+        artwork:
+          oneOf:
+            - $ref: "#/components/schemas/PortalFile"
+            - type: "null"
+
+    DeletePortfolioProjectInput:
+      type: object
+      required: [projectId]
+      properties:
+        projectId:
+          type: string
+
+    SubmitFinancePaymentProofInput:
+      type: object
+      required: [invoiceId, amountMinor, transferDate, bankReference, file]
+      properties:
+        invoiceId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+        amountMinor:
+          type: integer
+          minimum: 1
+        transferDate:
+          type: string
+          format: date
+        bankReference:
+          type: string
+        file:
+          $ref: "#/components/schemas/PortalFile"
+
+    DeleteFinancePaymentProofInput:
+      type: object
+      required: [invoiceId]
+      properties:
+        invoiceId:
+          type: string
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
+    ChatTarget:
+      oneOf:
+        - type: object
+          required: [kind, context]
+          properties:
+            kind:
+              const: group
+            context:
+              type: object
+        - type: object
+          required: [kind, personId]
+          properties:
+            kind:
+              const: personal
+            personId:
+              type: string
+        - type: object
+          required: [kind, serviceId]
+          properties:
+            kind:
+              const: service
+            serviceId:
+              type: string
+
+    SendChatMessageInput:
+      type: object
+      required: [target, text, attachments]
+      properties:
+        target:
+          $ref: "#/components/schemas/ChatTarget"
+        text:
+          type: string
+        attachments:
+          type: array
+          items:
+            type: object
+        programmeEnrolmentId:
+          type: ["string", "null"]
+
     PortalCallRequest:
       type: object
       required: [args]
@@ -388,17 +1292,78 @@ components:
           type: array
           description: |
             Positional arguments for the PortalApi method.
-            File values use PortalFile instead of a browser File object.
-          items:
-            oneOf:
-              - type: object
-              - type: string
-              - type: number
-              - type: boolean
-              - type: "null"
-              - type: array
-                items: {}
-              - $ref: "#/components/schemas/PortalFile"
+            Typed request schemas (see PortalRequestSchemaIndex) document the
+            shapes of object arguments. File values use PortalFile.
+          items: true
+        _schemaIndex:
+          description: Docs-only index of typed request bodies (not sent on the wire)
+          $ref: "#/components/schemas/PortalRequestSchemaIndex"
+
+    PortalRequestSchemaIndex:
+      type: object
+      description: Named PortalApi request shapes used by student-portal
+      properties:
+        programmeEnrolmentReadInput:
+          $ref: "#/components/schemas/ProgrammeEnrolmentReadInput"
+        onlineFormInput:
+          $ref: "#/components/schemas/OnlineFormInput"
+        onlineFormSubmissionInput:
+          $ref: "#/components/schemas/OnlineFormSubmissionInput"
+        saveOnlineFormDraftInput:
+          $ref: "#/components/schemas/SaveOnlineFormDraftInput"
+        submitOnlineFormInput:
+          $ref: "#/components/schemas/SubmitOnlineFormInput"
+        sendOnlineFormMessageInput:
+          $ref: "#/components/schemas/SendOnlineFormMessageInput"
+        markOnlineFormReadInput:
+          $ref: "#/components/schemas/MarkOnlineFormReadInput"
+        announcementInput:
+          $ref: "#/components/schemas/AnnouncementInput"
+        lecturerReviewInput:
+          $ref: "#/components/schemas/LecturerReviewInput"
+        submitLecturerReviewInput:
+          $ref: "#/components/schemas/SubmitLecturerReviewInput"
+        academicTimetableInput:
+          $ref: "#/components/schemas/AcademicTimetableInput"
+        academicModuleDetailInput:
+          $ref: "#/components/schemas/AcademicModuleDetailInput"
+        academicModuleMaterialDetailInput:
+          $ref: "#/components/schemas/AcademicModuleMaterialDetailInput"
+        submitAssignmentInput:
+          $ref: "#/components/schemas/SubmitAssignmentInput"
+        deleteAssignmentSubmissionInput:
+          $ref: "#/components/schemas/DeleteAssignmentSubmissionInput"
+        moduleRegistrationFeePreviewInput:
+          $ref: "#/components/schemas/ModuleRegistrationFeePreviewInput"
+        confirmModuleRegistrationsInput:
+          $ref: "#/components/schemas/ConfirmModuleRegistrationsInput"
+        servicePageInput:
+          $ref: "#/components/schemas/ServicePageInput"
+        calendarMonthInput:
+          $ref: "#/components/schemas/CalendarMonthInput"
+        updatePersonalProfileInput:
+          $ref: "#/components/schemas/UpdatePersonalProfileInput"
+        updateResumeProfileInput:
+          $ref: "#/components/schemas/UpdateResumeProfileInput"
+        createPortfolioProjectInput:
+          $ref: "#/components/schemas/CreatePortfolioProjectInput"
+        updatePortfolioProjectInput:
+          $ref: "#/components/schemas/UpdatePortfolioProjectInput"
+        deletePortfolioProjectInput:
+          $ref: "#/components/schemas/DeletePortfolioProjectInput"
+        submitFinancePaymentProofInput:
+          $ref: "#/components/schemas/SubmitFinancePaymentProofInput"
+        deleteFinancePaymentProofInput:
+          $ref: "#/components/schemas/DeleteFinancePaymentProofInput"
+        sendChatMessageInput:
+          $ref: "#/components/schemas/SendChatMessageInput"
+        chatTarget:
+          $ref: "#/components/schemas/ChatTarget"
+        personalAddress:
+          $ref: "#/components/schemas/PersonalAddress"
+        moduleRegistrationSelectionInput:
+          $ref: "#/components/schemas/ModuleRegistrationSelectionInput"
+
     PortalFile:
       type: object
       required: [__portalFile, name, type, size]
@@ -434,7 +1399,12 @@ components:
       type: object
       required: [result, cms]
       properties:
-        result: {}
+        result:
+          description: |
+            PortalApi return value for the invoked method.
+            Shapes live in student-portal `src/contracts/*` (Zod schemas).
+            Per-method response OpenAPI components are deferred until CAP-53
+            freezes the live CMS contracts.
         cms:
           $ref: "#/components/schemas/CmsAck"
 
