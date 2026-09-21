@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Raisd Portal API
-  version: 0.2.0
+  version: 0.3.0
   summary: Stage-1 HTTP face of the campus Portal API
   description: |
     Bearer-authenticated RPC over the student-portal `PortalApi` surface.
@@ -32,7 +32,7 @@ info:
     `_`-prefixed name. Use `POST /v1/auth/scenario` instead of
     `selectStudentScenario`.
 
-    **PortalApi method catalog (55 methods from student-portal)**
+    **PortalApi methods (55)** — each appears as its own `POST /v1/portal/<method>` operation in Swagger UI.\n\n    **PortalApi method catalog (55 methods from student-portal)**
 
     | Method | Args (`args` array) | Returns | Area | Frontend |
     |--------|---------------------|---------|------|----------|
@@ -114,8 +114,39 @@ tags:
     description: Liveness, metadata, and published docs
   - name: Auth
     description: Demo student sessions
-  - name: Portal
-    description: RPC over PortalApi methods used by student-portal
+  - name: Immigration
+    description: PortalApi · Immigration
+  - name: Online forms
+    description: PortalApi · Online forms
+  - name: Announcements
+    description: PortalApi · Announcements
+  - name: Policies
+    description: PortalApi · Policies
+  - name: Lecturer review
+    description: PortalApi · Lecturer review
+  - name: Dashboard
+    description: PortalApi · Dashboard
+  - name: Academic
+    description: PortalApi · Academic
+  - name: Registration
+    description: PortalApi · Registration
+  - name: Materials
+    description: PortalApi · Materials
+  - name: Profile
+    description: PortalApi · Profile
+  - name: Services
+    description: PortalApi · Services
+  - name: Community
+    description: PortalApi · Community
+  - name: Calendar
+    description: PortalApi · Calendar
+  - name: Finance
+    description: PortalApi · Finance
+  - name: Internal
+    description: PortalApi · Internal
+  - name: Chat
+    description: PortalApi · Chat
+
 
 paths:
   /health:
@@ -301,419 +332,2121 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
 
-  /v1/portal/{method}:
+  # --- PortalApi methods (one operation per student-portal method) ---
+  /v1/portal/getImmigration:
     post:
-      tags: [Portal]
-      operationId: callPortalMethod
-      summary: Call a PortalApi method
+      tags: [Immigration]
+      operationId: portal_getImmigration
+      summary: Get student pass / immigration case
       description: |
-        Body is always `{ "args": [ ... ] }` matching the TypeScript
-        `PortalApi` method signature in student-portal
-        (`src/services/portal-api.ts`).
-
-        Most methods take a single object argument (`args: [input]`).
-        Exceptions:
-        - `getPortalRecordGraph` → `args: []`
-        - `getChatConversation` / `markChatConversationRead` →
-          `args: [conversationId, input?]`
-        - `deleteChatMessage` → `args: [conversationId, messageId, input?]`
-
-        File arguments may be sent as `PortalFile`.
-
-        Successful responses wrap the method result:
-        `{ "result": <PortalApi return value>, "cms": { "acknowledged": true, "mode": "stub", "note": "..." } }`.
-
-        See the info description for the full method catalog derived from the
-        student-portal frontend.
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
       security:
         - bearerAuth: []
-      parameters:
-        - name: method
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/schemas/PortalMethod"
-          description: Name of the PortalApi method to invoke
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/PortalCallRequest"
-            examples:
-              getDashboard:
-                summary: getDashboard
-                value:
-                  args:
-                    - {}
-              getImmigration:
-                summary: getImmigration
-                value:
-                  args:
-                    - {}
-              getOnlineForms:
-                summary: getOnlineForms
-                value:
-                  args:
-                    - {}
-              getOnlineForm:
-                summary: getOnlineForm
-                value:
-                  args:
-                    - formId: form-visa-renewal
-              getOnlineFormSubmission:
-                summary: getOnlineFormSubmission
-                value:
-                  args:
-                    - submissionId: sub-1
-              startOnlineForm:
-                summary: startOnlineForm
-                value:
-                  args:
-                    - formId: form-visa-renewal
-              saveOnlineFormDraft:
-                summary: saveOnlineFormDraft
-                value:
-                  args:
-                    - submissionId: sub-1
-                      answers:
-                        field-1: value
-                      revision: 0
-              submitOnlineForm:
-                summary: submitOnlineForm
-                value:
-                  args:
-                    - submissionId: sub-1
-                      revision: 1
-              withdrawOnlineForm:
-                summary: withdrawOnlineForm
-                value:
-                  args:
-                    - submissionId: sub-1
-              sendOnlineFormMessage:
-                summary: sendOnlineFormMessage
-                value:
-                  args:
-                    - submissionId: sub-1
-                      text: Please advise.
-                      attachments:
-                        []
-                      clientMessageId: client-1
-              markOnlineFormRead:
-                summary: markOnlineFormRead
-                value:
-                  args:
-                    - submissionId: sub-1
-                      throughSequence: 3
-              getAnnouncements:
-                summary: getAnnouncements
-                value:
-                  args:
-                    - {}
-              getAnnouncement:
-                summary: getAnnouncement
-                value:
-                  args:
-                    - announcementId: ann-1
-              getUniversityPolicies:
-                summary: getUniversityPolicies
-                value:
-                  args:
-                    - {}
-              getLecturerReview:
-                summary: getLecturerReview
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-                      lecturerId: lec-1
-              submitLecturerReview:
-                summary: submitLecturerReview
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-                      lecturerId: lec-1
-                      questionnaireId: q-1
-                      questionnaireVersion: 1
-                      answers:
-                        q1: 5
-                      feedback: Clear lectures.
-              getAcademicPerformance:
-                summary: getAcademicPerformance
-                value:
-                  args:
-                    - {}
-              getAcademicModules:
-                summary: getAcademicModules
-                value:
-                  args:
-                    - {}
-              getAcademicTimetable:
-                summary: getAcademicTimetable
-                value:
-                  args:
-                    - semesterId: null
-              getAcademicGraduation:
-                summary: getAcademicGraduation
-                value:
-                  args:
-                    - {}
-              getAcademicStudyPlan:
-                summary: getAcademicStudyPlan
-                value:
-                  args:
-                    - {}
-              getAcademicModuleRegistration:
-                summary: getAcademicModuleRegistration
-                value:
-                  args:
-                    - {}
-              getModuleRegistrationFeePreview:
-                summary: getModuleRegistrationFeePreview
-                value:
-                  args:
-                    - studyPeriodId: sp-1
-                      moduleOfferingIds:
-                        - off-1
-                        - off-2
-              confirmModuleRegistrations:
-                summary: confirmModuleRegistrations
-                value:
-                  args:
-                    - studyPeriodId: sp-1
-                      moduleOfferingIds:
-                        - off-1
-                        - off-2
-              getAcademicContext:
-                summary: getAcademicContext
-                value:
-                  args:
-                    - {}
-              getAcademicModuleDetail:
-                summary: getAcademicModuleDetail
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-              getAcademicModuleAttendance:
-                summary: getAcademicModuleAttendance
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-              getAcademicModuleMaterials:
-                summary: getAcademicModuleMaterials
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-              getAcademicModuleMaterialDetail:
-                summary: getAcademicModuleMaterialDetail
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-                      moduleLearningItemId: item-1
-              submitAssignment:
-                summary: submitAssignment
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-                      moduleLearningItemId: item-1
-                      file:
-                        __portalFile: true
-                        name: essay.pdf
-                        type: application/pdf
-                        size: 1024
-                        contentBase64: ""
-              deleteAssignmentSubmission:
-                summary: deleteAssignmentSubmission
-                value:
-                  args:
-                    - moduleId: mod-1
-                      semesterId: sem-1
-                      moduleLearningItemId: item-1
-              getPersonalProfile:
-                summary: getPersonalProfile
-                value:
-                  args:
-                    - {}
-              updatePersonalProfile:
-                summary: updatePersonalProfile
-                value:
-                  args:
-                    - contactNumber: "+60 12-345 6789"
-                      maritalStatus: single
-                      emailAddress: student@example.com
-                      permanentAddress:
-                        addressLine: 1 Example St
-                        city: Kuala Lumpur
-                        postcode: "50000"
-                        state: WP
-                        country: MY
-                      currentAddress:
-                        addressLine: 1 Example St
-                        city: Kuala Lumpur
-                        postcode: "50000"
-                        state: WP
-                        country: MY
-                      emergencyContacts:
-                        - name: Parent
-                          relationship: Parent
-                          contactNumber: "+60 12-000 0000"
-              getAcademicProfile:
-                summary: getAcademicProfile
-                value:
-                  args:
-                    - {}
-              getDocumentsProfile:
-                summary: getDocumentsProfile
-                value:
-                  args:
-                    - {}
-              getPrivacySecurity:
-                summary: getPrivacySecurity
-                value:
-                  args:
-                    - {}
-              getServices:
-                summary: getServices
-                value:
-                  args:
-                    - {}
-              getServicePage:
-                summary: getServicePage
-                value:
-                  args:
-                    - slug: student-support
-              getResumeProfile:
-                summary: getResumeProfile
-                value:
-                  args:
-                    - {}
-              updateResumeProfile:
-                summary: updateResumeProfile
-                value:
-                  args:
-                    - professionalSummary: Student designer.
-                      workExperiences:
-                        []
-                      educations:
-                        []
-                      skills:
-                        []
-                      recognitions:
-                        []
-              getPortfolioProfile:
-                summary: getPortfolioProfile
-                value:
-                  args:
-                    - {}
-              createPortfolioProject:
-                summary: createPortfolioProject
-                value:
-                  args:
-                    - name: Studio project
-                      createdOn: "2025-06-01"
-                      description: A studio piece.
-                      toolsUsed:
-                        - Figma
-                      artwork:
-                        __portalFile: true
-                        name: art.jpg
-                        type: image/jpeg
-                        size: 2048
-              updatePortfolioProject:
-                summary: updatePortfolioProject
-                value:
-                  args:
-                    - id: proj-1
-                      name: Studio project
-                      createdOn: "2025-06-01"
-                      description: Updated.
-                      toolsUsed:
-                        - Figma
-                      artwork: null
-              deletePortfolioProject:
-                summary: deletePortfolioProject
-                value:
-                  args:
-                    - projectId: proj-1
-              getCommunity:
-                summary: getCommunity
-                value:
-                  args:
-                    - {}
-              getCalendarMonth:
-                summary: getCalendarMonth
-                value:
-                  args:
-                    - semesterId: sem-1
-                      month: 2026-09
-              getFinanceStatement:
-                summary: getFinanceStatement
-                value:
-                  args:
-                    - {}
-              submitFinancePaymentProof:
-                summary: submitFinancePaymentProof
-                value:
-                  args:
-                    - invoiceId: inv-1
-                      amountMinor: 150000
-                      transferDate: 2026-09-01
-                      bankReference: TRX-123
-                      file:
-                        __portalFile: true
-                        name: receipt.pdf
-                        type: application/pdf
-                        size: 4096
-              deleteFinancePaymentProof:
-                summary: deleteFinancePaymentProof
-                value:
-                  args:
-                    - invoiceId: inv-1
-              getPortalRecordGraph:
-                summary: getPortalRecordGraph
-                value:
-                  args:
+            example:
+              args:
+                - programmeEnrolmentId: null
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getOnlineForms:
+    post:
+      tags: [Online forms]
+      operationId: portal_getOnlineForms
+      summary: List online forms and submissions
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getOnlineForm:
+    post:
+      tags: [Online forms]
+      operationId: portal_getOnlineForm
+      summary: Get one online form context
+      description: |
+        `args`: `[OnlineFormInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - formId: form-visa-renewal
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getOnlineFormSubmission:
+    post:
+      tags: [Online forms]
+      operationId: portal_getOnlineFormSubmission
+      summary: Get an online form submission
+      description: |
+        `args`: `[OnlineFormSubmissionInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - submissionId: sub-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/startOnlineForm:
+    post:
+      tags: [Online forms]
+      operationId: portal_startOnlineForm
+      summary: Start an online form submission
+      description: |
+        `args`: `[OnlineFormInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - formId: form-visa-renewal
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/saveOnlineFormDraft:
+    post:
+      tags: [Online forms]
+      operationId: portal_saveOnlineFormDraft
+      summary: Save online form draft answers
+      description: |
+        `args`: `[SaveOnlineFormDraftInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - submissionId: sub-1
+                  answers:
+                    field-1: value
+                  revision: 0
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/submitOnlineForm:
+    post:
+      tags: [Online forms]
+      operationId: portal_submitOnlineForm
+      summary: Submit an online form
+      description: |
+        `args`: `[SubmitOnlineFormInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - submissionId: sub-1
+                  revision: 1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/withdrawOnlineForm:
+    post:
+      tags: [Online forms]
+      operationId: portal_withdrawOnlineForm
+      summary: Withdraw an online form submission
+      description: |
+        `args`: `[OnlineFormSubmissionInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - submissionId: sub-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/sendOnlineFormMessage:
+    post:
+      tags: [Online forms]
+      operationId: portal_sendOnlineFormMessage
+      summary: Send a message on an online form case
+      description: |
+        `args`: `[SendOnlineFormMessageInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - submissionId: sub-1
+                  text: Please advise.
+                  attachments:
                     []
-              getChatConversations:
-                summary: getChatConversations
-                value:
-                  args:
-                    - {}
-              getChatConversation:
-                summary: getChatConversation
-                value:
-                  args:
-                    - conv-1
-                    - {}
-              markChatConversationRead:
-                summary: markChatConversationRead
-                value:
-                  args:
-                    - conv-1
-                    - {}
-              sendChatMessage:
-                summary: sendChatMessage
-                value:
-                  args:
-                    - target:
-                        kind: personal
-                        personId: person-1
-                      text: Hello
-                      attachments:
-                        []
-              deleteChatMessage:
-                summary: deleteChatMessage
-                value:
-                  args:
-                    - conv-1
-                    - msg-1
-                    - {}
+                  clientMessageId: client-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/markOnlineFormRead:
+    post:
+      tags: [Online forms]
+      operationId: portal_markOnlineFormRead
+      summary: Mark online form messages read
+      description: |
+        `args`: `[MarkOnlineFormReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - submissionId: sub-1
+                  throughSequence: 3
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAnnouncements:
+    post:
+      tags: [Announcements]
+      operationId: portal_getAnnouncements
+      summary: List announcements
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAnnouncement:
+    post:
+      tags: [Announcements]
+      operationId: portal_getAnnouncement
+      summary: Get one announcement
+      description: |
+        `args`: `[AnnouncementInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - announcementId: ann-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getUniversityPolicies:
+    post:
+      tags: [Policies]
+      operationId: portal_getUniversityPolicies
+      summary: List university policies
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getLecturerReview:
+    post:
+      tags: [Lecturer review]
+      operationId: portal_getLecturerReview
+      summary: Get lecturer review questionnaire
+      description: |
+        `args`: `[LecturerReviewInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+                  lecturerId: lec-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/submitLecturerReview:
+    post:
+      tags: [Lecturer review]
+      operationId: portal_submitLecturerReview
+      summary: Submit lecturer review
+      description: |
+        `args`: `[SubmitLecturerReviewInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+                  lecturerId: lec-1
+                  questionnaireId: q-1
+                  questionnaireVersion: 1
+                  answers:
+                    q1: 5
+                  feedback: Clear lectures.
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getDashboard:
+    post:
+      tags: [Dashboard]
+      operationId: portal_getDashboard
+      summary: Get student dashboard
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicPerformance:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicPerformance
+      summary: Get academic performance
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicModules:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicModules
+      summary: List academic modules
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicTimetable:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicTimetable
+      summary: Get academic timetable
+      description: |
+        `args`: `[AcademicTimetableInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - semesterId: null
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicGraduation:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicGraduation
+      summary: Get graduation progress
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicStudyPlan:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicStudyPlan
+      summary: Get study plan
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicModuleRegistration:
+    post:
+      tags: [Registration]
+      operationId: portal_getAcademicModuleRegistration
+      summary: Get module registration state
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getModuleRegistrationFeePreview:
+    post:
+      tags: [Registration]
+      operationId: portal_getModuleRegistrationFeePreview
+      summary: Preview module registration fees
+      description: |
+        `args`: `[ModuleRegistrationFeePreviewInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - studyPeriodId: sp-1
+                  moduleOfferingIds:
+                    - off-1
+                    - off-2
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/confirmModuleRegistrations:
+    post:
+      tags: [Registration]
+      operationId: portal_confirmModuleRegistrations
+      summary: Confirm module registrations
+      description: |
+        `args`: `[ConfirmModuleRegistrationsInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - studyPeriodId: sp-1
+                  moduleOfferingIds:
+                    - off-1
+                    - off-2
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicContext:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicContext
+      summary: Get academic context / enrolments
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicModuleDetail:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicModuleDetail
+      summary: Get module detail
+      description: |
+        `args`: `[AcademicModuleDetailInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicModuleAttendance:
+    post:
+      tags: [Academic]
+      operationId: portal_getAcademicModuleAttendance
+      summary: Get module attendance
+      description: |
+        `args`: `[AcademicModuleDetailInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicModuleMaterials:
+    post:
+      tags: [Materials]
+      operationId: portal_getAcademicModuleMaterials
+      summary: List module materials
+      description: |
+        `args`: `[AcademicModuleDetailInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicModuleMaterialDetail:
+    post:
+      tags: [Materials]
+      operationId: portal_getAcademicModuleMaterialDetail
+      summary: Get one learning item
+      description: |
+        `args`: `[AcademicModuleMaterialDetailInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+                  moduleLearningItemId: item-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/submitAssignment:
+    post:
+      tags: [Materials]
+      operationId: portal_submitAssignment
+      summary: Submit an assignment file
+      description: |
+        `args`: `[SubmitAssignmentInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+                  moduleLearningItemId: item-1
+                  file:
+                    __portalFile: true
+                    name: essay.pdf
+                    type: application/pdf
+                    size: 1024
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/deleteAssignmentSubmission:
+    post:
+      tags: [Materials]
+      operationId: portal_deleteAssignmentSubmission
+      summary: Delete an assignment submission
+      description: |
+        `args`: `[DeleteAssignmentSubmissionInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - moduleId: mod-1
+                  semesterId: sem-1
+                  moduleLearningItemId: item-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getPersonalProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_getPersonalProfile
+      summary: Get personal profile
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/updatePersonalProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_updatePersonalProfile
+      summary: Update personal profile
+      description: |
+        `args`: `[UpdatePersonalProfileInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - contactNumber: "+60 12-345 6789"
+                  maritalStatus: single
+                  emailAddress: "student@example.com"
+                  permanentAddress:
+                    addressLine: 1 Example St
+                    city: Kuala Lumpur
+                    postcode: 50000
+                    state: WP
+                    country: MY
+                  currentAddress:
+                    addressLine: 1 Example St
+                    city: Kuala Lumpur
+                    postcode: 50000
+                    state: WP
+                    country: MY
+                  emergencyContacts:
+                    - name: Parent
+                      relationship: Parent
+                      contactNumber: "+60 12-000 0000"
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getAcademicProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_getAcademicProfile
+      summary: Get academic profile
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getDocumentsProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_getDocumentsProfile
+      summary: Get documents profile
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getPrivacySecurity:
+    post:
+      tags: [Profile]
+      operationId: portal_getPrivacySecurity
+      summary: Get privacy & security content
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getServices:
+    post:
+      tags: [Services]
+      operationId: portal_getServices
+      summary: List campus services
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getServicePage:
+    post:
+      tags: [Services]
+      operationId: portal_getServicePage
+      summary: Get a campus service page
+      description: |
+        `args`: `[ServicePageInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - slug: student-support
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getResumeProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_getResumeProfile
+      summary: Get resume profile
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/updateResumeProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_updateResumeProfile
+      summary: Update resume profile
+      description: |
+        `args`: `[UpdateResumeProfileInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - professionalSummary: Student designer.
+                  workExperiences:
+                    []
+                  educations:
+                    []
+                  skills:
+                    []
+                  recognitions:
+                    []
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getPortfolioProfile:
+    post:
+      tags: [Profile]
+      operationId: portal_getPortfolioProfile
+      summary: Get portfolio projects
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/createPortfolioProject:
+    post:
+      tags: [Profile]
+      operationId: portal_createPortfolioProject
+      summary: Create a portfolio project
+      description: |
+        `args`: `[CreatePortfolioProjectInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - name: Studio project
+                  createdOn: 2025-06-01
+                  description: A studio piece.
+                  toolsUsed:
+                    - Figma
+                  artwork:
+                    __portalFile: true
+                    name: art.jpg
+                    type: image/jpeg
+                    size: 2048
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/updatePortfolioProject:
+    post:
+      tags: [Profile]
+      operationId: portal_updatePortfolioProject
+      summary: Update a portfolio project
+      description: |
+        `args`: `[UpdatePortfolioProjectInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - id: proj-1
+                  name: Studio project
+                  createdOn: 2025-06-01
+                  description: Updated.
+                  toolsUsed:
+                    - Figma
+                  artwork: null
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/deletePortfolioProject:
+    post:
+      tags: [Profile]
+      operationId: portal_deletePortfolioProject
+      summary: Delete a portfolio project
+      description: |
+        `args`: `[DeletePortfolioProjectInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - projectId: proj-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getCommunity:
+    post:
+      tags: [Community]
+      operationId: portal_getCommunity
+      summary: Get community directory
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getCalendarMonth:
+    post:
+      tags: [Calendar]
+      operationId: portal_getCalendarMonth
+      summary: Get calendar events for a month
+      description: |
+        `args`: `[CalendarMonthInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - semesterId: sem-1
+                  month: 2026-09
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getFinanceStatement:
+    post:
+      tags: [Finance]
+      operationId: portal_getFinanceStatement
+      summary: Get finance statement
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/submitFinancePaymentProof:
+    post:
+      tags: [Finance]
+      operationId: portal_submitFinancePaymentProof
+      summary: Upload payment proof
+      description: |
+        `args`: `[SubmitFinancePaymentProofInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - invoiceId: inv-1
+                  amountMinor: 150000
+                  transferDate: 2026-09-01
+                  bankReference: TRX-123
+                  file:
+                    __portalFile: true
+                    name: receipt.pdf
+                    type: application/pdf
+                    size: 4096
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/deleteFinancePaymentProof:
+    post:
+      tags: [Finance]
+      operationId: portal_deleteFinancePaymentProof
+      summary: Delete payment proof
+      description: |
+        `args`: `[DeleteFinancePaymentProofInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - invoiceId: inv-1
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getPortalRecordGraph:
+    post:
+      tags: [Internal]
+      operationId: portal_getPortalRecordGraph
+      summary: Get canonical mock record graph (tests)
+      description: |
+        No arguments. Used by tests/internals; not wired in production UI hooks.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                []
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getChatConversations:
+    post:
+      tags: [Chat]
+      operationId: portal_getChatConversations
+      summary: List chat conversations
+      description: |
+        Optional enrolment scope. `args`: `[]` or `[ProgrammeEnrolmentReadInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/getChatConversation:
+    post:
+      tags: [Chat]
+      operationId: portal_getChatConversation
+      summary: Get chat conversation detail
+      description: |
+        `args`: `[conversationId, ProgrammeEnrolmentReadInput?]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - conv-1
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/markChatConversationRead:
+    post:
+      tags: [Chat]
+      operationId: portal_markChatConversationRead
+      summary: Mark chat conversation read
+      description: |
+        `args`: `[conversationId, ProgrammeEnrolmentReadInput?]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - conv-1
+                - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/sendChatMessage:
+    post:
+      tags: [Chat]
+      operationId: portal_sendChatMessage
+      summary: Send a chat message
+      description: |
+        `args`: `[SendChatMessageInput]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - target:
+                    kind: personal
+                    personId: person-1
+                  text: Hello
+                  attachments:
+                    []
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/portal/deleteChatMessage:
+    post:
+      tags: [Chat]
+      operationId: portal_deleteChatMessage
+      summary: Delete a chat message
+      description: |
+        `args`: `[conversationId, messageId, ProgrammeEnrolmentReadInput?]`.
+        Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - conv-1
+                - msg-1
+                - {}
       responses:
         "200":
           description: Method succeeded
