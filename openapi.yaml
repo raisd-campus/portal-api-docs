@@ -1,0 +1,447 @@
+openapi: 3.1.0
+info:
+  title: Raisd Portal API
+  version: 0.1.0
+  summary: Stage-1 HTTP face of the campus Portal API
+  description: |
+    Bearer-authenticated RPC over the student `PortalApi` surface.
+
+    Portals (applicant, student, lecturer, staff) call this service only.
+    They never talk to Postgres or the existing CMS directly.
+
+    **Stage 1 behaviour**
+    - Sessions are in-memory and reuse the student-portal `MockPortalApi` engine.
+    - Mutating calls return `cms.acknowledged: true` with `cms.mode: stub`.
+    - CAP-53 will replace the stub with a live CMS adapter.
+
+    **Typical flow**
+    1. `POST /v1/auth/login`
+    2. `POST /v1/portal/{method}` with `Authorization: Bearer <accessToken>`
+  contact:
+    name: Raisd working group
+    email: iman.suherman@raisd.co
+  license:
+    name: Proprietary
+
+servers:
+  - url: http://127.0.0.1:8080
+    description: Local portal-api (`npm start` in portal-api/)
+  - url: https://api.raisd.co
+    description: Planned public name (not provisioned yet)
+
+tags:
+  - name: Health
+    description: Liveness and service metadata
+  - name: Auth
+    description: Demo student sessions
+  - name: Portal
+    description: RPC over PortalApi methods
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      operationId: getHealth
+      summary: Liveness probe
+      security: []
+      responses:
+        "200":
+          description: Service is up
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+              example:
+                ok: true
+                service: portal-api
+                mode: stub-session
+                cms: stub
+                time: "2026-09-21T09:25:12.975Z"
+
+  /v1/meta:
+    get:
+      tags: [Health]
+      operationId: getMeta
+      summary: Service metadata and supported scenarios
+      security: []
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaResponse"
+
+  /v1/auth/login:
+    post:
+      tags: [Auth]
+      operationId: login
+      summary: Create a demo student session
+      description: |
+        Issues a bearer token bound to a student scenario.
+        No password yet — stage-1 demo auth only.
+      security: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+            examples:
+              default:
+                value: {}
+              midProgramme:
+                value:
+                  scenarioId: mid-programme
+      responses:
+        "200":
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /v1/auth/logout:
+    post:
+      tags: [Auth]
+      operationId: logout
+      summary: End the current session
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Session destroyed
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok]
+                properties:
+                  ok:
+                    type: boolean
+                    const: true
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /v1/auth/scenario:
+    post:
+      tags: [Auth]
+      operationId: switchScenario
+      summary: Switch the demo student scenario on the current session
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [scenarioId]
+              properties:
+                scenarioId:
+                  $ref: "#/components/schemas/ScenarioId"
+      responses:
+        "200":
+          description: Scenario switched
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [scenarioId, studentProfileId]
+                properties:
+                  scenarioId:
+                    $ref: "#/components/schemas/ScenarioId"
+                  studentProfileId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /v1/portal/{method}:
+    post:
+      tags: [Portal]
+      operationId: callPortalMethod
+      summary: Call a PortalApi method
+      description: |
+        Body is always `{ "args": [ ... ] }` matching the TypeScript
+        `PortalApi` method signature in the student portal.
+
+        File arguments may be sent as:
+        `{ "__portalFile": true, "name": "...", "type": "...", "size": 0, "contentBase64": "..." }`.
+
+        Successful responses wrap the method result:
+        `{ "result": <PortalApi return value>, "cms": { "acknowledged": true, "mode": "stub", "note": "..." } }`.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: method
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/PortalMethod"
+          description: Name of the PortalApi method to invoke
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            examples:
+              getDashboard:
+                summary: Dashboard for the active enrolment
+                value:
+                  args:
+                    - {}
+              getAnnouncement:
+                summary: One announcement by id
+                value:
+                  args:
+                    - announcementId: ann-1
+              getChatConversation:
+                summary: Conversation detail (first arg is conversationId)
+                value:
+                  args:
+                    - conv-1
+                    - {}
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: UUID
+      description: Token from `POST /v1/auth/login`
+
+  responses:
+    BadRequest:
+      description: Invalid body or PortalApi rejection
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorBody"
+    Unauthorized:
+      description: Missing or expired bearer token
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorBody"
+          example:
+            error: Session expired or missing. Sign in again.
+
+  schemas:
+    ScenarioId:
+      type: string
+      enum:
+        - mid-programme
+        - first-semester-registration
+        - new-student-pass
+        - graduation-ready
+
+    PortalMethod:
+      type: string
+      description: Methods exposed by the student PortalApi interface
+      enum:
+        - getImmigration
+        - getOnlineForms
+        - getOnlineForm
+        - getOnlineFormSubmission
+        - startOnlineForm
+        - saveOnlineFormDraft
+        - submitOnlineForm
+        - withdrawOnlineForm
+        - sendOnlineFormMessage
+        - markOnlineFormRead
+        - getAnnouncements
+        - getAnnouncement
+        - getUniversityPolicies
+        - getLecturerReview
+        - submitLecturerReview
+        - getDashboard
+        - getAcademicPerformance
+        - getAcademicModules
+        - getAcademicTimetable
+        - getAcademicGraduation
+        - getAcademicStudyPlan
+        - getAcademicModuleRegistration
+        - getModuleRegistrationFeePreview
+        - confirmModuleRegistrations
+        - getAcademicContext
+        - getAcademicModuleDetail
+        - getAcademicModuleAttendance
+        - getAcademicModuleMaterials
+        - getAcademicModuleMaterialDetail
+        - submitAssignment
+        - deleteAssignmentSubmission
+        - getPersonalProfile
+        - updatePersonalProfile
+        - getAcademicProfile
+        - getDocumentsProfile
+        - getPrivacySecurity
+        - getServices
+        - getServicePage
+        - getResumeProfile
+        - updateResumeProfile
+        - getPortfolioProfile
+        - createPortfolioProject
+        - updatePortfolioProject
+        - deletePortfolioProject
+        - getCommunity
+        - getCalendarMonth
+        - getFinanceStatement
+        - submitFinancePaymentProof
+        - deleteFinancePaymentProof
+        - getPortalRecordGraph
+        - getChatConversations
+        - getChatConversation
+        - markChatConversationRead
+        - sendChatMessage
+        - deleteChatMessage
+
+    HealthResponse:
+      type: object
+      required: [ok, service, mode, cms, time]
+      properties:
+        ok:
+          type: boolean
+        service:
+          type: string
+          example: portal-api
+        mode:
+          type: string
+          example: stub-session
+        cms:
+          type: string
+          example: stub
+        time:
+          type: string
+          format: date-time
+
+    MetaResponse:
+      type: object
+      required: [service, version, scenarios, defaultScenarioId, cmsMode]
+      properties:
+        service:
+          type: string
+        version:
+          type: string
+        scenarios:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScenarioId"
+        defaultScenarioId:
+          $ref: "#/components/schemas/ScenarioId"
+        cmsMode:
+          type: string
+          example: stub
+        note:
+          type: string
+
+    LoginRequest:
+      type: object
+      properties:
+        scenarioId:
+          $ref: "#/components/schemas/ScenarioId"
+
+    LoginResponse:
+      type: object
+      required: [accessToken, tokenType, expiresIn, scenarioId, studentProfileId]
+      properties:
+        accessToken:
+          type: string
+          format: uuid
+        tokenType:
+          type: string
+          const: Bearer
+        expiresIn:
+          type: integer
+          description: Seconds until the session expires
+        scenarioId:
+          $ref: "#/components/schemas/ScenarioId"
+        studentProfileId:
+          type: string
+
+    PortalCallRequest:
+      type: object
+      required: [args]
+      properties:
+        args:
+          type: array
+          description: |
+            Positional arguments for the PortalApi method.
+            File values use PortalFile instead of a browser File object.
+          items:
+            oneOf:
+              - type: object
+              - type: string
+              - type: number
+              - type: boolean
+              - type: "null"
+              - type: array
+                items: {}
+              - $ref: "#/components/schemas/PortalFile"
+    PortalFile:
+      type: object
+      required: [__portalFile, name, type, size]
+      properties:
+        __portalFile:
+          type: boolean
+          const: true
+        name:
+          type: string
+        type:
+          type: string
+          example: application/pdf
+        size:
+          type: integer
+          minimum: 0
+        contentBase64:
+          type: string
+          description: Optional file bytes as base64
+
+    CmsAck:
+      type: object
+      required: [acknowledged, mode]
+      properties:
+        acknowledged:
+          type: boolean
+        mode:
+          type: string
+          enum: [stub, live]
+        note:
+          type: string
+
+    PortalCallResponse:
+      type: object
+      required: [result, cms]
+      properties:
+        result: {}
+        cms:
+          $ref: "#/components/schemas/CmsAck"
+
+    ErrorBody:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+        details: {}
