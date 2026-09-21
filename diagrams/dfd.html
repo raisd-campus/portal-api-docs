@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd DFD — Data Flow Diagrams</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Data Flow Diagrams</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="./index.html">Overview</a>
+        <a href="./erd.html">ERD</a>
+        <a class="active" href="./dfd.html">DFD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Data Flow Diagrams</h1>
+      <p>
+        Context and levelled process diagrams for how applicants, students, lecturers,
+        and staff exchange data with Portal API, the existing CMS, planned Postgres,
+        and the evidence file volume.
+      </p>
+      <div class="meta-row">
+        <span class="chip">Gane &amp; Sarson style via Mermaid</span>
+        <span class="chip ok">Stage 1: mock + stub CMS</span>
+        <span class="chip warn">Target flows marked where CAP-53 applies</span>
+      </div>
+    </section>
+
+    <div class="toc">
+      <a href="#l0"><strong>Level 0 — Context</strong><span>Whole system boundary</span></a>
+      <a href="#l1"><strong>Level 1 — Portal system</strong><span>Major processes &amp; stores</span></a>
+      <a href="#auth"><strong>Auth &amp; session</strong><span>Login → bearer → RPC</span></a>
+      <a href="#admissions"><strong>Admissions (M2)</strong><span>Apply → offer → enrol</span></a>
+      <a href="#registration"><strong>Registration &amp; fees</strong><span>Modules → invoice → proof</span></a>
+      <a href="#teaching"><strong>Teaching &amp; results</strong><span>Materials → mark → publish</span></a>
+      <a href="#runtime"><strong>Stage 1 runtime</strong><span>What runs today</span></a>
+      <a href="#deploy"><strong>Deploy path</strong><span>Traefik → k3s → stores</span></a>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <strong>External entity</strong>
+        <span>Square / actor outside the system boundary.</span>
+      </div>
+      <div class="legend-item">
+        <strong>Process</strong>
+        <span>Rounded node — transforms or routes data.</span>
+      </div>
+      <div class="legend-item">
+        <strong>Data store</strong>
+        <span>Cylinder — durable or session state.</span>
+      </div>
+      <div class="legend-item">
+        <strong>Data flow</strong>
+        <span>Labeled arrow — what moves, not how.</span>
+      </div>
+    </div>
+
+    <!-- L0 -->
+    <section class="section" id="l0">
+      <h2>Level 0 — Context diagram</h2>
+      <p class="lead">The Raisd portal control plane as a single process.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>0. Portal Control Plane</h3>
+            <p>Four role populations + IdP; three persistence backends.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  A(["Applicant"])
+  S(["Student"])
+  L(["Lecturer"])
+  T(["Staff / Registry / Bursary"])
+  IDP(["Identity Provider / CMS Login"])
+
+  P0(("0<br/>Raisd Portal<br/>Control Plane"))
+
+  CMS[("D1 Existing CMS<br/>System of Record")]
+  PG[("D2 Postgres<br/>planned")]
+  FS[("D3 Evidence / file volume")]
+  MAIL(["UltaCP Mail<br/>notifications only"])
+
+  A -->|"application, evidence, accept offer"| P0
+  P0 -->|"status, offer, enrolment ack"| A
+
+  S -->|"registration, payments, submissions, forms"| P0
+  P0 -->|"timetable, invoices, results, materials"| S
+
+  L -->|"materials, attendance, marks, messages"| P0
+  P0 -->|"class lists, submissions, published grades"| L
+
+  T -->|"review, allocate, publish, configure"| P0
+  P0 -->|"queues, ledgers, case status"| T
+
+  IDP -->|"auth assertion / session subject"| P0
+
+  P0 <-->|"enrolment, marks, ledger, applications"| CMS
+  P0 <-->|"portal-owned durable state"| PG
+  P0 <-->|"file bytes + metadata refs"| FS
+  P0 -.->|"outbound notices"| MAIL
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Portals never connect to D1–D3 directly. Mail is out-of-band (not on the
+          request path). Staff continue to use the existing CMS UI where it already works;
+          new staff-portal screens only fill verified gaps.
+        </div>
+      </div>
+    </section>
+
+    <!-- L1 -->
+    <section class="section" id="l1">
+      <h2>Level 1 — Portal system decomposition</h2>
+      <p class="lead">Major processes inside the control plane boundary.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>1.x processes</h3>
+            <p>Web shells → Portal API → domain handlers → stores / CMS adapter.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph External
+    A(["Applicants"])
+    S(["Students"])
+    L(["Lecturers"])
+    T(["Staff"])
+    IDP(["IdP / CMS login"])
+  end
+
+  subgraph ControlPlane["Raisd control plane"]
+    P1(("1.1<br/>Role portal<br/>web shells"))
+    P2(("1.2<br/>Auth &amp;<br/>session"))
+    P3(("1.3<br/>Portal API<br/>RPC gateway"))
+    P4(("1.4<br/>Admissions<br/>handler"))
+    P5(("1.5<br/>Academic &amp;<br/>registration"))
+    P6(("1.6<br/>Finance<br/>handler"))
+    P7(("1.7<br/>Teaching &amp;<br/>assessment"))
+    P8(("1.8<br/>Forms / immigration<br/>/ graduation"))
+    P9(("1.9<br/>CMS adapter<br/>CAP-53"))
+  end
+
+  subgraph Stores
+    DS[("D0 Session store<br/>in-memory today")]
+    CMS[("D1 Existing CMS")]
+    PG[("D2 Postgres planned")]
+    FS[("D3 Evidence files")]
+    MOCK[("D4 Mock PortalRecordGraph<br/>demo fixtures")]
+  end
+
+  A --> P1
+  S --> P1
+  L --> P1
+  T --> P1
+  P1 -->|"HTTPS UI calls"| P3
+  IDP --> P2
+  P2 -->|"token / subject"| P3
+  P2 <--> DS
+
+  P3 --> P4
+  P3 --> P5
+  P3 --> P6
+  P3 --> P7
+  P3 --> P8
+
+  P4 --> P9
+  P5 --> P9
+  P6 --> P9
+  P7 --> P9
+  P8 --> P9
+
+  P4 <--> FS
+  P6 <--> FS
+  P7 <--> FS
+  P8 <--> FS
+
+  P9 <--> CMS
+  P4 -.-> PG
+  P5 -.-> PG
+  P6 -.-> PG
+  P3 -.->|"stage 1"| MOCK
+          </pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Process catalogue</h3>
+            <p>What each Level-1 process owns.</p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:16px 18px">
+          <table class="attr">
+            <thead>
+              <tr><th>ID</th><th>Process</th><th>Inputs</th><th>Outputs / side effects</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1.1</td>
+                <td>Role portal webs</td>
+                <td>User actions in apply / student / teach / staff</td>
+                <td>HTTPS to Portal API; rendered views</td>
+              </tr>
+              <tr>
+                <td>1.2</td>
+                <td>Auth &amp; session</td>
+                <td>Credentials / IdP assertion</td>
+                <td>Bearer token; session record (TTL 12h today)</td>
+              </tr>
+              <tr>
+                <td>1.3</td>
+                <td>Portal API RPC</td>
+                <td><code>POST /v1/portal/:method</code> + bearer</td>
+                <td><code>{ result, cms }</code> envelope</td>
+              </tr>
+              <tr>
+                <td>1.4</td>
+                <td>Admissions</td>
+                <td>Application drafts, evidence files, acceptances</td>
+                <td>CMS application / offer / first enrolment</td>
+              </tr>
+              <tr>
+                <td>1.5</td>
+                <td>Academic &amp; registration</td>
+                <td>Module selections, credit overrides</td>
+                <td>Registrations, study-plan views</td>
+              </tr>
+              <tr>
+                <td>1.6</td>
+                <td>Finance</td>
+                <td>Invoice queries, payment proofs</td>
+                <td>Allocations (bursary), funding awards</td>
+              </tr>
+              <tr>
+                <td>1.7</td>
+                <td>Teaching &amp; assessment</td>
+                <td>Materials, attendance, marks, submissions</td>
+                <td>Published results (student-visible)</td>
+              </tr>
+              <tr>
+                <td>1.8</td>
+                <td>Forms / immigration / graduation</td>
+                <td>Form answers, case docs</td>
+                <td>Case status, linked invoices</td>
+              </tr>
+              <tr>
+                <td>1.9</td>
+                <td>CMS adapter</td>
+                <td>Domain write/read intents</td>
+                <td>CMS transactions; stub ack until CAP-53</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auth -->
+    <section class="section" id="auth">
+      <h2>Auth &amp; session (current + target)</h2>
+      <p class="lead">Stage 1 uses stub login and an in-memory session map.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Current Stage 1 path</h3>
+            <p><code>POST /v1/auth/login</code> → UUID token → every portal method.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor U as Browser (role portal)
+  participant API as Portal API
+  participant SS as D0 Session store
+  participant Mock as D4 MockPortalApi
+
+  U->>API: POST /v1/auth/login { scenarioId, ... }
+  API->>SS: create Session(token, TTL 12h, scenario)
+  API-->>U: { token }
+  U->>API: POST /v1/portal/{method}<br/>Authorization: Bearer token
+  API->>SS: lookup token
+  SS-->>API: session + scenario + studentProfileId
+  API->>Mock: invoke PortalApi method
+  Mock-->>API: result
+  API-->>U: { result, cms: { acknowledged, mode: stub } }
+          </pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Target auth data flow</h3>
+            <p>IdP / CMS login issues subject; Portal API enforces RBAC per method.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  U(["User"])
+  IDP(["IdP / CMS login"])
+  P2(("1.2 Auth"))
+  DS[("Session / token store")]
+  P3(("1.3 Portal API"))
+  RBAC{{"RBAC check<br/>role × method × campus"}}
+  H(("Domain handler"))
+
+  U -->|"login"| IDP
+  IDP -->|"assertion"| P2
+  P2 -->|"persist subject, roles"| DS
+  U -->|"Bearer + method"| P3
+  P3 --> DS
+  P3 --> RBAC
+  RBAC --> H
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admissions -->
+    <section class="section" id="admissions">
+      <h2>Admissions data flow (Milestone 2 target)</h2>
+      <p class="lead">Applicant portal → evidence volume + CMS application lifecycle.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Apply → review → offer → first enrolment</h3>
+            <p>Registry reviews inside existing CMS; portals surface status.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  A(["Applicant"])
+  REG(["Registry staff"])
+
+  P1(("1.1 Applicant portal"))
+  P3(("1.3 Portal API"))
+  P4(("1.4 Admissions"))
+  P9(("1.9 CMS adapter"))
+
+  FS[("D3 Evidence volume")]
+  CMS[("D1 CMS applications / offers")]
+  STU[("D1 / D2 Student + ProgrammeEnrolment")]
+
+  A -->|"draft application"| P1 --> P3 --> P4
+  A -->|"upload evidence file"| P1 --> P3 --> P4
+  P4 -->|"store bytes"| FS
+  P4 -->|"file id + checksum + type"| P9 --> CMS
+
+  A -->|"submit application"| P1 --> P3 --> P4 --> P9 --> CMS
+
+  REG -->|"review in CMS UI"| CMS
+  CMS -->|"status / offer"| P9 --> P4 --> P3 --> P1 --> A
+
+  A -->|"accept offer"| P1 --> P3 --> P4 --> P9
+  P9 -->|"create first enrolment"| STU
+  P9 -->|"bind student identity"| CMS
+  P4 -->|"enrolment ack"| P3 --> P1 --> A
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Evidence object metadata (type, checksum, uploadedAt) is stored with the
+          application; raw bytes stay on D3. Declarations capture policy version + acceptedAt.
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration -->
+    <section class="section" id="registration">
+      <h2>Registration &amp; fees (Milestone 3 target)</h2>
+      <p class="lead">Module selection creates CMS registration; invoices and payment proofs follow.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Register modules → invoice → proof → allocate</h3>
+            <p>Proof ≠ payment: bursary verifies and writes ledger Payment / Allocation.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  S(["Student"])
+  BUR(["Bursary / Finance staff"])
+
+  P5(("1.5 Academic &amp; registration"))
+  P6(("1.6 Finance"))
+  P9(("1.9 CMS adapter"))
+
+  CMS_R[("D1 Module registrations")]
+  CMS_F[("D1 Finance ledger")]
+  FS[("D3 Payment proof files")]
+
+  S -->|"select modules / submit registration"| P5
+  P5 -->|"validate credits, prereqs, window"| P5
+  P5 -->|"registration transaction"| P9 --> CMS_R
+  P9 -->|"fee lines from FeePlan"| P6
+  P6 -->|"issue Invoice INV-######"| P9 --> CMS_F
+  P6 -->|"invoice view"| S
+
+  S -->|"upload payment proof<br/>amount, bank ref, file"| P6
+  P6 -->|"store proof file"| FS
+  P6 -->|"proof metadata queue"| P9 --> CMS_F
+
+  BUR -->|"verify proof in CMS / staff portal"| CMS_F
+  BUR -->|"record Payment + Allocation"| P9
+  P9 --> CMS_F
+  P6 -->|"receipt / updated balance"| S
+          </pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Finance data stores detail</h3>
+            <p>What moves between student UI and ledger entities.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Student_visible
+    IV[Invoice + lines + tax]
+    PP[Payment proof upload]
+    BA[Balance / account issues]
+  end
+
+  subgraph Ledger_SoR
+    FA[FinanceAccount]
+    PAY[Payment]
+    ALL[PaymentAllocation]
+    ADJ[FinancialAdjustment]
+    FUND[FundingAward / Benefit]
+  end
+
+  IV --- FA
+  PP -.->|"staff confirms"| PAY
+  PAY --> ALL
+  ALL --> IV
+  FUND --> ADJ
+  ADJ --> FA
+  BA --- FA
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaching -->
+    <section class="section" id="teaching">
+      <h2>Teaching, submissions &amp; results</h2>
+      <p class="lead">Lecturer publishes materials; student submits; marks publish only when released.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Materials → submit → mark → publish</h3>
+            <p>Students see published <code>AssessmentResult</code> / <code>ModuleResult</code> / <code>TermResult</code> only.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  L(["Lecturer"])
+  S(["Student"])
+  REG(["Registry"])
+
+  P7(("1.7 Teaching &amp; assessment"))
+  P9(("1.9 CMS adapter"))
+  FS[("D3 Learning / submission files")]
+  CMS[("D1 Marks &amp; attendance SoR")]
+
+  L -->|"publish ModuleLearningItem / Assessment"| P7
+  P7 -->|"file bytes"| FS
+  P7 -->|"metadata"| P9 --> CMS
+
+  S -->|"download materials"| P7 --> FS
+  S -->|"AssignmentSubmission"| P7
+  P7 -->|"submission file"| FS
+  P7 -->|"submission metadata"| P9 --> CMS
+
+  L -->|"record Attendance"| P7 --> P9 --> CMS
+  L -->|"enter AssessmentResult"| P7 --> P9 --> CMS
+
+  REG -->|"publish ModuleResult / TermResult"| P9 --> CMS
+  CMS -->|"publishedAt set"| P7
+  P7 -->|"results visible"| S
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Soft-delete on submissions uses <code>deletedAt</code>. Learning progress statuses:
+          not-started | viewed | completed | locked.
+        </div>
+      </div>
+    </section>
+
+    <!-- Runtime -->
+    <section class="section" id="runtime">
+      <h2>Stage 1 runtime (what actually runs today)</h2>
+      <p class="lead">portal-api is an HTTP façade over the student-portal mock engine.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>As-built Stage 1</h3>
+            <p>No live CMS adapter; <code>cms.mode = stub</code> on every response.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  SP[Student portal<br/>Vite app]
+  API[portal-api<br/>Fastify]
+  SS[("In-memory<br/>Session Map")]
+  MOCK[MockPortalApi<br/>from student-portal]
+  GRAPH[("PortalRecordGraph<br/>fixture data")]
+
+  SP -->|"VITE_PORTAL_API_URL"| API
+  API <--> SS
+  API --> MOCK
+  MOCK <--> GRAPH
+  API -->|"cms: stub ack"| SP
+          </pre>
+        </div>
+        <div class="note warn" style="margin:0 18px 18px">
+          Demo or “frontend ready” is not Live. Live requires real CMS data, durable save,
+          server-enforced permission, and a paired staff/lecturer path (product rule).
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>API surface domains</h3>
+            <p>OpenAPI lists ~55 <code>PortalApi</code> methods under these groups.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  GW(("POST /v1/portal/:method"))
+
+  GW --> I[immigration]
+  GW --> F[online-forms]
+  GW --> A[announcements / policies]
+  GW --> R[lecturer-review]
+  GW --> D[dashboard]
+  GW --> AC[academic / registration / materials]
+  GW --> PR[profile / services]
+  GW --> C[community / calendar / chat]
+  GW --> FI[finance]
+  GW --> G[getPortalRecordGraph]
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deploy -->
+    <section class="section" id="deploy">
+      <h2>Deployment data path (SDD-12)</h2>
+      <p class="lead">Browser → Traefik → portal Deployments on k3s / UltaHost Singapore.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Ingress to stores</h3>
+            <p>Hostnames such as <code>apply.raisd.co</code> / <code>api.raisd.co</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  B(["Browser"])
+  TR[Traefik ingress]
+  APPLY[apply Deployment]
+  STUD[student Deployment]
+  TEACH[teach Deployment]
+  STAFF[staff Deployment]
+  API[portal-api Deployment]
+  PG[("Postgres StatefulSet<br/>planned")]
+  PVC[("PVC evidence")]
+  CMS[("Existing CMS<br/>UltaHost Premium")]
+
+  B --> TR
+  TR --> APPLY
+  TR --> STUD
+  TR --> TEACH
+  TR --> STAFF
+  TR --> API
+  APPLY --> API
+  STUD --> API
+  TEACH --> API
+  STAFF --> API
+  API --> PG
+  API --> PVC
+  API --> CMS
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Cross-cutting flows</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Online forms, immigration, graduation</h3>
+            <p>Shared pattern: definition → submission → messages → optional invoice / case.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  U(["Student"])
+  ST(["Staff desk"])
+  P8(("1.8 Forms / immigration / graduation"))
+  FS[("D3 Attachments")]
+  CMS[("D1 Case / form SoR")]
+  INV[("Invoice if fee configured")]
+
+  U -->|"start submission"| P8 --> CMS
+  U -->|"answers + files"| P8
+  P8 --> FS
+  P8 --> CMS
+  ST -->|"message / request changes"| P8 --> CMS
+  P8 -->|"thread"| U
+  P8 -->|"open ImmigrationCase / GraduationRecord"| CMS
+  P8 -.->|"fee from campus config"| INV
+          </pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    DFD · raisd-campus/control-plane · SDD-02 architecture · SDD-12 deployment · CAP-53 CMS adapter
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      sequence: { mirrorActors: false },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+</body>
+</html>

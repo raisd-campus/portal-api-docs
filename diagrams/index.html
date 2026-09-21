@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd Control Plane — Architecture Diagrams</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Logical ERD &amp; DFD documentation</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a class="active" href="./index.html">Overview</a>
+        <a href="./erd.html">ERD</a>
+        <a href="./dfd.html">DFD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Campus portal data model &amp; flows</h1>
+      <p>
+        Detailed Mermaid entity-relationship and data-flow diagrams for the Raisd
+        control plane: Portal API, role portals, existing CMS (system of record),
+        planned Postgres, and evidence file storage. Derived from Zod portal
+        contracts and the Software Design Documents.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">Logical model (contracts + SDD)</span>
+        <span class="chip warn">No physical SQL migrations yet</span>
+        <span class="chip">Public: raisd-campus.github.io/portal-api-docs/diagrams</span>
+      </div>
+    </section>
+
+    <div class="toc">
+      <a href="./erd.html">
+        <strong>Entity Relationship Diagrams</strong>
+        <span>Institution, curriculum, delivery, student journey, finance, admissions, immigration</span>
+      </a>
+      <a href="./dfd.html">
+        <strong>Data Flow Diagrams</strong>
+        <span>Context (L0), portal decomposition (L1), auth, admissions, registration, teaching</span>
+      </a>
+      <a href="../index.html">
+        <strong>Portal API OpenAPI</strong>
+        <span>Interactive Swagger UI for <code>POST /v1/portal/:method</code></span>
+      </a>
+      <a href="https://github.com/raisd-campus/control-plane">
+        <strong>control-plane repository</strong>
+        <span>GitHub source · portal-api · SDD set</span>
+      </a>
+    </div>
+
+    <section class="section">
+      <h2>How to read these diagrams</h2>
+      <div class="legend">
+        <div class="legend-item">
+          <strong>CMS (SoR)</strong>
+          <span>Existing campus CMS remains system of record until CAP-53 adapters land.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Portal contracts</strong>
+          <span>Canonical record shapes in sibling <code>student-portal</code> Zod schemas.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Postgres (planned)</strong>
+          <span>Portal-owned durable state designed in SDD-12; not migrated yet.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Evidence volume</strong>
+          <span>File bytes for assignments, payment proofs, admissions evidence.</span>
+        </div>
+      </div>
+      <p class="note">
+        Cardinality notation in ERDs follows Mermaid: <code>||--o{</code> one-to-many,
+        <code>||--||</code> one-to-one, <code>}o--o{</code> many-to-many via junction.
+        DFDs use Gane &amp; Sarson style via Mermaid flowcharts (external entities,
+        processes, data stores).
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>System snapshot</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Context — portals sit in front of CMS</h3>
+            <p>Browsers never talk to Postgres, CMS, or file storage directly.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Actors
+    A[Applicants]
+    S[Students]
+    L[Lecturers]
+    T[Staff]
+  end
+
+  subgraph ControlPlane["Raisd control plane"]
+    W[Role portal webs]
+    API[Portal API]
+  end
+
+  subgraph Stores
+    CMS[(Existing CMS SoR)]
+    PG[(Postgres planned)]
+    FS[(Evidence files)]
+    IDP[IdP / CMS login]
+  end
+
+  A --> W
+  S --> W
+  L --> W
+  T --> W
+  W --> API
+  IDP --> API
+  API --> CMS
+  API --> PG
+  API --> FS
+          </pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Generated for raisd-campus/control-plane · Mermaid diagrams · GitHub Pages
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+</body>
+</html>

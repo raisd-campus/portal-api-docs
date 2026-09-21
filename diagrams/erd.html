@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd ERD — Entity Relationship Diagrams</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Entity Relationship Diagrams</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="./index.html">Overview</a>
+        <a class="active" href="./erd.html">ERD</a>
+        <a href="./dfd.html">DFD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Entity Relationship Diagrams</h1>
+      <p>
+        Logical data model for Raisd campus portals. Attributes and relationships
+        mirror Zod contracts in <code>student-portal</code> and admissions entities
+        from SDD-04. Split by domain so each diagram stays readable.
+      </p>
+      <div class="meta-row">
+        <span class="chip">PK / FK annotated</span>
+        <span class="chip">Cardinality explicit</span>
+        <span class="chip warn">Logical — not a migrated Postgres schema</span>
+      </div>
+    </section>
+
+    <div class="toc">
+      <a href="#overview"><strong>0. Domain map</strong><span>How aggregates connect</span></a>
+      <a href="#institution"><strong>1. Institution</strong><span>Campus, faculty, staff, config</span></a>
+      <a href="#curriculum"><strong>2. Curriculum</strong><span>Programme, modules, fees, grades</span></a>
+      <a href="#delivery"><strong>3. Delivery</strong><span>Terms, offerings, materials</span></a>
+      <a href="#student"><strong>4. Student record</strong><span>Profile, enrolment, journey</span></a>
+      <a href="#results"><strong>5. Results &amp; progress</strong><span>Attendance, marks, GPA</span></a>
+      <a href="#finance"><strong>6. Finance</strong><span>Invoices, payments, funding</span></a>
+      <a href="#admissions"><strong>7. Admissions</strong><span>SDD-04 target CMS entities</span></a>
+      <a href="#immigration"><strong>8. Immigration &amp; forms</strong><span>Cases, online forms, graduation</span></a>
+    </div>
+
+    <!-- 0 -->
+    <section class="section" id="overview">
+      <h2>0. Domain map</h2>
+      <p class="lead">High-level aggregates and ownership boundaries.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Aggregate hubs</h3>
+            <p><code>ProgrammeEnrolment</code> and <code>Campus</code> are the primary FK hubs.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  CAMPUS ||--o{ FACULTY : hosts
+  FACULTY ||--o{ PROGRAMME : owns
+  PROGRAMME ||--o{ PROGRAMME_VERSION : versions
+  PROGRAMME_VERSION ||--o{ PROGRAMME_ENROLMENT : enrols_into
+  STUDENT_PROFILE ||--o{ PROGRAMME_ENROLMENT : has
+  CAMPUS ||--o{ PROGRAMME_ENROLMENT : at
+  PROGRAMME_ENROLMENT ||--|| FINANCE_ACCOUNT : bills
+  PROGRAMME_ENROLMENT ||--o{ STUDY_PERIOD : spans
+  STUDY_PERIOD ||--o{ MODULE_REGISTRATION : registers
+  MODULE_OFFERING ||--o{ MODULE_REGISTRATION : offered_as
+  PROGRAMME_VERSION ||--o{ CURRICULUM_MODULE : contains
+  MODULE ||--o{ CURRICULUM_MODULE : listed_in
+  MODULE ||--o{ MODULE_OFFERING : delivered_as
+
+  CAMPUS {
+    string id PK
+    string code
+    string name
+  }
+  STUDENT_PROFILE {
+    string id PK
+    string studentNumber
+  }
+  PROGRAMME_ENROLMENT {
+    string id PK
+    string status
+  }
+  FINANCE_ACCOUNT {
+    string id PK
+    string currencyCode
+  }
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Messaging / community read models (Conversation, Meetup, CommunityGroup) exist
+          in portal contracts but are session-scoped demos today and are omitted from the
+          durable ERD set.
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 -->
+    <section class="section" id="institution">
+      <h2>1. Institution</h2>
+      <p class="lead">Campus organisation, staff, and campus-scoped configuration.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Campus · Faculty · Staff · Config</h3>
+            <p>1:1 finance profile; N immigration / graduation / tax configs per campus.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  CAMPUS ||--o{ FACULTY : has
+  FACULTY ||--o{ STAFF_MEMBER : employs
+  CAMPUS ||--|| CAMPUS_FINANCE_PROFILE : configures
+  CAMPUS ||--o{ CAMPUS_SERVICE_TAX_PROFILE : taxes
+  CAMPUS ||--o{ CAMPUS_IMMIGRATION_CONFIG : immigration
+  CAMPUS ||--o{ CAMPUS_GRADUATION_CONFIG : graduation
+  CAMPUS ||--o| CAMPUS_PRIVACY_SECURITY : privacy
+  CAMPUS ||--o{ ANNOUNCEMENT : publishes
+  CAMPUS ||--o{ UNIVERSITY_POLICY : policies
+  CAMPUS ||--o{ CAMPUS_SERVICE_PAGE : services
+  CAMPUS ||--o{ REVIEW_QUESTIONNAIRE : reviews
+  PERSON_SUMMARY }o--|| STUDENT_PROFILE : may_be
+  PERSON_SUMMARY }o--|| STAFF_MEMBER : may_be
+
+  CAMPUS {
+    string id PK
+    string code
+    string name
+    string countryCode
+    string timeZone
+  }
+  FACULTY {
+    string id PK
+    string campusId FK
+    string code
+    string name
+  }
+  STAFF_MEMBER {
+    string id PK
+    string facultyId FK
+    string staffNumber
+    string displayName
+    string academicTitle
+    string emailAddress
+    string avatarUrl
+  }
+  PERSON_SUMMARY {
+    string id PK
+    string displayName
+    string personType
+    string studentProfileId FK
+    string staffMemberId FK
+  }
+  CAMPUS_FINANCE_PROFILE {
+    string id PK
+    string campusId FK
+    string currencyCode
+    string bankDetails
+    int processingDays
+  }
+  CAMPUS_SERVICE_TAX_PROFILE {
+    string id PK
+    string campusId FK
+    string jurisdiction
+    string registration
+    int rateBasisPoints
+    date effectiveFrom
+    date effectiveTo
+  }
+  CAMPUS_IMMIGRATION_CONFIG {
+    string id PK
+    string campusId FK
+    string programmeVersionId FK
+    string feeItemId FK
+  }
+  CAMPUS_GRADUATION_CONFIG {
+    string id PK
+    string campusId FK
+    string programmeVersionId FK
+    string feeItemId FK
+  }
+  ANNOUNCEMENT {
+    string id PK
+    string campusId FK
+    string title
+    string department
+    datetime publishedAt
+    boolean isPinned
+  }
+  REVIEW_QUESTIONNAIRE {
+    string id PK
+    string campusId FK
+    string version
+  }
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="section" id="curriculum">
+      <h2>2. Curriculum</h2>
+      <p class="lead">Programmes, module catalogue, prerequisites, grading, and fee plans.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Programme · Module · Grading · FeePlan</h3>
+            <p><code>CurriculumModule</code> is the M:N bridge; tuition <code>FeeItem</code> may reference a Module.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  FACULTY ||--o{ PROGRAMME : offers
+  PROGRAMME ||--o{ PROGRAMME_VERSION : versions
+  PROGRAMME_VERSION ||--o{ CURRICULUM_MODULE : includes
+  MODULE ||--o{ CURRICULUM_MODULE : appears_in
+  CURRICULUM_MODULE ||--o{ MODULE_PREREQUISITE : requires
+  MODULE ||--o{ MODULE_PREREQUISITE : is_prereq_of
+  CAMPUS ||--o{ GRADING_SCHEME : defines
+  GRADING_SCHEME ||--o{ GRADE_BAND : bands
+  PROGRAMME_VERSION ||--o| FEE_PLAN : priced_by
+  FEE_PLAN ||--o{ FEE_ITEM : lines
+  MODULE ||--o{ FEE_ITEM : tuition_for
+  FUNDING_SCHEME ||--o{ STUDENT_FUNDING_AWARD : awards
+
+  PROGRAMME {
+    string id PK
+    string facultyId FK
+    string code
+    string title
+    string awardLevel
+  }
+  PROGRAMME_VERSION {
+    string id PK
+    string programmeId FK
+    string versionLabel
+    date effectiveFrom
+    date effectiveTo
+    int totalSemesterCount
+    float totalCreditsRequired
+    int minimumSemesterCredits
+    int maximumSemesterCredits
+    float minimumGraduationCgpa
+    float minimumAttendancePercent
+  }
+  MODULE {
+    string id PK
+    string code
+    string title
+    string description
+    float defaultCredits
+  }
+  CURRICULUM_MODULE {
+    string id PK
+    string programmeVersionId FK
+    string moduleId FK
+    int recommendedSemesterNumber
+    float credits
+    string requirementType
+  }
+  MODULE_PREREQUISITE {
+    string id PK
+    string curriculumModuleId FK
+    string prerequisiteModuleId FK
+    string minimumGrade
+  }
+  GRADING_SCHEME {
+    string id PK
+    string campusId FK
+    string name
+    float maximumPoints
+  }
+  GRADE_BAND {
+    string id PK
+    string gradingSchemeId FK
+    string label
+    float minimumScore
+    float points
+    string outcome
+  }
+  FEE_PLAN {
+    string id PK
+    string programmeVersionId FK
+    string currencyCode
+  }
+  FEE_ITEM {
+    string id PK
+    string feePlanId FK
+    string moduleId FK
+    string category
+    string label
+    int amountMinor
+    string serviceTaxTreatment
+    string serviceTaxExemptionCode
+  }
+  FUNDING_SCHEME {
+    string id PK
+    string name
+    string kind
+    boolean renewable
+  }
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          <code>FeeItem.category</code>: tuition | registration | books | resource |
+          international-services | repeat-administration | other.
+          Tuition items <em>must</em> reference a Module; non-tuition must not.
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="section" id="delivery">
+      <h2>3. Delivery</h2>
+      <p class="lead">Academic terms, class offerings, schedules, weeks, learning items, assessments.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Term · Offering · Schedule · Materials</h3>
+            <p>Teaching staff assigned per offering; learning items optionally link to assessments.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  CAMPUS ||--o{ ACADEMIC_TERM : runs
+  MODULE ||--o{ MODULE_OFFERING : offered_as
+  ACADEMIC_TERM ||--o{ MODULE_OFFERING : in_term
+  CAMPUS ||--o{ MODULE_OFFERING : at_campus
+  MODULE_OFFERING ||--o{ TEACHING_ASSIGNMENT : taught_by
+  STAFF_MEMBER ||--o{ TEACHING_ASSIGNMENT : assigned
+  MODULE_OFFERING ||--o{ CLASS_SCHEDULE : scheduled
+  CLASS_SCHEDULE ||--o{ CLASS_SESSION : instances
+  MODULE_OFFERING ||--o{ MODULE_WEEK : weeks
+  MODULE_WEEK ||--o{ MODULE_LEARNING_ITEM : items
+  MODULE_OFFERING ||--o{ MODULE_ASSESSMENT : assesses
+  MODULE_ASSESSMENT ||--o{ MODULE_LEARNING_ITEM : may_link
+
+  ACADEMIC_TERM {
+    string id PK
+    string campusId FK
+    string code
+    string title
+    int sequenceNumber
+    datetime startsAt
+    datetime endsAt
+    datetime resultPublishedAt
+    string status
+  }
+  MODULE_OFFERING {
+    string id PK
+    string moduleId FK
+    string academicTermId FK
+    string campusId FK
+    string sectionCode
+    string deliveryMode
+  }
+  TEACHING_ASSIGNMENT {
+    string id PK
+    string moduleOfferingId FK
+    string staffMemberId FK
+    string role
+    int displayOrder
+  }
+  CLASS_SCHEDULE {
+    string id PK
+    string moduleOfferingId FK
+    int dayOfWeek
+    string startsAtLocal
+    string endsAtLocal
+    string location
+    date effectiveFrom
+    date effectiveTo
+  }
+  CLASS_SESSION {
+    string id PK
+    string classScheduleId FK
+    datetime startsAt
+    datetime endsAt
+    string status
+  }
+  MODULE_WEEK {
+    string id PK
+    string moduleOfferingId FK
+    int weekNumber
+    date startsOn
+    string title
+  }
+  MODULE_LEARNING_ITEM {
+    string id PK
+    string moduleWeekId FK
+    string moduleAssessmentId FK
+    string kind
+    string title
+    datetime availableFrom
+    string fileName
+    int sizeBytes
+  }
+  MODULE_ASSESSMENT {
+    string id PK
+    string moduleOfferingId FK
+    string title
+    string kind
+    float weightPercent
+    datetime availableFrom
+    datetime dueAt
+  }
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="section" id="student">
+      <h2>4. Student record &amp; enrolment</h2>
+      <p class="lead">Identity, documents, visa pass, programme enrolment, and study periods.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>StudentProfile hub</h3>
+            <p><code>ProgrammeEnrolment</code> links student ↔ programme version ↔ campus.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  STUDENT_PROFILE ||--o{ EMERGENCY_CONTACT : contacts
+  STUDENT_PROFILE ||--o{ ACADEMIC_QUALIFICATION : quals
+  STUDENT_PROFILE ||--o{ ENGLISH_PROFICIENCY : english
+  STUDENT_PROFILE ||--o{ STUDENT_DOCUMENT : documents
+  STUDENT_PROFILE ||--o| STUDENT_RESUME : resume
+  STUDENT_RESUME ||--o{ RESUME_WORK_EXPERIENCE : work
+  STUDENT_RESUME ||--o{ RESUME_EDUCATION : education
+  STUDENT_RESUME ||--o{ RESUME_SKILL : skills
+  STUDENT_RESUME ||--o{ RESUME_RECOGNITION : awards
+  STUDENT_PROFILE ||--o{ PORTFOLIO_PROJECT : portfolio
+  STUDENT_PROFILE ||--o{ PROGRAMME_ENROLMENT : enrolments
+  STUDENT_PROFILE ||--o{ STUDENT_VISA_PASS : passes
+  PROGRAMME_ENROLMENT ||--o{ STUDENT_VISA_PASS : for_enrolment
+  PROGRAMME_VERSION ||--o{ PROGRAMME_ENROLMENT : of_version
+  CAMPUS ||--o{ PROGRAMME_ENROLMENT : at
+  PROGRAMME_ENROLMENT ||--o{ STUDY_PERIOD : periods
+  ACADEMIC_TERM ||--o{ STUDY_PERIOD : term
+  STUDY_PERIOD ||--o| CREDIT_LOAD_OVERRIDE : override
+  STAFF_MEMBER ||--o{ CREDIT_LOAD_OVERRIDE : approves
+  STUDENT_PROFILE ||--o{ STUDENT_ACCOUNT_ISSUE : issues
+
+  STUDENT_PROFILE {
+    string id PK
+    string studentNumber
+    string displayName
+    string nationality
+    string citizenshipCountryCode
+    date dateOfBirth
+    string gender
+    string maritalStatus
+    string emailAddress
+    string identificationNumber
+    string passportPhotoFileName
+    date passportExpiresOn
+  }
+  EMERGENCY_CONTACT {
+    string id PK
+    string studentProfileId FK
+    string fullName
+    string relationship
+    boolean isPrimary
+  }
+  ACADEMIC_QUALIFICATION {
+    string id PK
+    string studentProfileId FK
+    string qualificationName
+    string institutionName
+    date completedOn
+    string transcriptFileName
+  }
+  ENGLISH_PROFICIENCY {
+    string id PK
+    string studentProfileId FK
+    string score
+    string certificateFileName
+  }
+  STUDENT_RESUME {
+    string id PK
+    string studentProfileId FK
+    string professionalSummary
+  }
+  PROGRAMME_ENROLMENT {
+    string id PK
+    string studentProfileId FK
+    string programmeVersionId FK
+    string campusId FK
+    datetime enrolledAt
+    date expectedCompletionOn
+    string status
+  }
+  STUDY_PERIOD {
+    string id PK
+    string programmeEnrolmentId FK
+    string academicTermId FK
+    int programmeSemesterNumber
+    string status
+    datetime registrationOpensAt
+    datetime registrationClosesAt
+  }
+  STUDENT_VISA_PASS {
+    string id PK
+    string studentProfileId FK
+    string programmeEnrolmentId FK
+    string passType
+    string passportNumber
+    string passNumber
+    string status
+  }
+  CREDIT_LOAD_OVERRIDE {
+    string id PK
+    string studyPeriodId FK
+    int approvedMaximumCredits
+    string approvedByStaffMemberId FK
+    string status
+  }
+  STUDENT_ACCOUNT_ISSUE {
+    string id PK
+    string studentProfileId FK
+    string kind
+    string status
+    int amountMinor
+    datetime dueAt
+  }
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="section" id="results">
+      <h2>5. Registration, progress &amp; results</h2>
+      <p class="lead">Module registration is the junction for attendance, submissions, and published results.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>ModuleRegistration lifecycle</h3>
+            <p><code>ModuleResult</code> 1:1 registration; <code>TermResult</code> 1:1 study period.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  STUDY_PERIOD ||--o{ MODULE_REGISTRATION : registers
+  MODULE_OFFERING ||--o{ MODULE_REGISTRATION : into
+  MODULE_REGISTRATION ||--o{ ATTENDANCE : attendance
+  CLASS_SESSION ||--o{ ATTENDANCE : session
+  MODULE_REGISTRATION ||--o{ LEARNING_PROGRESS : progress
+  MODULE_LEARNING_ITEM ||--o{ LEARNING_PROGRESS : item
+  MODULE_REGISTRATION ||--o{ ASSIGNMENT_SUBMISSION : submits
+  MODULE_LEARNING_ITEM ||--o{ ASSIGNMENT_SUBMISSION : for_item
+  MODULE_REGISTRATION ||--o{ ASSESSMENT_RESULT : scored
+  MODULE_ASSESSMENT ||--o{ ASSESSMENT_RESULT : of
+  MODULE_REGISTRATION ||--|| MODULE_RESULT : final
+  GRADE_BAND ||--o{ MODULE_RESULT : band
+  STUDY_PERIOD ||--|| TERM_RESULT : term_gpa
+  MODULE_REGISTRATION ||--o{ LECTURER_REVIEW : reviewed
+  TEACHING_ASSIGNMENT ||--o{ LECTURER_REVIEW : by
+  STUDENT_PROFILE ||--o{ LECTURER_REVIEW : from
+
+  MODULE_REGISTRATION {
+    string id PK
+    string studyPeriodId FK
+    string moduleOfferingId FK
+    int attemptNumber
+    string registrationType
+    string status
+    datetime registeredAt
+  }
+  ATTENDANCE {
+    string id PK
+    string moduleRegistrationId FK
+    string classSessionId FK
+    string status
+    datetime recordedAt
+  }
+  LEARNING_PROGRESS {
+    string id PK
+    string moduleRegistrationId FK
+    string moduleLearningItemId FK
+    string status
+    datetime completedAt
+  }
+  ASSIGNMENT_SUBMISSION {
+    string id PK
+    string moduleRegistrationId FK
+    string moduleLearningItemId FK
+    string fileName
+    int sizeBytes
+    datetime submittedAt
+    datetime deletedAt
+  }
+  ASSESSMENT_RESULT {
+    string id PK
+    string moduleRegistrationId FK
+    string moduleAssessmentId FK
+    float scorePercent
+    float weightedScore
+    datetime publishedAt
+  }
+  MODULE_RESULT {
+    string id PK
+    string moduleRegistrationId FK
+    string gradeBandId FK
+    string grade
+    string outcome
+    float points
+    float creditsEarned
+    boolean includedInCgpa
+    datetime publishedAt
+  }
+  TERM_RESULT {
+    string id PK
+    string studyPeriodId FK
+    float gpa
+    float cgpa
+    float termCreditsAttempted
+    float cumulativeCreditsEarned
+    datetime publishedAt
+  }
+  LECTURER_REVIEW {
+    string id PK
+    string studentProfileId FK
+    string moduleRegistrationId FK
+    string teachingAssignmentId FK
+  }
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="section" id="finance">
+      <h2>6. Finance</h2>
+      <p class="lead">One finance account per enrolment; payments allocate to invoices (N:M).</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Account · Invoice · Payment · Funding</h3>
+            <p>Payment proof (uploaded file) is distinct from ledger Payment / Allocation.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  PROGRAMME_ENROLMENT ||--|| FINANCE_ACCOUNT : has
+  FINANCE_ACCOUNT ||--o{ INVOICE : invoices
+  STUDY_PERIOD ||--o{ INVOICE : may_bill
+  INVOICE ||--o{ INVOICE_LINE : lines
+  FEE_ITEM ||--o{ INVOICE_LINE : from
+  INVOICE ||--o| INVOICE_SERVICE_TAX : tax
+  CAMPUS_SERVICE_TAX_PROFILE ||--o{ INVOICE_SERVICE_TAX : profile
+  FINANCE_ACCOUNT ||--o{ PAYMENT : payments
+  PAYMENT ||--o{ PAYMENT_ALLOCATION : allocates
+  INVOICE ||--o{ PAYMENT_ALLOCATION : receives
+  PROGRAMME_ENROLMENT ||--o{ EDUCATION_SERVICE_TAX_EXEMPTION : exemptions
+  FUNDING_SCHEME ||--o{ STUDENT_FUNDING_AWARD : grants
+  PROGRAMME_ENROLMENT ||--o{ STUDENT_FUNDING_AWARD : receives
+  STUDENT_FUNDING_AWARD ||--o{ STUDENT_FUNDING_BENEFIT : benefits
+  STUDENT_FUNDING_AWARD ||--o{ STUDENT_FUNDING_RENEWAL_CONDITION : conditions
+  FINANCE_ACCOUNT ||--o{ FINANCIAL_ADJUSTMENT : adjustments
+  INVOICE ||--o{ FINANCIAL_ADJUSTMENT : may_adjust
+  STUDENT_FUNDING_BENEFIT ||--o{ FINANCIAL_ADJUSTMENT : from_benefit
+
+  FINANCE_ACCOUNT {
+    string id PK
+    string programmeEnrolmentId FK
+    string currencyCode
+    string status
+  }
+  INVOICE {
+    string id PK
+    string financeAccountId FK
+    string studyPeriodId FK
+    string invoiceNumber
+    int subtotalMinor
+    int taxMinor
+    int totalMinor
+    string status
+  }
+  INVOICE_LINE {
+    string id PK
+    string invoiceId FK
+    string feeItemId FK
+    int quantity
+    int amountMinor
+  }
+  INVOICE_SERVICE_TAX {
+    string id PK
+    string invoiceId FK
+    string profileId FK
+    string outcome
+    int amountMinor
+  }
+  PAYMENT {
+    string id PK
+    string financeAccountId FK
+    string reference
+    datetime paidAt
+    int amountMinor
+    string method
+    string status
+  }
+  PAYMENT_ALLOCATION {
+    string id PK
+    string paymentId FK
+    string invoiceId FK
+    int amountMinor
+  }
+  EDUCATION_SERVICE_TAX_EXEMPTION {
+    string id PK
+    string programmeEnrolmentId FK
+    string type
+  }
+  STUDENT_FUNDING_AWARD {
+    string id PK
+    string fundingSchemeId FK
+    string programmeEnrolmentId FK
+    string status
+  }
+  STUDENT_FUNDING_BENEFIT {
+    string id PK
+    string awardId FK
+    int amountMinor
+  }
+  FINANCIAL_ADJUSTMENT {
+    string id PK
+    string financeAccountId FK
+    string invoiceId FK
+    string fundingBenefitId FK
+    string direction
+    int amountMinor
+  }
+          </pre>
+        </div>
+        <div class="note warn" style="margin:0 18px 18px">
+          Invoice numbers use <code>INV-######</code> (<code>INV-000000</code> reserved).
+          Student-uploaded payment proof is an API mutation payload (file + bank reference),
+          not the same entity as bursary-recorded <code>Payment</code>.
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="section" id="admissions">
+      <h2>7. Admissions (SDD-04 target)</h2>
+      <p class="lead">Logical CMS entities for applicant journey — not yet exposed as PortalApi methods.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Applicant → Application → Offer → Enrolment</h3>
+            <p>Evidence bytes live on the evidence volume; metadata in CMS / planned Postgres.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  APPLICANT_ACCOUNT ||--o{ APPLICATION : submits
+  CAMPUS ||--o{ APPLICATION : campus
+  PROGRAMME ||--o{ APPLICATION : programme
+  APPLICATION ||--o{ EVIDENCE_OBJECT : evidence
+  APPLICATION ||--o{ DECLARATION : declarations
+  APPLICATION ||--o| OFFER : may_receive
+  OFFER ||--o| FIRST_ENROLMENT : on_accept
+  FIRST_ENROLMENT ||--|| STUDENT_PROFILE : creates
+  FIRST_ENROLMENT ||--|| PROGRAMME_ENROLMENT : seeds
+
+  APPLICANT_ACCOUNT {
+    string id PK
+    string identitySubject
+    string email
+    string contactNumber
+  }
+  APPLICATION {
+    string id PK
+    string applicantAccountId FK
+    string programmeId FK
+    string campusId FK
+    string intake
+    string status
+  }
+  EVIDENCE_OBJECT {
+    string id PK
+    string applicationId FK
+    string evidenceType
+    string fileId
+    string checksum
+    datetime uploadedAt
+  }
+  DECLARATION {
+    string id PK
+    string applicationId FK
+    string policyVersion
+    datetime acceptedAt
+  }
+  OFFER {
+    string id PK
+    string applicationId FK
+    string conditions
+    date expiresOn
+    string decision
+  }
+  FIRST_ENROLMENT {
+    string id PK
+    string offerId FK
+    string studentId
+    string programmeId
+    date startOn
+  }
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Application status path (logical): draft → submitted → under-review → offered /
+          rejected / withdrawn → enrolled (after offer accept).
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="section" id="immigration">
+      <h2>8. Immigration, online forms &amp; graduation</h2>
+      <p class="lead">Case management and form submissions tied to enrolment / invoices.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>ImmigrationCase · OnlineForm · GraduationRecord</h3>
+            <p>Optional 1:1 links to form submission, visa pass, and invoice.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  STUDENT_PROFILE ||--o{ IMMIGRATION_CASE : cases
+  PROGRAMME_ENROLMENT ||--o{ IMMIGRATION_CASE : for
+  CAMPUS ||--o{ IMMIGRATION_CASE : at
+  IMMIGRATION_CASE ||--o{ IMMIGRATION_DOCUMENT_CHECK : checks
+  IMMIGRATION_CASE ||--o{ IMMIGRATION_CASE_EVENT : events
+  ONLINE_FORM_SUBMISSION ||--o| IMMIGRATION_CASE : may_drive
+  STUDENT_VISA_PASS ||--o| IMMIGRATION_CASE : may_attach
+  INVOICE ||--o| IMMIGRATION_CASE : may_bill
+  CAMPUS ||--o{ ONLINE_FORM_DEFINITION : forms
+  ONLINE_FORM_DEFINITION ||--o{ ONLINE_FORM_SUBMISSION : submissions
+  STUDENT_PROFILE ||--o{ ONLINE_FORM_SUBMISSION : submits
+  PROGRAMME_ENROLMENT ||--o{ ONLINE_FORM_SUBMISSION : context
+  ONLINE_FORM_SUBMISSION ||--o{ ONLINE_FORM_MESSAGE : messages
+  STUDENT_PROFILE ||--o{ GRADUATION_RECORD : graduation
+  PROGRAMME_ENROLMENT ||--o{ GRADUATION_RECORD : for
+  CAMPUS ||--o{ GRADUATION_RECORD : at
+  ONLINE_FORM_SUBMISSION ||--o| GRADUATION_RECORD : clearance
+  ONLINE_FORM_SUBMISSION ||--o| GRADUATION_RECORD : convocation
+  INVOICE ||--o| GRADUATION_RECORD : fee
+
+  IMMIGRATION_CASE {
+    string id PK
+    string studentProfileId FK
+    string programmeEnrolmentId FK
+    string campusId FK
+    string caseType
+    string status
+    string formSubmissionId FK
+    string visaPassId FK
+    string invoiceId FK
+  }
+  IMMIGRATION_DOCUMENT_CHECK {
+    string id PK
+    string immigrationCaseId FK
+    string label
+    string status
+  }
+  IMMIGRATION_CASE_EVENT {
+    string id PK
+    string immigrationCaseId FK
+    string label
+    datetime occurredAt
+  }
+  ONLINE_FORM_DEFINITION {
+    string id PK
+    string campusId FK
+    string version
+    string eligibility
+  }
+  ONLINE_FORM_SUBMISSION {
+    string id PK
+    string formDefinitionId FK
+    string studentProfileId FK
+    string programmeEnrolmentId FK
+    int revision
+    string status
+  }
+  ONLINE_FORM_MESSAGE {
+    string id PK
+    string submissionId FK
+    int sequence
+    string sender
+    string text
+  }
+  GRADUATION_RECORD {
+    string id PK
+    string studentProfileId FK
+    string programmeEnrolmentId FK
+    string campusId FK
+    string clearanceSubmissionId FK
+    string convocationSubmissionId FK
+    string invoiceId FK
+  }
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Attribute quick reference — hub entities</h2>
+      <div class="card">
+        <div class="card-head"><div><h3>Most referenced keys</h3></div></div>
+        <div class="card-body" style="padding:16px 18px">
+          <table class="attr">
+            <thead>
+              <tr><th>Entity</th><th>Primary key</th><th>Important foreign keys</th><th>Status / enums</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Campus</code></td>
+                <td><code>id</code></td>
+                <td>—</td>
+                <td><code>countryCode</code>, <code>timeZone</code></td>
+              </tr>
+              <tr>
+                <td><code>StudentProfile</code></td>
+                <td><code>id</code></td>
+                <td>—</td>
+                <td><code>maritalStatus</code>, passport fields</td>
+              </tr>
+              <tr>
+                <td><code>ProgrammeEnrolment</code></td>
+                <td><code>id</code></td>
+                <td><code>studentProfileId</code>, <code>programmeVersionId</code>, <code>campusId</code></td>
+                <td>active | completed | withdrawn | deferred</td>
+              </tr>
+              <tr>
+                <td><code>StudyPeriod</code></td>
+                <td><code>id</code></td>
+                <td><code>programmeEnrolmentId</code>, <code>academicTermId</code></td>
+                <td>completed | current | planned | deferred</td>
+              </tr>
+              <tr>
+                <td><code>ModuleRegistration</code></td>
+                <td><code>id</code></td>
+                <td><code>studyPeriodId</code>, <code>moduleOfferingId</code></td>
+                <td>registered | completed | withdrawn | pending-confirmation</td>
+              </tr>
+              <tr>
+                <td><code>FinanceAccount</code></td>
+                <td><code>id</code></td>
+                <td><code>programmeEnrolmentId</code> (1:1)</td>
+                <td>active | closed</td>
+              </tr>
+              <tr>
+                <td><code>Invoice</code></td>
+                <td><code>id</code></td>
+                <td><code>financeAccountId</code>, <code>studyPeriodId?</code></td>
+                <td><code>invoiceNumber</code> INV-######</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Logical ERD · raisd-campus/control-plane · contracts in student-portal · SDD-04 admissions
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      er: { layoutDirection: "TB" },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+</body>
+</html>
