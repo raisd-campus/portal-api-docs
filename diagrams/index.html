@@ -34,17 +34,26 @@
       <div class="meta-row">
         <span class="chip ok">Logical model (contracts + SDD)</span>
         <span class="chip ok">Students map via programme version</span>
+        <span class="chip ok">Campus via Faculty → Programme</span>
         <span class="chip warn">No physical SQL migrations yet</span>
         <span class="chip">Public: raisd-campus.github.io/portal-api-docs/diagrams</span>
       </div>
     </section>
 
-    <div class="note" style="margin: 0 0 28px">
+    <div class="note" style="margin: 0 0 16px">
       <strong>Student ↔ programme mapping.</strong>
       Students are mapped to a <em>programme version</em>, not only to a programme:
       <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
       → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
       Details on the <a href="./erd.html">ERD</a> (domain map and student record sections).
+    </div>
+
+    <div class="note" style="margin: 0 0 28px">
+      <strong>Campus where a programme is offered.</strong>
+      Via faculty: <code>Campus</code> → <code>Faculty</code> → <code>Programme</code>
+      → <code>ProgrammeVersion</code>. Enrolment also stores <code>campusId</code> for the
+      student’s study campus. See the <a href="./erd.html">ERD</a> institution and
+      curriculum sections.
     </div>
 
     <div class="toc">

@@ -34,11 +34,12 @@
         <span class="chip">PK / FK annotated</span>
         <span class="chip">Cardinality explicit</span>
         <span class="chip ok">Students map via programme version</span>
+        <span class="chip ok">Campus via Faculty → Programme</span>
         <span class="chip warn">Logical — not a migrated Postgres schema</span>
       </div>
     </section>
 
-    <div class="note" style="margin: 0 0 28px">
+    <div class="note" style="margin: 0 0 16px">
       <strong>Student ↔ programme mapping.</strong>
       Students are mapped to a <em>programme version</em>, not only to a programme.
       Path:
@@ -49,6 +50,18 @@
       time; registration, finance, and study periods hang off that
       <code>ProgrammeEnrolment</code> hub. See
       <a href="#overview">domain map</a> and <a href="#student">student record</a>.
+    </div>
+
+    <div class="note" style="margin: 0 0 28px">
+      <strong>Campus where a programme is offered.</strong>
+      Programmes are owned by a <em>faculty</em>, and each faculty belongs to a
+      <em>campus</em>. Path for “which campus offers this programme”:
+      <code>Campus</code> → <code>Faculty</code> → <code>Programme</code>
+      → <code>ProgrammeVersion</code>.
+      Separately, <code>ProgrammeEnrolment.campusId</code> records the campus of the
+      student’s enrolment (the campus they study at). Delivery also scopes
+      <code>ModuleOffering</code> and <code>AcademicTerm</code> to a campus.
+      See <a href="#institution">institution</a> and <a href="#curriculum">curriculum</a>.
     </div>
 
     <div class="toc">
@@ -117,6 +130,14 @@ erDiagram
           <code>Programme</code> would be too coarse: versions change credit rules and
           module lists over time.
         </div>
+        <div class="note" style="margin:0 18px 12px">
+          <strong>Yes — campus offering is via faculty.</strong>
+          <code>Campus</code> hosts <code>Faculty</code>; <code>Faculty</code> owns
+          <code>Programme</code>. So which campus a programme is offered through is:
+          <code>Campus</code> → <code>Faculty</code> → <code>Programme</code>
+          → <code>ProgrammeVersion</code>.
+          Enrolment also stores <code>campusId</code> directly for the student’s study campus.
+        </div>
         <div class="note" style="margin:0 18px 18px">
           Messaging / community read models (Conversation, Meetup, CommunityGroup) exist
           in portal contracts but are session-scoped demos today and are omitted from the
@@ -128,12 +149,19 @@ erDiagram
     <!-- 1 -->
     <section class="section" id="institution">
       <h2>1. Institution</h2>
-      <p class="lead">Campus organisation, staff, and campus-scoped configuration.</p>
+      <p class="lead">
+        Campus organisation, staff, and campus-scoped configuration.
+        Faculties sit under a campus; programmes hang off faculty — that is how we
+        know <strong>which campus a programme is offered through</strong>.
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
             <h3>Campus · Faculty · Staff · Config</h3>
-            <p>1:1 finance profile; N immigration / graduation / tax configs per campus.</p>
+            <p>
+              <code>Campus</code> 1:N <code>Faculty</code>; faculty then owns programmes
+              (see curriculum). 1:1 finance profile; N immigration / graduation / tax configs.
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -225,18 +253,33 @@ erDiagram
   }
           </pre>
         </div>
+        <div class="note" style="margin:0 18px 18px">
+          <strong>Campus → Faculty → Programme.</strong>
+          A programme is offered through the faculty that owns it
+          (<code>Programme.facultyId</code>), and that faculty is tied to one campus
+          (<code>(Faculty.campusId)</code>. Walk that chain to answer “at which campus
+          is this programme offered?”
+        </div>
       </div>
     </section>
 
     <!-- 2 -->
     <section class="section" id="curriculum">
       <h2>2. Curriculum</h2>
-      <p class="lead">Programmes, module catalogue, prerequisites, grading, and fee plans.</p>
+      <p class="lead">
+        Programmes, module catalogue, prerequisites, grading, and fee plans.
+        Each programme belongs to a faculty (<code>facultyId</code>), so campus
+        offering is inherited via <code>Campus</code> → <code>Faculty</code> →
+        <code>Programme</code>.
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
             <h3>Programme · Module · Grading · FeePlan</h3>
-            <p><code>CurriculumModule</code> is the M:N bridge; tuition <code>FeeItem</code> may reference a Module.</p>
+            <p>
+              Faculty offers programmes; <code>CurriculumModule</code> is the M:N bridge;
+              tuition <code>FeeItem</code> may reference a Module.
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -333,10 +376,16 @@ erDiagram
   }
           </pre>
         </div>
-        <div class="note" style="margin:0 18px 18px">
+        <div class="note" style="margin:0 18px 12px">
           <code>FeeItem.category</code>: tuition | registration | books | resource |
           international-services | repeat-administration | other.
           Tuition items <em>must</em> reference a Module; non-tuition must not.
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          <strong>Offered at which campus?</strong>
+          Start from <code>Programme.facultyId</code> → <code>Faculty.campusId</code>.
+          That chain answers which campus the programme is offered through.
+          Student study location is still on <code>ProgrammeEnrolment.campusId</code>.
         </div>
       </div>
     </section>
@@ -983,6 +1032,18 @@ erDiagram
                 <td><code>id</code></td>
                 <td>—</td>
                 <td><code>maritalStatus</code>, passport fields</td>
+              </tr>
+              <tr>
+                <td><code>Faculty</code></td>
+                <td><code>id</code></td>
+                <td><code>campusId</code> — campus that hosts this faculty</td>
+                <td>Bridge from campus to programmes</td>
+              </tr>
+              <tr>
+                <td><code>Programme</code></td>
+                <td><code>id</code></td>
+                <td><code>facultyId</code> — offered through that faculty’s campus</td>
+                <td>certificate | diploma | bachelor | master | doctorate</td>
               </tr>
               <tr>
                 <td><code>ProgrammeEnrolment</code></td>
