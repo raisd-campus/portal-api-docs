@@ -33,9 +33,23 @@
       <div class="meta-row">
         <span class="chip">PK / FK annotated</span>
         <span class="chip">Cardinality explicit</span>
+        <span class="chip ok">Students map via programme version</span>
         <span class="chip warn">Logical — not a migrated Postgres schema</span>
       </div>
     </section>
+
+    <div class="note" style="margin: 0 0 28px">
+      <strong>Student ↔ programme mapping.</strong>
+      Students are mapped to a <em>programme version</em>, not only to a programme.
+      Path:
+      <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
+      → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
+      Each enrolment is for a specific version (credits, semester count, CGPA/attendance
+      rules, curriculum modules, fee plan). One student may have multiple enrolments over
+      time; registration, finance, and study periods hang off that
+      <code>ProgrammeEnrolment</code> hub. See
+      <a href="#overview">domain map</a> and <a href="#student">student record</a>.
+    </div>
 
     <div class="toc">
       <a href="#overview"><strong>0. Domain map</strong><span>How aggregates connect</span></a>
@@ -95,6 +109,13 @@ erDiagram
     string currencyCode
   }
           </pre>
+        </div>
+        <div class="note" style="margin:0 18px 12px">
+          <strong>Yes — we map the student on programme version.</strong>
+          <code>ProgrammeEnrolment.programmeVersionId</code> is the FK that places a
+          student on a concrete curriculum/fee/rules snapshot. Linking only to
+          <code>Programme</code> would be too coarse: versions change credit rules and
+          module lists over time.
         </div>
         <div class="note" style="margin:0 18px 18px">
           Messaging / community read models (Conversation, Meetup, CommunityGroup) exist
@@ -424,12 +445,20 @@ erDiagram
     <!-- 4 -->
     <section class="section" id="student">
       <h2>4. Student record &amp; enrolment</h2>
-      <p class="lead">Identity, documents, visa pass, programme enrolment, and study periods.</p>
+      <p class="lead">
+        Identity, documents, visa pass, programme enrolment, and study periods.
+        Academic placement is always through a <strong>programme version</strong>
+        on <code>ProgrammeEnrolment</code>.
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
             <h3>StudentProfile hub</h3>
-            <p><code>ProgrammeEnrolment</code> links student ↔ programme version ↔ campus.</p>
+            <p>
+              <code>ProgrammeEnrolment</code> links
+              student ↔ <strong>programme version</strong> ↔ campus
+              (<code>(studentProfileId, programmeVersionId, campusId)</code>.
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -539,6 +568,15 @@ erDiagram
     datetime dueAt
   }
           </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          <strong>Programme version, not programme alone.</strong>
+          Path:
+          <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
+          → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
+          Study periods, module registrations, finance account, visa pass, and most
+          journey records hang off that enrolment. A student may hold more than one
+          enrolment (different programmes or versions over time).
         </div>
       </div>
     </section>
@@ -949,8 +987,18 @@ erDiagram
               <tr>
                 <td><code>ProgrammeEnrolment</code></td>
                 <td><code>id</code></td>
-                <td><code>studentProfileId</code>, <code>programmeVersionId</code>, <code>campusId</code></td>
+                <td>
+                  <code>studentProfileId</code>,
+                  <code>programmeVersionId</code> (maps student to a version),
+                  <code>campusId</code>
+                </td>
                 <td>active | completed | withdrawn | deferred</td>
+              </tr>
+              <tr>
+                <td><code>ProgrammeVersion</code></td>
+                <td><code>id</code></td>
+                <td><code>programmeId</code></td>
+                <td>Credits, semester count, CGPA/attendance mins; curriculum + fee plan attach here</td>
               </tr>
               <tr>
                 <td><code>StudyPeriod</code></td>

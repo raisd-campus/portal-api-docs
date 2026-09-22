@@ -33,10 +33,19 @@
       </p>
       <div class="meta-row">
         <span class="chip ok">Logical model (contracts + SDD)</span>
+        <span class="chip ok">Students map via programme version</span>
         <span class="chip warn">No physical SQL migrations yet</span>
         <span class="chip">Public: raisd-campus.github.io/portal-api-docs/diagrams</span>
       </div>
     </section>
+
+    <div class="note" style="margin: 0 0 28px">
+      <strong>Student ↔ programme mapping.</strong>
+      Students are mapped to a <em>programme version</em>, not only to a programme:
+      <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
+      → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
+      Details on the <a href="./erd.html">ERD</a> (domain map and student record sections).
+    </div>
 
     <div class="toc">
       <a href="./erd.html">
