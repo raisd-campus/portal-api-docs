@@ -17,6 +17,7 @@
         <a href="./index.html">Overview</a>
         <a class="active" href="./erd.html">ERD</a>
         <a href="./dfd.html">DFD</a>
+        <a href="./architecture.html">Architecture</a>
         <a href="../index.html">OpenAPI</a>
       </nav>
     </div>
@@ -34,7 +35,7 @@
         <span class="chip">PK / FK annotated</span>
         <span class="chip">Cardinality explicit</span>
         <span class="chip ok">Students map via programme version</span>
-        <span class="chip ok">Campus via Faculty → Programme</span>
+        <span class="chip ok">ProgrammeCampusOffering</span>
         <span class="chip warn">Logical — not a migrated Postgres schema</span>
       </div>
     </section>
@@ -45,35 +46,43 @@
       Path:
       <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
       → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
-      Each enrolment is for a specific version (credits, semester count, CGPA/attendance
-      rules, curriculum modules, fee plan). One student may have multiple enrolments over
-      time; registration, finance, and study periods hang off that
-      <code>ProgrammeEnrolment</code> hub. See
-      <a href="#overview">domain map</a> and <a href="#student">student record</a>.
+      Keep <code>ProgrammeVersion</code>: enrolment stays on the curriculum/rules under which
+      the student enrolled (e.g. BBA 129 vs 122 credits) — never resolve from “current”
+      programme config. See <a href="#overview">domain map</a>,
+      <a href="#student">student record</a>, and
+      <a href="./architecture.html#academic">architecture</a>.
+    </div>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Campus where a programme is offered.</strong>
+      Prefer <code>ProgrammeCampusOffering</code> (programme version × campus), not
+      “faculty belongs to one campus ⇒ programme belongs to that campus”. The same
+      academic programme may be delivered at Botswana, Uganda, Sierra Leone, etc.
+      Faculty remains organisational. Enrolment still stores
+      <code>ProgrammeEnrolment.campusId</code> for the student’s study campus.
+      See <a href="#curriculum">curriculum</a> and
+      <a href="./architecture.html#academic">architecture</a>.
     </div>
 
     <div class="note" style="margin: 0 0 28px">
-      <strong>Campus where a programme is offered.</strong>
-      Programmes are owned by a <em>faculty</em>, and each faculty belongs to a
-      <em>campus</em>. Path for “which campus offers this programme”:
-      <code>Campus</code> → <code>Faculty</code> → <code>Programme</code>
-      → <code>ProgrammeVersion</code>.
-      Separately, <code>ProgrammeEnrolment.campusId</code> records the campus of the
-      student’s enrolment (the campus they study at). Delivery also scopes
-      <code>ModuleOffering</code> and <code>AcademicTerm</code> to a campus.
-      See <a href="#institution">institution</a> and <a href="#curriculum">curriculum</a>.
+      <strong>Canonical vs legacy.</strong>
+      Do not mirror <code>r_student</code> / <code>r_stdprogram</code> / …
+      Legacy IDs live in <code>LegacyEntityMap</code>; messy translation lives in the
+      CAP-53 anti-corruption layer. Details:
+      <a href="./architecture.html">LUCT CMS / Portal compatibility</a>.
     </div>
 
     <div class="toc">
       <a href="#overview"><strong>0. Domain map</strong><span>How aggregates connect</span></a>
       <a href="#institution"><strong>1. Institution</strong><span>Campus, faculty, staff, config</span></a>
-      <a href="#curriculum"><strong>2. Curriculum</strong><span>Programme, modules, fees, grades</span></a>
+      <a href="#curriculum"><strong>2. Curriculum</strong><span>Programme, campus offering, modules</span></a>
       <a href="#delivery"><strong>3. Delivery</strong><span>Terms, offerings, materials</span></a>
       <a href="#student"><strong>4. Student record</strong><span>Profile, enrolment, journey</span></a>
-      <a href="#results"><strong>5. Results &amp; progress</strong><span>Attendance, marks, GPA</span></a>
+      <a href="#results"><strong>5. Results &amp; progress</strong><span>Attempts, marks, publications</span></a>
       <a href="#finance"><strong>6. Finance</strong><span>Invoices, payments, funding</span></a>
       <a href="#admissions"><strong>7. Admissions</strong><span>SDD-04 target CMS entities</span></a>
       <a href="#immigration"><strong>8. Immigration &amp; forms</strong><span>Cases, online forms, graduation</span></a>
+      <a href="#integration"><strong>9. Integration &amp; audit</strong><span>Legacy map, DQ, idempotency</span></a>
     </div>
 
     <!-- 0 -->
@@ -91,11 +100,13 @@
           <pre class="mermaid">
 erDiagram
   CAMPUS ||--o{ FACULTY : hosts
-  FACULTY ||--o{ PROGRAMME : owns
+  FACULTY ||--o{ PROGRAMME : organises
   PROGRAMME ||--o{ PROGRAMME_VERSION : versions
+  PROGRAMME_VERSION ||--o{ PROGRAMME_CAMPUS_OFFERING : offered_at
+  CAMPUS ||--o{ PROGRAMME_CAMPUS_OFFERING : delivers
   PROGRAMME_VERSION ||--o{ PROGRAMME_ENROLMENT : enrols_into
   STUDENT_PROFILE ||--o{ PROGRAMME_ENROLMENT : has
-  CAMPUS ||--o{ PROGRAMME_ENROLMENT : at
+  CAMPUS ||--o{ PROGRAMME_ENROLMENT : studies_at
   PROGRAMME_ENROLMENT ||--|| FINANCE_ACCOUNT : bills
   PROGRAMME_ENROLMENT ||--o{ STUDY_PERIOD : spans
   STUDY_PERIOD ||--o{ MODULE_REGISTRATION : registers
@@ -117,6 +128,11 @@ erDiagram
     string id PK
     string status
   }
+  PROGRAMME_CAMPUS_OFFERING {
+    string id PK
+    string programmeVersionId FK
+    string campusId FK
+  }
   FINANCE_ACCOUNT {
     string id PK
     string currencyCode
@@ -125,18 +141,14 @@ erDiagram
         </div>
         <div class="note" style="margin:0 18px 12px">
           <strong>Yes — we map the student on programme version.</strong>
-          <code>ProgrammeEnrolment.programmeVersionId</code> is the FK that places a
-          student on a concrete curriculum/fee/rules snapshot. Linking only to
-          <code>Programme</code> would be too coarse: versions change credit rules and
-          module lists over time.
+          <code>ProgrammeEnrolment.programmeVersionId</code> pins curriculum/fee/rules.
+          Do not determine requirements dynamically from the programme’s current config.
         </div>
         <div class="note" style="margin:0 18px 12px">
-          <strong>Yes — campus offering is via faculty.</strong>
-          <code>Campus</code> hosts <code>Faculty</code>; <code>Faculty</code> owns
-          <code>Programme</code>. So which campus a programme is offered through is:
-          <code>Campus</code> → <code>Faculty</code> → <code>Programme</code>
-          → <code>ProgrammeVersion</code>.
-          Enrolment also stores <code>campusId</code> directly for the student’s study campus.
+          <strong>Campus offering is via ProgrammeCampusOffering.</strong>
+          Faculty organises programmes organisationally; multi-campus delivery uses
+          <code>ProgrammeVersion</code> × <code>Campus</code> offerings (same pattern as
+          <code>ModuleOffering</code>).
         </div>
         <div class="note" style="margin:0 18px 18px">
           Messaging / community read models (Conversation, Meetup, CommunityGroup) exist
@@ -151,16 +163,19 @@ erDiagram
       <h2>1. Institution</h2>
       <p class="lead">
         Campus organisation, staff, and campus-scoped configuration.
-        Faculties sit under a campus; programmes hang off faculty — that is how we
-        know <strong>which campus a programme is offered through</strong>.
+        Faculty is organisational (staff, programme ownership for admin).
+        <strong>Where a programme version is delivered</strong> is modelled by
+        <code>ProgrammeCampusOffering</code>, not by assuming one faculty ⇒ one campus
+        for academic offering.
       </p>
       <div class="card">
         <div class="card-head">
           <div>
             <h3>Campus · Faculty · Staff · Config</h3>
             <p>
-              <code>Campus</code> 1:N <code>Faculty</code>; faculty then owns programmes
-              (see curriculum). 1:1 finance profile; N immigration / graduation / tax configs.
+              Prefer <code>CampusConfig</code> / campus policy for differences — not
+              scattered <code>if (campus === …)</code> in domain code.
+              1:1 finance profile; N immigration / graduation / tax configs.
             </p>
           </div>
         </div>
@@ -254,11 +269,9 @@ erDiagram
           </pre>
         </div>
         <div class="note" style="margin:0 18px 18px">
-          <strong>Campus → Faculty → Programme.</strong>
-          A programme is offered through the faculty that owns it
-          (<code>Programme.facultyId</code>), and that faculty is tied to one campus
-          (<code>(Faculty.campusId)</code>. Walk that chain to answer “at which campus
-          is this programme offered?”
+          Faculty still links programmes for organisational ownership
+          (<code>(Programme.facultyId)</code>. Multi-campus academic delivery uses
+          <a href="#curriculum"><code>ProgrammeCampusOffering</code></a>.
         </div>
       </div>
     </section>
@@ -267,26 +280,26 @@ erDiagram
     <section class="section" id="curriculum">
       <h2>2. Curriculum</h2>
       <p class="lead">
-        Programmes, module catalogue, prerequisites, grading, and fee plans.
-        Each programme belongs to a faculty (<code>facultyId</code>), so campus
-        offering is inherited via <code>Campus</code> → <code>Faculty</code> →
-        <code>Programme</code>.
+        Programmes, versions, <strong>campus offerings</strong>, module catalogue,
+        prerequisites, grading, and fee plans.
       </p>
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Programme · Module · Grading · FeePlan</h3>
+            <h3>Programme · ProgrammeCampusOffering · Module · FeePlan</h3>
             <p>
-              Faculty offers programmes; <code>CurriculumModule</code> is the M:N bridge;
-              tuition <code>FeeItem</code> may reference a Module.
+              Programme = academic identity · ProgrammeVersion = curriculum/rules ·
+              ProgrammeCampusOffering = where that version is delivered.
             </p>
           </div>
         </div>
         <div class="card-body">
           <pre class="mermaid">
 erDiagram
-  FACULTY ||--o{ PROGRAMME : offers
+  FACULTY ||--o{ PROGRAMME : organises
   PROGRAMME ||--o{ PROGRAMME_VERSION : versions
+  PROGRAMME_VERSION ||--o{ PROGRAMME_CAMPUS_OFFERING : offered_at
+  CAMPUS ||--o{ PROGRAMME_CAMPUS_OFFERING : at_campus
   PROGRAMME_VERSION ||--o{ CURRICULUM_MODULE : includes
   MODULE ||--o{ CURRICULUM_MODULE : appears_in
   CURRICULUM_MODULE ||--o{ MODULE_PREREQUISITE : requires
@@ -317,6 +330,15 @@ erDiagram
     int maximumSemesterCredits
     float minimumGraduationCgpa
     float minimumAttendancePercent
+  }
+  PROGRAMME_CAMPUS_OFFERING {
+    string id PK
+    string programmeVersionId FK
+    string campusId FK
+    string localProgrammeCode
+    date effectiveFrom
+    date effectiveTo
+    string status
   }
   MODULE {
     string id PK
@@ -383,9 +405,8 @@ erDiagram
         </div>
         <div class="note" style="margin:0 18px 18px">
           <strong>Offered at which campus?</strong>
-          Start from <code>Programme.facultyId</code> → <code>Faculty.campusId</code>.
-          That chain answers which campus the programme is offered through.
-          Student study location is still on <code>ProgrammeEnrolment.campusId</code>.
+          Query <code>ProgrammeCampusOffering</code> for the version — not Faculty alone.
+          Student study location remains on <code>ProgrammeEnrolment.campusId</code>.
         </div>
       </div>
     </section>
@@ -393,7 +414,11 @@ erDiagram
     <!-- 3 -->
     <section class="section" id="delivery">
       <h2>3. Delivery</h2>
-      <p class="lead">Academic terms, class offerings, schedules, weeks, learning items, assessments.</p>
+      <p class="lead">
+        Academic terms, class offerings, schedules, weeks, learning items, assessments.
+        Keep <strong>AcademicTerm</strong> (calendar e.g. 2026-03) distinct from
+        <code>StudyPeriod.programmeSemesterNumber</code> (student’s semester in the programme).
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
@@ -626,6 +651,12 @@ erDiagram
           Study periods, module registrations, finance account, visa pass, and most
           journey records hang off that enrolment. A student may hold more than one
           enrolment (different programmes or versions over time).
+          Historical enrolments and study periods must be preserved — defer / return /
+          transfer / withdraw create or transition records
+          (<code>EnrolmentStatusHistory</code>), not rewrite academic history.
+          Statuses are layered (identity / enrolment / study period / registration /
+          immigration / finance) — see
+          <a href="./architecture.html#status">active student definitions</a>.
         </div>
       </div>
     </section>
@@ -633,12 +664,19 @@ erDiagram
     <!-- 5 -->
     <section class="section" id="results">
       <h2>5. Registration, progress &amp; results</h2>
-      <p class="lead">Module registration is the junction for attendance, submissions, and published results.</p>
+      <p class="lead">
+        Module registration is the junction for attendance, submissions, and published results.
+        Attempts are never overwritten. <code>TermResult</code> is a calculated snapshot;
+        published history is versioned via <code>ResultPublication</code>.
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
             <h3>ModuleRegistration lifecycle</h3>
-            <p><code>ModuleResult</code> 1:1 registration; <code>TermResult</code> 1:1 study period.</p>
+            <p>
+              <code>ModuleResult</code> 1:1 registration; <code>TermResult</code> 1:1 study period.
+              Credits earned ≠ CGPA inclusion (<code>includedInCgpa</code>).
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -657,6 +695,8 @@ erDiagram
   MODULE_REGISTRATION ||--|| MODULE_RESULT : final
   GRADE_BAND ||--o{ MODULE_RESULT : band
   STUDY_PERIOD ||--|| TERM_RESULT : term_gpa
+  STUDY_PERIOD ||--o{ RESULT_PUBLICATION : publications
+  RESULT_PUBLICATION ||--o| RESULT_PUBLICATION : supersedes
   MODULE_REGISTRATION ||--o{ LECTURER_REVIEW : reviewed
   TEACHING_ASSIGNMENT ||--o{ LECTURER_REVIEW : by
   STUDENT_PROFILE ||--o{ LECTURER_REVIEW : from
@@ -719,7 +759,19 @@ erDiagram
     float cgpa
     float termCreditsAttempted
     float cumulativeCreditsEarned
+    string calculationVersion
+    datetime calculatedAt
     datetime publishedAt
+  }
+  RESULT_PUBLICATION {
+    string id PK
+    string studyPeriodId FK
+    int version
+    string calculationVersion
+    datetime publishedAt
+    string publishedBy
+    string supersedesPublicationId FK
+    string reason
   }
   LECTURER_REVIEW {
     string id PK
@@ -729,13 +781,29 @@ erDiagram
   }
           </pre>
         </div>
+        <div class="note" style="margin:0 18px 12px">
+          <strong>Attempts never overwrite.</strong>
+          First fail + repeat keep both <code>ModuleRegistration</code> rows
+          (<code>attemptNumber</code>, <code>registrationType</code>).
+          Policy decides CGPA/credit effect.
+        </div>
+        <div class="note" style="margin:0 18px 12px">
+          <strong>Credits earned ≠ CGPA.</strong>
+          Pass · creditsEarned 3 · points 0 · <code>includedInCgpa = false</code> is valid.
+          AcademicProgressService recalculates from registrations + results + curriculum +
+          ProgrammeVersion — <code>TermResult</code> is a snapshot.
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          <strong>ResultPublication</strong> versions official release (V1 → V2 with reason).
+          Students see published results only.
+        </div>
       </div>
     </section>
 
     <!-- 6 -->
     <section class="section" id="finance">
       <h2>6. Finance</h2>
-      <p class="lead">One finance account per enrolment; payments allocate to invoices (N:M).</p>
+      <p class="lead">One finance account per enrolment; payments allocate to invoices (N:M). Result visibility uses rule-based <code>ResultAccessPolicy</code> (balance, funding, holds) — not hardcoded portal thresholds.</p>
       <div class="card">
         <div class="card-head">
           <div>
@@ -1011,6 +1079,92 @@ erDiagram
       </div>
     </section>
 
+    <!-- 9 -->
+    <section class="section" id="integration">
+      <h2>9. Integration, audit &amp; data quality</h2>
+      <p class="lead">
+        Canonical IDs are not legacy CMS IDs. Mapping, DQ, idempotency, and audit live
+        with the portal/integration layer — see
+        <a href="./architecture.html">architecture</a>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>LegacyEntityMap · DataQualityIssue · IntegrationOperation · AuditEvent</h3>
+            <p>Support tracing “Student 207020002” without contaminating canonical PKs.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  PROGRAMME_ENROLMENT ||--o{ ENROLMENT_STATUS_HISTORY : history
+  LEGACY_ENTITY_MAP }o--|| STUDENT_PROFILE : may_map
+  DATA_QUALITY_ISSUE }o--o| STUDENT_PROFILE : may_flag
+
+  LEGACY_ENTITY_MAP {
+    string id PK
+    string canonicalEntityType
+    string canonicalEntityId
+    string sourceSystem
+    string sourceCampus
+    string legacyTable
+    string legacyId
+    datetime mappedAt
+  }
+  ENROLMENT_STATUS_HISTORY {
+    string id PK
+    string programmeEnrolmentId FK
+    string fromStatus
+    string toStatus
+    datetime effectiveAt
+    string reason
+    string changedBy
+  }
+  DATA_QUALITY_ISSUE {
+    string id PK
+    string entityType
+    string entityId
+    string sourceSystem
+    string issueType
+    string severity
+    string details
+    datetime detectedAt
+    datetime resolvedAt
+    string resolution
+  }
+  INTEGRATION_OPERATION {
+    string id PK
+    string idempotencyKey
+    string operationType
+    string entityId
+    string status
+    datetime startedAt
+    datetime completedAt
+    string error
+  }
+  AUDIT_EVENT {
+    string id PK
+    string actorId
+    string entityType
+    string entityId
+    string action
+    string before
+    string after
+    string reason
+    datetime timestamp
+    string correlationId
+  }
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Integrity (document intentionally): unique StudyPeriod(enrolment, term);
+          ModuleResult 1:1 registration; TermResult 1:1 study period; controlled
+          registration uniqueness by attempt; offer accept must not create two first
+          enrolments; payment allocation constraints.
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <h2>Attribute quick reference — hub entities</h2>
       <div class="card">
@@ -1036,14 +1190,20 @@ erDiagram
               <tr>
                 <td><code>Faculty</code></td>
                 <td><code>id</code></td>
-                <td><code>campusId</code> — campus that hosts this faculty</td>
-                <td>Bridge from campus to programmes</td>
+                <td><code>campusId</code> — organisational home</td>
+                <td>Not the sole definition of programme campus offering</td>
               </tr>
               <tr>
                 <td><code>Programme</code></td>
                 <td><code>id</code></td>
-                <td><code>facultyId</code> — offered through that faculty’s campus</td>
+                <td><code>facultyId</code> — organisational owner</td>
                 <td>certificate | diploma | bachelor | master | doctorate</td>
+              </tr>
+              <tr>
+                <td><code>ProgrammeCampusOffering</code></td>
+                <td><code>id</code></td>
+                <td><code>programmeVersionId</code>, <code>campusId</code></td>
+                <td>Where a version is delivered; optional localProgrammeCode</td>
               </tr>
               <tr>
                 <td><code>ProgrammeEnrolment</code></td>

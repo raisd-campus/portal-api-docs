@@ -17,6 +17,7 @@
         <a class="active" href="./index.html">Overview</a>
         <a href="./erd.html">ERD</a>
         <a href="./dfd.html">DFD</a>
+        <a href="./architecture.html">Architecture</a>
         <a href="../index.html">OpenAPI</a>
       </nav>
     </div>
@@ -27,14 +28,14 @@
       <h1>Campus portal data model &amp; flows</h1>
       <p>
         Detailed Mermaid entity-relationship and data-flow diagrams for the Raisd
-        control plane: Portal API, role portals, existing CMS (system of record),
-        planned Postgres, and evidence file storage. Derived from Zod portal
-        contracts and the Software Design Documents.
+        control plane, plus LUCT CMS / Portal compatibility guidance: clean canonical
+        domain inside; CAP-53 anti-corruption layer outside.
       </p>
       <div class="meta-row">
         <span class="chip ok">Logical model (contracts + SDD)</span>
         <span class="chip ok">Students map via programme version</span>
-        <span class="chip ok">Campus via Faculty → Programme</span>
+        <span class="chip ok">ProgrammeCampusOffering</span>
+        <span class="chip ok">CMS ACL (CAP-53)</span>
         <span class="chip warn">No physical SQL migrations yet</span>
         <span class="chip">Public: raisd-campus.github.io/portal-api-docs/diagrams</span>
       </div>
@@ -42,36 +43,43 @@
 
     <div class="note" style="margin: 0 0 16px">
       <strong>Student ↔ programme mapping.</strong>
-      Students are mapped to a <em>programme version</em>, not only to a programme:
+      Students map to a <em>programme version</em>:
       <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
       → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
-      Details on the <a href="./erd.html">ERD</a> (domain map and student record sections).
+      Keep version pinning (e.g. BBA 129 vs 122 credits). See <a href="./erd.html">ERD</a>.
+    </div>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Campus where a programme is offered.</strong>
+      Prefer <code>ProgrammeCampusOffering</code> (version × campus), not Faculty-as-campus.
+      Faculty remains organisational. See <a href="./erd.html#curriculum">ERD curriculum</a>
+      and <a href="./architecture.html#academic">architecture</a>.
     </div>
 
     <div class="note" style="margin: 0 0 28px">
-      <strong>Campus where a programme is offered.</strong>
-      Via faculty: <code>Campus</code> → <code>Faculty</code> → <code>Programme</code>
-      → <code>ProgrammeVersion</code>. Enrolment also stores <code>campusId</code> for the
-      student’s study campus. See the <a href="./erd.html">ERD</a> institution and
-      curriculum sections.
+      <strong>LUCT compatibility.</strong>
+      Do not mirror legacy CMS tables. Document CAP-53 as an anti-corruption layer,
+      legacy ID maps, idempotent writes, reproducible calculations, layered “active”
+      statuses, and one SoR owner per domain.
+      Start here: <a href="./architecture.html">Architecture — LUCT CMS / Portal</a>.
     </div>
 
     <div class="toc">
       <a href="./erd.html">
         <strong>Entity Relationship Diagrams</strong>
-        <span>Institution, curriculum, delivery, student journey, finance, admissions, immigration</span>
+        <span>Institution, curriculum, delivery, student journey, finance, integration</span>
       </a>
       <a href="./dfd.html">
         <strong>Data Flow Diagrams</strong>
-        <span>Context (L0), portal decomposition (L1), auth, admissions, registration, teaching</span>
+        <span>Context, ACL, auth, admissions, registration workflow, teaching</span>
+      </a>
+      <a href="./architecture.html">
+        <strong>LUCT CMS / Portal architecture</strong>
+        <span>ACL, SoR ownership, academic rules, ops priority</span>
       </a>
       <a href="../index.html">
         <strong>Portal API OpenAPI</strong>
         <span>Interactive Swagger UI for <code>POST /v1/portal/:method</code></span>
-      </a>
-      <a href="https://github.com/raisd-campus/control-plane">
-        <strong>control-plane repository</strong>
-        <span>GitHub source · portal-api · SDD set</span>
       </a>
     </div>
 
@@ -80,15 +88,15 @@
       <div class="legend">
         <div class="legend-item">
           <strong>CMS (SoR)</strong>
-          <span>Existing campus CMS remains system of record until CAP-53 adapters land.</span>
+          <span>Existing campus CMS remains system of record; CAP-53 translates.</span>
         </div>
         <div class="legend-item">
-          <strong>Portal contracts</strong>
-          <span>Canonical record shapes in sibling <code>student-portal</code> Zod schemas.</span>
+          <strong>Canonical model</strong>
+          <span>StudentProfile → Enrolment → StudyPeriod → ModuleRegistration → ModuleResult.</span>
         </div>
         <div class="legend-item">
           <strong>Postgres (planned)</strong>
-          <span>Portal-owned durable state designed in SDD-12; not migrated yet.</span>
+          <span>Portal-owned maps, DQ, audit, session — not a second SoR for CMS domains.</span>
         </div>
         <div class="legend-item">
           <strong>Evidence volume</strong>
@@ -98,8 +106,7 @@
       <p class="note">
         Cardinality notation in ERDs follows Mermaid: <code>||--o{</code> one-to-many,
         <code>||--||</code> one-to-one, <code>}o--o{</code> many-to-many via junction.
-        DFDs use Gane &amp; Sarson style via Mermaid flowcharts (external entities,
-        processes, data stores).
+        DFDs use Gane &amp; Sarson style via Mermaid flowcharts.
       </p>
     </section>
 
@@ -125,6 +132,7 @@ flowchart LR
   subgraph ControlPlane["Raisd control plane"]
     W[Role portal webs]
     API[Portal API]
+    ACL[CMS ACL CAP-53]
   end
 
   subgraph Stores
@@ -140,7 +148,8 @@ flowchart LR
   T --> W
   W --> API
   IDP --> API
-  API --> CMS
+  API --> ACL
+  ACL --> CMS
   API --> PG
   API --> FS
           </pre>

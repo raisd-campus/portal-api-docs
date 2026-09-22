@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — LUCT CMS / Portal Compatibility</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>LUCT CMS / Portal compatibility</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="./index.html">Overview</a>
+        <a href="./erd.html">ERD</a>
+        <a href="./dfd.html">DFD</a>
+        <a class="active" href="./architecture.html">Architecture</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Architecture review — LUCT CMS / Portal compatibility</h1>
+      <p>
+        Guidance incorporated from LUCT CMS and Student Portal operational experience.
+        Keep the canonical domain clean; concentrate legacy complexity in the CMS
+        anti-corruption boundary (CAP-53). Existing CMS remains System of Record in
+        the current stage; portals never talk to CMS / Postgres / files directly.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">Clean canonical inside</span>
+        <span class="chip warn">Ugly legacy translation outside</span>
+        <span class="chip">Do not mirror r_student / r_stdprogram schema</span>
+      </div>
+    </section>
+
+    <div class="toc">
+      <a href="#principles"><strong>Six instructions</strong><span>Core rules for authors</span></a>
+      <a href="#target"><strong>Target shape</strong><span>Portals → domains → ACL → CMS</span></a>
+      <a href="#acl"><strong>CMS ACL (CAP-53)</strong><span>Anti-corruption layer</span></a>
+      <a href="#ownership"><strong>Source of truth</strong><span>CMS vs Postgres owners</span></a>
+      <a href="#academic"><strong>Academic model</strong><span>Version, campuses, results</span></a>
+      <a href="#status"><strong>Active student</strong><span>Named status queries</span></a>
+      <a href="#ops"><strong>Integration ops</strong><span>Idempotency, DQ, audit</span></a>
+      <a href="#priority"><strong>Doc priority</strong><span>Critical → later</span></a>
+    </div>
+
+    <section class="section" id="principles">
+      <h2>Six instructions for documentation authors</h2>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <ol style="margin:0; padding-left:1.25rem; color:var(--ink); line-height:1.6">
+            <li><strong>Keep the canonical academic model clean</strong> — do not copy the legacy schema.</li>
+            <li><strong>Upgrade CAP-53</strong> from “CMS database adapter” to a documented anti-corruption / integration layer.</li>
+            <li><strong>Make historical academic state immutable/auditable</strong> and calculations reproducible.</li>
+            <li><strong>Explicitly model</strong> statuses, curriculum versions, repeats, transfers, exemptions, and credit/CGPA rules — do not hide them in SQL.</li>
+            <li><strong>One authoritative owner per domain</strong>; cross-system operations must be idempotent, recoverable, and reconcilable.</li>
+            <li><strong>Assume legacy data is imperfect</strong> — detect and expose inconsistencies rather than silently guessing.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="target">
+      <h2>Suggested target architecture</h2>
+      <p class="lead">Clean domain inside; legacy translation outside. Incremental migration — not a big-bang CMS rewrite.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Portals → Portal API → domains → ACL → CMS</h3>
+            <p>Staff keep using existing CMS UI where it works; new staff screens fill verified gaps only.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph Portals
+    ST[Student]
+    LE[Lecturer]
+    SF[Staff]
+    AP[Applicant]
+  end
+
+  API[Portal API]
+
+  subgraph Domains
+    AC[Academic domain]
+    FI[Finance domain]
+    AD[Admissions domain]
+  end
+
+  CAN[(Canonical domain model)]
+  PG[(Postgres owned data)]
+
+  subgraph ACL["CMS Anti-Corruption Layer CAP-53"]
+    MAP[Mapping]
+    VAL[Validation]
+    OPS[Operations]
+  end
+
+  CMS[(Existing CMS SoR)]
+
+  ST --> API
+  LE --> API
+  SF --> API
+  AP --> API
+  API --> AC
+  API --> FI
+  API --> AD
+  AC --> CAN
+  FI --> CAN
+  AD --> CAN
+  CAN --> PG
+  CAN --> ACL
+  MAP --> CMS
+  VAL --> CMS
+  OPS --> CMS
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Cross-cutting: Identity &amp; Authorization · Audit · Idempotency ·
+          Reconciliation · Data Quality · Monitoring · Files.
+          Migration grows new domains beside the legacy CMS rather than replacing it in one cutover.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Core academic path (keep this readable)</h3>
+            <p>Developers must understand this without opening legacy SQL.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  SP[StudentProfile] --> PE[ProgrammeEnrolment]
+  PE --> PV[ProgrammeVersion]
+  PV --> CM[CurriculumModules]
+  PE --> STU[StudyPeriod]
+  STU --> MR[ModuleRegistration]
+  MR --> RES[ModuleResult]
+
+  MOD[Module] --> MO[ModuleOffering]
+  MO --> CAM[Campus]
+  MO --> AT[AcademicTerm]
+  MO --> TA[TeachingAssignment]
+
+  PV --> APS[AcademicProgressService]
+  CM --> APS
+  MR --> APS
+  RES --> APS
+  APS --> TR[TermResult / Progress snapshots]
+  TR --> PUB[ResultPublication]
+  PUB --> TX[Transcript presentation]
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="acl">
+      <h2>CMS Adapter = Anti-Corruption Layer (CAP-53)</h2>
+      <p class="lead">
+        Not a 1:1 table access layer. Legacy meaning lives across tables, views,
+        stored procedures, and old PHP. Domain handlers must not embed arbitrary legacy SQL.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Responsibilities</h3>
+            <p>Example: <code>getCurrentStudyPeriod(student)</code> may walk
+              <code>r_student → r_stdprogram → r_stdsemester → f_term → r_stdmodule</code>
+              and return a canonical <code>StudyPeriod</code>.</p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:16px 18px">
+          <table class="attr">
+            <thead>
+              <tr><th>Responsibility</th><th>Intent</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Translate legacy → canonical</td><td>CMS records become domain entities</td></tr>
+              <tr><td>Translate commands → CMS ops</td><td>Domain writes become required CMS operations</td></tr>
+              <tr><td>Resolve legacy status meanings</td><td>Map ambiguous ACTIVE / registered / current flags</td></tr>
+              <tr><td>Map legacy IDs ↔ canonical IDs</td><td>Via <code>LegacyEntityMap</code> — never reuse CMS IDs as PK</td></tr>
+              <tr><td>Handle campus/schema differences</td><td><code>CampusCmsAdapter</code> where schemas differ</td></tr>
+              <tr><td>Validate inconsistent legacy records</td><td>Raise <code>DataQualityIssue</code>, do not silently guess</td></tr>
+              <tr><td>Safe transactional writes</td><td>Defined boundaries; no partial “success”</td></tr>
+              <tr><td>Idempotent writes</td><td><code>IntegrationOperation</code> + idempotency key</td></tr>
+              <tr><td>Report mapping / sync failures</td><td>Surface to ops and reconciliation</td></tr>
+              <tr><td>Support reconciliation</td><td>Counts and domain integrity checks</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ownership">
+      <h2>CMS vs Postgres — one authority per domain</h2>
+      <p class="lead">Never leave “CMS says ACTIVE / Postgres says DEFERRED” without a winner.</p>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <table class="attr">
+            <thead>
+              <tr><th>Domain</th><th>Current authority</th><th>Future authority</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Student identity</td><td>CMS</td><td>Migration decision TBD</td></tr>
+              <tr><td>Programme enrolment</td><td>CMS</td><td>TBD</td></tr>
+              <tr><td>Study periods</td><td>CMS</td><td>TBD</td></tr>
+              <tr><td>Module registration</td><td>CMS</td><td>TBD</td></tr>
+              <tr><td>Official results</td><td>CMS</td><td>TBD</td></tr>
+              <tr><td>Finance ledger</td><td>CMS</td><td>TBD</td></tr>
+              <tr><td>Application portal state</td><td>Decide explicitly (Portal/Postgres or CMS)</td><td>Postgres/CMS</td></tr>
+              <tr><td>Portal session</td><td>Portal</td><td>Portal</td></tr>
+              <tr><td>Uploaded file bytes</td><td>File store</td><td>File store</td></tr>
+              <tr><td>Legacy ID maps / DQ issues / audit</td><td>Portal Postgres (planned)</td><td>Portal Postgres</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="academic">
+      <h2>Academic model decisions</h2>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Keep ProgrammeVersion</h3>
+            <p>Enrolment is pinned to the version under which the student enrolled (e.g. BBA 129 vs 122 credits). Do not resolve requirements from “current” programme config.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>ProgrammeCampusOffering (preferred over Faculty-as-campus)</h3>
+            <p>Same programme may be delivered at several campuses while sharing academic identity. Faculty remains organisational; offering is explicit.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  P[Programme] --> PV[ProgrammeVersion]
+  PV --> PCO[ProgrammeCampusOffering]
+  PCO --> B[Botswana]
+  PCO --> U[Uganda]
+  PCO --> S[Sierra Leone]
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Mirrors <code>ModuleOffering</code> (module × term × campus). See
+          <a href="./erd.html#curriculum">ERD curriculum</a>.
+          <code>ProgrammeEnrolment.campusId</code> remains the student’s study campus.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Credits earned ≠ credits in CGPA</h3>
+            <p>Retain <code>ModuleResult.includedInCgpa</code>. Pass/elective/exemption cases must be representable without special-case transcript SQL.</p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:16px 18px">
+          <p style="margin:0 0 8px; color:var(--muted)">Valid example: Grade PASS · Credits earned 3 · CGPA points 0 · Included in CGPA false.</p>
+          <p style="margin:0; color:var(--muted)">Also support: normal, repeat, exemption, credit transfer, pass/fail, audit/non-credit, replacement, additional elective, transferred programme credit — via registration type + result flags, not ad-hoc SQL.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Calculations are reproducible snapshots</h3>
+            <p>Authoritative inputs: ModuleRegistration + ModuleResult + CurriculumModule + ProgrammeVersion + grading rules. <code>TermResult</code> is a calculated snapshot (<code>calculationVersion</code>, <code>calculatedAt</code>), not primary truth.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>ResultPublication versions published academic history</h3>
+            <p>Publication is not only <code>publishedAt</code> on the current row. Corrections create a new publication that supersedes the previous; prior versions remain auditable.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>AcademicTerm ≠ student’s programme semester</h3>
+            <p>Keep explicit: calendar <code>AcademicTerm</code> (e.g. 2026-03) vs <code>StudyPeriod.programmeSemesterNumber</code> (Semester 5 for one student, Semester 3 for another).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Attempts are never overwritten</h3>
+            <p><code>ModuleRegistration.attemptNumber</code> + <code>registrationType</code>. Failed then repeat keeps both rows; policy decides CGPA/credit effect.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>AcademicProgressService — policy not transcript SQL</h3>
+            <p><code>calculateModuleOutcome</code>, credits, term GPA, CGPA, graduation progress, prerequisites. Transcript is a presentation of calculated history. One service — not portal/registry/transcript/stored-proc each inventing rules.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>History is never rewritten</h3>
+            <p>Defer / return / transfer / withdraw / re-enrol create or transition records. Use <code>EnrolmentStatusHistory</code> (and similar) for auditability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="status">
+      <h2>Define “active student” properly</h2>
+      <p class="lead">EMGS active ≠ CMS registered ≠ current semester ≠ current active report. Avoid one universal <code>student.status = ACTIVE</code>.</p>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <table class="attr">
+            <thead>
+              <tr><th>Layer</th><th>Status lives on</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Identity</td><td><code>StudentProfile</code></td></tr>
+              <tr><td>Enrolment</td><td><code>ProgrammeEnrolment</code></td></tr>
+              <tr><td>Academic period</td><td><code>StudyPeriod</code></td></tr>
+              <tr><td>Registration</td><td><code>ModuleRegistration</code></td></tr>
+              <tr><td>Immigration</td><td><code>StudentVisaPass</code> / <code>ImmigrationCase</code></td></tr>
+              <tr><td>Finance</td><td><code>FinanceAccount</code> / account issues</td></tr>
+            </tbody>
+          </table>
+          <p style="margin:12px 0 0; color:var(--muted)">
+            Named queries: <code>isCurrentlyEnrolled()</code>, <code>isAcademicallyActive()</code>,
+            <code>hasCurrentStudyPeriod()</code>, <code>isRegisteredForModules()</code>,
+            <code>hasActiveImmigrationStatus()</code>, <code>isEligibleForStudentPortal()</code>.
+            Every report must state which definition it uses.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ops">
+      <h2>Integration operations</h2>
+
+      <div class="card">
+        <div class="card-head"><div><h3>LegacyEntityMap</h3><p>Canonical UUID ↔ sourceCampus + legacyTable + legacyId. Supports overlapping numeric IDs across campuses.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>DataQualityIssue + reconciliation</h3><p>Expect imperfect legacy data. Flag CURRENT_ENROLMENT_WITHOUT_STUDY_PERIOD, LEGACY_PASSPORT_MISMATCH, etc. CAP-53 reports CMS vs mapped counts and domain integrity checks.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Idempotency — IntegrationOperation</h3><p>Register module, accept offer, create enrolment, submit marks, publish results, invoice, payment, forms — all keyed. Retries must not double-write.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Transaction / workflow states</h3>
+            <p>Registration → CMS → invoice must define failure modes. UI success only when the agreed boundary completes.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  P[PENDING] --> PR[PROCESSING]
+  PR --> C[CMS_COMMITTED]
+  C --> F[FINANCE_PENDING]
+  F --> OK[COMPLETED]
+  PR --> FAIL[FAILED]
+  C --> REC[REQUIRES_RECONCILIATION]
+  F --> REC
+          </pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>AuditEvent</h3><p>Who / what / when / why / before / after for marks, grades, registrations, enrolments, finance, publications, visa — not only application logs.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Migration: preserve raw legacy</h3><p>Legacy source → raw import → mapping/validation → canonical. Never silently “fix” historical academic data on import.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Campus differences = configuration</h3><p><code>CampusConfig</code> / <code>CampusPolicy</code> / <code>CampusCmsAdapter</code>. Canonical model stays consistent; no <code>if (campus === "botswana")</code> scattered in domain services.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Identity ≠ legacy password behaviour</h3><p>IdP → stable subject → Person/Student/Staff mapping. Legacy password/email login stays behind a temporary adapter — not canonical design.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>RBAC scopes</h3><p>Beyond role × method × campus: faculty, programme, module offering, operation. A Botswana lecturer does not automatically see every Botswana student’s marks.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>ResultAccessPolicy</h3><p>Rule-based (campus, funding, balance, holds, term) → <code>allowed</code> + <code>reasonCode</code>. Not hardcoded <code>if (balance &lt; 1000)</code> in the portal.</p></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Integrity constraints (document intentionally)</h3>
+          <p>Examples: unique studentNumber where applicable; unique StudyPeriod(enrolment, term); ModuleResult 1:1 registration; TermResult 1:1 study period; controlled registration uniqueness by attempt; payment allocation limits; offer accept must not create two first enrolments.</p>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Integration health</h3><p>Beyond API/DB up: adapter latency, failed writes, retry queue, unmapped records, reconciliation mismatches, stuck registrations, file/metadata orphans.</p></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="priority">
+      <h2>Documentation priority</h2>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <table class="attr">
+            <thead>
+              <tr><th>Priority</th><th>Change</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Critical</td><td>CMS Adapter as anti-corruption layer</td></tr>
+              <tr><td>Critical</td><td>CMS/Postgres source-of-truth ownership</td></tr>
+              <tr><td>Critical</td><td>Legacy-ID mapping</td></tr>
+              <tr><td>Critical</td><td>Transaction + retry/idempotency behaviour</td></tr>
+              <tr><td>Critical</td><td>Deterministic academic calculation rules</td></tr>
+              <tr><td>Critical</td><td>Explicit active/enrolled/registered statuses</td></tr>
+              <tr><td>High</td><td>Result/calculation versioning</td></tr>
+              <tr><td>High</td><td>Audit trail</td></tr>
+              <tr><td>High</td><td>Migration reconciliation / data quality</td></tr>
+              <tr><td>High</td><td>Programme campus offering independently</td></tr>
+              <tr><td>High</td><td>Repeats / exemptions / transfers / pass-fail</td></tr>
+              <tr><td>High</td><td>Campus-specific configuration strategy</td></tr>
+              <tr><td>Medium</td><td>Integration monitoring</td></tr>
+              <tr><td>Medium</td><td>Result-access / finance policy</td></tr>
+              <tr><td>Medium</td><td>RBAC scopes beyond campus</td></tr>
+              <tr><td>Later</td><td>Fully retire legacy CMS procedures/views</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Do not over-engineer the new system because the old CMS is complicated.
+          Complexity belongs at the boundary: <em>clean canonical domain inside; ugly legacy translation outside.</em>
+          Related diagrams: <a href="./erd.html">ERD</a> · <a href="./dfd.html">DFD</a>.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    LUCT CMS / Portal compatibility · raisd-campus/control-plane · CAP-53 anti-corruption layer
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+</body>
+</html>

@@ -17,6 +17,7 @@
         <a href="./index.html">Overview</a>
         <a href="./erd.html">ERD</a>
         <a class="active" href="./dfd.html">DFD</a>
+        <a href="./architecture.html">Architecture</a>
         <a href="../index.html">OpenAPI</a>
       </nav>
     </div>
@@ -33,17 +34,26 @@
       <div class="meta-row">
         <span class="chip">Gane &amp; Sarson style via Mermaid</span>
         <span class="chip ok">Stage 1: mock + stub CMS</span>
+        <span class="chip ok">CAP-53 = anti-corruption layer</span>
         <span class="chip warn">Target flows marked where CAP-53 applies</span>
       </div>
     </section>
 
+    <div class="note" style="margin: 0 0 28px">
+      <strong>Clean canonical inside; ugly legacy translation outside.</strong>
+      CAP-53 is not a 1:1 DB adapter — it is the CMS anti-corruption layer
+      (mapping, validation, idempotent ops, reconciliation). Full guidance:
+      <a href="./architecture.html">LUCT CMS / Portal compatibility</a>.
+    </div>
+
     <div class="toc">
       <a href="#l0"><strong>Level 0 — Context</strong><span>Whole system boundary</span></a>
       <a href="#l1"><strong>Level 1 — Portal system</strong><span>Major processes &amp; stores</span></a>
-      <a href="#auth"><strong>Auth &amp; session</strong><span>Login → bearer → RPC</span></a>
+      <a href="#acl"><strong>CMS ACL (CAP-53)</strong><span>Anti-corruption layer</span></a>
+      <a href="#auth"><strong>Auth &amp; session</strong><span>Identity → person → RBAC</span></a>
       <a href="#admissions"><strong>Admissions (M2)</strong><span>Apply → offer → enrol</span></a>
-      <a href="#registration"><strong>Registration &amp; fees</strong><span>Modules → invoice → proof</span></a>
-      <a href="#teaching"><strong>Teaching &amp; results</strong><span>Materials → mark → publish</span></a>
+      <a href="#registration"><strong>Registration &amp; fees</strong><span>Modules → invoice · workflow</span></a>
+      <a href="#teaching"><strong>Teaching &amp; results</strong><span>Progress service · publication</span></a>
       <a href="#runtime"><strong>Stage 1 runtime</strong><span>What runs today</span></a>
       <a href="#deploy"><strong>Deploy path</strong><span>Traefik → k3s → stores</span></a>
     </div>
@@ -130,7 +140,7 @@ flowchart TB
         <div class="card-head">
           <div>
             <h3>1.x processes</h3>
-            <p>Web shells → Portal API → domain handlers → stores / CMS adapter.</p>
+            <p>Web shells → Portal API → domain handlers → stores / CMS anti-corruption layer.</p>
           </div>
         </div>
         <div class="card-body">
@@ -153,7 +163,7 @@ flowchart TB
     P6(("1.6<br/>Finance<br/>handler"))
     P7(("1.7<br/>Teaching &amp;<br/>assessment"))
     P8(("1.8<br/>Forms / immigration<br/>/ graduation"))
-    P9(("1.9<br/>CMS adapter<br/>CAP-53"))
+    P9(("1.9<br/>CMS ACL<br/>CAP-53"))
   end
 
   subgraph Stores
@@ -262,12 +272,55 @@ flowchart TB
               </tr>
               <tr>
                 <td>1.9</td>
-                <td>CMS adapter</td>
-                <td>Domain write/read intents</td>
-                <td>CMS transactions; stub ack until CAP-53</td>
+                <td>CMS anti-corruption layer</td>
+                <td>Canonical read/write intents; never raw SQL from handlers</td>
+                <td>Legacy↔canonical map, validation, idempotent CMS ops, DQ, reconciliation</td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACL -->
+    <section class="section" id="acl">
+      <h2>CMS Anti-Corruption Layer (CAP-53)</h2>
+      <p class="lead">
+        Domain handlers never contain arbitrary legacy SQL. Example:
+        <code>getCurrentStudyPeriod(student)</code> may require walking
+        <code>r_student → r_stdprogram → r_stdsemester → f_term → r_stdmodule</code>
+        then returning a canonical <code>StudyPeriod</code>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Mapping · Validation · Operations</h3>
+            <p>Full responsibility list on the <a href="./architecture.html#acl">architecture</a> page.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  H(("Domain handler"))
+  ACL(("1.9 CMS ACL"))
+  MAP[LegacyEntityMap]
+  DQ[DataQualityIssue]
+  IOP[IntegrationOperation]
+  CMS[(Existing CMS)]
+  REC[Reconciliation reports]
+
+  H -->|"canonical command / query"| ACL
+  ACL --> MAP
+  ACL --> DQ
+  ACL --> IOP
+  ACL <-->|"translated ops"| CMS
+  ACL --> REC
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          Writes are idempotent (idempotency key). Campus schema differences use
+          CampusCmsAdapter behind the same canonical interface. One owner per domain —
+          see <a href="./architecture.html#ownership">SoR table</a>.
         </div>
       </div>
     </section>
@@ -308,8 +361,8 @@ sequenceDiagram
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Target auth data flow</h3>
-            <p>IdP / CMS login issues subject; Portal API enforces RBAC per method.</p>
+            <h3>Target auth — identity mapping</h3>
+            <p>IdP subject → Account → Person → Role/Scope. Legacy password/email login stays behind a temporary adapter — not canonical design. RBAC scopes: role × campus × faculty × programme × module offering × operation.</p>
           </div>
         </div>
         <div class="card-body">
@@ -320,12 +373,12 @@ flowchart LR
   P2(("1.2 Auth"))
   DS[("Session / token store")]
   P3(("1.3 Portal API"))
-  RBAC{{"RBAC check<br/>role × method × campus"}}
+  RBAC{{"RBAC<br/>role × campus × faculty<br/>× programme × offering × op"}}
   H(("Domain handler"))
 
   U -->|"login"| IDP
-  IDP -->|"assertion"| P2
-  P2 -->|"persist subject, roles"| DS
+  IDP -->|"stable subject"| P2
+  P2 -->|"Person / Student / Staff map"| DS
   U -->|"Bearer + method"| P3
   P3 --> DS
   P3 --> RBAC
@@ -355,7 +408,7 @@ flowchart TB
   P1(("1.1 Applicant portal"))
   P3(("1.3 Portal API"))
   P4(("1.4 Admissions"))
-  P9(("1.9 CMS adapter"))
+  P9(("1.9 CMS ACL"))
 
   FS[("D3 Evidence volume")]
   CMS[("D1 CMS applications / offers")]
@@ -387,7 +440,10 @@ flowchart TB
     <!-- Registration -->
     <section class="section" id="registration">
       <h2>Registration &amp; fees (Milestone 3 target)</h2>
-      <p class="lead">Module selection creates CMS registration; invoices and payment proofs follow.</p>
+      <p class="lead">
+        Module selection creates CMS registration; invoices and payment proofs follow.
+        Define transaction / workflow states so UI success is not a partial write.
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
@@ -403,7 +459,7 @@ flowchart TB
 
   P5(("1.5 Academic &amp; registration"))
   P6(("1.6 Finance"))
-  P9(("1.9 CMS adapter"))
+  P9(("1.9 CMS ACL"))
 
   CMS_R[("D1 Module registrations")]
   CMS_F[("D1 Finance ledger")]
@@ -462,17 +518,41 @@ flowchart LR
           </pre>
         </div>
       </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Registration → invoice workflow states</h3>
+            <p>If registration succeeds and invoice fails, status must not report UI “success”. Use idempotency keys on retries.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  P[PENDING] --> PR[PROCESSING]
+  PR --> C[CMS_COMMITTED]
+  C --> F[FINANCE_PENDING]
+  F --> OK[COMPLETED]
+  PR --> FAIL[FAILED]
+  C --> REC[REQUIRES_RECONCILIATION]
+  F --> REC
+          </pre>
+        </div>
+      </div>
     </section>
 
     <!-- Teaching -->
     <section class="section" id="teaching">
       <h2>Teaching, submissions &amp; results</h2>
-      <p class="lead">Lecturer publishes materials; student submits; marks publish only when released.</p>
+      <p class="lead">
+        Lecturer publishes materials; student submits; marks publish only when released.
+        GPA/CGPA/credits come from AcademicProgressService; ResultPublication versions official history.
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
             <h3>Materials → submit → mark → publish</h3>
-            <p>Students see published <code>AssessmentResult</code> / <code>ModuleResult</code> / <code>TermResult</code> only.</p>
+            <p>Students see published results only. ResultAccessPolicy may gate visibility (funding/balance/holds).</p>
           </div>
         </div>
         <div class="card-body">
@@ -483,7 +563,7 @@ flowchart TB
   REG(["Registry"])
 
   P7(("1.7 Teaching &amp; assessment"))
-  P9(("1.9 CMS adapter"))
+  P9(("1.9 CMS ACL"))
   FS[("D3 Learning / submission files")]
   CMS[("D1 Marks &amp; attendance SoR")]
 
@@ -648,7 +728,7 @@ flowchart TB
   </main>
 
   <footer class="footer">
-    DFD · raisd-campus/control-plane · SDD-02 architecture · SDD-12 deployment · CAP-53 CMS adapter
+    DFD · raisd-campus/control-plane · CAP-53 anti-corruption layer · SDD-12 deployment
   </footer>
 
   <script type="module">
