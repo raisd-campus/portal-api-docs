@@ -1,0 +1,17 @@
+---
+description: Frontend-only CMS student portal constraints (canonical extract)
+alwaysApply: false
+---
+
+# CMS student portal (canonical rule extract)
+
+Full instructions: `docs/ai/frontend/student-portal/AGENTS.md` and campus `docs/ai/AGENTS.md`.
+
+Vite + React + TypeScript + Tailwind + shadcn/ui. Dark theme.
+
+- Treat server data as coming from one Portal API. Prefer HTTP adapter when `VITE_PORTAL_API_URL` is set; otherwise mock.
+- Do not write directly to the CMS or Postgres from the portal web.
+- Style with existing tokens and documented type utilities.
+- Chat lives in the Community column of the floating sidebar. Do not promote it to its own route or page.
+- Product rules for Community/Chat: `docs/ai/frontend/student-portal/sidebar-behavior.md`.
+- Demo is not Live.

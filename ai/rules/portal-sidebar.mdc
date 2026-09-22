@@ -1,0 +1,10 @@
+---
+description: Portal sidebar / Community chat constraints (canonical extract)
+alwaysApply: false
+---
+
+# Portal sidebar
+
+Product rules: `docs/ai/frontend/student-portal/sidebar-behavior.md`.
+
+Chat lives in the Community column of the floating sidebar. Do not promote it to its own route or page.

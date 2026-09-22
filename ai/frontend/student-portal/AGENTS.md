@@ -1,0 +1,116 @@
+# CMS Student Portal Instructions
+
+> **Canonical location:** `control-plane/docs/ai/frontend/student-portal/`  
+> **Campus-wide agents first:** [../../AGENTS.md](../../AGENTS.md)  
+> **Extracted:** 23 September 2026 from `raisd-campus/student-portal` (Faid central knowledge-base decision, 22 Sep 2026).  
+> Paths below are relative to **this folder**. The `student-portal` repo keeps working copies under its local `docs/` and must stay in sync.
+
+These instructions apply to the student-portal repository. Read the detailed project documents before changing behaviour:
+
+- `project-scope.md`
+- `data-model.md`
+- `design-system.md` (shared copy also under [`../../design/design-system.md`](../../design/design-system.md))
+- `sidebar-behavior.md`
+- `calendar.md`
+- `academic-performance.md`
+- `academic-modules.md`
+- `announcements.md`
+- `academic-timetable.md`
+- `academic-study-plan.md`
+- `academic-graduation.md`
+- `academic-module-registration.md`
+- `personal-profile.md`
+- `profile-documents.md`
+- `privacy-security.md`
+- `online-forms.md`
+- `university-policies.md`
+- `resume-profile.md`
+- `portfolio-profile.md`
+- `finance.md`
+- `immigration.md`
+- `campus-services.md`
+- `handoff.md`
+
+## Product boundaries
+
+- This phase is frontend-only and desktop-first. Do not add a live API connection, physical database, authentication integration, persistent browser storage, cloud file storage, production uploads, or mobile remediation unless the user explicitly expands the scope.
+- The approved exception is responsive Services body content only: verify isolated content at 375, 390, 430 and 768px and either side of its container breakpoint. This does not establish mobile support for the portal shell, navigation or other features.
+- Treat all server-owned information as coming from one logical Portal API, even if a future backend combines the CMS with other databases or services.
+- Keep the current dark-only direction until theming is added to the agreed scope.
+- Do not present planned or speculative capabilities as implemented.
+- Announcements (CAP-16) is read-only student viewing: campus-owned clickable-list/detail pages and dashboard links with structured rich content. Admin editing/publishing, read tracking, notifications, attachments and persistence remain outside scope.
+- CAP-33 learner support is represented by the session-only IT Helpdesk conversation in Community. Formal support forms, ticket/case tracking, service-level commitments and staff operations remain CAP-51 or future backend work.
+- CAP-35 Accessibility Support is a campus-owned Services placeholder plus an engineering WCAG 2.2 A/AA audit of the supported desktop portal. Do not invent campus services, eligibility, medical guidance, policies or contacts. Accessibility requests, documents, case tracking and staff responses remain CAP-51. Audit evidence is not formal certification or full mobile/assistive-technology acceptance.
+- CAP-39 Privacy & Security is a read-only campus-owned Profile demonstration. It may explain portal information use, available frontend actions and account-security guidance, but must not claim an approved legal basis, retention period, regulatory compliance or production security. Formal privacy requests and case tracking remain CAP-51; authentication, authorization, retention enforcement, audit logging and security operations remain backend responsibilities.
+- Profile Documents is a read-only library within Profile. Its title-only document rows are no-op placeholders; document file delivery and management are outside this frontend phase.
+- CAP-51 Online Forms supports eight campus-owned catalogue templates plus the case-linked CAP-50 medical-result form, session drafts, immutable student submissions, status history, withdrawal while open and student/reviewer case conversations. CAP-50 application forms may snapshot selected-student university-held evidence by field and accept a case-specific replacement without modifying Profile records. The medical-result form is available only from the exact new-pass case after eVAL approval and remains outside the general catalogue. Submitted fields and embedded documents never reopen for student editing; additional evidence goes through message attachments. No generic Supporting documents section or production admin screens are included. Reviewer responses/outcomes are seeded or advanced by the narrow CAP-15/CAP-50 development simulation, not live. Unread badges count owned forms with unseen reviewer messages and acknowledge only messages actually displayed. Dedicated privacy requests and broader staff operations remain outside these forms.
+- CAP-55 University Policies is a campus-owned, read-only catalogue demonstration. Its titles and summaries are synthetic assumptions pending campus approval. Cards remain enabled no-op actions until approved policy bodies and detail routes exist. Do not imply approved content, publishing, versioning, effective dates, acknowledgements or notifications.
+
+- CAP-15 Graduation is a session-only progress hub reusing Online Forms, Finance and the CAP-50 graduation-triggered cancellation case. Its clearance decisions are Faculty, Finance and Library. The approved development-only Admin Actions exception is an all-student review workspace for graduation reviews, Immigration progress and Finance proof/counter-payment posting on the same mock session. Each command carries and verifies the owning student; the currently viewed student does not limit the review queue. Keep commands outside `PortalApi` and their implementation outside production bundles. Do not add generic form approval controls, live staff processing, persistent records, a payment gateway or functional document delivery. RM500 base fee and campus rules remain documented prototype assumptions. See `academic-graduation.md`.
+- Cyberjaya Services contains Transportation, Dining, Wellness, Accessibility Support, Connectivity, Shopping and Recreation. Accommodation is not an active portal domain, Finance category, Community service or Graduation clearance department. The legacy `/accommodation` route returns students to Dashboard, while removed or unknown Services slugs use the normal Transportation fallback.
+- CAP-50 Immigration is a Malaysia/Cyberjaya-only, session-only Student Pass overview and case-specific Applications progress page. New applications use five steps, with separate EMGS/eVAL, medical-result submission, and passport/endorsement stages; renewals use four steps and cancellations use three. After eVAL, Step 4 links to an exact case-owned Online Form that owns the medical-result draft, upload, immutable submission, withdrawal and review lifecycle; Immigration reflects that form's status and enables passport handover only after acceptance. Completed cases return Applications to its empty state. It reuses Online Forms for applications/messages and Finance for invoices/proofs. Graduation creates the same fee-waived cancellation case. Cancellation is distinct from natural expiry and retains the ended pass as history. A student-requested cancellation on an active eligible enrolment may start a fresh new-pass application after collection closes the cancellation case; graduation and university-directed cancellations, inactive enrolments, and expired passes require International Office review. Keep EMGS/STARS integration, real uploads, government decisions, passport custody, persistent records and production staff actions outside this phase. See `immigration.md`.
+- Cyberjaya international students without a current Student Pass, including an eligible student whose prior pass was cancelled, may access the portal and plan module selections, but Module Registration fee preview and confirmation require eVAL approval for the new application. Malaysian citizens and international students with a valid or expiring pass retain the normal registration rules; cancelled passes without a replacement case remain blocked, and expired passes require International Office review. Treat this as a prototype campus policy pending operational approval.
+
+## Data and API architecture
+
+- UI components must consume service/query results. Do not import mock fixtures directly into screens.
+- Keep `PortalApi` replaceable: the current `MockPortalApi` is a development adapter, and a future HTTP adapter should not require a UI rewrite.
+- Define and validate frontend-required records with Zod contracts. Use stable opaque IDs, ISO 8601 timestamps, explicit nullable values where meaningful, empty arrays for empty collections, and integer bytes for file sizes.
+- The Data Model Explorer describes the frontend's logical contract, not a mandated backend schema.
+- Treat the canonical record graph as the source for mock academic, student, delivery, attendance, and finance data. Route-facing response DTOs are derived read models; do not create a second conflicting fixture set inside screens or features.
+- The canonical graph may contain multiple student scenarios. Every student-specific projection must start from the selected stable student ID and traverse its enrolment/transaction relationships; never infer the active student from array position or duplicate a screen-specific student fixture.
+- Student reads use an explicit owned Programme Enrolment context carried by the stable `programmeEnrolmentId` URL/query key. When the URL omits it, choose the active enrolment, then the newest deferred, completed, or withdrawn enrolment in that order; current-semester fields may be null. Registration and other restricted mutations still require their exact active/current ownership context, while inactive enrolments remain readable history.
+- Student scenario selection is a development-only, in-memory student-view switch. It must retain shared canonical workflow records in the current mock session while clearing student-scoped query caches, without using browser persistence. A refresh creates a new session. Keep the production-facing API interface independent of scenario and Admin Actions tooling.
+- Scope private caches to the scenario and session generation. Reject late mutation responses before success callbacks run after a scenario reset, including switching away and back to the same student.
+- Every session write must capture the selected student, session generation and write revision before asynchronous work, stage its candidate state, and commit only when all three still match. Stale scenario and same-session concurrent writes must fail without partial state. Student-facing errors must use product language and must not mention mock data, adapters, APIs or implementation details.
+- Student transactions must reference the exact enrolment, study period, module registration, offering, session, assessment, or invoice that owns them. Preserve attempt numbers and repeat-module history; do not attach published results directly to the current semester before results are published.
+- Chat, Personal-profile, Resume-profile, Portfolio-profile, Finance payment-proof, assignment-submission, lecturer-review, module-registration and Immigration mutations remain session-only and reset on refresh until backend persistence is approved.
+- Online Forms draft saves, submissions, messages, withdrawal and read acknowledgements also remain session-only. Resolve exact enrolment/module-result/visa/evidence/Immigration-case ownership at the API boundary, use current-session Profile values for prefills, reject stale draft revisions and snapshot submitted answers, definitions, any university-held evidence references, and the exact case link where applicable. Temporary previews must be released on session disposal. A case-specific replacement must not update Profile records. Submission never changes official academic results, visa validity or Finance balances. Graduation Clearance and CAP-50 application forms create their respective session-only administrative cases; the case-linked medical-result form advances only its existing new-pass case. Accepting Immigration documents issues its configured Finance invoice, while Registry graduation approval issues the graduation invoice and fee-waived cancellation atomically.
+- Module Registration is a first-confirmation-only transaction. A successful confirmation atomically creates the selected Module Registrations, one aggregated semester tuition Invoice, one separate registration-fee Invoice, any eligible award-linked credits, and resolves the registration issue. The confirmed Study Period is permanently read-only; do not restore replacement or edit-after-confirmation semantics without a new product decision.
+- Finance Invoice due dates remain canonical future-use data but are frozen out of the student-facing Finance response and UI. Student invoice status is unpaid, partially paid, paid, or void; do not reintroduce overdue presentation or due-date sorting without a new product decision.
+- Finance scholarships and incentives are read-only student assignments. Active fee benefits create capped, invoice-linked credit adjustments with an auditable Funding Benefit relationship; informational allowances never affect balances and the portal does not track their payout. Academic renewal evaluation uses the latest published Term Result but never changes the staff-controlled award status or revokes posted credits.
+- Finance distinguishes the signed account ledger balance from open invoice balances and unapplied confirmed payments. Student attention, Study Plan eligibility and Graduation Finance gates remain outstanding until every invoice is settled or void; an unallocated payment is visible as Finance-owned credit and cannot clear those gates.
+- Malaysian Service Tax is an issuance-time Finance decision. Derive eligibility from Malaysian citizenship, not the Local/International display category; resolve an effective campus tax profile; apply explicit Fee Item tax treatment and valid enrolment exemptions; subtract eligible award-linked credits from the taxable base; and snapshot one immutable decision per Invoice. Invoice totals and all downstream balances are tax-inclusive. Later payments, proofs, or award changes must not recalculate SST; staff corrections, credit notes, filing, and remittance remain out of scope. Sponsor, diplomat-dependant, and award-netting branches are approved prototype assumptions only and require campus Finance or Malaysian tax-adviser confirmation before production backend work.
+- Student Fee Category is a read-only enrolment-campus projection. Local Malaysian students use the explicit not-applicable Study Plan passport/visa branch and must not receive fabricated Student Visa / Pass records merely to satisfy the UI.
+- Assignment submission is a frontend-only contract demonstration: one PDF or ZIP file, at most 50 MiB, may be submitted, replaced, or deleted from release time until (but not including) `dueAt`. Store only validated file metadata in the mock session; do not persist or upload file contents. Assignment-brief downloads remain visible no-op placeholders. Do not add functional resource downloads, quiz/exam starts, grading, or other completion mutations until those backend workflows are approved.
+- Preserve the current attachment policy unless scope changes: any file type, at most 5 files, 25 MB per file, and 75 MB total per message. Preview only safe raster images inline; render active or unsafe formats such as SVG and HTML as generic files.
+
+## Synchronized changes
+
+- When data requirements change, update the contract, data-model registry and relationships, valid mock fixtures, Portal API/query boundary, explorer samples, relevant documentation, and tests in the same change.
+- When a reusable visual rule or component changes, update semantic tokens or shared components and the Design System Explorer together. Avoid raw colours and arbitrary values except documented media overlays or external brand colours.
+- Every standalone compact summary strip must use the shared `SummaryCard` before feature-owned markup is introduced. Compose its optional label, value, action, description, summary columns, indicators, and supporting-content slots; let the component own typography and spacing. `StudentSummaryCard`, compact summaries inside accordion triggers, table or popup totals, and chart cards remain separate patterns.
+- Before creating or changing a route-level page layout, inspect the established shell and at least two comparable completed pages. Reuse the shared page-heading treatment, top-level vertical rhythm, content width, and loading/error geometry from those references; do not substitute raw typography or spacing classes when a shared page pattern already exists. Document and test any intentional divergence.
+- Nested detail routes must retain the parent page shell and active parent tab when comparable portal pages do. Start the content breadcrumb at the immediate parent tab or list view; do not repeat the outer page heading as the first breadcrumb item.
+- For editable forms, use the documented shared field-label treatment and spacing from `design-system.md`; inspect a comparable completed form before introducing local label typography or field gaps.
+- Use the `$cms-student-portal-page` skill ([../../skills/cms-student-portal-page/SKILL.md](../../skills/cms-student-portal-page/SKILL.md)) for new route pages and substantial page-shell restructures. It does not apply to isolated component, content, or CSS edits.
+- Keep generic primitives in `components/ui`, reusable portal patterns in `components/system`, feature-specific components with their feature, and route composition in pages/app routing.
+- Keep loading, empty, error, disabled, selected, hover, focus, and keyboard-accessible behaviour consistent where the relevant component supports those states.
+- Required next steps must resolve to an exact owned portal route, an available Community service, or explicit non-interactive guidance. Do not render enabled no-op actions or invent a fallback destination. Student-facing read failures use the shared retryable `QueryErrorState` when retry is valid.
+- Update behaviour documents whenever implementation changes. Documentation must describe the current application, not an intended future state.
+
+## Verification
+
+- Add or update unit tests for changed contracts, validation rules, transformations, model relationships, and mock API behaviour.
+- Add or update Playwright tests for changed user-visible flows. `PLAYWRIGHT_WORKERS` can limit full-gate concurrency on a busy host without skipping tests. Maintain the current desktop coverage at 1280 px and 1440 px until supported viewports change.
+- Use verification proportionate to the change. A small isolated visual or CSS adjustment that does not alter data, interaction, layout structure, or component contracts requires a production build and the focused affected test or browser check. Run `npm run check:all` for data/API/contract changes, interaction or user-flow changes, shared-component refactors, substantial visual work, and before every commit or push. Report any external blocker rather than claiming success.
+- For documentation-only changes, perform proportionate content and reference checks; run application tests when the documentation change reflects or accompanies behaviour changes.
+- Report exactly what was changed, which checks ran, their results, known warnings, and anything intentionally left out of scope.
+
+## Working rules
+
+- At the start of work, read campus [../../AGENTS.md](../../AGENTS.md), then this file, then `handoff.md`, and inspect Git status before changing files. The handoff is a concise cross-session record; the detailed documents above remain the source of truth for product behaviour. Mirror handoff updates into the `student-portal` working copy.
+- After meaningful completed work, update `handoff.md` (canonical here and mirror in `student-portal/docs/handoff.md`) with the current state, verification result, known warnings, and the next approved work item. Do not rely on a previous chat as project context.
+- Inspect relevant implementation and documentation before editing. Preserve unrelated user changes and avoid destructive commands.
+- Prefer small, reusable changes that keep the backend handoff straightforward.
+- Do not silently change an agreed product policy. If a requested change conflicts with the current scope, identify the conflict and confirm or clearly record the new decision.
+
+## Maintaining these instructions
+
+- Update this `AGENTS.md` (under `control-plane/docs/ai/frontend/student-portal/`) in the same change whenever project scope, architecture, mandatory workflow, supported platforms, persistence policy, or testing requirements materially change. Keep the `student-portal` root pointer and local `docs/` mirrors aligned.
+- Keep ordinary feature details in their relevant project documents rather than growing this file into a feature log.
+- When these instructions and a newly approved user decision conflict, follow the new decision and update both this file, campus [`../../AGENTS.md`](../../AGENTS.md) if needed, and the affected source-of-truth documents.
+
+## Lecturer review boundary
+
+CAP-30 lecturer reviews are approved session-only frontend interactions. Require all 15 ratings and optional feedback up to 2,000 characters; confirm before immutable submission. New reviews require a registered module in the current Study Period of an active Programme Enrolment. Previously submitted reviews remain readable in historical periods. Resolve ownership through the exact Module Registration and Teaching Assignment, including co-lecturers/repeats; never key uniqueness by lecturer alone. Preserve questionnaire snapshots and reject duplicate/stale-session mutations. Drafts and submissions reset with the mock session. No staff reporting, confidentiality promises, persistent storage or changes to CAP-28 are implied.

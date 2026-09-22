@@ -1,0 +1,85 @@
+# Raisd AI knowledge base — machine-readable index
+# Any agent or doc generator should load this file first after AGENTS.md.
+version: 1
+updated: 2026-09-23
+canonical_repo: raisd-campus/control-plane
+canonical_path: docs/ai
+decision:
+  date: 2026-09-22
+  source: Working Group CMS 2026 standup
+  summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
+
+entrypoints:
+  agents: AGENTS.md
+  humans: README.md
+  generate_docs: process/generate-documentation.md
+  product_baseline: ../sdd/README.md
+
+sibling_repos:
+  - applicant-portal
+  - student-portal
+  - lecturer-portal
+  - staff-portal
+  - design-system
+  - portal-api-docs
+
+architecture:
+  - path: architecture/overview.md
+    topics: [adr-1, portals, portal-api, cms, cyberjaya]
+  - path: architecture/repositories.md
+    topics: [repo-map, local-paths, ownership]
+  - path: architecture/deployment.md
+    topics: [ultaHost, k3s, stages, hostnames]
+
+backend:
+  - path: backend/portal-api.md
+    topics: [openapi, auth, mock-bridge, cms-stub]
+    openapi: ../../openapi.yaml
+    code: ../../portal-api/
+
+frontend:
+  student-portal:
+    agents: frontend/student-portal/AGENTS.md
+    scope: frontend/student-portal/project-scope.md
+    data_model: frontend/student-portal/data-model.md
+    handoff: frontend/student-portal/handoff.md
+    documents:
+      - frontend/student-portal/design-system.md
+      - frontend/student-portal/sidebar-behavior.md
+      - frontend/student-portal/calendar.md
+      - frontend/student-portal/academic-performance.md
+      - frontend/student-portal/academic-modules.md
+      - frontend/student-portal/announcements.md
+      - frontend/student-portal/academic-timetable.md
+      - frontend/student-portal/academic-study-plan.md
+      - frontend/student-portal/academic-graduation.md
+      - frontend/student-portal/academic-module-registration.md
+      - frontend/student-portal/personal-profile.md
+      - frontend/student-portal/profile-documents.md
+      - frontend/student-portal/privacy-security.md
+      - frontend/student-portal/online-forms.md
+      - frontend/student-portal/university-policies.md
+      - frontend/student-portal/resume-profile.md
+      - frontend/student-portal/portfolio-profile.md
+      - frontend/student-portal/finance.md
+      - frontend/student-portal/immigration.md
+      - frontend/student-portal/campus-services.md
+      - frontend/student-portal/performance.md
+    skill: skills/cms-student-portal-page/SKILL.md
+  applicant-portal: frontend/applicant-portal.md
+  lecturer-portal: frontend/lecturer-portal.md
+  staff-portal: frontend/staff-portal.md
+
+design:
+  - path: design/design-system.md
+    topics: [tokens, components, dark-theme, summary-card]
+
+process:
+  - path: process/generate-documentation.md
+    topics: [sdd, pdf, openapi, knowledge-sync]
+  - path: process/status-language.md
+    topics: [demo, live, partial, placeholder]
+
+rules:
+  - path: rules/cms-student-portal.mdc
+  - path: rules/portal-sidebar.mdc

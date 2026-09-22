@@ -1,0 +1,879 @@
+
+# LMS / ODL REQUIREMENTS CHECKLIST
+
+
+---
+
+# 1. BOTSWANA
+
+**Main Authority:** Botswana Qualifications Authority (BQA)  
+**Regulatory Strength:** Moderate  
+**Overall Position:** General accreditation and quality-assurance requirements apply to online/distance provision, but the reviewed material does not establish a dedicated national LMS feature standard.
+
+## Governance & Accreditation
+
+[ ] Verify the institution/provider is appropriately accredited by BQA. — General QA
+
+[ ] Verify the ODL/online programme is accredited. — General QA
+
+[ ] Maintain evidence of institutional and programme readiness for online delivery. — General QA
+
+## Course Design & Content
+
+[ ] Clearly document course information and intended learning outcomes. — General QA
+
+[ ] Provide suitable access to digital learning materials/resources. — General QA
+
+[ ] Maintain a process for reviewing and assuring the quality of learning materials. — General QA
+
+## Assessment
+
+[ ] Maintain an appropriate assessment system for online/ODL programmes. — General QA
+
+## Learner Support
+
+[ ] Provide appropriate learner support services. — General QA
+
+[ ] Provide access to suitable library/e-learning resources. — General QA
+
+[ ] Provide appropriate study-centre or off-site support where applicable. — General QA
+
+## Technology
+
+[ ] Ensure adequate internet/connectivity and supporting infrastructure. — General QA
+
+## Quality & Staff
+
+[ ] Monitor quality and effectiveness of ODL delivery. — General QA
+
+[ ] Ensure staff have appropriate training and competence for programme delivery. — General QA
+
+## External Arrangements
+
+[ ] Check accreditation and quality controls for external, cross-border or third-party arrangements. — General QA
+
+### Items Requiring Further Verification
+
+No explicit national LMS requirement was confirmed for:
+
+- Dedicated LMS platform
+- Self-learning materials
+- Multimedia requirements
+- Copyright controls
+- Learner-instructor interaction
+- Learner-learner interaction
+- Live/synchronous learning
+- Asynchronous learning
+- Interactive online activities
+- Instructor feedback
+- Identity verification
+- Anti-plagiarism
+- Online grades/progress access
+- LMS induction
+- Dedicated IT helpdesk
+- Accessibility requirements
+- LMS capacity/reliability monitoring
+- Backup/redundancy
+- Privacy/data security
+- Cybersecurity
+- Mobile accessibility
+- Learner engagement tracking
+- Student ICT skills
+
+**Key Caution:** Treat these as matters requiring BQA verification rather than as exemptions.
+
+---
+
+# 2. CAMBODIA
+
+**Main Authorities:** Accreditation Committee of Cambodia (ACC) / Ministry of Education, Youth and Sport (MoEYS)  
+**Regulatory Strength:** Limited–Moderate  
+**Overall Position:** Higher-education accreditation applies, and MoEYS has active LMS/digital-learning practices, but a detailed mandatory higher-education LMS feature standard was not confirmed.
+
+## General QA Requirements
+
+[ ] Verify accreditation/QA requirements for the ODL programme. — General QA
+
+[ ] Define programme/course information and learning outcomes. — General QA
+
+[ ] Maintain quality controls for learning materials. — General QA
+
+[ ] Maintain appropriate assessment processes. — General QA
+
+[ ] Provide learner support services. — General QA
+
+## Official Digital-Learning Practice
+
+The following are evident in official implementation or capacity-building activities but should **not automatically be treated as mandatory regulatory requirements**:
+
+[ ] LMS use and management — Practice Only
+
+[ ] Digital content creation and hosting — Practice Only
+
+[ ] Multimedia/media use — Practice Only
+
+[ ] Learner-instructor interaction — Practice Only
+
+[ ] Interactive online learning activities — Practice Only
+
+[ ] Internet/connectivity utilisation — Practice Only
+
+[ ] Mobile/device access — Practice Only
+
+[ ] Learning analytics/QA monitoring — Practice Only
+
+[ ] Staff digital/LMS competence — Practice Only
+
+[ ] Student ICT/digital-learning skills — Practice Only
+
+### Items Requiring Regulatory Confirmation
+
+Confirm directly with ACC/MoEYS whether the programme requires:
+
+- LMS readiness evidence
+- Self-learning materials
+- Copyright/IP controls
+- Learner-learner interaction
+- Synchronous classes
+- Asynchronous learning
+- Instructor feedback
+- Identity verification
+- Anti-plagiarism systems
+- Grades/progress access
+- LMS induction
+- IT helpdesk
+- Digital library
+- Special-needs accessibility
+- Study-centre support
+- LMS reliability monitoring
+- Backup/disaster recovery
+- Privacy/data protection
+- Cybersecurity
+- Performance tracking
+- Formal learner feedback
+- Cross-border/third-party controls
+
+**Key Caution:** Official MoEYS use of LMS technology demonstrates recognised practice, but it should not be converted into a mandatory accreditation requirement without ACC/MoEYS confirmation.
+
+---
+
+# 3. ESWATINI
+
+**Main Authority:** Eswatini Higher Education Council (ESHEC)  
+**Regulatory Strength:** High  
+**Overall Position:** ESHEC institutional-review standards contain clear quality-assurance requirements for institutions providing online education.
+
+## Governance & Accreditation
+
+[ ] Provide a suitable LMS/online learning environment. — QA Requirement
+
+[ ] Demonstrate LMS readiness, capacity and functionality. — QA Requirement
+
+[ ] Ensure institution and programme accreditation covers online education. — QA Requirement
+
+## Course Design & Content
+
+[ ] Clearly state programme/course information and learning outcomes.
+
+[ ] Provide online access to learning content.
+
+[ ] Provide suitable self-learning/distance-learning materials.
+
+[ ] Apply quality assurance to learning materials.
+
+[ ] Use appropriate multimedia/media for the delivery mode.
+
+## Interaction & Teaching
+
+[ ] Provide learner-instructor interaction.
+
+[ ] Provide learner-learner interaction.
+
+[ ] Support asynchronous learning.
+
+[ ] Provide interactive online learning activities.
+
+[ ] Ensure learners receive appropriate instructor feedback.
+
+## Assessment & Academic Integrity
+
+[ ] Maintain a suitable online/ODL assessment framework.
+
+[ ] Verify learner identity and prevent impersonation.
+
+[ ] Apply academic-integrity and anti-plagiarism controls.
+
+[ ] Provide appropriate access to grades, progress and results.
+
+## Learner Support
+
+[ ] Provide student orientation/LMS induction.
+
+[ ] Maintain comprehensive learner-support services.
+
+[ ] Provide IT helpdesk/technical support.
+
+[ ] Provide digital library/e-learning resources.
+
+[ ] Support students with disabilities/special needs.
+
+[ ] Provide appropriate study-centre/regional support where applicable.
+
+## Technology & Security
+
+[ ] Ensure stable and adequate internet connectivity.
+
+[ ] Monitor LMS capacity, reliability and performance.
+
+[ ] Protect learner information and personal data.
+
+[ ] Maintain an appropriately secure digital learning environment.
+
+## Quality & Capability
+
+[ ] Track learner engagement/performance.
+
+[ ] Use analytics/monitoring for quality assurance.
+
+[ ] Collect learner feedback and conduct course evaluation.
+
+[ ] Ensure staff have adequate ODL/LMS competence.
+
+[ ] Ensure students possess or develop appropriate ICT skills.
+
+[ ] Maintain appropriate controls for cross-border and external arrangements.
+
+### Requirements Not Explicitly Confirmed
+
+Further confirmation should be obtained for:
+
+- Copyright/intellectual-property controls
+- Mandatory synchronous/live sessions
+- Backup/redundancy requirements
+- Mobile/device accessibility
+
+**Key Caution:** These four items being unconfirmed should not be interpreted as unnecessary.
+
+---
+
+# 4. LESOTHO
+
+**Main Authorities:** Ministry of Education and Training (MoET) / Council on Higher Education (CHE)  
+**Regulatory Strength:** High at policy level  
+**Overall Position:** Lesotho has strong ODL policy requirements covering ICT, learner support and quality assurance, although individual LMS functions are not always prescribed.
+
+## Governance & Accreditation
+
+[ ] Provide a suitable ICT/LMS environment for ODL delivery. — Policy Requirement
+
+[ ] Ensure ODL programmes operate within appropriate accreditation/QA arrangements.
+
+## Course Design & Materials
+
+[ ] Clearly define course information and learning outcomes.
+
+[ ] Provide digital access to learning materials.
+
+[ ] Develop appropriate self-learning materials.
+
+[ ] Implement learning-material QA processes.
+
+[ ] Use an appropriate mix of technologies/media.
+
+## Teaching & Interaction
+
+[ ] Provide learner-instructor interaction.
+
+[ ] Include interactive learning activities.
+
+[ ] Ensure instructor feedback is available.
+
+## Assessment
+
+[ ] Maintain an appropriate ODL assessment framework.
+
+## Learner Support
+
+[ ] Provide learner orientation and induction.
+
+[ ] Maintain comprehensive learner-support systems.
+
+[ ] Provide appropriate technical/IT support.
+
+[ ] Provide digital library/e-learning resources.
+
+[ ] Accommodate learners with disabilities or special needs.
+
+[ ] Provide study/regional/learning-centre support where required.
+
+## Technology
+
+[ ] Ensure adequate ICT infrastructure and connectivity.
+
+[ ] Maintain sufficient LMS/technology capacity and reliability.
+
+## Quality & Capability
+
+[ ] Monitor ODL programme quality.
+
+[ ] Collect learner feedback and undertake course evaluation.
+
+[ ] Train staff in appropriate ODL/ICT delivery.
+
+[ ] Ensure learners develop appropriate ICT skills.
+
+[ ] Maintain suitable controls for partnerships and external arrangements.
+
+### Items Requiring Further Confirmation
+
+Specific requirements were not confirmed for:
+
+- LMS readiness evidence
+- Copyright/IP
+- Learner-learner interaction
+- Mandatory live/synchronous learning
+- Mandatory asynchronous learning
+- Identity verification
+- Anti-plagiarism
+- Online grade/progress access
+- Backup/redundancy
+- Privacy/data security
+- Cybersecurity
+- Mobile/device accessibility
+- Learner performance tracking
+
+**Key Caution:** Obtain the current CHE ODL accreditation standards before final compliance approval.
+
+---
+
+# 5. MALAYSIA
+
+**Main Authority:** Malaysian Qualifications Agency (MQA)  
+**Primary Framework:** COPPA:ODL  
+**Regulatory Strength:** Very High  
+**Overall Position:** Malaysia has one of the most detailed LMS/ODL accreditation frameworks among the eight countries reviewed.
+
+## Governance & Accreditation
+
+[ ] Provide an electronic/online learning platform for teaching and learning.
+
+[ ] Demonstrate LMS/platform readiness as part of accreditation.
+
+[ ] Obtain appropriate ODL programme accreditation.
+
+## Course Design & Content
+
+[ ] Clearly specify course/programme information and learning outcomes.
+
+[ ] Provide online access to digital learning content.
+
+[ ] Develop appropriate self-instructional materials (SIM).
+
+[ ] Maintain a dedicated process/unit for SIM development where required.
+
+[ ] Review and quality-assure learning materials.
+
+[ ] Use an appropriate multimedia/media mix.
+
+[ ] Comply with copyright and intellectual-property requirements.
+
+## Interaction & Pedagogy
+
+[ ] Enable learner-instructor interaction.
+
+[ ] Enable learner-learner interaction.
+
+[ ] Provide synchronous/live interaction.
+
+[ ] Provide asynchronous learning opportunities.
+
+[ ] Include interactive online learning activities.
+
+[ ] Ensure appropriate and timely instructor feedback.
+
+## Assessment & Integrity
+
+[ ] Maintain an appropriate ODL/online assessment framework.
+
+[ ] Implement identity-verification measures where appropriate.
+
+[ ] Maintain academic-integrity/anti-plagiarism controls.
+
+[ ] Allow learners appropriate access to grades, progress and results.
+
+## Learner Support
+
+[ ] Provide student orientation/ODL induction.
+
+[ ] Provide structured learner-support services.
+
+[ ] Provide suitable IT/technical support.
+
+[ ] Provide digital library/e-resource access.
+
+[ ] Accommodate learners with disabilities or special requirements.
+
+[ ] Provide learning-centre/study-centre support where applicable.
+
+## Technology & Security
+
+[ ] Ensure adequate internet/connectivity.
+
+[ ] Monitor LMS capacity, reliability and system performance.
+
+[ ] Protect student information and personal data.
+
+[ ] Maintain a secure digital learning environment.
+
+## Quality, Analytics & Capability
+
+[ ] Track learner participation, engagement and performance.
+
+[ ] Use LMS/programme data for QA monitoring.
+
+[ ] Collect learner feedback and evaluate courses.
+
+[ ] Ensure staff have appropriate ODL/LMS training and competence.
+
+[ ] Prepare students for self-directed/online learning and relevant technology.
+
+## External Arrangements
+
+[ ] Review cross-border, outsourced and third-party arrangements as part of overall ODL quality assurance. — General QA
+
+### Items Not Explicitly Confirmed in the Matrix
+
+Specific explicit requirements were not confirmed for:
+
+- Backup/redundancy/business continuity as a standalone LMS feature
+- Mobile/device accessibility as a standalone feature
+
+**Key Caution:** These should still be addressed as good system design and checked against other applicable Malaysian legislation, institutional cybersecurity requirements and programme-specific conditions.
+
+---
+
+# 6. NAMIBIA
+
+**Main Authority:** Namibia Qualifications Authority (NQA)  
+**Regulatory Strength:** Moderate  
+**Overall Position:** Namibia has substantial general accreditation requirements for course delivery, resources, assessment, support and quality systems, but the reviewed sources do not establish a dedicated LMS functionality standard.
+
+## General QA Checklist
+
+[ ] Demonstrate provider/LMS readiness and capability.
+
+[ ] Ensure ODL/online programme delivery falls within appropriate accreditation.
+
+[ ] Clearly document course design and learning outcomes.
+
+[ ] Provide adequate learning materials and digital content.
+
+[ ] Maintain learning-material quality assurance.
+
+[ ] Use suitable delivery media/resources.
+
+[ ] Maintain appropriate assessment systems.
+
+[ ] Provide students appropriate access to academic records/results.
+
+[ ] Provide student orientation/support.
+
+[ ] Maintain comprehensive learner-support services.
+
+[ ] Provide digital library/resources.
+
+[ ] Provide accessibility/special-needs support.
+
+[ ] Provide suitable off-site/study-centre support.
+
+[ ] Ensure suitable internet and ICT resources.
+
+[ ] Monitor system/resource capacity and reliability.
+
+[ ] Monitor learner engagement where relevant.
+
+[ ] Maintain quality-monitoring systems.
+
+[ ] Collect learner feedback.
+
+[ ] Maintain appropriate staff development and competence.
+
+[ ] Control partnership, off-site and third-party arrangements.
+
+### Items Requiring Further Verification
+
+No dedicated national LMS feature requirement was confirmed for:
+
+- Mandatory LMS platform
+- Self-learning materials
+- Copyright/IP
+- Learner-instructor interaction
+- Learner-learner interaction
+- Live interaction
+- Asynchronous learning
+- Interactive online activities
+- Instructor feedback
+- Identity verification
+- Anti-plagiarism
+- IT helpdesk
+- Backup/redundancy
+- Privacy/data security
+- Cybersecurity
+- Mobile accessibility
+- Student ICT skills
+
+**Key Caution:** Apply the NQA accreditation framework as the baseline and obtain any additional NCHE or mode-specific requirements before programme launch.
+
+---
+
+# 7. SIERRA LEONE
+
+**Main Authority:** Tertiary Education Commission (TEC) / Ministry of Technical and Higher Education  
+**Regulatory Strength:** Moderate  
+**Overall Position:** National ODL/online guidelines exist, but detailed feature-level requirements were not fully available in the material reviewed.
+
+## Governance & Accreditation
+
+[ ] Provide an appropriate platform/system for ODL/online delivery. — Policy Requirement
+
+[ ] Demonstrate readiness for ODL/online establishment and assessment. — Policy Requirement
+
+[ ] Ensure ODL/online programme approval/accreditation. — Policy Requirement
+
+## Course Design
+
+[ ] Clearly define course/programme information and learning outcomes. — Policy Requirement
+
+[ ] Maintain quality controls for learning materials. — Policy Requirement
+
+## Assessment
+
+[ ] Maintain an appropriate ODL/online assessment framework. — Policy Requirement
+
+## Learner Support
+
+[ ] Provide student orientation. — Policy Requirement
+
+[ ] Maintain learner-support services. — Policy Requirement
+
+[ ] Provide technical/IT support. — Policy Requirement
+
+[ ] Support learners with disabilities/special needs. — Policy Requirement
+
+[ ] Provide appropriate learning-centre/regional support. — Policy Requirement
+
+## Quality & Capability
+
+[ ] Maintain QA monitoring/continuous improvement. — Policy Requirement
+
+[ ] Collect learner feedback/course evaluation. — Policy Requirement
+
+[ ] Ensure staff have appropriate ODL competence. — Policy Requirement
+
+## Partnerships
+
+[ ] Maintain appropriate controls for cross-border, outsourced or partnership arrangements. — Policy Requirement
+
+### Items Requiring Further Verification
+
+Detailed requirements were not confirmed for:
+
+- Digital content hosting
+- Self-learning materials
+- Multimedia
+- Copyright/IP
+- Learner-instructor interaction
+- Learner-learner interaction
+- Synchronous learning
+- Asynchronous learning
+- Interactive learning activities
+- Instructor feedback
+- Identity verification
+- Anti-plagiarism
+- Grades/progress access
+- Digital library
+- Internet/connectivity
+- LMS capacity/reliability
+- Backup/redundancy
+- Privacy/data security
+- Cybersecurity
+- Mobile/device accessibility
+- Learner engagement tracking
+- Student ICT skills
+
+**Key Caution:** Obtain the complete current TEC ODL/online guideline before treating individual LMS functions as mandatory or optional.
+
+---
+
+# 8. UGANDA
+
+**Main Authority:** National Council for Higher Education (NCHE)  
+**Framework:** Minimum Standards for Open, Distance and e-Learning (ODeL)  
+**Regulatory Strength:** Very High  
+**Overall Position:** Uganda has the most comprehensive set of explicit LMS/ODeL requirements in the comparison, with 36 of the 37 reviewed feature areas supported by mandatory or QA requirements.
+
+## Governance & Accreditation
+
+[ ] Provide an interactive LMS that effectively supports ODeL.
+
+[ ] Demonstrate LMS readiness/capability.
+
+[ ] Ensure both institution and ODeL programme have appropriate NCHE accreditation.
+
+## Course Design & Content
+
+[ ] Clearly document course information, content and learning outcomes.
+
+[ ] Provide reliable access to digital learning content.
+
+[ ] Develop appropriate Self-Learning Materials (SLMs).
+
+[ ] Quality-assure and pre-test learning materials.
+
+[ ] Use suitable multimedia/media for ODeL delivery.
+
+[ ] Maintain copyright and intellectual-property controls.
+
+## Interaction & Pedagogy
+
+[ ] Enable learner-instructor interaction.
+
+[ ] Enable learner-learner interaction.
+
+[ ] Provide appropriate synchronous/live interaction.
+
+[ ] Provide asynchronous learning.
+
+[ ] Provide interactive learning activities.
+
+[ ] Ensure instructor feedback is available.
+
+## Assessment & Integrity
+
+[ ] Maintain an appropriate ODeL assessment system.
+
+[ ] Verify student identity and prevent impersonation.
+
+[ ] Maintain plagiarism/academic-integrity controls.
+
+[ ] Give learners appropriate access to grades, progress and results.
+
+## Learner Support
+
+[ ] Provide learner orientation before/during ODeL study.
+
+[ ] Maintain comprehensive learner-support services.
+
+[ ] Provide technical support/helpdesk services.
+
+[ ] Provide digital library and electronic resources.
+
+[ ] Support learners with disabilities or special requirements.
+
+[ ] Provide appropriate regional/study-centre support.
+
+## Technology & Infrastructure
+
+[ ] Ensure adequate internet/connectivity.
+
+[ ] Ensure LMS capacity and system reliability.
+
+[ ] Maintain backup, redundancy and continuity measures.
+
+[ ] Protect student privacy and personal information.
+
+[ ] Maintain an appropriately secure/cybersecure environment.
+
+## Quality & Analytics
+
+[ ] Track learner engagement and performance.
+
+[ ] Monitor and evaluate LMS/ODeL quality.
+
+[ ] Collect learner feedback and evaluate learning materials/courses.
+
+## Staff & Student Capability
+
+[ ] Ensure academic staff are competent in ODeL delivery.
+
+[ ] Provide continuous professional development for ODeL staff.
+
+[ ] Orient/train students in ICT and ODeL systems.
+
+## External Arrangements
+
+[ ] Maintain contracts and governance controls for outsourced services.
+
+[ ] Ensure third-party arrangements meet institutional ODeL standards.
+
+[ ] Apply appropriate controls to cross-border/electronically delivered programmes.
+
+### Item Not Explicitly Confirmed
+
+[ ] Confirm any specific regulatory requirement for mobile/device accessibility.
+
+**Key Caution:** Mobile accessibility being unconfirmed does not remove the need to provide suitable student access across common devices.
+
+---
+
+# MASTER LMS / ODL CHECKLIST
+
+This can be used as the common baseline when developing an LMS intended to operate across all eight countries.
+
+## A. Governance & Accreditation
+
+[ ] Institution/provider has required approval.
+
+[ ] ODL/online programme has required accreditation.
+
+[ ] Dedicated LMS/online platform is available.
+
+[ ] LMS readiness and capacity can be demonstrated to regulators.
+
+[ ] Policies and procedures exist for LMS/ODL operation.
+
+---
+
+## B. Course Design & Content
+
+[ ] Course information is clearly presented.
+
+[ ] Learning outcomes are clearly stated.
+
+[ ] Digital course materials are available online.
+
+[ ] Self-learning materials are provided where required.
+
+[ ] Learning materials undergo QA/review.
+
+[ ] Multimedia/media mix is appropriate.
+
+[ ] Copyright and intellectual-property requirements are addressed.
+
+---
+
+## C. Interaction & Learning
+
+[ ] Student-instructor communication is supported.
+
+[ ] Student-student interaction is supported.
+
+[ ] Live/synchronous learning is supported where required.
+
+[ ] Asynchronous learning is supported.
+
+[ ] Interactive learning activities are available.
+
+[ ] Instructors can provide feedback to learners.
+
+---
+
+## D. Assessment & Academic Integrity
+
+[ ] Online assessment is supported.
+
+[ ] Student identity can be verified where required.
+
+[ ] Anti-plagiarism/academic-integrity controls exist.
+
+[ ] Students can view grades/results/progress.
+
+[ ] Assessment records are retained appropriately.
+
+---
+
+## E. Learner Support & Accessibility
+
+[ ] Student orientation/LMS induction is provided.
+
+[ ] Learner-support services are available.
+
+[ ] Technical/IT helpdesk is available.
+
+[ ] Digital library/e-resources are available.
+
+[ ] Accessibility/special-needs requirements are supported.
+
+[ ] Study-centre/regional support is available where required.
+
+---
+
+## F. Technology & Security
+
+[ ] Internet/connectivity requirements are adequate.
+
+[ ] LMS can handle expected numbers of users.
+
+[ ] LMS availability and reliability are monitored.
+
+[ ] Backup and recovery arrangements exist.
+
+[ ] Privacy/data-protection controls exist.
+
+[ ] Cybersecurity controls are implemented.
+
+[ ] System works effectively across suitable devices.
+
+---
+
+## G. Quality & Analytics
+
+[ ] Student engagement can be monitored.
+
+[ ] Student performance can be monitored.
+
+[ ] LMS data can support QA reporting.
+
+[ ] Learner feedback can be collected.
+
+[ ] Course evaluation and improvement processes exist.
+
+---
+
+## H. Staff & Student Capability
+
+[ ] Academic staff receive LMS/ODL training.
+
+[ ] Academic staff are competent to teach online.
+
+[ ] Students receive appropriate ICT/LMS training.
+
+[ ] Students understand how to study effectively through ODL.
+
+---
+
+## I. External / Cross-Border Arrangements
+
+[ ] Outsourced LMS/services are governed through appropriate agreements.
+
+[ ] Third-party providers meet institutional quality requirements.
+
+[ ] Cross-border delivery complies with destination-country requirements.
+
+[ ] External/partner study centres are appropriately controlled.
+
+---
+
+# COUNTRY COMPLIANCE PRIORITY
+
+**Very High Explicit LMS Requirements**
+- Malaysia
+- Uganda
+
+**High LMS / Online QA Requirements**
+- Eswatini
+
+**Strong ODL Policy Requirements**
+- Lesotho
+
+**ODL Policy Exists but Detailed Feature Verification Required**
+- Sierra Leone
+
+**Primarily General Accreditation / QA**
+- Botswana
+- Namibia
+
+**Official LMS Practice but Limited Confirmed Feature-Level Regulation**
+- Cambodia
+
+---

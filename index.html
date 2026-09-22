@@ -89,6 +89,7 @@
         <a href="./diagrams/architecture.html">Architecture</a>
         <a href="./diagrams/erd.html">ERD</a>
         <a href="./diagrams/dfd.html">DFD</a>
+        <a href="./ai/index.html">AI knowledge</a>
         <a class="active" href="./index.html">OpenAPI</a>
       </nav>
     </div>
@@ -97,12 +98,12 @@
   <header class="raisd-header">
     <h1>Raisd Portal API</h1>
     <p>
-      Published OpenAPI:
-      <a href="./openapi.yaml">openapi.yaml</a>
-      · Spec repo:
-      <a href="https://github.com/raisd-campus/portal-api-docs">portal-api-docs</a>
-      · Service (private):
-      <a href="https://github.com/raisd-campus/control-plane/tree/main/portal-api">control-plane/portal-api</a>
+      OpenAPI source of truth:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+      · Public Pages:
+      <a href="https://raisd-campus.github.io/portal-api-docs/">raisd-campus.github.io/portal-api-docs</a>
+      · Service code:
+      <a href="https://github.com/raisd-campus/control-plane/tree/main/portal-api">portal-api/</a>
     </p>
     <p>
       Stage 1: bearer demo sessions and stub CMS acknowledgements.
@@ -112,8 +113,20 @@
   <div id="swagger-ui"></div>
   <script src="https://unpkg.com/swagger-ui-dist@5.27.1/swagger-ui-bundle.js" crossorigin></script>
   <script>
+    // portal-api serves this at /docs with /openapi.yaml
+    // GitHub Pages (when enabled) serves index + openapi.yaml from the same directory
+    // Local `python -m http.server` from repo root uses ../openapi.yaml
+    const path = location.pathname.replace(/\/$/, "") || "/";
+    const onApiDocs = path === "/docs";
+    const onPages = location.hostname.endsWith("github.io");
+    const specUrl = onApiDocs
+      ? "/openapi.yaml"
+      : onPages
+        ? "./openapi.yaml"
+        : "../openapi.yaml";
+
     window.ui = SwaggerUIBundle({
-      url: "./openapi.yaml",
+      url: specUrl,
       dom_id: "#swagger-ui",
       deepLinking: true,
       presets: [SwaggerUIBundle.presets.apis],
