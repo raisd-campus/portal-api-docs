@@ -99,5 +99,7 @@
   "UX": "User experience.",
   "PDF": "Portable Document Format.",
   "WCAG": "Web Content Accessibility Guidelines.",
-  "SST": "Malaysian Sales and Service Tax (finance prototype assumptions)."
+  "SST": "Malaysian Sales and Service Tax (finance prototype assumptions).",
+  "ADR-2": "ADR-2: Singapore, on UltaHost — host on existing VDS estate; size follows launch stage.",
+  "ADR-3": "ADR-3: Kubernetes starting at the minimum — application workloads on k3s; CMS and mail stay off K8s."
 }

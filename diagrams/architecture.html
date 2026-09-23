@@ -48,7 +48,7 @@
     </section>
 
     <div class="toc">
-      <a href="#sdd"><strong>SDD catalogue</strong><span>All Software Design Documents</span></a>
+      <a href="#sdd"><strong>SDD &amp; ADR catalogue</strong><span>Design docs and decisions</span></a>
       <a href="#principles"><strong>Six instructions</strong><span>Core rules for authors</span></a>
       <a href="#target"><strong>Target shape</strong><span>Portals → domains → ACL → CMS</span></a>
       <a href="#acl"><strong>CMS ACL (CAP-53)</strong><span>Anti-corruption layer</span></a>
@@ -60,11 +60,51 @@
     </div>
 
     <section class="section" id="sdd">
-      <h2>Software Design Documents</h2>
+      <h2>Software Design Documents and ADRs</h2>
       <p class="lead">
         Product baseline for Working Group CMS 2026.
         Hub: <a href="../sdd/">sdd/</a> · Nomenclature: <a href="../sdd/15-nomenclature.html">SDD-15</a>.
       </p>
+
+      <h3 style="margin:0 0 10px;font-size:1.05rem">Architecture Decision Records</h3>
+      <div class="card" style="margin-bottom:22px">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Decision</th>
+                  <th>Summary</th>
+                  <th>Recorded in</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="../sdd/02-architecture-and-integration.html#adr-1">ADR-1</a></td>
+                  <td>Existing CMS as initial backend</td>
+                  <td>Cyberjaya / LUCT CMS remains SoR this phase; portals via Portal API; do not duplicate operational desks. Progressive unified CMS is M5+ on verified gaps.</td>
+                  <td><a href="../sdd/02-architecture-and-integration.html">SDD-02</a></td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/12-deployment-architecture.html#adr-2">ADR-2</a></td>
+                  <td>Singapore, on UltaHost</td>
+                  <td>Host on the existing UltaHost VDS estate in Singapore. Machine size follows the launch stage, not the largest machine already owned.</td>
+                  <td><a href="../sdd/12-deployment-architecture.html">SDD-12</a></td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/12-deployment-architecture.html#adr-3">ADR-3</a></td>
+                  <td>Kubernetes, starting at the minimum</td>
+                  <td>Application workloads on k3s. Existing CMS and mail stay off Kubernetes. Start single-node; grow by stage.</td>
+                  <td><a href="../sdd/12-deployment-architecture.html">SDD-12</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin:0 0 10px;font-size:1.05rem">Software Design Documents</h3>
       <div class="card">
         <div class="card-body" style="padding:0">
           <div class="table-wrap">

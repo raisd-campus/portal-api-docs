@@ -50,6 +50,7 @@ builds which service, which machine runs it, and how a browser reaches
 it. The runtime is Kubernetes. The first launch stage is one node and
 one portal.</p>
 <h2 id="hosting-decision">1. Hosting decision</h2>
+<p><a id="hosting-decision"></a> <a id="adr-2"></a></p>
 <p><strong>ADR-2 — Singapore, on UltaHost. Size follows the stage, not
 the largest machine already owned.</strong></p>
 <p>On 19 September 2026 Aslam said the current estate is UltaHost
@@ -59,6 +60,7 @@ same location as the mailbox host <code>cp8.sgp1.ultacp.com</code>. The
 cluster does not start on a Premium. Section 2.1 is the size to
 provision at each stage. A larger machine already paid for may be used,
 but it is not the requirement.</p>
+<p><a id="adr-3"></a></p>
 <p><strong>ADR-3 — Kubernetes, starting at the minimum.</strong></p>
 <p>Application workloads run on <strong>k3s</strong>. k3s is the
 distribution because it is one binary, includes Traefik as ingress, and
