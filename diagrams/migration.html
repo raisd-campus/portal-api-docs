@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Migration plan &amp; milestones</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · Migration · ERD · DFD · <a href="./old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="./index.html">Overview</a>
+        <a href="./architecture.html">Architecture</a>
+        <a class="active" href="./migration.html">Migration</a>
+        <a href="./erd.html">ERD</a>
+        <a href="./dfd.html">DFD</a>
+        <a href="./old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a href="../sdd/">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Migration plan &amp; milestones</h1>
+      <p>
+        End-to-end delivery and migration plan for Raisd portals on the existing Cyberjaya /
+        <a href="./old-cms/">LUCT CMS</a> system of record, then progressive consolidation.
+        Source of truth: <a href="../sdd/03-delivery-milestones.html">SDD-03</a> (milestones),
+        <a href="../sdd/12-deployment-architecture.html">SDD-12</a> (hosting stages),
+        <a href="../sdd/14-cms-feature-comparison.html">SDD-14</a> (CMS vs portals),
+        <a href="../sdd/02-architecture-and-integration.html#adr-1">ADR-1</a>–<a href="../sdd/12-deployment-architecture.html#adr-3">ADR-3</a>.
+        All dates remain <strong>TBC</strong> until the working group confirms them.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">This phase: CMS = SoR</span>
+        <span class="chip ok">Portals via Portal API</span>
+        <span class="chip warn">No ops duplication</span>
+        <span class="chip">M5+: progressive unified CMS</span>
+      </div>
+    </section>
+
+    <div class="toc">
+      <a href="#posture"><strong>SoR posture</strong><span>This phase vs M5+</span></a>
+      <a href="#sequence"><strong>Milestone sequence</strong><span>M1 → M5</span></a>
+      <a href="#m1"><strong>M1</strong><span>Confirm rules</span></a>
+      <a href="#m2"><strong>M2</strong><span>Admissions launch</span></a>
+      <a href="#m3"><strong>M3</strong><span>Core student portal</span></a>
+      <a href="#m4"><strong>M4</strong><span>Cyberjaya pilot</span></a>
+      <a href="#m5"><strong>M5</strong><span>Expansion &amp; migration</span></a>
+      <a href="#hosting"><strong>Hosting stages</strong><span>SDD-12 launch plan</span></a>
+      <a href="#critical"><strong>Critical path</strong><span>Live rules &amp; next two weeks</span></a>
+      <a href="#done"><strong>Definition of done</strong><span>When a CAP is Live</span></a>
+      <a href="#counts"><strong>Checklist counts</strong><span>Rows by milestone</span></a>
+    </div>
+
+    <section class="section" id="posture">
+      <h2>System-of-record posture</h2>
+      <p class="lead">
+        Confirmed Working Group (Aslam, 23 Sep 2026) and recorded as
+        <a href="../sdd/02-architecture-and-integration.html#adr-1">ADR-1</a>.
+      </p>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr><th>Horizon</th><th>What ships</th><th>System of record</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#m1">M1</a>–<a href="#m4">M4</a> (this phase)</td>
+                  <td>Four portals + Portal API on existing Cyberjaya / LUCT CMS</td>
+                  <td>Existing CMS — do not duplicate operational desks</td>
+                </tr>
+                <tr>
+                  <td><a href="#m5">M5</a>+</td>
+                  <td>Campus expansion; remaining CMS capabilities; progressive consolidation</td>
+                  <td>Migrate domain-by-domain only with ownership, cutover, rollback, and training agreed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pre class="mermaid" style="margin-top:16px">
+flowchart TB
+  subgraph phase ["This phase — M1 to M4"]
+    P[Four portals] --> API[Portal API]
+    API --> CMS[Cyberjaya / LUCT CMS SoR]
+  end
+  subgraph later ["Longer term — M5+"]
+    G[Verified gap] --> MIG[Migration strategy]
+    MIG --> U[Progressive unified CMS]
+    CMS -.->|retire desk only when ready| U
+  end
+  phase --> later
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sequence">
+      <h2>Milestone sequence</h2>
+      <p class="lead">
+        Order follows admissions-first product decisions and working-system dependencies.
+        A milestone is when a capability <strong>must work</strong>, not when investigation begins.
+        Detail: <a href="../sdd/03-delivery-milestones.html">SDD-03</a>.
+      </p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  M1[1. Confirm rules<br/>and integration] --> M2[2. Admissions launch]
+  M2 --> M3[3. Core student portal]
+  M3 --> M4[4. Cyberjaya pilot<br/>acceptance]
+  M4 --> M5[5. Campus expansion<br/>and remaining CMS]
+          </pre>
+          <div class="table-wrap" style="margin-top:8px">
+            <table class="attr">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Target</th>
+                  <th>Release condition (summary)</th>
+                  <th>Hosting stage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#m1">M1</a></td>
+                  <td>Confirm rules and integration</td>
+                  <td>TBC</td>
+                  <td>Rules, API access, operating responsibilities agreed</td>
+                  <td>Before stage 1 install</td>
+                </tr>
+                <tr>
+                  <td><a href="#m2">M2</a></td>
+                  <td>Admissions launch</td>
+                  <td>TBC</td>
+                  <td>Application-to-enrolment works with real records</td>
+                  <td><a href="#hosting">Stage 2</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#m3">M3</a></td>
+                  <td>Core student portal</td>
+                  <td>TBC</td>
+                  <td>Student + staff/lecturer paths Live or on verified old CMS</td>
+                  <td><a href="#hosting">Stage 3</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#m4">M4</a></td>
+                  <td>Cyberjaya pilot acceptance</td>
+                  <td>TBC</td>
+                  <td>Campus accepts pilot; training and ops ready</td>
+                  <td><a href="#hosting">Stage 4</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#m5">M5</a></td>
+                  <td>Campus expansion and remaining CMS</td>
+                  <td>TBC</td>
+                  <td>Each campus accepts rollout; SoR moves only with written strategy</td>
+                  <td><a href="#hosting">Stage 5</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin:14px 18px 4px;color:var(--muted);font-size:0.92rem">
+            Kickoff and backend commitments: <strong>TBC</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="m1">
+      <h2>M1 — Confirm rules and integration</h2>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <tbody>
+                <tr><th>Target</th><td>TBC</td></tr>
+                <tr><th>Scope</th><td>Campus rules, named owners, legacy capabilities, integration access</td></tr>
+                <tr><th>Dependencies</th><td>Campus and backend owners identified; kickoff TBC</td></tr>
+                <tr><th>Release condition</th><td>Rules, API access and operating responsibilities agreed</td></tr>
+                <tr><th>Primary CAP</th><td><a href="../sdd/11-capability-catalog.html#cap-42">CAP-42</a> (copyright / provider operating controls)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="padding:14px 18px 18px;margin:0">
+            Not a UI milestone. Unblocks every later “Needs checking” row.
+            Full text: <a href="../sdd/03-delivery-milestones.html#m1">SDD-03 §M1</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="m2">
+      <h2>M2 — Admissions launch</h2>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <tbody>
+                <tr><th>Target</th><td>TBC</td></tr>
+                <tr><th>Scope</th><td>Applicant registration, evidence, tracking, offers, Registry review, core applicant/student sign-in, mobile shell foundations</td></tr>
+                <tr><th>Dependencies</th><td>Agreed rules; working old-CMS admissions/authentication integration</td></tr>
+                <tr><th>Release condition</th><td>Application-to-enrolment works with real records; required staff workflows available through verified old CMS or new screens</td></tr>
+                <tr><th>Hosting</th><td><a href="#hosting">Stage 2</a> — same k3s node resized; wired to real CMS</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="padding:14px 18px 18px">
+            <p style="margin:0 0 10px"><strong>Must work end to end:</strong></p>
+            <ol style="margin:0;padding-left:1.25rem;line-height:1.55">
+              <li>Applicant account (<a href="../sdd/11-capability-catalog.html#cap-01">CAP-01</a>).</li>
+              <li>Application + documents + declarations (<a href="../sdd/11-capability-catalog.html#cap-02">CAP-02</a>, <a href="../sdd/11-capability-catalog.html#cap-03">CAP-03</a>, <a href="../sdd/11-capability-catalog.html#cap-55">CAP-55</a>).</li>
+              <li>Track / offer / accept (<a href="../sdd/11-capability-catalog.html#cap-07">CAP-07</a>).</li>
+              <li>Registry review, qualification checks, offer, first enrolment (<a href="../sdd/11-capability-catalog.html#cap-03">CAP-03</a>, <a href="../sdd/11-capability-catalog.html#cap-05">CAP-05</a>, <a href="../sdd/11-capability-catalog.html#cap-06">CAP-06</a>, <a href="../sdd/11-capability-catalog.html#cap-07">CAP-07</a>).</li>
+              <li>Marketing communications without owning the decision (<a href="../sdd/11-capability-catalog.html#cap-16">CAP-16</a>).</li>
+              <li>Staff access via existing CMS unless a gap is verified (<a href="../sdd/11-capability-catalog.html#cap-44">CAP-44</a>).</li>
+              <li>Portal API first slice (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>).</li>
+              <li>Auth, privacy, monitoring, backups (<a href="../sdd/11-capability-catalog.html#cap-01">CAP-01</a>, <a href="../sdd/11-capability-catalog.html#cap-37">CAP-37</a>, <a href="../sdd/11-capability-catalog.html#cap-38">CAP-38</a>, <a href="../sdd/11-capability-catalog.html#cap-39">CAP-39</a>).</li>
+              <li>Accessible forms and mobile shell (<a href="../sdd/11-capability-catalog.html#cap-35">CAP-35</a>, <a href="../sdd/11-capability-catalog.html#cap-36">CAP-36</a>).</li>
+            </ol>
+            <p style="margin:12px 0 0" class="note">Student portal demo screens are <strong>not</strong> the release condition for M2.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="m3">
+      <h2>M3 — Core student portal</h2>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <tbody>
+                <tr><th>Target</th><td>TBC</td></tr>
+                <tr><th>Scope</th><td>Learning resources, timetable, assignment delivery, policies, core records, semester registration, with lecturer and staff support</td></tr>
+                <tr><th>Dependencies</th><td>Required student, teaching, file-delivery and finance APIs; approved content; staff workflows</td></tr>
+                <tr><th>Release condition</th><td>Student and staff journeys work end to end with durable records and agreed core mobile access</td></tr>
+                <tr><th>Hosting</th><td><a href="#hosting">Stage 3</a> — add edge node; deploy student + lecturer portals</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="padding:14px 18px 18px;margin:0">
+            Student-only demo UI is insufficient. Lecturer publish/mark and staff approval paths for the same CAP IDs must be Live or explicitly served by the old CMS.
+            Full text: <a href="../sdd/03-delivery-milestones.html#m3">SDD-03 §M3</a> · portals <a href="../sdd/05-student-portal.html">SDD-05</a> / <a href="../sdd/06-lecturer-portal.html">SDD-06</a> / <a href="../sdd/07-admin-staff-cms.html">SDD-07</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="m4">
+      <h2>M4 — Cyberjaya pilot acceptance</h2>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <tbody>
+                <tr><th>Target</th><td>TBC</td></tr>
+                <tr><th>Scope</th><td>Test the integrated Cyberjaya pilot, train staff, obtain campus acceptance</td></tr>
+                <tr><th>Dependencies</th><td>Integrations, content, security, recovery, operational support ready</td></tr>
+                <tr><th>Release condition</th><td>Campus accepts the pilot and confirms applicable requirements, including verified existing-CMS or manual alternatives</td></tr>
+                <tr><th>Primary CAP</th><td><a href="../sdd/11-capability-catalog.html#cap-41">CAP-41</a> staff training and operating readiness</td></tr>
+                <tr><th>Hosting</th><td><a href="#hosting">Stage 4</a> — same two nodes; restore drill; no new product</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="padding:14px 18px 18px;margin:0">
+            Full text: <a href="../sdd/03-delivery-milestones.html#m4">SDD-03 §M4</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="m5">
+      <h2>M5 — Campus expansion and remaining CMS</h2>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <tbody>
+                <tr><th>Target</th><td>TBC</td></tr>
+                <tr><th>Scope</th><td>Expand campus coverage; remaining approved CMS/staff capabilities; <strong>start progressive consolidation</strong> toward a unified one-stop CMS where gaps are verified</td></tr>
+                <tr><th>Dependencies</th><td>Cyberjaya accepted; campus-specific rules and existing capabilities verified; migration plan per domain before retiring a legacy desk</td></tr>
+                <tr><th>Release condition</th><td>Each campus accepts its rollout. Deferring new software never defers an applicable operating requirement. Any SoR move needs ownership, cutover, rollback, and training agreed</td></tr>
+                <tr><th>Hosting</th><td><a href="#hosting">Stage 5</a> — grow data node only when full</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="padding:14px 18px 18px">
+            <p style="margin:0 0 10px">
+              Includes quizzes/exams, live class, library, visa, accommodation, scholarships, online payment gateway, study centres, remaining staff desks —
+              <strong>prefer Portal API + verified old CMS</strong> first; rebuild or migrate only when the gap and migration strategy are explicit
+              (<a href="../sdd/14-cms-feature-comparison.html">SDD-14</a>).
+            </p>
+            <div class="table-wrap">
+              <table class="attr">
+                <thead>
+                  <tr><th>Migration rule (M5+)</th><th>Detail</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Verified gap only</td><td>Do not rewrite a working LUCT CMS desk without evidence it fails the CAP</td></tr>
+                  <tr><td>Written strategy</td><td>Ownership, cutover, rollback, training before SoR moves</td></tr>
+                  <tr><td>Domain-by-domain</td><td>Consolidate progressively; never big-bang CMS replacement</td></tr>
+                  <tr><td>Default this phase</td><td>Staff ops stay on CMS; portals read/write via CAP-53 ACL</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="hosting">
+      <h2>Hosting &amp; launch stages (SDD-12)</h2>
+      <p class="lead">
+        <a href="../sdd/12-deployment-architecture.html#adr-2">ADR-2</a>: Singapore UltaHost; size follows the stage.
+        <a href="../sdd/12-deployment-architecture.html#adr-3">ADR-3</a>: k3s from the minimum. Existing CMS and mail stay off Kubernetes.
+        Full sizing: <a href="../sdd/12-deployment-architecture.html">SDD-12</a>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Launch stages mapped to milestones</h3>
+            <p>Each stage adds workloads; it does not replace the cluster. Replicas stay at 1 until a stage says otherwise.</p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>When</th>
+                  <th>Cluster</th>
+                  <th>What is running</th>
+                  <th>Public names</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1. Minimum</td>
+                  <td>Before admissions (after M1)</td>
+                  <td>One k3s node (3 vCPU / 4 GB)</td>
+                  <td>Ingress, applicant-portal, portal-api, Postgres, evidence volume</td>
+                  <td><code>apply.raisd.co</code>, <code>api.raisd.co</code></td>
+                </tr>
+                <tr>
+                  <td>2. Admissions launch</td>
+                  <td><a href="#m2">M2</a></td>
+                  <td>Same node, resized (4 vCPU / 6 GB)</td>
+                  <td>Stage 1 wired to real CMS; backup CronJob; staff-portal only if CMS gap verified</td>
+                  <td>Same (+ <code>staff.raisd.co</code> if deployed)</td>
+                </tr>
+                <tr>
+                  <td>3. Core student</td>
+                  <td><a href="#m3">M3</a></td>
+                  <td>Add edge node; data node steps up</td>
+                  <td>Add student-portal and lecturer-portal; ingress on edge</td>
+                  <td><code>student.raisd.co</code>, <code>teach.raisd.co</code></td>
+                </tr>
+                <tr>
+                  <td>4. Pilot acceptance</td>
+                  <td><a href="#m4">M4</a></td>
+                  <td>Same two nodes; no resize</td>
+                  <td>Restore drill from backup job; no new product</td>
+                  <td>Unchanged</td>
+                </tr>
+                <tr>
+                  <td>5. Campus expansion</td>
+                  <td><a href="#m5">M5</a></td>
+                  <td>Grow data node only when full</td>
+                  <td>Remaining portal features; not a second control plane</td>
+                  <td>Unchanged until a campus outside SEA launches</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Server requirements (minimum per stage)</h3>
+            <p>Do not skip ahead. Prices are 24-month UltaHost Singapore list rates (19 Sep 2026), not a quote.</p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr><th>Stage</th><th>Nodes</th><th>Requirement</th><th>Smallest plan</th><th>Cluster total</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>1</td><td>3 vCPU, 4 GB, 75 GB NVMe</td><td>VPS Professional ≈ $15.87/mo</td><td>3 vCPU, 4 GB</td></tr>
+                <tr><td>2</td><td>1</td><td>4 vCPU, 6 GB, 100 GB NVMe</td><td>VPS Enterprise ≈ $20.69/mo (resize; do not add a second)</td><td>4 vCPU, 6 GB</td></tr>
+                <tr><td>3</td><td>2</td><td>Edge 3/4/75; Data 4/8/250</td><td>Edge: 2nd Professional; Data: VDS POWER Plus ≈ $37.72/mo</td><td>7 vCPU, 12 GB</td></tr>
+                <tr><td>4</td><td>2</td><td>Same as stage 3</td><td>No new server</td><td>7 vCPU, 12 GB</td></tr>
+                <tr><td>5</td><td>2</td><td>Data 8/16/450 only when 8 GB node is full</td><td>VDS POWER Premium ≈ $68.43/mo (data only)</td><td>11 vCPU, 20 GB</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note" style="margin:14px 18px 18px">
+            Existing CMS stays on POWER Premium — never a Kubernetes node.
+            Prefer Professional VPS for stage 1 so the owned Plus box remains free for stage 3.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="critical">
+      <h2>Critical path for Live (this phase)</h2>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <ol style="margin:0;padding-left:1.25rem;line-height:1.55">
+            <li>Confirm admissions staff can complete offer → first enrolment on old CMS (or document the gap).</li>
+            <li>Deliver <a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a> first slice: auth + applicant create/read + document metadata acknowledgment.</li>
+            <li>Only then promote student Demo journeys that mutate registration or finance.</li>
+            <li>Do not mark any CAP Live from frontend Demo alone.</li>
+            <li>Do not rebuild working staff desks — Portal API + verified old CMS (<a href="../sdd/14-cms-feature-comparison.html">SDD-14</a>).</li>
+          </ol>
+          <h3 style="margin:18px 0 8px;font-size:1.02rem">Near-term design rule (next two weeks)</h3>
+          <p style="margin:0 0 8px;color:var(--muted)">Student portal v1 is deepest on M3 screens; product priority still puts M2 before M3.</p>
+          <ol style="margin:0;padding-left:1.25rem;line-height:1.55">
+            <li>Freeze new student demo screens unless they are on the M2 critical path (auth, mobile shell, accessibility).</li>
+            <li>Prioritise CAP-53, CAP-01, applicant CAP-02/03/07, and Registry old-CMS verification.</li>
+            <li>Keep existing student demos, but label them Demo until wired.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="done">
+      <h2>Definition of done (any capability)</h2>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <p style="margin:0 0 10px">A capability is <strong>Live</strong> only when all of the following are true:</p>
+          <ol style="margin:0;padding-left:1.25rem;line-height:1.55">
+            <li>Real data from the system of record, not a mock session.</li>
+            <li>Durable save where the user can mutate data.</li>
+            <li>Server-enforced permission for that role and campus.</li>
+            <li>The paired staff/lecturer action exists in new UI <strong>or</strong> is verified in the old CMS.</li>
+            <li>Accountable owner named.</li>
+            <li>Core mobile accepted if the CAP is in PRODUCT-MOBILE.</li>
+            <li>Country/campus operating checks in the next-action column are closed or explicitly waived.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="counts">
+      <h2>Checklist counts by milestone</h2>
+      <p class="lead">
+        Re-counted from the live Working Group sheet on 19 Sep 2026 (unchanged from 18 Sep).
+        Progress detail: <a href="../sdd/13-progress-timeline.html">SDD-13</a>.
+      </p>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr><th>Milestone</th><th>Rows</th><th>Dominant frontend status</th><th>Live</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Confirm rules &amp; integration (M1)</td><td>1</td><td>Not applicable</td><td>0</td></tr>
+                <tr><td>Admissions launch (M2)</td><td>23</td><td>Mostly not started. 4 of 18 applicable rows started, none Live</td><td>0</td></tr>
+                <tr><td>Core student portal (M3)</td><td>51</td><td>16 started (student Demo/Partial). 35 not started, including lecturer and staff</td><td>0</td></tr>
+                <tr><td>Cyberjaya pilot acceptance (M4)</td><td>1</td><td>Not applicable (training)</td><td>0</td></tr>
+                <tr><td>Campus expansion &amp; remaining CMS (M5)</td><td>36</td><td>12 started. 22 applicable rows not started</td><td>0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="related">
+      <h2>Related</h2>
+      <div class="toc">
+        <a href="../sdd/03-delivery-milestones.html"><strong>SDD-03</strong><span>Delivery milestones</span></a>
+        <a href="../sdd/12-deployment-architecture.html"><strong>SDD-12</strong><span>Deployment architecture</span></a>
+        <a href="../sdd/14-cms-feature-comparison.html"><strong>SDD-14</strong><span>CMS vs portals</span></a>
+        <a href="../sdd/13-progress-timeline.html"><strong>SDD-13</strong><span>Progress timeline</span></a>
+        <a href="./architecture.html#sdd"><strong>Architecture</strong><span>SDD &amp; ADR catalogue</span></a>
+        <a href="./old-cms/comparison.html#target"><strong>LUCT CMS</strong><span>Target delivery</span></a>
+        <a href="../sdd/15-nomenclature.html"><strong>SDD-15</strong><span>CAP / M nomenclature</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Migration plan · sources SDD-03 / SDD-12 / SDD-14 · raisd-campus/control-plane
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "neutral",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+  <script src="./abbr-tooltips.js" defer></script>
+</body>
+</html>
