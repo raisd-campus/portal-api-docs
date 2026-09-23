@@ -349,3 +349,9 @@ a.raisd-abbr {
 abbr.raisd-abbr {
   font-style: normal;
 }
+
+/* Mermaid SVG labels that match the glossary */
+.mermaid svg [data-raisd-abbr="1"],
+.mermaid svg text[data-raisd-abbr="1"] {
+  cursor: help;
+}

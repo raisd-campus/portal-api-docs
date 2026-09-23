@@ -1,6 +1,13 @@
-/*! Raisd abbreviation hover tooltips — loads glossary.json */
+/*! Raisd abbreviation hover tooltips — loads glossary.json
+ *  Applies to page copy and rendered Mermaid diagrams (SVG + HTML labels).
+ */
 (function () {
   'use strict';
+
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var appliedDict = null;
+  var appliedRe = null;
+  var observer = null;
 
   function glossaryUrl() {
     var scripts = document.getElementsByTagName('script');
@@ -13,14 +20,6 @@
     return 'glossary.json';
   }
 
-  function escapeAttr(s) {
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/</g, '&lt;');
-  }
-
-  // Longer keys first so "LUCT CMS" / "CAP-53" / "SDD-15" beat shorter tokens
   function sortedKeys(dict) {
     return Object.keys(dict).sort(function (a, b) {
       return b.length - a.length || a.localeCompare(b);
@@ -31,20 +30,29 @@
     var parts = keys.map(function (k) {
       return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     });
-    // Word-ish boundaries: avoid matching inside longer tokens already handled by length sort
     return new RegExp('\\b(' + parts.join('|') + ')\\b', 'g');
   }
 
-  var SKIP = { SCRIPT:1, STYLE:1, TEXTAREA:1, CODE:1, PRE:1, KBD:1, SAMP:1 };
+  var SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, CODE: 1, PRE: 1, KBD: 1, SAMP: 1 };
+
+  function isSvgNode(el) {
+    return el && el.namespaceURI === SVG_NS;
+  }
 
   function shouldSkip(node) {
     var el = node.parentElement;
     while (el) {
       if (SKIP[el.tagName]) return true;
-      if (el.classList && el.classList.contains('mermaid')) return true;
+      // Unrendered Mermaid source only — rendered diagrams become SVG/div
+      if (el.tagName === 'PRE' && el.classList && el.classList.contains('mermaid')) {
+        return true;
+      }
+      // Do not wrap SVG text nodes with HTML <abbr>
+      if (isSvgNode(el)) return true;
       if (el.getAttribute && el.getAttribute('data-no-abbr') != null) return true;
-      // already wrapped
-      if (el.tagName === 'ABBR' && el.classList.contains('raisd-abbr')) return true;
+      if (el.tagName === 'ABBR' && el.classList && el.classList.contains('raisd-abbr')) {
+        return true;
+      }
       el = el.parentElement;
     }
     return false;
@@ -96,7 +104,6 @@
       var t = (el.childNodes.length === 1 && el.firstChild.nodeType === 3)
         ? el.textContent.trim()
         : null;
-      // Also match when element text is exactly a key or starts with key + punctuation
       if (!t) return;
       if (dict[t]) {
         enhanceElement(el, dict[t]);
@@ -107,11 +114,126 @@
     });
   }
 
+  function titlesForText(text, re, dict) {
+    var compact = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!compact) return [];
+    if (dict[compact]) return [dict[compact]];
+    var titles = [];
+    var seen = {};
+    re.lastIndex = 0;
+    var m;
+    while ((m = re.exec(compact)) !== null) {
+      var key = m[1];
+      if (dict[key] && !seen[key]) {
+        seen[key] = 1;
+        titles.push(dict[key]);
+      }
+    }
+    return titles;
+  }
+
+  function setSvgTooltip(el, title) {
+    if (!el || !title) return;
+    el.setAttribute('title', title);
+    el.setAttribute('data-raisd-abbr', '1');
+    el.style.cursor = 'help';
+    var existing = null;
+    for (var i = 0; i < el.childNodes.length; i++) {
+      var c = el.childNodes[i];
+      if (c.nodeType === 1 && c.tagName && c.tagName.toLowerCase() === 'title' &&
+          c.classList && c.classList.contains('raisd-abbr-title')) {
+        existing = c;
+        break;
+      }
+    }
+    if (!existing) {
+      existing = document.createElementNS(SVG_NS, 'title');
+      existing.classList.add('raisd-abbr-title');
+      el.insertBefore(existing, el.firstChild);
+    }
+    existing.textContent = title;
+  }
+
+  function annotateSvgTree(svg, re, dict) {
+    if (!svg || svg.getAttribute('data-raisd-abbr-done') === '1') return;
+    svg.setAttribute('data-raisd-abbr-done', '1');
+
+    // HTML labels inside foreignObject (htmlLabels: true)
+    svg.querySelectorAll('foreignObject').forEach(function (fo) {
+      if (fo.getAttribute('data-raisd-abbr-done') === '1') return;
+      fo.setAttribute('data-raisd-abbr-done', '1');
+      annotateExisting(fo, dict);
+      walk(fo, re, dict);
+      // Also title the FO / parent group when the whole label matches
+      var titles = titlesForText(fo.textContent, re, dict);
+      if (titles.length) {
+        var host = fo.closest('g') || fo;
+        setSvgTooltip(host, titles.join(' · '));
+      }
+    });
+
+    // Native SVG text labels
+    svg.querySelectorAll('text').forEach(function (textEl) {
+      if (textEl.getAttribute('data-raisd-abbr') === '1') return;
+      var titles = titlesForText(textEl.textContent, re, dict);
+      if (!titles.length) return;
+      setSvgTooltip(textEl, titles.join(' · '));
+      var host = textEl.closest('g.node, g.edgeLabel, g.cluster, g.label, g.actor, g.messageText, g.loopText, g.note') ||
+        textEl.closest('g') || textEl;
+      if (host !== textEl && host.getAttribute('data-raisd-abbr') !== '1') {
+        setSvgTooltip(host, titles.join(' · '));
+      }
+    });
+  }
+
+  function annotateMermaid(root, re, dict) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('.mermaid svg, svg[id^="mermaid-"]').forEach(function (svg) {
+      annotateSvgTree(svg, re, dict);
+    });
+  }
+
+  function applyAll() {
+    if (!appliedDict || !appliedRe) return;
+    annotateExisting(document.body, appliedDict);
+    walk(document.body, appliedRe, appliedDict);
+    annotateMermaid(document.body, appliedRe, appliedDict);
+  }
+
+  function watchMermaid() {
+    if (observer) return;
+    observer = new MutationObserver(function (mutations) {
+      var need = false;
+      for (var i = 0; i < mutations.length; i++) {
+        var m = mutations[i];
+        if (m.type === 'childList') {
+          for (var j = 0; j < m.addedNodes.length; j++) {
+            var n = m.addedNodes[j];
+            if (n.nodeType !== 1) continue;
+            if (n.tagName === 'svg' || (n.querySelector && n.querySelector('svg'))) {
+              need = true;
+              break;
+            }
+          }
+        }
+        if (need) break;
+      }
+      if (need) annotateMermaid(document.body, appliedRe, appliedDict);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    // Mermaid startOnLoad is async — retry a few times
+    [100, 400, 1000, 2500].forEach(function (ms) {
+      setTimeout(function () {
+        annotateMermaid(document.body, appliedRe, appliedDict);
+      }, ms);
+    });
+  }
+
   function apply(dict) {
-    var keys = sortedKeys(dict);
-    var re = buildRegex(keys);
-    annotateExisting(document.body, dict);
-    walk(document.body, re, dict);
+    appliedDict = dict;
+    appliedRe = buildRegex(sortedKeys(dict));
+    applyAll();
+    watchMermaid();
   }
 
   fetch(glossaryUrl(), { credentials: 'same-origin' })
