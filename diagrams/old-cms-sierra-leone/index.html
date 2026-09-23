@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — ICA Sierra Leone CMS Analysis</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+                              <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../migration.html">Plan overview</a>
+            <a href="../migration.html#sequence">Milestone sequence</a>
+            <a href="../migration.html#m1">M1–M5 detail</a>
+            <a href="../migration.html#hosting">Hosting stages</a>
+            <a href="../migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../old-cms/index.html">Analysis hub</a>
+            <a href="../old-cms/comparison.html">Comparison</a>
+            <a href="../old-cms/fsd.html">FSD</a>
+            <a href="../old-cms/erd.html">Legacy ERD</a>
+            <a href="../old-cms/flows.html">Flows</a>
+            <a href="../old-cms/database.html">Database</a>
+            <a href="index.html">Sierra Leone</a>
+            <a href="database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>Existing Sierra Leone CMS — technical analysis</h1>
+      <p>
+        Inventory from the ICA Sierra Leone source &amp; structure package
+        (<code>ICA_SierraLeone_Codes_&amp;_DB_Structure_23_09_2026</code>).
+        Sister <strong>EMS / PHPMaker</strong> campus to Cyberjaya — useful for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion pattern matching.
+        <strong>Not</strong> the launch system of record (<a href="../architecture.html#sdd">ADR-1</a> remains Cyberjaya).
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">DB <code>ems_sierraleone</code></span>
+        <span class="chip ok">345 tables</span>
+        <span class="chip ok">156 non-temp</span>
+        <span class="chip ok">6 procedures</span>
+        <span class="chip ok">91 triggers</span>
+        <span class="chip ok">9 views</span>
+        <span class="chip">Dump date 23 Sep 2026</span>
+      </div>
+    </section>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Scope.</strong>
+      Document structure and desk surfaces only. The PHP tree, <code>.gz</code> portal extracts,
+      credentials, and live student files from the package are <em>not</em> committed to git.
+      Canonical agent notes:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">old-cms-sierra-leone.md</a>.
+      Cyberjaya (launch SoR): <a href="../old-cms/">LUCT CMS / Cyberjaya analysis</a>.
+    </div>
+
+    <div class="note warn" style="margin: 0 0 28px">
+      <strong>Technology shape.</strong>
+      PHPMaker desks under <code>sierraleone/&lt;desk&gt;/</code> —
+      <code>applicationcenter</code>, <code>registry</code>, <code>academic</code>,
+      <code>finance</code>, <code>reports</code>, <code>setting</code>, <code>studentaffair</code>.
+      Same EMS family as Cyberjaya (<code>r_*</code> / <code>f_*</code> / <code>b_*</code>),
+      with admissions mostly on <code>ac_*</code> instead of <code>app_*</code>.
+      No Laravel payment/PDPA apps and almost no stored-procedure API surface in this dump.
+    </div>
+
+    <nav class="toc" aria-label="Sierra Leone CMS sections">
+      <a href="./database.html">
+        <strong>Database — tables, SPs, triggers, views</strong>
+        <span>345 tables · 6 procedures · 91 triggers · 9 views</span>
+      </a>
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">
+        <strong>Full inventory (Markdown)</strong>
+        <span>Module map, domain counts, Cyberjaya comparison</span>
+      </a>
+      <a href="../old-cms/">
+        <strong>Cyberjaya LUCT CMS hub</strong>
+        <span>Launch SoR analysis (ADR-1)</span>
+      </a>
+      <a href="../../sdd/14-cms-feature-comparison.html">
+        <strong>SDD-14 CAP comparison</strong>
+        <span>Cyberjaya-focused CAP matrix (reference)</span>
+      </a>
+    </nav>
+
+    <section class="section">
+      <h2>Desks vs Raisd portals</h2>
+      <p class="lead">Staff desks share MySQL; Raisd portals never talk to campus MySQL directly.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Sierra Leone EMS context</h3>
+            <p>Smaller sibling of the Cyberjaya CMS family.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph SL["ICA Sierra Leone CMS"]
+    AC[Application centre]
+    REG[Registry]
+    ACAD[Academic]
+    FIN[Finance]
+    REP[Reports]
+    SET[Setting]
+    SA[Student affairs]
+    DB[("ems_sierraleone MySQL")]
+    AC --> DB
+    REG --> DB
+    ACAD --> DB
+    FIN --> DB
+    REP --> DB
+    SET --> DB
+    SA --> DB
+  end
+
+  subgraph Raisd["Raisd control plane — M5+"]
+    API[Portal API / ACL]
+    AP[Applicant]
+    SP[Student]
+    LP[Lecturer]
+    ST[Staff]
+    AP --> API
+    SP --> API
+    LP --> API
+    ST --> API
+    API -.->|"campus-keyed CAP-53"| DB
+  end
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Quick comparison to Cyberjaya</h2>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Signal</th><th>Cyberjaya</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Database</td><td><code>cmscbj</code></td><td><code>ems_sierraleone</code></td></tr>
+            <tr><td>Tables</td><td>~1,942</td><td>345 (~156 non-temp)</td></tr>
+            <tr><td>Stored procedures</td><td>~318</td><td>6</td></tr>
+            <tr><td>Triggers</td><td>~239</td><td>91</td></tr>
+            <tr><td>Admissions prefix</td><td><code>app_*</code></td><td><code>ac_*</code></td></tr>
+            <tr><td>ADR-1 launch SoR</td><td>Yes</td><td>No — expansion reference</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+  <p class="footer">
+    Source inventory in
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">docs/ai/backend/old-cms-sierra-leone.md</a>
+    · Package <code>ICA_SierraLeone_Codes_&amp;_DB_Structure_23_09_2026</code> (structure only — not committed)
+  </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+</body>
+</html>

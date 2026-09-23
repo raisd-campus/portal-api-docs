@@ -1,0 +1,9 @@
+ICA Sierra Leone — stored procedures from ICA_SierraLeone_Procedure_23092026.sql
+Database: ems_sierraleone
+
+PROCEDURE `b_calcmodule`
+PROCEDURE `b_calcsch`
+PROCEDURE `f_calcass`
+PROCEDURE `f_calccgpa`
+PROCEDURE `f_calcgpa`
+PROCEDURE `f_calcgpa_old`

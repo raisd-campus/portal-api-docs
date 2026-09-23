@@ -69,6 +69,8 @@
   "SDD-14": "Existing CMS vs Raisd portals — Cyberjaya inventory mapped to CAP IDs.",
   "SDD-15": "Nomenclature — quick links for every CAP-* and M1–M5.",
   "LUCT CMS": "Limkokwing University of Creative Technology campus management system (Cyberjaya) — system of record this phase.",
+  "ICA": "International College Africa / Limkokwing ICA campus lineage — Sierra Leone dump uses EMS PHPMaker desks.",
+  "ems_sierraleone": "MySQL schema for the ICA Sierra Leone CMS structure dump (23 Sep 2026).",
   "LUCT": "Limkokwing University of Creative Technology.",
   "CMS": "Campus Management System — operational desks and records for the campus.",
   "Portal API": "Integration contract between Raisd portal UIs and the existing CMS (anti-corruption / ACL layer).",

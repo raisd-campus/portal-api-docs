@@ -1,0 +1,11 @@
+ICA Sierra Leone — views
+
+CurTermPopulationlist
+ac_courseeligibility
+c_stdassessment
+c_stdtimetable
+f_moduletermview
+r_stdmoduleview
+statement
+statement_base
+statement_total
