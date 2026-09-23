@@ -20,6 +20,7 @@
         <a href="./dfd.html">DFD</a>
         <a href="./old-cms/">LUCT CMS</a>
         <a href="../ai/index.html">AI knowledge</a>
+        <a href="../sdd/">SDD</a>
         <a href="../index.html">OpenAPI</a>
       </nav>
     </div>
@@ -47,6 +48,7 @@
     </section>
 
     <div class="toc">
+      <a href="#sdd"><strong>SDD catalogue</strong><span>All Software Design Documents</span></a>
       <a href="#principles"><strong>Six instructions</strong><span>Core rules for authors</span></a>
       <a href="#target"><strong>Target shape</strong><span>Portals → domains → ACL → CMS</span></a>
       <a href="#acl"><strong>CMS ACL (CAP-53)</strong><span>Anti-corruption layer</span></a>
@@ -56,6 +58,111 @@
       <a href="#ops"><strong>Integration ops</strong><span>Idempotency, DQ, audit</span></a>
       <a href="#priority"><strong>Doc priority</strong><span>Critical → later</span></a>
     </div>
+
+    <section class="section" id="sdd">
+      <h2>Software Design Documents</h2>
+      <p class="lead">
+        Product baseline for Working Group CMS 2026.
+        Hub: <a href="../sdd/">sdd/</a> · Nomenclature: <a href="../sdd/15-nomenclature.html">SDD-15</a>.
+      </p>
+      <div class="card">
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Document</th>
+                  <th>What it covers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="../sdd/00-document-control.html">SDD-00</a></td>
+                  <td>Document control</td>
+                  <td>Status, sources, glossary, status meanings</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/01-system-overview.html">SDD-01</a></td>
+                  <td>System overview</td>
+                  <td>Product intent, portals, constraints, current vs target</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/02-architecture-and-integration.html">SDD-02</a></td>
+                  <td>Architecture and integration</td>
+                  <td>Existing CMS as backend, Portal API, auth, mobile, data</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/03-delivery-milestones.html">SDD-03</a></td>
+                  <td>Delivery milestones</td>
+                  <td>Admissions-first sequence and release conditions (M1–M5)</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/04-applicant-portal.html">SDD-04</a></td>
+                  <td>Applicant portal</td>
+                  <td>Apply → evidence → track → offer → enrol</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/05-student-portal.html">SDD-05</a></td>
+                  <td>Student portal</td>
+                  <td>Learning, records, fees, support (current v1 frontend)</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/06-lecturer-portal.html">SDD-06</a></td>
+                  <td>Lecturer portal</td>
+                  <td>Publish, attendance, marking, class communication</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/07-admin-staff-cms.html">SDD-07</a></td>
+                  <td>Admin / staff CMS</td>
+                  <td>Registry, Faculty, Bursary, QA, Marketing, remaining desks</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/08-shared-platform.html">SDD-08</a></td>
+                  <td>Shared platform</td>
+                  <td>Integration spine, security, ops, training</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/09-requirements-traceability.html">SDD-09</a></td>
+                  <td>Requirements traceability</td>
+                  <td>Product decisions, campus requests, country evidence, UI baseline</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/10-open-questions.html">SDD-10</a></td>
+                  <td>Open questions</td>
+                  <td>Decisions still required before Live</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/11-capability-catalog.html">SDD-11</a></td>
+                  <td>Capability catalogue</td>
+                  <td>All 112 CAP rows from the detailed checklist</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/12-deployment-architecture.html">SDD-12</a></td>
+                  <td>Deployment architecture</td>
+                  <td>Repositories, VDS hosts, public names, request path</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/13-progress-timeline.html">SDD-13</a></td>
+                  <td>Progress and timeline</td>
+                  <td>Latest sheet snapshot, completion, sequence, remaining tasks</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/14-cms-feature-comparison.html">SDD-14</a></td>
+                  <td>Existing CMS vs Raisd portals</td>
+                  <td>Cyberjaya LUCT CMS inventory mapped to CAP IDs</td>
+                </tr>
+                <tr>
+                  <td><a href="../sdd/15-nomenclature.html">SDD-15</a></td>
+                  <td>Nomenclature</td>
+                  <td>Quick links for every CAP-* and M1–M5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="section" id="principles">
       <h2>Six instructions for documentation authors</h2>
