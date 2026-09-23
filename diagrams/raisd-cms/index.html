@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Raisd CMS (ERD &amp; DFD)</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · Migration · Raisd CMS · <a href="../old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../architecture.html">Architecture</a>
+        <a href="../migration.html">Migration</a>
+        <div class="nav-group">
+          <a class="active" href="./index.html">Raisd CMS</a>
+          <div class="nav-sub" role="group" aria-label="Raisd CMS">
+            <a href="../erd.html">ERD</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div><a href="../old-cms/">LUCT CMS</a>
+        <a href="../../ai/index.html">AI knowledge</a>
+        <a href="../../sdd/">SDD</a>
+        <a href="../../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Raisd CMS</h1>
+      <p>
+        Canonical Raisd data model and flows for the four portals + Portal API.
+        These are the <strong>logical</strong> ERD and DFD — not a copy of the
+        <a href="../old-cms/">LUCT CMS</a> physical schema. Legacy tables stay behind
+        the CAP-53 anti-corruption layer.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">Logical / contract model</span>
+        <span class="chip ok">Portals → Portal API → domains</span>
+        <span class="chip warn">No physical SQL migrations yet</span>
+      </div>
+    </section>
+
+    <div class="toc">
+      <a href="../erd.html">
+        <strong>Entity Relationship Diagrams</strong>
+        <span>Institution, curriculum, delivery, student journey, finance, integration</span>
+      </a>
+      <a href="../dfd.html">
+        <strong>Data Flow Diagrams</strong>
+        <span>Context, ACL, auth, admissions, registration workflow, teaching</span>
+      </a>
+      <a href="../architecture.html">
+        <strong>Architecture</strong>
+        <span>SoR ownership, CAP-53 ACL, SDD &amp; ADR catalogue</span>
+      </a>
+      <a href="../old-cms/erd.html">
+        <strong>LUCT physical ERD</strong>
+        <span>Legacy Cyberjaya tables — discovery only, not the Raisd model</span>
+      </a>
+    </div>
+
+    <section class="section">
+      <h2>How this relates to LUCT CMS</h2>
+      <div class="card">
+        <div class="card-body" style="padding:16px 18px">
+          <div class="table-wrap">
+            <table class="attr">
+              <thead>
+                <tr><th>Surface</th><th>Role</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Raisd CMS</strong> (this section)</td>
+                  <td>Canonical portal contracts, clean domain model, product ERD/DFD</td>
+                </tr>
+                <tr>
+                  <td><a href="../old-cms/">LUCT CMS</a></td>
+                  <td>Existing Cyberjaya SoR this phase; physical tables, desks, batches</td>
+                </tr>
+                <tr>
+                  <td><a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a></td>
+                  <td>Anti-corruption / Portal API boundary between the two</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Raisd CMS · ERD &amp; DFD · raisd-campus/control-plane
+  </footer>
+  <script src="../abbr-tooltips.js" defer></script>
+</body>
+</html>

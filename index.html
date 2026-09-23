@@ -62,6 +62,30 @@
       color: #fff;
       border-color: #1a4f8b;
     }
+    .nav-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav-sub {
+      display: inline-flex;
+      gap: 2px;
+      align-items: center;
+      padding: 2px;
+      border-radius: 999px;
+      border: 1px solid #d7dee8;
+      background: #fff;
+    }
+    .nav-sub a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #5a6a7e;
+    }
+    .nav-sub a:hover { background: #e8f0f8; color: #152033; }
+    .nav-sub a.active { background: #1a4f8b; color: #fff; }
 
     .raisd-header {
       max-width: var(--page-max);
@@ -101,14 +125,19 @@
     <div class="site-header-inner">
       <div class="brand">
         <strong>Raisd Control Plane</strong>
-        <span>Overview · Architecture · Migration · ERD · DFD · <a href="./diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+        <span>Overview · Architecture · Migration · Raisd CMS · <a href="./diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
       </div>
       <nav class="nav" aria-label="Docs">
         <a href="./diagrams/">Overview</a>
         <a href="./diagrams/architecture.html">Architecture</a>
         <a href="./diagrams/migration.html">Migration</a>
-        <a href="./diagrams/erd.html">ERD</a>
-        <a href="./diagrams/dfd.html">DFD</a>
+        <div class="nav-group">
+          <a href="./diagrams/raisd-cms/">Raisd CMS</a>
+          <div class="nav-sub" role="group" aria-label="Raisd CMS">
+            <a href="./diagrams/erd.html">ERD</a>
+            <a href="./diagrams/dfd.html">DFD</a>
+          </div>
+        </div>
         <a href="./diagrams/old-cms/">LUCT CMS</a>
         <a href="./ai/index.html">AI knowledge</a>
         <a class="active" href="./index.html">OpenAPI</a>

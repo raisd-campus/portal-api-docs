@@ -57,6 +57,7 @@ jobs:
           test -f _site/diagrams/old-cms/index.html
           test -f _site/diagrams/old-cms/comparison.html
           test -f _site/diagrams/migration.html
+          test -f _site/diagrams/raisd-cms/index.html
           test -f _site/ai/index.html
           test -f _site/sdd/15-nomenclature.html
           test -f _site/sdd/11-capability-catalog.html
