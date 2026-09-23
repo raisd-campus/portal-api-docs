@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>07-admin-staff-cms — Raisd SDD</title>
-  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <link rel="stylesheet" href="../../../diagrams/styles.css" />
   <style>
     main.sdd-doc {
       max-width: var(--page-max, 1460px);
@@ -24,23 +24,81 @@
     <div class="site-header-inner">
       <div class="brand">
         <strong>Raisd Control Plane</strong>
-        <span>Overview · Architecture · Migration · Raisd CMS · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+        <span>Overview · Architecture · Migration · Raisd CMS · LUCT CMS · AI knowledge · SDD · OpenAPI</span>
       </div>
-      <nav class="nav" aria-label="Primary">
-        <a href="../index.html">Overview</a>
-        <a href="../diagrams/architecture.html">Architecture</a>
-        <a href="../diagrams/migration.html">Migration</a>
-        <div class="nav-group">
-          <a href="../diagrams/raisd-cms/">Raisd CMS</a>
-          <div class="nav-sub" role="group" aria-label="Raisd CMS">
+            <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/index.html">Diagrams hub</a>
+            <a href="../diagrams/architecture.html">Architecture</a>
+            <a href="../diagrams/migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/architecture.html">Architecture home</a>
+            <a href="../diagrams/architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../diagrams/architecture.html#acl">SoR / ACL</a>
+            <a href="../diagrams/architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/migration.html">Plan overview</a>
+            <a href="../diagrams/migration.html#sequence">Milestone sequence</a>
+            <a href="../diagrams/migration.html#m1">M1–M5 detail</a>
+            <a href="../diagrams/migration.html#hosting">Hosting stages</a>
+            <a href="../diagrams/migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/raisd-cms/index.html">Raisd CMS hub</a>
             <a href="../diagrams/erd.html">ERD</a>
             <a href="../diagrams/dfd.html">DFD</a>
           </div>
         </div>
-        <a href="../diagrams/old-cms/">LUCT CMS</a>
-        <a href="../ai/index.html">AI knowledge</a>
-        <a class="active" href="./index.html">SDD</a>
-        <a href="../index.html">OpenAPI</a>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/old-cms/index.html">Analysis hub</a>
+            <a href="../diagrams/old-cms/comparison.html">Comparison</a>
+            <a href="../diagrams/old-cms/fsd.html">FSD</a>
+            <a href="../diagrams/old-cms/erd.html">Legacy ERD</a>
+            <a href="../diagrams/old-cms/flows.html">Flows</a>
+            <a href="../diagrams/old-cms/database.html">Database</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" class="active" href="index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a class="active" href="index.html">SDD hub</a>
+            <a href="15-nomenclature.html">Nomenclature</a>
+            <a href="11-capability-catalog.html">Capability catalogue</a>
+            <a href="03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -326,6 +384,7 @@ already holds.</li>
 </ul>
   </main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
-  <script src="../diagrams/abbr-tooltips.js" defer></script>
+  <script src="../../../diagrams/abbr-tooltips.js" defer></script>
+  <script src="../diagrams/nav-dropdown.js" defer></script>
 </body>
 </html>

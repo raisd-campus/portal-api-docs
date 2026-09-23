@@ -11,22 +11,81 @@
     <div class="site-header-inner">
       <div class="brand">
         <strong>Raisd Control Plane</strong>
-        <span>Overview · Architecture · Migration · Raisd CMS · <a href="./old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+        <span>Overview · Architecture · Migration · Raisd CMS · LUCT CMS · AI knowledge · SDD · OpenAPI</span>
       </div>
-      <nav class="nav" aria-label="Primary">
-        <a href="./index.html">Overview</a>
-        <a href="./architecture.html">Architecture</a>
-        <a href="./migration.html">Migration</a>
-        <div class="nav-group">
-          <a href="./raisd-cms/">Raisd CMS</a>
-          <div class="nav-sub" role="group" aria-label="Raisd CMS">
-            <a class="active" href="./erd.html">ERD</a>
-            <a href="./dfd.html">DFD</a>
+            <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Diagrams hub</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="migration.html">Migration</a>
           </div>
         </div>
-        <a href="./old-cms/">LUCT CMS</a>
-        <a href="../ai/index.html">AI knowledge</a>
-        <a href="../index.html">OpenAPI</a>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="architecture.html">Architecture home</a>
+            <a href="architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="architecture.html#acl">SoR / ACL</a>
+            <a href="architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="migration.html">Plan overview</a>
+            <a href="migration.html#sequence">Milestone sequence</a>
+            <a href="migration.html#m1">M1–M5 detail</a>
+            <a href="migration.html#hosting">Hosting stages</a>
+            <a href="migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" class="active" href="raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="raisd-cms/index.html">Raisd CMS hub</a>
+            <a class="active" href="erd.html">ERD</a>
+            <a href="dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="old-cms/index.html">Analysis hub</a>
+            <a href="old-cms/comparison.html">Comparison</a>
+            <a href="old-cms/fsd.html">FSD</a>
+            <a href="old-cms/erd.html">Legacy ERD</a>
+            <a href="old-cms/flows.html">Flows</a>
+            <a href="old-cms/database.html">Database</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../sdd/index.html">SDD hub</a>
+            <a href="../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -1283,5 +1342,6 @@ erDiagram
     });
   </script>
   <script src="abbr-tooltips.js" defer></script>
+  <script src="nav-dropdown.js" defer></script>
 </body>
 </html>

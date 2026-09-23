@@ -64,68 +64,86 @@ a:hover { text-decoration: underline; }
 .brand span { color: var(--muted); font-size: 0.85rem; }
 .nav {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
   align-items: center;
 }
 .nav a {
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  color: var(--ink);
-  font-size: 0.92rem;
-}
-.nav a:hover { background: var(--accent-soft); text-decoration: none; }
-.nav a.active {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-.nav-group {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-.nav-group > a {
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  color: var(--ink);
-  font-size: 0.92rem;
-}
-.nav-group > a:hover { background: var(--accent-soft); text-decoration: none; }
-.nav-group > a.active {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-.nav-sub {
-  display: inline-flex;
-  gap: 2px;
-  align-items: center;
-  padding: 2px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-}
-.nav-sub a {
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 0.84rem;
-  color: var(--muted);
-}
-.nav-sub a:hover {
-  background: var(--accent-soft);
-  color: var(--ink);
   text-decoration: none;
 }
-.nav-sub a.active {
+.nav-dd {
+  position: relative;
+}
+.nav-dd-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--ink);
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+.nav-dd-main::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  opacity: 0.55;
+}
+.nav-dd-main:hover,
+.nav-dd:focus-within > .nav-dd-main,
+.nav-dd.open > .nav-dd-main {
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+.nav-dd-main.active,
+.nav-dd:has(.nav-dd-menu a.active) > .nav-dd-main {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
+.nav-dd-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 200px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  z-index: 40;
+}
+.nav-dd:hover > .nav-dd-menu,
+.nav-dd:focus-within > .nav-dd-menu,
+.nav-dd.open > .nav-dd-menu {
+  display: block;
+}
+.nav-dd-menu a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+.nav-dd-menu a:hover {
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+.nav-dd-menu a.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* legacy inline subchip group (kept harmless if any remain) */
+.nav-group { display: contents; }
+.nav-sub { display: none; }
 
 main {
   max-width: var(--page-max);
