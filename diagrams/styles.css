@@ -41,7 +41,7 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--line);
 }
 .site-header-inner {
-  max-width: 1180px;
+  max-width: 1460px;
   margin: 0 auto;
   padding: 14px 20px;
   display: flex;
@@ -77,7 +77,7 @@ a:hover { text-decoration: underline; }
 }
 
 main {
-  max-width: 1180px;
+  max-width: 1460px;
   margin: 0 auto;
   padding: 28px 20px 64px;
 }
@@ -257,7 +257,7 @@ table.attr code {
 }
 
 .footer {
-  max-width: 1180px;
+  max-width: 1460px;
   margin: 0 auto;
   padding: 0 20px 40px;
   color: var(--muted);

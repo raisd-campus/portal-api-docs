@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Old CMS Process Flows / DFD</title>
+  <title>Raisd — Legacy CMS Process Flows / DFD</title>
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
@@ -11,14 +11,14 @@
     <div class="site-header-inner">
       <div class="brand">
         <strong>Raisd Control Plane</strong>
-        <span>Overview · Architecture · ERD · DFD · Old CMS · AI knowledge · OpenAPI</span>
+        <span>Overview · Architecture · ERD · DFD · Legacy CMS · AI knowledge · OpenAPI</span>
       </div>
       <nav class="nav" aria-label="Primary">
         <a href="../index.html">Overview</a>
         <a href="../architecture.html">Architecture</a>
         <a href="../erd.html">ERD</a>
         <a href="../dfd.html">DFD</a>
-        <a class="active" href="./index.html">Old CMS</a>
+        <a class="active" href="./index.html">Legacy CMS</a>
         <a href="../../ai/index.html">AI knowledge</a>
         <a href="../../index.html">OpenAPI</a>
       </nav>
@@ -40,7 +40,7 @@
       </div>
     </section>
 
-    <nav class="toc" aria-label="Old CMS sections">
+    <nav class="toc" aria-label="Legacy CMS sections">
       <a href="./index.html"><strong>Hub</strong><span>Analysis overview</span></a>
       <a href="./comparison.html"><strong>Comparison</strong><span>CAP matrices</span></a>
       <a href="./fsd.html"><strong>FSD</strong><span>Modules</span></a>
@@ -234,7 +234,7 @@ flowchart LR
         <div class="card-body">
           <pre class="mermaid">
 flowchart TB
-  subgraph OldPath["Old CMS write path"]
+  subgraph OldPath["Legacy CMS write path"]
     UI[PHPMaker / Laravel desk UI]
     MYSQL[(cmscbj)]
     TRG[Triggers ~237]
@@ -294,7 +294,7 @@ flowchart TB
   </main>
 
   <footer class="footer">
-    Generated for raisd-campus/control-plane · Old CMS analysis · GitHub Pages
+    Generated for raisd-campus/control-plane · Legacy CMS analysis · GitHub Pages
   </footer>
 
   <script type="module">

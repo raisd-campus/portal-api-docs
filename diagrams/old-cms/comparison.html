@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Old CMS Feature Comparison</title>
+  <title>Raisd — Legacy CMS Feature Comparison</title>
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
@@ -11,14 +11,14 @@
     <div class="site-header-inner">
       <div class="brand">
         <strong>Raisd Control Plane</strong>
-        <span>Overview · Architecture · ERD · DFD · Old CMS · AI knowledge · OpenAPI</span>
+        <span>Overview · Architecture · ERD · DFD · Legacy CMS · AI knowledge · OpenAPI</span>
       </div>
       <nav class="nav" aria-label="Primary">
         <a href="../index.html">Overview</a>
         <a href="../architecture.html">Architecture</a>
         <a href="../erd.html">ERD</a>
         <a href="../dfd.html">DFD</a>
-        <a class="active" href="./index.html">Old CMS</a>
+        <a class="active" href="./index.html">Legacy CMS</a>
         <a href="../../ai/index.html">AI knowledge</a>
         <a href="../../index.html">OpenAPI</a>
       </nav>
@@ -27,7 +27,7 @@
 
   <main>
     <section class="hero">
-      <h1>Old CMS ↔ Raisd — feature comparison</h1>
+      <h1>Legacy CMS ↔ Raisd — feature comparison</h1>
       <p>
         CAP-oriented technical comparison between the existing Cyberjaya CMS
         (<code>cmscbj</code> and the Raisd four-portal + Portal API stack.
@@ -43,7 +43,7 @@
       </div>
     </section>
 
-    <nav class="toc" aria-label="Old CMS sections">
+    <nav class="toc" aria-label="Legacy CMS sections">
       <a href="./index.html"><strong>Hub</strong><span>Analysis overview</span></a>
       <a href="./comparison.html"><strong>Comparison</strong><span>This page</span></a>
       <a href="./fsd.html"><strong>FSD</strong><span>Modules</span></a>
@@ -61,7 +61,7 @@
       <a href="#lecturer"><strong>Lecturer</strong><span>Teaching CAPs</span></a>
       <a href="#staff"><strong>Staff</strong><span>Gaps only</span></a>
       <a href="#shared"><strong>Shared</strong><span>CAP-37…53</span></a>
-      <a href="#old-only"><strong>Old CMS only</strong><span>Keep on desks</span></a>
+      <a href="#old-only"><strong>Legacy CMS only</strong><span>Keep on desks</span></a>
       <a href="#raisd-gaps"><strong>Raisd-only gaps</strong><span>New product</span></a>
     </div>
 
@@ -150,7 +150,7 @@ flowchart TB
     <section class="section" id="architecture">
       <h2>Side-by-side architecture</h2>
       <p class="lead">
-        Old CMS = many desk apps sharing MySQL. Raisd = four webs + Portal API + <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> ACL.
+        Legacy CMS = many desk apps sharing MySQL. Raisd = four webs + Portal API + <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> ACL.
         Live write success only after CMS acknowledges.
       </p>
       <div class="card">
@@ -248,7 +248,7 @@ flowchart LR
         <thead>
           <tr>
             <th>Domain</th>
-            <th>Old CMS evidence</th>
+            <th>Legacy CMS evidence</th>
             <th>Raisd canonical (approx.)</th>
             <th>Notes</th>
           </tr>
@@ -329,7 +329,7 @@ flowchart LR
           <tr>
             <th>CAP</th>
             <th>Feature</th>
-            <th>Old CMS evidence (module / table / SP)</th>
+            <th>Legacy CMS evidence (module / table / SP)</th>
             <th>Old coverage</th>
             <th>Raisd portal status</th>
             <th>Technical notes</th>
@@ -424,7 +424,7 @@ flowchart LR
           <tr>
             <th>CAP</th>
             <th>Feature</th>
-            <th>Old CMS evidence (module / table / SP)</th>
+            <th>Legacy CMS evidence (module / table / SP)</th>
             <th>Old coverage</th>
             <th>Raisd portal status</th>
             <th>Technical notes</th>
@@ -813,7 +813,7 @@ flowchart LR
           <tr>
             <th>CAP</th>
             <th>Feature</th>
-            <th>Old CMS evidence (module / table / SP)</th>
+            <th>Legacy CMS evidence (module / table / SP)</th>
             <th>Old coverage</th>
             <th>Raisd portal status</th>
             <th>Technical notes</th>
@@ -878,7 +878,7 @@ flowchart LR
           <tr>
             <th>CAP</th>
             <th>Feature</th>
-            <th>Old CMS evidence (module / table / SP)</th>
+            <th>Legacy CMS evidence (module / table / SP)</th>
             <th>Old coverage</th>
             <th>Raisd portal status</th>
             <th>Technical notes</th>
@@ -969,7 +969,7 @@ flowchart LR
           <tr>
             <th>CAP</th>
             <th>Feature</th>
-            <th>Old CMS evidence (module / table / SP)</th>
+            <th>Legacy CMS evidence (module / table / SP)</th>
             <th>Old coverage</th>
             <th>Raisd portal status</th>
             <th>Technical notes</th>
@@ -1036,12 +1036,12 @@ flowchart LR
     </section>
 
     <section class="section" id="old-only">
-      <h2>Old CMS only (weak or no Raisd CAP coverage)</h2>
+      <h2>Legacy CMS only (weak or no Raisd CAP coverage)</h2>
       <p class="lead">Real Cyberjaya operations that stay on old CMS unless product expands scope.</p>
       <div class="table-wrap"><table class="attr">
         <thead>
           <tr>
-            <th>Old CMS area</th>
+            <th>Legacy CMS area</th>
             <th>Examples</th>
             <th>Raisd note</th>
           </tr>
@@ -1162,7 +1162,7 @@ flowchart LR
   </main>
 
   <footer class="footer">
-    Generated for raisd-campus/control-plane · Old CMS analysis · GitHub Pages
+    Generated for raisd-campus/control-plane · Legacy CMS analysis · GitHub Pages
   </footer>
 
   <script type="module">
