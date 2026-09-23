@@ -15,7 +15,7 @@
         <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
         <strong>Raisd Control Plane</strong>
       </a>
-                              <nav class="nav" aria-label="Primary">
+                                    <nav class="nav" aria-label="Primary">
         <div class="nav-dd">
           <a class="nav-dd-main" href="../index.html">Overview</a>
           <div class="nav-dd-menu" role="menu">
@@ -47,6 +47,9 @@
           <a class="nav-dd-main active" href="index.html">Raisd CMS</a>
           <div class="nav-dd-menu" role="menu">
             <a href="index.html">Raisd CMS hub</a>
+            <a href="student-portal.html">Student portal</a>
+            <a href="student-portal-screenshots.html">Screenshots</a>
+            <a href="student-portal-guide.html">Use guides</a>
             <a href="../erd.html">ERD</a>
             <a href="../dfd.html">DFD</a>
           </div>
@@ -98,19 +101,31 @@
     <section class="hero">
       <h1>Raisd CMS</h1>
       <p>
-        Canonical Raisd data model and flows for the four portals + Portal API.
-        These are the <strong>logical</strong> ERD and DFD — not a copy of the
-        <a href="../old-cms/">LUCT CMS</a> physical schema. Legacy tables stay behind
-        the CAP-53 anti-corruption layer.
+        Canonical Raisd product surface: the <strong>Student portal</strong> demo,
+        logical ERD/DFD for all portals, and the bridge to the existing campus CMS.
+        These are not a copy of the <a href="../old-cms/">LUCT CMS</a> physical schema —
+        legacy tables stay behind the CAP-53 anti-corruption layer.
       </p>
       <div class="meta-row">
+        <span class="chip ok">Student portal demo</span>
         <span class="chip ok">Logical / contract model</span>
-        <span class="chip ok">Portals → Portal API → domains</span>
-        <span class="chip warn">No physical SQL migrations yet</span>
+        <span class="chip warn">Demo ≠ Live CMS writes</span>
       </div>
     </section>
 
     <div class="toc">
+      <a href="student-portal.html">
+        <strong>Student portal — capabilities</strong>
+        <span>CAP map, demo status, where each feature lives</span>
+      </a>
+      <a href="student-portal-screenshots.html">
+        <strong>Student portal — screenshots</strong>
+        <span>19 desktop captures of the current demo UI</span>
+      </a>
+      <a href="student-portal-guide.html">
+        <strong>Student portal — use guides</strong>
+        <span>Step-by-step paths for registration, fees, forms, and more</span>
+      </a>
       <a href="../erd.html">
         <strong>Entity Relationship Diagrams</strong>
         <span>Institution, curriculum, delivery, student journey, finance, integration</span>
@@ -141,7 +156,7 @@
               <tbody>
                 <tr>
                   <td><strong>Raisd CMS</strong> (this section)</td>
-                  <td>Canonical portal contracts, clean domain model, product ERD/DFD</td>
+                  <td>Student portal product docs, canonical portal contracts, clean domain ERD/DFD</td>
                 </tr>
                 <tr>
                   <td><a href="../old-cms/">LUCT CMS</a></td>

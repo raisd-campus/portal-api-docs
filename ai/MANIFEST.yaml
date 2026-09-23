@@ -11,6 +11,8 @@ decision:
 notes:
   - 2026-09-23: Cyberjaya old CMS dump inventoried; CAP comparison at backend/cms-feature-comparison.md (SDD-14).
   - 2026-09-23: SDD-15 nomenclature — CAP-* and M1–M5 anchors/cross-links (../sdd/15-nomenclature.md).
+  - 2026-09-23: ICA Sierra Leone CMS dump inventoried (ems_sierraleone); docs/ai/backend/old-cms-sierra-leone.md + diagrams/old-cms-sierra-leone/.
+  - 2026-09-23: Raisd CMS Student portal capabilities, screenshots, and use guides under diagrams/raisd-cms/.
 
 entrypoints:
   agents: AGENTS.md
@@ -44,6 +46,9 @@ backend:
     code: ../../portal-api/
   - path: backend/old-cms-cyberjaya.md
     topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker]
+  - path: backend/old-cms-sierra-leone.md
+    topics: [existing-cms, sierra-leone, ems_sierraleone, inventory, php-maker, m5]
+    pages: ../diagrams/old-cms-sierra-leone/
   - path: backend/cms-feature-comparison.md
     topics: [cap-mapping, gap-analysis, adr-1, old-vs-new, triggers, stored-procedures, batch]
     sdd: ../sdd/14-cms-feature-comparison.md
@@ -51,7 +56,15 @@ backend:
 
 diagrams:
   - path: ../diagrams/index.html
-    topics: [overview, mermaid]
+    topics: [overview, mermaid, executive-summary, migration]
+  - path: ../diagrams/raisd-cms/index.html
+    topics: [raisd-cms, student-portal, capabilities, screenshots, guides, erd, dfd]
+    pages:
+      - ../diagrams/raisd-cms/student-portal.html
+      - ../diagrams/raisd-cms/student-portal-screenshots.html
+      - ../diagrams/raisd-cms/student-portal-guide.html
+      - ../diagrams/erd.html
+      - ../diagrams/dfd.html
   - path: ../diagrams/old-cms/index.html
     topics: [legacy-cms, comparison, fsd, erd, flows, database]
     pages:
@@ -63,6 +76,15 @@ diagrams:
     extracts:
       - ../diagrams/old-cms/_trigger-summary.txt
       - ../diagrams/old-cms/_proc-catalog.txt
+  - path: ../diagrams/old-cms-sierra-leone/index.html
+    topics: [legacy-cms, sierra-leone, ems, inventory, database]
+    pages:
+      - ../diagrams/old-cms-sierra-leone/database.html
+    extracts:
+      - ../diagrams/old-cms-sierra-leone/_trigger-summary.txt
+      - ../diagrams/old-cms-sierra-leone/_proc-catalog.txt
+      - ../diagrams/old-cms-sierra-leone/_table-catalog.txt
+      - ../diagrams/old-cms-sierra-leone/_view-catalog.txt
 
 frontend:
   student-portal:

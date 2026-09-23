@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Student portal capabilities</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+          <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../migration.html">Plan overview</a>
+            <a href="../migration.html#sequence">Milestone sequence</a>
+            <a href="../migration.html#m1">M1–M5 detail</a>
+            <a href="../migration.html#hosting">Hosting stages</a>
+            <a href="../migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Raisd CMS hub</a>
+            <a href="student-portal.html">Student portal</a>
+            <a href="student-portal-screenshots.html">Screenshots</a>
+            <a href="student-portal-guide.html">Use guides</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../old-cms/index.html">Analysis hub</a>
+            <a href="../old-cms/comparison.html">Comparison</a>
+            <a href="../old-cms/fsd.html">FSD</a>
+            <a href="../old-cms/erd.html">Legacy ERD</a>
+            <a href="../old-cms/flows.html">Flows</a>
+            <a href="../old-cms/database.html">Database</a>
+            <a href="../old-cms-sierra-leone/index.html">Sierra Leone</a>
+            <a href="../old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Student portal — capabilities</h1>
+      <p>
+        What the Raisd <strong>Student portal</strong> demo covers today, mapped to CAP IDs.
+        This is a <strong>frontend demo</strong>: screens exist; most saves stay in one browser session
+        and do not write to the Cyberjaya CMS yet.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">Role: enrolled student</span>
+        <span class="chip warn">Demo ≠ Live</span>
+        <span class="chip">Source: <a href="../../sdd/05-student-portal.html">SDD-05</a></span>
+        <span class="chip"><a href="student-portal-screenshots.html">Screenshots</a></span>
+        <span class="chip"><a href="student-portal-guide.html">Use guides</a></span>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="On this page">
+      <a href="#how"><strong>How to read this</strong><span>Demo vs Live</span></a>
+      <a href="#catalogue"><strong>Capability catalogue</strong><span>Student CAP rows</span></a>
+      <a href="#areas"><strong>Product areas</strong><span>Where to click</span></a>
+    </nav>
+
+    <section class="section" id="how">
+      <h2>How to read this</h2>
+      <div class="legend">
+        <div class="legend-item"><strong>Demo</strong><span>UI works in the mock session; resets on refresh; not CMS-backed.</span></div>
+        <div class="legend-item"><strong>Partial</strong><span>Useful UI, but a required Live piece is still missing (download, publish, auth, …).</span></div>
+        <div class="legend-item"><strong>Not started / Placeholder</strong><span>Thin or absent student surface.</span></div>
+        <div class="legend-item"><strong>Live (target)</strong><span>Durable CMS/file save + matching staff/lecturer path — see <a href="../migration.html">Migration</a>.</span></div>
+      </div>
+      <p class="note">
+        Full agent behaviour docs live in
+        <a href="../../ai/frontend/student-portal/">docs/ai/frontend/student-portal/</a>.
+        Product baseline: <a href="../../sdd/05-student-portal.html">SDD-05</a>.
+      </p>
+    </section>
+
+    <section class="section" id="catalogue">
+      <h2>Capability catalogue (student surface)</h2>
+      <p class="lead">Forty-one student-facing CAP rows from the working-group catalogue. Status is the current frontend demo baseline.</p>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>CAP</th>
+              <th>Capability</th>
+              <th>Where in the UI</th>
+              <th>Milestone</th>
+              <th>Demo status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="cap-01">
+              <td>Account & shell</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-01-student">CAP-01</a></td>
+              <td>Sign-in and account access</td>
+              <td><code>Shell / mock session</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m2">M2</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Fixed mock student; logout is a no-op until real auth.</td>
+            </tr>
+            <tr id="cap-35">
+              <td>Account & shell</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-35-student">CAP-35</a></td>
+              <td>Accessibility assistance</td>
+              <td><code>/services (Accessibility)</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m2">M2</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Campus placeholder + engineering audit; formal requests via Online Forms.</td>
+            </tr>
+            <tr id="cap-36">
+              <td>Account & shell</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-36-student">CAP-36</a></td>
+              <td>Mobile shell</td>
+              <td><code>Whole portal</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m2">M2</a></td>
+              <td><span class="chip warn">Not accepted</span></td>
+              <td>Desktop-first; Services body has a limited responsive exception.</td>
+            </tr>
+            <tr id="cap-39">
+              <td>Account & shell</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-39-student">CAP-39</a></td>
+              <td>Privacy & security guidance</td>
+              <td><code>/profile/privacy-security</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m2">M2</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Read-only campus guidance; formal privacy requests stay CAP-51.</td>
+            </tr>
+            <tr id="cap-08">
+              <td>Profile</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-08-student">CAP-08</a></td>
+              <td>Personal details & emergency contacts</td>
+              <td><code>/profile/personal-info</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Session-editable contact/address; some fields will need staff approval Live.</td>
+            </tr>
+            <tr id="cap-09">
+              <td>Profile</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-09-student">CAP-09</a></td>
+              <td>Student documents library</td>
+              <td><code>/profile/documents</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Lists evidence; View/Download remain placeholders.</td>
+            </tr>
+            <tr id="cap-10">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-10-student">CAP-10</a></td>
+              <td>Semester module registration</td>
+              <td><code>/academic/module-registration</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Confirm once per study period; creates mock invoices.</td>
+            </tr>
+            <tr id="cap-11">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-11-student">CAP-11</a></td>
+              <td>Class timetable</td>
+              <td><code>/academic/timetable</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Read-only recurring schedule from mock data.</td>
+            </tr>
+            <tr id="cap-12">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-12-student">CAP-12</a></td>
+              <td>Attendance records</td>
+              <td><code>/academic/attendance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Present/absent calendar; lecturer records attendance Live.</td>
+            </tr>
+            <tr id="cap-13">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-13-student">CAP-13</a></td>
+              <td>Grades, results & progress</td>
+              <td><code>/academic/performance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Published sample GPA/results only.</td>
+            </tr>
+            <tr id="cap-14">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-14-student">CAP-14</a></td>
+              <td>Study plan & prerequisites</td>
+              <td><code>/academic/study-plan</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Six-semester journey with credit and CGPA gates.</td>
+            </tr>
+            <tr id="cap-15">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-15-student">CAP-15</a></td>
+              <td>Graduation clearance</td>
+              <td><code>/academic/graduation</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Progress hub; clearance decisions are simulated in session.</td>
+            </tr>
+            <tr id="cap-23">
+              <td>Academic</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-23-student">CAP-23</a></td>
+              <td>Course information & outcomes</td>
+              <td><code>/academic/modules</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Module cards and detail pages.</td>
+            </tr>
+            <tr id="cap-17">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-17-student">CAP-17</a></td>
+              <td>Study guides</td>
+              <td><code>Modules → Materials</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Needs lecturer publish + authorised download Live.</td>
+            </tr>
+            <tr id="cap-18">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-18-student">CAP-18</a></td>
+              <td>Lecture notes & media</td>
+              <td><code>Modules → Materials</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Release-aware list; downloads mostly placeholders.</td>
+            </tr>
+            <tr id="cap-19">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-19-student">CAP-19</a></td>
+              <td>Assignment briefs</td>
+              <td><code>Modules → Materials</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Brief download remains a placeholder.</td>
+            </tr>
+            <tr id="cap-20">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-20-student">CAP-20</a></td>
+              <td>Submit / replace assignments</td>
+              <td><code>Modules → assignment detail</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Session metadata only; file bytes are not uploaded.</td>
+            </tr>
+            <tr id="cap-21">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-21-student">CAP-21</a></td>
+              <td>Revision & practice</td>
+              <td><code>—</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip">Not started</span></td>
+              <td>Campus-requested; not built yet.</td>
+            </tr>
+            <tr id="cap-22">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-22-student">CAP-22</a></td>
+              <td>Past examination papers</td>
+              <td><code>—</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip">Not started</span></td>
+              <td>Campus-requested; not built yet.</td>
+            </tr>
+            <tr id="cap-28">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-28-student">CAP-28</a></td>
+              <td>Marks & lecturer feedback</td>
+              <td><code>Modules / Performance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Shows published feedback only.</td>
+            </tr>
+            <tr id="cap-29">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-29-student">CAP-29</a></td>
+              <td>Integrity guidance</td>
+              <td><code>Assessment surfaces</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Guidance in assessment UX; not a standalone product.</td>
+            </tr>
+            <tr id="cap-24">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-24-student">CAP-24</a></td>
+              <td>Quizzes & examinations</td>
+              <td><code>Modules Materials</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Placeholder</span></td>
+              <td>Detail shells exist; start/grade flows deferred.</td>
+            </tr>
+            <tr id="cap-26">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-26-student">CAP-26</a></td>
+              <td>Live online classes</td>
+              <td><code>—</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip">Not started</span></td>
+              <td>Deferred.</td>
+            </tr>
+            <tr id="cap-27">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-27-student">CAP-27</a></td>
+              <td>Self-paced learning</td>
+              <td><code>Materials release rules</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Release timing in Materials only.</td>
+            </tr>
+            <tr id="cap-30">
+              <td>Learning</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-30-student">CAP-30</a></td>
+              <td>Course / lecturer evaluation</td>
+              <td><code>Module → lecturer review</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Session questionnaire; not Live staff analytics.</td>
+            </tr>
+            <tr id="cap-16">
+              <td>Comms & policy</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-16-student">CAP-16</a></td>
+              <td>Announcements</td>
+              <td><code>/announcements</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Read-only articles; no publishing or read-tracking.</td>
+            </tr>
+            <tr id="cap-55">
+              <td>Comms & policy</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-55-student">CAP-55</a></td>
+              <td>University policies</td>
+              <td><code>/policies</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Catalogue cards; policy bodies not yet available.</td>
+            </tr>
+            <tr id="cap-25">
+              <td>Comms & policy</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-25-student">CAP-25</a></td>
+              <td>Student–lecturer chat</td>
+              <td><code>Community sidebar</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Session-only messages; reset on refresh.</td>
+            </tr>
+            <tr id="cap-33">
+              <td>Comms & policy</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-33-student">CAP-33</a></td>
+              <td>IT helpdesk</td>
+              <td><code>Community → IT Helpdesk</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Chat channel; tickets stay CAP-51.</td>
+            </tr>
+            <tr id="cap-32">
+              <td>Comms & policy</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-32-student">CAP-32</a></td>
+              <td>Orientation</td>
+              <td><code>Services / content</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Covered partly via Services content.</td>
+            </tr>
+            <tr id="cap-45">
+              <td>Finance</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-45-student">CAP-45</a></td>
+              <td>Balances, invoices, history</td>
+              <td><code>/finance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Mock ledger; fictional bank details must not ship Live.</td>
+            </tr>
+            <tr id="cap-46">
+              <td>Finance</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-46-student">CAP-46</a></td>
+              <td>Bank-transfer proof</td>
+              <td><code>/finance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Proof metadata only until Bursary verifies Live.</td>
+            </tr>
+            <tr id="cap-47">
+              <td>Finance</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-47-student">CAP-47</a></td>
+              <td>Online payment</td>
+              <td><code>/finance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Not Live</span></td>
+              <td>Counter / transfer instructions only; no payment gateway.</td>
+            </tr>
+            <tr id="cap-48">
+              <td>Finance</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-48-student">CAP-48</a></td>
+              <td>Scholarships & incentives</td>
+              <td><code>/finance</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Read-only award assignments in session.</td>
+            </tr>
+            <tr id="cap-49">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-49-student">CAP-49</a></td>
+              <td>Resume & portfolio</td>
+              <td><code>/profile/resume · /portfolio</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Session editors; no PDF export or public share.</td>
+            </tr>
+            <tr id="cap-50">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-50-student">CAP-50</a></td>
+              <td>Immigration / Student Pass</td>
+              <td><code>/immigration</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>International students only; session case progress.</td>
+            </tr>
+            <tr id="cap-51">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-51-student">CAP-51</a></td>
+              <td>Requests & Online Forms</td>
+              <td><code>/online-forms</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Catalogue + My Forms; session drafts/submissions.</td>
+            </tr>
+            <tr id="cap-52">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-52-student">CAP-52</a></td>
+              <td>Accommodation</td>
+              <td><code>—</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip">Out of scope</span></td>
+              <td>Removed from this release; route returns to Dashboard.</td>
+            </tr>
+            <tr id="cap-54">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-54-student">CAP-54</a></td>
+              <td>Campus services information</td>
+              <td><code>/services</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Demo</span></td>
+              <td>Cyberjaya catalogue with source images.</td>
+            </tr>
+            <tr id="cap-31">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-31-student">CAP-31</a></td>
+              <td>Digital library</td>
+              <td><code>Services imagery</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip warn">Partial</span></td>
+              <td>Informational only; no licence checkout.</td>
+            </tr>
+            <tr id="cap-34">
+              <td>Services</td>
+              <td><a href="../../sdd/11-capability-catalog.html#cap-34-student">CAP-34</a></td>
+              <td>Study-centre support</td>
+              <td><code>—</code></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a></td>
+              <td><span class="chip">Not started</span></td>
+              <td>Deferred.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="areas">
+      <h2>Product areas → screens</h2>
+      <div class="toc">
+        <a href="student-portal-screenshots.html#dashboard"><strong>Dashboard</strong><span>News, performance peek, calendar</span></a>
+        <a href="student-portal-screenshots.html#academic"><strong>Academic</strong><span>Performance, modules, timetable, registration, graduation</span></a>
+        <a href="student-portal-screenshots.html#profile"><strong>Profile</strong><span>Personal, documents, resume, portfolio, privacy</span></a>
+        <a href="student-portal-screenshots.html#finance"><strong>Finance</strong><span>Invoices, proofs, awards</span></a>
+        <a href="student-portal-screenshots.html#services"><strong>Services &amp; support</strong><span>Campus services, forms, immigration, policies</span></a>
+        <a href="student-portal-guide.html"><strong>Use guides</strong><span>Step-by-step for common tasks</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Raisd CMS · Student portal · Demo UI (session-only) · raisd-campus/control-plane
+  </footer>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+</body>
+</html>

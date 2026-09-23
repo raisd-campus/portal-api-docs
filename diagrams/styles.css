@@ -281,6 +281,97 @@ main {
   line-height: 1.4;
 }
 
+/* Student portal screenshots & guides */
+.shot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 8px 0 0;
+}
+.shot-card {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.shot-card a { display: block; }
+.shot-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1440 / 900;
+  object-fit: cover;
+  object-position: top left;
+  background: #0b1220;
+}
+.shot-card figcaption {
+  padding: 12px 14px 14px;
+  display: grid;
+  gap: 4px;
+}
+.shot-card figcaption strong {
+  font-size: 0.95rem;
+}
+.shot-card .shot-group {
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.shot-card figcaption > span:last-child {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.guide-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+  gap: 18px;
+  align-items: start;
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.guide-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+.guide-card ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--ink);
+}
+.guide-card li { margin: 0 0 8px; }
+.guide-links {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+}
+.guide-shot {
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0b1220;
+}
+.guide-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1440 / 900;
+  object-fit: cover;
+  object-position: top left;
+}
+@media (max-width: 800px) {
+  .guide-card { grid-template-columns: 1fr; }
+}
+
 .meta-row {
   display: flex;
   flex-wrap: wrap;
