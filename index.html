@@ -85,7 +85,7 @@
     .nav-dd-main:hover, .nav-dd:focus-within > .nav-dd-main, .nav-dd.open > .nav-dd-main {
       background: #e8f0f8; text-decoration: none;
     }
-    .nav-dd-main.active, .nav-dd:has(.nav-dd-menu a.active) > .nav-dd-main {
+    .nav-dd-main.active {
       background: #1a4f8b; color: #fff; border-color: #1a4f8b;
     }
     .nav-dd-menu {
@@ -102,7 +102,6 @@
       color: #152033; font-size: 0.88rem; white-space: nowrap; text-decoration: none;
     }
     .nav-dd-menu a:hover { background: #e8f0f8; }
-    .nav-dd-menu a.active { background: #1a4f8b; color: #fff; }
 
     .raisd-header {
       max-width: var(--page-max);
@@ -144,7 +143,7 @@
         <img class="brand-logo" src="diagrams/assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
         <strong>Raisd Control Plane</strong>
       </a>
-            <nav class="nav" aria-label="Primary">
+                  <nav class="nav" aria-label="Primary">
         <div class="nav-dd">
           <a class="nav-dd-main" href="diagrams/index.html">Overview</a>
           <div class="nav-dd-menu" role="menu">
@@ -213,7 +212,7 @@
         <div class="nav-dd">
           <a class="nav-dd-main active" href="index.html">OpenAPI</a>
           <div class="nav-dd-menu" role="menu">
-            <a class="active" href="index.html">Swagger UI</a>
+            <a href="index.html">Swagger UI</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
           </div>
         </div>
