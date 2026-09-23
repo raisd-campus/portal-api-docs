@@ -186,10 +186,148 @@
     });
   }
 
+  /** Nomenclature IDs only (CAP-nn, M1–M5, SDD-nn, ADR-n) — legend scope */
+  var NOM_RE = /\b(CAP-\d{2}|M[1-5]|SDD-\d{2}|ADR-\d+)\b/g;
+
+  function sddUrl(file, hash) {
+    var base = new URL(glossaryUrl(), location.href);
+    var u = new URL('../sdd/' + file, base);
+    if (hash) u.hash = hash;
+    return u.pathname + u.search + u.hash;
+  }
+
+  function nomenclatureHref(key) {
+    var m;
+    if ((m = /^CAP-(\d{2})$/.exec(key))) {
+      return sddUrl('11-capability-catalog.html', 'cap-' + m[1]);
+    }
+    if ((m = /^M([1-5])$/.exec(key))) {
+      return sddUrl('03-delivery-milestones.html', 'm' + m[1]);
+    }
+    if ((m = /^SDD-(\d{2})$/.exec(key))) {
+      var files = {
+        '00': '00-document-control.html',
+        '01': '01-system-overview.html',
+        '02': '02-architecture-and-integration.html',
+        '03': '03-delivery-milestones.html',
+        '11': '11-capability-catalog.html',
+        '14': '14-cms-feature-comparison.html',
+        '15': '15-nomenclature.html'
+      };
+      return sddUrl(files[m[1]] || '15-nomenclature.html');
+    }
+    if ((m = /^ADR-(\d+)$/.exec(key))) {
+      return sddUrl('02-architecture-and-integration.html', 'adr-' + m[1]);
+    }
+    return sddUrl('15-nomenclature.html');
+  }
+
+  function legendBlurb(key, dict) {
+    var raw = dict[key] || key;
+    // Strip "CAP-53: " / "M2 — " style prefixes for a compact legend line
+    var stripped = raw
+      .replace(new RegExp('^' + key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*[:—-]\\s*', 'i'), '')
+      .trim();
+    return stripped || raw;
+  }
+
+  function sortNomKeys(keys) {
+    return keys.slice().sort(function (a, b) {
+      var rank = function (k) {
+        if (/^CAP-/.test(k)) return 0;
+        if (/^M[1-5]$/.test(k)) return 1;
+        if (/^SDD-/.test(k)) return 2;
+        if (/^ADR-/.test(k)) return 3;
+        return 9;
+      };
+      var ra = rank(a);
+      var rb = rank(b);
+      if (ra !== rb) return ra - rb;
+      if (/^CAP-/.test(a) && /^CAP-/.test(b)) {
+        return parseInt(a.slice(4), 10) - parseInt(b.slice(4), 10);
+      }
+      return a.localeCompare(b);
+    });
+  }
+
+  function collectNomKeys(text) {
+    var seen = {};
+    var keys = [];
+    var m;
+    NOM_RE.lastIndex = 0;
+    while ((m = NOM_RE.exec(String(text || ''))) !== null) {
+      if (!seen[m[1]]) {
+        seen[m[1]] = 1;
+        keys.push(m[1]);
+      }
+    }
+    return keys;
+  }
+
+  function mermaidHost(svg) {
+    return svg.closest('.mermaid') || svg.parentElement;
+  }
+
+  function ensureNomenclatureLegend(svg, dict) {
+    var host = mermaidHost(svg);
+    if (!host) return;
+    var next = host.nextElementSibling;
+    if (next && next.classList && next.classList.contains('mermaid-nomenclature-legend') &&
+        host.getAttribute('data-raisd-nom-legend') === '1') {
+      return; // already inserted — avoid MutationObserver loops
+    }
+    if (next && next.classList && next.classList.contains('mermaid-nomenclature-legend')) {
+      next.remove();
+    }
+
+    var keys = sortNomKeys(collectNomKeys(svg.textContent));
+    keys = keys.filter(function (k) { return !!dict[k]; });
+    if (!keys.length) {
+      host.removeAttribute('data-raisd-nom-legend');
+      return;
+    }
+
+    var aside = document.createElement('aside');
+    aside.className = 'mermaid-nomenclature-legend';
+    aside.setAttribute('aria-label', 'Nomenclature in this diagram');
+    aside.setAttribute('data-no-abbr', '');
+
+    var head = document.createElement('div');
+    head.className = 'mermaid-nomenclature-legend-head';
+    head.textContent = 'Nomenclature in this diagram';
+    aside.appendChild(head);
+
+    var ul = document.createElement('ul');
+    keys.forEach(function (key) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = nomenclatureHref(key);
+      a.className = 'raisd-abbr';
+      a.textContent = key;
+      a.setAttribute('title', dict[key]);
+      li.appendChild(a);
+      li.appendChild(document.createTextNode(' — ' + legendBlurb(key, dict)));
+      ul.appendChild(li);
+    });
+    aside.appendChild(ul);
+
+    var foot = document.createElement('p');
+    foot.className = 'mermaid-nomenclature-legend-foot';
+    var full = document.createElement('a');
+    full.href = sddUrl('15-nomenclature.html');
+    full.textContent = 'Full nomenclature (SDD-15)';
+    foot.appendChild(full);
+    aside.appendChild(foot);
+
+    host.setAttribute('data-raisd-nom-legend', '1');
+    host.insertAdjacentElement('afterend', aside);
+  }
+
   function annotateMermaid(root, re, dict) {
     if (!root || !root.querySelectorAll) return;
     root.querySelectorAll('.mermaid svg, svg[id^="mermaid-"]').forEach(function (svg) {
       annotateSvgTree(svg, re, dict);
+      ensureNomenclatureLegend(svg, dict);
     });
   }
 

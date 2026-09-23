@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd Control Plane — Architecture Diagrams</title>
+  <title>Raisd Control Plane — Overview</title>
   <link rel="stylesheet" href="./styles.css" />
   <script src="site-auth.js"></script>
 </head>
@@ -96,139 +96,93 @@
 
   <main>
     <section class="hero">
-      <h1>Campus portal data model &amp; flows</h1>
+      <h1>Raisd campus — what we are building</h1>
       <p>
-        Detailed Mermaid entity-relationship and data-flow diagrams for the Raisd
-        control plane, plus <a href="./old-cms/">LUCT CMS</a> / Portal compatibility guidance: clean canonical
-        domain inside; CAP-53 anti-corruption layer outside. Includes a dedicated
-        <a href="./old-cms/">LUCT Cyberjaya CMS analysis</a> section (comparison, FSD,
-        legacy ERD, batch/trigger inventory).
+        Plain-language overview of the Raisd portals, how they sit on the existing campus CMS,
+        where we are today, where we are going, and the migration stages to get there.
+        Technical diagrams and SDD detail live one click away.
       </p>
       <div class="meta-row">
-        <span class="chip ok">Logical model (contracts + SDD)</span>
-        <span class="chip ok">Students map via programme version</span>
-        <span class="chip ok">ProgrammeCampusOffering</span>
-        <span class="chip ok">CMS ACL (CAP-53)</span>
-        <span class="chip warn">No physical SQL migrations yet</span>
-        <span class="chip">Public: raisd-campus.github.io/portal-api-docs/diagrams</span>
+        <span class="chip ok">This phase: Cyberjaya CMS = system of record</span>
+        <span class="chip ok">Four portals via Portal API</span>
+        <span class="chip warn">Do not rebuild working staff desks</span>
+        <span class="chip">M5+: progressive unified CMS</span>
       </div>
     </section>
 
-    <div class="note" style="margin: 0 0 16px">
-      <strong>This phase vs longer term (23 Sep 2026 — Aslam).</strong>
-      Cyberjaya CMS remains SoR; portals via Portal API; no duplication of operational functions.
-      Longer term: progressive unified one-stop CMS on verified gaps + migration strategy (M5+).
-      See <a href="./old-cms/comparison.html#target">LUCT CMS — target delivery</a> and
-      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">architecture overview</a>.
-    </div>
+    <nav class="toc" aria-label="On this page">
+      <a href="#exec"><strong>Executive summary</strong><span>In one minute</span></a>
+      <a href="#architecture"><strong>Architecture</strong><span>High-level picture</span></a>
+      <a href="#states"><strong>Current → target</strong><span>And what to do</span></a>
+      <a href="#migration"><strong>Migration stages</strong><span>M1 through M5</span></a>
+      <a href="#explore"><strong>Explore further</strong><span>Diagrams, SDD, API</span></a>
+    </nav>
 
-    <div class="note" style="margin: 0 0 16px">
-      <strong>Student ↔ programme mapping.</strong>
-      Students map to a <em>programme version</em>:
-      <code>StudentProfile</code> → <code>ProgrammeEnrolment</code>
-      → <code>programmeVersionId</code> → <code>ProgrammeVersion</code> → <code>Programme</code>.
-      Keep version pinning (e.g. BBA 129 vs 122 credits). See <a href="./erd.html">ERD</a>.
-    </div>
-
-    <div class="note" style="margin: 0 0 16px">
-      <strong>Campus where a programme is offered.</strong>
-      Prefer <code>ProgrammeCampusOffering</code> (version × campus), not Faculty-as-campus.
-      Faculty remains organisational. See <a href="./erd.html#curriculum">ERD curriculum</a>
-      and <a href="./architecture.html#academic">architecture</a>.
-    </div>
-
-    <div class="note" style="margin: 0 0 28px">
-      <strong>LUCT compatibility.</strong>
-      Do not mirror legacy CMS tables. Document CAP-53 as an anti-corruption layer,
-      legacy ID maps, idempotent writes, reproducible calculations, layered “active”
-      statuses, and one SoR owner per domain.
-      Start here: <a href="./architecture.html">Architecture — LUCT CMS / Portal</a>.
-    </div>
-
-    <div class="toc">
-      <a href="./architecture.html">
-        <strong>LUCT CMS / Portal architecture</strong>
-        <span>ACL, SoR ownership, academic rules, ops priority</span>
-      </a>
-      <a href="./erd.html">
-        <strong>Entity Relationship Diagrams</strong>
-        <span>Institution, curriculum, delivery, student journey, finance, integration</span>
-      </a>
-      <a href="./dfd.html">
-        <strong>Data Flow Diagrams</strong>
-        <span>Context, ACL, auth, admissions, registration workflow, teaching</span>
-      </a>
-      <a href="./old-cms/">
-        <strong>LUCT Cyberjaya CMS analysis</strong>
-        <span>Feature comparison, FSD, legacy ERD, flows, triggers / SPs / batches</span>
-      </a>
-      <a href="./old-cms-sierra-leone/">
-        <strong>ICA Sierra Leone CMS</strong>
-        <span>Sister EMS dump (<code>ems_sierraleone</code>) — M5 campus pattern</span>
-      </a>
-      <a href="../index.html">
-        <strong>Portal API OpenAPI</strong>
-        <span>Interactive Swagger UI for <code>POST /v1/portal/:method</code></span>
-      </a>
-    </div>
-
-    <section class="section">
-      <h2>How to read these diagrams</h2>
-      <div class="legend">
-        <div class="legend-item">
-          <strong>CMS (SoR)</strong>
-          <span>Existing campus CMS remains system of record; CAP-53 translates.</span>
-        </div>
-        <div class="legend-item">
-          <strong>Canonical model</strong>
-          <span>StudentProfile → Enrolment → StudyPeriod → ModuleRegistration → ModuleResult.</span>
-        </div>
-        <div class="legend-item">
-          <strong>Postgres (planned)</strong>
-          <span>Portal-owned maps, DQ, audit, session — not a second SoR for CMS domains.</span>
-        </div>
-        <div class="legend-item">
-          <strong>Evidence volume</strong>
-          <span>File bytes for assignments, payment proofs, admissions evidence.</span>
-        </div>
+    <section class="section" id="exec">
+      <div class="exec-summary">
+        <h2>Executive summary</h2>
+        <p>
+          Raisd is modernising how applicants, students, lecturers, and staff use campus systems —
+          <strong>without throwing away the working Cyberjaya / LUCT CMS</strong> that already holds
+          the official records.
+        </p>
+        <p>
+          Think of it as <strong>four new front doors</strong> (Applicant, Student, Lecturer, Staff)
+          that all talk to one <strong>Portal API</strong>. That API is the only bridge to the
+          existing CMS. Nobody’s browser talks to the database or file store directly.
+        </p>
+        <p>
+          <strong>This phase (confirmed 23 Sep 2026):</strong> keep the existing CMS as the
+          system of record; ship better portal experiences; do <em>not</em> rebuild operational
+          desks that already work. <strong>Longer term:</strong> move toward one unified CMS
+          only where a gap is proven and a proper migration plan exists (ownership, cutover,
+          rollback, training).
+        </p>
+        <ol>
+          <li><strong>Now:</strong> student UI is largely demo/mock; applicant / lecturer / staff portals and live CMS writes are still ahead.</li>
+          <li><strong>Next:</strong> agree rules (M1), then admissions end-to-end on real records (M2).</li>
+          <li><strong>Then:</strong> core student journeys (M3), Cyberjaya pilot acceptance (M4), other campuses and remaining CMS (M5).</li>
+        </ol>
       </div>
-      <p class="note">
-        Cardinality notation in ERDs follows Mermaid: <code>||--o{</code> one-to-many,
-        <code>||--||</code> one-to-one, <code>}o--o{</code> many-to-many via junction.
-        DFDs use Gane &amp; Sarson style via Mermaid flowcharts.
+    </section>
+
+    <section class="section" id="architecture">
+      <h2>High-level architecture</h2>
+      <p class="lead">
+        Four role portals → Portal API → anti-corruption layer (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)
+        → existing CMS. Planned Postgres holds portal maps, audit, and session — not a second copy of CMS data.
+        Detail: <a href="./architecture.html">Architecture review</a> ·
+        <a href="../sdd/02-architecture-and-integration.html">SDD-02</a> ·
+        <a href="../sdd/02-architecture-and-integration.html#adr-1">ADR-1</a>.
       </p>
-    </section>
-
-    <section class="section">
-      <h2>System snapshot</h2>
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Context — portals sit in front of CMS</h3>
-            <p>Browsers never talk to Postgres, CMS, or file storage directly.</p>
+            <h3>Who uses what</h3>
+            <p>Browsers never talk to CMS, Postgres, or files directly.</p>
           </div>
         </div>
         <div class="card-body">
           <pre class="mermaid">
 flowchart LR
-  subgraph Actors
+  subgraph People
     A[Applicants]
     S[Students]
     L[Lecturers]
     T[Staff]
   end
 
-  subgraph ControlPlane["Raisd control plane"]
+  subgraph Raisd["Raisd control plane"]
     W[Role portal webs]
     API[Portal API]
-    ACL[CMS ACL CAP-53]
+    ACL["CMS bridge CAP-53"]
   end
 
-  subgraph Stores
-    CMS[(Existing CMS SoR)]
+  subgraph Campus
+    CMS[(Existing CMS<br/>system of record)]
     PG[(Postgres planned)]
     FS[(Evidence files)]
-    IDP[IdP / CMS login]
+    IDP[Login / IdP]
   end
 
   A --> W
@@ -243,6 +197,257 @@ flowchart LR
   API --> FS
           </pre>
         </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <strong>Portals</strong>
+          <span>Applicant, Student, Lecturer, Staff — separate webs for each role.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Portal API</strong>
+          <span>One contract every portal calls. Enforces auth and durable saves.</span>
+        </div>
+        <div class="legend-item">
+          <strong>CAP-53 bridge</strong>
+          <span>Translates clean portal language into legacy CMS tables — does not clone them.</span>
+        </div>
+        <div class="legend-item">
+          <strong>CMS (SoR)</strong>
+          <span>Authoritative campus records for this phase (Cyberjaya / LUCT).</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="states">
+      <h2>Current state, target state, and what needs to be done</h2>
+      <p class="lead">
+        Baseline product truth: <a href="../sdd/01-system-overview.html">SDD-01</a>.
+        “Demo” on screen is not “Live” — Live needs durable save, real records, and server-enforced permissions.
+      </p>
+      <div class="state-grid">
+        <div class="state-card now">
+          <h3>Current state</h3>
+          <ul>
+            <li>Student portal: deepest UI, still mostly <strong>demo / mock data</strong>.</li>
+            <li>Applicant, lecturer, and staff portals: <strong>not launched</strong> as Live products.</li>
+            <li>Backend: contracts and mock runtime; <strong>CMS writes not Live</strong>.</li>
+            <li>Auth: mock student session; real SSO / CMS login still ahead.</li>
+            <li>Staff work: continues on the <strong>existing LUCT CMS desks</strong>.</li>
+            <li>Docs &amp; diagrams: published for the working group (this site).</li>
+          </ul>
+        </div>
+        <div class="state-card target">
+          <h3>This-phase target (M1–M4)</h3>
+          <ul>
+            <li>Four portals on <strong>real Cyberjaya CMS records</strong> via Portal API.</li>
+            <li>Admissions first, then core student journeys and pilot acceptance.</li>
+            <li>Staff stay on verified old CMS unless a gap is proven.</li>
+            <li>Phone-friendly core journeys (not a native app mandate).</li>
+            <li>Monitoring, backups, privacy, and training ready for Cyberjaya pilot.</li>
+          </ul>
+        </div>
+        <div class="state-card gap">
+          <h3>What needs to be done</h3>
+          <ul>
+            <li>Agree campus rules, owners, and API access (<a href="./migration.html#m1">M1</a>).</li>
+            <li>Ship Portal API first slice + admissions end-to-end (<a href="./migration.html#m2">M2</a> / <a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>).</li>
+            <li>Wire Live auth that respects CMS login rules.</li>
+            <li>Make student learning, fees, and support paths Live or keep them on verified old CMS (<a href="./migration.html#m3">M3</a>).</li>
+            <li>Complete Cyberjaya pilot acceptance and ops readiness (<a href="./migration.html#m4">M4</a>).</li>
+            <li>Only then expand campuses and migrate remaining CMS domains with a written strategy (<a href="./migration.html#m5">M5</a>).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <strong>Longer-term direction (M5+):</strong>
+        a progressive <em>unified one-stop CMS</em> — retire legacy desks domain-by-domain when ownership,
+        cutover, rollback, and training are agreed. Not a rewrite mandate for Admissions launch.
+        See <a href="./old-cms/comparison.html#target">target delivery</a>.
+      </div>
+      <div class="table-wrap" style="margin-top:16px">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Where we are</th>
+              <th>This-phase Live target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Student UI</td>
+              <td>Demo / Partial on mock data</td>
+              <td>Role journeys on real CMS records via Portal API</td>
+            </tr>
+            <tr>
+              <td>Applicant UI</td>
+              <td>No Live product yet</td>
+              <td>Application → enrolment on CMS via Portal API</td>
+            </tr>
+            <tr>
+              <td>Lecturer UI</td>
+              <td>No Live product yet</td>
+              <td>Publish / attendance / marking — prefer verified old Lecturer Portal where it works</td>
+            </tr>
+            <tr>
+              <td>Staff UI</td>
+              <td>Ops on existing CMS desks</td>
+              <td>New screens only for verified gaps; else keep the desk</td>
+            </tr>
+            <tr>
+              <td>Backend</td>
+              <td>Mock runtime; CMS path stubbed</td>
+              <td>Portal API ↔ Cyberjaya CMS (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)</td>
+            </tr>
+            <tr>
+              <td>Auth</td>
+              <td>Fixed mock session</td>
+              <td>Real login / SSO honouring CMS rules where required</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="migration">
+      <h2>Migration stages (M1–M5)</h2>
+      <p class="lead">
+        Order is admissions-first. A milestone is when something <strong>must work</strong>,
+        not when investigation starts. Dates are <strong>TBC</strong> until the working group locks them.
+        Full plan: <a href="./migration.html">Migration</a> · <a href="../sdd/03-delivery-milestones.html">SDD-03</a>.
+      </p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  M1["M1 Confirm rules<br/>and integration"] --> M2["M2 Admissions<br/>launch"]
+  M2 --> M3["M3 Core student<br/>portal"]
+  M3 --> M4["M4 Cyberjaya<br/>pilot acceptance"]
+  M4 --> M5["M5 Campus expansion<br/>and remaining CMS"]
+          </pre>
+        </div>
+      </div>
+      <div class="milestone-strip">
+        <a class="milestone-card" href="./migration.html#m1">
+          <span class="mid">M1</span>
+          <strong>Confirm rules &amp; integration</strong>
+          <span>Campus rules, named owners, legacy capabilities, and API access agreed. Unblocks later work — not a UI release.</span>
+        </a>
+        <a class="milestone-card" href="./migration.html#m2">
+          <span class="mid">M2</span>
+          <strong>Admissions launch</strong>
+          <span>Apply → evidence → offer → enrol on real records. Portal API first slice. Staff review via verified CMS or new screens.</span>
+        </a>
+        <a class="milestone-card" href="./migration.html#m3">
+          <span class="mid">M3</span>
+          <strong>Core student portal</strong>
+          <span>Learning, records, fees, and lecturer/staff support paths Live — or still on verified old CMS where that is safer.</span>
+        </a>
+        <a class="milestone-card" href="./migration.html#m4">
+          <span class="mid">M4</span>
+          <strong>Cyberjaya pilot acceptance</strong>
+          <span>Campus accepts the integrated pilot. Training and operations ready. Hosting at pilot stage.</span>
+        </a>
+        <a class="milestone-card" href="./migration.html#m5">
+          <span class="mid">M5</span>
+          <strong>Expansion &amp; remaining CMS</strong>
+          <span>Other campuses (e.g. Sierra Leone pattern). Move SoR only with a written migration strategy per domain.</span>
+        </a>
+      </div>
+      <div class="table-wrap" style="margin-top:16px">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>In plain words</th>
+              <th>Release condition (summary)</th>
+              <th>Hosting</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="./migration.html#m1">M1</a></td>
+              <td>Get the rules and access straight</td>
+              <td>Rules, API access, and operating responsibilities agreed</td>
+              <td>Before stage 1 install</td>
+            </tr>
+            <tr>
+              <td><a href="./migration.html#m2">M2</a></td>
+              <td>Open admissions for real</td>
+              <td>Application-to-enrolment works with real records</td>
+              <td><a href="./migration.html#hosting">Stage 2</a></td>
+            </tr>
+            <tr>
+              <td><a href="./migration.html#m3">M3</a></td>
+              <td>Day-to-day student life works</td>
+              <td>Student + staff/lecturer paths Live or on verified old CMS</td>
+              <td><a href="./migration.html#hosting">Stage 3</a></td>
+            </tr>
+            <tr>
+              <td><a href="./migration.html#m4">M4</a></td>
+              <td>Cyberjaya says “we accept this”</td>
+              <td>Campus accepts pilot; training and ops ready</td>
+              <td><a href="./migration.html#hosting">Stage 4</a></td>
+            </tr>
+            <tr>
+              <td><a href="./migration.html#m5">M5</a></td>
+              <td>Grow out + tidy remaining CMS</td>
+              <td>Each campus accepts rollout; SoR moves only with written strategy</td>
+              <td><a href="./migration.html#hosting">Stage 5</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <strong>System-of-record posture:</strong>
+        M1–M4 keep Cyberjaya / LUCT CMS as SoR.
+        M5+ may migrate domains progressively — never by silently duplicating desks.
+        See <a href="./migration.html#posture">migration posture</a> and
+        <a href="./migration.html#critical">critical path</a>.
+      </div>
+    </section>
+
+    <section class="section" id="explore">
+      <h2>Explore further</h2>
+      <p class="lead">Deeper technical material for architects, developers, and AI agents.</p>
+      <div class="toc">
+        <a href="./architecture.html">
+          <strong>Architecture review</strong>
+          <span>ACL, SoR ownership, academic rules, ops priority</span>
+        </a>
+        <a href="./migration.html">
+          <strong>Full migration plan</strong>
+          <span>M1–M5 detail, hosting stages, definition of done</span>
+        </a>
+        <a href="./raisd-cms/index.html">
+          <strong>Raisd CMS — ERD &amp; DFD</strong>
+          <span>Logical data model and data flows</span>
+        </a>
+        <a href="./old-cms/">
+          <strong>LUCT Cyberjaya CMS analysis</strong>
+          <span>Comparison, FSD, legacy ERD, triggers / batches</span>
+        </a>
+        <a href="./old-cms-sierra-leone/">
+          <strong>ICA Sierra Leone CMS</strong>
+          <span>Sister campus dump — M5 expansion pattern</span>
+        </a>
+        <a href="../sdd/">
+          <strong>Software Design Documents</strong>
+          <span>Working-group baseline (SDD-00 … SDD-15)</span>
+        </a>
+        <a href="../ai/index.html">
+          <strong>AI knowledge base</strong>
+          <span>Agent instructions and catalogues</span>
+        </a>
+        <a href="../index.html">
+          <strong>Portal API OpenAPI</strong>
+          <span>Swagger UI for <code>POST /v1/portal/:method</code></span>
+        </a>
+      </div>
+      <div class="note" style="margin-top:8px">
+        Short labels such as CAP-53 or M2 are explained on hover and in
+        <a href="../sdd/15-nomenclature.html">SDD-15 nomenclature</a>.
+        Mermaid diagrams that mention those IDs also show a short legend underneath.
       </div>
     </section>
   </main>
