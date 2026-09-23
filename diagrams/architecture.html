@@ -31,13 +31,18 @@
       <p>
         Guidance incorporated from LUCT CMS and Student Portal operational experience.
         Keep the canonical domain clean; concentrate legacy complexity in the CMS
-        anti-corruption boundary (CAP-53). Existing CMS remains System of Record in
-        the current stage; portals never talk to CMS / Postgres / files directly.
+        anti-corruption boundary (CAP-53). <strong>This phase (confirmed 23 Sep 2026):</strong>
+        existing Cyberjaya CMS remains System of Record; portals via Portal API; do not
+        duplicate operational desks. Longer term: progressive unified one-stop CMS on
+        verified gaps + migration strategy
+        (<a href="./old-cms/comparison.html#target">target delivery</a>).
+        Portals never talk to CMS / Postgres / files directly.
       </p>
       <div class="meta-row">
+        <span class="chip ok">This phase: CMS = SoR</span>
         <span class="chip ok">Clean canonical inside</span>
         <span class="chip warn">Ugly legacy translation outside</span>
-        <span class="chip">Do not mirror r_student / r_stdprogram schema</span>
+        <span class="chip">M5+: progressive unified CMS</span>
       </div>
     </section>
 

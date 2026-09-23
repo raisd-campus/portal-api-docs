@@ -46,10 +46,20 @@
     </section>
 
     <div class="note" style="margin: 0 0 16px">
-      <strong>ADR-1 (system of record).</strong>
-      Do not replace working Cyberjaya staff desks at launch. Build Raisd UIs that read/write through the
-      Portal API → CAP-53 anti-corruption layer → existing MySQL. Also seen in dumps:
+      <strong>This phase — ADR-1 (confirmed Aslam, 23 Sep 2026).</strong>
+      Use the existing Cyberjaya CMS as system of record. Build modern portal experiences via the
+      Portal API → CAP-53 anti-corruption layer → existing MySQL. Do <em>not</em> duplicate operational
+      staff functions the old CMS already runs. Also seen in dumps:
       <code>campus2_cyberjaya</code>, <code>portalcyberjaya</code>.
+    </div>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Longer-term target.</strong>
+      Still aim for a <strong>unified, one-stop CMS</strong>, delivered <em>progressively</em> on
+      verified gaps with an explicit migration strategy (ownership, cutover, rollback, training).
+      That consolidation sits under <strong>M5+</strong> / remaining-CMS work — not Admissions launch rewrite.
+      See <a href="../../sdd/03-delivery-milestones.md">SDD-03</a> and
+      <a href="./comparison.html#target">high-level comparison &amp; target delivery</a>.
     </div>
 
     <div class="note warn" style="margin: 0 0 28px">

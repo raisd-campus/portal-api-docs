@@ -55,11 +55,25 @@ flowchart TB
 ## Executive summary
 
 1. The old CMS is a **full campus operations suite** (admissions, registry, faculty, bursary, lecturer, services/visa, accommodation, AQA, library, reporting, LEC, training, payment, PDPA). Raisd’s new stack is a **modern multi-portal UX + API layer** on top of that record.
-2. Most **Admin / Staff** CAPs already have an old-CMS desk. Default: **do not rebuild**; verify and deep-link or keep staff on old CMS until a gap is proven ([SDD-07](../../sdd/07-admin-staff-cms.md)).
-3. The **Student portal** is the deepest new UI (mostly Demo/Partial). Old CMS holds the underlying records; Live needs CAP-53 mapping, not a second ledger.
-4. **Applicant** and **Lecturer** portals are largely **Not started** as Raisd apps, while old CMS already has Marketing/Registry admissions and a Lecturer Portal 1.0.
-5. Old CMS has **heavy Malaysia-specific ops** (EMGS, KDN/MPWA, eIPTS, PTPTN, MQA/KPT) that exceed many CAP wordings — keep them on old CMS unless a portal journey explicitly needs them.
-6. Gaps where the **new** product intents go beyond clear old-CMS menus: polished mobile shells, portfolio/resume builders, modern LMS-style quizzes/live class productisation, unified helpdesk UX, and a single Portal API contract. Treat as product decisions, not automatic rebuilds.
+2. **This phase (confirmed Aslam, 23 Sep 2026):** Cyberjaya CMS remains **system of record**; build portals via the Portal API; **do not duplicate** operational functions the old CMS already runs.
+3. **Longer term:** still aim for a **unified one-stop CMS**, delivered **progressively** on verified gaps with an explicit migration strategy (M5+ / remaining-CMS — not M2–M4 launch rewrite).
+4. Most **Admin / Staff** CAPs already have an old-CMS desk. Default: **do not rebuild**; verify and deep-link or keep staff on old CMS until a gap is proven ([SDD-07](../../sdd/07-admin-staff-cms.md)).
+5. The **Student portal** is the deepest new UI (mostly Demo/Partial). Old CMS holds the underlying records; Live needs CAP-53 mapping, not a second ledger.
+6. **Applicant** and **Lecturer** portals are largely **Not started** as Raisd apps, while old CMS already has Marketing/Registry admissions and a Lecturer Portal 1.0.
+7. Old CMS has **heavy Malaysia-specific ops** (EMGS, KDN/MPWA, eIPTS, PTPTN, MQA/KPT) that exceed many CAP wordings — keep them on old CMS unless a portal journey explicitly needs them.
+8. Gaps where the **new** product intents go beyond clear old-CMS menus: polished mobile shells, portfolio/resume builders, modern LMS-style quizzes/live class productisation, unified helpdesk UX, and a single Portal API contract. Treat as product decisions, not automatic rebuilds.
+
+### High-level comparison and target delivery
+
+| Horizon | What we deliver | System of record |
+|---|---|---|
+| **This phase (M1–M4)** | Modern Applicant / Student / Lecturer / Staff experiences via Portal API; staff ops stay on verified old desks unless a gap is proven | Existing Cyberjaya CMS |
+| **M2** | Admissions launch (apply → offer → enrol) | Existing CMS |
+| **M3** | Core student portal + paired lecturer/staff paths | Existing CMS |
+| **M4** | Cyberjaya pilot acceptance | Existing CMS + Portal API |
+| **Longer term (M5+)** | Campus expansion + progressive consolidation toward one-stop CMS | Migrate domain-by-domain after verified gap + migration strategy |
+
+Published comparison UI: [../../diagrams/old-cms/comparison.html](../../diagrams/old-cms/comparison.html). Milestones: [SDD-03](../../sdd/03-delivery-milestones.md).
 
 ## System-level comparison
 

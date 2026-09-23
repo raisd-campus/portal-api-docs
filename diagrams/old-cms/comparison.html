@@ -35,8 +35,10 @@
         Raisd statuses from SDD-11. Demo ≠ Live.
       </p>
       <div class="meta-row">
-        <span class="chip ok">ADR-1: CMS remains SoR</span>
-        <span class="chip warn">Staff portal = gaps only</span>
+        <span class="chip ok">This phase: CMS = SoR</span>
+        <span class="chip ok">Portals via Portal API</span>
+        <span class="chip warn">No ops duplication</span>
+        <span class="chip">Longer term: progressive unified CMS</span>
         <span class="chip">CAP-53 critical path</span>
       </div>
     </section>
@@ -51,6 +53,7 @@
     </nav>
 
     <div class="toc">
+      <a href="#target"><strong>Target delivery</strong><span>Phase vs longer term</span></a>
       <a href="#architecture"><strong>Architecture</strong><span>Old vs new</span></a>
       <a href="#domains"><strong>Domain mapping</strong><span>Tables → canonical</span></a>
       <a href="#applicant"><strong>Applicant</strong><span>CAP-01…55</span></a>
@@ -61,6 +64,88 @@
       <a href="#old-only"><strong>Old CMS only</strong><span>Keep on desks</span></a>
       <a href="#raisd-gaps"><strong>Raisd-only gaps</strong><span>New product</span></a>
     </div>
+
+    <section class="section" id="target">
+      <h2>High-level comparison &amp; target delivery</h2>
+      <p class="lead">
+        Working Group confirmation <strong>23 Sep 2026 (Aslam)</strong>: this phase keeps Cyberjaya CMS as SoR
+        and builds modern portals via the Portal API without duplicating operational functions.
+        Longer term still aims for a unified one-stop CMS — progressively, on verified gaps, with a migration strategy.
+      </p>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Horizon</th>
+              <th>What we deliver</th>
+              <th>System of record</th>
+              <th>Milestone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>This phase</strong></td>
+              <td>Modern Applicant / Student / Lecturer / Staff experiences via Portal API; staff ops stay on verified old desks unless a gap is proven</td>
+              <td>Existing Cyberjaya CMS</td>
+              <td>M1–M4</td>
+            </tr>
+            <tr>
+              <td>Admissions launch</td>
+              <td>Apply → evidence → track → offer → enrol</td>
+              <td>Existing CMS</td>
+              <td>M2</td>
+            </tr>
+            <tr>
+              <td>Core student portal</td>
+              <td>Student journeys + paired lecturer/staff paths (or verified old desk)</td>
+              <td>Existing CMS</td>
+              <td>M3</td>
+            </tr>
+            <tr>
+              <td>Cyberjaya pilot</td>
+              <td>Integrated acceptance, training, ops readiness</td>
+              <td>Existing CMS + Portal API</td>
+              <td>M4</td>
+            </tr>
+            <tr>
+              <td><strong>Longer term</strong></td>
+              <td>Campus expansion + progressive consolidation toward one-stop CMS</td>
+              <td>Migrate domain-by-domain after verified gap + written migration strategy</td>
+              <td>M5+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Phase vs progressive unification</h3>
+            <p>M5+ is not a licence to rewrite every working desk.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph phase ["This phase — M1 to M4"]
+    P[Four portals] --> API[Portal API]
+    API --> CMS[Cyberjaya CMS SoR]
+  end
+  subgraph later ["Longer term — M5+"]
+    G[Verified gap] --> MIG[Migration strategy]
+    MIG --> U[Progressive unified CMS]
+    CMS -.->|retire desk only when ready| U
+  end
+  phase --> later
+          </pre>
+        </div>
+      </div>
+      <p class="note">
+        Detail: <a href="../../sdd/01-system-overview.md">SDD-01</a>,
+        <a href="../../sdd/03-delivery-milestones.md">SDD-03</a>,
+        <a href="../../sdd/14-cms-feature-comparison.md">SDD-14</a>,
+        <a href="../../ai/architecture/overview.md">architecture overview</a>.
+      </p>
+    </section>
 
     <section class="section" id="architecture">
       <h2>Side-by-side architecture</h2>
