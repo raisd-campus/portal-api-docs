@@ -9,6 +9,7 @@ on:
       - index.html
       - diagrams/**
       - ai/**
+      - sdd/**
       - .github/workflows/pages.yml
   workflow_dispatch:
 
@@ -46,6 +47,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Assemble site
+        env:
+          DOCS_SITE_USER: ${{ secrets.DOCS_SITE_USER }}
+          DOCS_SITE_PASSWORD: ${{ secrets.DOCS_SITE_PASSWORD }}
         run: |
           mkdir -p _site
           cp index.html openapi.yaml _site/
@@ -58,6 +62,7 @@ jobs:
           test -f _site/diagrams/old-cms/comparison.html
           test -f _site/diagrams/migration.html
           test -f _site/diagrams/raisd-cms/index.html
+          test -f _site/diagrams/old-cms-sierra-leone/index.html
           test -f _site/ai/index.html
           test -f _site/sdd/15-nomenclature.html
           test -f _site/sdd/11-capability-catalog.html
@@ -65,7 +70,9 @@ jobs:
           test -f _site/sdd/index.html
           test -f _site/diagrams/glossary.json
           test -f _site/diagrams/abbr-tooltips.js
-
+          test -f _site/diagrams/site-auth.js
+          test -f _site/diagrams/site-auth-config.json
+          python3 scripts/assemble-site-auth.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

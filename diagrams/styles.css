@@ -367,3 +367,74 @@ abbr.raisd-abbr {
 .mermaid svg text[data-raisd-abbr="1"] {
   cursor: help;
 }
+
+/* Docs site auth gate (GitHub Pages) */
+html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
+  visibility: hidden !important;
+}
+#raisd-auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(900px 420px at 15% -10%, #dfeaf7 0%, transparent 55%),
+    radial-gradient(700px 360px at 100% 0%, #e8f3ec 0%, transparent 45%),
+    #f6f8fb;
+  visibility: visible !important;
+}
+.raisd-auth-card {
+  width: min(400px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
+  border-radius: 16px;
+  border: 1px solid var(--line, #d7dee8);
+  background: #fff;
+  box-shadow: var(--shadow, 0 10px 30px rgba(21, 32, 51, 0.06));
+}
+.raisd-auth-logo { display: block; height: 28px; width: auto; margin-bottom: 4px; }
+.raisd-auth-card h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--ink, #152033);
+}
+.raisd-auth-lead {
+  margin: 0 0 4px;
+  color: var(--muted, #5a6a7e);
+  font-size: 0.92rem;
+}
+.raisd-auth-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.86rem;
+  color: var(--ink, #152033);
+}
+.raisd-auth-label input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line, #d7dee8);
+  font: inherit;
+}
+.raisd-auth-card button {
+  margin-top: 4px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent, #1a4f8b);
+  background: var(--accent, #1a4f8b);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.raisd-auth-card button:hover { filter: brightness(1.05); }
+.raisd-auth-error {
+  margin: 0;
+  color: #8a1f1f;
+  font-size: 0.88rem;
+}
