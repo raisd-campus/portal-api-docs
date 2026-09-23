@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>02-architecture-and-integration — Raisd SDD</title>
-  <link rel="stylesheet" href="../../../diagrams/styles.css" />
+  <link rel="stylesheet" href="../diagrams/styles.css" />
   <style>
     main.sdd-doc {
       max-width: var(--page-max, 1460px);
@@ -12,11 +12,55 @@
       margin: 0 auto;
       padding: 28px var(--page-pad-x, 20px) 64px;
     }
-    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
-    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
-    main.sdd-doc h2 { margin-top: 1.8rem; }
-    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; margin: 0 0 12px; }
+    main.sdd-doc h2 { margin-top: 2rem; margin-bottom: 0.6rem; font-size: 1.25rem; }
+    main.sdd-doc h3 { margin-top: 1.4rem; font-size: 1.05rem; }
+    main.sdd-doc p, main.sdd-doc li { max-width: 72rem; }
+    main.sdd-doc .table-scroll {
+      overflow-x: auto;
+      margin: 12px 0 20px;
+      border: 1px solid var(--line, #d7dee8);
+      border-radius: 12px;
+      background: var(--surface, #fff);
+      box-shadow: var(--shadow, 0 10px 30px rgba(21, 32, 51, 0.06));
+    }
+    main.sdd-doc table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 0;
+    }
+    main.sdd-doc th,
+    main.sdd-doc td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line, #d7dee8);
+      text-align: left;
+      vertical-align: top;
+    }
+    main.sdd-doc th {
+      background: var(--accent-soft, #e8f0f8);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    main.sdd-doc tbody tr:last-child td { border-bottom: 0; }
+    main.sdd-doc tbody tr:hover td { background: #f8fafc; }
+    main.sdd-doc colgroup { display: none; }
+    main.sdd-doc pre {
+      overflow-x: auto;
+      background: #eef2f7;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line, #d7dee8);
+    }
     main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+    main.sdd-doc .mermaid {
+      background: var(--surface, #fff);
+      border: 1px solid var(--line, #d7dee8);
+      border-radius: 12px;
+      padding: 12px;
+      overflow-x: auto;
+      margin: 12px 0 20px;
+    }
   </style>
 </head>
 <body>
@@ -84,9 +128,9 @@
           </div>
         </div>
         <div class="nav-dd">
-          <a class="nav-dd-main" class="active" href="index.html">SDD</a>
+          <a class="nav-dd-main active" href="index.html">SDD</a>
           <div class="nav-dd-menu" role="menu">
-            <a class="active" href="index.html">SDD hub</a>
+                        <a href="index.html">SDD hub</a>
             <a href="15-nomenclature.html">Nomenclature</a>
             <a href="11-capability-catalog.html">Capability catalogue</a>
             <a href="03-delivery-milestones.html">Milestones</a>
@@ -421,7 +465,40 @@ access, old-CMS owner, API surface already callable, SSO vs CMS
 password, file-store product, environments.</p>
   </main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
-  <script src="../../../diagrams/abbr-tooltips.js" defer></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    // Pandoc emits <pre class="mermaid"><code>…</code></pre>; flatten for Mermaid
+    document.querySelectorAll("pre.mermaid > code").forEach(function (code) {
+      var pre = code.parentElement;
+      pre.textContent = code.textContent;
+    });
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
   <script src="../diagrams/nav-dropdown.js" defer></script>
+  <script>
+    // Wrap pandoc tables for horizontal scroll without breaking layout
+    document.querySelectorAll('main.sdd-doc > table').forEach(function (table) {
+      if (table.parentElement && table.parentElement.classList.contains('table-scroll')) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'table-scroll';
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    });
+  </script>
 </body>
 </html>
