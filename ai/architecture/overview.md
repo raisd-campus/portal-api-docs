@@ -16,6 +16,7 @@ Consequences:
 - CAP-53 (existing CMS integration and campus configuration) is on the critical path for Admissions launch.
 - Frontend “ready” screens cannot go Live until the matching old-CMS capability is verified or replaced.
 - New staff screens are built only where the old CMS does not already support the workflow.
+- Inventory of the Cyberjaya dump and CAP mapping: [../backend/old-cms-cyberjaya.md](../backend/old-cms-cyberjaya.md), [../backend/cms-feature-comparison.md](../backend/cms-feature-comparison.md), [SDD-14](../../sdd/14-cms-feature-comparison.md).
 
 ## Logical shape
 

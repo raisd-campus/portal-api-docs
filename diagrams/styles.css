@@ -219,12 +219,21 @@ main {
 .legend-item strong { display: block; margin-bottom: 4px; }
 .legend-item span { color: var(--muted); }
 
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 8px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
 table.attr {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.88rem;
   margin-top: 8px;
 }
+.table-wrap > table.attr { margin: 0; }
 table.attr th,
 table.attr td {
   text-align: left;
@@ -232,7 +241,13 @@ table.attr td {
   border-bottom: 1px solid var(--line);
   vertical-align: top;
 }
-table.attr th { color: var(--muted); font-weight: 600; }
+table.attr th {
+  color: var(--muted);
+  font-weight: 600;
+  background: #f3f6fa;
+}
+table.attr tbody tr:last-child td { border-bottom: 0; }
+table.attr tbody tr:hover td { background: #f8fafc; }
 table.attr code {
   font-family: var(--mono);
   font-size: 0.84em;

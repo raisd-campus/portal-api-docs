@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Old CMS Process Flows / DFD</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · Old CMS · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../architecture.html">Architecture</a>
+        <a href="../erd.html">ERD</a>
+        <a href="../dfd.html">DFD</a>
+        <a class="active" href="./index.html">Old CMS</a>
+        <a href="../../ai/index.html">AI knowledge</a>
+        <a href="../../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Process flows — batch, admissions, registration, payment</h1>
+      <p>
+        Data-flow style Mermaid charts for nightly Cyberjaya batch, admissions handoff,
+        semester registration, portal login gating, payment verification, and the Raisd vs
+        PHPMaker write-path contrast.
+      </p>
+      <div class="meta-row">
+        <span class="chip">cyberjayabatchnight*.sh</span>
+        <span class="chip">portal.sql LoginActive</span>
+        <span class="chip ok">CAP-53 write path</span>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="Old CMS sections">
+      <a href="./index.html"><strong>Hub</strong><span>Analysis overview</span></a>
+      <a href="./comparison.html"><strong>Comparison</strong><span>CAP matrices</span></a>
+      <a href="./fsd.html"><strong>FSD</strong><span>Modules</span></a>
+      <a href="./erd.html"><strong>Legacy ERD</strong><span>Physical tables</span></a>
+      <a href="./flows.html"><strong>Flows</strong><span>This page</span></a>
+      <a href="./database.html"><strong>Database</strong><span>Triggers &amp; SPs</span></a>
+    </nav>
+
+    <div class="toc">
+      <a href="#batch"><strong>Nightly batch</strong><span>cyberjayabatchnight</span></a>
+      <a href="#admissions"><strong>Admissions</strong><span>App → enrol</span></a>
+      <a href="#registration"><strong>Registration</strong><span>Semester</span></a>
+      <a href="#login"><strong>Login gating</strong><span>LoginActive</span></a>
+      <a href="#payment"><strong>Payment verify</strong><span>Proof → receipt</span></a>
+      <a href="#writepath"><strong>Write paths</strong><span>Raisd vs PHPMaker</span></a>
+    </div>
+
+    <section class="section" id="batch">
+      <h2>Nightly batch sequence</h2>
+      <p class="lead">
+        From <code>cyberjayabatchnight*.sh</code>: stop httpd, run domain SQL jobs, restart httpd,
+        then mysqldump portal sync exports. CAP-53 must assume these jobs refresh balances,
+        attendance, portal flags, and reports overnight.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>cyberjayabatchnight*.sh</h3>
+            <p>Order matters — bursary and portal gating depend on earlier refreshes.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  A[Stop httpd] --> B[Registry jobs]
+  B --> C[Attendance]
+  C --> D[Examination]
+  D --> E[Accommodation]
+  E --> F[Bursary]
+  F --> G[SSD]
+  G --> H[VisaReport]
+  H --> I[portal]
+  I --> J[portalcontact]
+  J --> K[report]
+  K --> L[cleanup]
+  L --> M[Start httpd]
+  M --> N[mysqldump portal sync exports]
+          </pre>
+        </div>
+      </div>
+      <table class="attr">
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Stop httpd</td><td>Quiet writes during batch consistency window</td></tr>
+          <tr><td>Registry</td><td>Student/register consistency jobs</td></tr>
+          <tr><td>Attendance</td><td>Attendance rollups / transfers</td></tr>
+          <tr><td>Examination</td><td>Exam/marks related batch</td></tr>
+          <tr><td>Accommodation</td><td>Occupancy / housing refresh</td></tr>
+          <tr><td>Bursary</td><td>Ledger / outstanding refresh (ties to <code>b_Update_*</code>)</td></tr>
+          <tr><td>SSD</td><td>Student services batch</td></tr>
+          <tr><td>VisaReport</td><td>Immigration reporting exports</td></tr>
+          <tr><td>portal / portalcontact</td><td>Login gating + contact sync (<code>portal.sql</code>)</td></tr>
+          <tr><td>report / cleanup</td><td>Reporting extracts and temp cleanup</td></tr>
+          <tr><td>Start httpd</td><td>Resume staff/portal apps</td></tr>
+          <tr><td>mysqldump portal sync</td><td>Export portal snapshot tables for Cyberjaya portal DB</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="admissions">
+      <h2>Admissions flow</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Agent / online application → enrol</h3>
+            <p>Marketing/Registry desks + Agent* stored procedures.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  Agent[Agent / Online app] --> Form[app_applicationform]
+  Form --> Docs[app_document / app_docfile]
+  Docs --> Review[Registry / Marketing review]
+  Review --> Pre[app_preoffer]
+  Pre --> Offer[r_stdofferletter]
+  Offer --> Enrol[Enrol r_student]
+  Enrol --> Prog[r_stdprogram]
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="registration">
+      <h2>Semester registration</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>ProgramsAllowedToRegister → modules → fees</h3>
+            <p>Atomic with triggers; finish with bursary student refresh.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  Gate[ProgramsAllowedToRegister] --> Sem[Insert/update r_stdsemester]
+  Sem --> Mod[Insert/update r_stdmodule]
+  Mod --> Trig[Fees / registration triggers]
+  Trig --> Upd[b_Update_Student]
+  Upd --> Out[AccOutstanding / CGPA consistency]
+          </pre>
+        </div>
+      </div>
+      <p class="note warn">
+        Do not bypass <code>b_Update_Student</code> (and related mark/billing variants) when mutating
+        registration or balances — overnight batch and desk UIs assume these procedures keep
+        outstanding and academic aggregates consistent.
+      </p>
+    </section>
+
+    <section class="section" id="login">
+      <h2>Portal login gating</h2>
+      <p class="lead">
+        Batch <code>portal.sql</code> enables/disables student portal login using outstanding balance,
+        VIP, PTPTN rules, and <code>StdPortalActive</code> — writing <code>r_student.LoginActive</code>
+        / <code>loginactive</code>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>portal.sql LoginActive rules</h3>
+            <p>Raisd CAP-01 must honour equivalent policy, not invent open access.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  Batch[portal.sql nightly] --> Eval{Evaluate student}
+  Eval -->|Outstanding / policy fail| Off[LoginActive = off]
+  Eval -->|VIP / PTPTN / StdPortalActive OK| On[LoginActive = on]
+  Off --> Portal[Legacy portal / sync reject]
+  On --> PortalOK[Legacy portal allow]
+  Sync[portal_r_student_cyberjaya dump] --> Portal
+  Sync --> PortalOK
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="payment">
+      <h2>Payment verification</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Proof → b_paymentverification → receipts</h3>
+            <p>Proof ≠ payment. Bursary verifies; Laravel payment app may issue receipts.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  Stu[Student uploads proof] --> PV[b_paymentverification]
+  PV --> Staff[Bursary review]
+  Staff -->|approve| Rec[b_receipt / b_receiptdetail]
+  Staff -->|reject| Back[Student notified]
+  Rec --> Stmt[b_statement / AccOutstanding]
+  PayApp[Laravel payment/] -.-> Rec
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="writepath">
+      <h2>Raisd vs old write path</h2>
+      <p class="lead">
+        PHPMaker desks write MySQL directly (triggers fire in-process). Raisd portals must go
+        Portal API → ACL → CMS, and only treat the write as success after CMS acknowledgment.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Direct MySQL vs CAP-53 ACL</h3>
+            <p>Canonical Raisd DFDs: <a href="../dfd.html">../dfd.html</a>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph OldPath["Old CMS write path"]
+    UI[PHPMaker / Laravel desk UI]
+    MYSQL[(cmscbj)]
+    TRG[Triggers ~237]
+    SP[Stored procedures]
+    UI --> MYSQL
+    MYSQL --> TRG
+    UI --> SP
+    SP --> MYSQL
+  end
+
+  subgraph NewPath["Raisd write path"]
+    P[Role portal]
+    API[Portal API]
+    ACL[CAP-53 ACL]
+    P --> API --> ACL --> MYSQL
+  end
+          </pre>
+        </div>
+      </div>
+      <table class="attr">
+        <thead>
+          <tr>
+            <th>Concern</th>
+            <th>Old PHPMaker path</th>
+            <th>Raisd path</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Client</td>
+            <td>Desk browser → PHP app</td>
+            <td>Portal browser → Portal API only</td>
+          </tr>
+          <tr>
+            <td>Authz</td>
+            <td>Per-module user levels</td>
+            <td>Server-enforced Portal API authz</td>
+          </tr>
+          <tr>
+            <td>Write success</td>
+            <td>MySQL commit (+ triggers)</td>
+            <td>CMS acknowledgment required for Live</td>
+          </tr>
+          <tr>
+            <td>Schema</td>
+            <td>Physical <code>r_*</code>/<code>b_*</code></td>
+            <td>Canonical contracts; ACL translates</td>
+          </tr>
+          <tr>
+            <td>Batch interaction</td>
+            <td>Desks offline during httpd stop</td>
+            <td>API must tolerate stale flags until portal.sql runs</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Generated for raisd-campus/control-plane · Old CMS analysis · GitHub Pages
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+</body>
+</html>

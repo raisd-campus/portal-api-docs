@@ -16,14 +16,15 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Lecturer UI → [frontend/lecturer-portal.md](frontend/lecturer-portal.md)
    - Staff UI → [frontend/staff-portal.md](frontend/staff-portal.md)
    - Portal API / identity / campus config → [backend/portal-api.md](backend/portal-api.md)
-4. Matching SDD (`docs/sdd/04`–`08`, `12`) for the delivery contract.
+   - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
+4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract.
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
 
 ## 2. Product boundaries (campus-wide)
 
 - **Four portals, one existing CMS.** Applicant, Student, Lecturer, and Staff are separate webs. They talk only to the **Portal API**. They never write directly to Postgres or the existing CMS.
 - **Cyberjaya first.** Admissions before semester registration. Core mobile at launch means phone-friendly agreed journeys, not a verified native-app mandate.
-- **Keep the existing CMS** as the initial system of record (ADR-1). Whole-CMS replacement is backlog, not launch scope.
+- **Keep the existing CMS** as the initial system of record (ADR-1). Whole-CMS replacement is backlog, not launch scope. Inventory and CAP mapping: [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md).
 - **Demo ≠ Live.** Sample data and session-only mutations are Demo. Live requires durable save through the Portal API (or approved production path), server-enforced authz, and a named owner.
 - Do not present planned or speculative capabilities as implemented.
 - Do not invent campus policy, legal basis, EMGS outcomes, or tax treatment beyond what the knowledge base already records as prototype assumptions.

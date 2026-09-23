@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Old CMS Functional Structure</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · Old CMS · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../architecture.html">Architecture</a>
+        <a href="../erd.html">ERD</a>
+        <a href="../dfd.html">DFD</a>
+        <a class="active" href="./index.html">Old CMS</a>
+        <a href="../../ai/index.html">AI knowledge</a>
+        <a href="../../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Functional Structure Diagram — Old Cyberjaya CMS</h1>
+      <p>
+        Functional decomposition of PHPMaker (+ Laravel) desk modules under
+        <code>cyberjaya/campus/</code>, campus UI code <code>[MYS-CYB]</code>.
+        Each row is a separate web app with its own login, menu, and permissions.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">~20 staff modules</span>
+        <span class="chip">PHPMaker core</span>
+        <span class="chip">Laravel: payment · icupdpa</span>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="Old CMS sections">
+      <a href="./index.html"><strong>Hub</strong><span>Analysis overview</span></a>
+      <a href="./comparison.html"><strong>Comparison</strong><span>CAP matrices</span></a>
+      <a href="./fsd.html"><strong>FSD</strong><span>This page</span></a>
+      <a href="./erd.html"><strong>Legacy ERD</strong><span>Physical tables</span></a>
+      <a href="./flows.html"><strong>Flows</strong><span>Batch &amp; DFD</span></a>
+      <a href="./database.html"><strong>Database</strong><span>Triggers &amp; SPs</span></a>
+    </nav>
+
+    <section class="section">
+      <h2>FSD hierarchy</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Cyberjaya campus functional tree</h3>
+            <p>Shared MySQL <code>cmscbj</code> underneath all desks.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+mindmap
+  root((Cyberjaya CMS))
+    Academic
+      registry
+      faculty
+      lecturer
+      lec
+      cdu
+    Student life
+      services
+      accommodation
+      stdfile
+      studentfile
+      siu
+      library
+    Commercial
+      bursary
+      marketing
+      payment
+    Compliance
+      icu
+      icupdpa
+      cmsadminsetup
+      cms_inquiry
+    Cross-cutting
+      reporting
+      training
+      cyberbatch
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Module → Raisd mapping</h2>
+      <p class="lead">Default: keep staff desks; expose student/applicant journeys via Portal API.</p>
+      <div class="table-wrap"><table class="attr">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Title</th>
+            <th>Primary tables / signals</th>
+            <th>Menu capabilities (summary)</th>
+            <th>Raisd mapping</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>registry/</code></td>
+            <td>Registry Management System 1.0</td>
+            <td><code>app_*</code>, <code>r_student</code>, <code>r_stdprogram</code>, <code>r_stdofferletter*</code>, transcripts</td>
+            <td>Applications, student register, terms, forms, letters, graduation, transcripts, KDN/eIPTS reports</td>
+            <td>Staff SoR; student/applicant via API</td>
+          </tr>
+          <tr>
+            <td><code>faculty/</code></td>
+            <td>Faculty Management System 1.0</td>
+            <td><code>f_program</code>, <code>f_module</code>, <code>f_class</code>, <code>f_lecturer</code>, <code>f_term</code>, inventory</td>
+            <td>Schools, modules, lecturers, classrooms, classes, exam timetable, inventory, senate/board reports</td>
+            <td>Staff SoR; lecturer/student reads via API</td>
+          </tr>
+          <tr>
+            <td><code>bursary/</code></td>
+            <td>Bursary Management System 1.0</td>
+            <td><code>b_statement*</code>, <code>b_invoice*</code>, <code>b_payment*</code>, <code>b_receipt*</code>, <code>b_paymentverification</code></td>
+            <td>Fee catalog, invoices/receipts, payment verification, visa fees, incentives, agents, outstanding</td>
+            <td>Finance SoR; student CAP-45–48 read/proof</td>
+          </tr>
+          <tr>
+            <td><code>lecturer/</code></td>
+            <td>Lecturer Portal 1.0</td>
+            <td>Lecturer modules, notices, <code>f_modulemat</code>, streaming link</td>
+            <td>Notices, profile, supervised students, module view, forms, streaming</td>
+            <td>Prefer reuse until gap proven</td>
+          </tr>
+          <tr>
+            <td><code>marketing/</code></td>
+            <td>Marketing Management System 1.0</td>
+            <td><code>app_applicationform*</code>, <code>m_agent</code>, Agent* SPs, incentives</td>
+            <td>Applications, pre-admission, agents, incentives, recruitment / online agent reports</td>
+            <td>Applicant SoR ops; Raisd applicant UX new</td>
+          </tr>
+          <tr>
+            <td><code>services/</code></td>
+            <td>Student Services Management System 1.0</td>
+            <td><code>w_visa</code>, <code>r_stdimmigration</code>, EMGS/SSD/KDN tables</td>
+            <td>Visa/VAL/EMGS, medical, insurance, international status, SSD letters</td>
+            <td>Ops on CMS; student CAP-50 view</td>
+          </tr>
+          <tr>
+            <td><code>accommodation/</code></td>
+            <td>Accommodation System 1.0</td>
+            <td><code>acc_dorm</code>, <code>acc_room</code>, <code>acc_occupant</code>, pricing</td>
+            <td>Dorms, rooms, pricing, tenants, breakfast card</td>
+            <td>Allocation on CMS; student CAP-52 request UX</td>
+          </tr>
+          <tr>
+            <td><code>cdu/</code></td>
+            <td>AQA Management System 1.0</td>
+            <td>Entry reqs, English/foreign quals, MQA/KPT, programme compliance</td>
+            <td>Entry requirements, quals, accreditation/approval</td>
+            <td>Staff QA; CAP-04 evidence</td>
+          </tr>
+          <tr>
+            <td><code>icu/</code></td>
+            <td>Internal Compliance Unit</td>
+            <td>Staff list, PDPA documents</td>
+            <td>Staff PDPA / compliance menus</td>
+            <td>CAP-39 adjacent; keep on CMS</td>
+          </tr>
+          <tr>
+            <td><code>siu/</code></td>
+            <td>Student Info Update System</td>
+            <td>Controlled student-info update, letters, transcripts</td>
+            <td>SIU updates, letters, transcripts</td>
+            <td>Staff path for CAP-08 corrections</td>
+          </tr>
+          <tr>
+            <td><code>library/</code></td>
+            <td>Library 1.0</td>
+            <td><code>r_elibrary</code>, population views</td>
+            <td>Population view, eLibraries</td>
+            <td>CAP-31 licence/access</td>
+          </tr>
+          <tr>
+            <td><code>reporting/</code></td>
+            <td>Campus Reporting System</td>
+            <td>Cross-desk report views</td>
+            <td>Finance, attendance, enrolment, scholarships, portal status, …</td>
+            <td>Usually no Raisd rebuild</td>
+          </tr>
+          <tr>
+            <td><code>stdfile/</code> · <code>studentfile/</code></td>
+            <td>Student File System</td>
+            <td>Document / file dossiers (KDN, MyQuest, SETARA variants)</td>
+            <td>Document dossiers</td>
+            <td>CAP-09 dossier backing</td>
+          </tr>
+          <tr>
+            <td><code>lec/</code></td>
+            <td>Limkokwing English Center 2.0</td>
+            <td>LEC students, marks, batch enrolment</td>
+            <td>LEC students, marks, summer camp</td>
+            <td>Campus-specific; out of SDD-11</td>
+          </tr>
+          <tr>
+            <td><code>training/</code></td>
+            <td>Training 1.0</td>
+            <td><code>t_enrollment</code>, <code>t_enrollrequest</code></td>
+            <td>Staff training enrolment / requests</td>
+            <td>CAP-41 operating evidence</td>
+          </tr>
+          <tr>
+            <td><code>payment/</code></td>
+            <td>Payment (Laravel)</td>
+            <td>Receipt / collection objects, parking-related</td>
+            <td>Online / counter payment receipts</td>
+            <td>CAP-47 gateway path</td>
+          </tr>
+          <tr>
+            <td><code>icupdpa/</code></td>
+            <td>ICU PDPA (Laravel)</td>
+            <td>PDPA compliance workflows</td>
+            <td>PDPA document compliance</td>
+            <td>CAP-39</td>
+          </tr>
+          <tr>
+            <td><code>cmsadminsetup/</code></td>
+            <td>Admin setup</td>
+            <td>User levels / PHPMaker admin</td>
+            <td>User levels / system setup</td>
+            <td>CAP-44 workspace access</td>
+          </tr>
+          <tr>
+            <td><code>cms_inquiry/</code></td>
+            <td>Inquiry</td>
+            <td>Inquiry desk tables/forms</td>
+            <td>CMS inquiry desk</td>
+            <td>CAP-33 channel candidate</td>
+          </tr>
+          <tr>
+            <td><code>cyberbatch/</code> + scripts</td>
+            <td>Batch / ops</td>
+            <td><code>portal.sql</code>, bursary/attendance/visa jobs</td>
+            <td>Nightly stop-httpd → jobs → dump → start</td>
+            <td>CAP-53 must respect batch rules</td>
+          </tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="section">
+      <h2>Functional flow — desks around the student record</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Who touches the student</h3>
+            <p>Registry seeds identity; other desks attach academic, finance, visa, housing.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  REG[Registry / Marketing] -->|enrol| STU[(r_student)]
+  FAC[Faculty] -->|classes / marks| STU
+  BUR[Bursary] -->|ledger| STU
+  LEC[Lecturer] -->|attendance / materials| STU
+  SSD[Services] -->|visa / medical| STU
+  ACC[Accommodation] -->|occupancy| STU
+  SIU[SIU] -->|controlled updates| STU
+  STU -->|LoginActive| PORT[Legacy portal / sync]
+          </pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Generated for raisd-campus/control-plane · Old CMS analysis · GitHub Pages
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+</body>
+</html>

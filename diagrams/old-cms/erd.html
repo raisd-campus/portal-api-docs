@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Old CMS Legacy Physical ERD</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · Old CMS · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../architecture.html">Architecture</a>
+        <a href="../erd.html">ERD</a>
+        <a href="../dfd.html">DFD</a>
+        <a class="active" href="./index.html">Old CMS</a>
+        <a href="../../ai/index.html">AI knowledge</a>
+        <a href="../../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Legacy physical ERD — Cyberjaya CMS tables</h1>
+      <p>
+        Logical view of <strong>real</strong> MySQL tables from the
+        <code>cmscbj</code> structure dump (23 Sep 2026). Key names annotated from dump:
+        <code>StudentID</code>, <code>StdProgramID</code>, <code>StdSemesterID</code>,
+        <code>StdModuleID</code>, <code>ApplicationID</code>, <code>ProgramID</code>,
+        <code>ModuleID</code>, <code>TermID</code>.
+      </p>
+      <div class="meta-row">
+        <span class="chip warn">Not the Raisd canonical model</span>
+        <span class="chip">Wide denormalized rows</span>
+        <span class="chip ok">Physical SoR keys</span>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="Old CMS sections">
+      <a href="./index.html"><strong>Hub</strong><span>Analysis overview</span></a>
+      <a href="./comparison.html"><strong>Comparison</strong><span>CAP matrices</span></a>
+      <a href="./fsd.html"><strong>FSD</strong><span>Modules</span></a>
+      <a href="./erd.html"><strong>Legacy ERD</strong><span>This page</span></a>
+      <a href="./flows.html"><strong>Flows</strong><span>Batch &amp; DFD</span></a>
+      <a href="./database.html"><strong>Database</strong><span>Triggers &amp; SPs</span></a>
+    </nav>
+
+    <div class="note warn" style="margin: 0 0 28px">
+      <strong>Contrast.</strong>
+      Raisd canonical ERD is in <a href="../erd.html">../erd.html</a>
+      (<code>StudentProfile</code> → <code>ProgrammeEnrolment</code> → …).
+      <strong>Do not mirror</strong> legacy tables into Portal API contracts or Postgres schemas.
+      CAP-53 translates; it does not clone <code>r_student</code>.
+    </div>
+
+    <div class="toc">
+      <a href="#core"><strong>Core student</strong><span>r_student…</span></a>
+      <a href="#admissions"><strong>Admissions</strong><span>app_*</span></a>
+      <a href="#academic"><strong>Academic</strong><span>f_*</span></a>
+      <a href="#finance"><strong>Finance</strong><span>b_*</span></a>
+      <a href="#attendance"><strong>Attendance</strong><span>r_stdattendance</span></a>
+      <a href="#immigration"><strong>Immigration</strong><span>w_visa</span></a>
+      <a href="#accommodation"><strong>Accommodation</strong><span>acc_*</span></a>
+      <a href="#portal"><strong>Portal sync</strong><span>portal_r_*</span></a>
+    </div>
+
+    <section class="section" id="core">
+      <h2>Core student</h2>
+      <p class="lead">
+        <code>r_student</code> is wide (100+ columns), including finance/portal flags such as
+        <code>AccOutstanding</code> and <code>LoginActive</code> — denormalized operational state on the student row.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>r_student · personal · programme · semester · module</h3>
+            <p>PK/FK names from structure dump.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+    string LoginActive
+    decimal AccOutstanding
+    string StdPortalActive
+  }
+  r_stdpersonal {
+    int StudentID PK_FK
+  }
+  r_stdprogram {
+    int StdProgramID PK
+    int StudentID FK
+    int ProgramID FK
+  }
+  r_stdsemester {
+    int StdSemesterID PK
+    int StdProgramID FK
+    int TermID FK
+  }
+  r_stdmodule {
+    int StdModuleID PK
+    int StdSemesterID FK
+    int ModuleID FK
+  }
+  r_student ||--|| r_stdpersonal : "StudentID"
+  r_student ||--o{ r_stdprogram : "StudentID"
+  r_stdprogram ||--o{ r_stdsemester : "StdProgramID"
+  r_stdsemester ||--o{ r_stdmodule : "StdSemesterID"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="admissions">
+      <h2>Admissions</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Application → documents → offer → enrol</h3>
+            <p>Also: <code>app_applicationformonline</code>, <code>app_preoffer</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  app_applicationform {
+    int ApplicationID PK
+  }
+  app_document {
+    int ApplicationID FK
+  }
+  app_preoffer {
+    int ApplicationID FK
+  }
+  r_stdofferletter {
+    int StudentID FK
+    int ApplicationID FK
+  }
+  r_student {
+    int StudentID PK
+  }
+  app_applicationform ||--o{ app_document : "ApplicationID"
+  app_applicationform ||--o| app_preoffer : "ApplicationID"
+  app_applicationform ||--o| r_stdofferletter : "ApplicationID"
+  r_student ||--o{ r_stdofferletter : "StudentID"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="academic">
+      <h2>Academic (faculty structures)</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Programme · module · class · term · lecturer · materials</h3>
+            <p>Student registrations reference these via ProgrammeID / ModuleID / TermID.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  f_program {
+    int ProgramID PK
+  }
+  f_module {
+    int ModuleID PK
+  }
+  f_class {
+    int ClassID PK
+    int ModuleID FK
+    int TermID FK
+  }
+  f_term {
+    int TermID PK
+  }
+  f_lecturer {
+    int LecturerID PK
+  }
+  f_modulemat {
+    int ModuleID FK
+  }
+  f_program ||--o{ f_module : "curriculum"
+  f_module ||--o{ f_class : "ModuleID"
+  f_term ||--o{ f_class : "TermID"
+  f_lecturer ||--o{ f_class : "teaches"
+  f_module ||--o{ f_modulemat : "ModuleID"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="finance">
+      <h2>Finance (bursary)</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Statement · invoice · payment · receipt · verification</h3>
+            <p>Laravel <code>payment/</code> sits beside these ledger objects.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+    decimal AccOutstanding
+  }
+  b_statement {
+    int StudentID FK
+  }
+  b_invoicedetail {
+    int StudentID FK
+  }
+  b_payment {
+    int StudentID FK
+  }
+  b_receipt {
+    int StudentID FK
+  }
+  b_paymentverification {
+    int StudentID FK
+  }
+  r_student ||--o{ b_statement : "StudentID"
+  r_student ||--o{ b_invoicedetail : "StudentID"
+  r_student ||--o{ b_payment : "StudentID"
+  r_student ||--o{ b_receipt : "StudentID"
+  r_student ||--o{ b_paymentverification : "StudentID"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="attendance">
+      <h2>Attendance</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>r_stdattendance · f_attend*</h3>
+            <p>Also Adobe Connect attendance tables for streaming classes.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+  }
+  r_stdmodule {
+    int StdModuleID PK
+    int StudentID FK
+  }
+  r_stdattendance {
+    int StudentID FK
+    int StdModuleID FK
+  }
+  f_attenddatemod {
+    int ModuleID FK
+  }
+  r_student ||--o{ r_stdattendance : "StudentID"
+  r_stdmodule ||--o{ r_stdattendance : "StdModuleID"
+  f_attenddatemod ||--o{ r_stdattendance : "session"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="immigration">
+      <h2>Immigration</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>w_visa · r_stdimmigration</h3>
+            <p>Services desk also owns EMGS/KDN/SSD reporting tables (~205 immigration-related names in dump).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+  }
+  w_visa {
+    int StudentID FK
+  }
+  r_stdimmigration {
+    int StudentID FK
+  }
+  r_student ||--o{ w_visa : "StudentID"
+  r_student ||--o| r_stdimmigration : "StudentID"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="accommodation">
+      <h2>Accommodation</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>acc_dorm · acc_room · acc_occupant</h3>
+            <p>Full housing ops including checkout, extend occupancy, breakfast card.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  acc_dorm {
+    int DormID PK
+  }
+  acc_room {
+    int RoomID PK
+    int DormID FK
+  }
+  acc_occupant {
+    int OccupantID PK
+    int RoomID FK
+    int StudentID FK
+  }
+  r_student {
+    int StudentID PK
+  }
+  acc_dorm ||--o{ acc_room : "DormID"
+  acc_room ||--o{ acc_occupant : "RoomID"
+  r_student ||--o{ acc_occupant : "StudentID"
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="portal">
+      <h2>Portal sync &amp; login gating fields</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>portal_r_student_cyberjaya + LoginActive</h3>
+            <p>Also programme/semester snapshot tables; <code>r_studentportaldoc</code>, <code>r_studentblockportal</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+    string LoginActive
+    string StdPortalActive
+    decimal AccOutstanding
+  }
+  portal_r_student_cyberjaya {
+    int StudentID PK
+  }
+  portal_r_studentprogram_cyberjaya {
+    int StdProgramID PK
+    int StudentID FK
+  }
+  portal_r_studentprogramsemester_cyberjaya {
+    int StdSemesterID PK
+    int StdProgramID FK
+  }
+  r_student ||--o| portal_r_student_cyberjaya : "sync"
+  r_student ||--o{ portal_r_studentprogram_cyberjaya : "sync"
+  portal_r_studentprogram_cyberjaya ||--o{ portal_r_studentprogramsemester_cyberjaya : "sync"
+          </pre>
+        </div>
+      </div>
+      <p class="note">
+        Database names also seen: <code>campus2_cyberjaya</code>, <code>portalcyberjaya</code>.
+        Legacy portal sync is not the Raisd OpenAPI contract — use as discovery for CAP-53 only.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Generated for raisd-campus/control-plane · Old CMS analysis · GitHub Pages
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+</body>
+</html>

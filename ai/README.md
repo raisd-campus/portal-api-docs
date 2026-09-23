@@ -21,7 +21,7 @@ docs/ai/
 ├── AGENTS.md                 ← campus-wide agent instructions (read first)
 ├── MANIFEST.yaml             ← machine-readable index
 ├── architecture/             ← system, repos, deployment
-├── backend/                  ← Portal API and integration
+├── backend/                  ← Portal API, existing CMS inventory, CAP comparison
 ├── frontend/                 ← per-portal agent knowledge
 │   └── student-portal/       ← extracted from raisd-campus/student-portal
 ├── design/                   ← shared design system knowledge

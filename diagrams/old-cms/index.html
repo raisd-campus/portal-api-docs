@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Old Cyberjaya CMS Analysis</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · Old CMS · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../architecture.html">Architecture</a>
+        <a href="../erd.html">ERD</a>
+        <a href="../dfd.html">DFD</a>
+        <a class="active" href="./index.html">Old CMS</a>
+        <a href="../../ai/index.html">AI knowledge</a>
+        <a href="../../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Existing Cyberjaya CMS — technical analysis</h1>
+      <p>
+        Inventory and CAP mapping from the Cyberjaya source &amp; structure package
+        (<code>CMS_Cyberjaya_Source_Codes_&amp;_DB_Structure_23_09_2026</code>).
+        Per <strong>ADR-1</strong>, the old CMS remains the system of record;
+        Raisd portals and the Portal API sit in front and must acknowledge CMS writes for Live.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">DB <code>cmscbj</code></span>
+        <span class="chip ok">~1942 tables</span>
+        <span class="chip ok">~318 procedures</span>
+        <span class="chip ok">~237 triggers</span>
+        <span class="chip ok">~20 staff modules</span>
+        <span class="chip">Dump date 23 Sep 2026</span>
+        <span class="chip">Campus UI <code>[MYS-CYB]</code></span>
+      </div>
+    </section>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>ADR-1 (system of record).</strong>
+      Do not replace working Cyberjaya staff desks at launch. Build Raisd UIs that read/write through the
+      Portal API → CAP-53 anti-corruption layer → existing MySQL. Also seen in dumps:
+      <code>campus2_cyberjaya</code>, <code>portalcyberjaya</code>.
+    </div>
+
+    <div class="note warn" style="margin: 0 0 28px">
+      <strong>Technology shape.</strong>
+      PHPMaker core under <code>cyberjaya/campus/&lt;desk&gt;/</code>, plus Laravel sub-apps
+      <code>payment/</code> and <code>icupdpa/</code>. Live classes use Adobe Connect tables and
+      <code>classroom.limkokwing.net</code> streaming. Batch ops live in <code>cyberbatch/</code>
+      and <code>CYBERJAYA-SCRIPT/</code>.
+    </div>
+
+    <nav class="toc" aria-label="Old CMS sections">
+      <a href="./comparison.html">
+        <strong>Feature comparison</strong>
+        <span>CAP matrices, old vs Raisd posture, domain mapping</span>
+      </a>
+      <a href="./fsd.html">
+        <strong>Functional structure</strong>
+        <span>Module decomposition, tables, Raisd mapping</span>
+      </a>
+      <a href="./erd.html">
+        <strong>Legacy physical ERD</strong>
+        <span>Real <code>r_*</code> / <code>b_*</code> / <code>app_*</code> keys</span>
+      </a>
+      <a href="./flows.html">
+        <strong>Process flows / DFD</strong>
+        <span>Nightly batch, admissions, registration, payment</span>
+      </a>
+      <a href="./database.html">
+        <strong>Triggers, SPs &amp; batches</strong>
+        <span>~237 triggers, ~318 procedures, batch jobs</span>
+      </a>
+    </nav>
+
+    <section class="section">
+      <h2>Context — old multi-app CMS vs Raisd portals</h2>
+      <p class="lead">
+        Staff currently log into many PHPMaker (+ Laravel) desk apps that share MySQL.
+        Raisd collapses student/applicant/lecturer/staff UX into four webs that talk only to the Portal API.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Side-by-side context</h3>
+            <p>Browsers never talk to CMS MySQL directly in the Raisd path.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph Old["Existing Cyberjaya CMS"]
+    direction TB
+    R[Registry]
+    F[Faculty]
+    B[Bursary]
+    L[Lecturer Portal 1.0]
+    M[Marketing]
+    S[Services / SSD]
+    A[Accommodation]
+    X[CDU · ICU · Library · …]
+    PAY[Laravel payment]
+    ICU[Laravel icupdpa]
+    DB[(cmscbj MySQL)]
+    R --> DB
+    F --> DB
+    B --> DB
+    L --> DB
+    M --> DB
+    S --> DB
+    A --> DB
+    X --> DB
+    PAY --> DB
+    ICU --> DB
+  end
+
+  subgraph New["Raisd control plane"]
+    AP[Applicant portal]
+    SP[Student portal]
+    LP[Lecturer portal]
+    ST[Staff portal]
+    API[Portal API]
+    ACL[CMS ACL CAP-53]
+    AP --> API
+    SP --> API
+    LP --> API
+    ST --> API
+    API --> ACL
+  end
+
+  ACL -->|Live writes / reads| DB
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Package snapshot</h2>
+      <table class="attr">
+        <thead>
+          <tr>
+            <th>Artifact</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>cyberjaya/campus/*</code></td>
+            <td>PHPMaker staff and role apps — main feature surface</td>
+          </tr>
+          <tr>
+            <td><code>cyberjaya/campus/payment/</code></td>
+            <td>Laravel payment / receipt sub-app</td>
+          </tr>
+          <tr>
+            <td><code>cyberjaya/campus/icupdpa/</code></td>
+            <td>Laravel ICU / PDPA sub-app</td>
+          </tr>
+          <tr>
+            <td><code>cyberbatch/</code> + <code>CYBERJAYA-SCRIPT/</code></td>
+            <td>Nightly/batch SQL, portal login gating, backups, visa/notification jobs</td>
+          </tr>
+          <tr>
+            <td><code>CMS_Cyberjaya_SP_23092026.sql</code></td>
+            <td>~318 stored procedures / functions</td>
+          </tr>
+          <tr>
+            <td><code>CMS_Cyberjaya_Triggers_23092026.sql</code></td>
+            <td>~237 triggers on ~107 tables</td>
+          </tr>
+          <tr>
+            <td>Structure dump</td>
+            <td>~1,942 tables (includes temp/scratch and historical copies)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>How to use these pages</h2>
+      <div class="legend">
+        <div class="legend-item">
+          <strong>Comparison</strong>
+          <span>Verbose CAP tables with evidence, Raisd status, launch posture.</span>
+        </div>
+        <div class="legend-item">
+          <strong>FSD</strong>
+          <span>Functional modules, primary tables, Raisd mapping.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Legacy ERD</strong>
+          <span>Physical keys only — not the Raisd canonical model.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Flows</strong>
+          <span>Batch, admissions, registration, payment, write-path contrast.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Database</strong>
+          <span>Trigger hot tables, SP catalogs, batch implications for CAP-53.</span>
+        </div>
+      </div>
+      <p class="note">
+        Markdown sources:
+        <a href="../../ai/backend/cms-feature-comparison.md">docs/ai/backend/cms-feature-comparison.md</a>,
+        <a href="../../ai/backend/old-cms-cyberjaya.md">docs/ai/backend/old-cms-cyberjaya.md</a>,
+        <a href="../../sdd/14-cms-feature-comparison.md">docs/sdd/14-cms-feature-comparison.md</a>.
+        Raisd statuses follow SDD-11 (Demo / Partial / Placeholder / Not started / Needs checking).
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Generated for raisd-campus/control-plane · Old CMS analysis · GitHub Pages
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+</body>
+</html>

@@ -41,4 +41,6 @@ The student portal defines the replaceable `PortalApi` surface (`src/services/po
 
 - Student frontend API rules: [../frontend/student-portal/AGENTS.md](../frontend/student-portal/AGENTS.md) (Data and API architecture section)
 - Data model (frontend logical contract): [../frontend/student-portal/data-model.md](../frontend/student-portal/data-model.md)
+- Existing Cyberjaya CMS inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md)
+- CAP-level old vs new comparison: [cms-feature-comparison.md](cms-feature-comparison.md)
 - ERD / DFD HTML: [`docs/diagrams/`](../../diagrams/)

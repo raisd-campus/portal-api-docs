@@ -38,6 +38,7 @@ This knowledge base is the **input** for human-facing and published documentatio
 |---|---|
 | OpenAPI / Swagger | Maintain `openapi.yaml`; sync to `portal-api-docs` for GitHub Pages |
 | ERD / DFD HTML | `docs/diagrams/*.html` from SDD + Portal API knowledge |
+| Old CMS analysis (GitHub Pages) | `docs/diagrams/old-cms/*` from dump inventory + CAP matrix; publish copy to `portal-api-docs` |
 | Architecture PDF | Built from SDD catalogue / capability rows (see prior `Raisd-Campus-Architecture.pdf`) |
 | Meeting briefing | `proposals/CMS_Working_Group_Meeting_Briefing.html` from checklist + SDD |
 

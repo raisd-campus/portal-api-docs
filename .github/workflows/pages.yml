@@ -53,6 +53,7 @@ jobs:
           cp -R ai _site/ai
           test -f _site/diagrams/erd.html
           test -f _site/diagrams/dfd.html
+          test -f _site/diagrams/old-cms/index.html
           test -f _site/ai/index.html
 
       - uses: actions/configure-pages@v5

@@ -8,6 +8,8 @@ decision:
   date: 2026-09-22
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
+notes:
+  - 2026-09-23: Cyberjaya old CMS dump inventoried; CAP comparison at backend/cms-feature-comparison.md (SDD-14).
 
 entrypoints:
   agents: AGENTS.md
@@ -36,6 +38,27 @@ backend:
     topics: [openapi, auth, mock-bridge, cms-stub]
     openapi: ../../openapi.yaml
     code: ../../portal-api/
+  - path: backend/old-cms-cyberjaya.md
+    topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker]
+  - path: backend/cms-feature-comparison.md
+    topics: [cap-mapping, gap-analysis, adr-1, old-vs-new, triggers, stored-procedures, batch]
+    sdd: ../sdd/14-cms-feature-comparison.md
+    pages: ../diagrams/old-cms/
+
+diagrams:
+  - path: ../diagrams/index.html
+    topics: [overview, mermaid]
+  - path: ../diagrams/old-cms/index.html
+    topics: [legacy-cms, comparison, fsd, erd, flows, database]
+    pages:
+      - ../diagrams/old-cms/comparison.html
+      - ../diagrams/old-cms/fsd.html
+      - ../diagrams/old-cms/erd.html
+      - ../diagrams/old-cms/flows.html
+      - ../diagrams/old-cms/database.html
+    extracts:
+      - ../diagrams/old-cms/_trigger-summary.txt
+      - ../diagrams/old-cms/_proc-catalog.txt
 
 frontend:
   student-portal:
