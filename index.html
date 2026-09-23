@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <link rel="icon" href="diagrams/assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Raisd Portal API</title>
   <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.27.1/swagger-ui.css" />
@@ -37,16 +38,23 @@
       flex-wrap: wrap;
     }
     .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      color: inherit;
+      text-decoration: none;
     }
-    .brand strong { font-size: 1.02rem; letter-spacing: -0.01em; color: #152033; }
-    .brand span { color: #5a6a7e; font-size: 0.84rem; }
+    .brand:hover { text-decoration: none; color: inherit; }
+    .brand-logo { height: 28px; width: auto; display: block; }
+    .brand strong { font-size: 1.02rem; letter-spacing: -0.01em; color: #152033; white-space: nowrap; }
+    .brand span { display: none; }
     .nav {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      margin-left: auto;
+      justify-content: flex-end;
     }
     .nav a {
       padding: 8px 12px;
@@ -132,10 +140,10 @@
 <body>
   <header class="site-header">
     <div class="site-header-inner">
-      <div class="brand">
+      <a class="brand" href="diagrams/index.html">
+        <img class="brand-logo" src="diagrams/assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
         <strong>Raisd Control Plane</strong>
-        <span>Overview · Architecture · Migration · Raisd CMS · LUCT CMS · AI knowledge · SDD · OpenAPI</span>
-      </div>
+      </a>
             <nav class="nav" aria-label="Primary">
         <div class="nav-dd">
           <a class="nav-dd-main" href="diagrams/index.html">Overview</a>
@@ -203,7 +211,7 @@
           </div>
         </div>
         <div class="nav-dd">
-          <a class="nav-dd-main" class="active" href="index.html">OpenAPI</a>
+          <a class="nav-dd-main active" href="index.html">OpenAPI</a>
           <div class="nav-dd-menu" role="menu">
             <a class="active" href="index.html">Swagger UI</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
