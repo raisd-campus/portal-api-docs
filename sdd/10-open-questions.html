@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>10-open-questions — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="open-questions">Open questions</h1>
+<p><strong>Document:</strong> SDD-10<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026</p>
+<p>Decisions required before capabilities can move from Needs checking /
+Demo to Live. Intended as the working-group agenda, then as a living
+decision log.</p>
+<h2 id="blocking-for-m1-m2">1. Blocking for <a
+href="03-delivery-milestones.html#m1">M1</a> / <a
+href="03-delivery-milestones.html#m2">M2</a></h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Why it blocks</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>What is the stack, repo, and who can grant access today?</td>
+<td>Cannot implement <a
+href="11-capability-catalog.html#cap-53">CAP-53</a> or review the real
+frontend.</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Who owns the old CMS / API, and what is already callable?</td>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a>, every Needs
+checking backend row. Partial answer: 23 Sep 2026 dump inventoried in
+SDD-14 / <code>docs/ai/backend/cms-feature-comparison.md</code>
+(<code>api_student_*</code> SPs, portal sync tables, desk modules).
+Callable HTTP surface and owner still TBC.</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Login: CMS password, SSO, or both?</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a> applicant and
+student.</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Is admissions-first still the sequence, or has student v1 been
+promoted?</td>
+<td>Stops building the wrong next screens.</td>
+<td>Product owner</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>File store for evidence, assignments, and payment proofs?</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, 09, 20,
+46.</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Q6</td>
+<td>Named owners for Registry, Faculty, Bursary, QA, Marketing, IT?</td>
+<td>Every next-action owner is TBC.</td>
+<td>Working group</td>
+</tr>
+<tr>
+<td>Q7</td>
+<td>Kickoff date and backend commitment window?</td>
+<td>All milestone targets.</td>
+<td>Working group</td>
+</tr>
+</tbody>
+</table>
+<h2 id="product-and-ux">2. Product and UX</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Related CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q8</td>
+<td>Minimum applicant field set per Cyberjaya programme?</td>
+<td>02, 03, 55</td>
+</tr>
+<tr>
+<td>Q9</td>
+<td>Which profile fields save directly vs need Registry approval?</td>
+<td>08</td>
+</tr>
+<tr>
+<td>Q10</td>
+<td>Announcement audiences and acknowledgement for policies?</td>
+<td>16, 55</td>
+</tr>
+<tr>
+<td>Q11</td>
+<td>Approved meeting tool for live class, or defer <a
+href="11-capability-catalog.html#cap-26">CAP-26</a>?</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Q12</td>
+<td>Payment: bank-transfer only for <a
+href="03-delivery-milestones.html#m3">M3</a>, gateway on <a
+href="03-delivery-milestones.html#m5">M5</a>?</td>
+<td>45–47</td>
+</tr>
+<tr>
+<td>Q13</td>
+<td>Core mobile breakpoints and devices for acceptance?</td>
+<td>36, PRODUCT-MOBILE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="academic-and-finance-rules">3. Academic and finance rules</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Related CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q14</td>
+<td>Legacy registration rules and atomic save constraints?</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Q15</td>
+<td>Result approval / publication workflow in old CMS?</td>
+<td>13, 28</td>
+</tr>
+<tr>
+<td>Q16</td>
+<td>Authoritative attendance source?</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Q17</td>
+<td>Past-paper publication policy?</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Q18</td>
+<td>Proof-to-allocation SLA and who emails the student?</td>
+<td>46</td>
+</tr>
+<tr>
+<td>Q19</td>
+<td>Real bank instructions for Cyberjaya (no fictional numbers)?</td>
+<td>45</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compliance-and-ops">4. Compliance and ops</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Related CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q20</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a> approval pack
+for Cyberjaya programmes/sites?</td>
+<td>04</td>
+</tr>
+<tr>
+<td>Q21</td>
+<td>Backup owner and last successful restore test?</td>
+<td>38</td>
+</tr>
+<tr>
+<td>Q22</td>
+<td>Privacy policy that the portal must enforce?</td>
+<td>39</td>
+</tr>
+<tr>
+<td>Q23</td>
+<td>Training plan for Registry and lecturers before <a
+href="03-delivery-milestones.html#m4">M4</a>?</td>
+<td>41</td>
+</tr>
+<tr>
+<td>Q24</td>
+<td>Which country clauses actually apply to Cyberjaya vs later
+campuses?</td>
+<td>SDD-09</td>
+</tr>
+<tr>
+<td>Q25</td>
+<td>Which Cyberjaya student-facing URL is still Live (vs staff
+stdfile/studentfile)?</td>
+<td>01, 53; SDD-14</td>
+</tr>
+<tr>
+<td>Q26</td>
+<td>Map <code>api_student_*</code> and <code>portal_r_student_*</code>
+to Portal API methods?</td>
+<td>53</td>
+</tr>
+<tr>
+<td>Q27</td>
+<td>Does Raisd applicant-portal replace or sit beside agent online
+application?</td>
+<td>02, 07</td>
+</tr>
+<tr>
+<td>Q28</td>
+<td>Where do assignment submissions land in the old CMS today?</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<h2 id="role-split-after-tonight">5. Role split after tonight</h2>
+<p>Proposed until the group names people:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Seat</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend</td>
+<td>Applicant <a href="03-delivery-milestones.html#m2">M2</a> + mobile
+shell; stop expanding student demo</td>
+</tr>
+<tr>
+<td>Backend / old CMS</td>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a> admissions
+slice, auth, files</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Contracts, environments, definition of Live</td>
+</tr>
+<tr>
+<td>DevOps</td>
+<td>Monitoring, backups, promotion path</td>
+</tr>
+<tr>
+<td>Department owners</td>
+<td>Close Needs checking on rules, not screens</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decision-log">6. Decision log</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Date</th>
+<th>Decision</th>
+<th>Decided by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7 Sep 2026</td>
+<td>Cyberjaya first; admissions before registration; core mobile; keep
+existing CMS; five portal groups</td>
+<td>Product owner (sheet)</td>
+</tr>
+<tr>
+<td>18 Sep 2026</td>
+<td>Student portal v1 frontend currently in progress; meeting to review
+it</td>
+<td>Faid Zamin / Aslam (chat)</td>
+</tr>
+<tr>
+<td>22 Sep 2026</td>
+<td>Central AI knowledge base for backend, frontend, and architecture
+under control-plane <code>docs/</code> (<code>docs/ai/</code>)</td>
+<td>Faid Zamin (standup)</td>
+</tr>
+<tr>
+<td>23 Sep 2026</td>
+<td>Student-portal agent docs extracted into
+<code>docs/ai/frontend/student-portal/</code>; sibling repos point to
+<code>docs/ai</code> as SSOT</td>
+<td>Iman Suherman</td>
+</tr>
+<tr>
+<td>23 Sep 2026</td>
+<td>Cyberjaya old CMS source+structure dump inventoried; CAP comparison
+published as SDD-14 (reuse staff desks; Portal API for Live)</td>
+<td>Iman Suherman</td>
+</tr>
+<tr>
+<td>23 Sep 2026</td>
+<td>This phase: existing Cyberjaya CMS remains SoR; modern portals via
+Portal API; do not duplicate operational functions. Longer term:
+progressive unified one-stop CMS on verified gaps + migration
+strategy</td>
+<td>Aslam (WG chat); recorded by Iman Suherman</td>
+</tr>
+</tbody>
+</table>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

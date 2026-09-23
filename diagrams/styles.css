@@ -267,3 +267,16 @@ table.attr code {
 @media (max-width: 640px) {
   .card-body { padding: 4px 2px 10px; }
 }
+
+
+/* Abbreviation tooltips (native title + visual cue) */
+abbr.raisd-abbr,
+a.raisd-abbr {
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  cursor: help;
+}
+abbr.raisd-abbr {
+  font-style: normal;
+}

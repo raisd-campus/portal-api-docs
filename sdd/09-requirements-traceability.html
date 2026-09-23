@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>09-requirements-traceability — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="requirements-traceability">Requirements traceability</h1>
+<p><strong>Document:</strong> SDD-09<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Source:</strong> Requirements &amp; Sources tab<br />
+<strong>Date:</strong> 18 September 2026</p>
+<p>Software status is not campus compliance. Country clauses below are
+evidence to confirm with campus QA; they do not by themselves mandate a
+particular screen.</p>
+<p>Related: <a href="00-document-control.html">SDD-00</a>, <a
+href="01-system-overview.html">SDD-01</a>, <a
+href="11-capability-catalog.html">SDD-11</a>. The LMS X-Y research
+domains (INPUT-F01–F37) live in the source sheet; they are supplied
+research, not universal mandates.</p>
+<h2 id="product-decisions">Product decisions</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PRODUCT-PRIORITY</td>
+<td>Cyberjaya first. Admissions before semester registration. Include
+core mobile. Keep the existing CMS as the initial backend.</td>
+<td>Owners, kickoff and backend commitments TBC. Whole-CMS coverage is a
+backlog, not an instruction to replace working legacy functions.</td>
+</tr>
+<tr>
+<td>PRODUCT-MOBILE</td>
+<td>Core admissions and student journeys must be phone-friendly for
+launch.</td>
+<td>This is a delivery priority, not a verified universal government
+breakpoint or native-app requirement. Current portal mobile acceptance
+is outstanding.</td>
+</tr>
+<tr>
+<td>PRODUCT-PORTALS</td>
+<td>Group delivery by Applicant, Student, Lecturer, Admin / Staff and
+Shared System. Separate role-specific work and department
+responsibility; retain the original capability links.</td>
+<td>Proposed department split approved. Milestone dates, named owners
+and unverified old-CMS capabilities remain TBC. This is not a
+government-prescribed portal architecture.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="campus-requested-features">Campus-requested features</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>CAP</th>
+<th>Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAMP-11</td>
+<td><a href="11-capability-catalog.html#cap-11">CAP-11</a></td>
+<td>Class timetable</td>
+</tr>
+<tr>
+<td>CAMP-16</td>
+<td><a href="11-capability-catalog.html#cap-16">CAP-16</a></td>
+<td>Important announcements</td>
+</tr>
+<tr>
+<td>CAMP-17</td>
+<td><a href="11-capability-catalog.html#cap-17">CAP-17</a></td>
+<td>Study guides</td>
+</tr>
+<tr>
+<td>CAMP-18</td>
+<td><a href="11-capability-catalog.html#cap-18">CAP-18</a></td>
+<td>Lecture notes</td>
+</tr>
+<tr>
+<td>CAMP-19</td>
+<td><a href="11-capability-catalog.html#cap-19">CAP-19</a></td>
+<td>Assignment briefs</td>
+</tr>
+<tr>
+<td>CAMP-20</td>
+<td><a href="11-capability-catalog.html#cap-20">CAP-20</a></td>
+<td>Submit assignments</td>
+</tr>
+<tr>
+<td>CAMP-21</td>
+<td><a href="11-capability-catalog.html#cap-21">CAP-21</a></td>
+<td>Revision work</td>
+</tr>
+<tr>
+<td>CAMP-22</td>
+<td><a href="11-capability-catalog.html#cap-22">CAP-22</a></td>
+<td>Past examination papers</td>
+</tr>
+<tr>
+<td>CAMP-55</td>
+<td><a href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>University policies related to students</td>
+</tr>
+</tbody>
+</table>
+<h2 id="country-and-regulator-evidence">Country and regulator
+evidence</h2>
+<p>Covers Botswana, Cambodia, Eswatini, Lesotho, Malaysia, Namibia,
+Sierra Leone and Uganda.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Type</th>
+<th>CAP IDs</th>
+<th>Requirement</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MY-LRN</td>
+<td>Malaysia</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-14">CAP-14</a>, <a
+href="11-capability-catalog.html#cap-17">CAP-17</a>, <a
+href="11-capability-catalog.html#cap-18">CAP-18</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-21">CAP-21</a>, <a
+href="11-capability-catalog.html#cap-22">CAP-22</a>, <a
+href="11-capability-catalog.html#cap-23">CAP-23</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a>, <a
+href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>Provide self-instructional materials and an online learning
+platform.</td>
+<td>MQA COPPA-ODL: 1.2.5(ii)-(v), printed p.8</td>
+</tr>
+<tr>
+<td>MY-INFO</td>
+<td>Malaysia</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-11">CAP-11</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a>, <a
+href="11-capability-catalog.html#cap-16">CAP-16</a>, <a
+href="11-capability-catalog.html#cap-17">CAP-17</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-23">CAP-23</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Give students current programme, schedule and assessment
+information.</td>
+<td>MQA COPPA-ODL: 1.3.2, printed pp.8-9</td>
+</tr>
+<tr>
+<td>MY-ASMT</td>
+<td>Malaysia</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-21">CAP-21</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a>, <a
+href="11-capability-catalog.html#cap-29">CAP-29</a>, <a
+href="11-capability-catalog.html#cap-51">CAP-51</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Explain assessment criteria, appeals and changes. Secure and
+communicate results.</td>
+<td>MQA COPPA-ODL: 2.2.3-2.2.4; 2.3, printed pp.10-11</td>
+</tr>
+<tr>
+<td>MY-SUP</td>
+<td>Malaysia</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-30">CAP-30</a>, <a
+href="11-capability-catalog.html#cap-31">CAP-31</a>, <a
+href="11-capability-catalog.html#cap-32">CAP-32</a>, <a
+href="11-capability-catalog.html#cap-33">CAP-33</a>, <a
+href="11-capability-catalog.html#cap-35">CAP-35</a>, <a
+href="11-capability-catalog.html#cap-51">CAP-51</a>, <a
+href="11-capability-catalog.html#cap-54">CAP-54</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Provide orientation, student support, counselling and grievance
+routes.</td>
+<td>MQA COPPA-ODL: 3.3.1-3.3.8, printed pp.14-15</td>
+</tr>
+<tr>
+<td>MY-REC</td>
+<td>Malaysia</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-08">CAP-08</a>, <a
+href="11-capability-catalog.html#cap-09">CAP-09</a>, <a
+href="11-capability-catalog.html#cap-10">CAP-10</a>, <a
+href="11-capability-catalog.html#cap-12">CAP-12</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-15">CAP-15</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Preserve secure academic records.</td>
+<td>MQA COPPA-ODL: 6.4, printed p.24</td>
+</tr>
+<tr>
+<td>MY-INT</td>
+<td>Malaysia</td>
+<td>QA guidance</td>
+<td><a href="11-capability-catalog.html#cap-25">CAP-25</a>, <a
+href="11-capability-catalog.html#cap-26">CAP-26</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a></td>
+<td>Support the approved interaction mix and some face-to-face
+interaction.</td>
+<td>MQA ODL evaluation guidance: 1.2.5, Cluster 1.2C</td>
+</tr>
+<tr>
+<td>UG-LRN</td>
+<td>Uganda</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-14">CAP-14</a>, <a
+href="11-capability-catalog.html#cap-17">CAP-17</a>, <a
+href="11-capability-catalog.html#cap-18">CAP-18</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-21">CAP-21</a>, <a
+href="11-capability-catalog.html#cap-22">CAP-22</a>, <a
+href="11-capability-catalog.html#cap-23">CAP-23</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a>, <a
+href="11-capability-catalog.html#cap-42">CAP-42</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a>, <a
+href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>Provide course content, learner guidance and self-assessment.</td>
+<td>NCHE ODeL minimum standards: 8.1; 8.4, pp.12,14-15</td>
+</tr>
+<tr>
+<td>UG-ASMT</td>
+<td>Uganda</td>
+<td>ODL guidance</td>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a>, <a
+href="11-capability-catalog.html#cap-29">CAP-29</a></td>
+<td>Explain assessment, process assignments and return timely
+feedback.</td>
+<td>NCHE ODeL minimum standards: 8.3 guidelines 3-8, p.14</td>
+</tr>
+<tr>
+<td>UG-SUP</td>
+<td>Uganda</td>
+<td>ODL standards and guidance</td>
+<td><a href="11-capability-catalog.html#cap-25">CAP-25</a>, <a
+href="11-capability-catalog.html#cap-26">CAP-26</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a>, <a
+href="11-capability-catalog.html#cap-31">CAP-31</a>, <a
+href="11-capability-catalog.html#cap-32">CAP-32</a>, <a
+href="11-capability-catalog.html#cap-33">CAP-33</a>, <a
+href="11-capability-catalog.html#cap-34">CAP-34</a>, <a
+href="11-capability-catalog.html#cap-35">CAP-35</a>, <a
+href="11-capability-catalog.html#cap-41">CAP-41</a>, <a
+href="11-capability-catalog.html#cap-54">CAP-54</a></td>
+<td>Support interaction, learner orientation and technical help.</td>
+<td>NCHE ODeL minimum standards: 9.2-9.4, pp.16-17</td>
+</tr>
+<tr>
+<td>UG-OPS</td>
+<td>Uganda</td>
+<td>Explicit ODL requirement</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-37">CAP-37</a>, <a
+href="11-capability-catalog.html#cap-38">CAP-38</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Maintain reliable infrastructure, privacy, security and
+backups.</td>
+<td>NCHE ODeL minimum standards: 6.3, pp.11-12</td>
+</tr>
+<tr>
+<td>BW-ODL</td>
+<td>Botswana</td>
+<td>Accreditation standard</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-42">CAP-42</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a></td>
+<td>Maintain an ODeL policy aligned with BQA guidance.</td>
+<td>BQA HE Norms and Standards: 6.16.1.1 (universities); 14.16
+(colleges)</td>
+</tr>
+<tr>
+<td>BW-REC</td>
+<td>Botswana</td>
+<td>QA guidance</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-08">CAP-08</a>, <a
+href="11-capability-catalog.html#cap-09">CAP-09</a>, <a
+href="11-capability-catalog.html#cap-10">CAP-10</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-15">CAP-15</a>, <a
+href="11-capability-catalog.html#cap-38">CAP-38</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Control records access, retention, confidentiality and off-site
+backup.</td>
+<td>BQA implementation guidance: 2.18.2</td>
+</tr>
+<tr>
+<td>BW-REP</td>
+<td>Botswana</td>
+<td>QA guidance</td>
+<td><a href="11-capability-catalog.html#cap-12">CAP-12</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-30">CAP-30</a>, <a
+href="11-capability-catalog.html#cap-40">CAP-40</a></td>
+<td>Report progression, completion and student satisfaction.</td>
+<td>BQA implementation guidance: 2.18.3</td>
+</tr>
+<tr>
+<td>BW-LRN</td>
+<td>Botswana</td>
+<td>QA guidance</td>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a>, <a
+href="11-capability-catalog.html#cap-17">CAP-17</a>, <a
+href="11-capability-catalog.html#cap-18">CAP-18</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-21">CAP-21</a>, <a
+href="11-capability-catalog.html#cap-22">CAP-22</a>, <a
+href="11-capability-catalog.html#cap-23">CAP-23</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a>, <a
+href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>Evidence ODeL resources, teaching, assessment and
+certification.</td>
+<td>BQA implementation guidance: 2.23</td>
+</tr>
+<tr>
+<td>SZ-ADM</td>
+<td>Eswatini</td>
+<td>Explicit QA benchmark</td>
+<td><a href="11-capability-catalog.html#cap-02">CAP-02</a>, <a
+href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-07">CAP-07</a>, <a
+href="11-capability-catalog.html#cap-08">CAP-08</a>, <a
+href="11-capability-catalog.html#cap-09">CAP-09</a></td>
+<td>Provide online applications, tracking, admission information and
+secure records.</td>
+<td>ESHEC Institutional Review Standards: Standard 7, benchmarks
+2/6/8/9</td>
+</tr>
+<tr>
+<td>SZ-ASMT</td>
+<td>Eswatini</td>
+<td>Explicit QA benchmark</td>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-21">CAP-21</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a>, <a
+href="11-capability-catalog.html#cap-29">CAP-29</a>, <a
+href="11-capability-catalog.html#cap-32">CAP-32</a></td>
+<td>Provide assessment policies, moderation, appeals, feedback and
+secure results.</td>
+<td>ESHEC Institutional Review Standards: Standard 8, benchmarks
+6-12</td>
+</tr>
+<tr>
+<td>SZ-SUP</td>
+<td>Eswatini</td>
+<td>Explicit QA benchmark</td>
+<td><a href="11-capability-catalog.html#cap-12">CAP-12</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-33">CAP-33</a>, <a
+href="11-capability-catalog.html#cap-40">CAP-40</a>, <a
+href="11-capability-catalog.html#cap-44">CAP-44</a>, <a
+href="11-capability-catalog.html#cap-54">CAP-54</a></td>
+<td>Track learner performance, support at-risk students and provide
+technical help.</td>
+<td>ESHEC Institutional Review Standards: Standard 4(10); Standard
+9(3-4,12)</td>
+</tr>
+<tr>
+<td>SZ-SEC</td>
+<td>Eswatini</td>
+<td>Explicit QA benchmark</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-38">CAP-38</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Maintain data protection and backup policy.</td>
+<td>ESHEC Institutional Review Standards: Standard 12, benchmark 7</td>
+</tr>
+<tr>
+<td>LS-SUB</td>
+<td>Lesotho</td>
+<td>Explicit ODL standard</td>
+<td><a href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a></td>
+<td>Receive, record and process assignments.</td>
+<td>CHE Minimum Accreditation Standards for ODL: 2.1.9(ix)</td>
+</tr>
+<tr>
+<td>LS-SUP</td>
+<td>Lesotho</td>
+<td>Explicit ODL standard</td>
+<td><a href="11-capability-catalog.html#cap-25">CAP-25</a>, <a
+href="11-capability-catalog.html#cap-31">CAP-31</a>, <a
+href="11-capability-catalog.html#cap-32">CAP-32</a>, <a
+href="11-capability-catalog.html#cap-33">CAP-33</a>, <a
+href="11-capability-catalog.html#cap-35">CAP-35</a>, <a
+href="11-capability-catalog.html#cap-54">CAP-54</a></td>
+<td>Provide tutoring, induction, advising and technical support.</td>
+<td>CHE Minimum Accreditation Standards for ODL: 2.2.1, printed
+pp.14-15</td>
+</tr>
+<tr>
+<td>LS-ASMT</td>
+<td>Lesotho</td>
+<td>Explicit ODL standard</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-15">CAP-15</a>, <a
+href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a>, <a
+href="11-capability-catalog.html#cap-29">CAP-29</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a>, <a
+href="11-capability-catalog.html#cap-51">CAP-51</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Secure assessments and results, with moderation, appeals and
+privacy.</td>
+<td>CHE Minimum Accreditation Standards for ODL: 2.2.2, printed
+pp.15-17</td>
+</tr>
+<tr>
+<td>LS-TRACK</td>
+<td>Lesotho</td>
+<td>Explicit ODL standard</td>
+<td><a href="11-capability-catalog.html#cap-12">CAP-12</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-40">CAP-40</a></td>
+<td>Track attendance, results, participation and at-risk learners.</td>
+<td>CHE Minimum Accreditation Standards for ODL: 2.2.3(vi,viii,x,xi);
+2.2.4(iv), printed pp.17-18</td>
+</tr>
+<tr>
+<td>NA-LRN</td>
+<td>Namibia</td>
+<td>General accreditation requirement</td>
+<td><a href="11-capability-catalog.html#cap-11">CAP-11</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a>, <a
+href="11-capability-catalog.html#cap-17">CAP-17</a>, <a
+href="11-capability-catalog.html#cap-18">CAP-18</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-21">CAP-21</a>, <a
+href="11-capability-catalog.html#cap-22">CAP-22</a>, <a
+href="11-capability-catalog.html#cap-23">CAP-23</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a>, <a
+href="11-capability-catalog.html#cap-31">CAP-31</a>, <a
+href="11-capability-catalog.html#cap-33">CAP-33</a>, <a
+href="11-capability-catalog.html#cap-35">CAP-35</a>, <a
+href="11-capability-catalog.html#cap-54">CAP-54</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Provide learning resources, delivery and student
+information/support.</td>
+<td>NQA Accreditation Regulations: Printed p.22: 2.2,2.3,2.5-2.7</td>
+</tr>
+<tr>
+<td>NA-ASMT</td>
+<td>Namibia</td>
+<td>General accreditation requirement</td>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-20">CAP-20</a>, <a
+href="11-capability-catalog.html#cap-24">CAP-24</a>, <a
+href="11-capability-catalog.html#cap-28">CAP-28</a>, <a
+href="11-capability-catalog.html#cap-29">CAP-29</a></td>
+<td>Maintain fair, valid and consistent assessment.</td>
+<td>NQA Accreditation Regulations: Printed p.22: 2.8</td>
+</tr>
+<tr>
+<td>NA-REC</td>
+<td>Namibia</td>
+<td>General accreditation requirement</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-08">CAP-08</a>, <a
+href="11-capability-catalog.html#cap-09">CAP-09</a>, <a
+href="11-capability-catalog.html#cap-10">CAP-10</a>, <a
+href="11-capability-catalog.html#cap-12">CAP-12</a>, <a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, <a
+href="11-capability-catalog.html#cap-30">CAP-30</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a>, <a
+href="11-capability-catalog.html#cap-40">CAP-40</a></td>
+<td>Safely maintain enrolment, progression and achievement records and
+quality review.</td>
+<td>NQA Accreditation Regulations: Printed p.22: 2.9,2.12</td>
+</tr>
+<tr>
+<td>KH-CONF</td>
+<td>Cambodia</td>
+<td>Needs confirmation</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a></td>
+<td>Obtain applicable adopted institutional and programme
+standards.</td>
+<td>ACC consultation on accreditation standards: Official consultation
+notice; operative clauses unverified</td>
+</tr>
+<tr>
+<td>KH-PRACT</td>
+<td>Cambodia</td>
+<td>Implementation example</td>
+<td><a href="11-capability-catalog.html#cap-18">CAP-18</a>, <a
+href="11-capability-catalog.html#cap-19">CAP-19</a>, <a
+href="11-capability-catalog.html#cap-22">CAP-22</a>, <a
+href="11-capability-catalog.html#cap-27">CAP-27</a>, <a
+href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>Ministry platform offers online courses and accounts.</td>
+<td>MoEYS learning platform: Official platform</td>
+</tr>
+<tr>
+<td>SL-CONF</td>
+<td>Sierra Leone</td>
+<td>Policy evidence; clauses pending</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-33">CAP-33</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a>, <a
+href="11-capability-catalog.html#cap-54">CAP-54</a></td>
+<td>Obtain operative ODL and learner-support guidelines.</td>
+<td>COL country programme evidence: Country highlights; full clauses
+unavailable</td>
+</tr>
+<tr>
+<td>MY-QUAL</td>
+<td>Malaysia</td>
+<td>Framework / register</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Verify recognised programme/location, approved entry rules and
+qualification credits.</td>
+<td>MQF 2024 and MQR guidance</td>
+</tr>
+<tr>
+<td>MY-SITE</td>
+<td>Malaysia</td>
+<td>Official recognition guidance</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a></td>
+<td>Check recognition for the exact programme, delivery location and
+mode.</td>
+<td>MQR search guidance</td>
+</tr>
+<tr>
+<td>UG-QUAL</td>
+<td>Uganda</td>
+<td>Framework</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Apply approved credit-transfer policy and retain evidence.</td>
+<td>Uganda HE Qualifications Framework 3.5-3.10, printed pp.23-24</td>
+</tr>
+<tr>
+<td>SL-QUAL</td>
+<td>Sierra Leone</td>
+<td>Policy status; needs confirmation</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Confirm the adopted qualification, prior-learning and
+credit-transfer rules.</td>
+<td>MTHE framework reform report</td>
+</tr>
+<tr>
+<td>BW-TRANS</td>
+<td>Botswana</td>
+<td>Transition guidance</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-43">CAP-43</a></td>
+<td>Confirm commencement before scheduling the institutional transition
+plan.</td>
+<td>BQA Transition Guidelines 1.5-1.6</td>
+</tr>
+<tr>
+<td>BW-COMMS</td>
+<td>Botswana</td>
+<td>QA guidance</td>
+<td><a href="11-capability-catalog.html#cap-02">CAP-02</a>, <a
+href="11-capability-catalog.html#cap-11">CAP-11</a>, <a
+href="11-capability-catalog.html#cap-16">CAP-16</a>, <a
+href="11-capability-catalog.html#cap-23">CAP-23</a>, <a
+href="11-capability-catalog.html#cap-45">CAP-45</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Publish accurate programme, fees and accreditation information.</td>
+<td>BQA implementation guidance 2.18.5/2.18.8</td>
+</tr>
+<tr>
+<td>NA-QUAL</td>
+<td>Namibia</td>
+<td>Official register</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a></td>
+<td>Verify provider/programme accreditation and applicable
+conditions.</td>
+<td>NQA 2026 accreditation publication</td>
+</tr>
+<tr>
+<td>LS-APPROVAL</td>
+<td>Lesotho</td>
+<td>ODL accreditation standard</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a></td>
+<td>Verify the programme and delivery-mode accreditation
+conditions.</td>
+<td>CHE ODL standard 3.1/3.5</td>
+</tr>
+<tr>
+<td>QUAL-1</td>
+<td>Botswana</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Botswana worksheet; Award
+Mapping; MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-2</td>
+<td>Cambodia</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Cambodia worksheet; Award
+Mapping; MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-3</td>
+<td>Eswatini</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Eswatini worksheet; Award
+Mapping; MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-4</td>
+<td>Lesotho</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Lesotho worksheet; Award Mapping;
+MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-5</td>
+<td>Malaysia</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Malaysia worksheet; Award
+Mapping; MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-6</td>
+<td>Namibia</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Namibia worksheet; Award Mapping;
+MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-7</td>
+<td>Sierra Leone</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Sierra Leone worksheet; Award
+Mapping; MOHE Requirements</td>
+</tr>
+<tr>
+<td>QUAL-8</td>
+<td>Uganda</td>
+<td>Supplied research; confirm locally</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-04">CAP-04</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Check award level, credit definition, duration, entry rules,
+certified evidence and professional recognition where applicable.</td>
+<td>Supplied qualification comparison: Uganda worksheet; Award Mapping;
+MOHE Requirements</td>
+</tr>
+</tbody>
+</table>
+<h2 id="portal-baseline-current-student-frontend">Portal baseline
+(current student frontend)</h2>
+<p>Repository baseline <code>6811e88</code> as recorded in the
+Requirements tab. These rows describe the current demo UI, not Live.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>CAP</th>
+<th>Current implementation</th>
+<th>Suggested next-action role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BASE-01</td>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>Shell and fixed mock student session exist; logout is a no-op.
+Login, password recovery and real sessions are absent.</td>
+<td>IT / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-02</td>
+<td><a href="11-capability-catalog.html#cap-02">CAP-02</a></td>
+<td>No applicant signup, application, intake-choice or
+application-status route exists.</td>
+<td>Admissions / frontend lead.</td>
+</tr>
+<tr>
+<td>BASE-03</td>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a></td>
+<td>No applicant upload or English-entry checking flow. Enrolled-student
+qualification records are displayed in Profile only.</td>
+<td>Admissions.</td>
+</tr>
+<tr>
+<td>BASE-04</td>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a></td>
+<td>No accreditation register or campus/programme/delivery-mode approval
+workflow.</td>
+<td>Campus QA / registry.</td>
+</tr>
+<tr>
+<td>BASE-05</td>
+<td><a href="11-capability-catalog.html#cap-05">CAP-05</a></td>
+<td>Study plan and prior qualifications show sample values; no
+national-framework mapping or admissions decision tool.</td>
+<td>Admissions / academic registry.</td>
+</tr>
+<tr>
+<td>BASE-06</td>
+<td><a href="11-capability-catalog.html#cap-06">CAP-06</a></td>
+<td>No authority evaluation, home-country recognition, professional
+approval or appeal workflow.</td>
+<td>Admissions / campus QA.</td>
+</tr>
+<tr>
+<td>BASE-07</td>
+<td><a href="11-capability-catalog.html#cap-07">CAP-07</a></td>
+<td>Students already exist in mock scenarios; admissions decisions and
+offer acceptance are absent.</td>
+<td>Admissions / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-08</td>
+<td><a href="11-capability-catalog.html#cap-08">CAP-08</a></td>
+<td>Contact, address and emergency-contact edits work only within one
+mock session.</td>
+<td>Student records / frontend lead.</td>
+</tr>
+<tr>
+<td>BASE-09</td>
+<td><a href="11-capability-catalog.html#cap-09">CAP-09</a></td>
+<td>Student/university file lists are built; all View and Download
+actions are no-op placeholders.</td>
+<td>Student records / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-10</td>
+<td><a href="11-capability-catalog.html#cap-10">CAP-10</a></td>
+<td>Module selection, prerequisite/clash/credit checks and
+first-confirmation mock invoices work; this is not admissions
+registration.</td>
+<td>Academic registry / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-11</td>
+<td><a href="11-capability-catalog.html#cap-11">CAP-11</a></td>
+<td>Student semester and module schedules are implemented,
+read-only.</td>
+<td>Academic registry / frontend lead.</td>
+</tr>
+<tr>
+<td>BASE-12</td>
+<td><a href="11-capability-catalog.html#cap-12">CAP-12</a></td>
+<td>Student present/absent views and calendars exist;
+recording/correcting attendance is not a student workflow.</td>
+<td>Lecturer / academic registry.</td>
+</tr>
+<tr>
+<td>BASE-13</td>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a></td>
+<td>Published grade/GPA/CGPA and assessment-breakdown views exist; no
+staff marking or publication workflow.</td>
+<td>Examinations / academic registry.</td>
+</tr>
+<tr>
+<td>BASE-14</td>
+<td><a href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Curriculum journey, completed credits and prototype graduation
+checks exist; they are not campus compliance approval.</td>
+<td>Academic registry.</td>
+</tr>
+<tr>
+<td>BASE-15</td>
+<td><a href="11-capability-catalog.html#cap-15">CAP-15</a></td>
+<td>Graduation is a blank tab and Download Transcript does nothing.</td>
+<td>Academic registry.</td>
+</tr>
+<tr>
+<td>BASE-16</td>
+<td><a href="11-capability-catalog.html#cap-16">CAP-16</a></td>
+<td>Dashboard announcement preview cards exist; cards have no
+open/detail action, and there is no staff publishing or acknowledgement
+workflow.</td>
+<td>Campus communications.</td>
+</tr>
+<tr>
+<td>BASE-17</td>
+<td><a href="11-capability-catalog.html#cap-17">CAP-17</a></td>
+<td>Generic Materials can list resources, but no explicit study-guide
+workflow or functional guide access is implemented.</td>
+<td>Academic content / lecturers.</td>
+</tr>
+<tr>
+<td>BASE-18</td>
+<td><a href="11-capability-catalog.html#cap-18">CAP-18</a></td>
+<td>Released resources, including notes/videos/links, display in
+Materials but their actions are no-ops.</td>
+<td>Lecturers / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-19</td>
+<td><a href="11-capability-catalog.html#cap-19">CAP-19</a></td>
+<td>Assignment details and brief metadata exist; the brief
+filename/download action is a placeholder.</td>
+<td>Lecturers / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-20</td>
+<td><a href="11-capability-catalog.html#cap-20">CAP-20</a></td>
+<td>One-file PDF/ZIP submit/replace/delete demonstration stores metadata
+only; file bytes are never uploaded.</td>
+<td>Lecturers / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-21</td>
+<td><a href="11-capability-catalog.html#cap-21">CAP-21</a></td>
+<td>No explicit revision-work workflow, formative activity engine or
+progress tracking.</td>
+<td>Lecturers / academic lead.</td>
+</tr>
+<tr>
+<td>BASE-22</td>
+<td><a href="11-capability-catalog.html#cap-22">CAP-22</a></td>
+<td>No explicit past-paper library or publication/access policy; generic
+resource placeholders do not count as delivery.</td>
+<td>Examinations / library.</td>
+</tr>
+<tr>
+<td>BASE-23</td>
+<td><a href="11-capability-catalog.html#cap-23">CAP-23</a></td>
+<td>Module summary, lecturers, timetable and assessment outline exist;
+structured learning outcomes are not represented.</td>
+<td>Academic registry / lecturers.</td>
+</tr>
+<tr>
+<td>BASE-24</td>
+<td><a href="11-capability-catalog.html#cap-24">CAP-24</a></td>
+<td>Assessment information can be listed; taking quizzes/exams, attempts
+and results processing are absent.</td>
+<td>Examinations / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-25</td>
+<td><a href="11-capability-catalog.html#cap-25">CAP-25</a></td>
+<td>Programme/module/personal/service chat works in one mock session;
+messages are not actually delivered to other users.</td>
+<td>Student support / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-26</td>
+<td><a href="11-capability-catalog.html#cap-26">CAP-26</a></td>
+<td>Online delivery labels or timetable locations do not launch or
+provide a live-teaching service.</td>
+<td>Academic IT / lecturers.</td>
+</tr>
+<tr>
+<td>BASE-27</td>
+<td><a href="11-capability-catalog.html#cap-27">CAP-27</a></td>
+<td>Dated learning weeks and release-aware lists exist; resource access
+and completion tracking are incomplete.</td>
+<td>Academic content / lecturers.</td>
+</tr>
+<tr>
+<td>BASE-28</td>
+<td><a href="11-capability-catalog.html#cap-28">CAP-28</a></td>
+<td>No marking workspace, rubric, feedback return or moderation
+workflow; displayed historic grades are sample records.</td>
+<td>Lecturers / examinations.</td>
+</tr>
+<tr>
+<td>BASE-29</td>
+<td><a href="11-capability-catalog.html#cap-29">CAP-29</a></td>
+<td>No exam identity checks, anti-impersonation or plagiarism
+integration; client-side file validation does not supply these.</td>
+<td>Examinations / campus QA.</td>
+</tr>
+<tr>
+<td>BASE-30</td>
+<td><a href="11-capability-catalog.html#cap-30">CAP-30</a></td>
+<td>Lecturer Review is a visible no-op button; no survey or feedback
+reporting workflow.</td>
+<td>Campus QA.</td>
+</tr>
+<tr>
+<td>BASE-31</td>
+<td><a href="11-capability-catalog.html#cap-31">CAP-31</a></td>
+<td>Services describes physical libraries; it is not a searchable
+digital library or authorized e-resource connection.</td>
+<td>Library / academic IT.</td>
+</tr>
+<tr>
+<td>BASE-32</td>
+<td><a href="11-capability-catalog.html#cap-32">CAP-32</a></td>
+<td>No student induction, help course or ICT competency workflow.</td>
+<td>Student support / academic IT.</td>
+</tr>
+<tr>
+<td>BASE-33</td>
+<td><a href="11-capability-catalog.html#cap-33">CAP-33</a></td>
+<td>Service chat is a mock demonstration and Requests is a blank page;
+no real ticketing, SLA or staffed helpdesk evidence.</td>
+<td>Student support / IT support.</td>
+</tr>
+<tr>
+<td>BASE-34</td>
+<td><a href="11-capability-catalog.html#cap-34">CAP-34</a></td>
+<td>No study-centre directory, allocation or remote learner support
+workflow; old-campus arrangements are unverified.</td>
+<td>Campus operations.</td>
+</tr>
+<tr>
+<td>BASE-35</td>
+<td><a href="11-capability-catalog.html#cap-35">CAP-35</a></td>
+<td>Many controls have keyboard/accessibility coverage, but no full
+accessibility conformance audit or accommodation workflow.</td>
+<td>Frontend lead / student support.</td>
+</tr>
+<tr>
+<td>BASE-36</td>
+<td><a href="11-capability-catalog.html#cap-36">CAP-36</a></td>
+<td>Whole-portal mobile is not implemented or accepted. Only isolated
+Services body content has responsive test coverage.</td>
+<td>Frontend lead.</td>
+</tr>
+<tr>
+<td>BASE-37</td>
+<td><a href="11-capability-catalog.html#cap-37">CAP-37</a></td>
+<td>No frontend evidence can establish campus internet adequacy or
+production platform capacity/reliability.</td>
+<td>IT operations.</td>
+</tr>
+<tr>
+<td>BASE-38</td>
+<td><a href="11-capability-catalog.html#cap-38">CAP-38</a></td>
+<td>No production data service is implemented here; old CMS
+backup/recovery capability has not been assessed.</td>
+<td>IT operations.</td>
+</tr>
+<tr>
+<td>BASE-39</td>
+<td><a href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Student-scoped mock projections and safe file checks exist; real
+authorization, security operations and privacy controls are absent
+here.</td>
+<td>IT security / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-40</td>
+<td><a href="11-capability-catalog.html#cap-40">CAP-40</a></td>
+<td>GPA/attendance student displays exist, but staff engagement
+analytics, risk alerts and QA reporting are absent.</td>
+<td>Campus QA / academic lead.</td>
+</tr>
+<tr>
+<td>BASE-41</td>
+<td><a href="11-capability-catalog.html#cap-41">CAP-41</a></td>
+<td>Institutional training cannot be inferred from this student frontend
+repository.</td>
+<td>Academic QA / HR.</td>
+</tr>
+<tr>
+<td>BASE-42</td>
+<td><a href="11-capability-catalog.html#cap-42">CAP-42</a></td>
+<td>Imported-asset provenance exists for Services; this does not
+establish learning-resource rights or third-party/cross-border
+approval.</td>
+<td>Campus QA / procurement / IT.</td>
+</tr>
+<tr>
+<td>BASE-43</td>
+<td><a href="11-capability-catalog.html#cap-43">CAP-43</a></td>
+<td>No staff material approval, pre-testing/pilot or regulator-readiness
+evidence workflow.</td>
+<td>Campus QA / academic content.</td>
+</tr>
+<tr>
+<td>BASE-44</td>
+<td><a href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>No staff or lecturer application routes; a student-facing Materials
+area alone is not a complete LMS.</td>
+<td>Product owner / staff leads.</td>
+</tr>
+<tr>
+<td>BASE-45</td>
+<td><a href="11-capability-catalog.html#cap-45">CAP-45</a></td>
+<td>Account/invoice/payment/adjustment views use a mock ledger;
+instructions include fictional banking information.</td>
+<td>Campus finance / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-46</td>
+<td><a href="11-capability-catalog.html#cap-46">CAP-46</a></td>
+<td>Students can submit/change/withdraw proof metadata; no actual upload
+or staff verification occurs.</td>
+<td>Campus finance / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-47</td>
+<td><a href="11-capability-catalog.html#cap-47">CAP-47</a></td>
+<td>No online payment flow; invoice download is a disabled placeholder,
+with no receipt delivery.</td>
+<td>Campus finance / backend lead.</td>
+</tr>
+<tr>
+<td>BASE-48</td>
+<td><a href="11-capability-catalog.html#cap-48">CAP-48</a></td>
+<td>Read-only award/renewal/credit displays exist; applications and
+staff award assignment are absent.</td>
+<td>Campus finance / student affairs.</td>
+</tr>
+<tr>
+<td>BASE-49</td>
+<td><a href="11-capability-catalog.html#cap-49">CAP-49</a></td>
+<td>Both edit flows work with temporary local data; no durable storage,
+resume export or public portfolio sharing.</td>
+<td>Careers / frontend lead.</td>
+</tr>
+<tr>
+<td>BASE-50</td>
+<td><a href="11-capability-catalog.html#cap-50">CAP-50</a></td>
+<td>International students see a blank Immigration page; personal visa
+information and mock eligibility checks are not visa case
+management.</td>
+<td>International student office.</td>
+</tr>
+<tr>
+<td>BASE-51</td>
+<td><a href="11-capability-catalog.html#cap-51">CAP-51</a></td>
+<td>Requests is a blank page; no online forms, routing or approval
+tracking.</td>
+<td>Student services / staff leads.</td>
+</tr>
+<tr>
+<td>BASE-52</td>
+<td><a href="11-capability-catalog.html#cap-52">CAP-52</a></td>
+<td>Standalone Accommodation is blank; Services Accommodation supplies
+read-only information only.</td>
+<td>Accommodation office.</td>
+</tr>
+<tr>
+<td>BASE-53</td>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a></td>
+<td>Replaceable API contracts, mock campus ownership and student scopes
+exist; no authenticated HTTP adapter or live CMS connection.</td>
+<td>Backend lead / old CMS owner.</td>
+</tr>
+<tr>
+<td>BASE-54</td>
+<td><a href="11-capability-catalog.html#cap-54">CAP-54</a></td>
+<td>Seven read-only Cyberjaya categories have content; other campuses
+need approved content. No booking/payment workflow.</td>
+<td>Campus student services.</td>
+</tr>
+<tr>
+<td>BASE-55</td>
+<td><a href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Documents includes handbook metadata; no confirmed policy
+collection, actual file delivery, version/acknowledgement workflow.</td>
+<td>Student affairs / campus QA.</td>
+</tr>
+</tbody>
+</table>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>13-progress-timeline — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="progress-timeline-and-remaining-work">Progress, timeline, and
+remaining work</h1>
+<p><strong>Document:</strong> SDD-13<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 19 September 2026<br />
+<strong>Source:</strong> <a
+href="https://docs.google.com/spreadsheets/d/1Yux9R8hIgcPrQ5OklKd9Oyq_04qJtaAhcxJvr_7NvYI/edit?usp=sharing">Student
+Portal and CMS Daily Checklist</a>, downloaded 19 September 2026. Faid
+Zamin shared that sheet in the working-group chat on 18 September 2026
+and said the student portal v1 frontend was still being built.</p>
+<p>Local copy: <a
+href="../../materials/docs/working-group/SOURCE.html">materials/docs/working-group/</a>.</p>
+<h2 id="what-changed-in-the-latest-sheet">1. What changed in the latest
+sheet</h2>
+<p>Status cells did not move. The download has the same 112 detailed
+rows, the same Frontend / Mobile / Backend values, and the same TBC
+owners and target weeks as the 18 September copy.</p>
+<p>The only newer timestamp is <a
+href="11-capability-catalog.html#cap-35">CAP-35</a> on the student
+portal (accessibility), last updated 9 September 2026. Its status is
+still Demo. Every other detailed row was last touched 7 September
+2026.</p>
+<p>The chat after the 18 September meeting records that the meeting
+ended. It does not record a new date, a new owner, or a status
+change.</p>
+<p><strong>Completion, using the sheet’s own word:</strong> a row is
+complete only when it is <strong>Live</strong>. Live count is
+<strong>0</strong>. Demo, Partial, and Placeholder are not completions.
+The simplified tab’s “Frontend ready” (23 grouped rows) is the same work
+the detailed tab calls Demo or Partial.</p>
+<h2 id="milestone-progress">2. Milestone progress</h2>
+<p>Applicable rows exclude Frontend = Not applicable. “Started” means
+Demo, Partial, or Placeholder. Backend is Needs checking on every
+applicable row, including the ones with a started frontend.</p>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th style="text-align: right;">Rows</th>
+<th style="text-align: right;">Applicable</th>
+<th style="text-align: right;">Started</th>
+<th style="text-align: right;">Not started</th>
+<th style="text-align: right;">Live</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Confirm rules and integration</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>2. Admissions launch</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>3. Core student portal</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>4. Cyberjaya pilot acceptance</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>5. Campus expansion and remaining CMS</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>By portal, detailed tab:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>Portal</th>
+<th style="text-align: right;">Started</th>
+<th style="text-align: right;">Not started</th>
+<th style="text-align: right;">Live</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Applicant</td>
+<td style="text-align: right;">0 of 7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Student</td>
+<td style="text-align: right;">31 of 40</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Lecturer</td>
+<td style="text-align: right;">0 of 18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Admin / staff</td>
+<td style="text-align: right;">0 of 37</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Shared system</td>
+<td style="text-align: right;">1 (<a
+href="11-capability-catalog.html#cap-53">CAP-53</a>, Partial)</td>
+<td style="text-align: right;">0 applicable frontend</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>The student UI is ahead of the sequence. Product priority on the
+Timeline tab is still admissions before the core student portal. Four
+admissions rows have a student-side frontend start (sign-in Placeholder,
+accessibility Demo, privacy Partial, and the mobile shell is Not
+applicable). The applicant and staff halves of admissions are not
+started.</p>
+<h2 id="timeline">3. Timeline</h2>
+<p>From the Timeline tab, fetched 19 September 2026. Kickoff is TBC.
+Backend commitment is TBC. Every milestone target is TBC. There is no
+agreed week to put on a calendar.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Order</th>
+<th>Milestone</th>
+<th>Target</th>
+<th>Release condition, shortened</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Confirm rules and integration</td>
+<td>TBC</td>
+<td>Rules, API access, and operating responsibilities agreed</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Admissions launch</td>
+<td>TBC</td>
+<td>Application to enrolment works on real records</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Core student portal</td>
+<td>TBC</td>
+<td>Student and staff journeys work with durable records</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cyberjaya pilot acceptance</td>
+<td>TBC</td>
+<td>Campus accepts the pilot</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Campus expansion and remaining CMS</td>
+<td>TBC</td>
+<td>Each campus accepts its rollout</td>
+</tr>
+</tbody>
+</table>
+<p>The bars below are the order only. Their length is not a duration the
+group has agreed. Do not read the dates as a plan.</p>
+<pre class="mermaid"><code>gantt
+    title Sequence only. Kickoff and every target on the sheet are TBC.
+    dateFormat YYYY-MM-DD
+    axisFormat %d %b
+    section Order
+    M1 Confirm rules and integration     :m1, 2026-09-21, 7d
+    M2 Admissions launch                 :m2, after m1, 21d
+    M3 Core student portal               :m3, after m2, 28d
+    M4 Cyberjaya pilot acceptance        :m4, after m3, 14d
+    M5 Campus expansion                  :m5, after m4, 21d</code></pre>
+<h2 id="gantt-of-progress">4. Gantt of progress</h2>
+<p>Each bar is the share of applicable rows, not time. Filled means the
+frontend has been started. Nothing in the filled part is Live.</p>
+<pre class="mermaid"><code>gantt
+    title Frontend started versus not started. Snapshot 19 Sep 2026. Not a calendar.
+    dateFormat YYYY-MM-DD
+    axisFormat %d
+    section M2 Admissions
+    Started 4 of 18                         :done, a1, 2026-09-01, 4d
+    Not started 14 of 18                    :active, a2, after a1, 14d
+    section M3 Core student
+    Started 16 of 51                        :done, b1, 2026-09-01, 16d
+    Not started 35 of 51                    :active, b2, after b1, 35d
+    section M5 Expansion
+    Started 12 of 34                        :done, c1, 2026-09-01, 12d
+    Not started 22 of 34                    :active, c2, after c1, 22d</code></pre>
+<p><a href="03-delivery-milestones.html#m1">M1</a> and <a
+href="03-delivery-milestones.html#m4">M4</a> have no frontend rows. They
+are still open: rules and owners are TBC, and Cyberjaya has not accepted
+a pilot.</p>
+<h2 id="tasks-still-to-do">5. Tasks still to do</h2>
+<h3 id="before-any-milestone-can-be-called-live">Before any milestone
+can be called Live</h3>
+<ul>
+<li>Name the next-action owner on each row. All 112 are TBC.</li>
+<li>Agree a target week. All 112 are TBC.</li>
+<li>Agree kickoff and the backend commitment on the Timeline tab. Both
+are TBC.</li>
+<li>Move backend off Needs checking. That is every applicable row.</li>
+</ul>
+<h3 id="m1-confirm-rules-and-integration"><a
+href="03-delivery-milestones.html#m1">M1</a> — confirm rules and
+integration</h3>
+<ul>
+<li><a href="11-capability-catalog.html#cap-42">CAP-42</a>. Copyright
+and provider approvals. Non-software. Not started as an operating
+check.</li>
+</ul>
+<h3 id="m2-admissions-launch"><a
+href="03-delivery-milestones.html#m2">M2</a> — admissions launch</h3>
+<p>These are the tasks on the critical path. Applicant and staff rows
+are Not started. Student rows listed here are not Live.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Task</th>
+<th>Frontend now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="11-capability-catalog.html#cap-02">CAP-02</a></td>
+<td>Applicant</td>
+<td>Online application form</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a></td>
+<td>Applicant</td>
+<td>Upload documents and English-entry evidence</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-07">CAP-07</a></td>
+<td>Applicant</td>
+<td>Track, view offer, accept enrolment</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Applicant</td>
+<td>Policies and declarations</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-16">CAP-16</a></td>
+<td>Applicant</td>
+<td>Announcements. Marketing does not issue offers</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>Applicant</td>
+<td>Sign-in and account</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-35">CAP-35</a></td>
+<td>Applicant</td>
+<td>Accessible forms</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-36">CAP-36</a></td>
+<td>Applicant</td>
+<td>Mobile registration shell</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a>, 05, 06,
+07</td>
+<td>Staff</td>
+<td>Review evidence, qualifications, foreign awards, offer, first
+enrolment</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a></td>
+<td>Staff</td>
+<td>Record programme and site approvals before taking applications</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-16">CAP-16</a></td>
+<td>Staff</td>
+<td>Recruitment copy only</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>Staff</td>
+<td>Confirm old-CMS staff access. New screens only for a verified
+gap</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>Student</td>
+<td>Real sign-in and logout. Today’s control is a placeholder</td>
+<td>Placeholder</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-35">CAP-35</a></td>
+<td>Student</td>
+<td>Accessibility audit. Last sheet edit, still Demo</td>
+<td>Demo</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Student</td>
+<td>Server-enforced privacy</td>
+<td>Partial</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a></td>
+<td>Shared</td>
+<td>Portal API to the existing CMS. Partial. This gates the
+milestone</td>
+<td>Partial</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-37">CAP-37</a>, 38, 39</td>
+<td>Shared</td>
+<td>Monitoring, backups, security. Not screens</td>
+<td>Not started as operations</td>
+</tr>
+</tbody>
+</table>
+<h3 id="m3-core-student-portal"><a
+href="03-delivery-milestones.html#m3">M3</a> — core student portal</h3>
+<p>16 of 51 rows have a student frontend start. 35 are not started,
+including every lecturer row and the staff path for the same
+capabilities. A student Demo does not close the row. Lecturer publish,
+attendance, and marking, and the staff approval path, are still to do.
+See <a href="11-capability-catalog.html">SDD-11</a>.</p>
+<h3 id="m4-cyberjaya-acceptance"><a
+href="03-delivery-milestones.html#m4">M4</a> — Cyberjaya acceptance</h3>
+<p><a href="11-capability-catalog.html#cap-41">CAP-41</a> staff training
+and operating readiness. Not a screen. Not started.</p>
+<h3 id="m5-campus-expansion"><a
+href="03-delivery-milestones.html#m5">M5</a> — campus expansion</h3>
+<p>22 of 34 applicable rows are not started. Includes quizzes, live
+class, library, visa, housing, scholarships, and online payment. Do not
+pull these forward of admissions.</p>
+<h2 id="related-documents">6. Related documents</h2>
+<ul>
+<li>Milestone definitions: <a
+href="03-delivery-milestones.html">SDD-03</a></li>
+<li>Full rows: <a href="11-capability-catalog.html">SDD-11</a></li>
+<li>Sheet: <a
+href="../../materials/docs/working-group/SOURCE.html">working-group
+source</a></li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

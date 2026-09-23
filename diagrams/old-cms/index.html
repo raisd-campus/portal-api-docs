@@ -48,7 +48,7 @@
     <div class="note" style="margin: 0 0 16px">
       <strong>This phase — ADR-1 (confirmed Aslam, 23 Sep 2026).</strong>
       Use the existing Cyberjaya CMS as system of record. Build modern portal experiences via the
-      Portal API → <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> anti-corruption layer → existing MySQL. Do <em>not</em> duplicate operational
+      Portal API → <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> anti-corruption layer → existing MySQL. Do <em>not</em> duplicate operational
       staff functions the old CMS already runs. Also seen in dumps:
       <code>campus2_cyberjaya</code>, <code>portalcyberjaya</code>.
     </div>
@@ -57,11 +57,11 @@
       <strong>Longer-term target.</strong>
       Still aim for a <strong>unified, one-stop CMS</strong>, delivered <em>progressively</em> on
       verified gaps with an explicit migration strategy (ownership, cutover, rollback, training).
-      That consolidation sits under <strong><a href="../../sdd/03-delivery-milestones.md#m5">M5</a>+</strong> / remaining-CMS work — not Admissions launch rewrite.
-      See <a href="../../sdd/03-delivery-milestones.md">SDD-03</a> and
+      That consolidation sits under <strong><a href="../../sdd/03-delivery-milestones.html#m5">M5</a>+</strong> / remaining-CMS work — not Admissions launch rewrite.
+      See <a href="../../sdd/03-delivery-milestones.html">SDD-03</a> and
       <a href="./comparison.html#target">high-level comparison &amp; target delivery</a>.
-      CAP / milestone IDs: <a href="../../sdd/15-nomenclature.md">SDD-15 nomenclature</a>,
-      <a href="../../sdd/11-capability-catalog.md">SDD-11 catalogue</a>.
+      CAP / milestone IDs: <a href="../../sdd/15-nomenclature.html">SDD-15 nomenclature</a>,
+      <a href="../../sdd/11-capability-catalog.html">SDD-11 catalogue</a>.
     </div>
 
     <div class="note warn" style="margin: 0 0 28px">
@@ -219,14 +219,14 @@ flowchart TB
         </div>
         <div class="legend-item">
           <strong>Database</strong>
-          <span>Trigger hot tables, SP catalogs, batch implications for <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a>.</span>
+          <span>Trigger hot tables, SP catalogs, batch implications for <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>.</span>
         </div>
       </div>
       <p class="note">
         Markdown sources:
         <a href="../../ai/backend/cms-feature-comparison.md">docs/ai/backend/cms-feature-comparison.md</a>,
         <a href="../../ai/backend/old-cms-cyberjaya.md">docs/ai/backend/old-cms-cyberjaya.md</a>,
-        <a href="../../sdd/14-cms-feature-comparison.md">docs/sdd/14-cms-feature-comparison.md</a>.
+        <a href="../../sdd/14-cms-feature-comparison.html">docs/sdd/14-cms-feature-comparison.md</a>.
         Raisd statuses follow SDD-11 (Demo / Partial / Placeholder / Not started / Needs checking).
       </p>
     </section>
@@ -254,5 +254,6 @@ flowchart TB
       flowchart: { curve: "basis", htmlLabels: true },
     });
   </script>
+  <script src="../abbr-tooltips.js" defer></script>
 </body>
 </html>

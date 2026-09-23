@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>03-delivery-milestones — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="delivery-milestones">Delivery milestones</h1>
+<p><strong>Document:</strong> SDD-03<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026 (updated 23 September 2026)</p>
+<p><strong>Nomenclature:</strong> <a href="#m1">M1</a>–<a
+href="#m5">M5</a> anchors below. Capability IDs: <a
+href="11-capability-catalog.html">SDD-11</a> · index <a
+href="15-nomenclature.html">SDD-15</a>.</p>
+<h2 id="sequence">1. Sequence</h2>
+<p>Milestone order follows the admissions-first decision and
+working-system dependencies. It is not prescribed by government. All
+unagreed dates remain TBC. A milestone describes when a capability
+<strong>must work</strong>, not when investigation begins.</p>
+<pre class="mermaid"><code>flowchart LR
+  M1[1. Confirm rules&lt;br/&gt;and integration] --&gt; M2[2. Admissions launch]
+  M2 --&gt; M3[3. Core student portal]
+  M3 --&gt; M4[4. Cyberjaya pilot&lt;br/&gt;acceptance]
+  M4 --&gt; M5[5. Campus expansion&lt;br/&gt;and remaining CMS]</code></pre>
+<p><strong>SoR posture across milestones:</strong> <a
+href="#m1">M1</a>–<a href="#m4">M4</a> deliver modern portals
+<strong>on</strong> the existing Cyberjaya CMS via the Portal API
+(ADR-1, confirmed Aslam 23 Sep 2026). <strong><a
+href="#m5">M5</a>+</strong> is where progressive <strong>unified
+one-stop CMS</strong> consolidation may begin — only for verified gaps
+and with an agreed migration strategy. <a href="#m5">M5</a> is not a
+licence to rewrite every working desk.</p>
+<p>Kickoff: TBC. Backend commitments: TBC.</p>
+<h2 id="milestone-definitions">2. Milestone definitions</h2>
+<p><a id="m1"></a></p>
+<h3 id="m1-confirm-rules-and-integration">M1 — Confirm rules and
+integration</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>Target</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Campus rules, named owners, legacy capabilities, integration
+access</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Campus and backend owners identified; kickoff TBC</td>
+</tr>
+<tr>
+<td>Release condition</td>
+<td>Rules, API access and operating responsibilities agreed</td>
+</tr>
+<tr>
+<td>Primary CAP</td>
+<td><a href="11-capability-catalog.html#cap-42">CAP-42</a> (copyright /
+provider operating controls)</td>
+</tr>
+</tbody>
+</table>
+<p>This is not a UI milestone. It unblocks every later “Needs checking”
+row.</p>
+<p><a id="m2"></a></p>
+<h3 id="m2-admissions-launch">M2 — Admissions launch</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>Target</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Applicant registration, evidence, tracking, offers, Registry review,
+core applicant/student sign-in, mobile shell foundations</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Agreed rules; working old-CMS admissions/authentication
+integration</td>
+</tr>
+<tr>
+<td>Release condition</td>
+<td>Application-to-enrolment works with real records; required staff
+workflows available through verified old CMS or new screens</td>
+</tr>
+</tbody>
+</table>
+<p>Must work end to end:</p>
+<ol type="1">
+<li>Applicant account (<a
+href="11-capability-catalog.html#cap-01">CAP-01</a>).</li>
+<li>Application + documents + declarations (<a
+href="11-capability-catalog.html#cap-02">CAP-02</a>, <a
+href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-55">CAP-55</a>).</li>
+<li>Track / offer / accept (<a
+href="11-capability-catalog.html#cap-07">CAP-07</a>).</li>
+<li>Registry review, qualification checks, offer, first enrolment (<a
+href="11-capability-catalog.html#cap-03">CAP-03</a>, <a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, <a
+href="11-capability-catalog.html#cap-06">CAP-06</a>, <a
+href="11-capability-catalog.html#cap-07">CAP-07</a>).</li>
+<li>Marketing communications without owning the decision (<a
+href="11-capability-catalog.html#cap-16">CAP-16</a>).</li>
+<li>Staff access via existing CMS unless a gap is verified (<a
+href="11-capability-catalog.html#cap-44">CAP-44</a>).</li>
+<li>Portal API first slice (<a
+href="11-capability-catalog.html#cap-53">CAP-53</a>).</li>
+<li>Auth, privacy, monitoring, backups (<a
+href="11-capability-catalog.html#cap-01">CAP-01</a>, <a
+href="11-capability-catalog.html#cap-37">CAP-37</a>, <a
+href="11-capability-catalog.html#cap-38">CAP-38</a>, <a
+href="11-capability-catalog.html#cap-39">CAP-39</a>).</li>
+<li>Accessible forms and mobile shell (<a
+href="11-capability-catalog.html#cap-35">CAP-35</a>, <a
+href="11-capability-catalog.html#cap-36">CAP-36</a>).</li>
+</ol>
+<p>Student portal demo screens are <strong>not</strong> the release
+condition for <a href="#m2">M2</a>.</p>
+<p><a id="m3"></a></p>
+<h3 id="m3-core-student-portal">M3 — Core student portal</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>Target</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Learning resources, timetable, assignment delivery, policies, core
+records, semester registration, with lecturer and staff support</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Required student, teaching, file-delivery and finance APIs; approved
+content; staff workflows</td>
+</tr>
+<tr>
+<td>Release condition</td>
+<td>Student and staff journeys work end to end with durable records and
+agreed core mobile access</td>
+</tr>
+</tbody>
+</table>
+<p>Student-only demo UI is insufficient. Lecturer publish/mark and staff
+approval paths for the same CAP IDs must be Live or explicitly served by
+the old CMS.</p>
+<p><a id="m4"></a></p>
+<h3 id="m4-cyberjaya-pilot-acceptance">M4 — Cyberjaya pilot
+acceptance</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>Target</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Test the integrated Cyberjaya pilot, train staff, obtain campus
+acceptance</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Integrations, content, security, recovery, operational support
+ready</td>
+</tr>
+<tr>
+<td>Release condition</td>
+<td>Campus accepts the pilot and confirms applicable requirements,
+including verified existing-CMS or manual alternatives</td>
+</tr>
+<tr>
+<td>Primary CAP</td>
+<td><a href="11-capability-catalog.html#cap-41">CAP-41</a> staff
+training and operating readiness</td>
+</tr>
+</tbody>
+</table>
+<p><a id="m5"></a></p>
+<h3 id="m5-campus-expansion-and-remaining-cms">M5 — Campus expansion and
+remaining CMS</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>Target</td>
+<td>TBC</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Expand campus coverage; remaining approved CMS/staff capabilities;
+<strong>start progressive consolidation</strong> toward a unified
+one-stop CMS where gaps are verified</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Cyberjaya accepted; campus-specific rules and existing capabilities
+verified; migration plan per domain before retiring a legacy desk</td>
+</tr>
+<tr>
+<td>Release condition</td>
+<td>Each campus accepts its rollout. Deferring new software never defers
+an applicable operating requirement. Any SoR move needs ownership,
+cutover, rollback, and training agreed</td>
+</tr>
+</tbody>
+</table>
+<p>Includes quizzes/exams, live class, library, visa, accommodation,
+scholarships, online payment gateway, study centres, remaining staff
+desks — <strong>prefer Portal API + verified old CMS</strong> first;
+rebuild or migrate only when the gap and migration strategy are explicit
+(<a href="11-capability-catalog.html">SDD-11</a>).</p>
+<pre class="mermaid"><code>flowchart TB
+  subgraph phase [&quot;This phase — M1 to M4&quot;]
+    P[Four portals] --&gt; API[Portal API]
+    API --&gt; CMS[Cyberjaya CMS SoR]
+  end
+  subgraph later [&quot;Longer term — M5+&quot;]
+    G[Verified gap] --&gt; MIG[Migration strategy]
+    MIG --&gt; U[Progressive unified CMS]
+    CMS -.-&gt;|retire desk only when ready| U
+  end
+  phase --&gt; later</code></pre>
+<h2 id="tension-with-current-build">3. Tension with current build</h2>
+<p>The student portal v1 frontend is deepest on <a href="#m3">M3</a>
+student screens. Product priority still puts <a href="#m2">M2</a> before
+<a href="#m3">M3</a>.</p>
+<p>Design rule for the next two weeks:</p>
+<ol type="1">
+<li>Freeze new student demo screens unless they are on the <a
+href="#m2">M2</a> critical path (auth, mobile shell,
+accessibility).</li>
+<li>Prioritise <a href="11-capability-catalog.html#cap-53">CAP-53</a>,
+<a href="11-capability-catalog.html#cap-01">CAP-01</a>, applicant <a
+href="11-capability-catalog.html#cap-02">CAP-02</a>/<a
+href="11-capability-catalog.html#cap-03">CAP-03</a>/<a
+href="11-capability-catalog.html#cap-07">CAP-07</a>, and Registry
+old-CMS verification.</li>
+<li>Keep existing student demos, but label them Demo until wired.</li>
+</ol>
+<h2 id="definition-of-done-any-capability">4. Definition of done (any
+capability)</h2>
+<p>A capability is Live only when all of the following are true:</p>
+<ol type="1">
+<li>Real data from the system of record, not a mock session.</li>
+<li>Durable save where the user can mutate data.</li>
+<li>Server-enforced permission for that role and campus.</li>
+<li>The paired staff/lecturer action exists in new UI
+<strong>or</strong> is verified in the old CMS.</li>
+<li>Accountable owner named.</li>
+<li>Core mobile accepted if the CAP is in PRODUCT-MOBILE.</li>
+<li>Country/campus operating checks in the next-action column are closed
+or explicitly waived.</li>
+</ol>
+<h2 id="counts-detailed-checklist">5. Counts (detailed checklist)</h2>
+<p>Re-counted from the <a
+href="https://docs.google.com/spreadsheets/d/1Yux9R8hIgcPrQ5OklKd9Oyq_04qJtaAhcxJvr_7NvYI/edit?usp=sharing">live
+sheet</a> on 19 September 2026. Same figures as 18 September. Progress,
+the sequence chart, and the open tasks are in <a
+href="13-progress-timeline.html">SDD-13</a>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Rows</th>
+<th>Dominant frontend status</th>
+<th>Live</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confirm rules &amp; integration</td>
+<td>1</td>
+<td>Not applicable</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Admissions launch</td>
+<td>23</td>
+<td>Mostly not started. 4 of 18 applicable rows started, none Live</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Core student portal</td>
+<td>51</td>
+<td>16 started (student Demo/Partial). 35 not started, including
+lecturer and staff</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Cyberjaya pilot acceptance</td>
+<td>1</td>
+<td>Not applicable (training)</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Campus expansion &amp; remaining CMS</td>
+<td>36</td>
+<td>12 started. 22 applicable rows not started</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-documents">6. Related documents</h2>
+<p>Portal breakdowns: <a href="04-applicant-portal.html">SDD-04</a>
+through <a href="08-shared-platform.html">SDD-08</a>.</p>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

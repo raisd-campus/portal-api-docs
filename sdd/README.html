@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>README — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="campus-cms-software-design-documents">Campus CMS — Software
+Design Documents</h1>
+<p>Working draft for <strong>Working Group CMS 2026</strong>. These
+documents turn Faid’s Daily Checklist, Timeline, and Requirements &amp;
+Sources into a design baseline the team can implement against.</p>
+<p>They are design documents, not a commercial proposal. Dates, named
+owners, and backend commitments remain TBC until the working group
+confirms them.</p>
+<p><strong>AI agents:</strong> start at the campus knowledge base <a
+href="../ai/"><code>../ai/</code></a> (decision 22 Sep 2026 — Faid
+Zamin). SDDs are the product baseline; <code>docs/ai/</code> is the
+single source of truth for agent instructions, extracted frontend
+behaviour docs, and documentation generation.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Document</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="00-document-control.html">SDD-00</a></td>
+<td>Document control</td>
+<td>Status, sources, glossary, status meanings</td>
+</tr>
+<tr>
+<td><a href="01-system-overview.html">SDD-01</a></td>
+<td>System overview</td>
+<td>Product intent, portals, constraints, current vs target</td>
+</tr>
+<tr>
+<td><a href="02-architecture-and-integration.html">SDD-02</a></td>
+<td>Architecture and integration</td>
+<td>Existing CMS as backend, Portal API, auth, mobile, data</td>
+</tr>
+<tr>
+<td><a href="12-deployment-architecture.html">SDD-12</a></td>
+<td>Deployment architecture</td>
+<td>Repositories, VDS hosts, public names, request path</td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html">SDD-03</a></td>
+<td>Delivery milestones</td>
+<td>Admissions-first sequence and release conditions</td>
+</tr>
+<tr>
+<td><a href="13-progress-timeline.html">SDD-13</a></td>
+<td>Progress and timeline</td>
+<td>Latest sheet snapshot, completion, sequence, remaining tasks</td>
+</tr>
+<tr>
+<td><a href="04-applicant-portal.html">SDD-04</a></td>
+<td>Applicant portal</td>
+<td>Apply → evidence → track → offer → enrol</td>
+</tr>
+<tr>
+<td><a href="05-student-portal.html">SDD-05</a></td>
+<td>Student portal</td>
+<td>Learning, records, fees, support (current v1 frontend)</td>
+</tr>
+<tr>
+<td><a href="06-lecturer-portal.html">SDD-06</a></td>
+<td>Lecturer portal</td>
+<td>Publish, attendance, marking, class communication</td>
+</tr>
+<tr>
+<td><a href="07-admin-staff-cms.html">SDD-07</a></td>
+<td>Admin / staff CMS</td>
+<td>Registry, Faculty, Bursary, QA, Marketing, remaining desks</td>
+</tr>
+<tr>
+<td><a href="08-shared-platform.html">SDD-08</a></td>
+<td>Shared platform</td>
+<td>Integration spine, security, ops, training</td>
+</tr>
+<tr>
+<td><a href="09-requirements-traceability.html">SDD-09</a></td>
+<td>Requirements traceability</td>
+<td>Product decisions, campus requests, country evidence, UI
+baseline</td>
+</tr>
+<tr>
+<td><a href="10-open-questions.html">SDD-10</a></td>
+<td>Open questions</td>
+<td>Decisions still required before Live</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html">SDD-11</a></td>
+<td>Capability catalogue</td>
+<td>All 112 CAP rows from the detailed checklist</td>
+</tr>
+<tr>
+<td><a href="14-cms-feature-comparison.html">SDD-14</a></td>
+<td>Existing CMS vs Raisd portals</td>
+<td>Cyberjaya old-CMS inventory mapped to CAP IDs (23 Sep 2026
+dump)</td>
+</tr>
+<tr>
+<td><a href="15-nomenclature.html">SDD-15</a></td>
+<td>Nomenclature</td>
+<td>Quick links for every CAP-* and M1–M5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-use-these-documents">How to use these documents</h2>
+<ol type="1">
+<li>Read SDD-00 and SDD-01 first.</li>
+<li>Treat SDD-02 and SDD-03 as the delivery contract: existing CMS
+stays, admissions before semester registration, Cyberjaya first.</li>
+<li>Implement against the portal SDD that owns the screen. The same CAP
+ID on two portals is one capability with two role surfaces.</li>
+<li>Use SDD-11 as the exhaustive inventory. Use SDD-09 when a capability
+is challenged as “required by government” or “already built”.</li>
+<li>Use <a href="15-nomenclature.html">SDD-15</a> to jump from any
+<code>CAP-*</code> or <code>M*</code> ID to its definition.</li>
+<li>Use SDD-14 when deciding whether to rebuild a staff/lecturer screen
+or keep the old Cyberjaya CMS desk.</li>
+<li>Do not treat Demo or Frontend ready as Live. Live requires real
+data, server-enforced access, and an accountable owner.</li>
+</ol>
+<h2 id="related-materials">Related materials</h2>
+<ul>
+<li>AI knowledge base (agents + doc generation): <a
+href="../ai/"><code>../ai/</code></a></li>
+<li>Old CMS technical analysis (GitHub Pages): <a
+href="../diagrams/old-cms/"><code>../diagrams/old-cms/</code></a></li>
+<li>Source spreadsheet: <code>materials/docs/working-group/</code> —
+live sheet <a
+href="https://docs.google.com/spreadsheets/d/1Yux9R8hIgcPrQ5OklKd9Oyq_04qJtaAhcxJvr_7NvYI/edit?usp=sharing">Student
+Portal and CMS Daily Checklist</a></li>
+<li>Progress from the 19 Sep 2026 download: <a
+href="13-progress-timeline.html">SDD-13</a></li>
+<li>Group chat:
+<code>materials/whatsapp/working-group-cms-2026/_chat.txt</code></li>
+<li>Meeting briefing:
+<code>proposals/CMS_Working_Group_Meeting_Briefing.html</code></li>
+<li>Earlier Sherina proposal (commercial, not this SDD set):
+<code>proposals/CampusOne_Phase1_Proposal.html</code></li>
+<li>Printable overview (architecture, repositories, entry points,
+features): <a
+href="../Raisd-Campus-Architecture.pdf"><code>../Raisd-Campus-Architecture.pdf</code></a></li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

@@ -39,7 +39,7 @@
         <span class="chip ok">Portals via Portal API</span>
         <span class="chip warn">No ops duplication</span>
         <span class="chip">Longer term: progressive unified CMS</span>
-        <span class="chip"><a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> critical path</span>
+        <span class="chip"><a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> critical path</span>
       </div>
     </section>
 
@@ -87,31 +87,31 @@
               <td><strong>This phase</strong></td>
               <td>Modern Applicant / Student / Lecturer / Staff experiences via Portal API; staff ops stay on verified old desks unless a gap is proven</td>
               <td>Existing Cyberjaya CMS</td>
-              <td><a href="../../sdd/03-delivery-milestones.md#m1">M1</a>–<a href="../../sdd/03-delivery-milestones.md#m4">M4</a></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m1">M1</a>–<a href="../../sdd/03-delivery-milestones.html#m4">M4</a></td>
             </tr>
             <tr>
               <td>Admissions launch</td>
               <td>Apply → evidence → track → offer → enrol</td>
               <td>Existing CMS</td>
-              <td><a href="../../sdd/03-delivery-milestones.md#m2">M2</a></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m2">M2</a></td>
             </tr>
             <tr>
               <td>Core student portal</td>
               <td>Student journeys + paired lecturer/staff paths (or verified old desk)</td>
               <td>Existing CMS</td>
-              <td><a href="../../sdd/03-delivery-milestones.md#m3">M3</a></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m3">M3</a></td>
             </tr>
             <tr>
               <td>Cyberjaya pilot</td>
               <td>Integrated acceptance, training, ops readiness</td>
               <td>Existing CMS + Portal API</td>
-              <td><a href="../../sdd/03-delivery-milestones.md#m4">M4</a></td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m4">M4</a></td>
             </tr>
             <tr>
               <td><strong>Longer term</strong></td>
               <td>Campus expansion + progressive consolidation toward one-stop CMS</td>
               <td>Migrate domain-by-domain after verified gap + written migration strategy</td>
-              <td><a href="../../sdd/03-delivery-milestones.md#m5">M5</a>+</td>
+              <td><a href="../../sdd/03-delivery-milestones.html#m5">M5</a>+</td>
             </tr>
           </tbody>
         </table>
@@ -120,7 +120,7 @@
         <div class="card-head">
           <div>
             <h3>Phase vs progressive unification</h3>
-            <p><a href="../../sdd/03-delivery-milestones.md#m5">M5</a>+ is not a licence to rewrite every working desk.</p>
+            <p><a href="../../sdd/03-delivery-milestones.html#m5">M5</a>+ is not a licence to rewrite every working desk.</p>
           </div>
         </div>
         <div class="card-body">
@@ -140,9 +140,9 @@ flowchart TB
         </div>
       </div>
       <p class="note">
-        Detail: <a href="../../sdd/01-system-overview.md">SDD-01</a>,
-        <a href="../../sdd/03-delivery-milestones.md">SDD-03</a>,
-        <a href="../../sdd/14-cms-feature-comparison.md">SDD-14</a>,
+        Detail: <a href="../../sdd/01-system-overview.html">SDD-01</a>,
+        <a href="../../sdd/03-delivery-milestones.html">SDD-03</a>,
+        <a href="../../sdd/14-cms-feature-comparison.html">SDD-14</a>,
         <a href="../../ai/architecture/overview.md">architecture overview</a>.
       </p>
     </section>
@@ -150,7 +150,7 @@ flowchart TB
     <section class="section" id="architecture">
       <h2>Side-by-side architecture</h2>
       <p class="lead">
-        <a href="./index.html">LUCT CMS</a> = many desk apps sharing MySQL. Raisd = four webs + Portal API + <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> ACL.
+        <a href="./index.html">LUCT CMS</a> = many desk apps sharing MySQL. Raisd = four webs + Portal API + <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> ACL.
         Live write success only after CMS acknowledges.
       </p>
       <div class="card">
@@ -222,12 +222,12 @@ flowchart LR
           <tr>
             <td>Auth</td>
             <td>Per-module login, user levels, <code>LoginActive</code> / <code>loginactive</code> rules</td>
-            <td>Planned SSO/session via Portal API (<a href="../../sdd/11-capability-catalog.md#cap-01">CAP-01</a>) — Needs checking</td>
+            <td>Planned SSO/session via Portal API (<a href="../../sdd/11-capability-catalog.html#cap-01">CAP-01</a>) — Needs checking</td>
           </tr>
           <tr>
             <td>Files</td>
             <td>Document tables + upload trees in zip</td>
-            <td>Durable evidence store required for Live (<a href="../../sdd/11-capability-catalog.md#cap-03">CAP-03</a>/09/20/46)</td>
+            <td>Durable evidence store required for Live (<a href="../../sdd/11-capability-catalog.html#cap-03">CAP-03</a>/09/20/46)</td>
           </tr>
           <tr>
             <td>Hosting</td>
@@ -241,7 +241,7 @@ flowchart LR
     <section class="section" id="domains">
       <h2>Domain comparison (legacy tables ↔ Raisd canonical)</h2>
       <p class="lead">
-        Mapping is conceptual for <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> — Raisd must not copy wide denormalized CMS tables into its logical ERD.
+        Mapping is conceptual for <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> — Raisd must not copy wide denormalized CMS tables into its logical ERD.
         Canonical Raisd ERD: <a href="../erd.html">../erd.html</a>.
       </p>
       <div class="table-wrap"><table class="attr">
@@ -338,7 +338,7 @@ flowchart LR
         </thead>
         <tbody>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-01">CAP-01</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-01">CAP-01</a></td>
             <td>Applicant sign-in / account</td>
             <td>Agent/online application SPs; staff logins. Dedicated Raisd applicant IdP not verified.</td>
             <td>Partial</td>
@@ -347,7 +347,7 @@ flowchart LR
             <td>Confirm legacy vs new; map via Portal API</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-02">CAP-02</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-02">CAP-02</a></td>
             <td>Online application form</td>
             <td><code>app_applicationformonline</code>, Marketing/Registry Application menus, <code>AgentSubmitApplication*</code></td>
             <td>Present</td>
@@ -356,7 +356,7 @@ flowchart LR
             <td><strong>Expose via Portal API</strong>; reuse CMS fields</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-03">CAP-03</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-03">CAP-03</a></td>
             <td>Upload application documents</td>
             <td><code>app_document</code>, <code>app_docfile</code>, doc review screens</td>
             <td>Present</td>
@@ -365,7 +365,7 @@ flowchart LR
             <td><strong>Expose</strong> upload path; Registry review on old CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-07">CAP-07</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-07">CAP-07</a></td>
             <td>Track application / offer / accept enrolment</td>
             <td><code>app_zstatus</code>, pre-offer, offer letters, graduation/enrol handoffs</td>
             <td>Present</td>
@@ -374,7 +374,7 @@ flowchart LR
             <td>Reuse Registry/Marketing; applicant track UI new</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-16">CAP-16</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-16">CAP-16</a></td>
             <td>Applicant announcements</td>
             <td><code>s_notice</code> campus-wide; applicant-specific feed Needs checking</td>
             <td>Partial</td>
@@ -383,7 +383,7 @@ flowchart LR
             <td>Confirm Marketing ownership</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-35">CAP-35</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-35">CAP-35</a></td>
             <td>Accessible application forms</td>
             <td>Not evidenced as a11y programme</td>
             <td>Not found</td>
@@ -392,7 +392,7 @@ flowchart LR
             <td>New UX on applicant portal</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-36">CAP-36</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-36">CAP-36</a></td>
             <td>Mobile online-registration shell</td>
             <td>Desktop PHPMaker / agent flows</td>
             <td>Not found</td>
@@ -401,7 +401,7 @@ flowchart LR
             <td>New Raisd shell</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-55">CAP-55</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-55">CAP-55</a></td>
             <td>Applicant policies / declarations</td>
             <td><code>r_form</code>, <code>s_letter</code>; policy pack Needs checking</td>
             <td>Partial</td>
@@ -417,7 +417,7 @@ flowchart LR
       <h2>Student portal CAPs</h2>
       <p class="lead">
         Student portal is Demo-deepest. Underlying records live in <code>r_*</code> / <code>b_*</code> / timetable / attendance.
-        Live needs <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> mapping, not a second ledger.
+        Live needs <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> mapping, not a second ledger.
       </p>
       <div class="table-wrap"><table class="attr">
         <thead>
@@ -433,7 +433,7 @@ flowchart LR
         </thead>
         <tbody>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-01">CAP-01</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-01">CAP-01</a></td>
             <td>Student sign-in / logout</td>
             <td><code>r_student.LoginActive</code> / <code>loginactive</code>, <code>portal.sql</code>, <code>api_student_login_info</code>, changepwd</td>
             <td>Present</td>
@@ -442,7 +442,7 @@ flowchart LR
             <td>Map to Portal API session; keep gating rules</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-08">CAP-08</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-08">CAP-08</a></td>
             <td>Personal details / emergency contacts</td>
             <td><code>r_stdpersonal</code>, <code>r_stdrelation*</code>, SIU update desk</td>
             <td>Present</td>
@@ -451,7 +451,7 @@ flowchart LR
             <td>Student edits via API; SIU/Registry SoR</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-09">CAP-09</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-09">CAP-09</a></td>
             <td>Student documents library</td>
             <td><code>r_studentportaldoc</code>, stdfile/studentfile dossiers</td>
             <td>Present</td>
@@ -460,7 +460,7 @@ flowchart LR
             <td>API + CMS storage</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-10">CAP-10</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-10">CAP-10</a></td>
             <td>Semester subject / class registration</td>
             <td><code>r_stdsemester</code>, <code>r_stdmodule</code>, <code>online_enrollment</code>, <code>ProgramsAllowedToRegister</code></td>
             <td>Present</td>
@@ -469,7 +469,7 @@ flowchart LR
             <td><strong>Atomic CMS registration</strong> via Portal API</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-11">CAP-11</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-11">CAP-11</a></td>
             <td>Class timetable</td>
             <td><code>p_timetable*</code>, class/module structures, timetable reports</td>
             <td>Present</td>
@@ -478,7 +478,7 @@ flowchart LR
             <td>Read CMS timetable</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-12">CAP-12</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-12">CAP-12</a></td>
             <td>Attendance records</td>
             <td><code>r_stdattendance*</code>, <code>f_attend*</code>, Adobe Connect attendance</td>
             <td>Present</td>
@@ -487,7 +487,7 @@ flowchart LR
             <td>Read CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-13">CAP-13</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-13">CAP-13</a></td>
             <td>Grades / results / progress</td>
             <td><code>b_Update_Student_Mark*</code>, gradebook/BOE faculty paths, dean lists</td>
             <td>Present</td>
@@ -496,7 +496,7 @@ flowchart LR
             <td>Publish rules stay on old CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-14">CAP-14</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-14">CAP-14</a></td>
             <td>Study plan / prerequisites</td>
             <td>Programme/module structures, CDU entry requirements</td>
             <td>Present</td>
@@ -505,7 +505,7 @@ flowchart LR
             <td>Map version rules carefully</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-15">CAP-15</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-15">CAP-15</a></td>
             <td>Graduation / transcripts</td>
             <td><code>app_graduation*</code>, PrintTranscript, SIU/Registry</td>
             <td>Present</td>
@@ -514,7 +514,7 @@ flowchart LR
             <td>Keep official transcript on old CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-16">CAP-16</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-16">CAP-16</a></td>
             <td>Announcements</td>
             <td><code>s_notice</code></td>
             <td>Present</td>
@@ -523,7 +523,7 @@ flowchart LR
             <td>Confirm ownership</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-17">CAP-17</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-17">CAP-17</a></td>
             <td>Study guides</td>
             <td><code>f_modulemat</code> — guide-specific Needs checking</td>
             <td>Partial</td>
@@ -532,7 +532,7 @@ flowchart LR
             <td>Confirm Faculty publishing</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-18">CAP-18</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-18">CAP-18</a></td>
             <td>Lecture notes / learning media</td>
             <td><code>f_modulemat</code>, lecturer notes reports</td>
             <td>Present</td>
@@ -541,7 +541,7 @@ flowchart LR
             <td>Download via API</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-19">CAP-19</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-19">CAP-19</a></td>
             <td>Assignment briefs</td>
             <td>Forms / module materials; dedicated product Partial</td>
             <td>Partial</td>
@@ -550,7 +550,7 @@ flowchart LR
             <td>Confirm before Live claim</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-20">CAP-20</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-20">CAP-20</a></td>
             <td>Submit / replace / withdraw assignments</td>
             <td>Limited dedicated submission product in menus</td>
             <td>Partial</td>
@@ -559,7 +559,7 @@ flowchart LR
             <td>Needs durable store path</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-21">CAP-21</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-21">CAP-21</a></td>
             <td>Revision / practice</td>
             <td>Not clearly found as first-class menu</td>
             <td>Not found</td>
@@ -568,7 +568,7 @@ flowchart LR
             <td>Product decision</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-22">CAP-22</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-22">CAP-22</a></td>
             <td>Past examination papers</td>
             <td>Final exam timetable present; past-paper library Needs checking</td>
             <td>Partial</td>
@@ -577,7 +577,7 @@ flowchart LR
             <td>Confirm access rights</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-23">CAP-23</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-23">CAP-23</a></td>
             <td>Course info / learning outcomes</td>
             <td><code>f_program*</code>, <code>f_module*</code></td>
             <td>Present</td>
@@ -586,7 +586,7 @@ flowchart LR
             <td>Approve via Faculty/CDU</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-24">CAP-24</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-24">CAP-24</a></td>
             <td>Online quizzes / examinations</td>
             <td>No modern quiz engine; exam dates / marks exist</td>
             <td>Partial</td>
@@ -595,7 +595,7 @@ flowchart LR
             <td>Do not claim Live from marks alone</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-25">CAP-25</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-25">CAP-25</a></td>
             <td>Student–lecturer communication</td>
             <td>Notices; not a full messaging product</td>
             <td>Partial</td>
@@ -604,7 +604,7 @@ flowchart LR
             <td>Product decision</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-26">CAP-26</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-26">CAP-26</a></td>
             <td>Live online classes</td>
             <td>Adobe Connect tables + Streaming link (<code>classroom.limkokwing.net</code>)</td>
             <td>Present</td>
@@ -613,7 +613,7 @@ flowchart LR
             <td>Integrate approved tool</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-27">CAP-27</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-27">CAP-27</a></td>
             <td>Self-paced learning / release schedules</td>
             <td>Module materials + release concepts Partial</td>
             <td>Partial</td>
@@ -622,7 +622,7 @@ flowchart LR
             <td>Define before Live</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-28">CAP-28</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-28">CAP-28</a></td>
             <td>View marks / lecturer feedback</td>
             <td>Marks present; feedback UX Needs checking</td>
             <td>Partial</td>
@@ -631,7 +631,7 @@ flowchart LR
             <td>Pair with lecturer CAP</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-29">CAP-29</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-29">CAP-29</a></td>
             <td>Assessment identity / integrity</td>
             <td>Not clearly found</td>
             <td>Not found</td>
@@ -640,7 +640,7 @@ flowchart LR
             <td>Policy + product</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-30">CAP-30</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-30">CAP-30</a></td>
             <td>Student feedback / course evaluation</td>
             <td><code>s_questionnaire</code>, <code>r_stdquestionnaire</code>, <code>r_stdsurvey</code></td>
             <td>Present</td>
@@ -649,7 +649,7 @@ flowchart LR
             <td>QA reporting on CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-31">CAP-31</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-31">CAP-31</a></td>
             <td>Digital library / e-resources</td>
             <td>Library <code>r_elibrary</code></td>
             <td>Present</td>
@@ -658,7 +658,7 @@ flowchart LR
             <td>Licence integration</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-32">CAP-32</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-32">CAP-32</a></td>
             <td>Orientation / digital-learning skills</td>
             <td>Training module staff-oriented; student induction Needs checking</td>
             <td>Partial</td>
@@ -667,7 +667,7 @@ flowchart LR
             <td>Content owners TBC</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-33">CAP-33</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-33">CAP-33</a></td>
             <td>Learner support / IT helpdesk</td>
             <td><code>cms_inquiry</code>, forms; not unified ticket product</td>
             <td>Partial</td>
@@ -676,7 +676,7 @@ flowchart LR
             <td>Confirm channels</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-34">CAP-34</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-34">CAP-34</a></td>
             <td>Study-centre / regional support</td>
             <td>Multi-campus/agent patterns; Cyberjaya-scoped Needs checking</td>
             <td>Partial</td>
@@ -685,7 +685,7 @@ flowchart LR
             <td>Campus expansion</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-35">CAP-35</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-35">CAP-35</a></td>
             <td>Accessibility / special needs</td>
             <td>Not found as dedicated product</td>
             <td>Not found</td>
@@ -694,7 +694,7 @@ flowchart LR
             <td>New requirement</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-36">CAP-36</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-36">CAP-36</a></td>
             <td>Mobile portal shell</td>
             <td>Legacy desktop-oriented</td>
             <td>Not found</td>
@@ -703,7 +703,7 @@ flowchart LR
             <td>Raisd owns shell</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-39">CAP-39</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-39">CAP-39</a></td>
             <td>Privacy / permissions / cybersecurity</td>
             <td>ICU PDPA app, user levels, portal blocks</td>
             <td>Present</td>
@@ -712,7 +712,7 @@ flowchart LR
             <td>Authz on Portal API</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-45">CAP-45</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-45">CAP-45</a></td>
             <td>Finance balances / invoices / history</td>
             <td><code>b_statement*</code>, invoices, receipts, bursary desk</td>
             <td>Present</td>
@@ -721,7 +721,7 @@ flowchart LR
             <td>Read ledger from CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-46">CAP-46</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-46">CAP-46</a></td>
             <td>Bank-transfer proof submission</td>
             <td><code>b_paymentverification</code></td>
             <td>Present</td>
@@ -730,7 +730,7 @@ flowchart LR
             <td>Bursary verifies</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-47">CAP-47</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-47">CAP-47</a></td>
             <td>Online payment / financial documents</td>
             <td>Laravel <code>payment/</code>, receipts, banks</td>
             <td>Present</td>
@@ -739,7 +739,7 @@ flowchart LR
             <td>Confirm gateway path</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-48">CAP-48</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-48">CAP-48</a></td>
             <td>Scholarships / incentives</td>
             <td>Assistance providers, incentive rules, scholarship reports</td>
             <td>Present</td>
@@ -748,7 +748,7 @@ flowchart LR
             <td>Bursary/Marketing ownership</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-49">CAP-49</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-49">CAP-49</a></td>
             <td>Resume / portfolio builders</td>
             <td>Not found</td>
             <td>Not found</td>
@@ -757,7 +757,7 @@ flowchart LR
             <td>Low priority vs SoR</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-50">CAP-50</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-50">CAP-50</a></td>
             <td>Immigration / visa (student view)</td>
             <td>Rich SSD/Services visa + student visa tables</td>
             <td>Present</td>
@@ -766,7 +766,7 @@ flowchart LR
             <td>Student view via API</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-51">CAP-51</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-51">CAP-51</a></td>
             <td>Requests / complaints / appeals</td>
             <td><code>r_form</code>, <code>f_complaint</code>, Registry appeals stems</td>
             <td>Present</td>
@@ -775,7 +775,7 @@ flowchart LR
             <td>Forms on CMS + portal UX</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-52">CAP-52</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-52">CAP-52</a></td>
             <td>Accommodation (student)</td>
             <td>Full Accommodation System</td>
             <td>Present</td>
@@ -784,7 +784,7 @@ flowchart LR
             <td>Student request UX new</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-54">CAP-54</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-54">CAP-54</a></td>
             <td>Campus services information</td>
             <td>Services desk + forms; published “services info” Partial</td>
             <td>Partial</td>
@@ -793,7 +793,7 @@ flowchart LR
             <td>Confirm ownership</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-55">CAP-55</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-55">CAP-55</a></td>
             <td>University policies</td>
             <td>Letters/forms; approved policy pack Needs checking</td>
             <td>Partial</td>
@@ -822,7 +822,7 @@ flowchart LR
         </thead>
         <tbody>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-11">CAP-11</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-11">CAP-11</a></td>
             <td>Teaching timetable / allocations</td>
             <td>Lecturer modules view, Faculty classes, timetable</td>
             <td>Present</td>
@@ -831,7 +831,7 @@ flowchart LR
             <td>Prefer old Lecturer Portal until gap proven</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-12">CAP-12</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-12">CAP-12</a></td>
             <td>Record / correct attendance</td>
             <td>Attendance screens + Adobe Connect attendance</td>
             <td>Present</td>
@@ -840,7 +840,7 @@ flowchart LR
             <td>Reuse Faculty/Lecturer CMS</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-17">CAP-17</a>–23, 28–29, 43–44</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-17">CAP-17</a>–23, 28–29, 43–44</td>
             <td>Publish materials, briefs, marking, workspace</td>
             <td>Modules, <code>f_modulemat</code>, forms, supervisor students, streaming</td>
             <td>Present / Partial</td>
@@ -849,7 +849,7 @@ flowchart LR
             <td>Verify before new lecturer-portal screens</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-24">CAP-24</a>–27, 40</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-24">CAP-24</a>–27, 40</td>
             <td>Quizzes, messaging, live class product, analytics</td>
             <td>Adobe Connect + engagement report; quizzes Partial</td>
             <td>Partial</td>
@@ -858,7 +858,7 @@ flowchart LR
             <td>Needs checking</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-36">CAP-36</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-36">CAP-36</a></td>
             <td>Mobile lecturer workspace</td>
             <td>Not found</td>
             <td>Not found</td>
@@ -887,16 +887,16 @@ flowchart LR
         </thead>
         <tbody>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-03">CAP-03</a>, 05–07</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-03">CAP-03</a>, 05–07</td>
             <td>Application review, quals, offers, first enrolment</td>
             <td>Registry, Marketing, CDU (foreign quals / entry req)</td>
             <td>Present</td>
             <td>Not started</td>
-            <td>Staff remain on desks for <a href="../../sdd/03-delivery-milestones.md#m2">M2</a> decisions</td>
-            <td><strong>Reuse old CMS</strong> for <a href="../../sdd/03-delivery-milestones.md#m2">M2</a> if verified</td>
+            <td>Staff remain on desks for <a href="../../sdd/03-delivery-milestones.html#m2">M2</a> decisions</td>
+            <td><strong>Reuse old CMS</strong> for <a href="../../sdd/03-delivery-milestones.html#m2">M2</a> if verified</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-08">CAP-08</a>–10, 13, 15–16, 55</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-08">CAP-08</a>–10, 13, 15–16, 55</td>
             <td>Student records, docs, registration config, results, graduation, announcements, policies</td>
             <td>Registry, SIU, Faculty</td>
             <td>Present</td>
@@ -905,7 +905,7 @@ flowchart LR
             <td>Reuse; Portal API for student-facing only</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-45">CAP-45</a>–48</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-45">CAP-45</a>–48</td>
             <td>Invoices, proof verify, scholarships, online reconcile</td>
             <td>Bursary + Laravel payment app</td>
             <td>Present</td>
@@ -914,16 +914,16 @@ flowchart LR
             <td>Reuse Bursary/Finance</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-04">CAP-04</a>, 30, 40, 42–43</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-04">CAP-04</a>, 30, 40, 42–43</td>
             <td>Approvals, evaluations, analytics, copyright, LMS readiness</td>
             <td>CDU / AQA, questionnaires, ICU PDPA</td>
             <td>Present / Partial</td>
             <td>Not started</td>
             <td>—</td>
-            <td>Reuse; evidence collection for <a href="../../sdd/11-capability-catalog.md#cap-04">CAP-04</a></td>
+            <td>Reuse; evidence collection for <a href="../../sdd/11-capability-catalog.html#cap-04">CAP-04</a></td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-11">CAP-11</a>, 14, 22–24</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-11">CAP-11</a>, 14, 22–24</td>
             <td>Schedule, study plans, past papers, exams admin</td>
             <td>Faculty</td>
             <td>Present</td>
@@ -932,7 +932,7 @@ flowchart LR
             <td>Reuse Faculty</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-16">CAP-16</a> (Marketing)</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-16">CAP-16</a> (Marketing)</td>
             <td>Recruitment communications</td>
             <td>Marketing</td>
             <td>Present</td>
@@ -941,7 +941,7 @@ flowchart LR
             <td>Reuse Marketing</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-31">CAP-31</a>–36, 44, 49–54</td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-31">CAP-31</a>–36, 44, 49–54</td>
             <td>Library admin, orientation, helpdesk, centres, a11y, mobile staff, workspace, career, visa ops, requests, housing, services</td>
             <td>Library, Training, Services, Accommodation, Inquiry, ICU</td>
             <td>Present / Partial</td>
@@ -950,7 +950,7 @@ flowchart LR
             <td>Default <strong>reuse</strong>; UI only for verified gaps</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-44">CAP-44</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-44">CAP-44</a></td>
             <td>Staff workspace / role access</td>
             <td>User levels across all desks (<code>cmsadminsetup</code>)</td>
             <td>Present</td>
@@ -978,7 +978,7 @@ flowchart LR
         </thead>
         <tbody>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-37">CAP-37</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-37">CAP-37</a></td>
             <td>Connectivity / monitoring</td>
             <td>Ops scripts exist; monitoring product Needs checking</td>
             <td>Partial</td>
@@ -987,7 +987,7 @@ flowchart LR
             <td>Ops owner</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-38">CAP-38</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-38">CAP-38</a></td>
             <td>Backups / continuity</td>
             <td><code>CYBERJAYA-SCRIPT</code> daily/weekly/monthly + S3 sync scripts</td>
             <td>Present</td>
@@ -996,7 +996,7 @@ flowchart LR
             <td>Verify restore tests</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-39">CAP-39</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-39">CAP-39</a></td>
             <td>Privacy / cybersecurity</td>
             <td>ICU PDPA + user permissions</td>
             <td>Present</td>
@@ -1005,7 +1005,7 @@ flowchart LR
             <td>Extend to Portal API</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-41">CAP-41</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-41">CAP-41</a></td>
             <td>Staff training / readiness</td>
             <td><code>training/</code> module</td>
             <td>Present</td>
@@ -1014,7 +1014,7 @@ flowchart LR
             <td>Operating evidence TBC</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-42">CAP-42</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-42">CAP-42</a></td>
             <td>Copyright / provider controls</td>
             <td>Partial / policy</td>
             <td>Partial</td>
@@ -1023,7 +1023,7 @@ flowchart LR
             <td>Non-software checks</td>
           </tr>
           <tr>
-            <td><a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a></td>
+            <td><a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a></td>
             <td>Existing CMS integration / campus config</td>
             <td><code>api_student_*</code>, <code>api_faculty_*</code>, portal sync tables, rich schema</td>
             <td>Present (legacy)</td>
@@ -1090,7 +1090,7 @@ flowchart LR
           <tr>
             <td>Staff PDPA compliance</td>
             <td>ICU Laravel <code>icupdpa/</code></td>
-            <td>Shared <a href="../../sdd/11-capability-catalog.md#cap-39">CAP-39</a> adjacent</td>
+            <td>Shared <a href="../../sdd/11-capability-catalog.html#cap-39">CAP-39</a> adjacent</td>
           </tr>
           <tr>
             <td>Nightly batch logic</td>
@@ -1113,27 +1113,27 @@ flowchart LR
         </thead>
         <tbody>
           <tr>
-            <td>Modern mobile-first shells (<a href="../../sdd/11-capability-catalog.md#cap-36">CAP-36</a>)</td>
+            <td>Modern mobile-first shells (<a href="../../sdd/11-capability-catalog.html#cap-36">CAP-36</a>)</td>
             <td>Desktop PHPMaker</td>
             <td>Raisd owns UX</td>
           </tr>
           <tr>
-            <td>Resume / portfolio builders (<a href="../../sdd/11-capability-catalog.md#cap-49">CAP-49</a>)</td>
+            <td>Resume / portfolio builders (<a href="../../sdd/11-capability-catalog.html#cap-49">CAP-49</a>)</td>
             <td>Not found</td>
             <td>Optional new product</td>
           </tr>
           <tr>
-            <td>Unified messaging / LMS quizzes (<a href="../../sdd/11-capability-catalog.md#cap-24">CAP-24</a>/25)</td>
+            <td>Unified messaging / LMS quizzes (<a href="../../sdd/11-capability-catalog.html#cap-24">CAP-24</a>/25)</td>
             <td>Notices + Adobe; no quiz engine found</td>
             <td>Do not claim Live from notices alone</td>
           </tr>
           <tr>
-            <td>Accessibility programme (<a href="../../sdd/11-capability-catalog.md#cap-35">CAP-35</a>)</td>
+            <td>Accessibility programme (<a href="../../sdd/11-capability-catalog.html#cap-35">CAP-35</a>)</td>
             <td>Not found</td>
             <td>New requirement</td>
           </tr>
           <tr>
-            <td>Single OpenAPI Portal API (<a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a>)</td>
+            <td>Single OpenAPI Portal API (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)</td>
             <td>Legacy <code>api_student_*</code> SPs only</td>
             <td>New integration layer</td>
           </tr>
@@ -1147,16 +1147,16 @@ flowchart LR
 
       <div class="note" style="margin-top:20px">
         <strong>Delivery implications.</strong>
-        Admissions launch (<a href="../../sdd/03-delivery-milestones.md#m2">M2</a>): Registry + Marketing + online application as SoR; applicant UX + API adapters.
+        Admissions launch (<a href="../../sdd/03-delivery-milestones.html#m2">M2</a>): Registry + Marketing + online application as SoR; applicant UX + API adapters.
         Core student: map Demo → <code>r_*</code>/<code>b_*</code>; no second finance engine.
         Lecturer/staff Raisd apps: verify first. Immigration/accommodation/library: student read/request in Raisd; ops on desks.
-        <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> first slice: auth + applicant create/read + document metadata, then semester registration.
+        <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> first slice: auth + applicant create/read + document metadata, then semester registration.
       </div>
 
       <p class="note">
         Markdown twins:
         <a href="../../ai/backend/cms-feature-comparison.md">cms-feature-comparison.md</a>,
-        <a href="../../sdd/14-cms-feature-comparison.md">SDD-14</a>.
+        <a href="../../sdd/14-cms-feature-comparison.html">SDD-14</a>.
       </p>
     </section>
   </main>
@@ -1183,5 +1183,6 @@ flowchart LR
       flowchart: { curve: "basis", htmlLabels: true },
     });
   </script>
+  <script src="../abbr-tooltips.js" defer></script>
 </body>
 </html>

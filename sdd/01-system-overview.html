@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>01-system-overview — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="system-overview">System overview</h1>
+<p><strong>Document:</strong> SDD-01<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026 (updated 23 September 2026)</p>
+<h2 id="problem">1. Problem</h2>
+<p>Campuses need one digital operating surface for applicants, students,
+lecturers, and staff, while remaining inside existing CMS records,
+country ODL/QA evidence, and a tight delivery sequence. A student-facing
+frontend already exists as a demo. Applicant, lecturer, and staff
+surfaces, plus a live backend, do not.</p>
+<h2 id="system-intent">2. System intent</h2>
+<p>Build <strong>role portals on top of the existing CMS</strong>, not a
+greenfield replacement of every legacy function.</p>
+<p><strong>This phase (confirmed 23 September 2026 — Aslam):</strong>
+Cyberjaya CMS remains the <strong>system of record</strong>. Modern
+applicant / student / lecturer / staff experiences are delivered through
+the <strong>Portal API</strong>. Do not duplicate operational desks the
+old CMS already runs.</p>
+<p><strong>Longer term:</strong> aim for a <strong>unified, one-stop
+CMS</strong>, delivered <strong>progressively</strong> — only when a gap
+is verified and a migration strategy (ownership, cutover, rollback,
+training) is agreed. That consolidation is backlog relative to
+Admissions launch and Cyberjaya pilot; see <a
+href="03-delivery-milestones.html">SDD-03</a> <a
+href="03-delivery-milestones.html#m5">M5</a>+ and <a
+href="14-cms-feature-comparison.html">SDD-14</a>.</p>
+<pre class="mermaid"><code>flowchart LR
+  A[Applicant portal] --&gt; P[Portal API]
+  S[Student portal] --&gt; P
+  L[Lecturer portal] --&gt; P
+  O[Admin / staff CMS] --&gt; P
+  P --&gt; C[Existing CMS&lt;br/&gt;system of record]
+  P --&gt; F[Files / evidence store]
+  subgraph Shared
+    Auth[Auth and RBAC]
+    Ops[Monitoring backups security]
+  end
+  Auth --&gt; A
+  Auth --&gt; S
+  Auth --&gt; L
+  Auth --&gt; O</code></pre>
+<p>Four doors, one campus:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Portal</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Applicant / online registration</td>
+<td>Apply, upload evidence, track, accept enrolment</td>
+</tr>
+<tr>
+<td>Student</td>
+<td>Study, register, pay, receive results, get support</td>
+</tr>
+<tr>
+<td>Lecturer</td>
+<td>Publish materials, take attendance, mark, communicate</td>
+</tr>
+<tr>
+<td>Admin / staff</td>
+<td>Registry, Faculty, Bursary/Finance, QA, Marketing, remaining
+desks</td>
+</tr>
+<tr>
+<td>Shared system</td>
+<td>Integration, security, availability, training — mostly not
+screens</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scope">3. Scope</h2>
+<h3 id="in-scope-for-this-sdd-set">In scope for this SDD set</h3>
+<ul>
+<li><a href="11-capability-catalog.html#cap-01">CAP-01</a> through <a
+href="11-capability-catalog.html#cap-55">CAP-55</a> as listed in <a
+href="11-capability-catalog.html">SDD-11</a>.</li>
+<li>Cyberjaya as first acceptance campus.</li>
+<li>Phone-friendly core admissions and student journeys.</li>
+<li>Using the existing CMS as the initial system of record.</li>
+</ul>
+<h3 id="out-of-scope-unless-a-later-decision-says-otherwise">Out of
+scope unless a later decision says otherwise</h3>
+<ul>
+<li>Replacing working legacy staff functions that already satisfy a
+capability.</li>
+<li>Native mobile apps.</li>
+<li>Treating eight-country research domains as universal screen
+mandates.</li>
+<li>Inferring legal compliance from a frontend percentage.</li>
+</ul>
+<h2 id="users-and-departments">4. Users and departments</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Actor</th>
+<th>Typical department</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Applicant</td>
+<td>Registry / Marketing</td>
+<td>Account, application, evidence, offer</td>
+</tr>
+<tr>
+<td>Student</td>
+<td>Registry, Faculty, Bursary, support desks</td>
+<td>Records, learning, fees, services</td>
+</tr>
+<tr>
+<td>Lecturer</td>
+<td>Faculty</td>
+<td>Class list, content, marking</td>
+</tr>
+<tr>
+<td>Registry officer</td>
+<td>Registry</td>
+<td>Applications, student master, enrolment, results release</td>
+</tr>
+<tr>
+<td>Faculty scheduler</td>
+<td>Faculty</td>
+<td>Classes, rooms, programme rules</td>
+</tr>
+<tr>
+<td>Bursary / Finance</td>
+<td>Bursary, Finance</td>
+<td>Invoices, proof verification, reconciliation</td>
+</tr>
+<tr>
+<td>QA</td>
+<td>Quality Assurance</td>
+<td>Approvals, materials readiness, evaluations</td>
+</tr>
+<tr>
+<td>Marketing</td>
+<td>Marketing</td>
+<td>Applicant communications only; Registry owns formal decisions</td>
+</tr>
+<tr>
+<td>IT / backend</td>
+<td>TBC</td>
+<td>Old CMS, Portal API, auth, ops</td>
+</tr>
+</tbody>
+</table>
+<p>Named next-action owners are TBC on every checklist row.</p>
+<h2 id="current-vs-target">5. Current vs target</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Current (baseline <code>6811e88</code>)</th>
+<th>This-phase Live target</th>
+<th>Longer-term direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Student UI</td>
+<td>Demo / Partial / Placeholder on mock data</td>
+<td>Role journeys on real CMS records via Portal API</td>
+<td>Same journeys; SoR may migrate per verified gap</td>
+</tr>
+<tr>
+<td>Applicant UI</td>
+<td>No routes</td>
+<td>Application-to-enrolment on CMS via Portal API</td>
+<td>Unified admissions surface</td>
+</tr>
+<tr>
+<td>Lecturer UI</td>
+<td>No routes</td>
+<td>Publish / attendance / marking — prefer verified old Lecturer
+Portal</td>
+<td>Progressive lecturer workspace consolidation</td>
+</tr>
+<tr>
+<td>Staff UI</td>
+<td>No routes; do not rebuild what old CMS already does</td>
+<td>Screens only for verified gaps; else old CMS desk</td>
+<td>Progressive one-stop staff CMS</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>Replaceable contracts, mock runtime, CMS writes stubbed</td>
+<td>Portal API ↔︎ existing Cyberjaya CMS (<a
+href="11-capability-catalog.html#cap-53">CAP-53</a>)</td>
+<td>Migration strategy per domain when retiring legacy</td>
+</tr>
+<tr>
+<td>Mobile</td>
+<td>Isolated Services tests only</td>
+<td>Core journeys on phone widths</td>
+<td>Unchanged principle</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>Fixed mock student session; logout no-op</td>
+<td>Real login / SSO / provisioning honouring CMS rules where
+required</td>
+<td>Campus-wide identity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="design-principles">6. Design principles</h2>
+<ol type="1">
+<li><strong>Existing CMS is source of truth for this phase</strong>
+until a later milestone proves a function should move — with an agreed
+migration strategy.</li>
+<li><strong>Admissions before semester registration.</strong> Student v1
+UI depth does not change that order.</li>
+<li><strong>Demo is not done.</strong> A screen without durable save and
+server-enforced permission is not Live.</li>
+<li><strong>Proof is not payment.</strong> Bank-transfer evidence stays
+unverified until Bursary allocates it.</li>
+<li><strong>One CAP, many surfaces.</strong> Student “view timetable”
+and lecturer “record attendance” share <a
+href="11-capability-catalog.html#cap-11">CAP-11</a>/12.</li>
+<li><strong>Country evidence is confirmation work</strong>, not an
+automatic feature list.</li>
+<li><strong>Build staff screens only for verified gaps</strong> in the
+old CMS; do not duplicate operational functions.</li>
+<li><strong>Unified one-stop CMS is progressive backlog</strong>, not a
+mandate to rewrite working desks for <a
+href="03-delivery-milestones.html#m2">M2</a>–<a
+href="03-delivery-milestones.html#m4">M4</a>.</li>
+</ol>
+<h2 id="campus-footprint">7. Campus footprint</h2>
+<p>First gate: <strong>Cyberjaya pilot acceptance</strong>.</p>
+<p>Evidence tab also covers Botswana, Cambodia, Eswatini, Lesotho,
+Malaysia, Namibia, Sierra Leone, and Uganda. Campus expansion never
+defers an applicable operating requirement if software is delayed — the
+campus must still run the process, on old CMS or manually, until the new
+surface is Live.</p>
+<h2 id="related-documents">8. Related documents</h2>
+<ul>
+<li>Architecture: <a
+href="02-architecture-and-integration.html">SDD-02</a></li>
+<li>Sequence of releases: <a
+href="03-delivery-milestones.html">SDD-03</a></li>
+<li>Traceability: <a
+href="09-requirements-traceability.html">SDD-09</a></li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>14-cms-feature-comparison — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="existing-cms-vs-raisd-portals-feature-comparison">Existing CMS
+vs Raisd portals — feature comparison</h1>
+<p><strong>Document:</strong> SDD-14<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 23 September 2026<br />
+<strong>Source package:</strong>
+<code>CMS_Cyberjaya_Source_Codes_&amp;_DB_Structure_23_09_2026.zip</code><br />
+<strong>Canonical detail (agents):</strong> <a
+href="../ai/backend/cms-feature-comparison.html"><code>docs/ai/backend/cms-feature-comparison.md</code></a>,
+<a
+href="../ai/backend/old-cms-cyberjaya.html"><code>docs/ai/backend/old-cms-cyberjaya.md</code></a><br />
+<strong>GitHub Pages (diagrams):</strong> <a
+href="../diagrams/old-cms/"><code>docs/diagrams/old-cms/</code></a> —
+Comparison · FSD · Legacy ERD · Flows · Database tech</p>
+<h2 id="purpose">1. Purpose</h2>
+<p>Record what the <strong>existing Cyberjaya CMS</strong> already does,
+and how that maps to the Raisd <strong>Applicant / Student / Lecturer /
+Staff</strong> portals and CAP catalogue (<a
+href="11-capability-catalog.html">SDD-11</a>).</p>
+<p>This is an inspection baseline for gap decisions. It does
+<strong>not</strong> authorise replacing working legacy staff functions
+(<a href="01-system-overview.html">SDD-01</a>, ADR-1).</p>
+<h2 id="framing">2. Framing</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Side</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Old CMS</td>
+<td>Live campus system of record (<code>cmscbj</code>), PHPMaker desks +
+Laravel payment/PDPA, batch jobs, ~1.9k tables, ~318 procedures</td>
+</tr>
+<tr>
+<td>New stack (this phase)</td>
+<td>Four role portals + Portal API on top of that SoR — <strong>do not
+duplicate</strong> operational desks</td>
+</tr>
+<tr>
+<td>Longer-term target</td>
+<td>Progressive <strong>unified one-stop CMS</strong>, only via verified
+gaps + migration strategy (<a
+href="03-delivery-milestones.html#m5">M5</a>+)</td>
+</tr>
+</tbody>
+</table>
+<pre class="text"><code>This phase:   Applicant / Student / Lecturer / Staff  →  Portal API  →  Existing CMS (SoR)
+Later:        Verified gap + migration plan  →  consolidate into unified CMS progressively</code></pre>
+<p><strong>Working Group (23 September 2026 — Aslam):</strong> agreed
+this-phase posture (CMS as SoR, portals via Portal API, no duplication
+of operational functions). Longer-term unified CMS remains the aim,
+delivered progressively.</p>
+<h2 id="headline-findings">3. Headline findings</h2>
+<ol type="1">
+<li><strong>Staff operations are already broad</strong> in the old CMS:
+Registry, Faculty, Bursary, Marketing, Student Services
+(visa/medical/insurance), Accommodation, AQA/CDU, Library, Reporting,
+Lecturer Portal, LEC, Training, ICU PDPA, Payment.</li>
+<li><strong>Most Admin/Staff CAP rows have an old-CMS home.</strong>
+Default delivery rule remains: verify and reuse; build Raisd staff
+screens only for proven gaps (<a
+href="07-admin-staff-cms.html">SDD-07</a>).</li>
+<li><strong>Student Demo screens</strong> largely have matching CMS
+records (profile, registration, timetable, attendance, finance,
+documents, questionnaires, visa data). Live requires Portal API mapping
+(<a href="11-capability-catalog.html#cap-53">CAP-53</a>), not a second
+database.</li>
+<li><strong>Applicant and Lecturer Raisd apps</strong> are behind the
+old CMS: online application + agent procedures and Lecturer Portal 1.0
+already exist.</li>
+<li><strong>Malaysia regulatory desks</strong> (EMGS, KDN/MPWA, eIPTS,
+MQA/KPT) are rich in the old CMS and mostly out of scope for early Raisd
+screens — keep them operational on existing desks.</li>
+<li><strong>Clearer Raisd-led gaps:</strong> mobile shells,
+portfolio/resume, modern quiz/messaging productisation, unified helpdesk
+UX, and the Portal API contract itself.</li>
+</ol>
+<h2 id="module-portal-ownership">4. Module → portal ownership</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Old CMS module</th>
+<th>Natural Raisd surface</th>
+<th>Default action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marketing + Registry applications</td>
+<td>Applicant + Staff (Registry)</td>
+<td>New applicant UX; keep decisions on CMS</td>
+</tr>
+<tr>
+<td>Registry / SIU / studentrecords / stdfile</td>
+<td>Student + Staff (Registry)</td>
+<td>Student read/update via API; staff on CMS</td>
+</tr>
+<tr>
+<td>Faculty + lecturer</td>
+<td>Lecturer + Staff (Faculty)</td>
+<td>Verify Lecturer Portal 1.0 before rebuild</td>
+</tr>
+<tr>
+<td>Bursary + payment</td>
+<td>Student finance + Staff (Bursary)</td>
+<td>Ledger stays on CMS</td>
+</tr>
+<tr>
+<td>Services (SSD/visa)</td>
+<td>Student immigration + Staff</td>
+<td>Ops on CMS; student view via API</td>
+</tr>
+<tr>
+<td>Accommodation</td>
+<td>Student housing + Staff</td>
+<td>Allocation on CMS</td>
+</tr>
+<tr>
+<td>CDU / AQA</td>
+<td>Staff (QA)</td>
+<td>Keep on CMS; <a href="11-capability-catalog.html#cap-04">CAP-04</a>
+evidence</td>
+</tr>
+<tr>
+<td>Library</td>
+<td>Student <a href="11-capability-catalog.html#cap-31">CAP-31</a> +
+Staff</td>
+<td>Keep licences on CMS</td>
+</tr>
+<tr>
+<td>ICU / PDPA</td>
+<td>Shared <a href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Keep compliance on CMS</td>
+</tr>
+<tr>
+<td>Reporting / training / lec</td>
+<td>Staff / campus-specific</td>
+<td>Usually no Raisd rebuild</td>
+</tr>
+</tbody>
+</table>
+<h2 id="capability-summary-by-group">5. Capability summary (by
+group)</h2>
+<p>Full CAP rows live in the AI comparison doc. Group posture:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Group</th>
+<th>Old CMS</th>
+<th>Raisd software</th>
+<th>Posture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Applicant (8 CAPs)</td>
+<td>Online app + docs + agent SPs Present/Partial</td>
+<td>Not started</td>
+<td>Build applicant portal on CMS data</td>
+</tr>
+<tr>
+<td>Student (41 CAPs)</td>
+<td>Records Present for core; LMS-style Partial</td>
+<td>Demo / Partial / Placeholder mix</td>
+<td>Map Demo → CMS; keep SoR</td>
+</tr>
+<tr>
+<td>Lecturer (19 CAPs)</td>
+<td>Lecturer Portal 1.0 + Faculty Present</td>
+<td>Not started</td>
+<td>Verify before new UI</td>
+</tr>
+<tr>
+<td>Admin / Staff (38 CAPs)</td>
+<td>Desk suite Present</td>
+<td>Not started</td>
+<td><strong>Gaps only</strong></td>
+</tr>
+<tr>
+<td>Shared (6 CAPs)</td>
+<td>Backups scripts Present; monitoring Needs checking</td>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a> Partial /
+Needs checking</td>
+<td>Integration critical path</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-stays-on-the-old-cms-unless-later-decided">6. What stays on
+the old CMS (unless later decided)</h2>
+<ul>
+<li>Agent management and agent claims<br />
+</li>
+<li>LEC / English Centre operations<br />
+</li>
+<li>Board / Senate / heavy regulatory reporting<br />
+</li>
+<li>Inventory, smart card, parking collection details<br />
+</li>
+<li>Nightly bursary / attendance / portal-login batch logic<br />
+</li>
+<li>Official transcript printing and graduation gown fee setup</li>
+</ul>
+<h2 id="critical-path-for-live-this-phase-and-target-delivery">7.
+Critical path for Live (this phase) and target delivery</h2>
+<h3 id="this-phase-m1m4">This phase (<a
+href="03-delivery-milestones.html#m1">M1</a>–<a
+href="03-delivery-milestones.html#m4">M4</a>)</h3>
+<ol type="1">
+<li>Confirm admissions staff can complete offer → first enrolment on old
+CMS (or document the gap).<br />
+</li>
+<li>Deliver <a href="11-capability-catalog.html#cap-53">CAP-53</a> first
+slice: auth + applicant create/read + document metadata
+acknowledgment.<br />
+</li>
+<li>Only then promote student Demo journeys that mutate registration or
+finance.<br />
+</li>
+<li>Do not mark any CAP Live from frontend Demo alone.<br />
+</li>
+<li>Do not rebuild working staff desks — Portal API + verified old
+CMS.</li>
+</ol>
+<h3 id="target-delivery-snapshot">Target delivery snapshot</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Horizon</th>
+<th>Delivery target</th>
+<th>SoR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="03-delivery-milestones.html#m2">M2</a> Admissions
+launch</td>
+<td>Applicant portal + Registry workflows</td>
+<td>Existing CMS</td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m3">M3</a> Core student
+portal</td>
+<td>Student journeys + lecturer/staff support paths</td>
+<td>Existing CMS (or verified old desk)</td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m4">M4</a> Cyberjaya pilot</td>
+<td>Integrated acceptance, training, ops</td>
+<td>Existing CMS + Portal API</td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m5">M5</a>+ Expansion /
+remaining CMS</td>
+<td>Multi-campus + progressive consolidation</td>
+<td>Migrate domain-by-domain only with a written strategy</td>
+</tr>
+</tbody>
+</table>
+<p>High-level comparison pages: <a
+href="../diagrams/old-cms/comparison.html"><code>docs/diagrams/old-cms/comparison.html</code></a>,
+agent matrix <a
+href="../ai/backend/cms-feature-comparison.html"><code>docs/ai/backend/cms-feature-comparison.md</code></a>.
+Milestones: <a href="03-delivery-milestones.html">SDD-03</a>.</p>
+<h2 id="open-questions-added-by-this-inspection">8. Open questions added
+by this inspection</h2>
+<p>See also <a href="10-open-questions.html">SDD-10</a>.</p>
+<ol type="1">
+<li>Which Cyberjaya student-facing URL is still Live?<br />
+</li>
+<li>How do <code>api_student_*</code> procedures and
+<code>portal_r_student_*</code> tables map to Portal API methods?<br />
+</li>
+<li>Does Raisd applicant-portal replace or sit beside the agent online
+application?<br />
+</li>
+<li>Adobe Connect vs replacement meeting tool for <a
+href="11-capability-catalog.html#cap-26">CAP-26</a>?<br />
+</li>
+<li>Where do assignment submissions physically land today (<a
+href="11-capability-catalog.html#cap-20">CAP-20</a>)?<br />
+</li>
+<li>Has a CMS backup restore been tested recently (<a
+href="11-capability-catalog.html#cap-38">CAP-38</a>)?</li>
+</ol>
+<h2 id="related-documents">9. Related documents</h2>
+<ul>
+<li><a href="02-architecture-and-integration.html">SDD-02 Architecture
+and integration</a><br />
+</li>
+<li><a href="07-admin-staff-cms.html">SDD-07 Admin / staff CMS</a><br />
+</li>
+<li><a href="11-capability-catalog.html">SDD-11 Capability
+catalogue</a><br />
+</li>
+<li>AI inventory and full matrices: <a
+href="../ai/backend/"><code>docs/ai/backend/</code></a><br />
+</li>
+<li><strong>Published analysis section:</strong> <a
+href="../diagrams/old-cms/"><code>docs/diagrams/old-cms/</code></a>
+(feature comparison, FSD, legacy ERD, flows, triggers/SPs/batches)</li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

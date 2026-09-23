@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>08-shared-platform — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="shared-platform">Shared platform</h1>
+<p><strong>Document:</strong> SDD-08<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026</p>
+<h2 id="purpose">1. Purpose</h2>
+<p>Cross-cutting capabilities that are not a role portal: integration,
+security, availability, copyright operating controls, and staff
+training. Most of these are <strong>Not applicable</strong> as frontend
+work. They still gate Live.</p>
+<h2 id="capabilities">2. Capabilities</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Feature</th>
+<th>Milestone</th>
+<th>Frontend</th>
+<th>Backend</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a></td>
+<td>Existing CMS integration and campus configuration</td>
+<td><a href="03-delivery-milestones.html#m2">M2</a></td>
+<td>Partial</td>
+<td>Needs checking</td>
+<td>Portal API, field mapping, Cyberjaya config. Critical path.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>Shared identity (see portals)</td>
+<td><a href="03-delivery-milestones.html#m2">M2</a></td>
+<td>—</td>
+<td>Needs checking</td>
+<td>One auth family; role-specific shells.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-37">CAP-37</a></td>
+<td>Connectivity, capacity, monitoring</td>
+<td><a href="03-delivery-milestones.html#m2">M2</a></td>
+<td>N/A</td>
+<td>Needs checking</td>
+<td>Uptime, expected users, dashboards. Screens do not prove this.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-38">CAP-38</a></td>
+<td>Backups and continuity</td>
+<td><a href="03-delivery-milestones.html#m2">M2</a></td>
+<td>N/A</td>
+<td>Needs checking</td>
+<td>Named owner, restore test.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Privacy, permissions, cybersecurity</td>
+<td><a href="03-delivery-milestones.html#m2">M2</a></td>
+<td>N/A on shared row</td>
+<td>Needs checking</td>
+<td>Server-enforced access; policies on record.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-42">CAP-42</a></td>
+<td>Copyright and external-provider controls</td>
+<td><a href="03-delivery-milestones.html#m1">M1</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Operating approvals. Non-software.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-41">CAP-41</a></td>
+<td>Staff training and operating readiness</td>
+<td><a href="03-delivery-milestones.html#m4">M4</a></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Required before Cyberjaya acceptance.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cap-53-design">3. <a
+href="11-capability-catalog.html#cap-53">CAP-53</a> design</h2>
+<p>Current: replaceable API contracts, mock campus ownership, student
+scopes; <strong>no authenticated HTTP adapter, no live CMS</strong>.</p>
+<p>Target slice for <a href="03-delivery-milestones.html#m2">M2</a>:</p>
+<ol type="1">
+<li>Authenticated HTTP adapter.</li>
+<li>Campus configuration record for Cyberjaya.</li>
+<li>Admissions entities: applicant, application, evidence metadata,
+offer, first enrolment.</li>
+<li>Identity: login mapped to CMS person.</li>
+<li>Error model: CMS rejection is visible to the user as a failed save,
+never a silent mock success.</li>
+</ol>
+<p>Later slices (<a href="03-delivery-milestones.html#m3">M3</a>):
+registration, timetable, files, finance ledger, results publication.</p>
+<h2 id="environments-proposed-not-yet-agreed">4. Environments (proposed,
+not yet agreed)</h2>
+<table>
+<thead>
+<tr>
+<th>Environment</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local mock</td>
+<td>Current student demo</td>
+</tr>
+<tr>
+<td>Integration</td>
+<td>Portal API against a non-production CMS</td>
+</tr>
+<tr>
+<td>Staging</td>
+<td>Cyberjaya-like config, UAT</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>Live after <a href="03-delivery-milestones.html#m4">M4</a></td>
+</tr>
+</tbody>
+</table>
+<p>Names and hosting TBC with the backend owner.</p>
+<h2 id="security-baseline-for-live">5. Security baseline for Live</h2>
+<ul>
+<li>TLS on all portal and API traffic.</li>
+<li>Role and campus on the server for every read/write.</li>
+<li>No secrets in the frontend.</li>
+<li>File uploads scanned and content-typed on the server.</li>
+<li>Audit who published results, allocated payments, issued offers.</li>
+<li>Logout ends the session (today it does not).</li>
+</ul>
+<h2 id="operating-readiness-m4">6. Operating readiness (<a
+href="03-delivery-milestones.html#m4">M4</a>)</h2>
+<p><a href="11-capability-catalog.html#cap-41">CAP-41</a> is not a
+software ticket. Collect: who supports students after hours, who
+restores backups, who trains Registry and lecturers, and the Cyberjaya
+acceptance sign-off.</p>
+<h2 id="related-documents">7. Related documents</h2>
+<p>Architecture: <a
+href="02-architecture-and-integration.html">SDD-02</a>. Open questions:
+<a href="10-open-questions.html">SDD-10</a>.</p>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

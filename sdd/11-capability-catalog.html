@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>11-capability-catalog — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="capability-catalogue">Capability catalogue</h1>
+<p><strong>Document:</strong> SDD-11<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Source:</strong> Working Group Daily Checklist, detailed tab
+(112 rows)<br />
+<strong>Date:</strong> 18 September 2026</p>
+<p>Canonical capability list. Portal design documents summarise these
+rows; this file is the exhaustive inventory. Repeated CAP IDs across
+portals are the same capability with role-specific work, not extra
+requirements.</p>
+<p><strong>Nomenclature:</strong> every <code>CAP-*</code> below is an
+anchor. Cross-doc links: <a href="15-nomenclature.html">SDD-15
+Nomenclature</a>. Milestones <code>M1</code>–<code>M5</code>: <a
+href="03-delivery-milestones.html">SDD-03</a>.</p>
+<p>Status meanings (from the checklist Timeline tab):</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Not started</td>
+<td>No implementation of this capability in the reviewed portal.</td>
+</tr>
+<tr>
+<td>Placeholder</td>
+<td>A page, label or button exists, but the intended action/content is
+unavailable.</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>Built using sample data or a temporary session. No live backend or
+durable save.</td>
+</tr>
+<tr>
+<td>Partial</td>
+<td>Some parts exist; key content, delivery, workflow or acceptance work
+is missing.</td>
+</tr>
+<tr>
+<td>Needs checking</td>
+<td>Capability or evidence has not been verified with its owner.</td>
+</tr>
+<tr>
+<td>Not applicable</td>
+<td>This workstream is not relevant to this capability.</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Accepted and operating with real data, access controls and an
+accountable owner.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="capability-index-quick-links">Capability index (quick
+links)</h2>
+<p>Unique CAP IDs link to the first catalogue row
+(<code>#cap-nn</code>). Portal-specific anchors use
+<code>#cap-nn-applicant</code>, <code>#cap-nn-student</code>,
+<code>#cap-nn-staff</code>, etc.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Primary feature (first catalogue row)</th>
+<th>Portal rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#cap-01">CAP-01</a></td>
+<td>Applicant sign-in and account access</td>
+<td><a href="#cap-01-applicant">applicant</a> · <a
+href="#cap-01-student">student</a></td>
+</tr>
+<tr>
+<td><a href="#cap-02">CAP-02</a></td>
+<td>Online application form for new applicants</td>
+<td><a href="#cap-02-applicant">applicant</a></td>
+</tr>
+<tr>
+<td><a href="#cap-03">CAP-03</a></td>
+<td>Upload application documents and English-entry evidence</td>
+<td><a href="#cap-03-applicant">applicant</a> · <a
+href="#cap-03-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-04">CAP-04</a></td>
+<td>Record institution, programme and delivery-site approvals</td>
+<td><a href="#cap-04-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-05">CAP-05</a></td>
+<td>Verify qualification levels, credits and duration</td>
+<td><a href="#cap-05-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-06">CAP-06</a></td>
+<td>Review foreign equivalency and professional recognition</td>
+<td><a href="#cap-06-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-07">CAP-07</a></td>
+<td>Track application, view offer and accept enrolment</td>
+<td><a href="#cap-07-applicant">applicant</a> · <a
+href="#cap-07-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-08">CAP-08</a></td>
+<td>Personal details and emergency contacts</td>
+<td><a href="#cap-08-student">student</a> · <a
+href="#cap-08-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-09">CAP-09</a></td>
+<td>Student documents library</td>
+<td><a href="#cap-09-student">student</a> · <a
+href="#cap-09-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-10">CAP-10</a></td>
+<td>Semester subject and class registration</td>
+<td><a href="#cap-10-student">student</a> · <a
+href="#cap-10-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-11">CAP-11</a></td>
+<td>Class timetable</td>
+<td><a href="#cap-11-student">student</a> · <a
+href="#cap-11-lecturer">lecturer</a> · <a
+href="#cap-11-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-12">CAP-12</a></td>
+<td>Attendance records</td>
+<td><a href="#cap-12-student">student</a> · <a
+href="#cap-12-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-13">CAP-13</a></td>
+<td>Grades, results and student progress</td>
+<td><a href="#cap-13-student">student</a> · <a
+href="#cap-13-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-14">CAP-14</a></td>
+<td>Study plan and prerequisites</td>
+<td><a href="#cap-14-student">student</a> · <a
+href="#cap-14-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-15">CAP-15</a></td>
+<td>Graduation clearance and transcripts</td>
+<td><a href="#cap-15-student">student</a> · <a
+href="#cap-15-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-16">CAP-16</a></td>
+<td>Read applicant announcements and admissions updates</td>
+<td><a href="#cap-16-applicant">applicant</a> · <a
+href="#cap-16-student">student</a> · <a href="#cap-16-staff">staff</a> ·
+<a href="#cap-16-staff-2">staff-2</a></td>
+</tr>
+<tr>
+<td><a href="#cap-17">CAP-17</a></td>
+<td>Study guides</td>
+<td><a href="#cap-17-student">student</a> · <a
+href="#cap-17-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-18">CAP-18</a></td>
+<td>Lecture notes and learning-media access</td>
+<td><a href="#cap-18-student">student</a> · <a
+href="#cap-18-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-19">CAP-19</a></td>
+<td>Assignment briefs</td>
+<td><a href="#cap-19-student">student</a> · <a
+href="#cap-19-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-20">CAP-20</a></td>
+<td>Submit, replace and withdraw assignments</td>
+<td><a href="#cap-20-student">student</a> · <a
+href="#cap-20-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-21">CAP-21</a></td>
+<td>Revision work and practice activities</td>
+<td><a href="#cap-21-student">student</a> · <a
+href="#cap-21-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-22">CAP-22</a></td>
+<td>Past examination papers</td>
+<td><a href="#cap-22-student">student</a> · <a
+href="#cap-22-lecturer">lecturer</a> · <a
+href="#cap-22-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-23">CAP-23</a></td>
+<td>Course information and learning outcomes</td>
+<td><a href="#cap-23-student">student</a> · <a
+href="#cap-23-lecturer">lecturer</a> · <a
+href="#cap-23-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-24">CAP-24</a></td>
+<td>Online quizzes and examinations</td>
+<td><a href="#cap-24-student">student</a> · <a
+href="#cap-24-lecturer">lecturer</a> · <a
+href="#cap-24-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-25">CAP-25</a></td>
+<td>Student–lecturer and student–student communication</td>
+<td><a href="#cap-25-student">student</a> · <a
+href="#cap-25-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-26">CAP-26</a></td>
+<td>Live online classes</td>
+<td><a href="#cap-26-student">student</a> · <a
+href="#cap-26-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-27">CAP-27</a></td>
+<td>Self-paced learning and release schedules</td>
+<td><a href="#cap-27-student">student</a> · <a
+href="#cap-27-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-28">CAP-28</a></td>
+<td>View marks and lecturer feedback</td>
+<td><a href="#cap-28-student">student</a> · <a
+href="#cap-28-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-29">CAP-29</a></td>
+<td>Assessment identity checks and integrity guidance</td>
+<td><a href="#cap-29-student">student</a> · <a
+href="#cap-29-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="#cap-30">CAP-30</a></td>
+<td>Student feedback and course evaluation</td>
+<td><a href="#cap-30-student">student</a> · <a
+href="#cap-30-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-31">CAP-31</a></td>
+<td>Digital library and e-resources</td>
+<td><a href="#cap-31-student">student</a> · <a
+href="#cap-31-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-32">CAP-32</a></td>
+<td>Student orientation and digital-learning skills</td>
+<td><a href="#cap-32-student">student</a> · <a
+href="#cap-32-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-33">CAP-33</a></td>
+<td>Learner support and IT helpdesk</td>
+<td><a href="#cap-33-student">student</a> · <a
+href="#cap-33-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-34">CAP-34</a></td>
+<td>Study-centre and regional support</td>
+<td><a href="#cap-34-student">student</a> · <a
+href="#cap-34-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-35">CAP-35</a></td>
+<td>Accessible application forms and assistance</td>
+<td><a href="#cap-35-applicant">applicant</a> · <a
+href="#cap-35-student">student</a> · <a
+href="#cap-35-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-36">CAP-36</a></td>
+<td>Mobile online-registration shell</td>
+<td><a href="#cap-36-applicant">applicant</a> · <a
+href="#cap-36-student">student</a> · <a
+href="#cap-36-lecturer">lecturer</a> · <a
+href="#cap-36-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-37">CAP-37</a></td>
+<td>Connectivity, capacity and service monitoring</td>
+<td><a href="#cap-37-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="#cap-38">CAP-38</a></td>
+<td>Backups and continuity</td>
+<td><a href="#cap-38-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="#cap-39">CAP-39</a></td>
+<td>Privacy, permissions and cybersecurity</td>
+<td><a href="#cap-39-student">student</a> · <a
+href="#cap-39-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="#cap-40">CAP-40</a></td>
+<td>Review class learning analytics</td>
+<td><a href="#cap-40-lecturer">lecturer</a> · <a
+href="#cap-40-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-41">CAP-41</a></td>
+<td>Staff training and operating readiness</td>
+<td><a href="#cap-41-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="#cap-42">CAP-42</a></td>
+<td>Record copyright permissions and provider approvals</td>
+<td><a href="#cap-42-staff">staff</a> · <a
+href="#cap-42-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="#cap-43">CAP-43</a></td>
+<td>Submit course materials for quality review</td>
+<td><a href="#cap-43-lecturer">lecturer</a> · <a
+href="#cap-43-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-44">CAP-44</a></td>
+<td>Lecturer workspace and course access</td>
+<td><a href="#cap-44-lecturer">lecturer</a> · <a
+href="#cap-44-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-45">CAP-45</a></td>
+<td>Finance balances, invoices and payment history</td>
+<td><a href="#cap-45-student">student</a> · <a
+href="#cap-45-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-46">CAP-46</a></td>
+<td>Bank-transfer proof submission</td>
+<td><a href="#cap-46-student">student</a> · <a
+href="#cap-46-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-47">CAP-47</a></td>
+<td>Online payment and financial documents</td>
+<td><a href="#cap-47-student">student</a> · <a
+href="#cap-47-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-48">CAP-48</a></td>
+<td>Scholarships and incentives</td>
+<td><a href="#cap-48-student">student</a> · <a
+href="#cap-48-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-49">CAP-49</a></td>
+<td>Resume and portfolio builders</td>
+<td><a href="#cap-49-student">student</a> · <a
+href="#cap-49-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-50">CAP-50</a></td>
+<td>Immigration and visa processing</td>
+<td><a href="#cap-50-student">student</a> · <a
+href="#cap-50-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-51">CAP-51</a></td>
+<td>Student requests, complaints and academic appeals</td>
+<td><a href="#cap-51-student">student</a> · <a
+href="#cap-51-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-52">CAP-52</a></td>
+<td>Accommodation management</td>
+<td><a href="#cap-52-student">student</a> · <a
+href="#cap-52-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-53">CAP-53</a></td>
+<td>Existing CMS integration and campus configuration</td>
+<td><a href="#cap-53-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="#cap-54">CAP-54</a></td>
+<td>Campus services information</td>
+<td><a href="#cap-54-student">student</a> · <a
+href="#cap-54-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="#cap-55">CAP-55</a></td>
+<td>Read applicant policies and declarations</td>
+<td><a href="#cap-55-applicant">applicant</a> · <a
+href="#cap-55-student">student</a> · <a
+href="#cap-55-staff">staff</a></td>
+</tr>
+</tbody>
+</table>
+<p>Milestones: <a href="03-delivery-milestones.html#m1">M1</a> · <a
+href="03-delivery-milestones.html#m2">M2</a> · <a
+href="03-delivery-milestones.html#m3">M3</a> · <a
+href="03-delivery-milestones.html#m4">M4</a> · <a
+href="03-delivery-milestones.html#m5">M5</a>. Full nomenclature: <a
+href="15-nomenclature.html">SDD-15</a>.</p>
+<h2 id="applicant-online-registration">Applicant / Online
+Registration</h2>
+<p>8 capabilities.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Department</th>
+<th>Feature</th>
+<th>Frontend</th>
+<th>Mobile</th>
+<th>Backend</th>
+<th>Milestone</th>
+<th>Next action / blocker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="cap-02"></a><a id="cap-02-applicant"></a><a
+href="#cap-02">CAP-02</a></td>
+<td>Registry</td>
+<td>Online application form for new applicants</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm the minimum applicant journey and required fields.</td>
+</tr>
+<tr>
+<td><a id="cap-03"></a><a id="cap-03-applicant"></a><a
+href="#cap-03">CAP-03</a></td>
+<td>Registry</td>
+<td>Upload application documents and English-entry evidence</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Define evidence requirements and programme/country entry rules.</td>
+</tr>
+<tr>
+<td><a id="cap-07"></a><a id="cap-07-applicant"></a><a
+href="#cap-07">CAP-07</a></td>
+<td>Registry</td>
+<td>Track application, view offer and accept enrolment</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm track application, view offer and accept enrolment and
+whether the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-55"></a><a id="cap-55-applicant"></a><a
+href="#cap-55">CAP-55</a></td>
+<td>Registry</td>
+<td>Read applicant policies and declarations</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm read applicant policies and declarations and whether the old
+CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-16"></a><a id="cap-16-applicant"></a><a
+href="#cap-16">CAP-16</a></td>
+<td>Marketing</td>
+<td>Read applicant announcements and admissions updates</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm read applicant announcements and admissions updates and
+whether the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-01"></a><a id="cap-01-applicant"></a><a
+href="#cap-01">CAP-01</a></td>
+<td>TBC</td>
+<td>Applicant sign-in and account access</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm applicant sign-in and account access and whether the old CMS
+already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-35"></a><a id="cap-35-applicant"></a><a
+href="#cap-35">CAP-35</a></td>
+<td>TBC</td>
+<td>Accessible application forms and assistance</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm accessible application forms and assistance and whether the
+old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-36"></a><a id="cap-36-applicant"></a><a
+href="#cap-36">CAP-36</a></td>
+<td>TBC</td>
+<td>Mobile online-registration shell</td>
+<td>Not applicable</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm mobile online-registration shell and whether the old CMS
+already supports it.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="student">Student</h2>
+<p>41 capabilities.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Department</th>
+<th>Feature</th>
+<th>Frontend</th>
+<th>Mobile</th>
+<th>Backend</th>
+<th>Milestone</th>
+<th>Next action / blocker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="cap-08"></a><a id="cap-08-student"></a><a
+href="#cap-08">CAP-08</a></td>
+<td>Registry</td>
+<td>Personal details and emergency contacts</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Agree which updates save directly and which need staff
+approval.</td>
+</tr>
+<tr>
+<td><a id="cap-09"></a><a id="cap-09-student"></a><a
+href="#cap-09">CAP-09</a></td>
+<td>Registry</td>
+<td>Student documents library</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Agree document permissions and authorised file delivery.</td>
+</tr>
+<tr>
+<td><a id="cap-10"></a><a id="cap-10-student"></a><a
+href="#cap-10">CAP-10</a></td>
+<td>Registry</td>
+<td>Semester subject and class registration</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Validate legacy registration rules and atomic save
+requirements.</td>
+</tr>
+<tr>
+<td><a id="cap-13"></a><a id="cap-13-student"></a><a
+href="#cap-13">CAP-13</a></td>
+<td>Registry</td>
+<td>Grades, results and student progress</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm result approval/publication rules and legacy data
+fields.</td>
+</tr>
+<tr>
+<td><a id="cap-15"></a><a id="cap-15-student"></a><a
+href="#cap-15">CAP-15</a></td>
+<td>Registry</td>
+<td>Graduation clearance and transcripts</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Define clearance steps and authorised transcript/certificate
+delivery.</td>
+</tr>
+<tr>
+<td><a id="cap-16-student"></a><a href="#cap-16">CAP-16</a></td>
+<td>Registry</td>
+<td>Important announcements</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm audiences, publishing ownership, full announcement viewing
+and the real feed.</td>
+</tr>
+<tr>
+<td><a id="cap-55-student"></a><a href="#cap-55">CAP-55</a></td>
+<td>Registry</td>
+<td>University policies for students</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Identify approved student policies and decide
+publication/acknowledgement needs.</td>
+</tr>
+<tr>
+<td><a id="cap-45"></a><a id="cap-45-student"></a><a
+href="#cap-45">CAP-45</a></td>
+<td>Bursary</td>
+<td>Finance balances, invoices and payment history</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Map real ledger data and confirm approved campus payment
+instructions.</td>
+</tr>
+<tr>
+<td><a id="cap-46"></a><a id="cap-46-student"></a><a
+href="#cap-46">CAP-46</a></td>
+<td>Bursary</td>
+<td>Bank-transfer proof submission</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Connect secure proof storage and staff verification without treating
+proof as payment.</td>
+</tr>
+<tr>
+<td><a id="cap-47"></a><a id="cap-47-student"></a><a
+href="#cap-47">CAP-47</a></td>
+<td>Bursary</td>
+<td>Online payment and financial documents</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm gateway or legacy payment route and receipt/invoice
+generation.</td>
+</tr>
+<tr>
+<td><a id="cap-48"></a><a id="cap-48-student"></a><a
+href="#cap-48">CAP-48</a></td>
+<td>Bursary</td>
+<td>Scholarships and incentives</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm award ownership, terms and approval processes.</td>
+</tr>
+<tr>
+<td><a id="cap-30"></a><a id="cap-30-student"></a><a
+href="#cap-30">CAP-30</a></td>
+<td>Quality Assurance</td>
+<td>Student feedback and course evaluation</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Approve survey scope, confidentiality and reporting ownership.</td>
+</tr>
+<tr>
+<td><a id="cap-11"></a><a id="cap-11-student"></a><a
+href="#cap-11">CAP-11</a></td>
+<td>Faculty</td>
+<td>Class timetable</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Map current timetable records and update rules from the old
+CMS.</td>
+</tr>
+<tr>
+<td><a id="cap-12"></a><a id="cap-12-student"></a><a
+href="#cap-12">CAP-12</a></td>
+<td>Faculty</td>
+<td>Attendance records</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Identify the authoritative attendance source and staff correction
+workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-14"></a><a id="cap-14-student"></a><a
+href="#cap-14">CAP-14</a></td>
+<td>Faculty</td>
+<td>Study plan and prerequisites</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Validate programme versions, prerequisites and credit-transfer
+rules.</td>
+</tr>
+<tr>
+<td><a id="cap-17"></a><a id="cap-17-student"></a><a
+href="#cap-17">CAP-17</a></td>
+<td>Faculty</td>
+<td>Study guides</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Identify required guides and arrange lecturer publishing and student
+access.</td>
+</tr>
+<tr>
+<td><a id="cap-18"></a><a id="cap-18-student"></a><a
+href="#cap-18">CAP-18</a></td>
+<td>Faculty</td>
+<td>Lecture notes and learning-media access</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Enable authorised resource viewing/download and supported media
+delivery.</td>
+</tr>
+<tr>
+<td><a id="cap-19"></a><a id="cap-19-student"></a><a
+href="#cap-19">CAP-19</a></td>
+<td>Faculty</td>
+<td>Assignment briefs</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Provide real brief files and release/access rules.</td>
+</tr>
+<tr>
+<td><a id="cap-20"></a><a id="cap-20-student"></a><a
+href="#cap-20">CAP-20</a></td>
+<td>Faculty</td>
+<td>Submit, replace and withdraw assignments</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Agree durable secure submission storage and staff receipt/marking
+handoff.</td>
+</tr>
+<tr>
+<td><a id="cap-21"></a><a id="cap-21-student"></a><a
+href="#cap-21">CAP-21</a></td>
+<td>Faculty</td>
+<td>Revision work and practice activities</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Define revision materials and any required practice/feedback
+activities.</td>
+</tr>
+<tr>
+<td><a id="cap-22"></a><a id="cap-22-student"></a><a
+href="#cap-22">CAP-22</a></td>
+<td>Faculty</td>
+<td>Past examination papers</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Identify approved papers and access/release restrictions.</td>
+</tr>
+<tr>
+<td><a id="cap-23"></a><a id="cap-23-student"></a><a
+href="#cap-23">CAP-23</a></td>
+<td>Faculty</td>
+<td>Course information and learning outcomes</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Add approved outcomes and complete course information to the
+contract.</td>
+</tr>
+<tr>
+<td><a id="cap-24"></a><a id="cap-24-student"></a><a
+href="#cap-24">CAP-24</a></td>
+<td>Faculty</td>
+<td>Online quizzes and examinations</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Define assessment modes, allowed attempts and approval/integrity
+requirements.</td>
+</tr>
+<tr>
+<td><a id="cap-25"></a><a id="cap-25-student"></a><a
+href="#cap-25">CAP-25</a></td>
+<td>Faculty</td>
+<td>Student–lecturer and student–student communication</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Agree persistent communication, moderation and response
+responsibilities.</td>
+</tr>
+<tr>
+<td><a id="cap-26"></a><a id="cap-26-student"></a><a
+href="#cap-26">CAP-26</a></td>
+<td>Faculty</td>
+<td>Live online classes</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm whether and how an approved meeting tool will be
+integrated.</td>
+</tr>
+<tr>
+<td><a id="cap-27"></a><a id="cap-27-student"></a><a
+href="#cap-27">CAP-27</a></td>
+<td>Faculty</td>
+<td>Self-paced learning and release schedules</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Define the self-paced learning journey and release/completion
+rules.</td>
+</tr>
+<tr>
+<td><a id="cap-28"></a><a id="cap-28-student"></a><a
+href="#cap-28">CAP-28</a></td>
+<td>Faculty</td>
+<td>View marks and lecturer feedback</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm staff marking, feedback and publication workflows in the old
+CMS.</td>
+</tr>
+<tr>
+<td><a id="cap-29"></a><a id="cap-29-student"></a><a
+href="#cap-29">CAP-29</a></td>
+<td>Faculty</td>
+<td>Assessment identity checks and integrity guidance</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm required identity and integrity controls for each delivery
+mode.</td>
+</tr>
+<tr>
+<td><a id="cap-01-student"></a><a href="#cap-01">CAP-01</a></td>
+<td>TBC</td>
+<td>Sign-in, logout and student account access</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm legacy login or SSO and account provisioning.</td>
+</tr>
+<tr>
+<td><a id="cap-31"></a><a id="cap-31-student"></a><a
+href="#cap-31">CAP-31</a></td>
+<td>TBC</td>
+<td>Digital library and e-resources</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Identify licensed resources and library access integration.</td>
+</tr>
+<tr>
+<td><a id="cap-32"></a><a id="cap-32-student"></a><a
+href="#cap-32">CAP-32</a></td>
+<td>TBC</td>
+<td>Student orientation and digital-learning skills</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Prepare induction content and required completion evidence.</td>
+</tr>
+<tr>
+<td><a id="cap-33"></a><a id="cap-33-student"></a><a
+href="#cap-33">CAP-33</a></td>
+<td>TBC</td>
+<td>Learner support and IT helpdesk</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm support channels, owners, operating hours and escalation
+process.</td>
+</tr>
+<tr>
+<td><a id="cap-34"></a><a id="cap-34-student"></a><a
+href="#cap-34">CAP-34</a></td>
+<td>TBC</td>
+<td>Study-centre and regional support</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm centres, local support arrangements and evidence
+required.</td>
+</tr>
+<tr>
+<td><a id="cap-35-student"></a><a href="#cap-35">CAP-35</a></td>
+<td>TBC</td>
+<td>Accessibility and special-needs support</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Audit journeys with assistive technology and confirm student support
+adjustments.</td>
+</tr>
+<tr>
+<td><a id="cap-36-student"></a><a href="#cap-36">CAP-36</a></td>
+<td>TBC</td>
+<td>Mobile portal shell and device access</td>
+<td>Not applicable</td>
+<td>Partial</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Design and verify the portal shell/navigation on agreed phone/tablet
+widths.</td>
+</tr>
+<tr>
+<td><a id="cap-39"></a><a id="cap-39-student"></a><a
+href="#cap-39">CAP-39</a></td>
+<td>TBC</td>
+<td>Privacy, permissions and cybersecurity</td>
+<td>Partial</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm applicable policies and implement server-enforced access and
+security controls.</td>
+</tr>
+<tr>
+<td><a id="cap-49"></a><a id="cap-49-student"></a><a
+href="#cap-49">CAP-49</a></td>
+<td>TBC</td>
+<td>Resume and portfolio builders</td>
+<td>Demo</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm launch priority and permanent save/export requirements.</td>
+</tr>
+<tr>
+<td><a id="cap-50"></a><a id="cap-50-student"></a><a
+href="#cap-50">CAP-50</a></td>
+<td>TBC</td>
+<td>Immigration and visa processing</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Define campus/country visa stages, evidence and staff actions.</td>
+</tr>
+<tr>
+<td><a id="cap-51"></a><a id="cap-51-student"></a><a
+href="#cap-51">CAP-51</a></td>
+<td>TBC</td>
+<td>Student requests, complaints and academic appeals</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm request and appeal types, staff decisions and published
+response times.</td>
+</tr>
+<tr>
+<td><a id="cap-52"></a><a id="cap-52-student"></a><a
+href="#cap-52">CAP-52</a></td>
+<td>TBC</td>
+<td>Accommodation management</td>
+<td>Placeholder</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm housing request/allocation workflow and legacy records.</td>
+</tr>
+<tr>
+<td><a id="cap-54"></a><a id="cap-54-student"></a><a
+href="#cap-54">CAP-54</a></td>
+<td>TBC</td>
+<td>Campus services information</td>
+<td>Demo</td>
+<td>Partial</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Supply and approve campus-specific content and publishing
+ownership.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lecturer">Lecturer</h2>
+<p>19 capabilities.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Department</th>
+<th>Feature</th>
+<th>Frontend</th>
+<th>Mobile</th>
+<th>Backend</th>
+<th>Milestone</th>
+<th>Next action / blocker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="cap-11-lecturer"></a><a href="#cap-11">CAP-11</a></td>
+<td>Faculty</td>
+<td>View teaching timetable and class allocations</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm view teaching timetable and class allocations and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-12-lecturer"></a><a href="#cap-12">CAP-12</a></td>
+<td>Faculty</td>
+<td>Record and correct class attendance</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm record and correct class attendance and whether the old CMS
+already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-17-lecturer"></a><a href="#cap-17">CAP-17</a></td>
+<td>Faculty</td>
+<td>Publish study guides</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish study guides and whether the old CMS already
+supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-18-lecturer"></a><a href="#cap-18">CAP-18</a></td>
+<td>Faculty</td>
+<td>Publish lecture notes and learning media</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish lecture notes and learning media and whether the old
+CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-19-lecturer"></a><a href="#cap-19">CAP-19</a></td>
+<td>Faculty</td>
+<td>Publish assignment briefs and deadlines</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish assignment briefs and deadlines and whether the old
+CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-20-lecturer"></a><a href="#cap-20">CAP-20</a></td>
+<td>Faculty</td>
+<td>Receive and review submitted assignments</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm receive and review submitted assignments and whether the old
+CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-21-lecturer"></a><a href="#cap-21">CAP-21</a></td>
+<td>Faculty</td>
+<td>Publish revision work and practice activities</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish revision work and practice activities and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-22-lecturer"></a><a href="#cap-22">CAP-22</a></td>
+<td>Faculty</td>
+<td>Prepare past papers for authorised publication</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm prepare past papers for authorised publication and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-23-lecturer"></a><a href="#cap-23">CAP-23</a></td>
+<td>Faculty</td>
+<td>Maintain course information and learning outcomes</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm maintain course information and learning outcomes and
+whether the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-24-lecturer"></a><a href="#cap-24">CAP-24</a></td>
+<td>Faculty</td>
+<td>Prepare and conduct online quizzes and examinations</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm prepare and conduct online quizzes and examinations and
+whether the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-25-lecturer"></a><a href="#cap-25">CAP-25</a></td>
+<td>Faculty</td>
+<td>Communicate with students and teaching groups</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm communicate with students and teaching groups and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-26-lecturer"></a><a href="#cap-26">CAP-26</a></td>
+<td>Faculty</td>
+<td>Deliver live online classes</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm deliver live online classes and whether the old CMS already
+supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-27-lecturer"></a><a href="#cap-27">CAP-27</a></td>
+<td>Faculty</td>
+<td>Schedule self-paced learning and content release</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm schedule self-paced learning and content release and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-28-lecturer"></a><a href="#cap-28">CAP-28</a></td>
+<td>Faculty</td>
+<td>Mark assessments and publish lecturer feedback</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm mark assessments and publish lecturer feedback and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-29-lecturer"></a><a href="#cap-29">CAP-29</a></td>
+<td>Faculty</td>
+<td>Check assessment identity and academic integrity</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm check assessment identity and academic integrity and whether
+the old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-40"></a><a id="cap-40-lecturer"></a><a
+href="#cap-40">CAP-40</a></td>
+<td>Faculty</td>
+<td>Review class learning analytics</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm review class learning analytics and whether the old CMS
+already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-43"></a><a id="cap-43-lecturer"></a><a
+href="#cap-43">CAP-43</a></td>
+<td>Faculty</td>
+<td>Submit course materials for quality review</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm submit course materials for quality review and whether the
+old CMS already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-44"></a><a id="cap-44-lecturer"></a><a
+href="#cap-44">CAP-44</a></td>
+<td>Faculty</td>
+<td>Lecturer workspace and course access</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm lecturer workspace and course access and whether the old CMS
+already supports it.</td>
+</tr>
+<tr>
+<td><a id="cap-36-lecturer"></a><a href="#cap-36">CAP-36</a></td>
+<td>TBC</td>
+<td>Mobile lecturer workspace</td>
+<td>Not applicable</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm mobile lecturer workspace and whether the old CMS already
+supports it.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="admin-staff">Admin / Staff</h2>
+<p>38 capabilities.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Department</th>
+<th>Feature</th>
+<th>Frontend</th>
+<th>Mobile</th>
+<th>Backend</th>
+<th>Milestone</th>
+<th>Next action / blocker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="cap-03-staff"></a><a href="#cap-03">CAP-03</a></td>
+<td>Registry</td>
+<td>Review application documents and entry evidence</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm review application documents and entry evidence and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-05"></a><a id="cap-05-staff"></a><a
+href="#cap-05">CAP-05</a></td>
+<td>Registry</td>
+<td>Verify qualification levels, credits and duration</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Approve country-specific qualification and credit comparisons
+without automatic equivalence.</td>
+</tr>
+<tr>
+<td><a id="cap-06"></a><a id="cap-06-staff"></a><a
+href="#cap-06">CAP-06</a></td>
+<td>Registry</td>
+<td>Review foreign equivalency and professional recognition</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Document who verifies foreign awards and records the authority
+decision.</td>
+</tr>
+<tr>
+<td><a id="cap-07-staff"></a><a href="#cap-07">CAP-07</a></td>
+<td>Registry</td>
+<td>Review applications, issue offers and create first enrolment</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm Registry review, offers and first-enrolment handoff with
+Marketing and the backend owner.</td>
+</tr>
+<tr>
+<td><a id="cap-08-staff"></a><a href="#cap-08">CAP-08</a></td>
+<td>Registry</td>
+<td>Maintain student records and emergency contacts</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm maintain student records and emergency contacts and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-09-staff"></a><a href="#cap-09">CAP-09</a></td>
+<td>Registry</td>
+<td>Publish and manage student documents</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish and manage student documents and the responsible
+old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-10-staff"></a><a href="#cap-10">CAP-10</a></td>
+<td>Registry</td>
+<td>Configure and approve semester registration</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm configure and approve semester registration and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-13-staff"></a><a href="#cap-13">CAP-13</a></td>
+<td>Registry</td>
+<td>Approve and release results and progress records</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm approve and release results and progress records and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-15-staff"></a><a href="#cap-15">CAP-15</a></td>
+<td>Registry</td>
+<td>Approve graduation and issue official transcripts</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm approve graduation and issue official transcripts and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-16-staff"></a><a href="#cap-16">CAP-16</a></td>
+<td>Registry</td>
+<td>Publish approved student announcements</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish approved student announcements and the responsible
+old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-55-staff"></a><a href="#cap-55">CAP-55</a></td>
+<td>Registry</td>
+<td>Approve and publish student policies</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm approve and publish student policies and the responsible
+old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-45-staff"></a><a href="#cap-45">CAP-45</a></td>
+<td>Bursary</td>
+<td>Manage student invoices, balances and payment records</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm manage student invoices, balances and payment records and
+the responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-46-staff"></a><a href="#cap-46">CAP-46</a></td>
+<td>Bursary</td>
+<td>Verify bank-transfer proofs and allocate payments</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm Bursary proof review and payment allocation, with Finance
+reconciliation.</td>
+</tr>
+<tr>
+<td><a id="cap-48-staff"></a><a href="#cap-48">CAP-48</a></td>
+<td>Bursary</td>
+<td>Assign and review scholarships and incentives</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm assign and review scholarships and incentives and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-47-staff"></a><a href="#cap-47">CAP-47</a></td>
+<td>Finance</td>
+<td>Reconcile online payments and issue financial documents</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm Finance reconciliation and financial-document controls, with
+Bursary student-account handoff.</td>
+</tr>
+<tr>
+<td><a id="cap-04"></a><a id="cap-04-staff"></a><a
+href="#cap-04">CAP-04</a></td>
+<td>Quality Assurance</td>
+<td>Record institution, programme and delivery-site approvals</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Collect current approval evidence for each intended campus and
+programme.</td>
+</tr>
+<tr>
+<td><a id="cap-30-staff"></a><a href="#cap-30">CAP-30</a></td>
+<td>Quality Assurance</td>
+<td>Manage student feedback and course evaluations</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm manage student feedback and course evaluations and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-40-staff"></a><a href="#cap-40">CAP-40</a></td>
+<td>Quality Assurance</td>
+<td>Review institutional learning analytics and quality reports</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Define useful learning/engagement measures and evidence
+reports.</td>
+</tr>
+<tr>
+<td><a id="cap-42"></a><a id="cap-42-staff"></a><a
+href="#cap-42">CAP-42</a></td>
+<td>Quality Assurance</td>
+<td>Record copyright permissions and provider approvals</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm record copyright permissions and provider approvals and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-43-staff"></a><a href="#cap-43">CAP-43</a></td>
+<td>Quality Assurance</td>
+<td>Approve course materials and LMS-readiness evidence</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Define material approval and retain pilot/readiness evidence.</td>
+</tr>
+<tr>
+<td><a id="cap-11-staff"></a><a href="#cap-11">CAP-11</a></td>
+<td>Faculty</td>
+<td>Schedule classes and allocate lecturers and rooms</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm schedule classes and allocate lecturers and rooms and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-14-staff"></a><a href="#cap-14">CAP-14</a></td>
+<td>Faculty</td>
+<td>Maintain study plans, prerequisites and programme rules</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm maintain study plans, prerequisites and programme rules and
+the responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-22-staff"></a><a href="#cap-22">CAP-22</a></td>
+<td>Faculty</td>
+<td>Approve access and publication rights for past papers</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm approve access and publication rights for past papers and
+the responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-23-staff"></a><a href="#cap-23">CAP-23</a></td>
+<td>Faculty</td>
+<td>Approve course information and learning outcomes</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm approve course information and learning outcomes and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-24-staff"></a><a href="#cap-24">CAP-24</a></td>
+<td>Faculty</td>
+<td>Administer examinations, access and approved arrangements</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm administer examinations, access and approved arrangements
+and the responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-16-staff-2"></a><a href="#cap-16">CAP-16</a></td>
+<td>Marketing</td>
+<td>Publish recruitment and applicant communications</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm Marketing publication approval and Registry ownership of
+formal application decisions.</td>
+</tr>
+<tr>
+<td><a id="cap-31-staff"></a><a href="#cap-31">CAP-31</a></td>
+<td>TBC</td>
+<td>Administer digital-library access and licences</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm administer digital-library access and licences and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-32-staff"></a><a href="#cap-32">CAP-32</a></td>
+<td>TBC</td>
+<td>Publish orientation and digital-learning guidance</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm publish orientation and digital-learning guidance and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-33-staff"></a><a href="#cap-33">CAP-33</a></td>
+<td>TBC</td>
+<td>Manage learner-support and IT-helpdesk requests</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m3">Core student portal /
+M3</a></td>
+<td>Confirm manage learner-support and it-helpdesk requests and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-34-staff"></a><a href="#cap-34">CAP-34</a></td>
+<td>TBC</td>
+<td>Coordinate study-centre and regional support</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm coordinate study-centre and regional support and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-35-staff"></a><a href="#cap-35">CAP-35</a></td>
+<td>TBC</td>
+<td>Manage accessibility and special-needs arrangements</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm manage accessibility and special-needs arrangements and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-36-staff"></a><a href="#cap-36">CAP-36</a></td>
+<td>TBC</td>
+<td>Mobile staff and administrator workspace</td>
+<td>Not applicable</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm mobile staff and administrator workspace and the responsible
+old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-44-staff"></a><a href="#cap-44">CAP-44</a></td>
+<td>TBC</td>
+<td>Staff and administrator workspace and role access</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm existing-CMS staff access for admissions; build new staff
+screens only for verified gaps.</td>
+</tr>
+<tr>
+<td><a id="cap-49-staff"></a><a href="#cap-49">CAP-49</a></td>
+<td>TBC</td>
+<td>Manage career, resume and portfolio guidance</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm manage career, resume and portfolio guidance and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-50-staff"></a><a href="#cap-50">CAP-50</a></td>
+<td>TBC</td>
+<td>Process immigration and student-visa cases</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm process immigration and student-visa cases and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-51-staff"></a><a href="#cap-51">CAP-51</a></td>
+<td>TBC</td>
+<td>Handle student requests, complaints and academic appeals</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm handle student requests, complaints and academic appeals and
+the responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-52-staff"></a><a href="#cap-52">CAP-52</a></td>
+<td>TBC</td>
+<td>Manage accommodation allocation and records</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm manage accommodation allocation and records and the
+responsible old-CMS workflow.</td>
+</tr>
+<tr>
+<td><a id="cap-54-staff"></a><a href="#cap-54">CAP-54</a></td>
+<td>TBC</td>
+<td>Publish campus services information</td>
+<td>Not started</td>
+<td>Not started</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m5">Campus expansion &amp;
+remaining CMS / M5</a></td>
+<td>Confirm publish campus services information and the responsible
+old-CMS workflow.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shared-system">Shared System</h2>
+<p>6 capabilities.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Department</th>
+<th>Feature</th>
+<th>Frontend</th>
+<th>Mobile</th>
+<th>Backend</th>
+<th>Milestone</th>
+<th>Next action / blocker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="cap-42-shared"></a><a href="#cap-42">CAP-42</a></td>
+<td>Quality Assurance</td>
+<td>Copyright and external-provider operating controls</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td><a href="03-delivery-milestones.html#m1">Confirm rules &amp;
+integration / M1</a></td>
+<td>Confirm permitted content use, provider responsibilities and
+operating approvals; these non-software checks remain TBC.</td>
+</tr>
+<tr>
+<td><a id="cap-37"></a><a id="cap-37-shared"></a><a
+href="#cap-37">CAP-37</a></td>
+<td>TBC</td>
+<td>Connectivity, capacity and service monitoring</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Assess real connectivity, expected users, uptime targets and
+monitoring.</td>
+</tr>
+<tr>
+<td><a id="cap-38"></a><a id="cap-38-shared"></a><a
+href="#cap-38">CAP-38</a></td>
+<td>TBC</td>
+<td>Backups and continuity</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Verify backup ownership, restore tests and continuity
+arrangements.</td>
+</tr>
+<tr>
+<td><a id="cap-39-shared"></a><a href="#cap-39">CAP-39</a></td>
+<td>TBC</td>
+<td>Privacy, permissions and cybersecurity</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm applicable policies and implement server-enforced access and
+security controls.</td>
+</tr>
+<tr>
+<td><a id="cap-41"></a><a id="cap-41-shared"></a><a
+href="#cap-41">CAP-41</a></td>
+<td>TBC</td>
+<td>Staff training and operating readiness</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td><a href="03-delivery-milestones.html#m4">Cyberjaya pilot acceptance
+/ M4</a></td>
+<td>Campus training, support ownership and operating-readiness evidence
+remain TBC; verify these before pilot acceptance.</td>
+</tr>
+<tr>
+<td><a id="cap-53"></a><a id="cap-53-shared"></a><a
+href="#cap-53">CAP-53</a></td>
+<td>TBC</td>
+<td>Existing CMS integration and campus configuration</td>
+<td>Partial</td>
+<td>Not applicable</td>
+<td>Needs checking</td>
+<td><a href="03-delivery-milestones.html#m2">Admissions launch /
+M2</a></td>
+<td>Confirm backend access, map old-CMS admissions data and deliver the
+first working Portal API integration.</td>
+</tr>
+</tbody>
+</table>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

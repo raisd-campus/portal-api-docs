@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>15-nomenclature — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="nomenclature-cap-and-milestone-ids">Nomenclature — CAP and
+milestone IDs</h1>
+<p><strong>Document:</strong> SDD-15<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 23 September 2026<br />
+<strong>Audience:</strong> Working Group CMS 2026, AI agents</p>
+<p>Quick reference for <strong>CAP-</strong>* and <strong>M</strong>*
+identifiers used across the SDD set. Prefer these links in chat, PRs,
+and design notes.</p>
+<h2 id="milestones-m1m5">Milestones (M1–M5)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="03-delivery-milestones.html#m1">M1</a></td>
+<td>Confirm rules and integration</td>
+<td><a href="03-delivery-milestones.html#m1">SDD-03 §M1</a></td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m2">M2</a></td>
+<td>Admissions launch</td>
+<td><a href="03-delivery-milestones.html#m2">SDD-03 §M2</a></td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+<td>Core student portal</td>
+<td><a href="03-delivery-milestones.html#m3">SDD-03 §M3</a></td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m4">M4</a></td>
+<td>Cyberjaya pilot acceptance</td>
+<td><a href="03-delivery-milestones.html#m4">SDD-03 §M4</a></td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+<td>Campus expansion and remaining CMS</td>
+<td><a href="03-delivery-milestones.html#m5">SDD-03 §M5</a></td>
+</tr>
+</tbody>
+</table>
+<p>Sequence diagram and release conditions: <a
+href="03-delivery-milestones.html">SDD-03</a>.</p>
+<h2 id="capability-ids-cap-01-cap-55">Capability IDs (CAP-01 …
+CAP-55)</h2>
+<p>Primary anchor <code>#cap-nn</code> is the first catalogue row.
+Portal-scoped anchors (<code>#cap-nn-applicant</code>,
+<code>#cap-nn-student</code>, …) point at that portal’s row in <a
+href="11-capability-catalog.html">SDD-11</a>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Primary feature</th>
+<th>Portal rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>Applicant sign-in and account access</td>
+<td><a href="11-capability-catalog.html#cap-01-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-01-student">student</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-02">CAP-02</a></td>
+<td>Online application form for new applicants</td>
+<td><a
+href="11-capability-catalog.html#cap-02-applicant">applicant</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a></td>
+<td>Upload application documents and English-entry evidence</td>
+<td><a href="11-capability-catalog.html#cap-03-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-03-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-04">CAP-04</a></td>
+<td>Record institution, programme and delivery-site approvals</td>
+<td><a href="11-capability-catalog.html#cap-04-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-05">CAP-05</a></td>
+<td>Verify qualification levels, credits and duration</td>
+<td><a href="11-capability-catalog.html#cap-05-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-06">CAP-06</a></td>
+<td>Review foreign equivalency and professional recognition</td>
+<td><a href="11-capability-catalog.html#cap-06-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-07">CAP-07</a></td>
+<td>Track application, view offer and accept enrolment</td>
+<td><a href="11-capability-catalog.html#cap-07-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-07-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-08">CAP-08</a></td>
+<td>Personal details and emergency contacts</td>
+<td><a href="11-capability-catalog.html#cap-08-student">student</a> · <a
+href="11-capability-catalog.html#cap-08-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-09">CAP-09</a></td>
+<td>Student documents library</td>
+<td><a href="11-capability-catalog.html#cap-09-student">student</a> · <a
+href="11-capability-catalog.html#cap-09-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-10">CAP-10</a></td>
+<td>Semester subject and class registration</td>
+<td><a href="11-capability-catalog.html#cap-10-student">student</a> · <a
+href="11-capability-catalog.html#cap-10-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-11">CAP-11</a></td>
+<td>Class timetable</td>
+<td><a href="11-capability-catalog.html#cap-11-student">student</a> · <a
+href="11-capability-catalog.html#cap-11-lecturer">lecturer</a> · <a
+href="11-capability-catalog.html#cap-11-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-12">CAP-12</a></td>
+<td>Attendance records</td>
+<td><a href="11-capability-catalog.html#cap-12-student">student</a> · <a
+href="11-capability-catalog.html#cap-12-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-13">CAP-13</a></td>
+<td>Grades, results and student progress</td>
+<td><a href="11-capability-catalog.html#cap-13-student">student</a> · <a
+href="11-capability-catalog.html#cap-13-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-14">CAP-14</a></td>
+<td>Study plan and prerequisites</td>
+<td><a href="11-capability-catalog.html#cap-14-student">student</a> · <a
+href="11-capability-catalog.html#cap-14-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-15">CAP-15</a></td>
+<td>Graduation clearance and transcripts</td>
+<td><a href="11-capability-catalog.html#cap-15-student">student</a> · <a
+href="11-capability-catalog.html#cap-15-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-16">CAP-16</a></td>
+<td>Read applicant announcements and admissions updates</td>
+<td><a href="11-capability-catalog.html#cap-16-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-16-student">student</a> · <a
+href="11-capability-catalog.html#cap-16-staff">staff</a> · <a
+href="11-capability-catalog.html#cap-16-staff-2">staff-2</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-17">CAP-17</a></td>
+<td>Study guides</td>
+<td><a href="11-capability-catalog.html#cap-17-student">student</a> · <a
+href="11-capability-catalog.html#cap-17-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-18">CAP-18</a></td>
+<td>Lecture notes and learning-media access</td>
+<td><a href="11-capability-catalog.html#cap-18-student">student</a> · <a
+href="11-capability-catalog.html#cap-18-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-19">CAP-19</a></td>
+<td>Assignment briefs</td>
+<td><a href="11-capability-catalog.html#cap-19-student">student</a> · <a
+href="11-capability-catalog.html#cap-19-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-20">CAP-20</a></td>
+<td>Submit, replace and withdraw assignments</td>
+<td><a href="11-capability-catalog.html#cap-20-student">student</a> · <a
+href="11-capability-catalog.html#cap-20-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-21">CAP-21</a></td>
+<td>Revision work and practice activities</td>
+<td><a href="11-capability-catalog.html#cap-21-student">student</a> · <a
+href="11-capability-catalog.html#cap-21-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-22">CAP-22</a></td>
+<td>Past examination papers</td>
+<td><a href="11-capability-catalog.html#cap-22-student">student</a> · <a
+href="11-capability-catalog.html#cap-22-lecturer">lecturer</a> · <a
+href="11-capability-catalog.html#cap-22-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-23">CAP-23</a></td>
+<td>Course information and learning outcomes</td>
+<td><a href="11-capability-catalog.html#cap-23-student">student</a> · <a
+href="11-capability-catalog.html#cap-23-lecturer">lecturer</a> · <a
+href="11-capability-catalog.html#cap-23-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-24">CAP-24</a></td>
+<td>Online quizzes and examinations</td>
+<td><a href="11-capability-catalog.html#cap-24-student">student</a> · <a
+href="11-capability-catalog.html#cap-24-lecturer">lecturer</a> · <a
+href="11-capability-catalog.html#cap-24-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-25">CAP-25</a></td>
+<td>Student–lecturer and student–student communication</td>
+<td><a href="11-capability-catalog.html#cap-25-student">student</a> · <a
+href="11-capability-catalog.html#cap-25-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-26">CAP-26</a></td>
+<td>Live online classes</td>
+<td><a href="11-capability-catalog.html#cap-26-student">student</a> · <a
+href="11-capability-catalog.html#cap-26-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-27">CAP-27</a></td>
+<td>Self-paced learning and release schedules</td>
+<td><a href="11-capability-catalog.html#cap-27-student">student</a> · <a
+href="11-capability-catalog.html#cap-27-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-28">CAP-28</a></td>
+<td>View marks and lecturer feedback</td>
+<td><a href="11-capability-catalog.html#cap-28-student">student</a> · <a
+href="11-capability-catalog.html#cap-28-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-29">CAP-29</a></td>
+<td>Assessment identity checks and integrity guidance</td>
+<td><a href="11-capability-catalog.html#cap-29-student">student</a> · <a
+href="11-capability-catalog.html#cap-29-lecturer">lecturer</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-30">CAP-30</a></td>
+<td>Student feedback and course evaluation</td>
+<td><a href="11-capability-catalog.html#cap-30-student">student</a> · <a
+href="11-capability-catalog.html#cap-30-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-31">CAP-31</a></td>
+<td>Digital library and e-resources</td>
+<td><a href="11-capability-catalog.html#cap-31-student">student</a> · <a
+href="11-capability-catalog.html#cap-31-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-32">CAP-32</a></td>
+<td>Student orientation and digital-learning skills</td>
+<td><a href="11-capability-catalog.html#cap-32-student">student</a> · <a
+href="11-capability-catalog.html#cap-32-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-33">CAP-33</a></td>
+<td>Learner support and IT helpdesk</td>
+<td><a href="11-capability-catalog.html#cap-33-student">student</a> · <a
+href="11-capability-catalog.html#cap-33-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-34">CAP-34</a></td>
+<td>Study-centre and regional support</td>
+<td><a href="11-capability-catalog.html#cap-34-student">student</a> · <a
+href="11-capability-catalog.html#cap-34-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-35">CAP-35</a></td>
+<td>Accessible application forms and assistance</td>
+<td><a href="11-capability-catalog.html#cap-35-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-35-student">student</a> · <a
+href="11-capability-catalog.html#cap-35-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-36">CAP-36</a></td>
+<td>Mobile online-registration shell</td>
+<td><a href="11-capability-catalog.html#cap-36-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-36-student">student</a> · <a
+href="11-capability-catalog.html#cap-36-lecturer">lecturer</a> · <a
+href="11-capability-catalog.html#cap-36-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-37">CAP-37</a></td>
+<td>Connectivity, capacity and service monitoring</td>
+<td><a href="11-capability-catalog.html#cap-37-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-38">CAP-38</a></td>
+<td>Backups and continuity</td>
+<td><a href="11-capability-catalog.html#cap-38-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-39">CAP-39</a></td>
+<td>Privacy, permissions and cybersecurity</td>
+<td><a href="11-capability-catalog.html#cap-39-student">student</a> · <a
+href="11-capability-catalog.html#cap-39-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-40">CAP-40</a></td>
+<td>Review class learning analytics</td>
+<td><a href="11-capability-catalog.html#cap-40-lecturer">lecturer</a> ·
+<a href="11-capability-catalog.html#cap-40-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-41">CAP-41</a></td>
+<td>Staff training and operating readiness</td>
+<td><a href="11-capability-catalog.html#cap-41-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-42">CAP-42</a></td>
+<td>Record copyright permissions and provider approvals</td>
+<td><a href="11-capability-catalog.html#cap-42-staff">staff</a> · <a
+href="11-capability-catalog.html#cap-42-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-43">CAP-43</a></td>
+<td>Submit course materials for quality review</td>
+<td><a href="11-capability-catalog.html#cap-43-lecturer">lecturer</a> ·
+<a href="11-capability-catalog.html#cap-43-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-44">CAP-44</a></td>
+<td>Lecturer workspace and course access</td>
+<td><a href="11-capability-catalog.html#cap-44-lecturer">lecturer</a> ·
+<a href="11-capability-catalog.html#cap-44-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-45">CAP-45</a></td>
+<td>Finance balances, invoices and payment history</td>
+<td><a href="11-capability-catalog.html#cap-45-student">student</a> · <a
+href="11-capability-catalog.html#cap-45-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-46">CAP-46</a></td>
+<td>Bank-transfer proof submission</td>
+<td><a href="11-capability-catalog.html#cap-46-student">student</a> · <a
+href="11-capability-catalog.html#cap-46-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-47">CAP-47</a></td>
+<td>Online payment and financial documents</td>
+<td><a href="11-capability-catalog.html#cap-47-student">student</a> · <a
+href="11-capability-catalog.html#cap-47-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-48">CAP-48</a></td>
+<td>Scholarships and incentives</td>
+<td><a href="11-capability-catalog.html#cap-48-student">student</a> · <a
+href="11-capability-catalog.html#cap-48-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-49">CAP-49</a></td>
+<td>Resume and portfolio builders</td>
+<td><a href="11-capability-catalog.html#cap-49-student">student</a> · <a
+href="11-capability-catalog.html#cap-49-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-50">CAP-50</a></td>
+<td>Immigration and visa processing</td>
+<td><a href="11-capability-catalog.html#cap-50-student">student</a> · <a
+href="11-capability-catalog.html#cap-50-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-51">CAP-51</a></td>
+<td>Student requests, complaints and academic appeals</td>
+<td><a href="11-capability-catalog.html#cap-51-student">student</a> · <a
+href="11-capability-catalog.html#cap-51-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-52">CAP-52</a></td>
+<td>Accommodation management</td>
+<td><a href="11-capability-catalog.html#cap-52-student">student</a> · <a
+href="11-capability-catalog.html#cap-52-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-53">CAP-53</a></td>
+<td>Existing CMS integration and campus configuration</td>
+<td><a href="11-capability-catalog.html#cap-53-shared">shared</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-54">CAP-54</a></td>
+<td>Campus services information</td>
+<td><a href="11-capability-catalog.html#cap-54-student">student</a> · <a
+href="11-capability-catalog.html#cap-54-staff">staff</a></td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Read applicant policies and declarations</td>
+<td><a href="11-capability-catalog.html#cap-55-applicant">applicant</a>
+· <a href="11-capability-catalog.html#cap-55-student">student</a> · <a
+href="11-capability-catalog.html#cap-55-staff">staff</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-link">How to link</h2>
+<p>From another SDD markdown file:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">CAP-53</span><span class="co">](11-capability-catalog.html#cap-53)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">CAP-53 shared row</span><span class="co">](11-capability-catalog.html#cap-53-shared)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">M2</span><span class="co">](03-delivery-milestones.html#m2)</span></span></code></pre></div>
+<p>From <code>docs/ai/</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">CAP-53</span><span class="co">](../sdd/11-capability-catalog.html#cap-53)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">M5</span><span class="co">](../sdd/03-delivery-milestones.html#m5)</span></span></code></pre></div>
+<p>HTML / GitHub Pages copies under <code>docs/diagrams/</code> should
+use the same fragment IDs on the rendered SDD pages when those pages are
+published.</p>
+<h2 id="related">Related</h2>
+<ul>
+<li>Exhaustive rows: <a href="11-capability-catalog.html">SDD-11
+Capability catalogue</a></li>
+<li>Milestones: <a href="03-delivery-milestones.html">SDD-03</a></li>
+<li>Glossary: <a
+href="00-document-control.html#glossary">SDD-00</a></li>
+<li>Old CMS map: <a
+href="14-cms-feature-comparison.html">SDD-14</a></li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

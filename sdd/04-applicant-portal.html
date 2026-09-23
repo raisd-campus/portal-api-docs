@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>04-applicant-portal — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="applicant-portal">Applicant portal</h1>
+<p><strong>Document:</strong> SDD-04<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026<br />
+<strong>Milestone:</strong> Admissions launch (<a
+href="03-delivery-milestones.html#m2">M2</a>)</p>
+<h2 id="purpose">1. Purpose</h2>
+<p>Let a prospective student create an account, submit an application
+with evidence and declarations, track status, view an offer, and accept
+enrolment. Registry remains the decision owner. Marketing may publish
+announcements; it does not issue offers.</p>
+<h2 id="actors">2. Actors</h2>
+<ul>
+<li>Applicant (unauthenticated visitor → authenticated applicant)</li>
+<li>Registry (staff, old CMS or new staff screens)</li>
+<li>Marketing (communications only)</li>
+</ul>
+<h2 id="primary-flow">3. Primary flow</h2>
+<pre class="mermaid"><code>sequenceDiagram
+  actor A as Applicant
+  participant P as Applicant portal
+  participant API as Portal API
+  participant CMS as Existing CMS
+  actor R as Registry
+
+  A-&gt;&gt;P: Sign in / create account (CAP-01)
+  P-&gt;&gt;API: Provision applicant
+  API-&gt;&gt;CMS: Create or match identity
+  A-&gt;&gt;P: Complete application (CAP-02)
+  A-&gt;&gt;P: Upload evidence (CAP-03)
+  A-&gt;&gt;P: Accept policies (CAP-55)
+  P-&gt;&gt;API: Submit application + files
+  API-&gt;&gt;CMS: Persist application
+  R-&gt;&gt;CMS: Review, qualification checks, offer (CAP-03/05/06/07)
+  A-&gt;&gt;P: Track status, view offer, accept (CAP-07)
+  P-&gt;&gt;API: Accept enrolment
+  API-&gt;&gt;CMS: First enrolment record</code></pre>
+<h2 id="capabilities">4. Capabilities</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Feature</th>
+<th>Frontend</th>
+<th>Design notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>Applicant sign-in and account access</td>
+<td>Not started</td>
+<td>Same identity family as student login; role = Applicant until
+enrolment. Confirm old CMS auth.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-02">CAP-02</a></td>
+<td>Online application form</td>
+<td>Not started</td>
+<td>Minimum journey and required fields per campus/programme. Campus
+requested.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-03">CAP-03</a></td>
+<td>Upload documents and English-entry evidence</td>
+<td>Not started</td>
+<td>Evidence rules are programme/country specific. Bytes must
+persist.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-07">CAP-07</a></td>
+<td>Track application, view offer, accept enrolment</td>
+<td>Not started</td>
+<td>Confirm whether old CMS already exposes this to applicants.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-16">CAP-16</a></td>
+<td>Applicant announcements and admissions updates</td>
+<td>Not started</td>
+<td>Campus requested. Marketing publishes; Registry owns decisions.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-35">CAP-35</a></td>
+<td>Accessible application forms and assistance</td>
+<td>Not started</td>
+<td>Keyboard, assistive tech, assistance path.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-36">CAP-36</a></td>
+<td>Mobile online-registration shell</td>
+<td>Not started (mobile)</td>
+<td>Launch requirement. Not a native app.</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-55">CAP-55</a></td>
+<td>Applicant policies and declarations</td>
+<td>Not started</td>
+<td>Campus requested. Capture acceptance, version, timestamp.</td>
+</tr>
+</tbody>
+</table>
+<p>Staff counterparts live in <a
+href="07-admin-staff-cms.html">SDD-07</a>: <a
+href="11-capability-catalog.html#cap-03">CAP-03</a>, 05, 06, 07, 16,
+44.</p>
+<h2 id="data-logical">5. Data (logical)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Key fields</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ApplicantAccount</td>
+<td>identity, contact, auth subject</td>
+<td>CMS / IdP</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>programme, intake, campus, status</td>
+<td>CMS</td>
+</tr>
+<tr>
+<td>EvidenceObject</td>
+<td>type, file id, checksum, uploaded at</td>
+<td>File store + CMS metadata</td>
+</tr>
+<tr>
+<td>Declaration</td>
+<td>policy version, accepted at</td>
+<td>CMS</td>
+</tr>
+<tr>
+<td>Offer</td>
+<td>conditions, expiry, decision</td>
+<td>CMS</td>
+</tr>
+<tr>
+<td>Enrolment</td>
+<td>student id, programme, start</td>
+<td>CMS</td>
+</tr>
+</tbody>
+</table>
+<p>Statuses at minimum: draft, submitted, under review, offer, accepted,
+enrolled, rejected, withdrawn.</p>
+<h2 id="rules">6. Rules</h2>
+<ul>
+<li>No application is complete without the campus-required evidence set
+for that programme.</li>
+<li>Foreign qualification checks (<a
+href="11-capability-catalog.html#cap-05">CAP-05</a>, 06) are
+staff-owned. The portal must not auto-equate credit systems.</li>
+<li>Offer acceptance is the only applicant action that creates first
+enrolment.</li>
+<li>Announcements never change application status.</li>
+</ul>
+<h2 id="current-baseline">7. Current baseline</h2>
+<p>No applicant signup, application, intake-choice, or
+application-status route exists (<code>src/app/routes.ts</code>).
+Enrolled-student qualification records in Profile are not an admissions
+flow.</p>
+<h2 id="acceptance-m2">8. Acceptance (<a
+href="03-delivery-milestones.html#m2">M2</a>)</h2>
+<ul>
+<li>An applicant can complete apply → upload → declare → submit on a
+phone-width viewport.</li>
+<li>Registry can complete review → offer using verified old CMS
+<strong>or</strong> new staff screens.</li>
+<li>Applicant sees the same status the CMS holds.</li>
+<li>Files opened by Registry are the files the applicant uploaded.</li>
+<li><a href="11-capability-catalog.html#cap-53">CAP-53</a> admissions
+mapping is Live for this path.</li>
+</ul>
+<h2 id="open-blockers">9. Open blockers</h2>
+<p>Confirm minimum applicant journey, evidence matrix per programme,
+old-CMS applicant tracking, and account provisioning. Owners TBC.</p>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

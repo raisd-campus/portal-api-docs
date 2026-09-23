@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>05-student-portal — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="student-portal">Student portal</h1>
+<p><strong>Document:</strong> SDD-05<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026<br />
+<strong>Milestones:</strong> Auth/mobile on <a
+href="03-delivery-milestones.html#m2">M2</a>; learning/records/fees on
+<a href="03-delivery-milestones.html#m3">M3</a>; remainder on <a
+href="03-delivery-milestones.html#m5">M5</a></p>
+<h2 id="purpose">1. Purpose</h2>
+<p>Give an enrolled student a single web surface for identity, academic
+life, fees, and support. The current v1 frontend is a
+<strong>demo</strong>: screens exist; they do not save to the CMS.</p>
+<p>This portal is not done when the student UI looks finished. Each
+student CAP also needs a lecturer or staff path, or a verified old-CMS
+equivalent.</p>
+<p><strong>Agent / behaviour knowledge (canonical):</strong> <a
+href="../ai/frontend/student-portal/"><code>docs/ai/frontend/student-portal/</code></a>
+in control-plane. Generate or refresh human docs from that tree using <a
+href="../ai/process/generate-documentation.html"><code>docs/ai/process/generate-documentation.md</code></a>.</p>
+<h2 id="actors">2. Actors</h2>
+<p>Student (authenticated). Upstream writers: Registry,
+Faculty/Lecturer, Bursary, support desks.</p>
+<h2 id="information-architecture">3. Information architecture</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Area</th>
+<th>CAP IDs</th>
+<th>Milestone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Account, privacy, accessibility, mobile shell</td>
+<td>01, 35, 36, 39</td>
+<td><a href="03-delivery-milestones.html#m2">M2</a> Admissions
+launch</td>
+</tr>
+<tr>
+<td>Profile and documents</td>
+<td>08, 09</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Semester registration</td>
+<td>10</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Results</td>
+<td>13, 28</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Announcements and policies</td>
+<td>16, 55</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Fees and bank-transfer proof</td>
+<td>45, 46</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Timetable and attendance</td>
+<td>11, 12</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Study plan and course information</td>
+<td>14, 23</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Guides, notes, briefs</td>
+<td>17, 18, 19</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Assignment submit</td>
+<td>20</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Past papers / revision</td>
+<td>21, 22</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Integrity guidance</td>
+<td>29</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Orientation, helpdesk</td>
+<td>32, 33</td>
+<td><a href="03-delivery-milestones.html#m3">M3</a></td>
+</tr>
+<tr>
+<td>Graduation / transcripts</td>
+<td>15</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+<tr>
+<td>Online payment, scholarships</td>
+<td>47, 48</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+<tr>
+<td>Quizzes/exams, live class, self-paced</td>
+<td>24, 26, 27</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>25</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+<tr>
+<td>Library, study centres</td>
+<td>31, 34</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+<tr>
+<td>Resume/portfolio, visa, requests, housing, services</td>
+<td>49–52, 54</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+<tr>
+<td>Course evaluation</td>
+<td>30</td>
+<td><a href="03-delivery-milestones.html#m5">M5</a></td>
+</tr>
+</tbody>
+</table>
+<p>Campus-requested student features: timetable, announcements, study
+guides, notes, briefs, assignment submit, revision, past papers,
+policies.</p>
+<h2 id="key-flows">4. Key flows</h2>
+<h3 id="registration-and-fees">4.1 Registration and fees</h3>
+<pre class="mermaid"><code>sequenceDiagram
+  actor S as Student
+  participant P as Student portal
+  participant API as Portal API
+  participant CMS as Existing CMS
+  actor B as Bursary
+
+  S-&gt;&gt;P: Select modules (CAP-10)
+  P-&gt;&gt;API: Validate rules atomically
+  API-&gt;&gt;CMS: Registration transaction
+  CMS--&gt;&gt;P: Invoice / balance (CAP-45)
+  S-&gt;&gt;P: Submit bank-transfer proof (CAP-46)
+  P-&gt;&gt;API: Store file metadata plus bytes
+  B-&gt;&gt;CMS: Verify proof; allocate payment
+  Note over P,CMS: Proof is never payment until Bursary allocates</code></pre>
+<h3 id="assignment-handoff">4.2 Assignment handoff</h3>
+<pre class="mermaid"><code>sequenceDiagram
+  actor L as Lecturer
+  actor S as Student
+  participant P as Portals
+  participant CMS as CMS / file store
+
+  L-&gt;&gt;P: Publish brief with release rule (CAP-19)
+  S-&gt;&gt;P: Download authorised brief
+  S-&gt;&gt;P: Submit / replace / withdraw file (CAP-20)
+  P-&gt;&gt;CMS: Durable object plus receipt
+  L-&gt;&gt;P: Mark and publish feedback (CAP-28)
+  S-&gt;&gt;P: View published mark only</code></pre>
+<h2 id="design-rules">5. Design rules</h2>
+<ol type="1">
+<li><strong>Edits vs approvals (<a
+href="11-capability-catalog.html#cap-08">CAP-08</a>).</strong> Some
+profile fields save directly; others raise a staff task. The split is a
+Registry policy, not a UI guess.</li>
+<li><strong>Documents (<a
+href="11-capability-catalog.html#cap-09">CAP-09</a>).</strong>
+View/Download must deliver files. No-op buttons stay Placeholder.</li>
+<li><strong>Registration (<a
+href="11-capability-catalog.html#cap-10">CAP-10</a>)</strong> is
+semester registration against legacy rules, not admissions. Atomic save:
+clash, credit, prerequisite checks in one CMS transaction.</li>
+<li><strong>Results (<a
+href="11-capability-catalog.html#cap-13">CAP-13</a>, 28)</strong> show
+only published results. Marking is lecturer/staff.</li>
+<li><strong>Announcements (<a
+href="11-capability-catalog.html#cap-16">CAP-16</a>)</strong> need a
+real feed, audience, and open/detail action. Preview cards without an
+open action are Partial.</li>
+<li><strong>Fees (<a
+href="11-capability-catalog.html#cap-45">CAP-45</a>, 46).</strong>
+Ledger from CMS. Fictional banking details must not ship. Proof upload
+is metadata <strong>and</strong> bytes; staff verification is a separate
+state.</li>
+<li><strong>Learning files (<a
+href="11-capability-catalog.html#cap-17">CAP-17</a>–22)</strong> require
+lecturer publish + authorised student access. A generic Materials list
+of no-op rows is not delivery.</li>
+<li><strong>Chat (<a
+href="11-capability-catalog.html#cap-25">CAP-25</a>)</strong> is not
+Live while messages stay in one mock session.</li>
+<li><strong>Immigration (<a
+href="11-capability-catalog.html#cap-50">CAP-50</a>)</strong> is case
+management, not a blank page or a mock eligibility widget.</li>
+</ol>
+<h2 id="current-baseline-selected">6. Current baseline (selected)</h2>
+<p>From BASE-01…BASE-55. Full list in <a
+href="09-requirements-traceability.html">SDD-09</a>.</p>
+<table>
+<thead>
+<tr>
+<th>CAP</th>
+<th>What exists now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td>Shell and fixed mock student session; logout no-op</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Contact edits in one mock session</td>
+</tr>
+<tr>
+<td>09</td>
+<td>File lists; View/Download no-op</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Mock module selection and mock invoices</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Read-only mock timetable</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Sample GPA/results; no publication workflow</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Dashboard preview cards; no detail, no publishing</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Submit demo stores metadata only; bytes never uploaded</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Chat in one mock session</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Whole-portal mobile not accepted</td>
+</tr>
+<tr>
+<td>45–46</td>
+<td>Mock ledger; fictional bank details; proof metadata only</td>
+</tr>
+<tr>
+<td>51–52</td>
+<td>Requests and Accommodation blank</td>
+</tr>
+<tr>
+<td>53</td>
+<td>Contracts exist; no live CMS adapter</td>
+</tr>
+</tbody>
+</table>
+<p>Simplified “Frontend ready” on these rows is Demo or Partial. Do not
+report them as complete in the working group.</p>
+<h2 id="remaining-frontend-estimates-student-only">7. Remaining frontend
+estimates (student only)</h2>
+<p>From the simplified sheet, not a commitment:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>CAP</th>
+<th>Effort</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="11-capability-catalog.html#cap-01">CAP-01</a></td>
+<td>1 day</td>
+<td>Placeholder</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-21">CAP-21</a>, 22</td>
+<td>3 days</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-24">CAP-24</a></td>
+<td>2 days</td>
+<td>Placeholder</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-26">CAP-26</a></td>
+<td>3 days</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-30">CAP-30</a></td>
+<td>2 days</td>
+<td>Placeholder</td>
+</tr>
+<tr>
+<td><a href="11-capability-catalog.html#cap-52">CAP-52</a></td>
+<td>3 days</td>
+<td>Placeholder</td>
+</tr>
+</tbody>
+</table>
+<p>Wiring and CMS work is separate and larger.</p>
+<h2 id="acceptance-m3-student-slice">8. Acceptance (<a
+href="03-delivery-milestones.html#m3">M3</a> student slice)</h2>
+<p>For each in-scope CAP:</p>
+<ul>
+<li>Student action persists in CMS or file store.</li>
+<li>Matching lecturer/staff action is Live or verified in old CMS.</li>
+<li>No sample ledger, no fictional bank, no mock session identity.</li>
+<li>Core mobile CAPs accepted on phone widths.</li>
+</ul>
+<h2 id="related-documents">9. Related documents</h2>
+<p>Lecturer pair: <a href="06-lecturer-portal.html">SDD-06</a>. Staff
+pair: <a href="07-admin-staff-cms.html">SDD-07</a>. Catalogue: <a
+href="11-capability-catalog.html">SDD-11</a>.</p>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

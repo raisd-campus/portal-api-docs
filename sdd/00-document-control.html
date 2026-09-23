@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>00-document-control — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="document-control">Document control</h1>
+<p><strong>Document:</strong> SDD-00<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 18 September 2026<br />
+<strong>Author:</strong> Iman Suherman<br />
+<strong>Audience:</strong> Working Group CMS 2026</p>
+<h2 id="purpose">Purpose</h2>
+<p>Establish a single design baseline for the Student Portal and Campus
+Management System work the group is already running. The Daily Checklist
+is the product backlog. These SDDs add architecture, flows, definition
+of done, and the decisions that the checklist leaves TBC.</p>
+<h2 id="revision-history">Revision history</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>18 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>First draft from Working Group sheet + group chat. Not yet confirmed
+by owners.</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>19 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>SDD-12 records repository-to-host placement on the existing UltaHost
+VDS estate. Not yet confirmed which Premium runs the old CMS.</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>19 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>SDD-12 revised: k3s, one node and the applicant portal first, then
+four launch stages.</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>19 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>SDD-12: server size per stage, from a 4 GB VPS up to a 16 GB data
+node only when the previous size is full.</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>19 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>SDD-13: sheet re-downloaded. No status change. Live count is 0.
+Dates remain TBC.</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>23 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>Central AI knowledge base at <a
+href="../ai/"><code>docs/ai/</code></a> per Faid Zamin suggestion
+(standup 22 Sep 2026). Student-portal agent docs extracted; sibling
+repos point here as SSOT.</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>23 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>SDD-14: Cyberjaya old CMS zip inventoried and mapped to CAP
+catalogue (<code>docs/ai/backend/cms-feature-comparison.md</code>).</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>23 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>GitHub Pages section <code>docs/diagrams/old-cms/</code> — verbose
+comparison, FSD, legacy ERD, flows, triggers/SPs/batches.</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>23 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>Aslam confirmed this-phase SoR = Cyberjaya CMS + Portal API (no ops
+duplication); longer-term progressive unified CMS. Recorded in
+SDD-01/02/03/14 and architecture overview.</td>
+</tr>
+<tr>
+<td>0.10</td>
+<td>23 Sep 2026</td>
+<td>Iman Suherman</td>
+<td>SDD-15 nomenclature; CAP-* / M* anchors and cross-links in SDD-03/11
+and key docs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sources">Sources</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Source</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Student Portal and CMS Daily Checklist (simplified, detailed,
+Timeline, Requirements &amp; Sources)</td>
+<td>Canonical backlog and evidence</td>
+</tr>
+<tr>
+<td>Working Group CMS 2026 WhatsApp, 18 Sep 2026</td>
+<td>Meeting context; student portal v1 frontend in progress</td>
+</tr>
+<tr>
+<td>Repository baseline <code>6811e88</code> recorded in Requirements
+tab</td>
+<td>Current student frontend implementation</td>
+</tr>
+<tr>
+<td>Adobe XD Student Portal Rev04</td>
+<td>Visual reference only; not the delivery sequence</td>
+</tr>
+<tr>
+<td>Phase 1 Timeline Resource Scenarios</td>
+<td>Staffing note from earlier thread; not the working-group milestone
+order</td>
+</tr>
+<tr>
+<td>Aslam WhatsApp, 19 Sep 2026</td>
+<td>Current UltaHost estate: VDS POWER Plus × 1, POWER Premium × 2;
+mailbox on <code>cp8.sgp1</code></td>
+</tr>
+<tr>
+<td>Faid Zamin, Working Group CMS 2026, 18 Sep 2026</td>
+<td>Google Sheet
+<code>1Yux9R8hIgcPrQ5OklKd9Oyq_04qJtaAhcxJvr_7NvYI</code>, overarching
+timeline. Re-downloaded 19 Sep 2026. Status cells unchanged.</td>
+</tr>
+<tr>
+<td>Faid Zamin, Working Group standup, 22 Sep 2026</td>
+<td>Suggested a central AI knowledge base for backend, frontend, and
+architecture under control-plane <code>docs/</code>. Implemented as <a
+href="../ai/"><code>docs/ai/</code></a>.</td>
+</tr>
+<tr>
+<td><code>raisd-campus/student-portal</code> agent docs</td>
+<td>Extracted into <a
+href="../ai/frontend/student-portal/"><code>docs/ai/frontend/student-portal/</code></a>
+on 23 Sep 2026 for cross-repo agent use.</td>
+</tr>
+<tr>
+<td>Aslam WhatsApp, 23 Sep 2026</td>
+<td>Confirmed this-phase CMS-as-SoR + Portal API portals; longer-term
+progressive unified one-stop CMS on verified gaps + migration
+strategy.</td>
+</tr>
+<tr>
+<td><code>CMS_Cyberjaya_Source_Codes_&amp;_DB_Structure_23_09_2026.zip</code></td>
+<td>Existing CMS source + structure dump. Inventoried 23 Sep 2026 into
+<a
+href="../ai/backend/old-cms-cyberjaya.html"><code>docs/ai/backend/old-cms-cyberjaya.md</code></a>
+and <a href="14-cms-feature-comparison.html">SDD-14</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="product-decisions-already-recorded">Product decisions already
+recorded</h2>
+<p>From PRODUCT-PRIORITY, PRODUCT-MOBILE, PRODUCT-PORTALS (7 September
+2026):</p>
+<ol type="1">
+<li>Cyberjaya first.</li>
+<li>Admissions before semester registration.</li>
+<li>Core mobile at launch (phone-friendly web, not a verified native-app
+mandate).</li>
+<li>Keep the existing CMS as the initial backend. Whole-CMS coverage is
+a backlog, not an instruction to replace working legacy functions.</li>
+<li>Group delivery by Applicant, Student, Lecturer, Admin / Staff, and
+Shared System.</li>
+<li><strong>(23 Sep 2026 — Aslam)</strong> This phase: Cyberjaya CMS =
+SoR; portals via Portal API; no duplication of operational functions.
+Longer term: progressive unified one-stop CMS on verified gaps with a
+clear migration strategy.</li>
+</ol>
+<p>Owners, kickoff date, and backend commitments are TBC.</p>
+<p><a id="glossary"></a></p>
+<h2 id="glossary">Glossary</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="11-capability-catalog.html">CAP-nn</a></td>
+<td>Capability identifier (<code>#cap-nn</code>). Same ID on two portals
+= one capability, two role surfaces. Index: <a
+href="15-nomenclature.html">SDD-15</a>.</td>
+</tr>
+<tr>
+<td>Old CMS / existing CMS</td>
+<td>Current campus system of record. Initial backend for the new
+portals.</td>
+</tr>
+<tr>
+<td>Portal API</td>
+<td>First working integration contract between new UIs and the existing
+CMS.</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>UI on sample data or a temporary session. No live backend, no
+durable save.</td>
+</tr>
+<tr>
+<td>Placeholder</td>
+<td>Screen or control exists; the intended action does not.</td>
+</tr>
+<tr>
+<td>Partial</td>
+<td>Some of the capability exists; key workflow, content, or acceptance
+is missing.</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Accepted, real data, access controls, accountable owner.</td>
+</tr>
+<tr>
+<td>Needs checking</td>
+<td>Not verified with the owning department or old-CMS owner.</td>
+</tr>
+<tr>
+<td>Cyberjaya</td>
+<td>First campus acceptance gate, not the whole eight-country
+footprint.</td>
+</tr>
+<tr>
+<td>Core mobile</td>
+<td>Agreed admissions and student journeys usable on phone/tablet
+widths.</td>
+</tr>
+<tr>
+<td><a href="03-delivery-milestones.html#m1">M1</a>–<a
+href="03-delivery-milestones.html#m5">M5</a></td>
+<td>Delivery milestones (confirm rules → admissions → core student →
+Cyberjaya pilot → expansion / remaining CMS). Index: <a
+href="15-nomenclature.html">SDD-15</a>.</td>
+</tr>
+<tr>
+<td><a href="15-nomenclature.html">SDD-15</a></td>
+<td>Nomenclature index for all CAP-* and M* quick links.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="status-meanings">Status meanings</h2>
+<p>Copied from the checklist Timeline tab. Use these words in PRs,
+stand-ups, and acceptance.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Not started</td>
+<td>No implementation of this capability in the reviewed portal.</td>
+</tr>
+<tr>
+<td>Placeholder</td>
+<td>A page, label or button exists, but the intended action or content
+is unavailable.</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>Built using sample data or a temporary session. No live backend or
+durable save.</td>
+</tr>
+<tr>
+<td>Partial</td>
+<td>Some parts exist; key content, delivery, workflow or acceptance work
+is missing.</td>
+</tr>
+<tr>
+<td>In progress</td>
+<td>An assigned owner is actively working on the item.</td>
+</tr>
+<tr>
+<td>Ready for testing</td>
+<td>Implementation is available for the agreed acceptance tests.</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Accepted and operating with real data, access controls and an
+accountable owner.</td>
+</tr>
+<tr>
+<td>Needs checking</td>
+<td>Capability or evidence has not been verified with its owner.</td>
+</tr>
+<tr>
+<td>Not applicable</td>
+<td>This workstream is not relevant to this capability.</td>
+</tr>
+</tbody>
+</table>
+<p>Software status is not campus compliance. Non-software controls stay
+as explicit checks in the next-action column.</p>
+<h2 id="open-control-items">Open control items</h2>
+<ul>
+<li>Stack, repo access, environments, and named backend owner are not in
+the sheet.</li>
+<li>Department is TBC on many rows. Do not invent owners in these
+drafts.</li>
+<li>Simplified “Frontend ready” maps mostly to Demo / Partial in the
+detailed tab. Design docs use the detailed statuses.</li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>

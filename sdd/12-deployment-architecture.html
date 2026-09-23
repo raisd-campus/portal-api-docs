@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>12-deployment-architecture — Raisd SDD</title>
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <style>
+    main.sdd-doc { max-width: 1460px; }
+    main.sdd-doc table { display: block; overflow-x: auto; width: 100%; }
+    main.sdd-doc h1 { font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; }
+    main.sdd-doc h2 { margin-top: 1.8rem; }
+    main.sdd-doc pre { overflow-x: auto; background: #eef2f7; padding: 12px; border-radius: 8px; }
+    main.sdd-doc code { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <strong>Raisd Control Plane</strong>
+        <span>Overview · Architecture · ERD · DFD · <a href="../diagrams/old-cms/">LUCT CMS</a> · AI knowledge · OpenAPI</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="../index.html">Overview</a>
+        <a href="../diagrams/architecture.html">Architecture</a>
+        <a href="../diagrams/erd.html">ERD</a>
+        <a href="../diagrams/dfd.html">DFD</a>
+        <a href="../diagrams/old-cms/">LUCT CMS</a>
+        <a href="../ai/index.html">AI knowledge</a>
+        <a class="active" href="./index.html">SDD</a>
+        <a href="../index.html">OpenAPI</a>
+      </nav>
+    </div>
+  </header>
+  <main class="sdd-doc">
+<h1 id="deployment-architecture">Deployment architecture</h1>
+<p><strong>Document:</strong> SDD-12<br />
+<strong>Status:</strong> Working draft<br />
+<strong>Date:</strong> 19 September 2026<br />
+<strong>Depends on:</strong> <a
+href="02-architecture-and-integration.html">SDD-02</a></p>
+<p>Logical design stays in SDD-02. This document says which repository
+builds which service, which machine runs it, and how a browser reaches
+it. The runtime is Kubernetes. The first launch stage is one node and
+one portal.</p>
+<h2 id="hosting-decision">1. Hosting decision</h2>
+<p><strong>ADR-2 — Singapore, on UltaHost. Size follows the stage, not
+the largest machine already owned.</strong></p>
+<p>On 19 September 2026 Aslam said the current estate is UltaHost
+<strong>VDS POWER Plus × 1</strong> and <strong>VDS POWER Premium ×
+2</strong>, and pointed at the VPS page. Region stays Singapore, the
+same location as the mailbox host <code>cp8.sgp1.ultacp.com</code>. The
+cluster does not start on a Premium. Section 2.1 is the size to
+provision at each stage. A larger machine already paid for may be used,
+but it is not the requirement.</p>
+<p><strong>ADR-3 — Kubernetes, starting at the minimum.</strong></p>
+<p>Application workloads run on <strong>k3s</strong>. k3s is the
+distribution because it is one binary, includes Traefik as ingress, and
+fits a single 16 GB node. Do not install a multi-master distribution, a
+service mesh, or a separate ingress product for the first stage.</p>
+<p>The existing CMS does not move onto Kubernetes. Mail does not move
+onto Kubernetes.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Plan</th>
+<th>Spec</th>
+<th>When it enters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data node, stage 1–2</td>
+<td>VPS Professional, then Enterprise</td>
+<td>3 cores / 4 GB, then 4 cores / 6 GB</td>
+<td>Stage 1. The only Kubernetes node</td>
+</tr>
+<tr>
+<td>Edge node</td>
+<td>VPS Professional</td>
+<td>3 cores, 4 GB, 75 GB NVMe</td>
+<td>Stage 3. Ingress and portal pods</td>
+</tr>
+<tr>
+<td>Data node, from stage 3</td>
+<td>POWER Plus, then Premium if full</td>
+<td>4 cores / 8 GB, then 8 cores / 16 GB</td>
+<td>Stage 3. API, Postgres, files</td>
+</tr>
+<tr>
+<td>System of record</td>
+<td>POWER Premium, already owned</td>
+<td>8 cores, 16 GB, 450 GB NVMe</td>
+<td>Existing CMS. Never a node</td>
+</tr>
+<tr>
+<td>Mail</td>
+<td>UltaCP <code>cp8.sgp1.ultacp.com</code></td>
+<td>Already provisioned</td>
+<td>Mail only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Still to confirm with Aslam:</strong> which Premium already
+runs the old CMS. That machine is Premium 2. If neither does, the CMS is
+placed there. It is still not a Kubernetes node.</p>
+<h2 id="launch-stages">2. Launch stages</h2>
+<p>Each stage adds workloads. It does not replace the cluster. Replicas
+stay at 1 until a stage says otherwise. Dates follow <a
+href="03-delivery-milestones.html">SDD-03</a> and are still TBC.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>When</th>
+<th>Cluster</th>
+<th>What is running</th>
+<th>Public names</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Minimum</td>
+<td>Before admissions</td>
+<td>One k3s node at the stage 1 size below</td>
+<td>Ingress, <code>applicant-portal</code>, <code>portal-api</code>,
+Postgres, evidence volume. One replica each</td>
+<td><code>apply.raisd.co</code>, <code>api.raisd.co</code></td>
+</tr>
+<tr>
+<td>2. Admissions launch</td>
+<td>Milestone 2</td>
+<td>Same node, resized</td>
+<td>Stage 1, wired to the real CMS. Backup CronJob.
+<code>staff-portal</code> only if SDD-07 has verified a gap</td>
+<td>Same, plus <code>staff.raisd.co</code> only if that deployment
+exists</td>
+</tr>
+<tr>
+<td>3. Core student</td>
+<td>Milestone 3</td>
+<td>Add the edge node. Data node steps up</td>
+<td>Add <code>student-portal</code> and <code>lecturer-portal</code>.
+Ingress moves to the edge node</td>
+<td><code>student.raisd.co</code>, <code>teach.raisd.co</code>. DNS
+moves to the edge node</td>
+</tr>
+<tr>
+<td>4. Pilot acceptance</td>
+<td>Milestone 4</td>
+<td>Same two nodes. No resize</td>
+<td>Restore drill from the backup job. No new product in the
+cluster</td>
+<td>Unchanged</td>
+</tr>
+<tr>
+<td>5. Campus expansion</td>
+<td>Milestone 5</td>
+<td>Grow the data node only when it is full</td>
+<td>Remaining portal features. Not a second control plane</td>
+<td>Unchanged until a campus outside Southeast Asia launches</td>
+</tr>
+</tbody>
+</table>
+<h3 id="server-requirements">2.1 Server requirements</h3>
+<p>Each row is the minimum for that stage. Do not skip ahead. Prices are
+the 24-month rates on ultahost.com on 19 September 2026, not a quote.
+All of them in Singapore.</p>
+<p>Do not start on VPS Basic (1 GB) or VPS Business (2 GB). k3s,
+Traefik, Postgres, and the API need about 1 GB, 1 GB, and 0.5 GB before
+the operating system. 4 GB is the smallest size with headroom. The VPS
+line ends at 6 GB, so stage 3 is the first step onto a VDS.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Nodes</th>
+<th>Requirement</th>
+<th>Smallest plan</th>
+<th>Cluster total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Minimum</td>
+<td>1</td>
+<td>3 vCPU, 4 GB RAM, 75 GB NVMe</td>
+<td>VPS Professional, about $15.87 / mo</td>
+<td>3 vCPU, 4 GB</td>
+</tr>
+<tr>
+<td>2. Admissions launch</td>
+<td>1</td>
+<td>4 vCPU, 6 GB RAM, 100 GB NVMe</td>
+<td>VPS Enterprise, about $20.69 / mo. Resize the stage 1 node. Do not
+add a second</td>
+<td>4 vCPU, 6 GB</td>
+</tr>
+<tr>
+<td>3. Core student</td>
+<td>2</td>
+<td>Edge: 3 vCPU, 4 GB, 75 GB. Data: 4 vCPU, 8 GB, 250 GB</td>
+<td>Edge: a second VPS Professional. Data: VDS POWER Plus, about $37.72
+/ mo. 6 GB is no longer enough for Postgres, the API, and assignment
+files</td>
+<td>7 vCPU, 12 GB</td>
+</tr>
+<tr>
+<td>4. Pilot acceptance</td>
+<td>2</td>
+<td>Same as stage 3</td>
+<td>No new server</td>
+<td>7 vCPU, 12 GB</td>
+</tr>
+<tr>
+<td>5. Campus expansion</td>
+<td>2</td>
+<td>Edge unchanged. Data: 8 vCPU, 16 GB, 450 GB, and only when the 8 GB
+node is full on CPU or disk</td>
+<td>VDS POWER Premium, about $68.43 / mo, for the data node only</td>
+<td>11 vCPU, 20 GB</td>
+</tr>
+</tbody>
+</table>
+<p>What is already owned, and when to use it:</p>
+<ul>
+<li>POWER Plus (4 cores, 8 GB, 250 GB) meets the stage 3 data
+requirement. Leave it out of the cluster until then.</li>
+<li>One POWER Premium meets the stage 5 data requirement, or it is the
+CMS. It is not the stage 1 node.</li>
+<li>The other POWER Premium is the CMS. It never joins Kubernetes.</li>
+</ul>
+<p>Running stage 1 on the Plus box is allowed, because 8 GB is more than
+4 GB. It is not the requirement. Prefer the Professional VPS so the Plus
+box is free for stage 3.</p>
+<p>Stage 1 is the spec to install. Stages 2–5 are the launch sequence.
+Do not deploy the student, lecturer, or staff images until the stage
+that names them.</p>
+<h2 id="repository-to-service">3. Repository to service</h2>
+<p>Five GitHub repositories in <code>raisd-campus</code>. The existing
+CMS and mail have no repository here. The control plane is one
+repository. Its processes are separate Kubernetes objects on the data
+node, not separate repositories.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Kubernetes object</th>
+<th>Replicas at stage 1</th>
+<th>Node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/applicant-portal"><code>applicant-portal</code></a></td>
+<td>Deployment <code>applicant-portal</code></td>
+<td>1</td>
+<td>Data node at stage 1. Edge node from stage 3</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/student-portal"><code>student-portal</code></a></td>
+<td>Deployment <code>student-portal</code></td>
+<td>Not deployed</td>
+<td>Edge node, stage 3</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/lecturer-portal"><code>lecturer-portal</code></a></td>
+<td>Deployment <code>lecturer-portal</code></td>
+<td>Not deployed</td>
+<td>Edge node, stage 3</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/staff-portal"><code>staff-portal</code></a></td>
+<td>Deployment <code>staff-portal</code></td>
+<td>Not deployed</td>
+<td>Edge node, stage 2 only if a CMS gap is verified, otherwise stage
+3</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/control-plane"><code>control-plane</code></a></td>
+<td>Deployment <code>portal-api</code></td>
+<td>1</td>
+<td>Data node</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/control-plane"><code>control-plane</code></a></td>
+<td>StatefulSet <code>postgres</code></td>
+<td>1</td>
+<td>Data node</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/control-plane"><code>control-plane</code></a></td>
+<td>PersistentVolumeClaim <code>evidence</code></td>
+<td>1 volume</td>
+<td>Data node</td>
+</tr>
+</tbody>
+</table>
+<p>One namespace, <code>campus</code>. All Services are ClusterIP. Only
+the ingress is reachable from outside the cluster.</p>
+<p>Portal pods do not open Postgres and do not call the CMS. They call
+<code>portal-api</code>.</p>
+<h2 id="how-the-services-call-each-other">4. How the services call each
+other</h2>
+<pre class="mermaid"><code>flowchart LR
+  subgraph stage1 [Stage 1 — one VPS, k3s]
+    ING[Traefik ingress]
+    AW[applicant-portal]
+    API[portal-api]
+    PG[(Postgres)]
+    FS[Evidence volume]
+  end
+
+  CMS[Existing CMS on Premium 2]
+  Mail[UltaCP mail]
+
+  Browser[Browser] --&gt; ING
+  ING --&gt; AW
+  ING --&gt; API
+  API --&gt; PG
+  API --&gt; FS
+  API --&gt;|private| CMS
+  API -.-&gt;|mail later, not stage 1| Mail</code></pre>
+<p>From stage 3 the ingress and the portal Deployments run on the edge
+node. <code>portal-api</code>, Postgres, and the evidence volume stay on
+the data node by node selector. The arrows do not change.</p>
+<p>Rules:</p>
+<ol type="1">
+<li>A portal pod never talks to Postgres, the evidence volume, or the
+CMS.</li>
+<li><code>portal-api</code> reports success only after the CMS
+acknowledges the write.</li>
+<li>Postgres and the evidence volume have no Ingress and no host
+port.</li>
+<li>Premium 2 is not a cluster node. It accepts CMS traffic from
+<code>portal-api</code> only.</li>
+<li>Mail is not in the request path. Webmail stays on UltaCP.</li>
+</ol>
+<h2 id="how-they-are-exposed">5. How they are exposed</h2>
+<p>Traefik, installed with k3s, terminates TLS and routes by hostname.
+There is no Caddy and no Docker Compose.</p>
+<p>Stage 1 and 2: public DNS points at the <strong>single data
+node</strong>. Stage 3 onward: public DNS points at the <strong>edge
+node</strong>, and the data node no longer accepts 443 from the
+internet.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Public name</th>
+<th>Repository</th>
+<th>First served</th>
+<th>Who</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>apply.raisd.co</code></td>
+<td><code>applicant-portal</code></td>
+<td>Stage 1</td>
+<td>Applicants</td>
+</tr>
+<tr>
+<td><code>api.raisd.co</code></td>
+<td><code>control-plane</code></td>
+<td>Stage 1</td>
+<td>Portal browsers, with a bearer token</td>
+</tr>
+<tr>
+<td><code>staff.raisd.co</code></td>
+<td><code>staff-portal</code></td>
+<td>Stage 2 if a gap is verified, otherwise not until stage 3</td>
+<td>Registry, Faculty, Bursary, QA, Marketing</td>
+</tr>
+<tr>
+<td><code>student.raisd.co</code></td>
+<td><code>student-portal</code></td>
+<td>Stage 3</td>
+<td>Students</td>
+</tr>
+<tr>
+<td><code>teach.raisd.co</code></td>
+<td><code>lecturer-portal</code></td>
+<td>Stage 3</td>
+<td>Lecturers</td>
+</tr>
+</tbody>
+</table>
+<p><code>raisd.co</code> comes from the mailbox domain. These names are
+not a DNS change that has already been made. Do not publish a name
+before its Deployment exists.</p>
+<p>Separate hostnames are deliberate. The API issues a bearer token. Do
+not set a cookie on <code>Domain=.raisd.co</code>.</p>
+<p>The existing CMS keeps its current URL. It is not an Ingress rule.
+Webmail stays at <code>https://cp8.sgp1.ultacp.com:2096/</code>.</p>
+<h3 id="firewall">Firewall</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Stage 1–2</th>
+<th>From stage 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data node</td>
+<td>443 and 80 from the internet. 80 redirects to 443</td>
+<td>No public 443. Cluster traffic from the edge node only</td>
+</tr>
+<tr>
+<td>Edge node</td>
+<td>Does not exist yet</td>
+<td>443 and 80 from the internet</td>
+</tr>
+<tr>
+<td>CMS host</td>
+<td>Existing CMS URL only, if staff already use it. CMS port from the
+data node</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>UltaCP</td>
+<td>2096 and mail ports, as today</td>
+<td>Same</td>
+</tr>
+</tbody>
+</table>
+<p>Postgres has no host port. SSH is for operators.</p>
+<h2 id="one-admissions-request">6. One admissions request</h2>
+<p>This is the stage 1 path. The hostname does not change in later
+stages. Only the node that owns 443 changes.</p>
+<ol type="1">
+<li>The browser loads <code>https://apply.raisd.co</code>. Traefik sends
+it to the <code>applicant-portal</code> Service.</li>
+<li>The browser calls <code>https://api.raisd.co</code> with the
+applicant token. Traefik sends it to <code>portal-api</code>. The
+browser never sees a pod address.</li>
+<li><code>portal-api</code> checks role and campus, writes the file to
+the evidence volume, and writes the application to the CMS on Premium
+2.</li>
+<li>If the CMS does not acknowledge, the API returns a failed save.</li>
+<li>Registry reviews in the existing CMS. <code>staff.raisd.co</code> is
+not part of stage 1.</li>
+</ol>
+<h2 id="what-is-installed-on-the-first-node">7. What is installed on the
+first node</h2>
+<p>The stage 1 node, and nothing else:</p>
+<ul>
+<li>Ubuntu 24.04 on the VPS Professional (3 vCPU, 4 GB, 75 GB)</li>
+<li>k3s, single server, Traefik enabled, no extra registries</li>
+<li>Namespace <code>campus</code></li>
+<li>The four objects in the stage 1 column above</li>
+<li>Local persistent volumes on the NVMe disk</li>
+<li>A CronJob is <strong>not</strong> in stage 1. The backup job arrives
+at stage 2, before admissions is called Live</li>
+</ul>
+<p>No Helm catalogue beyond what k3s ships. No Prometheus, no
+cert-manager add-on until Traefik’s built-in TLS is not enough, no
+second control plane.</p>
+<h2 id="what-this-does-not-include">8. What this does not include</h2>
+<ul>
+<li>A server larger than the row in section 2.1. The two Premiums are
+not the stage 1 cluster.</li>
+<li>VPS Basic or VPS Business. 2 GB is below the floor.</li>
+<li>Putting the CMS or mail on Kubernetes.</li>
+<li>Deploying student, lecturer, and staff portals in the minimum
+install.</li>
+<li>High availability, a service mesh, or more than one replica, before
+stage 5 shows the node is full.</li>
+</ul>
+<h2 id="related-documents">9. Related documents</h2>
+<ul>
+<li>Logical architecture and <a
+href="11-capability-catalog.html#cap-53">CAP-53</a>: <a
+href="02-architecture-and-integration.html">SDD-02</a></li>
+<li>Milestone order these stages follow: <a
+href="03-delivery-milestones.html">SDD-03</a></li>
+<li>Staff screens only for verified CMS gaps: <a
+href="07-admin-staff-cms.html">SDD-07</a></li>
+<li>Environments and security baseline: <a
+href="08-shared-platform.html">SDD-08</a></li>
+</ul>
+  </main>
+  <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
+  <script src="../diagrams/abbr-tooltips.js" defer></script>
+</body>
+</html>
