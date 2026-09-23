@@ -36,7 +36,7 @@
       <div class="meta-row">
         <span class="chip">cyberjayabatchnight*.sh</span>
         <span class="chip">portal.sql LoginActive</span>
-        <span class="chip ok">CAP-53 write path</span>
+        <span class="chip ok"><a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> write path</span>
       </div>
     </section>
 
@@ -62,7 +62,7 @@
       <h2>Nightly batch sequence</h2>
       <p class="lead">
         From <code>cyberjayabatchnight*.sh</code>: stop httpd, run domain SQL jobs, restart httpd,
-        then mysqldump portal sync exports. CAP-53 must assume these jobs refresh balances,
+        then mysqldump portal sync exports. <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> must assume these jobs refresh balances,
         attendance, portal flags, and reports overnight.
       </p>
       <div class="card">
@@ -177,7 +177,7 @@ flowchart TD
         <div class="card-head">
           <div>
             <h3>portal.sql LoginActive rules</h3>
-            <p>Raisd CAP-01 must honour equivalent policy, not invent open access.</p>
+            <p>Raisd <a href="../../sdd/11-capability-catalog.md#cap-01">CAP-01</a> must honour equivalent policy, not invent open access.</p>
           </div>
         </div>
         <div class="card-body">
@@ -227,7 +227,7 @@ flowchart LR
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Direct MySQL vs CAP-53 ACL</h3>
+            <h3>Direct MySQL vs <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> ACL</h3>
             <p>Canonical Raisd DFDs: <a href="../dfd.html">../dfd.html</a>.</p>
           </div>
         </div>

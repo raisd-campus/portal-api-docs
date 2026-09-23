@@ -17,7 +17,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Staff UI → [frontend/staff-portal.md](frontend/staff-portal.md)
    - Portal API / identity / campus config → [backend/portal-api.md](backend/portal-api.md)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
-4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract.
+4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
 
 ## 2. Product boundaries (campus-wide)
@@ -25,7 +25,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 - **Four portals, one existing CMS.** Applicant, Student, Lecturer, and Staff are separate webs. They talk only to the **Portal API**. They never write directly to Postgres or the existing CMS.
 - **Cyberjaya first.** Admissions before semester registration. Core mobile at launch means phone-friendly agreed journeys, not a verified native-app mandate.
 - **This phase — ADR-1 (confirmed Aslam, 23 Sep 2026):** keep the existing Cyberjaya CMS as system of record; build modern portal experiences via the Portal API; **do not duplicate** operational functions. Inventory and CAP mapping: [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md).
-- **Longer term:** progressive **unified one-stop CMS**, only on verified gaps with an explicit migration strategy (M5+ backlog — not launch rewrite). See [architecture/overview.md](architecture/overview.md) and [SDD-03](../sdd/03-delivery-milestones.md).
+- **Longer term:** progressive **unified one-stop CMS**, only on verified gaps with an explicit migration strategy ([M5](../sdd/03-delivery-milestones.md#m5)+ backlog — not launch rewrite). See [architecture/overview.md](architecture/overview.md) and [SDD-03](../sdd/03-delivery-milestones.md).
 - **Demo ≠ Live.** Sample data and session-only mutations are Demo. Live requires durable save through the Portal API (or approved production path), server-enforced authz, and a named owner.
 - Do not present planned or speculative capabilities as implemented.
 - Do not invent campus policy, legal basis, EMGS outcomes, or tax treatment beyond what the knowledge base already records as prototype assumptions.
@@ -50,7 +50,7 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 - Authorisation is server-enforced. Client-side role hiding is not security.
 - Evidence, assignments, and payment proofs need a durable file store for Live; metadata-only demos are not Live.
 - Hosting: existing UltaHost VDS / staged k3s plan in [architecture/deployment.md](architecture/deployment.md) and [SDD-12](../sdd/12-deployment-architecture.md). Do not invent a greenfield cloud topology without an ADR update.
-- CAP IDs are shared across portals: the same CAP on two portals is one capability, two role surfaces ([SDD-11](../sdd/11-capability-catalog.md)).
+- CAP IDs are shared across portals: the same CAP on two portals is one capability, two role surfaces ([SDD-11](../sdd/11-capability-catalog.md)). Quick links: [SDD-15](../sdd/15-nomenclature.md).
 
 ## 5. Documentation duties
 

@@ -10,12 +10,16 @@ decision:
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
   - 2026-09-23: Cyberjaya old CMS dump inventoried; CAP comparison at backend/cms-feature-comparison.md (SDD-14).
+  - 2026-09-23: SDD-15 nomenclature — CAP-* and M1–M5 anchors/cross-links (../sdd/15-nomenclature.md).
 
 entrypoints:
   agents: AGENTS.md
   humans: README.md
   generate_docs: process/generate-documentation.md
   product_baseline: ../sdd/README.md
+  nomenclature: ../sdd/15-nomenclature.md
+  capability_catalog: ../sdd/11-capability-catalog.md
+  milestones: ../sdd/03-delivery-milestones.md
 
 sibling_repos:
   - applicant-portal

@@ -13,7 +13,7 @@ Four role portals on top of the **existing campus CMS**, not a greenfield replac
 
 Consequences:
 
-- CAP-53 (existing CMS integration and campus configuration) is on the critical path for Admissions launch.
+- [CAP-53](../../sdd/11-capability-catalog.md#cap-53) (existing CMS integration and campus configuration) is on the critical path for Admissions launch.
 - Frontend “ready” screens cannot go Live until the matching old-CMS capability is verified or replaced.
 - New staff screens are built only where the old CMS does not already support the workflow.
 - Inventory of the Cyberjaya dump and CAP mapping: [../backend/old-cms-cyberjaya.md](../backend/old-cms-cyberjaya.md), [../backend/cms-feature-comparison.md](../backend/cms-feature-comparison.md), [SDD-14](../../sdd/14-cms-feature-comparison.md).
@@ -25,7 +25,7 @@ Longer term, Raisd still aims for a **unified, one-stop CMS**. That is **not** l
 1. when a **verified gap** exists in the old CMS (or an explicit product decision to retire a legacy desk), and  
 2. with a **clear migration strategy** (data ownership, cutover, rollback, staff training).
 
-Milestone framing: M1–M4 stay Portal-API-on-existing-CMS; progressive consolidation is planned under **M5+** / remaining-CMS work ([SDD-03](../../sdd/03-delivery-milestones.md), [SDD-14](../../sdd/14-cms-feature-comparison.md)).
+Milestone framing: [M1](../../sdd/03-delivery-milestones.md#m1)–[M4](../../sdd/03-delivery-milestones.md#m4) stay Portal-API-on-existing-CMS; progressive consolidation is planned under **[M5](../../sdd/03-delivery-milestones.md#m5)+** / remaining-CMS work ([SDD-03](../../sdd/03-delivery-milestones.md), [SDD-14](../../sdd/14-cms-feature-comparison.md)).
 
 ## Logical shape
 
@@ -56,7 +56,7 @@ Rules:
 3. Core mobile at launch (phone-friendly web).
 4. Keep the existing CMS as the initial backend (**this phase SoR**, confirmed Aslam 23 Sep 2026).
 5. Group delivery by Applicant, Student, Lecturer, Admin/Staff, and Shared System.
-6. Longer term: progressive **unified one-stop CMS**, only via verified gaps and an explicit migration strategy (not M2–M4 launch scope).
+6. Longer term: progressive **unified one-stop CMS**, only via verified gaps and an explicit migration strategy (not [M2](../../sdd/03-delivery-milestones.md#m2)–[M4](../../sdd/03-delivery-milestones.md#m4) launch scope).
 
 ## Current implementation tension
 

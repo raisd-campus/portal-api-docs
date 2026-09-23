@@ -6,6 +6,7 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 **ERD & DFD:** https://raisd-campus.github.io/portal-api-docs/diagrams/
 **Old CMS analysis:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/
 **AI knowledge:** https://raisd-campus.github.io/portal-api-docs/ai/
+**SDD / nomenclature:** https://raisd-campus.github.io/portal-api-docs/sdd/
 
 | File | Role |
 |------|------|
@@ -13,6 +14,7 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 | [`index.html`](index.html) | Swagger UI |
 | [`diagrams/`](diagrams/) | Mermaid ERD and DFD HTML pages |
 | [`diagrams/old-cms/`](diagrams/old-cms/) | Cyberjaya old CMS comparison, FSD, legacy ERD, flows, DB tech |
+| [`sdd/`](sdd/) | SDD copies; CAP-* / M* nomenclature ([15-nomenclature.md](sdd/15-nomenclature.md)) |
 
 The implementation and diagram source of truth live in the private [`control-plane`](https://github.com/raisd-campus/control-plane) repo (`portal-api/`, `docs/diagrams/`). Keep this published copy in sync when those change.
 

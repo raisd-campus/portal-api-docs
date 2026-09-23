@@ -14,11 +14,11 @@ Keep the current campus CMS as system of record. New portals talk to it through 
 
 Consequences:
 
-- CAP-53 (existing CMS integration and campus configuration) is on the critical path for Admissions launch.
+- [CAP-53](11-capability-catalog.md#cap-53) (existing CMS integration and campus configuration) is on the critical path for Admissions launch.
 - Frontend “ready” screens cannot go Live until the matching old-CMS capability is verified or replaced.
 - New staff screens are built only where the old CMS does not already support the workflow.
 
-**Longer-term target:** a unified, one-stop CMS, delivered progressively on **verified gaps** with an explicit **migration strategy**. That is post-pilot / remaining-CMS work ([SDD-03](03-delivery-milestones.md) M5+), not a mandate to replace working desks for Admissions launch.
+**Longer-term target:** a unified, one-stop CMS, delivered progressively on **verified gaps** with an explicit **migration strategy**. That is post-pilot / remaining-CMS work ([SDD-03](03-delivery-milestones.md) [M5](03-delivery-milestones.md#m5)+), not a mandate to replace working desks for Admissions launch.
 
 Hosting placement is in [SDD-12](12-deployment-architecture.md): the existing UltaHost VDS estate in Singapore, not a new VPS. The concrete old-CMS product name is still TBC. The student frontend baseline implies a TypeScript web app with replaceable API contracts (`src/services/portal-runtime.tsx`, `src/services/portal-api.ts`).
 
@@ -73,7 +73,7 @@ flowchart TB
   CMS --> MON
 ```
 
-## 3. Integration contract (CAP-53)
+## 3. Integration contract ([CAP-53](11-capability-catalog.md#cap-53))
 
 Current baseline: replaceable API contracts and mock campus ownership exist; **no authenticated HTTP adapter and no live CMS connection**.
 
@@ -94,10 +94,10 @@ First working integration is admissions + authentication, not the entire student
 
 | Capability | Design |
 |---|---|
-| CAP-01 Applicant / Student sign-in | Real session. Logout ends the session. Password recovery or SSO as the old CMS already provides. Mock “always logged in as one student” is not acceptable for Live. |
-| CAP-44 Staff workspace | Confirm existing-CMS staff access for admissions first. New staff chrome only for verified gaps. |
-| CAP-39 Privacy / permissions | Authorisation is server-enforced. Client-side student scoping is not security. |
-| CAP-35 Accessibility | Core forms and shells work with keyboard and assistive technology. |
+| [CAP-01](11-capability-catalog.md#cap-01) Applicant / Student sign-in | Real session. Logout ends the session. Password recovery or SSO as the old CMS already provides. Mock “always logged in as one student” is not acceptable for Live. |
+| [CAP-44](11-capability-catalog.md#cap-44) Staff workspace | Confirm existing-CMS staff access for admissions first. New staff chrome only for verified gaps. |
+| [CAP-39](11-capability-catalog.md#cap-39) Privacy / permissions | Authorisation is server-enforced. Client-side student scoping is not security. |
+| [CAP-35](11-capability-catalog.md#cap-35) Accessibility | Core forms and shells work with keyboard and assistive technology. |
 
 Roles at minimum: Applicant, Student, Lecturer, Registry, Faculty, Bursary, Finance, QA, Marketing, Admin. Campus and programme scope ride on the token, not on the UI hiding a menu.
 
@@ -109,17 +109,17 @@ Several student demos store metadata only (assignments, payment proof, documents
 - Virus/type checks on the server.
 - Permissioned download URLs.
 - Staff receipt of the same object the student submitted.
-- No treating CAP-46 payment proof as a completed payment.
+- No treating [CAP-46](11-capability-catalog.md#cap-46) payment proof as a completed payment.
 
 ## 6. Mobile (PRODUCT-MOBILE)
 
 Not a native app. Core journeys must work on agreed phone and tablet widths:
 
-CAP-01, 02, 03, 07, 11, 16, 17, 18, 19, 20, 21, 22, 35, 36, 55.
+[CAP-01](11-capability-catalog.md#cap-01), 02, 03, 07, 11, 16, 17, 18, 19, 20, 21, 22, 35, 36, 55.
 
 Current baseline: whole-portal mobile is not accepted; only isolated Services content has responsive tests.
 
-CAP-36 (shell) is a launch dependency for Admissions. Lecturer/staff mobile (CAP-36 on those portals) is Campus expansion unless the group promotes it.
+[CAP-36](11-capability-catalog.md#cap-36) (shell) is a launch dependency for Admissions. Lecturer/staff mobile ([CAP-36](11-capability-catalog.md#cap-36) on those portals) is Campus expansion unless the group promotes it.
 
 ## 7. Data ownership
 
@@ -137,11 +137,11 @@ CAP-36 (shell) is a launch dependency for Admissions. Lecturer/staff mobile (CAP
 
 | ID | Requirement | Live evidence |
 |---|---|---|
-| CAP-37 | Connectivity, capacity, monitoring | Uptime target, expected users, dashboards |
-| CAP-38 | Backups and continuity | Restore test, named owner |
-| CAP-39 | Privacy and cybersecurity | Policy + server controls |
-| CAP-41 | Staff training | Training record before Cyberjaya acceptance |
-| CAP-42 | Copyright / providers | Operating approval, not a screen |
+| [CAP-37](11-capability-catalog.md#cap-37) | Connectivity, capacity, monitoring | Uptime target, expected users, dashboards |
+| [CAP-38](11-capability-catalog.md#cap-38) | Backups and continuity | Restore test, named owner |
+| [CAP-39](11-capability-catalog.md#cap-39) | Privacy and cybersecurity | Policy + server controls |
+| [CAP-41](11-capability-catalog.md#cap-41) | Staff training | Training record before Cyberjaya acceptance |
+| [CAP-42](11-capability-catalog.md#cap-42) | Copyright / providers | Operating approval, not a screen |
 
 Frontend screens do not establish operational readiness.
 

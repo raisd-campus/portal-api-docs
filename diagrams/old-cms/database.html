@@ -39,7 +39,7 @@
         <span class="chip ok">~237 triggers</span>
         <span class="chip ok">~107 tables</span>
         <span class="chip ok">~318 procedures</span>
-        <span class="chip warn">CAP-53 must survive triggers</span>
+        <span class="chip warn"><a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> must survive triggers</span>
       </div>
     </section>
 
@@ -98,7 +98,7 @@
       <div class="note" style="margin:16px 0">
         <strong>Example — <code>r_student</code> AFTER INSERT.</strong>
         Seeds related rows (e.g. <code>r_starter</code>, contacts / related personal structures).
-        Any CAP-53 enrol path that inserts into <code>r_student</code> must tolerate and expect
+        Any <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> enrol path that inserts into <code>r_student</code> must tolerate and expect
         these side-effects — do not insert “bare” student rows assuming no cascade work.
       </div>
 
@@ -223,7 +223,7 @@
       <h2>api_* procedures (6)</h2>
       <div class="table-wrap"><table class="attr">
         <thead>
-          <tr><th>Name</th><th>Discovery use for CAP-53</th></tr>
+          <tr><th>Name</th><th>Discovery use for <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a></th></tr>
         </thead>
         <tbody>
           <tr><td><code>api_student_login_info</code></td><td>Login / session payload seed</td></tr>
@@ -329,7 +329,7 @@
           <tr>
             <td><code>CYBERJAYA-SCRIPT</code> daily/weekly/monthly + S3</td>
             <td>Backup scripts</td>
-            <td>CAP-38 continuity — scripts Present; restore tests Needs checking</td>
+            <td><a href="../../sdd/11-capability-catalog.md#cap-38">CAP-38</a> continuity — scripts Present; restore tests Needs checking</td>
           </tr>
           <tr>
             <td>Visa / notification jobs</td>
@@ -369,7 +369,7 @@
     </section>
 
     <section class="section" id="cap53">
-      <h2>Implications for CAP-53</h2>
+      <h2>Implications for <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a></h2>
       <div class="legend">
         <div class="legend-item">
           <strong>Survive triggers</strong>
@@ -410,7 +410,7 @@
           <tr>
             <td>Ignore <code>portal.sql</code></td>
             <td>Students blocked (or wrongly allowed) vs Raisd session</td>
-            <td>Map LoginActive policy into CAP-01 / authz</td>
+            <td>Map LoginActive policy into <a href="../../sdd/11-capability-catalog.md#cap-01">CAP-01</a> / authz</td>
           </tr>
           <tr>
             <td>Write during httpd-stop window</td>
@@ -425,7 +425,7 @@
         </tbody>
       </table></div>
       <p class="note">
-        First CAP-53 slice recommendation: auth + applicant create/read + document metadata
+        First <a href="../../sdd/11-capability-catalog.md#cap-53">CAP-53</a> slice recommendation: auth + applicant create/read + document metadata
         acknowledgment (using <code>app_*</code> and Agent* discovery), then semester registration.
       </p>
     </section>

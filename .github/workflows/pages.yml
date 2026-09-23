@@ -57,6 +57,9 @@ jobs:
           test -f _site/diagrams/old-cms/index.html
           test -f _site/diagrams/old-cms/comparison.html
           test -f _site/ai/index.html
+          test -f _site/sdd/15-nomenclature.md
+          test -f _site/sdd/11-capability-catalog.md
+          test -f _site/sdd/index.html
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

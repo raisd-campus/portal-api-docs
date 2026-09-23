@@ -11,6 +11,7 @@
 | Any AI agent (Cursor, Claude, Codex, Copilot, etc.) | [AGENTS.md](AGENTS.md) |
 | Machine catalog / tooling | [MANIFEST.yaml](MANIFEST.yaml) |
 | Human onboarding | This file, then [../sdd/README.md](../sdd/README.md) |
+| CAP / milestone IDs (`CAP-*`, `M1`–`M5`) | [../sdd/15-nomenclature.md](../sdd/15-nomenclature.md) |
 | Documentation generation | [process/generate-documentation.md](process/generate-documentation.md) |
 
 ## Layout

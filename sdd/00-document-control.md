@@ -23,6 +23,7 @@ Establish a single design baseline for the Student Portal and Campus Management 
 | 0.7 | 23 Sep 2026 | Iman Suherman | SDD-14: Cyberjaya old CMS zip inventoried and mapped to CAP catalogue (`docs/ai/backend/cms-feature-comparison.md`). |
 | 0.8 | 23 Sep 2026 | Iman Suherman | GitHub Pages section `docs/diagrams/old-cms/` — verbose comparison, FSD, legacy ERD, flows, triggers/SPs/batches. |
 | 0.9 | 23 Sep 2026 | Iman Suherman | Aslam confirmed this-phase SoR = Cyberjaya CMS + Portal API (no ops duplication); longer-term progressive unified CMS. Recorded in SDD-01/02/03/14 and architecture overview. |
+| 0.10 | 23 Sep 2026 | Iman Suherman | SDD-15 nomenclature; CAP-* / M* anchors and cross-links in SDD-03/11 and key docs. |
 
 ## Sources
 
@@ -53,11 +54,13 @@ From PRODUCT-PRIORITY, PRODUCT-MOBILE, PRODUCT-PORTALS (7 September 2026):
 
 Owners, kickoff date, and backend commitments are TBC.
 
+<a id="glossary"></a>
+
 ## Glossary
 
 | Term | Meaning |
 |---|---|
-| CAP-nn | Capability identifier. The same ID on two portals is one capability, two role surfaces. |
+| [CAP-nn](11-capability-catalog.md) | Capability identifier (`#cap-nn`). Same ID on two portals = one capability, two role surfaces. Index: [SDD-15](15-nomenclature.md). |
 | Old CMS / existing CMS | Current campus system of record. Initial backend for the new portals. |
 | Portal API | First working integration contract between new UIs and the existing CMS. |
 | Demo | UI on sample data or a temporary session. No live backend, no durable save. |
@@ -67,6 +70,8 @@ Owners, kickoff date, and backend commitments are TBC.
 | Needs checking | Not verified with the owning department or old-CMS owner. |
 | Cyberjaya | First campus acceptance gate, not the whole eight-country footprint. |
 | Core mobile | Agreed admissions and student journeys usable on phone/tablet widths. |
+| [M1](03-delivery-milestones.md#m1)–[M5](03-delivery-milestones.md#m5) | Delivery milestones (confirm rules → admissions → core student → Cyberjaya pilot → expansion / remaining CMS). Index: [SDD-15](15-nomenclature.md). |
+| [SDD-15](15-nomenclature.md) | Nomenclature index for all CAP-* and M* quick links. |
 
 ## Status meanings
 

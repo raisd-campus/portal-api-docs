@@ -4,6 +4,8 @@
 **Status:** Working draft  
 **Date:** 18 September 2026 (updated 23 September 2026)
 
+**Nomenclature:** [M1](#m1)–[M5](#m5) anchors below. Capability IDs: [SDD-11](11-capability-catalog.md) · index [SDD-15](15-nomenclature.md).
+
 ## 1. Sequence
 
 Milestone order follows the admissions-first decision and working-system dependencies. It is not prescribed by government. All unagreed dates remain TBC. A milestone describes when a capability **must work**, not when investigation begins.
@@ -16,11 +18,13 @@ flowchart LR
   M4 --> M5[5. Campus expansion<br/>and remaining CMS]
 ```
 
-**SoR posture across milestones:** M1–M4 deliver modern portals **on** the existing Cyberjaya CMS via the Portal API (ADR-1, confirmed Aslam 23 Sep 2026). **M5+** is where progressive **unified one-stop CMS** consolidation may begin — only for verified gaps and with an agreed migration strategy. M5 is not a licence to rewrite every working desk.
+**SoR posture across milestones:** [M1](#m1)–[M4](#m4) deliver modern portals **on** the existing Cyberjaya CMS via the Portal API (ADR-1, confirmed Aslam 23 Sep 2026). **[M5](#m5)+** is where progressive **unified one-stop CMS** consolidation may begin — only for verified gaps and with an agreed migration strategy. [M5](#m5) is not a licence to rewrite every working desk.
 
 Kickoff: TBC. Backend commitments: TBC.
 
 ## 2. Milestone definitions
+
+<a id="m1"></a>
 
 ### M1 — Confirm rules and integration
 
@@ -30,9 +34,11 @@ Kickoff: TBC. Backend commitments: TBC.
 | Scope | Campus rules, named owners, legacy capabilities, integration access |
 | Dependencies | Campus and backend owners identified; kickoff TBC |
 | Release condition | Rules, API access and operating responsibilities agreed |
-| Primary CAP | CAP-42 (copyright / provider operating controls) |
+| Primary CAP | [CAP-42](11-capability-catalog.md#cap-42) (copyright / provider operating controls) |
 
 This is not a UI milestone. It unblocks every later “Needs checking” row.
+
+<a id="m2"></a>
 
 ### M2 — Admissions launch
 
@@ -45,17 +51,19 @@ This is not a UI milestone. It unblocks every later “Needs checking” row.
 
 Must work end to end:
 
-1. Applicant account (CAP-01).
-2. Application + documents + declarations (CAP-02, 03, 55).
-3. Track / offer / accept (CAP-07).
-4. Registry review, qualification checks, offer, first enrolment (CAP-03, 05, 06, 07).
-5. Marketing communications without owning the decision (CAP-16).
-6. Staff access via existing CMS unless a gap is verified (CAP-44).
-7. Portal API first slice (CAP-53).
-8. Auth, privacy, monitoring, backups (CAP-01, 37, 38, 39).
-9. Accessible forms and mobile shell (CAP-35, 36).
+1. Applicant account ([CAP-01](11-capability-catalog.md#cap-01)).
+2. Application + documents + declarations ([CAP-02](11-capability-catalog.md#cap-02), [CAP-03](11-capability-catalog.md#cap-03), [CAP-55](11-capability-catalog.md#cap-55)).
+3. Track / offer / accept ([CAP-07](11-capability-catalog.md#cap-07)).
+4. Registry review, qualification checks, offer, first enrolment ([CAP-03](11-capability-catalog.md#cap-03), [CAP-05](11-capability-catalog.md#cap-05), [CAP-06](11-capability-catalog.md#cap-06), [CAP-07](11-capability-catalog.md#cap-07)).
+5. Marketing communications without owning the decision ([CAP-16](11-capability-catalog.md#cap-16)).
+6. Staff access via existing CMS unless a gap is verified ([CAP-44](11-capability-catalog.md#cap-44)).
+7. Portal API first slice ([CAP-53](11-capability-catalog.md#cap-53)).
+8. Auth, privacy, monitoring, backups ([CAP-01](11-capability-catalog.md#cap-01), [CAP-37](11-capability-catalog.md#cap-37), [CAP-38](11-capability-catalog.md#cap-38), [CAP-39](11-capability-catalog.md#cap-39)).
+9. Accessible forms and mobile shell ([CAP-35](11-capability-catalog.md#cap-35), [CAP-36](11-capability-catalog.md#cap-36)).
 
-Student portal demo screens are **not** the release condition for M2.
+Student portal demo screens are **not** the release condition for [M2](#m2).
+
+<a id="m3"></a>
 
 ### M3 — Core student portal
 
@@ -68,6 +76,8 @@ Student portal demo screens are **not** the release condition for M2.
 
 Student-only demo UI is insufficient. Lecturer publish/mark and staff approval paths for the same CAP IDs must be Live or explicitly served by the old CMS.
 
+<a id="m4"></a>
+
 ### M4 — Cyberjaya pilot acceptance
 
 | | |
@@ -76,7 +86,9 @@ Student-only demo UI is insufficient. Lecturer publish/mark and staff approval p
 | Scope | Test the integrated Cyberjaya pilot, train staff, obtain campus acceptance |
 | Dependencies | Integrations, content, security, recovery, operational support ready |
 | Release condition | Campus accepts the pilot and confirms applicable requirements, including verified existing-CMS or manual alternatives |
-| Primary CAP | CAP-41 staff training and operating readiness |
+| Primary CAP | [CAP-41](11-capability-catalog.md#cap-41) staff training and operating readiness |
+
+<a id="m5"></a>
 
 ### M5 — Campus expansion and remaining CMS
 
@@ -87,7 +99,7 @@ Student-only demo UI is insufficient. Lecturer publish/mark and staff approval p
 | Dependencies | Cyberjaya accepted; campus-specific rules and existing capabilities verified; migration plan per domain before retiring a legacy desk |
 | Release condition | Each campus accepts its rollout. Deferring new software never defers an applicable operating requirement. Any SoR move needs ownership, cutover, rollback, and training agreed |
 
-Includes quizzes/exams, live class, library, visa, accommodation, scholarships, online payment gateway, study centres, remaining staff desks — **prefer Portal API + verified old CMS** first; rebuild or migrate only when the gap and migration strategy are explicit ([SDD-14](14-cms-feature-comparison.md)).
+Includes quizzes/exams, live class, library, visa, accommodation, scholarships, online payment gateway, study centres, remaining staff desks — **prefer Portal API + verified old CMS** first; rebuild or migrate only when the gap and migration strategy are explicit ([SDD-11](11-capability-catalog.md)).
 
 ```mermaid
 flowchart TB
@@ -105,12 +117,12 @@ flowchart TB
 
 ## 3. Tension with current build
 
-The student portal v1 frontend is deepest on M3 student screens. Product priority still puts M2 before M3.
+The student portal v1 frontend is deepest on [M3](#m3) student screens. Product priority still puts [M2](#m2) before [M3](#m3).
 
 Design rule for the next two weeks:
 
-1. Freeze new student demo screens unless they are on the M2 critical path (auth, mobile shell, accessibility).
-2. Prioritise CAP-53, CAP-01, applicant CAP-02/03/07, and Registry old-CMS verification.
+1. Freeze new student demo screens unless they are on the [M2](#m2) critical path (auth, mobile shell, accessibility).
+2. Prioritise [CAP-53](11-capability-catalog.md#cap-53), [CAP-01](11-capability-catalog.md#cap-01), applicant [CAP-02](11-capability-catalog.md#cap-02)/[CAP-03](11-capability-catalog.md#cap-03)/[CAP-07](11-capability-catalog.md#cap-07), and Registry old-CMS verification.
 3. Keep existing student demos, but label them Demo until wired.
 
 ## 4. Definition of done (any capability)

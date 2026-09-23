@@ -119,14 +119,14 @@ Counts are **table names** in the dump (includes backups, temps, and copies — 
 
 - Batch `portal.sql` enables/disables student login based on outstanding balance, VIP, PTPTN rules, `StdPortalActive`.
 - Portal snapshot tables for Cyberjaya student / programme / semester.
-- API-named SPs for student login/module/program/semester — useful seed for CAP-53, not a Raisd Portal API.
+- API-named SPs for student login/module/program/semester — useful seed for [CAP-53](../../sdd/11-capability-catalog.md#cap-53), not a Raisd Portal API.
 
 ## What this inventory is not
 
 - Not proof that every table/screen is still in production use.
 - Not a licence to rebuild every staff screen in `staff-portal`.
 - Not a complete student self-service UX audit (legacy student-facing shell may sit outside these PHPMaker menus; data and SPs show portal intent).
-- Not Live evidence for any Raisd CAP — backend status remains **Needs checking** until CAP-53 maps and owners confirm.
+- Not Live evidence for any Raisd CAP — backend status remains **Needs checking** until [CAP-53](../../sdd/11-capability-catalog.md#cap-53) maps and owners confirm.
 
 ## Related documents
 
