@@ -6,6 +6,11 @@
   <title>Raisd Portal API</title>
   <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.27.1/swagger-ui.css" />
   <style>
+    :root {
+      --page-max: 1460px;
+      --page-pad-x: 20px;
+      --header-pad-y: 12px;
+    }
     html { box-sizing: border-box; }
     *, *::before, *::after { box-sizing: inherit; }
     body { margin: 0; background: #fafafa; }
@@ -21,9 +26,10 @@
       font-family: system-ui, -apple-system, Segoe UI, sans-serif;
     }
     .site-header-inner {
-      max-width: 1460px;
+      max-width: var(--page-max);
+      width: 100%;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: var(--header-pad-y) var(--page-pad-x);
       display: flex;
       gap: 16px;
       align-items: center;
@@ -58,9 +64,10 @@
     }
 
     .raisd-header {
-      max-width: 1460px;
+      max-width: var(--page-max);
+      width: 100%;
       margin: 0 auto;
-      padding: 20px 20px 0;
+      padding: 20px var(--page-pad-x) 0;
       font-family: system-ui, -apple-system, Segoe UI, sans-serif;
     }
     .raisd-header h1 {
@@ -75,6 +82,18 @@
       line-height: 1.4;
     }
     .raisd-header a { color: #1a4f8b; }
+
+    /* Keep Swagger body on the same content column as the site header */
+    #swagger-ui {
+      max-width: var(--page-max);
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--page-pad-x) 48px;
+    }
+    #swagger-ui .swagger-ui .wrapper {
+      max-width: none;
+      padding: 0;
+    }
   </style>
 </head>
 <body>

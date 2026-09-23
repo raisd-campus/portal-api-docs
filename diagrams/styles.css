@@ -1,4 +1,8 @@
 :root {
+  /* Match OpenAPI index.html content column */
+  --page-max: 1460px;
+  --page-pad-x: 20px;
+  --header-pad-y: 12px;
   --bg: #f6f8fb;
   --surface: #ffffff;
   --ink: #152033;
@@ -41,9 +45,10 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--line);
 }
 .site-header-inner {
-  max-width: 1460px;
+  max-width: var(--page-max);
+  width: 100%;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: var(--header-pad-y) var(--page-pad-x);
   display: flex;
   gap: 16px;
   align-items: center;
@@ -77,9 +82,10 @@ a:hover { text-decoration: underline; }
 }
 
 main {
-  max-width: 1460px;
+  max-width: var(--page-max);
+  width: 100%;
   margin: 0 auto;
-  padding: 28px 20px 64px;
+  padding: 28px var(--page-pad-x) 64px;
 }
 
 .hero {
@@ -93,7 +99,6 @@ main {
 }
 .hero p {
   margin: 0;
-  max-width: 70ch;
   color: var(--muted);
   font-size: 1.02rem;
 }
@@ -148,7 +153,6 @@ main {
 .section > p.lead {
   margin: 0 0 16px;
   color: var(--muted);
-  max-width: 80ch;
 }
 
 .card {
@@ -257,9 +261,10 @@ table.attr code {
 }
 
 .footer {
-  max-width: 1460px;
+  max-width: var(--page-max);
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px 40px;
+  padding: 0 var(--page-pad-x) 40px;
   color: var(--muted);
   font-size: 0.86rem;
 }
