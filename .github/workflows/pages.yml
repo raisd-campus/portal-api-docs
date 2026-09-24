@@ -10,7 +10,9 @@ on:
       - diagrams/**
       - ai/**
       - sdd/**
+      - design-system/**
       - .github/workflows/pages.yml
+      - scripts/validate-design-system.py
   workflow_dispatch:
 
 permissions:
@@ -35,6 +37,8 @@ jobs:
         run: npm install -g @redocly/cli@1
       - name: Lint openapi.yaml
         run: redocly lint openapi.yaml --extends=minimal
+      - name: Validate design system pages
+        run: python3 scripts/validate-design-system.py .
 
   pages:
     name: Deploy GitHub Pages
@@ -55,6 +59,7 @@ jobs:
           cp index.html openapi.yaml _site/
           cp -R diagrams _site/diagrams
           cp -R ai _site/ai
+          cp -R design-system _site/design-system
           if [ -d sdd ]; then cp -R sdd _site/sdd; fi
           test -f _site/diagrams/erd.html
           test -f _site/diagrams/dfd.html
@@ -74,6 +79,8 @@ jobs:
           test -f _site/diagrams/abbr-tooltips.js
           test -f _site/diagrams/site-auth.js
           test -f _site/diagrams/site-auth-config.json
+          test -f _site/design-system/index.html
+          test -f _site/design-system/student-components.html
           python3 scripts/assemble-site-auth.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

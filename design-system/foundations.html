@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Raisd Control Plane — Foundations</title>
+  <script src="../diagrams/site-auth.js"></script>
+</head>
+<body>
+  <header class="site-header"><div class="site-header-inner">
+    <a class="brand" href="../diagrams/index.html">
+        <img class="brand-logo" src="../diagrams/assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/index.html">Diagrams hub</a>
+            <a href="../diagrams/distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../diagrams/architecture.html">Architecture</a>
+            <a href="../diagrams/migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/distributed-cms-architecture.html">Target architecture</a>
+            <a href="../diagrams/distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../diagrams/distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../diagrams/distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../diagrams/migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/architecture.html">Architecture home</a>
+            <a href="../diagrams/distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../diagrams/architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../diagrams/architecture.html#acl">SoR / ACL</a>
+            <a href="../diagrams/architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/migration.html">Plan overview</a>
+            <a href="../diagrams/migration.html#sequence">Milestone sequence</a>
+            <a href="../diagrams/distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../diagrams/migration.html#m1">M1–M5 detail</a>
+            <a href="../diagrams/migration.html#hosting">Hosting stages</a>
+            <a href="../diagrams/migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../diagrams/raisd-cms/student-portal.html">Student portal</a>
+            <a href="../diagrams/raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../diagrams/raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../diagrams/erd.html">ERD</a>
+            <a href="../diagrams/dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/old-cms/index.html">Analysis hub</a>
+            <a href="../diagrams/old-cms/comparison.html">Comparison</a>
+            <a href="../diagrams/old-cms/fsd.html">FSD</a>
+            <a href="../diagrams/old-cms/erd.html">Legacy ERD</a>
+            <a href="../diagrams/old-cms/flows.html">Flows</a>
+            <a href="../diagrams/old-cms/database.html">Database</a>
+            <a href="../diagrams/old-cms-botswana/index.html">Botswana</a>
+            <a href="../diagrams/old-cms-botswana/database.html">Botswana DB</a>
+            <a href="../diagrams/old-cms-sierra-leone/index.html">Sierra Leone</a>
+            <a href="../diagrams/old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Design system hub</a>
+            <a href="foundations.html">Foundations</a>
+            <a href="shared-controls.html">Shared controls</a>
+            <a href="shared-patterns.html">Shared patterns</a>
+            <a href="student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../sdd/index.html">SDD hub</a>
+            <a href="../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+  </div></header>
+  <main>
+    <section class="hero"><p class="eyebrow">Design system · released package 0.1.0</p><h1>Foundations</h1><p>Tokens, typography, colour roles and scrolling</p></section>
+    <nav class="design-subnav" aria-label="Design system pages"><a class="" href="index.html">Overview</a><a class="current" href="foundations.html">Foundations</a><a class="" href="shared-controls.html">Shared controls</a><a class="" href="shared-patterns.html">Shared patterns</a><a class="" href="student-components.html">Student portal components</a></nav>
+    <p class="design-context">Static captures use mock student data. Click a preview to inspect it at full size. Exact props come from the released package declarations or the owning student source.</p><nav class="design-index" aria-label="On this page"><a href="#surface-tiers">Surface tiers</a><a href="#brand-palette">Brand palette</a><a href="#global-roles">Global roles</a><a href="#service-identity-colours">Service identity colours</a><a href="#typography-colours">Typography colours</a><a href="#scrollbar">Scrollbar</a><a href="#typography">Typography</a></nav><div class="design-cards"><article class="design-card" id="surface-tiers"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Surface tiers</h2></div><a href="#surface-tiers" aria-label="Link to Surface tiers">#</a></div><p>Use the neutral elevation scale; the application canvas is tier zero.</p><div class="design-shots"><figure class="design-shot"><a href="assets/surface-tiers-desktop.png" target="_blank" rel="noopener"><img src="assets/surface-tiers-desktop.png" alt="Dark portal UI: Surface tiers at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article>
+<article class="design-card" id="brand-palette"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Brand palette</h2></div><a href="#brand-palette" aria-label="Link to Brand palette">#</a></div><p>Use brand colours for hierarchy, not for success or failure.</p><div class="design-shots"><figure class="design-shot"><a href="assets/brand-palette-desktop.png" target="_blank" rel="noopener"><img src="assets/brand-palette-desktop.png" alt="Dark portal UI: Brand palette at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article>
+<article class="design-card" id="global-roles"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Global roles</h2></div><a href="#global-roles" aria-label="Link to Global roles">#</a></div><p>Feedback colours carry meaning alongside visible text and icons.</p><div class="design-shots"><figure class="design-shot"><a href="assets/global-roles-desktop.png" target="_blank" rel="noopener"><img src="assets/global-roles-desktop.png" alt="Dark portal UI: Global roles at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article>
+<article class="design-card" id="service-identity-colours"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Service identity colours</h2></div><a href="#service-identity-colours" aria-label="Link to Service identity colours">#</a></div><p>These accents identify named services and are not status colours.</p><div class="design-shots"><figure class="design-shot"><a href="assets/service-identity-colours-desktop.png" target="_blank" rel="noopener"><img src="assets/service-identity-colours-desktop.png" alt="Dark portal UI: Service identity colours at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article>
+<article class="design-card" id="typography-colours"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Typography colours</h2></div><a href="#typography-colours" aria-label="Link to Typography colours">#</a></div><p>Use semantic title, body and muted text roles.</p><div class="design-shots"><figure class="design-shot"><a href="assets/typography-colours-desktop.png" target="_blank" rel="noopener"><img src="assets/typography-colours-desktop.png" alt="Dark portal UI: Typography colours at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article>
+<article class="design-card" id="scrollbar"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Scrollbar</h2></div><a href="#scrollbar" aria-label="Link to Scrollbar">#</a></div><p>Keep scrollable areas usable with keyboard, pointer and touch input.</p><div class="design-shots"><figure class="design-shot"><a href="assets/scrollbar-desktop.png" target="_blank" rel="noopener"><img src="assets/scrollbar-desktop.png" alt="Dark portal UI: Scrollbar at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/scrollbar-2-desktop.png" target="_blank" rel="noopener"><img src="assets/scrollbar-2-desktop.png" alt="Dark portal UI: Scrollbar at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article>
+<article class="design-card" id="typography"><div class="design-card-head"><div><span class="design-badge">Shared foundation</span><h2>Typography</h2></div><a href="#typography" aria-label="Link to Typography">#</a></div><p>Use the shared type utilities to preserve the portal hierarchy.</p><div class="design-shots"><figure class="design-shot"><a href="assets/typography-desktop.png" target="_blank" rel="noopener"><img src="assets/typography-desktop.png" alt="Dark portal UI: Typography at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md">Canonical token guidance</a></p></article></div>
+  </main>
+  <script src="../diagrams/nav-dropdown.js" defer></script>
+</body>
+</html>

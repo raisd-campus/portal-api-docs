@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Raisd Control Plane — Shared patterns</title>
+  <script src="../diagrams/site-auth.js"></script>
+</head>
+<body>
+  <header class="site-header"><div class="site-header-inner">
+    <a class="brand" href="../diagrams/index.html">
+        <img class="brand-logo" src="../diagrams/assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/index.html">Diagrams hub</a>
+            <a href="../diagrams/distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../diagrams/architecture.html">Architecture</a>
+            <a href="../diagrams/migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/distributed-cms-architecture.html">Target architecture</a>
+            <a href="../diagrams/distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../diagrams/distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../diagrams/distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../diagrams/migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/architecture.html">Architecture home</a>
+            <a href="../diagrams/distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../diagrams/architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../diagrams/architecture.html#acl">SoR / ACL</a>
+            <a href="../diagrams/architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/migration.html">Plan overview</a>
+            <a href="../diagrams/migration.html#sequence">Milestone sequence</a>
+            <a href="../diagrams/distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../diagrams/migration.html#m1">M1–M5 detail</a>
+            <a href="../diagrams/migration.html#hosting">Hosting stages</a>
+            <a href="../diagrams/migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../diagrams/raisd-cms/student-portal.html">Student portal</a>
+            <a href="../diagrams/raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../diagrams/raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../diagrams/erd.html">ERD</a>
+            <a href="../diagrams/dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/old-cms/index.html">Analysis hub</a>
+            <a href="../diagrams/old-cms/comparison.html">Comparison</a>
+            <a href="../diagrams/old-cms/fsd.html">FSD</a>
+            <a href="../diagrams/old-cms/erd.html">Legacy ERD</a>
+            <a href="../diagrams/old-cms/flows.html">Flows</a>
+            <a href="../diagrams/old-cms/database.html">Database</a>
+            <a href="../diagrams/old-cms-botswana/index.html">Botswana</a>
+            <a href="../diagrams/old-cms-botswana/database.html">Botswana DB</a>
+            <a href="../diagrams/old-cms-sierra-leone/index.html">Sierra Leone</a>
+            <a href="../diagrams/old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Design system hub</a>
+            <a href="foundations.html">Foundations</a>
+            <a href="shared-controls.html">Shared controls</a>
+            <a href="shared-patterns.html">Shared patterns</a>
+            <a href="student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../sdd/index.html">SDD hub</a>
+            <a href="../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+  </div></header>
+  <main>
+    <section class="hero"><p class="eyebrow">Design system · released package 0.1.0</p><h1>Shared patterns</h1><p>Reusable page, card, table, media and feedback layouts</p></section>
+    <nav class="design-subnav" aria-label="Design system pages"><a class="" href="index.html">Overview</a><a class="" href="foundations.html">Foundations</a><a class="" href="shared-controls.html">Shared controls</a><a class="current" href="shared-patterns.html">Shared patterns</a><a class="" href="student-components.html">Student portal components</a></nav>
+    <p class="design-context">Static captures use mock student data. Click a preview to inspect it at full size. Exact props come from the released package declarations or the owning student source.</p><nav class="design-index" aria-label="On this page"><a href="#summary-cards">Summary cards</a><a href="#content-sections">Content sections</a><a href="#tab-panel-banner">Tab-panel banner</a><a href="#linked-list">Linked list</a><a href="#page-action-bar">Page action bar</a><a href="#inner-section">Inner section</a><a href="#data-table">Data table</a><a href="#detail-field">Detail field</a><a href="#detail-section-card">Detail section card</a><a href="#card-grid">Card grid</a><a href="#issue-card">Issue card</a><a href="#query-error-state">Query error state</a></nav><div class="design-cards"><article class="design-card" id="summary-cards"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Summary cards</h2></div><a href="#summary-cards" aria-label="Link to Summary cards">#</a></div><p>Shows identity, metrics, actions, columns, supporting content and a footer.</p><div class="design-shots"><figure class="design-shot"><a href="assets/summary-cards-desktop.png" target="_blank" rel="noopener"><img src="assets/summary-cards-desktop.png" alt="Dark portal UI: Summary cards at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/summary-cards-phone.png" target="_blank" rel="noopener"><img src="assets/summary-cards-phone.png" alt="Dark portal UI: Summary cards · phone at phone width" loading="lazy" /></a><figcaption>Summary cards · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/summary-card</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="content-sections"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Content sections</h2></div><a href="#content-sections" aria-label="Link to Content sections">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/content-sections-desktop.png" target="_blank" rel="noopener"><img src="assets/content-sections-desktop.png" alt="Dark portal UI: Content sections at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/content-sections-tablet.png" target="_blank" rel="noopener"><img src="assets/content-sections-tablet.png" alt="Dark portal UI: Content sections · tablet at tablet width" loading="lazy" /></a><figcaption>Content sections · tablet · 820px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/content-sections-phone.png" target="_blank" rel="noopener"><img src="assets/content-sections-phone.png" alt="Dark portal UI: Content sections · phone at phone width" loading="lazy" /></a><figcaption>Content sections · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/content-section</code> <code>@raisd-campus/design-system/system/page-panel-layout</code> <code>@raisd-campus/design-system/system/tabbed-page-panel</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="tab-panel-banner"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Tab-panel banner</h2></div><a href="#tab-panel-banner" aria-label="Link to Tab-panel banner">#</a></div><p>Shows media, missing-media and gradient treatments within the shared panel.</p><div class="design-shots"><figure class="design-shot"><a href="assets/tab-panel-banner-desktop.png" target="_blank" rel="noopener"><img src="assets/tab-panel-banner-desktop.png" alt="Dark portal UI: Tab-panel banner at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/tab-panel-banner-gradient-desktop.png" target="_blank" rel="noopener"><img src="assets/tab-panel-banner-gradient-desktop.png" alt="Dark portal UI: Tab-panel banner · Gradient on at desktop width" loading="lazy" /></a><figcaption>Tab-panel banner · Gradient on · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/tab-panel-banner-phone.png" target="_blank" rel="noopener"><img src="assets/tab-panel-banner-phone.png" alt="Dark portal UI: Tab-panel banner · phone at phone width" loading="lazy" /></a><figcaption>Tab-panel banner · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/tabbed-page-panel-banner</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="linked-list"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Linked list</h2></div><a href="#linked-list" aria-label="Link to Linked list">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/linked-list-desktop.png" target="_blank" rel="noopener"><img src="assets/linked-list-desktop.png" alt="Dark portal UI: Linked list at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/linked-list-phone.png" target="_blank" rel="noopener"><img src="assets/linked-list-phone.png" alt="Dark portal UI: Linked list · phone at phone width" loading="lazy" /></a><figcaption>Linked list · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/linked-list</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="page-action-bar"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Page action bar</h2></div><a href="#page-action-bar" aria-label="Link to Page action bar">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/page-action-bar-desktop.png" target="_blank" rel="noopener"><img src="assets/page-action-bar-desktop.png" alt="Dark portal UI: Page action bar at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/page-action-bar-phone.png" target="_blank" rel="noopener"><img src="assets/page-action-bar-phone.png" alt="Dark portal UI: Page action bar · phone at phone width" loading="lazy" /></a><figcaption>Page action bar · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/page-action-bar</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="inner-section"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Inner section</h2></div><a href="#inner-section" aria-label="Link to Inner section">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/inner-section-desktop.png" target="_blank" rel="noopener"><img src="assets/inner-section-desktop.png" alt="Dark portal UI: Inner section at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/inner-section</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="data-table"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Data table</h2></div><a href="#data-table" aria-label="Link to Data table">#</a></div><p>Use compact cards for record lists and a scrollable semantic table for comparisons.</p><div class="design-shots"><figure class="design-shot"><a href="assets/data-table-desktop.png" target="_blank" rel="noopener"><img src="assets/data-table-desktop.png" alt="Dark portal UI: Data table at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/data-table-tablet.png" target="_blank" rel="noopener"><img src="assets/data-table-tablet.png" alt="Dark portal UI: Data table · tablet at tablet width" loading="lazy" /></a><figcaption>Data table · tablet · 820px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/data-table-phone.png" target="_blank" rel="noopener"><img src="assets/data-table-phone.png" alt="Dark portal UI: Data table · phone at phone width" loading="lazy" /></a><figcaption>Data table · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/data-table</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="detail-field"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Detail field</h2></div><a href="#detail-field" aria-label="Link to Detail field">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/detail-field-desktop.png" target="_blank" rel="noopener"><img src="assets/detail-field-desktop.png" alt="Dark portal UI: Detail field at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure><figure class="design-shot"><a href="assets/detail-field-phone.png" target="_blank" rel="noopener"><img src="assets/detail-field-phone.png" alt="Dark portal UI: Detail field · phone at phone width" loading="lazy" /></a><figcaption>Detail field · phone · 390px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/detail-field</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="detail-section-card"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Detail section card</h2></div><a href="#detail-section-card" aria-label="Link to Detail section card">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/detail-section-card-desktop.png" target="_blank" rel="noopener"><img src="assets/detail-section-card-desktop.png" alt="Dark portal UI: Detail section card at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/detail-section-card</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="card-grid"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Card grid</h2></div><a href="#card-grid" aria-label="Link to Card grid">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/card-grid-desktop.png" target="_blank" rel="noopener"><img src="assets/card-grid-desktop.png" alt="Dark portal UI: Card grid at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/card-grid</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="issue-card"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Issue card</h2></div><a href="#issue-card" aria-label="Link to Issue card">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/issue-card-desktop.png" target="_blank" rel="noopener"><img src="assets/issue-card-desktop.png" alt="Dark portal UI: Issue card at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/issue-card</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article>
+<article class="design-card" id="query-error-state"><div class="design-card-head"><div><span class="design-badge">Shared package</span><h2>Query error state</h2></div><a href="#query-error-state" aria-label="Link to Query error state">#</a></div><p>Use the component for this visual pattern; the consumer supplies data and workflow decisions.</p><div class="design-shots"><figure class="design-shot"><a href="assets/query-error-state-desktop.png" target="_blank" rel="noopener"><img src="assets/query-error-state-desktop.png" alt="Dark portal UI: Query error state at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · package 0.1.0</figcaption></figure></div><p class="design-reference"><code>@raisd-campus/design-system/system/query-error-state</code> · <a href="https://github.com/raisd-campus/design-system/blob/v0.1.0/docs/components.md">Versioned catalogue</a></p></article></div>
+  </main>
+  <script src="../diagrams/nav-dropdown.js" defer></script>
+</body>
+</html>
