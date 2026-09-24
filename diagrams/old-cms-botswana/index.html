@@ -161,6 +161,7 @@
       <a href="#dfd"><strong>6. Data-flow (DFD)</strong><span>Context · admissions · academic · finance/TEF · batch</span></a>
       <a href="#database"><strong>7. Database</strong><span>713 tables · SPs · triggers · views</span></a>
       <a href="#raisd"><strong>8. Raisd mapping</strong><span>Portals · CAP · M5 flags</span></a>
+      <a href="#compare"><strong>9. Campus comparison</strong><span>vs Cyberjaya · Sierra Leone — all aspects</span></a>
     </nav>
 
     <!-- ========== 1. E2E ========== -->
@@ -1059,25 +1060,189 @@ flowchart TB
           </tbody>
         </table>
       </div>
+      <p>Full three-campus matrix: <a href="#compare">§9 Campus comparison</a>.</p>
+    </section>
 
-      <h3>Quick campus comparison</h3>
+    <!-- ========== 9. Comparison ========== -->
+    <section class="section" id="compare">
+      <h2>9. Comparison — Cyberjaya · Botswana · Sierra Leone</h2>
+      <p class="lead">
+        All-aspect matrix of the three inventoried campus dumps. Botswana sits between Cyberjaya
+        (fullest LUCT SoR) and Sierra Leone (thinner EMS / <code>ac_*</code> shape) — closest sister
+        to Cyberjaya, with a unique government TEF integration.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Cyberjaya = ADR-1 SoR</span>
+        <span class="chip ok">Botswana = LUCT sister + TEF</span>
+        <span class="chip">Sierra Leone = EMS / M5 pattern</span>
+      </div>
+
+      <div class="card" style="margin-bottom: 24px">
+        <div class="card-head">
+          <div>
+            <h3>Where each campus sits</h3>
+            <p>Product family vs launch role.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Family["Same product family"]
+    CYB["Cyberjaya<br/>cmscbj · LUCT · app_*"]
+    BWA["Botswana<br/>cmsbotswana · LUCT · app_*"]
+    SLE["Sierra Leone<br/>ems_sierraleone · EMS · ac_*"]
+  end
+  CYB -->|closest sister| BWA
+  CYB -.->|same EMS roots<br/>different admissions prefix| SLE
+  CYB ==>|ADR-1 launch SoR| LAUNCH([Raisd portals])
+  BWA -.->|M5 expansion| LAUNCH
+  SLE -.->|M5 expansion| LAUNCH
+  BWA -->|TEF.gov.bw| GOV([DTEF government])
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="compare-identity">9.1 Identity &amp; role</h3>
       <div class="table-wrap">
         <table class="attr">
           <thead>
-            <tr><th>Signal</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+            <tr><th>Aspect</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
           </thead>
           <tbody>
+            <tr><td>Package date</td><td>23 Sep 2026</td><td>24 Sep 2026</td><td>23 Sep 2026</td></tr>
             <tr><td>Database</td><td><code>cmscbj</code></td><td><code>cmsbotswana</code></td><td><code>ems_sierraleone</code></td></tr>
-            <tr><td>Tables</td><td>~1,942</td><td>713 (~554 non-temp)</td><td>345</td></tr>
-            <tr><td>Stored procedures</td><td>~318</td><td>46 (+15 fn)</td><td>6</td></tr>
-            <tr><td>Triggers</td><td>~239</td><td>157</td><td>91</td></tr>
-            <tr><td>Views</td><td>(large)</td><td>407</td><td>9</td></tr>
-            <tr><td>Admissions prefix</td><td><code>app_*</code></td><td><code>app_*</code></td><td><code>ac_*</code></td></tr>
-            <tr><td>Gov scholarship API</td><td>Not found</td><td><strong>TEF.gov.bw</strong></td><td>Not found</td></tr>
-            <tr><td>Portal API hooks</td><td>Yes</td><td>Yes (<code>*_botswana</code>)</td><td>Not in dump</td></tr>
-            <tr><td>ADR-1 launch SoR</td><td>Yes</td><td>No — expansion</td><td>No — expansion</td></tr>
+            <tr><td>Campus / brand code</td><td><code>[MYS-CYB]</code></td><td><code>[BWA-GBE]</code> · CMS 0.9a</td><td>ICA Sierra Leone EMS</td></tr>
+            <tr><td>Product family</td><td>LUCT CMS / PHPMaker</td><td>LUCT CMS / PHPMaker</td><td>EMS / PHPMaker (same roots)</td></tr>
+            <tr><td>Desk path</td><td><code>cyberjaya/campus/&lt;desk&gt;</code></td><td><code>botswana/campus/&lt;desk&gt;</code></td><td><code>sierraleone/&lt;desk&gt;</code></td></tr>
+            <tr><td>ADR-1 launch SoR</td><td><strong>Yes</strong></td><td>No — M5 expansion</td><td>No — M5 expansion</td></tr>
+            <tr><td>Pages hub</td><td><a href="../old-cms/">old-cms/</a></td><td><a href="index.html">old-cms-botswana/</a></td><td><a href="../old-cms-sierra-leone/">old-cms-sierra-leone/</a></td></tr>
           </tbody>
         </table>
+      </div>
+
+      <h3 id="compare-scale">9.2 Scale &amp; technology</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Aspect</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tables (structure)</td><td>~1,942</td><td>713 (~554 non-temp)</td><td>345 (~156 non-temp)</td></tr>
+            <tr><td>Stored procedures</td><td>~318</td><td>46 (+15 functions)</td><td>6</td></tr>
+            <tr><td>Triggers</td><td>~239</td><td>157</td><td>91</td></tr>
+            <tr><td>Views</td><td>Large</td><td><strong>407</strong></td><td>9</td></tr>
+            <tr><td>Laravel add-ons</td><td>Payment + ICU PDPA</td><td>Not in dump</td><td>Not in dump</td></tr>
+            <tr><td>Live class / streaming</td><td>Adobe Connect + classroom link</td><td>Not highlighted in dump</td><td>Not in dump</td></tr>
+            <tr><td>Batch / ops</td><td><code>cyberbatch</code> + scripts</td><td><code>botsbatch</code> (SQL + logs)</td><td><code>sleonebatch</code> empty in package</td></tr>
+            <tr><td>Approx. desk PHP</td><td>Largest estate</td><td>~5.7k under campus</td><td>~1.7k PHP desks</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-desks">9.3 Desks / modules</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Capability area</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Registry / student master</td><td><code>registry/</code></td><td><code>registry/</code> (~894)</td><td><code>registry/</code></td></tr>
+            <tr><td>Faculty / academic</td><td><code>faculty/</code></td><td><code>faculty/</code></td><td><code>academic/</code></td></tr>
+            <tr><td>Bursary / finance</td><td><code>bursary/</code> + Laravel payment</td><td><code>bursary/</code></td><td><code>finance/</code></td></tr>
+            <tr><td>Marketing / admissions ops</td><td><code>marketing/</code></td><td><code>marketing/</code></td><td><code>applicationcenter/</code></td></tr>
+            <tr><td>Lecturer</td><td><code>lecturer/</code> · <code>lec/</code></td><td><code>lecturer/</code></td><td>Inside academic desks</td></tr>
+            <tr><td>Student services / affairs</td><td><code>services/</code> (EMGS/KDN/SSD)</td><td><code>services/</code> (<code>w_*</code>)</td><td><code>studentaffair/</code> (<code>sa_*</code>)</td></tr>
+            <tr><td>Accommodation</td><td><code>accommodation/</code></td><td><code>accommodation/</code> + <code>w_*</code></td><td>Thin / not a full desk</td></tr>
+            <tr><td>AQA / curriculum</td><td><code>cdu/</code></td><td><code>cdu/</code></td><td>Setting / academic mix</td></tr>
+            <tr><td>Compliance / PDPA</td><td><code>icu/</code> · Laravel icupdpa</td><td>Not a dedicated dump desk</td><td>Not in dump</td></tr>
+            <tr><td>Reporting</td><td><code>reporting/</code></td><td><code>reporting/</code></td><td><code>reports/</code></td></tr>
+            <tr><td>Setup / settings</td><td><code>cmsadminsetup</code> / setup desks</td><td><code>setup/</code> (~756)</td><td><code>setting/</code></td></tr>
+            <tr><td>Student self-service</td><td>Multiple (stdfile, SIU, …)</td><td>Thin <code>student/</code> (~38)</td><td>Portal extracts only</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-domain">9.4 Domain data model</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Aspect</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Admissions tables</td><td>Mostly <code>app_*</code></td><td>Mostly <code>app_*</code></td><td>Mostly <code>ac_*</code></td></tr>
+            <tr><td>Student spine</td><td><code>r_student</code> → programme → semester → module</td><td>Same + <code>bots_*</code> mirrors</td><td>Same <code>r_*</code> / <code>f_*</code> spine</td></tr>
+            <tr><td>Finance</td><td>Rich <code>b_*</code> + payment app</td><td><code>b_*</code> + assist / DTEF billing</td><td><code>b_*</code> + loans; 6 calc SPs</td></tr>
+            <tr><td>Welfare / visa</td><td>Large EMGS/KDN forest</td><td>Thick <code>w_*</code> (~49)</td><td>Small <code>sa_*</code> (~3)</td></tr>
+            <tr><td>Local campus structs</td><td>Cyberjaya-specific tables</td><td><code>bots_*</code> (~11)</td><td>Fewer campus-only structs</td></tr>
+            <tr><td>Portal sync tables</td><td><code>portal_*_cyberjaya</code></td><td><code>portal_*_botswana</code> (6)</td><td>Not in dump</td></tr>
+            <tr><td>Temp / scratch share</td><td>High (dump includes history)</td><td>~159 temp/scratch</td><td>~189 temp/scratch</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-capabilities">9.5 Functional capabilities</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Capability</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Online / staff applications</td><td>Present (<code>app_*</code>)</td><td>Present (<code>app_*</code> + online SPs)</td><td>Present (<code>ac_*</code>)</td></tr>
+            <tr><td>Offer letters</td><td>Present</td><td>Present</td><td>Present (RTF variants)</td></tr>
+            <tr><td>Timetable / attendance / results</td><td>Full faculty + lecturer</td><td>Present (+ IH mirrors)</td><td>Present (academic desk)</td></tr>
+            <tr><td>Invoices / payments / statements</td><td>Full + Laravel payment</td><td>Full <code>b_*</code></td><td>Full <code>b_*</code> + loans</td></tr>
+            <tr><td>Scholarships / assist</td><td>Bursary incentives / assist</td><td>Assist + <strong>TEF.gov.bw POST</strong></td><td>Assist calc SPs; no gov API</td></tr>
+            <tr><td>Government integration</td><td>EMGS/KDN/eIPTS reporting</td><td><strong>DTEF → tef.gov.bw</strong> HAL API</td><td>Not found in dump</td></tr>
+            <tr><td>Accommodation</td><td>Full desk</td><td>Full desk + <code>w_occupant</code></td><td>Thin</td></tr>
+            <tr><td>Visa / insurance</td><td>Services (rich)</td><td>Services <code>w_*</code></td><td>Student affairs <code>sa_*</code></td></tr>
+            <tr><td>Portal / API procedures</td><td><code>api_student_*</code> + portal tables</td><td>Same pattern (<code>*_botswana</code>)</td><td>Not in dump</td></tr>
+            <tr><td>Nightly batch gating</td><td><code>portal.sql</code> LoginActive rules</td><td><code>botsbatch</code> portal/registry/…</td><td>Empty batch folder</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-integrations">9.6 External integrations</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Integration</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>National financing portal</td><td>—</td><td><code>tef.gov.bw</code> student admissions</td><td>—</td></tr>
+            <tr><td>Immigration / study permit ops</td><td>EMGS / KDN heavy</td><td><code>w_visa</code> / welfare</td><td><code>sa_studentvisa</code></td></tr>
+            <tr><td>Online classroom</td><td>Adobe Connect / streaming host</td><td>—</td><td>—</td></tr>
+            <tr><td>Payment gateway app</td><td>Laravel <code>payment/</code></td><td>—</td><td>—</td></tr>
+            <tr><td>Raisd Portal API readiness</td><td>Highest (launch ACL)</td><td>High (same hooks, campus suffix)</td><td>Lower (no api_* in dump)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-raisd">9.7 Raisd / M5 implications</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Topic</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Launch posture</td><td>SoR for portals (ADR-1)</td><td>Do not treat as launch SoR</td><td>Do not treat as launch SoR</td></tr>
+            <tr><td>ACL transfer</td><td>Baseline</td><td>Cleanest sister (<code>app_*</code> + portal hooks)</td><td>Expect <code>ac_*</code> mapping + thinner SPs</td></tr>
+            <tr><td>CAP-53 campus key</td><td><code>*_cyberjaya</code></td><td><code>*_botswana</code> / <code>bots_*</code></td><td>New campus key when onboarded</td></tr>
+            <tr><td>Feature flags needed</td><td>Core product</td><td>TEF client · thick housing/welfare</td><td>Admissions prefix · loans</td></tr>
+            <tr><td>Staff portal priority extras</td><td>EMGS / payment / PDPA ops</td><td>DTEF queue · accommodation earlier</td><td>Application centre shape</td></tr>
+            <tr><td>Inventory docs</td><td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cyberjaya.md">old-cms-cyberjaya.md</a></td><td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a></td><td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">old-cms-sierra-leone.md</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note" style="margin-top: 20px">
+        <strong>Verdict.</strong>
+        Botswana is the closest dump to Cyberjaya for M5 pattern matching (same LUCT desk tree and
+        <code>app_*</code> admissions, portal <code>api_*</code> hooks present). Sierra Leone proves EMS portability
+        with a different admissions prefix and a much smaller SP/view surface. Only Botswana evidence-backed
+        government scholarship admission sync is <code>tef.gov.bw</code> — keep it campus-flagged.
+        CAP comparison detail (Cyberjaya-focused):
+        <a href="../old-cms/comparison.html">old-cms/comparison.html</a> ·
+        <a href="../../sdd/14-cms-feature-comparison.html">SDD-14</a>.
       </div>
     </section>
 
