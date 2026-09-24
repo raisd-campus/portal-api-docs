@@ -2,223 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="refresh" content="0; url=index.html#database" />
+  <link rel="canonical" href="index.html#database" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Botswana CMS Database</title>
+  <title>Raisd — Botswana CMS Database (moved)</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
+  <script>location.replace("index.html#database");</script>
 </head>
 <body>
-<header class="site-header">
-    <div class="site-header-inner">
-      <a class="brand" href="../index.html">
-        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
-        <strong>Raisd Control Plane</strong>
-      </a>
-      <nav class="nav" aria-label="Primary">
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../index.html">Overview</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../index.html">Diagrams hub</a>
-            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
-            <a href="../architecture.html">Architecture</a>
-            <a href="../migration.html">Migration</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../distributed-cms-architecture.html">Distributed CMS</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../distributed-cms-architecture.html">Target architecture</a>
-            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
-            <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
-            <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
-            <a href="../migration.html">M1–M5 migration</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../architecture.html">Architecture home</a>
-            <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
-            <a href="../architecture.html#sdd">SDD & ADR catalogue</a>
-            <a href="../architecture.html#acl">SoR / ACL</a>
-            <a href="../architecture.html#academic">Academic model</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../migration.html">Migration</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../migration.html">Plan overview</a>
-            <a href="../migration.html#sequence">Milestone sequence</a>
-            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
-            <a href="../migration.html#m1">M1–M5 detail</a>
-            <a href="../migration.html#hosting">Hosting stages</a>
-            <a href="../migration.html#critical">Critical path</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
-            <a href="../raisd-cms/student-portal.html">Student portal</a>
-            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
-            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
-            <a href="../erd.html">ERD</a>
-            <a href="../dfd.html">DFD</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../old-cms/index.html">Analysis hub</a>
-            <a href="../old-cms/comparison.html">Comparison</a>
-            <a href="../old-cms/fsd.html">FSD</a>
-            <a href="../old-cms/erd.html">Legacy ERD</a>
-            <a href="../old-cms/flows.html">Flows</a>
-            <a href="../old-cms/database.html">Database</a>
-            <a href="index.html">Botswana</a>
-            <a href="database.html">Botswana DB</a>
-            <a href="index.html#dtef">Botswana DTEF sync</a>
-            <a href="../old-cms-sierra-leone/index.html">Sierra Leone</a>
-            <a href="../old-cms-sierra-leone/database.html">Sierra Leone DB</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../../design-system/index.html">Design system hub</a>
-            <a href="../../design-system/foundations.html">Foundations</a>
-            <a href="../../design-system/shared-controls.html">Shared controls</a>
-            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
-            <a href="../../design-system/student-components.html">Student components</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../../ai/index.html">AI hub</a>
-            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
-            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
-            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
-            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../../sdd/index.html">SDD hub</a>
-            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
-            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
-            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../../index.html">OpenAPI</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../../index.html">Swagger UI</a>
-            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="hero">
-      <h1>Botswana — tables, procedures, triggers &amp; views</h1>
-      <p>
-        Derived from <code>cmsbotswana</code> structure +
-        <code>CMS_Botswana_Procedure_24_09_2026.sql</code>,
-        <code>CMS_Botswana_Triggers_24_09_2026.sql</code>,
-        <code>CMS_Botswana_Views_24_09_2026.sql</code>.
-      </p>
-      <div class="meta-row">
-        <span class="chip ok">713 tables</span>
-        <span class="chip ok">46 SPs</span>
-        <span class="chip ok">15 functions</span>
-        <span class="chip ok">157 triggers</span>
-        <span class="chip ok">407 views</span>
-      </div>
-    </section>
-
-    <p><a href="./index.html">← Botswana hub</a></p>
-
-    <section class="section">
-      <h2>Stored procedures (46) — highlights</h2>
-      <div class="table-wrap">
-        <table class="attr">
-          <thead><tr><th>Procedure</th><th>Domain</th></tr></thead>
-          <tbody>
-            <tr><td><code>api_student_login_info</code></td><td>Portal API — student login</td></tr>
-            <tr><td><code>api_student_module_info</code></td><td>Portal API — modules</td></tr>
-            <tr><td><code>api_student_program_info</code></td><td>Portal API — programme</td></tr>
-            <tr><td><code>api_student_semester_info</code></td><td>Portal API — semester</td></tr>
-            <tr><td><code>api_faculty_list</code> / <code>api_faculty_program_list</code></td><td>Portal API — faculty</td></tr>
-            <tr><td><code>AfterInsertApplicationForm</code> / <code>FetchOnlineApplication*</code></td><td>Admissions — online app</td></tr>
-            <tr><td><code>b_Update_billing</code> / <code>b_Update_Student</code></td><td>Finance — billing</td></tr>
-            <tr><td><code>confirmReg</code> / <code>GetTimetable</code> / <code>r_Update_Semester</code></td><td>Registry / academic</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Full list (46 procedures + 15 functions): <a href="./_proc-catalog.txt"><code>_proc-catalog.txt</code></a></p>
-    </section>
-
-    <section class="section">
-      <h2>Views (407)</h2>
-      <p class="lead">Large reporting forest — finance statements, attendance, transcripts, population, accommodation.</p>
-      <ul>
-        <li>Finance: <code>b_statement*</code>, <code>b_outstanding*</code>, <code>b_receipt*</code>, <code>b_instalmentreport</code></li>
-        <li>Academic / registry: <code>r_stdmoduleview</code>, <code>r_stdtranscript*</code>, <code>r_boe</code>, <code>r_activestudent*</code></li>
-        <li>Attendance: <code>f_attend*</code>, <code>ih_studentattendance</code></li>
-        <li>Accommodation: <code>acc_*</code>, <code>w_occupant*</code>, <code>w_room*</code></li>
-        <li>Reports: <code>rep_curtermpopulation*</code>, <code>rep_preenrollment*</code></li>
-      </ul>
-      <p>Machine extract: <a href="./_view-catalog.txt"><code>_view-catalog.txt</code></a></p>
-    </section>
-
-    <section class="section">
-      <h2>Domain table signals</h2>
-      <div class="table-wrap">
-        <table class="attr">
-          <thead><tr><th>Signal</th><th>Approx.</th><th>Examples</th></tr></thead>
-          <tbody>
-            <tr><td>Temp / scratch</td><td>~159</td><td><code>temp_*</code>, <code>tmp_*</code>, one-off billing copies</td></tr>
-            <tr><td><code>r_*</code> student</td><td>~110</td><td><code>r_student</code>, <code>r_stdmodule</code>, <code>r_stdofferletter</code></td></tr>
-            <tr><td><code>f_*</code> academic</td><td>~74</td><td><code>f_program</code>, <code>f_module</code>, attendance / results</td></tr>
-            <tr><td><code>w_*</code> welfare / visa / acco</td><td>~49</td><td><code>w_visa</code>, <code>w_insurance</code>, <code>w_occupant</code></td></tr>
-            <tr><td><code>b_*</code> finance</td><td>~42</td><td><code>b_payment</code>, <code>b_receipt</code>, <code>b_assistbilling*</code></td></tr>
-            <tr><td><code>app_*</code> admissions</td><td>~21</td><td><code>app_applicationform</code>, <code>app_docfile</code></td></tr>
-            <tr><td><code>bots_*</code> local structs</td><td>~11</td><td><code>bots_program</code>, <code>bots_stdPortal</code></td></tr>
-            <tr><td><code>portal_*</code></td><td>6</td><td><code>portal_r_student_botswana</code>, …</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        Full table list:
-        <a href="./_table-catalog.txt"><code>_table-catalog.txt</code></a> ·
-        Triggers:
-        <a href="./_trigger-summary.txt"><code>_trigger-summary.txt</code></a>
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>CAP-53 note</h2>
-      <p>
-        Botswana confirms a third live LUCT schema in the same product family, with campus-suffixed
-        portal tables and <code>api_*</code> procedures. Portal API campus configuration
-        (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)
-        must stay campus-keyed; do not assume Cyberjaya table names or SP signatures match 1:1.
-      </p>
-    </section>
-
+  <main style="padding: 48px 24px; max-width: 40rem; margin: 0 auto">
+    <h1>Botswana database section moved</h1>
+    <p>
+      Tables, procedures, triggers, and views are now part of the
+      <a href="index.html#database">Botswana end-to-end CMS page</a> (section 7),
+      alongside ERD (§5) and DFD (§6).
+    </p>
   </main>
-  <p class="footer">
-    Source inventory in
-    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">docs/ai/backend/old-cms-botswana.md</a>
-    · Package <code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code> (structure only — not committed)
-  </p>
-  <script src="../abbr-tooltips.js" defer></script>
-  <script src="../nav-dropdown.js" defer></script>
 </body>
 </html>
