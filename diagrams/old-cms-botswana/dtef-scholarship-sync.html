@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Botswana DTEF / TEF.gov.bw scholarship sync</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../distributed-cms-architecture.html">Target architecture</a>
+            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../migration.html">Plan overview</a>
+            <a href="../migration.html#sequence">Milestone sequence</a>
+            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../migration.html#m1">M1–M5 detail</a>
+            <a href="../migration.html#hosting">Hosting stages</a>
+            <a href="../migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../old-cms/index.html">Analysis hub</a>
+            <a href="../old-cms/comparison.html">Comparison</a>
+            <a href="../old-cms/fsd.html">FSD</a>
+            <a href="../old-cms/erd.html">Legacy ERD</a>
+            <a href="../old-cms/flows.html">Flows</a>
+            <a href="../old-cms/database.html">Database</a>
+            <a href="index.html">Botswana</a>
+            <a href="database.html">Botswana DB</a>
+            <a href="dtef-scholarship-sync.html">Botswana DTEF sync</a>
+            <a href="../old-cms-sierra-leone/index.html">Sierra Leone</a>
+            <a href="../old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">DTEF sync (Markdown)</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>Botswana — DTEF scholarship sync with TEF.gov.bw</h1>
+      <p>
+        Functional process and technical analysis of the Registry desks that push
+        student admission / programme-of-study records to Botswana’s national
+        tertiary financing portal (<strong>TEF</strong> at <code>tef.gov.bw</code>).
+        Evidence from package <code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code>
+        — especially <code>r_scholarshipapplist.php</code> and
+        <code>r_dropout_scholarshipapplist.php</code> (sync runs on the matching edit screens).
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">Gov API · Drupal HAL+JSON</span>
+        <span class="chip ok">Table <code>r_scholarshipapp</code></span>
+        <span class="chip ok">CAP-48 adjacent</span>
+        <span class="chip">M5 campus-local · not ADR-1 SoR</span>
+      </div>
+    </section>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Scope.</strong>
+      Structure and behaviour only. PHP sources, TEF Basic Auth credentials, and live student
+      payloads are <em>not</em> committed. Canonical agent notes:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a>.
+      Parent inventory:
+      <a href="index.html">Botswana CMS analysis</a>.
+    </div>
+
+    <nav class="toc" aria-label="DTEF sync sections">
+      <a href="#fsd">
+        <strong>1. Functional specification</strong>
+        <span>Actors, process steps, status codes, desks</span>
+      </a>
+      <a href="#tech">
+        <strong>2. Technical analysis</strong>
+        <span>TEF endpoints, payload map, table</span>
+      </a>
+      <a href="#raisd">
+        <strong>3. Raisd implications</strong>
+        <span>Feature flags, Portal API boundary, CAP-48</span>
+      </a>
+      <a href="index.html">
+        <strong>Botswana hub</strong>
+        <span>Campus inventory overview</span>
+      </a>
+    </nav>
+
+    <section class="section" id="fsd">
+      <h2>1. Functional specification</h2>
+      <p class="lead">
+        Registry prepares DTEF-bound admission rows; saving with status
+        <strong>31 (Sent by Registry)</strong> submits to TEF. Finance assist billing is a
+        separate CMS process.
+      </p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>End-to-end process</h3>
+            <p>CMS queue → TEF admission API → later DTEF outcome statuses.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  actor Reg as Registry officer
+  participant Edit as r_scholarshipappedit<br/>(or dropout edit)
+  participant DB as r_scholarshipapp
+  participant TEF as tef.gov.bw
+
+  Reg->>Edit: Edit row · set status 31 · Save
+  Edit->>TEF: GET /rest/session/token
+  TEF-->>Edit: CSRF token
+  Edit->>TEF: POST /api/post/studentadmissions<br/>(HAL+JSON program_of_study)
+  alt success or duplicate admission
+    Edit->>DB: app_status=32 · remark=SUCCESS!
+  else API / curl error
+    Edit->>DB: app_status=33 · remark=error
+    Edit-->>Reg: Alert — contact support
+  end
+  Note over DB,TEF: 34 Approved / 35 Rejected<br/>recorded later (outcome path)
+          </pre>
+        </div>
+      </div>
+
+      <h3>Actors</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Actor</th><th>Responsibility</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Registry officer</td><td>Create/edit scholarship application; set status 31 to push</td></tr>
+            <tr><td>TEF.gov.bw</td><td>Accept <code>program_of_study</code> admissions (Drupal HAL API)</td></tr>
+            <tr><td>DTEF (government)</td><td>Financing decisions reflected as statuses 34 / 35</td></tr>
+            <tr><td>Bursary / finance</td><td>Assist billing via <code>b_stdassist*</code> / <code>dtef_scholarship</code> (not this POST)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Status vocabulary (<code>app_status</code>)</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Code</th><th>Meaning</th><th>TEF call?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>30</td><td>Pending</td><td>No</td></tr>
+            <tr><td>31</td><td>Sent by Registry</td><td><strong>Yes — triggers POST</strong></td></tr>
+            <tr><td>32</td><td>Successfully Sent to DTEF</td><td>Result</td></tr>
+            <tr><td>33</td><td>Failed</td><td>Result</td></tr>
+            <tr><td>34</td><td>Approved by DTEF</td><td>Outcome (later)</td></tr>
+            <tr><td>35</td><td>Rejected by DTEF</td><td>Outcome (later)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Registry desks</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Desk</th><th>List</th><th>Edit (sync)</th><th>Query surface</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Active scholarship apps</td>
+              <td><code>r_scholarshipapplist.php</code></td>
+              <td><code>r_scholarshipappedit.php</code></td>
+              <td>View <code>r_scholarshipapp_v</code></td>
+            </tr>
+            <tr>
+              <td>Dropout scholarship apps</td>
+              <td><code>r_dropout_scholarshipapplist.php</code></td>
+              <td><code>r_dropout_scholarshipappedit.php</code></td>
+              <td><code>r_scholarshipapp</code> ⟕ <code>w_student_sview</code>; requires <code>programCost</code>; skips update when status already 34</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top: 20px">
+        <div class="card-head">
+          <div>
+            <h3>Business process context</h3>
+            <p>Admission POST vs finance assist (same campus, different paths).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Registry["Registry desk"]
+    L1[Active list]
+    L2[Dropout list]
+    E[Edit · status 31]
+    L1 --> E
+    L2 --> E
+  end
+
+  subgraph Store["cmsbotswana"]
+    T[(r_scholarshipapp)]
+    A[(b_stdassistprog / sem)]
+    V[[dtef_scholarship view]]
+  end
+
+  subgraph Gov["Government"]
+    TEF[tef.gov.bw HAL API]
+    DTEF[DTEF financing]
+  end
+
+  E -->|POST program_of_study| TEF
+  E -->|UPDATE status 32/33| T
+  TEF -.->|outcomes 34/35| T
+  A --> V
+  T -.->|person / ID overlap| A
+  DTEF -.-> TEF
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tech">
+      <h2>2. Technical analysis</h2>
+      <p class="lead">
+        Sync is implemented in the edit screens’ <code>EditData()</code>, not in the list PHP.
+        Lists own filters, status labels, and (dropout) CSV upload UI.
+      </p>
+
+      <h3>TEF API contract</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Step</th><th>Request</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1 · CSRF</td>
+              <td><code>GET https://tef.gov.bw/rest/session/token</code></td>
+              <td>Token value sent as <code>X-CSRF-Token</code></td>
+            </tr>
+            <tr>
+              <td>2 · Admission</td>
+              <td><code>POST https://tef.gov.bw/api/post/studentadmissions?_format=hal_json</code></td>
+              <td><code>Content-Type: application/hal+json</code> · HTTP Basic (credentials in PHP — not published here)</td>
+            </tr>
+            <tr>
+              <td>Entity</td>
+              <td><code>type[].target_id = program_of_study</code></td>
+              <td>Drupal HAL entity shape (field → <code>[{ value: … }]</code>)</td>
+            </tr>
+            <tr>
+              <td>Duplicate</td>
+              <td>Error text <code>Duplicate Student Admission!</code></td>
+              <td>Treated as non-fatal → status 32</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Payload field map</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>TEF field</th><th>CMS column</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>title</code></td><td><code>title</code></td><td>Dropout path currently posts <code>null</code></td></tr>
+            <tr><td><code>id</code></td><td><code>IDNumber</code></td><td>National / student number</td></tr>
+            <tr><td><code>surname</code> / <code>firstname</code></td><td><code>Surname</code> / <code>Firstname</code></td><td></td></tr>
+            <tr><td><code>institution</code></td><td><code>TrainintIstitutionCode</code></td><td>Column typo preserved in CMS</td></tr>
+            <tr><td><code>institution_program_code</code></td><td><code>InstitutionProgramcode</code></td><td></td></tr>
+            <tr><td><code>program_name</code></td><td><code>program_name</code></td><td></td></tr>
+            <tr><td><code>program_duration</code></td><td><code>durationOFStudy</code></td><td></td></tr>
+            <tr><td><code>start_date</code> / <code>completion_date</code></td><td><code>commencementDate</code> / <code>expectedCompletionDate</code></td><td>Reformatted <code>d M Y</code> (Moses, 05 Apr 2023)</td></tr>
+            <tr><td><code>entry_level</code></td><td><code>levelofEntry</code></td><td></td></tr>
+            <tr><td><code>cost</code></td><td><code>programCost</code></td><td>Required before POST on dropout edit</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Primary table <code>r_scholarshipapp</code></h3>
+      <p>
+        PK <code>schctr</code>; person + programme + cost fields; workflow
+        <code>app_status</code>, <code>date_sent</code>, <code>staffid</code>, <code>remark</code>.
+        Active list reads view <code>r_scholarshipapp_v</code> (join to <code>r_student</code> for contact).
+      </p>
+    </section>
+
+    <section class="section" id="raisd">
+      <h2>3. Raisd implications</h2>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Topic</th><th>Guidance</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Launch SoR</td>
+              <td>Cyberjaya remains ADR-1. This TEF POST is <strong>not</strong> in the Cyberjaya dump.</td>
+            </tr>
+            <tr>
+              <td>CAP-48</td>
+              <td>Staff scholarship assign/review — Botswana SoR today is LUCT registry + bursary.</td>
+            </tr>
+            <tr>
+              <td>M5 / control plane</td>
+              <td>Campus feature flag + secret store for TEF URL/credentials; do not hard-code Cyberjaya.</td>
+            </tr>
+            <tr>
+              <td>Portal API</td>
+              <td>If Raisd re-implements submission, own the TEF client server-side — never browser → TEF.</td>
+            </tr>
+            <tr>
+              <td>Security</td>
+              <td>Rotate Basic Auth embedded in PHP; treat national ID payloads as cross-border PII.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+  <p class="footer">
+    Canonical:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">docs/ai/backend/botswana-dtef-scholarship-sync.md</a>
+    · Package <code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code> (structure / behaviour only — not committed)
+  </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+</body>
+</html>
