@@ -15,20 +15,32 @@
         <img class="brand-logo" src="assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
         <strong>Raisd Control Plane</strong>
       </a>
-                                    <nav class="nav" aria-label="Primary">
+                                          <nav class="nav" aria-label="Primary">
         <div class="nav-dd">
           <a class="nav-dd-main active" href="index.html">Overview</a>
           <div class="nav-dd-menu" role="menu">
             <a href="index.html">Diagrams hub</a>
+            <a href="distributed-cms-architecture.html">Distributed CMS</a>
             <a href="architecture.html">Architecture</a>
             <a href="migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="distributed-cms-architecture.html">Target architecture</a>
+            <a href="distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="migration.html">M1–M5 migration</a>
           </div>
         </div>
         <div class="nav-dd">
           <a class="nav-dd-main" href="architecture.html">Architecture</a>
           <div class="nav-dd-menu" role="menu">
             <a href="architecture.html">Architecture home</a>
-            <a href="architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="architecture.html#sdd">SDD &amp; ADR catalogue</a>
             <a href="architecture.html#acl">SoR / ACL</a>
             <a href="architecture.html#academic">Academic model</a>
           </div>
@@ -38,6 +50,7 @@
           <div class="nav-dd-menu" role="menu">
             <a href="migration.html">Plan overview</a>
             <a href="migration.html#sequence">Milestone sequence</a>
+            <a href="distributed-cms-architecture.html#journey">Current → ideal</a>
             <a href="migration.html#m1">M1–M5 detail</a>
             <a href="migration.html#hosting">Hosting stages</a>
             <a href="migration.html#critical">Critical path</a>
@@ -73,6 +86,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
           </div>
@@ -109,15 +123,16 @@
         <span class="chip ok">This phase: Cyberjaya CMS = system of record</span>
         <span class="chip ok">Four portals via Portal API</span>
         <span class="chip warn">Do not rebuild working staff desks</span>
-        <span class="chip">M5+: progressive unified CMS</span>
+        <span class="chip">Ideal: one CMS · country DBs</span>
       </div>
     </section>
 
     <nav class="toc" aria-label="On this page">
       <a href="#exec"><strong>Executive summary</strong><span>In one minute</span></a>
-      <a href="#architecture"><strong>Architecture</strong><span>High-level picture</span></a>
+      <a href="#architecture"><strong>Architecture</strong><span>This-phase picture</span></a>
+      <a href="#distributed"><strong>Distributed CMS</strong><span>Ideal end state</span></a>
       <a href="#states"><strong>Current → target</strong><span>And what to do</span></a>
-      <a href="#migration"><strong>Migration stages</strong><span>M1 through M5</span></a>
+      <a href="#migration"><strong>Migration stages</strong><span>M1 through Ideal</span></a>
       <a href="#explore"><strong>Explore further</strong><span>Diagrams, SDD, API</span></a>
     </nav>
 
@@ -137,14 +152,15 @@
         <p>
           <strong>This phase (confirmed 23 Sep 2026):</strong> keep the existing CMS as the
           system of record; ship better portal experiences; do <em>not</em> rebuild operational
-          desks that already work. <strong>Longer term:</strong> move toward one unified CMS
-          only where a gap is proven and a proper migration plan exists (ownership, cutover,
-          rollback, training).
+          desks that already work. <strong>Longer term:</strong> one unified Raisd CMS with
+          <a href="./distributed-cms-architecture.html">databases placed by country</a>
+          (Malaysia, Singapore, Sierra Leone, Botswana, …), white-labelling, and feature toggles —
+          reached via M5 progressive migration, not a launch rewrite.
         </p>
         <ol>
           <li><strong>Now:</strong> student UI is largely demo/mock; applicant / lecturer / staff portals and live CMS writes are still ahead.</li>
           <li><strong>Next:</strong> agree rules (M1), then admissions end-to-end on real records (M2).</li>
-          <li><strong>Then:</strong> core student journeys (M3), Cyberjaya pilot acceptance (M4), other campuses and remaining CMS (M5).</li>
+          <li><strong>Then:</strong> core student journeys (M3), Cyberjaya pilot (M4), other campuses (M5), then distributed ideal.</li>
         </ol>
       </div>
     </section>
@@ -221,6 +237,63 @@ flowchart LR
       </div>
     </section>
 
+    <section class="section" id="distributed">
+      <h2>Distributed CMS — ideal end state (high level)</h2>
+      <p class="lead">
+        End goal: <strong>one Raisd CMS product</strong> with a
+        <strong>database (and preferably API capacity) per country / region</strong>,
+        each campus white-labelled and feature-toggled. Global control plane holds tenancy,
+        branding, flags, and identity maps — not student ledgers.
+        Full step-by-step: <a href="./distributed-cms-architecture.html">Distributed CMS architecture</a>.
+      </p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Product["One product"]
+    P[Four portals]
+    API[Portal API]
+  end
+  subgraph Control["Global control plane"]
+    T[Tenant · white-label · flags · IdP]
+  end
+  subgraph Data["Country data planes"]
+    MY[(Malaysia)]
+    SG[(Singapore)]
+    SL[(Sierra Leone)]
+    BW[(Botswana)]
+    MORE[(…)]
+  end
+  P --> API
+  T -.-> API
+  API --> MY
+  API --> SG
+  API --> SL
+  API --> BW
+  API --> MORE
+          </pre>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <strong>M1–M4</strong>
+          <span>Cyberjaya CMS remains SoR; portals via Portal API in Singapore.</span>
+        </div>
+        <div class="legend-item">
+          <strong>M5</strong>
+          <span>Campus adapters, tenant registry, flags; migrate domains with a written cutover.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Ideal</strong>
+          <span>Raisd SoR everywhere; country DBs; geo-placed compute. Proposed — needs ADR.</span>
+        </div>
+        <div class="legend-item">
+          <strong>Country uniqueness</strong>
+          <span>White-label + feature toggles (e.g. MY EMGS) — not separate CMS forks.</span>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="states">
       <h2>Current state, target state, and what needs to be done</h2>
       <p class="lead">
@@ -262,9 +335,12 @@ flowchart LR
         </div>
       </div>
       <div class="note" style="margin-top:16px">
-        <strong>Longer-term direction (M5+):</strong>
+        <strong>Longer-term direction (M5+ → ideal):</strong>
         a progressive <em>unified one-stop CMS</em> — retire legacy desks domain-by-domain when ownership,
-        cutover, rollback, and training are agreed. Not a rewrite mandate for Admissions launch.
+        cutover, rollback, and training are agreed. Ideal end state: one product with
+        <em>distributed country databases</em>, white-label, and feature flags
+        (<a href="./distributed-cms-architecture.html">(one-page architecture)</a>).
+        Not a rewrite mandate for Admissions launch.
         See <a href="./old-cms/comparison.html#target">target delivery</a>.
       </div>
       <div class="table-wrap" style="margin-top:16px">
@@ -356,6 +432,11 @@ flowchart LR
           <strong>Expansion &amp; remaining CMS</strong>
           <span>Other campuses (e.g. Sierra Leone pattern). Move SoR only with a written migration strategy per domain.</span>
         </a>
+        <a class="milestone-card" href="./distributed-cms-architecture.html#phase-ideal">
+          <span class="mid">Ideal</span>
+          <strong>Distributed Raisd CMS</strong>
+          <span>One product · country DBs · white-label · feature flags · per-country identity (proposed target).</span>
+        </a>
       </div>
       <div class="table-wrap" style="margin-top:16px">
         <table class="attr">
@@ -425,6 +506,10 @@ flowchart LR
         <a href="./migration.html">
           <strong>Full migration plan</strong>
           <span>M1–M5 detail, hosting stages, definition of done</span>
+        </a>
+        <a href="./distributed-cms-architecture.html">
+          <strong>Distributed CMS target</strong>
+          <span>Current milestones → multi-country ideal (one page)</span>
         </a>
         <a href="./raisd-cms/index.html">
           <strong>Raisd CMS — ERD &amp; DFD</strong>

@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Distributed CMS target architecture</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="site-auth.js"></script>
+  <style>
+    .phase-banner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 12px;
+    }
+    .phase-banner .chip { margin: 0; }
+    .arch-layer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 12px 0 0;
+    }
+    .arch-layer {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .arch-layer h4 {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+    .arch-layer p, .arch-layer ul {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .arch-layer ul {
+      padding-left: 1.1rem;
+      margin-top: 6px;
+    }
+    .arch-layer li { margin: 0 0 3px; }
+    .journey-rail {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin: 14px 0 4px;
+    }
+    .journey-step {
+      position: relative;
+      padding: 12px 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      text-align: left;
+    }
+    .journey-step.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .journey-step.vision {
+      border-color: #b9dfc8;
+      background: var(--ok-bg);
+    }
+    .journey-step .n {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .journey-step strong {
+      display: block;
+      margin: 4px 0 4px;
+      font-size: 0.9rem;
+      line-height: 1.25;
+    }
+    .journey-step span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin: 10px 0 0;
+    }
+    .country-card {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px dashed var(--line);
+      background: #fafbfd;
+      font-size: 0.88rem;
+    }
+    .country-card strong { display: block; margin-bottom: 4px; }
+    .country-card span { color: var(--muted); font-size: 0.82rem; }
+    .callout {
+      margin: 12px 0 0;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-size: 0.92rem;
+    }
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: var(--warn-bg);
+    }
+    .callout.ok {
+      border-left-color: var(--ok);
+      background: var(--ok-bg);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+            <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Diagrams hub</a>
+            <a href="distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="distributed-cms-architecture.html">Target architecture</a>
+            <a href="distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="architecture.html">Architecture home</a>
+            <a href="distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="architecture.html#acl">SoR / ACL</a>
+            <a href="architecture.html#academic">Academic model</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="migration.html">Migration</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="migration.html">Plan overview</a>
+            <a href="migration.html#sequence">Milestone sequence</a>
+            <a href="distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="migration.html#m1">M1–M5 detail</a>
+            <a href="migration.html#hosting">Hosting stages</a>
+            <a href="migration.html#critical">Critical path</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="raisd-cms/student-portal.html">Student portal</a>
+            <a href="raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="erd.html">ERD</a>
+            <a href="dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="old-cms/index.html">Analysis hub</a>
+            <a href="old-cms/comparison.html">Comparison</a>
+            <a href="old-cms/fsd.html">FSD</a>
+            <a href="old-cms/erd.html">Legacy ERD</a>
+            <a href="old-cms/flows.html">Flows</a>
+            <a href="old-cms/database.html">Database</a>
+            <a href="old-cms-sierra-leone/index.html">Sierra Leone</a>
+            <a href="old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../sdd/index.html">SDD hub</a>
+            <a href="../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Distributed CMS — current milestones → ideal state</h1>
+      <p>
+        One page for the end goal: a <strong>single Raisd CMS product</strong> with
+        <strong>databases and compute placed by country / region</strong>
+        (Malaysia, Singapore, Sierra Leone, Botswana, and further campuses), each with its own
+        white-label, feature toggles, and identity — reached step by step from today’s
+        ADR-1 Cyberjaya path through M1–M5.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">M1–M4: Cyberjaya CMS = SoR (ADR-1)</span>
+        <span class="chip ok">M5: campus expansion + progressive unification</span>
+        <span class="chip warn">Ideal state = proposed target (needs ADR when WG confirms)</span>
+        <span class="chip">One product · many country data planes</span>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="On this page">
+      <a href="#vision"><strong>1. Ideal end state</strong><span>What “done” looks like</span></a>
+      <a href="#journey"><strong>2. Journey map</strong><span>Now → M5 → Ideal</span></a>
+      <a href="#phase-now"><strong>3. Now / M1</strong><span>Baseline</span></a>
+      <a href="#phase-m2m4"><strong>4. M2–M4</strong><span>Portal API on Cyberjaya</span></a>
+      <a href="#phase-m5"><strong>5. M5</strong><span>Multi-campus + unify</span></a>
+      <a href="#phase-ideal"><strong>6. Ideal</strong><span>Distributed Raisd CMS</span></a>
+      <a href="#tenancy"><strong>7. White-label &amp; flags</strong><span>Identity per country</span></a>
+      <a href="#data"><strong>8. Data plane</strong><span>Residency &amp; sync</span></a>
+      <a href="#cutover"><strong>9. Cutover playbook</strong><span>Domain-by-domain</span></a>
+      <a href="#decisions"><strong>10. Decisions still open</strong><span>TBC / ADR needed</span></a>
+    </nav>
+
+    <!-- 1. Vision -->
+    <section class="section" id="vision">
+      <h2>1. Ideal end state (target architecture)</h2>
+      <p class="lead">
+        Raisd ends as <strong>one CMS system</strong> (one product codebase, one Portal API contract,
+        four role portals) with a <strong>distributed data plane</strong>: each country or regulated
+        region keeps its own database and may run local API/portal capacity for latency and data residency.
+        Global control-plane services own tenancy, branding, feature flags, and identity federation —
+        not student ledgers.
+      </p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Logical shape — single product, many country data planes</h3>
+            <p>Portals stay thin. Writes always go to the campus’s local system of record.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph Users["Users worldwide"]
+    U1[Applicants / Students]
+    U2[Lecturers / Staff]
+  end
+
+  subgraph Edge["Edge &amp; routing"]
+    DNS[Geo / campus DNS]
+    WL[White-label shell<br/>theme · logo · domain]
+  end
+
+  subgraph GlobalCP["Global control plane — shared config only"]
+    TEN[Tenant registry<br/>campus · country · region]
+    FF[Feature flag service]
+    IDF[Identity federation<br/>IdP map · SSO policies]
+    SCH[Schema / release train]
+  end
+
+  subgraph SEA["Region SEA — example"]
+    subgraph MY["Malaysia · Cyberjaya"]
+      APImy[Portal API MY]
+      DBmy[(CMS DB MY)]
+      FSmy[(Evidence MY)]
+    end
+    subgraph SG["Singapore · hosting / campus"]
+      APIsg[Portal API SG]
+      DBsg[(CMS DB SG)]
+    end
+  end
+
+  subgraph AFR["Region Africa — example"]
+    subgraph SL["Sierra Leone"]
+      APIsl[Portal API SL]
+      DBsl[(CMS DB SL)]
+    end
+    subgraph BW["Botswana"]
+      APIbw[Portal API BW]
+      DBbw[(CMS DB BW)]
+    end
+  end
+
+  U1 --> DNS
+  U2 --> DNS
+  DNS --> WL
+  WL --> APImy
+  WL --> APIsg
+  WL --> APIsl
+  WL --> APIbw
+  TEN -.-> WL
+  FF -.-> APImy
+  FF -.-> APIsl
+  IDF -.-> APImy
+  IDF -.-> APIsl
+  SCH -.-> APImy
+  SCH -.-> APIsl
+  APImy --> DBmy
+  APImy --> FSmy
+  APIsg --> DBsg
+  APIsl --> DBsl
+  APIbw --> DBbw
+          </pre>
+        </div>
+      </div>
+
+      <div class="arch-layer-grid">
+        <div class="arch-layer">
+          <h4>Product layer (one)</h4>
+          <ul>
+            <li>Applicant / Student / Lecturer / Staff portals</li>
+            <li>Portal API (same OpenAPI contract)</li>
+            <li>Raisd CMS domain services (post-legacy)</li>
+          </ul>
+        </div>
+        <div class="arch-layer">
+          <h4>Control plane (global)</h4>
+          <ul>
+            <li>Campus / country tenant registry</li>
+            <li>White-label packs (brand, locale, legal copy)</li>
+            <li>Feature flags per campus / country</li>
+            <li>Identity provider mapping</li>
+          </ul>
+        </div>
+        <div class="arch-layer">
+          <h4>Data plane (per country)</h4>
+          <ul>
+            <li>Authoritative CMS database</li>
+            <li>Evidence / file store</li>
+            <li>Local Portal API replicas</li>
+            <li>Country compliance batch jobs</li>
+          </ul>
+        </div>
+        <div class="arch-layer">
+          <h4>Country uniqueness</h4>
+          <ul>
+            <li>MY: EMGS, MQA/KPT, PTPTN, …</li>
+            <li>SL / BW / others: local QA &amp; fees</li>
+            <li>Toggled modules — not forks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout ok">
+        <strong>Non-negotiable:</strong> one codebase and one CAP catalogue.
+        Country differences are configuration + feature flags + local adapters —
+        not separate CMS products per campus.
+      </div>
+    </section>
+
+    <!-- 2. Journey -->
+    <section class="section" id="journey">
+      <h2>2. Journey map — step by step</h2>
+      <p class="lead">
+        Agreed delivery is <a href="../sdd/03-delivery-milestones.html">SDD-03</a> M1–M5.
+        The ideal distributed Raisd CMS is the <strong>post-M5 target</strong> that M5 progressive
+        consolidation is designed to enable — not a rewrite during Admissions launch.
+      </p>
+
+      <div class="journey-rail">
+        <div class="journey-step active">
+          <div class="n">Now → M1</div>
+          <strong>Baseline &amp; rules</strong>
+          <span>Demo portals; Cyberjaya + sister CMS dumps; agree integration owners</span>
+        </div>
+        <div class="journey-step">
+          <div class="n">M2</div>
+          <strong>Admissions Live</strong>
+          <span>Portal API → CAP-53 → Cyberjaya CMS SoR</span>
+        </div>
+        <div class="journey-step">
+          <div class="n">M3–M4</div>
+          <strong>Core + pilot</strong>
+          <span>Student/lecturer Live paths; Cyberjaya acceptance</span>
+        </div>
+        <div class="journey-step">
+          <div class="n">M5</div>
+          <strong>Expand &amp; unify</strong>
+          <span>More campuses; domain migration off legacy</span>
+        </div>
+        <div class="journey-step vision">
+          <div class="n">Ideal</div>
+          <strong>Distributed CMS</strong>
+          <span>One product · country DBs · white-label · flags</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  N[Now<br/>Demo + dumps] --> M1[M1<br/>Rules &amp; access]
+  M1 --> M2[M2<br/>Admissions]
+  M2 --> M3[M3<br/>Core student]
+  M3 --> M4[M4<br/>Cyberjaya pilot]
+  M4 --> M5[M5<br/>Campus expansion<br/>+ progressive SoR]
+  M5 --> IDEAL[Ideal<br/>Unified Raisd CMS<br/>distributed DBs]
+          </pre>
+          <div class="table-wrap" style="margin-top:8px">
+            <table class="attr">
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>System of record</th>
+                  <th>Where data lives</th>
+                  <th>Multi-country?</th>
+                  <th>White-label / flags</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#phase-now">Now / M1</a></td>
+                  <td>Legacy CMS per campus (inventoried)</td>
+                  <td>Cyberjaya <code>cmscbj</code>; Sierra Leone <code>ems_sierraleone</code> (separate)</td>
+                  <td>Inventories only</td>
+                  <td>Not productised</td>
+                </tr>
+                <tr>
+                  <td><a href="#phase-m2m4">M2–M4</a></td>
+                  <td>Cyberjaya / LUCT CMS (ADR-1)</td>
+                  <td>Singapore UltaHost CMS host + k3s Postgres maps</td>
+                  <td>Cyberjaya only Live</td>
+                  <td>Campus config seed; single brand</td>
+                </tr>
+                <tr>
+                  <td><a href="#phase-m5">M5</a></td>
+                  <td>Legacy per campus, then domain-by-domain Raisd</td>
+                  <td>Still primarily SEA until outside-SEA launch</td>
+                  <td>Roll out campus-by-campus</td>
+                  <td>Introduce tenant + flag model</td>
+                </tr>
+                <tr>
+                  <td><a href="#phase-ideal">Ideal</a></td>
+                  <td>Raisd CMS (unified product)</td>
+                  <td>DB + API per country / region</td>
+                  <td>Yes — MY, SG, SL, BW, …</td>
+                  <td>Full white-label + feature toggles + identity packs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Now / M1 -->
+    <section class="section" id="phase-now">
+      <div class="phase-banner">
+        <span class="chip warn">Current baseline</span>
+        <span class="chip">M1 — Confirm rules &amp; integration</span>
+      </div>
+      <h2>3. Now → M1 — baseline architecture</h2>
+      <p class="lead">
+        Student portal is the deepest Demo UI. Applicant / lecturer / staff Raisd apps are not Live.
+        Cyberjaya CMS and sister-campus dumps (e.g. Sierra Leone) exist as separate legacy systems —
+        proof that multi-country already means <strong>separate databases today</strong>, not one shared ledger.
+      </p>
+
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph Raisd["Raisd today"]
+    SP[Student portal<br/>Demo / mock]
+    API[Portal API<br/>contracts + stubs]
+    PG[(Postgres planned<br/>maps / audit)]
+  end
+
+  subgraph Legacy["Legacy estate — separate SoRs"]
+    CJ[Cyberjaya / LUCT CMS<br/>cmscbj]
+    SL[Sierra Leone CMS<br/>ems_sierraleone]
+    OTHER[Other campus CMS<br/>Botswana · … TBC]
+  end
+
+  SP --> API
+  API -.->|stub / mock| CJ
+  API -.->|not connected| SL
+  CJ ~~~ SL
+  SL ~~~ OTHER
+          </pre>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="state-card now">
+          <h3>What must happen in M1</h3>
+          <ul>
+            <li>Named owners for CMS access and campus rules</li>
+            <li>Integration credentials for non-production Cyberjaya</li>
+            <li>Confirm which Premium hosts CMS (<a href="../sdd/12-deployment-architecture.html">SDD-12</a>)</li>
+            <li>Close “Needs checking” that unblock Admissions</li>
+            <li>Primary CAP: <a href="../sdd/11-capability-catalog.html#cap-42">CAP-42</a></li>
+          </ul>
+        </div>
+        <div class="state-card gap">
+          <h3>Why this matters for the ideal state</h3>
+          <ul>
+            <li>Sister CMS dumps prove country DBs are already isolated</li>
+            <li>CAP catalogue must stay shared across countries</li>
+            <li>Do not force one physical DB for compliance-heavy countries</li>
+            <li>Inventory → adapter map → later Raisd SoR cutover</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. M2–M4 -->
+    <section class="section" id="phase-m2m4">
+      <div class="phase-banner">
+        <span class="chip ok">This phase — ADR-1</span>
+        <span class="chip">M2 Admissions · M3 Core student · M4 Cyberjaya pilot</span>
+      </div>
+      <h2>4. M2–M4 — portals on Cyberjaya CMS (Singapore)</h2>
+      <p class="lead">
+        Four portals talk only to the Portal API. Live writes succeed only after the Cyberjaya CMS
+        acknowledges them (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>).
+        Hosting stays on UltaHost Singapore k3s (<a href="../sdd/12-deployment-architecture.html">SDD-12</a>).
+        Staff desks remain on verified old CMS unless a gap is proven.
+      </p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Runtime topology (M2–M4)</h3>
+            <p>One acceptance campus. One legacy SoR. No second control plane yet.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Clients
+    AP[apply.raisd.co]
+    STU[student.raisd.co]
+    TEA[teach.raisd.co]
+    STF[staff.raisd.co]
+  end
+
+  subgraph K3s["k3s · Singapore UltaHost"]
+    ING[Traefik]
+    API[portal-api]
+    PG[(Postgres<br/>maps · session · audit)]
+    FS[Evidence volume]
+  end
+
+  CMS[Cyberjaya CMS<br/>Premium · SoR]
+  IDP[CMS login / IdP]
+
+  AP --> ING
+  STU --> ING
+  TEA --> ING
+  STF --> ING
+  ING --> API
+  IDP --> API
+  API --> PG
+  API --> FS
+  API -->|CAP-53 ACL| CMS
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table class="attr">
+          <thead>
+            <tr><th>Milestone</th><th>Architecture change</th><th>Release condition (summary)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="./migration.html#m2">M2</a></td>
+              <td>Wire Portal API to real CMS; admissions + auth slice Live; evidence store durable</td>
+              <td>Apply → evidence → offer → enrol on real records</td>
+            </tr>
+            <tr>
+              <td><a href="./migration.html#m3">M3</a></td>
+              <td>Add student + lecturer portals on edge node; teaching/finance paths via API</td>
+              <td>Core student journeys + paired staff/lecturer paths Live or on old CMS</td>
+            </tr>
+            <tr>
+              <td><a href="./migration.html#m4">M4</a></td>
+              <td>No new topology; restore drill, training, acceptance</td>
+              <td>Cyberjaya accepts pilot; ops ready</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <strong>Do not skip ahead:</strong> building country DB sharding or a second regional cluster
+        before M4 acceptance invents a greenfield topology outside ADR-2/3.
+        Multi-country distribution is intentionally deferred to M5 → Ideal.
+      </div>
+    </section>
+
+    <!-- 5. M5 -->
+    <section class="section" id="phase-m5">
+      <div class="phase-banner">
+        <span class="chip">M5 — Campus expansion &amp; remaining CMS</span>
+        <span class="chip ok">Start progressive unified CMS</span>
+      </div>
+      <h2>5. M5 — multi-campus expansion and progressive unification</h2>
+      <p class="lead">
+        Expand coverage campus-by-campus. Prefer Portal API + verified local legacy CMS first.
+        Rebuild or migrate a domain into Raisd CMS only with ownership, cutover, rollback, and training.
+        Introduce the <strong>tenant / flag / white-label model</strong> here so Ideal is configuration, not a rewrite.
+      </p>
+
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph Shared["Raisd shared product"]
+    P[Four portals]
+    API[Portal API<br/>multi-tenant campus_id]
+    CFG[Campus config<br/>tenant · flags · brand]
+  end
+
+  subgraph Adapters["Country adapters — M5 pattern"]
+    A1[Cyberjaya adapter<br/>LUCT / cmscbj]
+    A2[Sierra Leone adapter<br/>ems_sierraleone]
+    A3[Botswana adapter<br/>TBC inventory]
+  end
+
+  subgraph SoR["Systems of record during M5"]
+    L1[(Legacy MY)]
+    L2[(Legacy SL)]
+    L3[(Legacy BW)]
+    R1[(Raisd domain DB<br/>migrated modules only)]
+  end
+
+  P --> API
+  CFG --> API
+  API --> A1
+  API --> A2
+  API --> A3
+  A1 --> L1
+  A2 --> L2
+  A3 --> L3
+  API -->|verified gap + cutover| R1
+          </pre>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="state-card target">
+          <h3>M5 architecture workstreams</h3>
+          <ul>
+            <li><strong>Adapter factory:</strong> one CAP-53 pattern per legacy campus DB</li>
+            <li><strong>Tenant registry:</strong> campus_id, country_code, region, legal entity</li>
+            <li><strong>Feature flags:</strong> EMGS, local QA, payment rails, visa desks</li>
+            <li><strong>White-label packs:</strong> logo, colours, domain, locale, privacy text</li>
+            <li><strong>Domain migration:</strong> admissions → registry → teaching → finance → …</li>
+            <li><strong>Hosting:</strong> grow SEA cluster; plan first non-SEA region when a campus outside SEA goes Live</li>
+          </ul>
+        </div>
+        <div class="state-card gap">
+          <h3>Expansion order (illustrative)</h3>
+          <div class="country-grid">
+            <div class="country-card">
+              <strong>🇲🇾 Malaysia (Cyberjaya)</strong>
+              <span>Pilot SoR · first Raisd domain cutovers</span>
+            </div>
+            <div class="country-card">
+              <strong>🇸🇱 Sierra Leone</strong>
+              <span>Inventory done · M5 adapter candidate</span>
+            </div>
+            <div class="country-card">
+              <strong>🇧🇼 Botswana</strong>
+              <span>Evidence tab campus · inventory TBC</span>
+            </div>
+            <div class="country-card">
+              <strong>🇸🇬 Singapore</strong>
+              <span>Hosting region · campus rules TBC</span>
+            </div>
+            <div class="country-card">
+              <strong>Other (KH, SZ, LS, NA, UG, …)</strong>
+              <span>Same pattern: inventory → adapter → accept → migrate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Ideal -->
+    <section class="section" id="phase-ideal">
+      <div class="phase-banner">
+        <span class="chip ok">Target vision — post M5</span>
+        <span class="chip warn">Proposed · confirm with Working Group as future ADR</span>
+      </div>
+      <h2>6. Ideal state — unified Raisd CMS, distributed databases</h2>
+      <p class="lead">
+        Legacy campus CMS instances are retired (or reduced to read-only archive).
+        Raisd CMS is the only write path. Each country (or regulated region) runs its own
+        database and preferably local API capacity. Global services never hold the student ledger.
+      </p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Detailed ideal architecture</h3>
+            <p>Global control plane + regional data planes + shared portal apps.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph Portals["Shared portal apps — multi-tenant"]
+    AP[Applicant]
+    SP[Student]
+    LP[Lecturer]
+    ST[Staff / admin CMS]
+  end
+
+  subgraph Control["Global control plane"]
+    TR[Tenant registry]
+    WL[White-label service]
+    FF[Feature flags]
+    ID[Identity router]
+    REL[Release / schema train]
+    OBS[Central observability]
+  end
+
+  subgraph RegionA["Region A — SEA"]
+    GW1[Regional API gateway]
+    API1[Portal API pool]
+    CMS1[Raisd CMS services]
+    DB1[(Country DBs<br/>MY · SG · …)]
+    FS1[(Evidence region A)]
+  end
+
+  subgraph RegionB["Region B — Africa"]
+    GW2[Regional API gateway]
+    API2[Portal API pool]
+    CMS2[Raisd CMS services]
+    DB2[(Country DBs<br/>SL · BW · …)]
+    FS2[(Evidence region B)]
+  end
+
+  AP --> WL
+  SP --> WL
+  LP --> WL
+  ST --> WL
+  WL --> GW1
+  WL --> GW2
+  TR --> WL
+  FF --> API1
+  FF --> API2
+  ID --> API1
+  ID --> API2
+  REL --> CMS1
+  REL --> CMS2
+  GW1 --> API1 --> CMS1
+  CMS1 --> DB1
+  CMS1 --> FS1
+  GW2 --> API2 --> CMS2
+  CMS2 --> DB2
+  CMS2 --> FS2
+  API1 --> OBS
+  API2 --> OBS
+          </pre>
+        </div>
+      </div>
+
+      <div class="arch-layer-grid">
+        <div class="arch-layer">
+          <h4>Scale-out unit</h4>
+          <p>A <em>country data plane</em>: DB + files + optional API pool. Add a country by provisioning a plane and registering a tenant — not by forking the CMS.</p>
+        </div>
+        <div class="arch-layer">
+          <h4>Geo placement</h4>
+          <p>Compute near data for latency and residency. DNS / gateway routes <code>campus → region</code>. Cross-region reads are explicit and rare.</p>
+        </div>
+        <div class="arch-layer">
+          <h4>Identity</h4>
+          <p>Each country maps to its IdP / local auth rules. Tokens carry <code>campus_id</code>, <code>country_code</code>, roles. Server enforces scope.</p>
+        </div>
+        <div class="arch-layer">
+          <h4>Ops</h4>
+          <p>One release train; per-country config. Backups and restore drills per data plane. Central metrics with country labels.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Tenancy -->
+    <section class="section" id="tenancy">
+      <h2>7. White-labelling, feature toggling, and identity</h2>
+      <p class="lead">
+        Country uniqueness is expressed as configuration on a shared product — not parallel codebases.
+      </p>
+
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  REQ[Browser request<br/>host / campus] --> RESOLVE[Tenant resolve]
+  RESOLVE --> BRAND[White-label pack<br/>logo · theme · domain · locale]
+  RESOLVE --> FLAGS[Feature flags<br/>modules · regulators · rails]
+  RESOLVE --> IDP[Identity pack<br/>IdP · MFA · password policy]
+  BRAND --> SHELL[Portal shell]
+  FLAGS --> API[Portal API authz]
+  IDP --> API
+  API --> LOCAL[(Country DB)]
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table class="attr">
+          <thead>
+            <tr><th>Dimension</th><th>What is shared</th><th>What is per country / campus</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>White-label</td>
+              <td>Portal layouts, CAP screens, design system</td>
+              <td>Logo, colours, public hostname, footer legal, language pack</td>
+              <td><code>apply.cyberjaya…</code> vs <code>apply.sl…</code></td>
+            </tr>
+            <tr>
+              <td>Feature toggles</td>
+              <td>Module code behind flags</td>
+              <td>EMGS / visa, local QA evidence, payment gateway, accommodation</td>
+              <td>MY: EMGS on · BW: EMGS off</td>
+            </tr>
+            <tr>
+              <td>Identity</td>
+              <td>Token model, RBAC engine, role names</td>
+              <td>IdP, password rules, staff directory source, SSO</td>
+              <td>CMS login vs national IdP</td>
+            </tr>
+            <tr>
+              <td>Academic rules</td>
+              <td>Capability IDs and workflows</td>
+              <td>Programme catalogue, calendar, fee schedules, grading policy</td>
+              <td>Campus config in control-plane</td>
+            </tr>
+            <tr>
+              <td>Compliance</td>
+              <td>Privacy framework, audit events</td>
+              <td>Data residency region, retention, local report jobs</td>
+              <td>DB must stay in-country when required</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Config sketch (illustrative):</strong>
+        <code>tenant_id</code>, <code>country_code</code>, <code>region</code>,
+        <code>brand_pack_id</code>, <code>feature_flags{}</code>,
+        <code>idp_ref</code>, <code>db_dsn_secret_ref</code>, <code>evidence_bucket</code>.
+        Secrets never live in the portal; only the regional Portal API resolves them.
+      </div>
+    </section>
+
+    <!-- 8. Data -->
+    <section class="section" id="data">
+      <h2>8. Data plane — residency, sync, and what must never be shared</h2>
+      <p class="lead">
+        Distributed database means <strong>partition by country / campus</strong>, not a single
+        multi-writer global database. Cross-country data movement is exceptional and explicit.
+      </p>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div><h3>Stays in-country</h3></div></div>
+          <div class="card-body" style="padding:14px 16px">
+            <ul style="margin:0;padding-left:1.2rem;color:var(--muted);font-size:0.92rem">
+              <li>Student master, applications, results, fees</li>
+              <li>Evidence files and payment proofs</li>
+              <li>Staff operational desks and audit for that campus</li>
+              <li>Country-specific regulator extracts</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><h3>May be global (non-ledger)</h3></div></div>
+          <div class="card-body" style="padding:14px 16px">
+            <ul style="margin:0;padding-left:1.2rem;color:var(--muted);font-size:0.92rem">
+              <li>Tenant registry and feature-flag definitions</li>
+              <li>White-label assets (or CDN copies)</li>
+              <li>Aggregated ops metrics (no PII)</li>
+              <li>Schema version / release metadata</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Allowed["Allowed cross-country — explicit"]
+    X1[Student transfer request]
+    X2[Group reporting anonymised]
+    X3[Shared programme template publish]
+  end
+
+  subgraph Forbidden["Forbidden by default"]
+    Y1[Silent multi-master replication of ledgers]
+    Y2[Portal writing two country DBs in one request]
+    Y3[Staff token reused across countries]
+  end
+
+  X1 --> BUS[Controlled integration bus<br/>consent · audit · mapping]
+  BUS --> TGT[(Target country DB)]
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Cutover -->
+    <section class="section" id="cutover">
+      <h2>9. Cutover playbook — how a campus reaches the ideal state</h2>
+      <p class="lead">
+        Same sequence for every country. Software delay never waives an operating requirement —
+        run on legacy or manually until Raisd is Live for that domain.
+      </p>
+
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  S1[1. Inventory legacy CMS<br/>schema · SPs · desks] --> S2[2. Map to CAP catalogue]
+  S2 --> S3[3. Ship Portal API adapter<br/>legacy remains SoR]
+  S3 --> S4[4. Campus accepts portals<br/>on legacy SoR]
+  S4 --> S5[5. Register tenant<br/>white-label · flags · IdP]
+  S5 --> S6[6. Domain cutover waves<br/>admissions → registry → teaching → finance → …]
+  S6 --> S7[7. Dual-run &amp; reconcile]
+  S7 --> S8[8. Flip SoR to Raisd DB<br/>legacy read-only / retire]
+  S8 --> S9[9. Optional: place API pool<br/>in-country / in-region]
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table class="attr">
+          <thead>
+            <tr><th>Wave</th><th>When</th><th>Exit criteria</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0 — Discover</td>
+              <td>Before Live</td>
+              <td>Inventory + CAP map (Cyberjaya / Sierra Leone pattern)</td>
+            </tr>
+            <tr>
+              <td>1 — Experience</td>
+              <td>M2–M4 / first campus acceptance</td>
+              <td>Portals Live on legacy SoR via CAP-53</td>
+            </tr>
+            <tr>
+              <td>2 — Tenantise</td>
+              <td>M5</td>
+              <td>campus_id, brand pack, flags, IdP wired; second campus adapter Live</td>
+            </tr>
+            <tr>
+              <td>3 — Domain migrate</td>
+              <td>M5+</td>
+              <td>Per-domain: ownership, cutover, rollback, training signed</td>
+            </tr>
+            <tr>
+              <td>4 — Distribute</td>
+              <td>Ideal</td>
+              <td>Country DB + regional API; legacy retired; residency proven</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10. Decisions -->
+    <section class="section" id="decisions">
+      <h2>10. Decisions still open (TBC)</h2>
+      <p class="lead">
+        Ideal-state topology is a <strong>proposed target</strong>. It must not be treated as an
+        agreed ADR until the Working Group confirms it. Current binding ADRs remain ADR-1 (SoR),
+        ADR-2 (Singapore UltaHost), ADR-3 (k3s).
+      </p>
+
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Topic</th><th>Options / notes</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Promote Ideal to ADR</td>
+              <td>Single product + country data planes + global control plane</td>
+              <td>Needs WG confirm</td>
+            </tr>
+            <tr>
+              <td>DB engine for Raisd SoR</td>
+              <td>Postgres (portal maps today) vs migrate legacy MySQL domains first</td>
+              <td>TBC</td>
+            </tr>
+            <tr>
+              <td>First non-SEA region host</td>
+              <td>When Africa campus goes Live — co-locate DB/API</td>
+              <td>TBC after M4</td>
+            </tr>
+            <tr>
+              <td>Feature-flag product</td>
+              <td>In-house control-plane vs third-party</td>
+              <td>TBC</td>
+            </tr>
+            <tr>
+              <td>Cross-campus student transfer</td>
+              <td>Manual export vs event bus</td>
+              <td>TBC / rare path</td>
+            </tr>
+            <tr>
+              <td>White-label domains</td>
+              <td>Per-campus hostnames vs path-based tenancy</td>
+              <td>Prefer hostnames (matches SDD-12 cookie rule)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="toc" style="margin-top:18px">
+        <a href="./migration.html"><strong>Migration plan</strong><span>M1–M5 detail</span></a>
+        <a href="./architecture.html"><strong>Architecture home</strong><span>ACL / academic model</span></a>
+        <a href="../sdd/03-delivery-milestones.html"><strong>SDD-03</strong><span>Milestones</span></a>
+        <a href="../sdd/12-deployment-architecture.html"><strong>SDD-12</strong><span>Hosting stages</span></a>
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md"><strong>AI knowledge</strong><span>Agent summary</span></a>
+        <a href="./old-cms-sierra-leone/index.html"><strong>Sierra Leone inventory</strong><span>M5 pattern</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Distributed CMS target · M1–M5 agreed path · Ideal state proposed · raisd-campus/control-plane
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "neutral",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+  <script src="./abbr-tooltips.js" defer></script>
+  <script src="nav-dropdown.js" defer></script>
+</body>
+</html>

@@ -113,7 +113,8 @@ a:hover { text-decoration: underline; }
 }
 .nav-dd-main:hover,
 .nav-dd:focus-within > .nav-dd-main,
-.nav-dd.open > .nav-dd-main {
+.nav-dd.open > .nav-dd-main,
+.nav-dd.is-hover > .nav-dd-main {
   background: var(--accent-soft);
   text-decoration: none;
 }
@@ -125,19 +126,31 @@ a:hover { text-decoration: underline; }
 .nav-dd-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 4px);
+  /* Flush under trigger — no dead gap; padding creates hit area */
+  top: 100%;
   left: 0;
   min-width: 200px;
-  padding: 6px;
-  border-radius: 12px;
+  padding: 10px 6px 6px;
+  border-radius: 0 0 12px 12px;
   border: 1px solid var(--line);
+  border-top: none;
   background: var(--surface);
   box-shadow: var(--shadow);
   z-index: 40;
 }
-.nav-dd:hover > .nav-dd-menu,
+/* Invisible bridge so the pointer can leave the pill without closing */
+.nav-dd-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -12px;
+  height: 12px;
+}
+/* Hover open is JS-driven (.is-hover) with leave delay — avoids snap-close on the way to the menu */
 .nav-dd:focus-within > .nav-dd-menu,
-.nav-dd.open > .nav-dd-menu {
+.nav-dd.open > .nav-dd-menu,
+.nav-dd.is-hover > .nav-dd-menu {
   display: block;
 }
 .nav-dd-menu a {
