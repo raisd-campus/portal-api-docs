@@ -27,6 +27,8 @@ Longer term, Raisd still aims for a **unified, one-stop CMS**. That is **not** l
 
 Milestone framing: [M1](../../sdd/03-delivery-milestones.md#m1)–[M4](../../sdd/03-delivery-milestones.md#m4) stay Portal-API-on-existing-CMS; progressive consolidation is planned under **[M5](../../sdd/03-delivery-milestones.md#m5)+** / remaining-CMS work ([SDD-03](../../sdd/03-delivery-milestones.md), [SDD-14](../../sdd/14-cms-feature-comparison.md)).
 
+**Ideal end state (proposed, post-M5):** one Raisd CMS product with **distributed country / region databases**, white-label packs, feature flags, and per-country identity — not one shared global student ledger. Detail: [distributed-cms-target.md](distributed-cms-target.md) and the one-page diagram [`docs/diagrams/distributed-cms-architecture.html`](../../diagrams/distributed-cms-architecture.html). Ideal topology needs a Working Group ADR before implementation.
+
 ## Logical shape
 
 ```text

@@ -16,6 +16,8 @@ Build **role portals on top of the existing CMS**, not a greenfield replacement 
 
 **Longer term:** aim for a **unified, one-stop CMS**, delivered **progressively** — only when a gap is verified and a migration strategy (ownership, cutover, rollback, training) is agreed. That consolidation is backlog relative to Admissions launch and Cyberjaya pilot; see [SDD-03](03-delivery-milestones.md) [M5](03-delivery-milestones.md#m5)+ and [SDD-14](14-cms-feature-comparison.md).
 
+**Ideal end state (proposed):** one Raisd CMS product with **distributed databases by country / region** (e.g. Malaysia, Singapore, Sierra Leone, Botswana), plus white-labelling, feature toggles, and country-specific identity — not one global student ledger. Diagram: [`docs/diagrams/distributed-cms-architecture.html`](../diagrams/distributed-cms-architecture.html). Agent summary: [`docs/ai/architecture/distributed-cms-target.md`](../ai/architecture/distributed-cms-target.md). Confirm as ADR before implementation.
+
 ```mermaid
 flowchart LR
   A[Applicant portal] --> P[Portal API]

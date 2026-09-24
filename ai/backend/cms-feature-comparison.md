@@ -2,6 +2,9 @@
 
 **Date:** 23 September 2026  
 **Old CMS source:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip` (inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md))  
+**Sister campus dumps (M5, not ADR-1 SoR):**
+- `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` — [old-cms-sierra-leone.md](old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/)
+- `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` — [old-cms-botswana.md](old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../../diagrams/old-cms-botswana/)  
 **New surface:** Raisd **four portals + Portal API** ([SDD-01](../../sdd/01-system-overview.md), [SDD-11](../../sdd/11-capability-catalog.md)) — **not** a greenfield CMS replacement.  
 **GitHub Pages (diagrams + verbose HTML):** [`docs/diagrams/old-cms/`](../../diagrams/old-cms/) — Comparison · FSD · Legacy ERD · Flows · Database (triggers / SPs / batches).
 

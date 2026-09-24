@@ -3,8 +3,11 @@
 **Document:** SDD-14  
 **Status:** Working draft  
 **Date:** 23 September 2026  
-**Source package:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip`  
-**Canonical detail (agents):** [`docs/ai/backend/cms-feature-comparison.md`](../ai/backend/cms-feature-comparison.md), [`docs/ai/backend/old-cms-cyberjaya.md`](../ai/backend/old-cms-cyberjaya.md)  
+**Source package:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip`
+**Also inventoried (M5 pattern, not launch SoR):**
+- `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` → [`docs/ai/backend/old-cms-sierra-leone.md`](../ai/backend/old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../diagrams/old-cms-sierra-leone/)
+- `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` → [`docs/ai/backend/old-cms-botswana.md`](../ai/backend/old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../diagrams/old-cms-botswana/)
+**Canonical detail (agents):** [`docs/ai/backend/cms-feature-comparison.md`](../ai/backend/cms-feature-comparison.md), [`docs/ai/backend/old-cms-cyberjaya.md`](../ai/backend/old-cms-cyberjaya.md)
 **GitHub Pages (diagrams):** [`docs/diagrams/old-cms/`](../diagrams/old-cms/) — Comparison · FSD · Legacy ERD · Flows · Database tech
 
 ## 1. Purpose

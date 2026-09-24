@@ -131,6 +131,8 @@ Counts are **table names** in the dump (includes backups, temps, and copies — 
 ## Related documents
 
 - CAP mapping: [cms-feature-comparison.md](cms-feature-comparison.md)
+- Sister campus (Sierra Leone EMS): [old-cms-sierra-leone.md](old-cms-sierra-leone.md)
+- Sister campus (Botswana LUCT): [old-cms-botswana.md](old-cms-botswana.md)
 - GitHub Pages diagrams: [../../diagrams/old-cms/](../../diagrams/old-cms/)
 - Portal API (new): [portal-api.md](portal-api.md)
 - Architecture: [../architecture/overview.md](../architecture/overview.md)

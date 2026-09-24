@@ -6,6 +6,8 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 **ERD & DFD:** https://raisd-campus.github.io/portal-api-docs/diagrams/
 **Distributed CMS:** https://raisd-campus.github.io/portal-api-docs/diagrams/distributed-cms-architecture.html
 **[LUCT CMS](https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/) analysis:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/
+**Botswana CMS:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-botswana/
+**Sierra Leone CMS:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-sierra-leone/
 **AI knowledge:** https://raisd-campus.github.io/portal-api-docs/ai/
 **SDD / nomenclature:** https://raisd-campus.github.io/portal-api-docs/sdd/
 **Nomenclature HTML:** https://raisd-campus.github.io/portal-api-docs/sdd/15-nomenclature.html (CAP/M hover tooltips on all Pages)

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Sierra Leone CMS Database</title>
+  <title>Raisd — LUCT Botswana CMS Analysis</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
 </head>
@@ -116,91 +116,145 @@
   <main>
 
     <section class="hero">
-      <h1>Sierra Leone — tables, procedures, triggers &amp; views</h1>
+      <h1>Existing Botswana CMS — technical analysis</h1>
       <p>
-        Derived from <code>ems_sierraleone</code> structure +
-        <code>ICA_SierraLeone_Procedure_23092026.sql</code>,
-        <code>ICA_SierraLeone_Triggers_23092026.sql</code>,
-        <code>ICA_SierraLeone_Views_23_09_2026.sql</code>.
+        Inventory from the LUCT Botswana source &amp; structure package
+        (<code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code>).
+        Sister <strong>LUCT CMS / PHPMaker</strong> campus (<strong>BWA-GBE</strong>) to Cyberjaya — useful for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion pattern matching.
+        <strong>Not</strong> the launch system of record (<a href="../architecture.html#sdd">ADR-1</a> remains Cyberjaya).
       </p>
       <div class="meta-row">
-        <span class="chip ok">345 tables</span>
-        <span class="chip ok">6 SPs</span>
-        <span class="chip ok">91 triggers</span>
-        <span class="chip ok">9 views</span>
+        <span class="chip ok">DB <code>cmsbotswana</code></span>
+        <span class="chip ok">713 tables</span>
+        <span class="chip ok">~554 non-temp</span>
+        <span class="chip ok">46 procedures</span>
+        <span class="chip ok">15 functions</span>
+        <span class="chip ok">157 triggers</span>
+        <span class="chip ok">407 views</span>
+        <span class="chip">Dump date 24 Sep 2026</span>
       </div>
     </section>
 
-    <p><a href="./index.html">← Sierra Leone hub</a></p>
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Scope.</strong>
+      Document structure and desk surfaces only. The PHP tree, <code>botsbatch</code> SQL/logs,
+      credentials, and live student files from the package are <em>not</em> committed to git.
+      Canonical agent notes:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a>.
+      Cyberjaya (launch SoR): <a href="../old-cms/">LUCT CMS / Cyberjaya analysis</a>.
+    </div>
+
+    <div class="note warn" style="margin: 0 0 28px">
+      <strong>Technology shape.</strong>
+      PHPMaker desks under <code>botswana/campus/&lt;desk&gt;/</code> —
+      registry, faculty, bursary, marketing, lecturer, services, accommodation, setup, reporting, cdu.
+      Same LUCT family as Cyberjaya (<code>r_*</code> / <code>f_*</code> / <code>b_*</code> / <code>app_*</code>),
+      with campus-local <code>bots_*</code>, <code>portal_*_botswana</code>, and <code>api_student_*</code> hooks.
+      Closer to Cyberjaya than the Sierra Leone EMS / <code>ac_*</code> package.
+    </div>
+
+    <nav class="toc" aria-label="Botswana CMS sections">
+      <a href="./database.html">
+        <strong>Database — tables, SPs, triggers, views</strong>
+        <span>713 tables · 46 procedures · 157 triggers · 407 views</span>
+      </a>
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">
+        <strong>Full inventory (Markdown)</strong>
+        <span>Module map, domain counts, Cyberjaya / Sierra Leone comparison</span>
+      </a>
+      <a href="../old-cms/">
+        <strong>Cyberjaya LUCT CMS hub</strong>
+        <span>Launch SoR analysis (ADR-1)</span>
+      </a>
+      <a href="../old-cms-sierra-leone/">
+        <strong>Sierra Leone CMS</strong>
+        <span>Sister EMS dump — M5 pattern</span>
+      </a>
+      <a href="../../sdd/14-cms-feature-comparison.html">
+        <strong>SDD-14 CAP comparison</strong>
+        <span>Cyberjaya-focused CAP matrix (reference)</span>
+      </a>
+    </nav>
 
     <section class="section">
-      <h2>Stored procedures (6)</h2>
+      <h2>Desks vs Raisd portals</h2>
+      <p class="lead">Staff desks share MySQL; Raisd portals never talk to campus MySQL directly.</p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Botswana LUCT CMS context</h3>
+            <p>Closest sister dump to Cyberjaya so far (same campus desk tree).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph BW["LUCT Botswana CMS BWA-GBE"]
+    REG[Registry]
+    FAC[Faculty]
+    BUR[Bursary]
+    MKT[Marketing]
+    LEC[Lecturer]
+    SVC[Services]
+    ACC[Accommodation]
+    SET[Setup]
+    REP[Reporting]
+    DB[("cmsbotswana MySQL")]
+    REG --> DB
+    FAC --> DB
+    BUR --> DB
+    MKT --> DB
+    LEC --> DB
+    SVC --> DB
+    ACC --> DB
+    SET --> DB
+    REP --> DB
+  end
+
+  subgraph Raisd["Raisd control plane — M5+"]
+    API[Portal API / ACL]
+    AP[Applicant]
+    SP[Student]
+    LP[Lecturer]
+    ST[Staff]
+    AP --> API
+    SP --> API
+    LP --> API
+    ST --> API
+    API -.->|"campus-keyed CAP-53"| DB
+  end
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Quick comparison</h2>
       <div class="table-wrap">
         <table class="attr">
-          <thead><tr><th>Procedure</th><th>Domain</th></tr></thead>
+          <thead>
+            <tr><th>Signal</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
           <tbody>
-            <tr><td><code>b_calcmodule</code></td><td>Finance — module fee calculation</td></tr>
-            <tr><td><code>b_calcsch</code></td><td>Finance — scholarship / assist calculation</td></tr>
-            <tr><td><code>f_calcass</code></td><td>Academic — assessment calculation</td></tr>
-            <tr><td><code>f_calccgpa</code></td><td>Academic — CGPA</td></tr>
-            <tr><td><code>f_calcgpa</code></td><td>Academic — GPA</td></tr>
-            <tr><td><code>f_calcgpa_old</code></td><td>Academic — legacy GPA</td></tr>
+            <tr><td>Database</td><td><code>cmscbj</code></td><td><code>cmsbotswana</code></td><td><code>ems_sierraleone</code></td></tr>
+            <tr><td>Tables</td><td>~1,942</td><td>713 (~554 non-temp)</td><td>345</td></tr>
+            <tr><td>Stored procedures</td><td>~318</td><td>46 (+15 fn)</td><td>6</td></tr>
+            <tr><td>Triggers</td><td>~239</td><td>157</td><td>91</td></tr>
+            <tr><td>Views</td><td>(large)</td><td>407</td><td>9</td></tr>
+            <tr><td>Admissions prefix</td><td><code>app_*</code></td><td><code>app_*</code></td><td><code>ac_*</code></td></tr>
+            <tr><td>Portal API hooks</td><td>Yes</td><td>Yes (<code>*_botswana</code>)</td><td>Not in dump</td></tr>
+            <tr><td>ADR-1 launch SoR</td><td>Yes</td><td>No — expansion</td><td>No — expansion</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Machine extract: <a href="./_proc-catalog.txt"><code>_proc-catalog.txt</code></a></p>
-    </section>
-
-    <section class="section">
-      <h2>Views (9)</h2>
-      <ul>
-        <li><code>CurTermPopulationlist</code></li>
-        <li><code>ac_courseeligibility</code></li>
-        <li><code>c_stdassessment</code>, <code>c_stdtimetable</code></li>
-        <li><code>f_moduletermview</code>, <code>r_stdmoduleview</code></li>
-        <li><code>statement</code>, <code>statement_base</code>, <code>statement_total</code></li>
-      </ul>
-      <p>Machine extract: <a href="./_view-catalog.txt"><code>_view-catalog.txt</code></a></p>
-    </section>
-
-    <section class="section">
-      <h2>Domain table signals</h2>
-      <div class="table-wrap">
-        <table class="attr">
-          <thead><tr><th>Signal</th><th>Approx.</th><th>Examples</th></tr></thead>
-          <tbody>
-            <tr><td>Temp / dated copies</td><td>~189</td><td><code>temp_*</code>, <code>*_20171220</code></td></tr>
-            <tr><td><code>f_*</code> academic</td><td>~44</td><td><code>f_program</code>, <code>f_module</code>, <code>f_timetable</code></td></tr>
-            <tr><td><code>b_*</code> finance</td><td>~31</td><td><code>b_invoice</code>, <code>b_payment</code>, <code>b_assist*</code></td></tr>
-            <tr><td><code>r_*</code> student</td><td>~26</td><td><code>r_student</code>, <code>r_stdmodule</code>, <code>r_stdofferletter</code></td></tr>
-            <tr><td><code>q_*</code> letters / rooms</td><td>~27</td><td><code>q_letter*</code>, <code>q_classroom*</code></td></tr>
-            <tr><td><code>ac_*</code> admissions</td><td>~7</td><td><code>ac_application</code>, <code>ac_enquiry</code></td></tr>
-            <tr><td><code>sa_*</code> student affairs</td><td>~3</td><td><code>sa_studentvisa</code>, <code>sa_insurance</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        Full table list:
-        <a href="./_table-catalog.txt"><code>_table-catalog.txt</code></a> ·
-        Triggers:
-        <a href="./_trigger-summary.txt"><code>_trigger-summary.txt</code></a>
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>CAP-53 note</h2>
-      <p>
-        Sierra Leone confirms a second live EMS schema in the same product family.
-        Portal API campus configuration (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)
-        must stay campus-keyed; do not assume Cyberjaya SP/API hooks exist here.
-      </p>
     </section>
 
   </main>
   <p class="footer">
     Source inventory in
-    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">docs/ai/backend/old-cms-sierra-leone.md</a>
-    · Package <code>ICA_SierraLeone_Codes_&amp;_DB_Structure_23_09_2026</code> (structure only — not committed)
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">docs/ai/backend/old-cms-botswana.md</a>
+    · Package <code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code> (structure only — not committed)
   </p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";

@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-09-23
+updated: 2026-09-24
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -12,7 +12,9 @@ notes:
   - 2026-09-23: Cyberjaya old CMS dump inventoried; CAP comparison at backend/cms-feature-comparison.md (SDD-14).
   - 2026-09-23: SDD-15 nomenclature — CAP-* and M1–M5 anchors/cross-links (../sdd/15-nomenclature.md).
   - 2026-09-23: ICA Sierra Leone CMS dump inventoried (ems_sierraleone); docs/ai/backend/old-cms-sierra-leone.md + diagrams/old-cms-sierra-leone/.
+  - 2026-09-24: LUCT Botswana CMS dump inventoried (cmsbotswana); docs/ai/backend/old-cms-botswana.md + diagrams/old-cms-botswana/.
   - 2026-09-23: Raisd CMS Student portal capabilities, screenshots, and use guides under diagrams/raisd-cms/.
+  - 2026-09-24: Distributed CMS target (one product, country data planes, white-label/flags) — architecture/distributed-cms-target.md + diagrams/distributed-cms-architecture.html.
 
 entrypoints:
   agents: AGENTS.md
@@ -34,6 +36,9 @@ sibling_repos:
 architecture:
   - path: architecture/overview.md
     topics: [adr-1, portals, portal-api, cms, cyberjaya]
+  - path: architecture/distributed-cms-target.md
+    topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state]
+    pages: ../diagrams/distributed-cms-architecture.html
   - path: architecture/repositories.md
     topics: [repo-map, local-paths, ownership]
   - path: architecture/deployment.md
@@ -49,6 +54,9 @@ backend:
   - path: backend/old-cms-sierra-leone.md
     topics: [existing-cms, sierra-leone, ems_sierraleone, inventory, php-maker, m5]
     pages: ../diagrams/old-cms-sierra-leone/
+  - path: backend/old-cms-botswana.md
+    topics: [existing-cms, botswana, cmsbotswana, inventory, php-maker, m5, luct]
+    pages: ../diagrams/old-cms-botswana/
   - path: backend/cms-feature-comparison.md
     topics: [cap-mapping, gap-analysis, adr-1, old-vs-new, triggers, stored-procedures, batch]
     sdd: ../sdd/14-cms-feature-comparison.md
@@ -57,6 +65,12 @@ backend:
 diagrams:
   - path: ../diagrams/index.html
     topics: [overview, mermaid, executive-summary, migration]
+  - path: ../diagrams/distributed-cms-architecture.html
+    topics: [distributed-cms, multi-country, white-label, feature-flags, migration-journey, ideal-state]
+  - path: ../diagrams/migration.html
+    topics: [milestones, m1-m5, hosting-stages]
+  - path: ../diagrams/architecture.html
+    topics: [acl, academic-model, sdd-adr]
   - path: ../diagrams/raisd-cms/index.html
     topics: [raisd-cms, student-portal, capabilities, screenshots, guides, erd, dfd]
     pages:
@@ -85,6 +99,15 @@ diagrams:
       - ../diagrams/old-cms-sierra-leone/_proc-catalog.txt
       - ../diagrams/old-cms-sierra-leone/_table-catalog.txt
       - ../diagrams/old-cms-sierra-leone/_view-catalog.txt
+  - path: ../diagrams/old-cms-botswana/index.html
+    topics: [legacy-cms, botswana, luct, inventory, database]
+    pages:
+      - ../diagrams/old-cms-botswana/database.html
+    extracts:
+      - ../diagrams/old-cms-botswana/_trigger-summary.txt
+      - ../diagrams/old-cms-botswana/_proc-catalog.txt
+      - ../diagrams/old-cms-botswana/_table-catalog.txt
+      - ../diagrams/old-cms-botswana/_view-catalog.txt
 
 frontend:
   student-portal:
