@@ -95,8 +95,12 @@
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
               <div class="nav-sub-menu" role="menu">
-                <a href="../old-cms-sierra-leone/index.html">Analysis hub</a>
-                <a href="../old-cms-sierra-leone/database.html">Database</a>
+                <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+                <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+                <a href="../old-cms-sierra-leone/index.html#dfd">DFD</a>
+                <a href="../old-cms-sierra-leone/index.html#database">Database</a>
+                <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+                <a href="../old-cms-sierra-leone/index.html#compare">Campus comparison</a>
               </div>
             </div>
 </div>
@@ -213,9 +217,9 @@
         <strong>Botswana (subsection)</strong>
         <span>E2E · ERD · DFD · database · DTEF · comparison</span>
       </a>
-      <a href="../old-cms-sierra-leone/">
-        <strong>Sierra Leone CMS</strong>
-        <span>Sister EMS dump (<code>ems_sierraleone</code>) — M5 pattern</span>
+      <a href="#sierra-leone">
+        <strong>Sierra Leone (subsection)</strong>
+        <span>E2E · ERD · DFD · database · integrations · comparison</span>
       </a>
     </nav>
 
@@ -264,6 +268,54 @@
         · DTEF notes:
         <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a>.
         Also under <strong>LUCT CMS</strong> in the top nav → <em>Botswana</em> group.
+      </p>
+    </section>
+
+    <section class="section" id="sierra-leone">
+      <h2>Sierra Leone — LUCT CMS subsection</h2>
+      <p class="lead">
+        Sister EMS dump <code>ems_sierraleone</code> (UI brand <strong>CMS-ICA V 1.0</strong>).
+        Thinner LUCT-family sibling for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion —
+        admissions on <code>ac_*</code>, six calculator SPs, no TEF government sync in this package.
+        Not the launch SoR (ADR-1 remains Cyberjaya).
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">DB <code>ems_sierraleone</code></span>
+        <span class="chip ok">345 tables</span>
+        <span class="chip ok">6 SPs · 91 triggers</span>
+        <span class="chip">Dump 23 Sep 2026</span>
+      </div>
+      <nav class="toc" aria-label="Sierra Leone CMS subsection">
+        <a href="../old-cms-sierra-leone/index.html">
+          <strong>E2E functional hub</strong>
+          <span>Lifecycle · desks · core flows · Raisd mapping</span>
+        </a>
+        <a href="../old-cms-sierra-leone/index.html#erd">
+          <strong>Physical ERD</strong>
+          <span>Student spine · ac_* admissions · finance · affairs</span>
+        </a>
+        <a href="../old-cms-sierra-leone/index.html#dfd">
+          <strong>Data-flow (DFD)</strong>
+          <span>Context · admissions · academic · finance</span>
+        </a>
+        <a href="../old-cms-sierra-leone/index.html#database">
+          <strong>Database</strong>
+          <span>Tables · SPs · triggers · views · CAP-53</span>
+        </a>
+        <a href="../old-cms-sierra-leone/index.html#integrations">
+          <strong>Integrations</strong>
+          <span>CMS support email · reCAPTCHA · no TEF</span>
+        </a>
+        <a href="../old-cms-sierra-leone/index.html#compare">
+          <strong>Campus comparison</strong>
+          <span>vs Cyberjaya · Botswana — all aspects</span>
+        </a>
+      </nav>
+      <p class="note" style="margin-top: 12px">
+        Canonical inventory:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">old-cms-sierra-leone.md</a>.
+        Also under <strong>LUCT CMS</strong> in the top nav → <em>Sierra Leone</em> flyout.
       </p>
     </section>
 
