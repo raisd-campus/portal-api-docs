@@ -70,17 +70,23 @@
         <div class="nav-dd">
           <a class="nav-dd-main active" href="index.html">LUCT CMS</a>
           <div class="nav-dd-menu" role="menu">
+            <span class="nav-dd-label">Cyberjaya</span>
             <a href="index.html">Analysis hub</a>
             <a href="comparison.html">Comparison</a>
             <a href="fsd.html">FSD</a>
             <a href="erd.html">Legacy ERD</a>
             <a href="flows.html">Flows</a>
             <a href="database.html">Database</a>
-            <a href="../old-cms-botswana/index.html">Botswana</a>
-            <a href="../old-cms-botswana/index.html#database">Botswana DB</a>
-            <a href="../old-cms-botswana/index.html#dtef">Botswana DTEF sync</a>
-            <a href="../old-cms-sierra-leone/index.html">Sierra Leone</a>
-            <a href="../old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+            <span class="nav-dd-label">Botswana</span>
+            <a class="nav-dd-indent" href="../old-cms-botswana/index.html">E2E hub</a>
+            <a class="nav-dd-indent" href="../old-cms-botswana/index.html#erd">ERD</a>
+            <a class="nav-dd-indent" href="../old-cms-botswana/index.html#dfd">DFD</a>
+            <a class="nav-dd-indent" href="../old-cms-botswana/index.html#database">Database</a>
+            <a class="nav-dd-indent" href="../old-cms-botswana/index.html#dtef">DTEF / TEF sync</a>
+            <a class="nav-dd-indent" href="../old-cms-botswana/index.html#compare">Campus comparison</a>
+            <span class="nav-dd-label">Sierra Leone</span>
+            <a class="nav-dd-indent" href="../old-cms-sierra-leone/index.html">Analysis hub</a>
+            <a class="nav-dd-indent" href="../old-cms-sierra-leone/database.html">Database</a>
           </div>
         </div>
         <div class="nav-dd">
@@ -191,15 +197,63 @@
         <strong>Triggers, SPs &amp; batches</strong>
         <span>~237 triggers, ~318 procedures, batch jobs</span>
       </a>
-      <a href="../old-cms-botswana/">
-        <strong>Botswana CMS</strong>
-        <span>Sister LUCT dump (<code>cmsbotswana</code> / BWA-GBE) — M5 pattern</span>
+      <a href="#botswana">
+        <strong>Botswana (subsection)</strong>
+        <span>E2E · ERD · DFD · database · DTEF · comparison</span>
       </a>
       <a href="../old-cms-sierra-leone/">
         <strong>Sierra Leone CMS</strong>
         <span>Sister EMS dump (<code>ems_sierraleone</code>) — M5 pattern</span>
       </a>
     </nav>
+
+    <section class="section" id="botswana">
+      <h2>Botswana — LUCT CMS subsection</h2>
+      <p class="lead">
+        Sister campus dump <code>cmsbotswana</code> (<strong>BWA-GBE</strong>). Closest LUCT family match to Cyberjaya
+        for <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion — plus campus-local
+        DTEF → <code>tef.gov.bw</code> scholarship sync. Not the launch SoR (ADR-1 remains Cyberjaya).
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">DB <code>cmsbotswana</code></span>
+        <span class="chip ok">713 tables</span>
+        <span class="chip ok">TEF.gov.bw</span>
+        <span class="chip">Dump 24 Sep 2026</span>
+      </div>
+      <nav class="toc" aria-label="Botswana CMS subsection">
+        <a href="../old-cms-botswana/index.html">
+          <strong>E2E functional hub</strong>
+          <span>Lifecycle · desks · core flows · Raisd mapping</span>
+        </a>
+        <a href="../old-cms-botswana/index.html#erd">
+          <strong>Physical ERD</strong>
+          <span>Student spine · admissions · finance · DTEF · portal</span>
+        </a>
+        <a href="../old-cms-botswana/index.html#dfd">
+          <strong>Data-flow (DFD)</strong>
+          <span>Context · admissions · academic · finance/TEF · batch</span>
+        </a>
+        <a href="../old-cms-botswana/index.html#database">
+          <strong>Database</strong>
+          <span>Tables · SPs · triggers · views · CAP-53</span>
+        </a>
+        <a href="../old-cms-botswana/index.html#dtef">
+          <strong>DTEF → TEF.gov.bw</strong>
+          <span>Scholarship government API sync</span>
+        </a>
+        <a href="../old-cms-botswana/index.html#compare">
+          <strong>Campus comparison</strong>
+          <span>vs Cyberjaya · Sierra Leone — all aspects</span>
+        </a>
+      </nav>
+      <p class="note" style="margin-top: 12px">
+        Canonical inventory:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a>
+        · DTEF notes:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a>.
+        Also under <strong>LUCT CMS</strong> in the top nav → <em>Botswana</em> group.
+      </p>
+    </section>
 
     <section class="section">
       <h2>Context — old multi-app CMS vs Raisd portals</h2>

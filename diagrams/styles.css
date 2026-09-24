@@ -172,6 +172,24 @@ a:hover { text-decoration: underline; }
   background: var(--accent-soft);
   text-decoration: none;
 }
+.nav-dd-label {
+  display: block;
+  padding: 10px 12px 4px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted, #5a6a7e);
+  pointer-events: none;
+}
+.nav-dd-label:not(:first-child) {
+  margin-top: 6px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+.nav-dd-menu a.nav-dd-indent {
+  padding-left: 20px;
+}
 
 /* legacy inline subchip group (kept harmless if any remain) */
 .nav-group { display: contents; }
