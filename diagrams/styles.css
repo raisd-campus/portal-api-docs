@@ -172,28 +172,118 @@ a:hover { text-decoration: underline; }
   background: var(--accent-soft);
   text-decoration: none;
 }
-.nav-dd-label {
+
+/* Nested side flyout under LUCT CMS (Cyberjaya / Botswana / Sierra Leone) */
+.nav-sub {
+  position: relative;
   display: block;
-  padding: 10px 12px 4px;
-  font-size: 0.72rem;
-  font-weight: 650;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--muted, #5a6a7e);
-  pointer-events: none;
 }
-.nav-dd-label:not(:first-child) {
-  margin-top: 6px;
-  border-top: 1px solid var(--line);
-  padding-top: 10px;
+.nav-sub-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
 }
-.nav-dd-menu a.nav-dd-indent {
-  padding-left: 20px;
+.nav-sub-trigger::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 5px solid currentColor;
+  opacity: 0.55;
+}
+.nav-sub-trigger:hover,
+.nav-sub:focus-within > .nav-sub-trigger,
+.nav-sub.open > .nav-sub-trigger,
+.nav-sub.is-hover > .nav-sub-trigger {
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+.nav-sub-menu {
+  display: none;
+  position: absolute;
+  left: calc(100% - 4px);
+  top: -6px;
+  min-width: 210px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  z-index: 50;
+}
+/* Bridge so pointer can move into the side menu without closing */
+.nav-sub-menu::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+}
+.nav-sub:focus-within > .nav-sub-menu,
+.nav-sub.open > .nav-sub-menu,
+.nav-sub.is-hover > .nav-sub-menu {
+  display: block;
+}
+.nav-sub-menu a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.nav-sub-menu a:hover {
+  background: var(--accent-soft);
+  text-decoration: none;
 }
 
-/* legacy inline subchip group (kept harmless if any remain) */
-.nav-group { display: contents; }
-.nav-sub { display: none; }
+@media (max-width: 900px) {
+  .nav-sub-menu {
+    position: static;
+    left: auto;
+    top: auto;
+    margin: 0 0 4px;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0 0 0 8px;
+  }
+  .nav-sub-menu::before {
+    display: none;
+  }
+  .nav-sub:not(.open):not(.is-hover):not(:focus-within) > .nav-sub-menu {
+    display: none;
+  }
+  .nav-sub-trigger::after {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    border-bottom: none;
+  }
+  .nav-sub.open > .nav-sub-trigger::after,
+  .nav-sub.is-hover > .nav-sub-trigger::after,
+  .nav-sub:focus-within > .nav-sub-trigger::after {
+    border-top: none;
+    border-bottom: 5px solid currentColor;
+  }
+}
+
+/* retired flat-label styles superseded by .nav-sub */
 
 main {
   max-width: var(--page-max);
