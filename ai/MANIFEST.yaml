@@ -10,6 +10,7 @@ decision:
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
   - 2026-09-23: Cyberjaya old CMS dump inventoried; CAP comparison at backend/cms-feature-comparison.md (SDD-14).
+  - 2026-09-25: Cyberjaya E2E hub deepened (flows, ERD, DFD, integrations, three-campus comparison); satellite pages redirect to hub anchors.
   - 2026-09-23: SDD-15 nomenclature — CAP-* and M1–M5 anchors/cross-links (../sdd/15-nomenclature.md).
   - 2026-09-23: ICA Sierra Leone CMS dump inventoried (ems_sierraleone); docs/ai/backend/old-cms-sierra-leone.md + diagrams/old-cms-sierra-leone/.
   - 2026-09-25: Sierra Leone E2E hub deepened (flows, ERD, DFD, integrations, three-campus comparison) from ICA_SierraLeone package re-analysis.
@@ -52,7 +53,8 @@ backend:
     openapi: ../../openapi.yaml
     code: ../../portal-api/
   - path: backend/old-cms-cyberjaya.md
-    topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker]
+    topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker, e2e, erd, dfd, integrations, adr-1]
+    pages: ../diagrams/old-cms/
   - path: backend/old-cms-sierra-leone.md
     topics: [existing-cms, sierra-leone, ems_sierraleone, inventory, php-maker, m5, e2e, erd, dfd, integrations]
     pages: ../diagrams/old-cms-sierra-leone/
@@ -85,7 +87,7 @@ diagrams:
       - ../diagrams/erd.html
       - ../diagrams/dfd.html
   - path: ../diagrams/old-cms/index.html
-    topics: [legacy-cms, comparison, fsd, erd, flows, database]
+    topics: [legacy-cms, comparison, fsd, erd, flows, database, e2e, functional-flow, dfd, integrations, adr-1]
     pages:
       - ../diagrams/old-cms/comparison.html
       - ../diagrams/old-cms/fsd.html
@@ -95,6 +97,9 @@ diagrams:
     extracts:
       - ../diagrams/old-cms/_trigger-summary.txt
       - ../diagrams/old-cms/_proc-catalog.txt
+      - ../diagrams/old-cms/_func-catalog.txt
+      - ../diagrams/old-cms/_table-catalog.txt
+      - ../diagrams/old-cms/_view-catalog.txt
   - path: ../diagrams/old-cms-sierra-leone/index.html
     topics: [legacy-cms, sierra-leone, ems, inventory, database, e2e, functional-flow, erd, dfd, integrations]
     pages:

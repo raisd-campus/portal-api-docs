@@ -1,109 +1,229 @@
-TOTAL_TRIGGERS 237
-TOTAL_TABLES 107
-app_applicationform|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-app_applicationform_test|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-f_lecturer|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-f_lecturer_20220324|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-f_lecturer_Backup20190111|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-f_lecturer_ccc|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-f_lecturer_dvd|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-f_programsummary|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_form|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdagent|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdofferletter|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdpersonal|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdprogram|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdsemester|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdsemester_innodb|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_student|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_student_backup_20200827|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_student_copy|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-std_agentchange|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-w_visa|4|AFTER INSERT, AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-acc_freeoccupant|3|AFTER INSERT, AFTER UPDATE, BEFORE INSERT
-acc_occupant|3|AFTER UPDATE, AFTER INSERT, BEFORE INSERT
-app_graduation|3|AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-app_graduation_20221014|3|AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-app_graduation_copy|3|AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-b_stdinstaldetail|3|AFTER INSERT, AFTER UPDATE, BEFORE INSERT
-b_stdinstalment|3|AFTER INSERT, BEFORE INSERT, BEFORE UPDATE
-f_structure|3|AFTER INSERT, BEFORE INSERT, BEFORE UPDATE
-f_termold|3|AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdmodule|3|AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-r_stdmodule_20191110|3|AFTER UPDATE, BEFORE INSERT, BEFORE UPDATE
-s_upload|3|AFTER INSERT, AFTER UPDATE, BEFORE INSERT
-s_upload_copy|3|AFTER INSERT, AFTER UPDATE, BEFORE INSERT
-acc_checkout|2|AFTER INSERT, BEFORE INSERT
-acc_contractoccupancy|2|AFTER INSERT, BEFORE INSERT
-acc_extendoccupancy|2|AFTER INSERT, BEFORE INSERT
-app_arrivalform|2|AFTER INSERT, AFTER UPDATE
-b_assistbillingdetail|2|AFTER UPDATE, BEFORE UPDATE
-b_invoicedetail|2|BEFORE INSERT, BEFORE UPDATE
-b_invoicedetailBNM|2|BEFORE INSERT, BEFORE UPDATE
-b_paymentdetail|2|AFTER INSERT, AFTER UPDATE
-b_paymentverification|2|BEFORE UPDATE, BEFORE INSERT
-b_receipt|2|AFTER UPDATE, BEFORE UPDATE
-b_receiptdetail|2|AFTER INSERT, AFTER UPDATE
-f_attenddatemod|2|BEFORE INSERT, BEFORE UPDATE
-f_module|2|BEFORE INSERT, BEFORE UPDATE
-f_program|2|BEFORE INSERT, BEFORE UPDATE
-f_programaccreditation|2|AFTER INSERT, AFTER UPDATE
-f_programaccreditationext|2|AFTER INSERT, AFTER UPDATE
-f_programaccreditationrevocation|2|BEFORE INSERT, BEFORE UPDATE
-f_programapproval|2|AFTER INSERT, AFTER UPDATE
-f_programapprovalext|2|AFTER INSERT, AFTER UPDATE
-f_releaseresult|2|AFTER INSERT, AFTER UPDATE
-f_releaseresult_20191114|2|AFTER INSERT, AFTER UPDATE
-f_semester|2|BEFORE INSERT, BEFORE UPDATE
-f_semmodule|2|BEFORE INSERT, BEFORE UPDATE
-f_term|2|BEFORE INSERT, AFTER UPDATE
-f_termdetail|2|AFTER INSERT, AFTER UPDATE
-ier_subjectcategory|2|AFTER INSERT, AFTER UPDATE
-ih_attenddatemod|2|BEFORE INSERT, BEFORE UPDATE
-ih_student|2|AFTER INSERT, AFTER UPDATE
-inv_itemdetail|2|AFTER INSERT, AFTER UPDATE
-m_commision|2|AFTER INSERT, AFTER UPDATE
-r_ptptn|2|BEFORE UPDATE, BEFORE INSERT
-r_stdattendancerequest|2|AFTER UPDATE, BEFORE INSERT
-r_stdimmigration|2|AFTER INSERT, AFTER UPDATE
-r_stdrelation|2|BEFORE INSERT, BEFORE UPDATE
-r_stdrelation_2013oct|2|BEFORE INSERT, BEFORE UPDATE
-r_stdrelation_july202020|2|BEFORE INSERT, BEFORE UPDATE
-r_studentRestored|2|AFTER INSERT, BEFORE INSERT
-s_staff|2|AFTER INSERT, AFTER UPDATE
-s_staff_20221018|2|AFTER INSERT, AFTER UPDATE
-s_staff_backup20190111|2|AFTER INSERT, AFTER UPDATE
-s_update|2|AFTER UPDATE, BEFORE INSERT
-w_occupant|2|AFTER INSERT, AFTER UPDATE
-w_receipt|2|BEFORE INSERT, BEFORE UPDATE
-w_receiptdetailacco|2|AFTER INSERT, AFTER UPDATE
-acc_changeroomrequest|1|AFTER INSERT
-acc_room|1|BEFORE UPDATE
-app_applicationformonline|1|AFTER INSERT
-app_arrivalformonline|1|AFTER INSERT
-app_document|1|AFTER UPDATE
-app_eligibilityletter|1|BEFORE INSERT
-app_graduationonline|1|AFTER INSERT
-b_stdassistprog|1|AFTER UPDATE
-b_stdassistprog_20180225|1|AFTER UPDATE
-bm_assesmentweight|1|BEFORE UPDATE
-documents|1|BEFORE INSERT
-f_releaseresultdetail|1|BEFORE UPDATE
-f_supervisor_request|1|BEFORE INSERT
-ih_stdattendance|1|BEFORE UPDATE
-ih_stdmark|1|BEFORE UPDATE
-m_agent|1|BEFORE INSERT
-m_agent_copy|1|BEFORE INSERT
-online_enrollment|1|BEFORE INSERT
-r_assistscheme|1|BEFORE INSERT
-r_stdnotes|1|BEFORE INSERT
-r_stdsurvey|1|AFTER INSERT
-r_student_submission|1|BEFORE INSERT
-r_studentportaldoc|1|BEFORE INSERT
-r_studenttranscriptotp|1|BEFORE UPDATE
-r_visaletter|1|BEFORE INSERT
-r_zgraduationdate|1|AFTER UPDATE
-s_autoupdate|1|BEFORE INSERT
-s_billing|1|BEFORE INSERT
-t_enrollrequest|1|AFTER UPDATE
-w_application|1|BEFORE UPDATE
+_before_ins_tr1
+_before_ins_tr2
+acc_changeroom_aft_ins_tr
+acc_checkout_aft_ins_tr
+acc_checkout_bfr_ins_tr
+acc_contractoccupancy_after_insert
+acc_contractoccupancy_before_insert
+acc_extendoccupancy_aft_ins_tr
+acc_extendoccupancy_before_insert
+acc_freeoccupant_aft_ins_tr
+acc_freeoccupant_aft_upd_tr
+acc_freeoccupant_bfr_ins_tr
+acc_occupant_aft_ins_tr
+acc_occupant_after_upd_tr1
+acc_occupant_bfr_ins_tr
+acc_room_aft_upd_tr
+after_upd8
+after_update
+afterupd8
+app_applicationform_after_ins_tr
+app_applicationform_after_ins_tr_copy
+app_applicationform_after_upd_tr1_copy
+app_applicationform_before_ins_tr1
+app_applicationform_before_ins_tr1_copy
+app_applicationform_before_upd_tr1
+app_applicationform_before_upd_tr1_copy
+app_applicationformonline_after_ins_tr1
+app_arrivalform_after_ins_tr1
+app_arrivalform_after_upd_tr1
+app_arrivalformonline_after_ins_tr1
+app_document_after_upd_tr1
+app_eligibility_bef_ins_tr
+app_graduation_after_upd_tr1
+app_graduation_after_upd_tr1_copy
+app_graduation_after_upd_tr1_copy1
+app_graduation_before_ins_tr1
+app_graduation_before_ins_tr1_copy
+app_graduation_before_ins_tr1_copy1
+app_graduation_before_upd_tr1
+app_graduation_before_upd_tr1_copy
+app_graduation_before_upd_tr1_copy1
+app_graduationonline_after_ins_tr1
+b_assistbillingdetail_after_upd_tr
+b_assistbillingdetail_before_upd_tr
+b_inv_b4_insert
+b_inv_b4_update
+b_invoicedetail_before_ins_tr1_copy
+b_invoicedetail_before_upd_tr1_copy
+b_paymentdetail_after_ins_tr1
+b_paymentdetail_after_upd_tr1
+b_paymentverification_after_upd_tr1
+b_paymentverification_before_ins_tr1
+b_receipt_after_upd_tr1
+b_receipt_before_upd_tr1
+b_receiptdetail_after_ins_tr1
+b_receiptdetail_after_upd_tr
+b_stdassistprog_after_upd_tr1
+b_stdassistprog_after_upd_tr1_copy
+b_stdinstaldetail_after_ins_tr1
+b_stdinstaldetail_after_upd_tr1
+b_stdinstaldetail_before_ins_tr1
+b_stdinstalment_after_ins_tr1
+b_stdinstalment_before_ins_tr1
+b_stdinstalment_before_upd_tr1
+b4_insert
+b4insert
+b4insert1
+b4upd8
+cmscbj
+f_attenddatemod_before_ins_tr
+f_attenddatemod_before_upd_tr
+f_lecturer_after_ins_tr1_copy
+f_lecturer_after_ins_tr1_copy1
+f_lecturer_after_ins_tr1_copy1_copy
+f_lecturer_after_ins_tr1_copy2
+f_lecturer_after_ins_tr1_copy2_copy
+f_lecturer_after_upd_tr1_copy
+f_lecturer_after_upd_tr1_copy1
+f_lecturer_after_upd_tr1_copy1_copy
+f_lecturer_after_upd_tr1_copy2
+f_lecturer_after_upd_tr1_copy2_copy
+f_lecturer_before_ins_tr_copy
+f_lecturer_before_ins_tr_copy1
+f_lecturer_before_ins_tr_copy1_copy
+f_lecturer_before_ins_tr_copy2
+f_lecturer_before_ins_tr_copy2_copy
+f_lecturer_before_upd_tr_copy
+f_lecturer_before_upd_tr_copy1
+f_lecturer_before_upd_tr_copy1_copy
+f_lecturer_before_upd_tr_copy2
+f_lecturer_before_upd_tr_copy2_copy
+f_module_before_ins_tr
+f_module_before_upd_tr
+f_program_before_ins_tr
+f_program_before_upd_tr
+f_programaccreditation_after_ins_tr_new
+f_programaccreditation_after_upd_tr_new
+f_programaccreditationext_after_ins_tr_new
+f_programaccreditationext_after_upd_tr_new
+f_programapproval_after_ins_tr_new_copy
+f_programapproval_after_upd_tr_new_copy
+f_programapprovalext_after_ins_tr_new
+f_programapprovalext_after_upd_tr_new
+f_programsummary_after_ins_tr_new
+f_programsummary_after_upd_tr_new
+f_programsummary_before_ins_tr_new
+f_programsummary_before_upd_tr_new
+f_releaseresult_after_ins_tr1
+f_releaseresult_after_ins_tr1_copy
+f_releaseresult_after_upd_tr1
+f_releaseresult_after_upd_tr1_copy
+f_releaseresultdetail_before_upd_tr1
+f_semester_before_ins_tr
+f_semester_before_upd_tr
+f_semmodule_before_ins_tr
+f_semmodule_before_upd_tr
+f_structure_after_ins_tr
+f_structure_before_ins_tr1
+f_structure_before_upd_tr1
+f_supervisor_request_BEFORE_INSERT
+f_term_after_upd_tr1
+f_term_after_upd_tr222
+f_term_before_ins_tr
+f_term_before_upd_tr
+f_termdetail_after_ins_tr1
+f_termdetail_after_upd_tr1
+f_termnew_before_ins_tr1
+ih_attenddatemod_before_ins_tr
+ih_attenddatemod_before_upd_tr
+ih_stdattendance_before_upd_tr1
+ih_stdmark_before_upd_tr1
+ih_student_after_ins_tr
+ih_student_after_upd_tr
+inv_itemdetail_after_ins_tr1
+inv_itemdetail_after_upd_tr1
+m_agent_before_ins_tr
+m_agent_before_ins_tr_copy
+m_commision_after_ins_tr1
+m_commision_after_upd_tr1
+r_form_after_ins_tr1
+r_form_AFTER_UPDATE
+r_form_BEFORE_INSERT
+r_form_before_upd_tr1
+r_ptptn_before_upd_tr1
+r_stdagent_after_ins_tr1
+r_stdagent_after_upd_tr1
+r_stdagent_before_ins_tr1
+r_stdagent_before_upd_tr1
+r_stdattendancerequest_after_upd_tr_new
+r_stdattendancerequest_before_ins_tr
+r_stdimmigration_after_ins_tr1
+r_stdimmigration_after_upd_tr1
+r_stdmodule_AFTER_UPDATE
+r_stdmodule_before_ins_tr2
+r_stdmodule_before_upd_tr
+r_stdnotes_before_ins_tr1
+r_stdofferletter_after_ins_tr
+r_stdofferletter_after_upd_tr1
+r_stdofferletter_before_ins_tr
+r_stdofferletter_before_upd_tr1
+r_stdpersonal_after_ins_tr
+r_stdpersonal_after_upd_tr1
+r_stdpersonal_before_ins_tr
+r_stdpersonal_before_upd_tr1
+r_stdprogram_after_ins_tr
+r_stdprogram_after_upd_tr
+r_stdprogram_before_ins_tr
+r_stdprogram_before_upd_tr
+r_stdrelation_before_ins_tr
+r_stdrelation_before_ins_tr_copy
+r_stdrelation_before_ins_tr_copy1
+r_stdrelation_before_upd_tr
+r_stdrelation_before_upd_tr_copy
+r_stdrelation_before_upd_tr_copy1
+r_stdsemester_after_ins_tr1
+r_stdsemester_after_ins_tr1_copy1
+r_stdsemester_after_upd_tr1
+r_stdsemester_after_upd_tr1_copy1
+r_stdsemester_before_ins_tr
+r_stdsemester_before_ins_tr_copy1
+r_stdsemester_before_upd_tr
+r_stdsemester_before_upd_tr_copy1
+r_stdsurvey_after_ins_tr
+r_student_after_ins_tr
+r_student_after_ins_tr_copy
+r_student_after_ins_tr_copy1
+r_student_AFTER_UPDATE
+r_student_AFTER_UPDATE_copy
+r_student_AFTER_UPDATE_copy1
+r_student_before_ins_tr
+r_student_before_ins_tr_copy
+r_student_before_ins_tr_copy1
+r_student_before_upd_tr
+r_student_before_upd_tr_copy
+r_student_before_upd_tr_copy1
+r_visaletter_bfr_update
+s_autoupdate_before_ins_tr
+s_billing_before_ins_tr
+s_staff_after_ins_tr1
+s_staff_after_ins_tr1_copy
+s_staff_after_ins_tr1_copy1
+s_staff_after_upd_tr1
+s_staff_after_upd_tr1_copy
+s_staff_after_upd_tr1_copy1
+s_update_after_upd_tr
+s_update_before_ins_tr
+s_upload_after_ins_tr1
+s_upload_after_ins_tr1_copy
+s_upload_after_upd_tr1
+s_upload_after_upd_tr1_copy
+s_upload_before_ins_tr
+s_upload_before_ins_tr_copy
+setcreatedat
+t_enrollrequest_after_upd_tr1
+test_after_update
+tr_aftrinsrt
+tr_aftrupd8
+tr_b4insert
+w_application_before_upd_tr
+w_occupant_after_ins_tr
+w_occupant_after_upd_tr
+w_receipt_before_ins_tr1
+w_receipt_before_upd_tr1
+w_receiptdetailacco_after_ins_tr
+w_receiptdetailacco_after_upd_tr
+w_visa_after_ins_tr1
+w_visa_after_upd_tr1
+w_visa_before_ins_tr1
+w_visa_before_upd_tr1
