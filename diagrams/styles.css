@@ -978,13 +978,13 @@ html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
   }
 }
 
-/* HTML labels projected onto 3D nodes */
+/* HTML labels projected onto 3D nodes (above WebGL canvas) */
 .obs-label-overlay {
   position: absolute;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: 2;
+  z-index: 5;
 }
 .obs-node-chip {
   position: absolute;
@@ -999,11 +999,12 @@ html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
   padding: 6px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.15;
   text-align: center;
   word-break: break-word;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
   will-change: transform;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 .obs-node-chip span {
   display: block;
