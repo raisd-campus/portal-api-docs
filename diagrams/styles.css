@@ -977,3 +977,35 @@ html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
     min-height: 420px;
   }
 }
+
+/* HTML labels projected onto 3D nodes */
+.obs-label-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+.obs-node-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border-style: solid;
+  box-sizing: border-box;
+  padding: 6px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-align: center;
+  word-break: break-word;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  will-change: transform;
+}
+.obs-node-chip span {
+  display: block;
+  max-width: 100%;
+}
