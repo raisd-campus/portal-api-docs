@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-09-25
+updated: 2026-09-26
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -18,6 +18,7 @@ notes:
   - 2026-09-25: Botswana DTEF scholarship → TEF.gov.bw sync analysed (functional + technical); backend/botswana-dtef-scholarship-sync.md + diagrams/old-cms-botswana/dtef-scholarship-sync.html.
   - 2026-09-23: Raisd CMS Student portal capabilities, screenshots, and use guides under diagrams/raisd-cms/.
   - 2026-09-24: Distributed CMS target (one product, country data planes, white-label/flags) — architecture/distributed-cms-target.md + diagrams/distributed-cms-architecture.html.
+  - 2026-09-26: FSD Obsidian 3D knowledge graph (breakdown / walkthrough / click) — diagrams/old-cms/obsidian.html + fsd-knowledge.json; LUCT CMS campus submenus.
 
 entrypoints:
   agents: AGENTS.md
@@ -87,7 +88,7 @@ diagrams:
       - ../diagrams/erd.html
       - ../diagrams/dfd.html
   - path: ../diagrams/old-cms/index.html
-    topics: [legacy-cms, comparison, fsd, erd, flows, database, e2e, functional-flow, dfd, integrations, adr-1]
+    topics: [legacy-cms, comparison, fsd, erd, flows, database, e2e, functional-flow, dfd, integrations, adr-1, obsidian]
     pages:
       - ../diagrams/old-cms/comparison.html
       - ../diagrams/old-cms/fsd.html

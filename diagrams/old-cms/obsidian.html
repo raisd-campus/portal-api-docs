@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Raisd CMS (ERD &amp; DFD)</title>
+  <title>Raisd — LUCT CMS FSD Obsidian 3D</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
 </head>
@@ -40,7 +40,7 @@
           <div class="nav-dd-menu" role="menu">
             <a href="../architecture.html">Architecture home</a>
             <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
-            <a href="../architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
             <a href="../architecture.html#acl">SoR / ACL</a>
             <a href="../architecture.html#academic">Academic model</a>
           </div>
@@ -57,25 +57,25 @@
           </div>
         </div>
         <div class="nav-dd">
-          <a class="nav-dd-main active" href="index.html">Raisd CMS</a>
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
           <div class="nav-dd-menu" role="menu">
-            <a href="index.html">Raisd CMS hub</a>
-            <a href="student-portal.html">Student portal</a>
-            <a href="student-portal-screenshots.html">Screenshots</a>
-            <a href="student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
             <a href="../erd.html">ERD</a>
             <a href="../dfd.html">DFD</a>
           </div>
         </div>
         <div class="nav-dd">
-          <a class="nav-dd-main" href="../old-cms/index.html">LUCT CMS</a>
+          <a class="nav-dd-main active" href="index.html">LUCT CMS</a>
           <div class="nav-dd-menu" role="menu">
             <div class="nav-sub">
-              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
               <div class="nav-sub-menu" role="menu">
-                <a href="../old-cms/index.html">E2E hub</a>
-                <a href="../old-cms/index.html#fsd">FSD</a>
-                <a href="../old-cms/obsidian.html">Obsidian</a>
+                <a href="index.html">E2E hub</a>
+                <a href="index.html#fsd">FSD</a>
+                <a href="obsidian.html">Obsidian</a>
 </div>
             </div>
             <div class="nav-sub">
@@ -94,7 +94,7 @@
                 <a href="../old-cms/obsidian.html">Obsidian</a>
 </div>
             </div>
-</div>
+          </div>
         </div>
         <div class="nav-dd">
           <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
@@ -111,6 +111,7 @@
           <div class="nav-dd-menu" role="menu">
             <a href="../../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cyberjaya.md">Cyberjaya inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
@@ -138,84 +139,77 @@
 
   <main>
     <section class="hero">
-      <h1>Raisd CMS</h1>
+      <h1>Obsidian 3D — FSD knowledge</h1>
       <p>
-        Canonical Raisd product surface: the <strong>Student portal</strong> demo,
-        logical ERD/DFD for all portals, and the bridge to the existing campus CMS.
-        These are not a copy of the <a href="../old-cms/">LUCT CMS</a> physical schema —
-        legacy tables stay behind the CAP-53 anti-corruption layer.
+        Interactive force-directed graph of Cyberjaya LUCT CMS functional structure.
+        Click a node for module breakdown; use Walkthrough to step desks → student record → Portal API.
       </p>
       <div class="meta-row">
-        <span class="chip ok">Student portal demo</span>
-        <span class="chip ok">Logical / contract model</span>
-        <span class="chip warn">Demo ≠ Live CMS writes</span>
+        <span class="chip ok">3D graph</span>
+        <span class="chip">Click to focus</span>
+        <span class="chip">Guided walkthrough</span>
+        <span class="chip">Source <code>fsd-knowledge.json</code></span>
       </div>
     </section>
 
-    <div class="toc">
-      <a href="student-portal.html">
-        <strong>Student portal — capabilities</strong>
-        <span>CAP map, demo status, where each feature lives</span>
-      </a>
-      <a href="student-portal-screenshots.html">
-        <strong>Student portal — screenshots</strong>
-        <span>19 desktop captures of the current demo UI</span>
-      </a>
-      <a href="student-portal-guide.html">
-        <strong>Student portal — use guides</strong>
-        <span>Step-by-step paths for registration, fees, forms, and more</span>
-      </a>
-      <a href="../erd.html">
-        <strong>Entity Relationship Diagrams</strong>
-        <span>Institution, curriculum, delivery, student journey, finance, integration</span>
-      </a>
-      <a href="../dfd.html">
-        <strong>Data Flow Diagrams</strong>
-        <span>Context, ACL, auth, admissions, registration workflow, teaching</span>
-      </a>
-      <a href="../architecture.html">
-        <strong>Architecture</strong>
-        <span>SoR ownership, CAP-53 ACL, SDD &amp; ADR catalogue</span>
-      </a>
-      <a href="../old-cms/erd.html">
-        <strong>LUCT physical ERD</strong>
-        <span>Legacy Cyberjaya tables — discovery only, not the Raisd model</span>
-      </a>
-    </div>
+    <nav class="toc" aria-label="Cyberjaya CMS sections">
+      <a href="./index.html"><strong>E2E hub</strong><span>Full campus analysis</span></a>
+      <a href="./index.html#fsd"><strong>FSD</strong><span>Functional breakdown</span></a>
+      <a href="./obsidian.html"><strong>Obsidian</strong><span>This page</span></a>
+      <a href="./index.html#erd"><strong>ERD</strong><span>Physical tables</span></a>
+      <a href="./index.html#dfd"><strong>DFD</strong><span>Data flows</span></a>
+      <a href="./index.html#database"><strong>Database</strong><span>Triggers &amp; SPs</span></a>
+    </nav>
 
-    <section class="section">
-      <h2>How this relates to LUCT CMS</h2>
-      <div class="card">
-        <div class="card-body" style="padding:16px 18px">
-          <div class="table-wrap">
-            <table class="attr">
-              <thead>
-                <tr><th>Surface</th><th>Role</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Raisd CMS</strong> (this section)</td>
-                  <td>Student portal product docs, canonical portal contracts, clean domain ERD/DFD</td>
-                </tr>
-                <tr>
-                  <td><a href="../old-cms/">LUCT CMS</a></td>
-                  <td>Existing Cyberjaya SoR this phase; physical tables, desks, batches</td>
-                </tr>
-                <tr>
-                  <td><a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a></td>
-                  <td>Anti-corruption / Portal API boundary between the two</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+    <section class="section obsidian-section">
+      <div class="obsidian-toolbar">
+        <div class="obsidian-search-row">
+          <label class="sr-only" for="obsidian-search">Search nodes</label>
+          <input id="obsidian-search" type="search" placeholder="Search module, CAP, group…" autocomplete="off" />
+          <button type="button" id="obsidian-search-btn" class="obs-btn">Find</button>
         </div>
+        <div class="obsidian-walk" role="group" aria-label="FSD walkthrough">
+          <button type="button" id="walk-prev" class="obs-btn">← Prev</button>
+          <span id="walk-step" class="obs-step">Walkthrough</span>
+          <button type="button" id="walk-next" class="obs-btn">Next →</button>
+          <button type="button" id="walk-reset" class="obs-btn ghost">Reset</button>
+        </div>
+        <p id="obsidian-status" class="obs-status" aria-live="polite">Loading graph…</p>
       </div>
+
+      <div class="obsidian-layout">
+        <div id="obsidian-graph" class="obsidian-graph" role="img" aria-label="3D FSD knowledge graph"></div>
+        <aside class="obsidian-panel" aria-label="Node breakdown">
+          <div class="obs-panel-head">
+            <h2 id="panel-title">Select a node</h2>
+            <span id="panel-group" class="chip">—</span>
+          </div>
+          <p id="panel-summary" class="lead">Click any sphere to open its FSD breakdown.</p>
+          <h3>Primary tables / signals</h3>
+          <ul id="panel-tables" class="obs-list"></ul>
+          <h3>Menu capabilities</h3>
+          <ul id="panel-menus" class="obs-list"></ul>
+          <h3>Raisd mapping</h3>
+          <p id="panel-raisd">—</p>
+          <h3>Linked knowledge</h3>
+          <div id="panel-links" class="obs-links"></div>
+        </aside>
+      </div>
+
+      <div id="obsidian-legend" class="obsidian-legend" aria-label="Group legend"></div>
+      <p class="muted" style="margin-top:12px;font-size:0.9rem">
+        Companion to the hub <a href="./index.html#fsd">FSD section</a> and legacy <a href="./fsd.html">fsd.html</a> tables,
+        navigable as an Obsidian-style 3D graph. Linked from every LUCT CMS campus submenu.
+      </p>
     </section>
   </main>
 
   <footer class="footer">
-    Raisd CMS · ERD &amp; DFD · raisd-campus/control-plane
+    Generated for raisd-campus/control-plane · <a href="./index.html">LUCT CMS</a> analysis · GitHub Pages
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
+  <script src="./obsidian-fsd.js" defer></script>
   <script src="../abbr-tooltips.js" defer></script>
   <script src="../nav-dropdown.js" defer></script>
 </body>

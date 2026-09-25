@@ -6,9 +6,9 @@
 **Source package:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip`
 **Also inventoried (M5 pattern, not launch SoR):**
 - `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` → [`docs/ai/backend/old-cms-sierra-leone.md`](../ai/backend/old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../diagrams/old-cms-sierra-leone/)
-- `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` → [`docs/ai/backend/old-cms-botswana.md`](../ai/backend/old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../diagrams/old-cms-botswana/)
+- `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` → [`docs/ai/backend/old-cms-botswana.md`](../ai/backend/old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../diagrams/old-cms-botswana/) (E2E + [DTEF §4](../diagrams/old-cms-botswana/index.html#dtef)), [`botswana-dtef-scholarship-sync.md`](../ai/backend/botswana-dtef-scholarship-sync.md)
 **Canonical detail (agents):** [`docs/ai/backend/cms-feature-comparison.md`](../ai/backend/cms-feature-comparison.md), [`docs/ai/backend/old-cms-cyberjaya.md`](../ai/backend/old-cms-cyberjaya.md)
-**GitHub Pages (diagrams):** [`docs/diagrams/old-cms/`](../diagrams/old-cms/) — Comparison · FSD · Legacy ERD · Flows · Database tech
+**GitHub Pages (diagrams):** [`docs/diagrams/old-cms/`](../diagrams/old-cms/) — Comparison · FSD · Obsidian 3D · Legacy ERD · Flows · Database tech
 
 ## 1. Purpose
 
@@ -114,4 +114,4 @@ See also [SDD-10](10-open-questions.md).
 - [SDD-07 Admin / staff CMS](07-admin-staff-cms.md)  
 - [SDD-11 Capability catalogue](11-capability-catalog.md)  
 - AI inventory and full matrices: [`docs/ai/backend/`](../ai/backend/)  
-- **Published analysis section:** [`docs/diagrams/old-cms/`](../diagrams/old-cms/) (feature comparison, FSD, legacy ERD, flows, triggers/SPs/batches)
+- **Published analysis section:** [`docs/diagrams/old-cms/`](../diagrams/old-cms/) (feature comparison, FSD, Obsidian 3D knowledge graph, legacy ERD, flows, triggers/SPs/batches)
