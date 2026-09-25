@@ -1,9 +1,10 @@
 /**
  * Obsidian-style 3D FSD knowledge graph (3d-force-graph).
- * Click a node to focus + open breakdown; Walkthrough steps the guided path.
+ * Nodes are flat circles with labels painted inside; click focuses + opens breakdown.
  */
 (function () {
   const GRAPH_URL = "./fsd-knowledge.json";
+  const CANVAS_SIZE = 256;
   const el = {
     graph: document.getElementById("obsidian-graph"),
     title: document.getElementById("panel-title"),
@@ -61,6 +62,135 @@
       .replace(/"/g, "&quot;");
   }
 
+  function shortLabel(label) {
+    const s = String(label || "").replace(/\/$/, "");
+    if (s.length <= 16) return s;
+    // Prefer last path segment for desk folders
+    const slash = s.lastIndexOf("/");
+    if (slash >= 0 && slash < s.length - 1) {
+      const tail = s.slice(slash + 1);
+      if (tail.length <= 16) return tail;
+    }
+    return s.slice(0, 14) + "…";
+  }
+
+  function wrapLines(ctx, text, maxWidth, maxLines) {
+    const words = String(text).split(/\s+/);
+    const lines = [];
+    let line = "";
+    words.forEach((word) => {
+      const test = line ? line + " " + word : word;
+      if (ctx.measureText(test).width <= maxWidth) {
+        line = test;
+      } else {
+        if (line) lines.push(line);
+        line = word;
+      }
+    });
+    if (line) lines.push(line);
+    if (lines.length <= maxLines) return lines;
+    const kept = lines.slice(0, maxLines);
+    kept[maxLines - 1] = kept[maxLines - 1].replace(/…?$/, "") + "…";
+    return kept;
+  }
+
+  function nodeFillColor(node) {
+    const base = groupMeta(node.group).color;
+    if (!highlightNodes.size) return base;
+    return highlightNodes.has(node.id) ? base : "rgba(90,100,120,0.35)";
+  }
+
+  function nodeTextColor(node) {
+    if (highlightNodes.size && !highlightNodes.has(node.id)) return "rgba(200,210,220,0.45)";
+    return "#0b0f17";
+  }
+
+  function drawNodeCanvas(node) {
+    const canvas = node.__canvas;
+    const ctx = node.__ctx;
+    if (!canvas || !ctx) return;
+
+    const size = CANVAS_SIZE;
+    const cx = size / 2;
+    const cy = size / 2;
+    const r = size / 2 - 4;
+
+    ctx.clearRect(0, 0, size, size);
+
+    // Soft outer ring
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(11,15,23,0.55)";
+    ctx.fill();
+
+    // Main circle
+    ctx.beginPath();
+    ctx.arc(cx, cy, r - 6, 0, Math.PI * 2);
+    ctx.fillStyle = nodeFillColor(node);
+    ctx.fill();
+    ctx.lineWidth = selectedId === node.id ? 6 : 3;
+    ctx.strokeStyle = selectedId === node.id ? "#ffffff" : "rgba(11,15,23,0.55)";
+    ctx.stroke();
+
+    // Label inside circle
+    const label = shortLabel(node.label || node.id);
+    ctx.fillStyle = nodeTextColor(node);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const maxWidth = (r - 18) * 2;
+    let fontSize = node.val >= 16 ? 34 : node.val >= 11 ? 28 : 24;
+    ctx.font = `700 ${fontSize}px "Segoe UI", system-ui, sans-serif`;
+    let lines = wrapLines(ctx, label, maxWidth, 3);
+    while (fontSize > 16 && lines.some((l) => ctx.measureText(l).width > maxWidth)) {
+      fontSize -= 2;
+      ctx.font = `700 ${fontSize}px "Segoe UI", system-ui, sans-serif`;
+      lines = wrapLines(ctx, label, maxWidth, 3);
+    }
+    const lineHeight = fontSize * 1.15;
+    const startY = cy - ((lines.length - 1) * lineHeight) / 2;
+    lines.forEach((line, i) => {
+      ctx.fillText(line, cx, startY + i * lineHeight);
+    });
+
+    if (node.__texture) node.__texture.needsUpdate = true;
+  }
+
+  function spriteScale(node) {
+    const v = node.val || 6;
+    return Math.max(14, Math.min(36, 10 + v * 0.95));
+  }
+
+  function createNodeObject(node) {
+    if (typeof THREE === "undefined") {
+      return undefined;
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = CANVAS_SIZE;
+    canvas.height = CANVAS_SIZE;
+    node.__canvas = canvas;
+    node.__ctx = canvas.getContext("2d");
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace || THREE.sRGBEncoding;
+    node.__texture = texture;
+    drawNodeCanvas(node);
+
+    const material = new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      depthWrite: false,
+    });
+    const sprite = new THREE.Sprite(material);
+    const s = spriteScale(node);
+    sprite.scale.set(s, s, 1);
+    node.__sprite = sprite;
+    return sprite;
+  }
+
+  function refreshNodeCanvases() {
+    if (!Graph) return;
+    Graph.graphData().nodes.forEach((n) => drawNodeCanvas(n));
+  }
+
   function fillPanel(node) {
     if (!node) return;
     const g = groupMeta(node.group);
@@ -76,7 +206,9 @@
 
     el.links.innerHTML = "";
     const related = knowledge.links.filter(
-      (l) => l.source === node.id || l.target === node.id ||
+      (l) =>
+        l.source === node.id ||
+        l.target === node.id ||
         (l.source && l.source.id === node.id) ||
         (l.target && l.target.id === node.id)
     );
@@ -114,27 +246,20 @@
   function updateHighlights(node) {
     highlightNodes = new Set();
     highlightLinks = new Set();
-    if (!node) {
-      Graph.nodeColor(paintNode).linkWidth(paintLinkWidth).linkColor(paintLinkColor);
-      return;
+    if (node) {
+      highlightNodes.add(node.id);
+      knowledge.links.forEach((l) => {
+        const sid = typeof l.source === "object" ? l.source.id : l.source;
+        const tid = typeof l.target === "object" ? l.target.id : l.target;
+        if (sid === node.id || tid === node.id) {
+          highlightLinks.add(l);
+          highlightNodes.add(sid);
+          highlightNodes.add(tid);
+        }
+      });
     }
-    highlightNodes.add(node.id);
-    knowledge.links.forEach((l) => {
-      const sid = typeof l.source === "object" ? l.source.id : l.source;
-      const tid = typeof l.target === "object" ? l.target.id : l.target;
-      if (sid === node.id || tid === node.id) {
-        highlightLinks.add(l);
-        highlightNodes.add(sid);
-        highlightNodes.add(tid);
-      }
-    });
-    Graph.nodeColor(paintNode).linkWidth(paintLinkWidth).linkColor(paintLinkColor);
-  }
-
-  function paintNode(n) {
-    const base = groupMeta(n.group).color;
-    if (!highlightNodes.size) return base;
-    return highlightNodes.has(n.id) ? base : "rgba(120,130,150,0.25)";
+    refreshNodeCanvases();
+    Graph.linkWidth(paintLinkWidth).linkColor(paintLinkColor);
   }
 
   function paintLinkWidth(l) {
@@ -157,15 +282,14 @@
     const dx = node.x - (cam.x || 0);
     const dy = node.y - (cam.y || 0);
     const dz = node.z - (cam.z || 0);
-    let len = Math.hypot(dx, dy, dz) || 1;
+    const len = Math.hypot(dx, dy, dz) || 1;
     Graph.cameraPosition(
       { x: node.x + (dx / len) * dist, y: node.y + (dy / len) * dist, z: node.z + (dz / len) * dist },
       node,
       900
     );
     setStatus(fromClick ? `Focused: ${node.label || node.id}` : `Walkthrough: ${node.label || node.id}`);
-    const wi = knowledge.walkthrough.indexOf(node.id);
-    walkIndex = wi;
+    walkIndex = knowledge.walkthrough.indexOf(node.id);
     updateWalkLabel();
   }
 
@@ -188,9 +312,11 @@
   function filterSearch(q) {
     const query = (q || "").trim().toLowerCase();
     if (!query) {
+      selectedId = null;
       highlightNodes = new Set();
       highlightLinks = new Set();
-      Graph.nodeColor(paintNode).linkWidth(paintLinkWidth).linkColor(paintLinkColor);
+      refreshNodeCanvases();
+      Graph.linkWidth(paintLinkWidth).linkColor(paintLinkColor);
       setStatus("Drag to orbit · scroll to zoom · click a node for breakdown");
       return;
     }
@@ -214,6 +340,10 @@
       setStatus("3D graph library failed to load (CDN).");
       return;
     }
+    if (typeof THREE === "undefined") {
+      setStatus("Three.js failed to load (CDN).");
+      return;
+    }
     const res = await fetch(GRAPH_URL);
     knowledge = await res.json();
 
@@ -235,9 +365,9 @@
       .backgroundColor("#0b0f17")
       .graphData(data)
       .nodeLabel((n) => `${n.label}\n${groupMeta(n.group).label}`)
-      .nodeColor(paintNode)
+      .nodeThreeObject(createNodeObject)
+      .nodeThreeObjectExtend(false)
       .nodeVal((n) => n.val || 6)
-      .nodeOpacity(0.95)
       .linkColor(paintLinkColor)
       .linkWidth(paintLinkWidth)
       .linkOpacity(0.7)
@@ -248,7 +378,8 @@
         selectedId = null;
         highlightNodes = new Set();
         highlightLinks = new Set();
-        Graph.nodeColor(paintNode).linkWidth(paintLinkWidth).linkColor(paintLinkColor);
+        refreshNodeCanvases();
+        Graph.linkWidth(paintLinkWidth).linkColor(paintLinkColor);
         setStatus("Drag to orbit · scroll to zoom · click a node for breakdown");
       });
 
@@ -270,9 +401,8 @@
       filterSearch(el.search.value)
     );
 
-    // Legend
     const legend = document.getElementById("obsidian-legend");
-    Object.entries(knowledge.groups).forEach(([id, g]) => {
+    Object.entries(knowledge.groups).forEach(([, g]) => {
       const item = document.createElement("span");
       item.className = "obs-legend-item";
       item.innerHTML = `<i style="background:${g.color}"></i>${escapeHtml(g.label)}`;
