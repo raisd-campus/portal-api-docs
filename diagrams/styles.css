@@ -885,8 +885,8 @@ html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
   height: 62vh;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid #1a2030;
-  background: #0b0f17;
+  border: 1px solid #2a3648;
+  background: #1a2332;
   box-shadow: var(--shadow);
 }
 .obsidian-graph canvas { display: block; }
