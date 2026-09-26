@@ -1,0 +1,498 @@
+{
+  "title": "Cyberjaya LUCT CMS — FSD knowledge graph",
+  "campus": "MYS-CYB",
+  "source": "docs/diagrams/old-cms/fsd.html",
+  "groups": {
+    "root": { "label": "Campus CMS", "color": "#7aa2f7" },
+    "academic": { "label": "Academic", "color": "#7dcfff" },
+    "student": { "label": "Student life", "color": "#9ece6a" },
+    "commercial": { "label": "Commercial", "color": "#e0af68" },
+    "compliance": { "label": "Compliance", "color": "#bb9af7" },
+    "cross": { "label": "Cross-cutting", "color": "#c0caf5" },
+    "record": { "label": "Shared record", "color": "#f7768e" },
+    "raisd": { "label": "Raisd surface", "color": "#73daca" },
+    "cap": { "label": "Capability", "color": "#ff9e64" }
+  },
+  "walkthrough": [
+    "cms",
+    "grp-academic",
+    "registry",
+    "faculty",
+    "lecturer",
+    "grp-student",
+    "services",
+    "accommodation",
+    "grp-commercial",
+    "bursary",
+    "marketing",
+    "r_student",
+    "portal-api",
+    "grp-compliance",
+    "cyberbatch"
+  ],
+  "nodes": [
+    {
+      "id": "cms",
+      "label": "Cyberjaya CMS",
+      "group": "root",
+      "val": 28,
+      "summary": "Multi-app PHPMaker (+ Laravel) campus CMS sharing MySQL cmscbj. Each desk is a separate web app with its own login, menu, and permissions.",
+      "tables": ["cmscbj (shared MySQL)", "cyberjaya/campus/<desk>/"],
+      "menus": ["~20 staff modules under campus/"],
+      "raisd": "Keep as SoR (ADR-1). Portals talk only via Portal API / CAP-53 ACL.",
+      "href": "./fsd.html"
+    },
+    {
+      "id": "grp-academic",
+      "label": "Academic",
+      "group": "academic",
+      "val": 16,
+      "summary": "Registry, faculty, lecturer desks, LEC, and AQA (CDU) around programmes, classes, and marks.",
+      "tables": [],
+      "menus": ["registry", "faculty", "lecturer", "lec", "cdu"],
+      "raisd": "Staff SoR; student/lecturer reads via Portal API."
+    },
+    {
+      "id": "grp-student",
+      "label": "Student life",
+      "group": "student",
+      "val": 16,
+      "summary": "Services, housing, student file, SIU, and library attach non-academic life-cycle data to the student.",
+      "tables": [],
+      "menus": ["services", "accommodation", "stdfile", "studentfile", "siu", "library"],
+      "raisd": "Ops stay on CMS; student portal exposes selected CAP views/requests."
+    },
+    {
+      "id": "grp-commercial",
+      "label": "Commercial",
+      "group": "commercial",
+      "val": 16,
+      "summary": "Bursary ledger, marketing/admissions intake, and Laravel payment collection.",
+      "tables": [],
+      "menus": ["bursary", "marketing", "payment"],
+      "raisd": "Finance/admissions SoR; applicant UX and fee proof surfaces are new."
+    },
+    {
+      "id": "grp-compliance",
+      "label": "Compliance",
+      "group": "compliance",
+      "val": 14,
+      "summary": "ICU / PDPA, admin setup, and inquiry desks for policy and access control.",
+      "tables": [],
+      "menus": ["icu", "icupdpa", "cmsadminsetup", "cms_inquiry"],
+      "raisd": "Keep on CMS; CAP-39 / CAP-44 / CAP-33 adjacent."
+    },
+    {
+      "id": "grp-cross",
+      "label": "Cross-cutting",
+      "group": "cross",
+      "val": 14,
+      "summary": "Campus reporting, staff training, and nightly cyberbatch jobs that span desks.",
+      "tables": [],
+      "menus": ["reporting", "training", "cyberbatch"],
+      "raisd": "Usually no Raisd rebuild; CAP-53 must respect batch windows."
+    },
+    {
+      "id": "registry",
+      "label": "registry/",
+      "group": "academic",
+      "val": 12,
+      "summary": "Registry Management System 1.0 — seeds student identity, applications, terms, letters, graduation, transcripts.",
+      "tables": ["app_*", "r_student", "r_stdprogram", "r_stdofferletter*", "transcripts"],
+      "menus": ["Applications", "student register", "terms", "forms", "letters", "graduation", "transcripts", "KDN/eIPTS reports"],
+      "raisd": "Staff SoR; student/applicant via API.",
+      "href": "./fsd.html"
+    },
+    {
+      "id": "faculty",
+      "label": "faculty/",
+      "group": "academic",
+      "val": 12,
+      "summary": "Faculty Management System 1.0 — schools, modules, lecturers, classrooms, classes, exam timetable, inventory.",
+      "tables": ["f_program", "f_module", "f_class", "f_lecturer", "f_term", "inventory"],
+      "menus": ["Schools", "modules", "lecturers", "classrooms", "classes", "exam timetable", "inventory", "senate/board reports"],
+      "raisd": "Staff SoR; lecturer/student reads via API."
+    },
+    {
+      "id": "lecturer",
+      "label": "lecturer/",
+      "group": "academic",
+      "val": 10,
+      "summary": "Lecturer Portal 1.0 — notices, profile, supervised students, module materials, streaming.",
+      "tables": ["lecturer modules", "notices", "f_modulemat", "streaming link"],
+      "menus": ["Notices", "profile", "supervised students", "module view", "forms", "streaming"],
+      "raisd": "Prefer reuse until gap proven."
+    },
+    {
+      "id": "lec",
+      "label": "lec/",
+      "group": "academic",
+      "val": 8,
+      "summary": "Limkokwing English Center 2.0 — LEC students, marks, summer camp / batch enrolment.",
+      "tables": ["LEC students", "marks", "batch enrolment"],
+      "menus": ["LEC students", "marks", "summer camp"],
+      "raisd": "Campus-specific; out of SDD-11."
+    },
+    {
+      "id": "cdu",
+      "label": "cdu/",
+      "group": "academic",
+      "val": 9,
+      "summary": "AQA Management System 1.0 — entry requirements, English/foreign quals, MQA/KPT programme compliance.",
+      "tables": ["entry reqs", "English/foreign quals", "MQA/KPT"],
+      "menus": ["Entry requirements", "quals", "accreditation/approval"],
+      "raisd": "Staff QA; CAP-04 evidence.",
+      "caps": ["cap-04"]
+    },
+    {
+      "id": "services",
+      "label": "services/",
+      "group": "student",
+      "val": 11,
+      "summary": "Student Services — visa/VAL/EMGS, medical, insurance, international status, SSD letters.",
+      "tables": ["w_visa", "r_stdimmigration", "EMGS/SSD/KDN"],
+      "menus": ["Visa/VAL/EMGS", "medical", "insurance", "international status", "SSD letters"],
+      "raisd": "Ops on CMS; student CAP-50 view.",
+      "caps": ["cap-50"]
+    },
+    {
+      "id": "accommodation",
+      "label": "accommodation/",
+      "group": "student",
+      "val": 10,
+      "summary": "Accommodation System — dorms, rooms, pricing, tenants, breakfast card.",
+      "tables": ["acc_dorm", "acc_room", "acc_occupant", "pricing"],
+      "menus": ["Dorms", "rooms", "pricing", "tenants", "breakfast card"],
+      "raisd": "Allocation on CMS; student CAP-52 request UX.",
+      "caps": ["cap-52"]
+    },
+    {
+      "id": "stdfile",
+      "label": "stdfile/ · studentfile/",
+      "group": "student",
+      "val": 9,
+      "summary": "Student File System — document dossiers (KDN, MyQuest, SETARA variants).",
+      "tables": ["document / file dossiers"],
+      "menus": ["Document dossiers"],
+      "raisd": "CAP-09 dossier backing.",
+      "caps": ["cap-09"]
+    },
+    {
+      "id": "siu",
+      "label": "siu/",
+      "group": "student",
+      "val": 9,
+      "summary": "Student Info Update — controlled student-info corrections, letters, transcripts.",
+      "tables": ["controlled student-info update", "letters", "transcripts"],
+      "menus": ["SIU updates", "letters", "transcripts"],
+      "raisd": "Staff path for CAP-08 corrections.",
+      "caps": ["cap-08"]
+    },
+    {
+      "id": "library",
+      "label": "library/",
+      "group": "student",
+      "val": 8,
+      "summary": "Library 1.0 — population view and eLibrary licences.",
+      "tables": ["r_elibrary", "population views"],
+      "menus": ["Population view", "eLibraries"],
+      "raisd": "CAP-31 licence/access.",
+      "caps": ["cap-31"]
+    },
+    {
+      "id": "bursary",
+      "label": "bursary/",
+      "group": "commercial",
+      "val": 12,
+      "summary": "Bursary Management — fee catalog, invoices/receipts, payment verification, visa fees, incentives, agents.",
+      "tables": ["b_statement*", "b_invoice*", "b_payment*", "b_receipt*", "b_paymentverification"],
+      "menus": ["Fee catalog", "invoices/receipts", "payment verification", "visa fees", "incentives", "agents", "outstanding"],
+      "raisd": "Finance SoR; student CAP-45–48 read/proof.",
+      "caps": ["cap-45", "cap-47"]
+    },
+    {
+      "id": "marketing",
+      "label": "marketing/",
+      "group": "commercial",
+      "val": 11,
+      "summary": "Marketing Management — applications, pre-admission, agents, incentives, recruitment reports.",
+      "tables": ["app_applicationform*", "m_agent", "Agent* SPs", "incentives"],
+      "menus": ["Applications", "pre-admission", "agents", "incentives", "recruitment / online agent reports"],
+      "raisd": "Applicant SoR ops; Raisd applicant UX new."
+    },
+    {
+      "id": "payment",
+      "label": "payment/",
+      "group": "commercial",
+      "val": 10,
+      "summary": "Payment (Laravel) — online/counter receipt collection, parking-related objects.",
+      "tables": ["receipt / collection objects", "parking-related"],
+      "menus": ["Online / counter payment receipts"],
+      "raisd": "CAP-47 gateway path.",
+      "caps": ["cap-47"]
+    },
+    {
+      "id": "icu",
+      "label": "icu/",
+      "group": "compliance",
+      "val": 8,
+      "summary": "Internal Compliance Unit — staff list and PDPA documents.",
+      "tables": ["staff list", "PDPA documents"],
+      "menus": ["Staff PDPA / compliance menus"],
+      "raisd": "CAP-39 adjacent; keep on CMS.",
+      "caps": ["cap-39"]
+    },
+    {
+      "id": "icupdpa",
+      "label": "icupdpa/",
+      "group": "compliance",
+      "val": 8,
+      "summary": "ICU PDPA (Laravel) — PDPA compliance workflows.",
+      "tables": ["PDPA compliance workflows"],
+      "menus": ["PDPA document compliance"],
+      "raisd": "CAP-39.",
+      "caps": ["cap-39"]
+    },
+    {
+      "id": "cmsadminsetup",
+      "label": "cmsadminsetup/",
+      "group": "compliance",
+      "val": 8,
+      "summary": "Admin setup — PHPMaker user levels / system setup.",
+      "tables": ["user levels / PHPMaker admin"],
+      "menus": ["User levels / system setup"],
+      "raisd": "CAP-44 workspace access.",
+      "caps": ["cap-44"]
+    },
+    {
+      "id": "cms_inquiry",
+      "label": "cms_inquiry/",
+      "group": "compliance",
+      "val": 7,
+      "summary": "Inquiry desk — CMS inquiry tables/forms.",
+      "tables": ["inquiry desk tables/forms"],
+      "menus": ["CMS inquiry desk"],
+      "raisd": "CAP-33 channel candidate.",
+      "caps": ["cap-33"]
+    },
+    {
+      "id": "reporting",
+      "label": "reporting/",
+      "group": "cross",
+      "val": 9,
+      "summary": "Campus Reporting — cross-desk finance, attendance, enrolment, scholarships, portal status reports.",
+      "tables": ["cross-desk report views"],
+      "menus": ["Finance", "attendance", "enrolment", "scholarships", "portal status"],
+      "raisd": "Usually no Raisd rebuild."
+    },
+    {
+      "id": "training",
+      "label": "training/",
+      "group": "cross",
+      "val": 7,
+      "summary": "Training 1.0 — staff training enrolment / requests.",
+      "tables": ["t_enrollment", "t_enrollrequest"],
+      "menus": ["Staff training enrolment / requests"],
+      "raisd": "CAP-41 operating evidence.",
+      "caps": ["cap-41"]
+    },
+    {
+      "id": "cyberbatch",
+      "label": "cyberbatch/",
+      "group": "cross",
+      "val": 11,
+      "summary": "Batch / ops — nightly stop-httpd → jobs → dump → start (bursary, attendance, visa, portal.sql).",
+      "tables": ["portal.sql", "bursary/attendance/visa jobs"],
+      "menus": ["Nightly batch window"],
+      "raisd": "CAP-53 must respect batch rules.",
+      "caps": ["cap-53"]
+    },
+    {
+      "id": "r_student",
+      "label": "r_student",
+      "group": "record",
+      "val": 18,
+      "summary": "Shared student record hub. Registry/Marketing enrol; Faculty, Bursary, Lecturer, Services, Accommodation, and SIU attach facts.",
+      "tables": ["r_student", "LoginActive"],
+      "menus": ["Touched by most desks"],
+      "raisd": "Canonical identity for Portal API student surfaces."
+    },
+    {
+      "id": "portal-api",
+      "label": "Portal API",
+      "group": "raisd",
+      "val": 14,
+      "summary": "Raisd anti-corruption layer. Portals never write MySQL directly; Live writes succeed only after CMS acknowledgement.",
+      "tables": [],
+      "menus": ["Applicant · Student · Lecturer · Staff portals"],
+      "raisd": "CAP-53 ACL + OpenAPI contract.",
+      "caps": ["cap-53"],
+      "href": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md"
+    },
+    {
+      "id": "cap-04",
+      "label": "CAP-04",
+      "group": "cap",
+      "val": 5,
+      "summary": "Programme / accreditation evidence surface.",
+      "href": "../../sdd/11-capability-catalog.html#cap-04"
+    },
+    {
+      "id": "cap-08",
+      "label": "CAP-08",
+      "group": "cap",
+      "val": 5,
+      "summary": "Student info correction path.",
+      "href": "../../sdd/11-capability-catalog.html#cap-08"
+    },
+    {
+      "id": "cap-09",
+      "label": "CAP-09",
+      "group": "cap",
+      "val": 5,
+      "summary": "Student dossier / evidence store.",
+      "href": "../../sdd/11-capability-catalog.html#cap-09"
+    },
+    {
+      "id": "cap-31",
+      "label": "CAP-31",
+      "group": "cap",
+      "val": 5,
+      "summary": "Library / eLibrary access.",
+      "href": "../../sdd/11-capability-catalog.html#cap-31"
+    },
+    {
+      "id": "cap-33",
+      "label": "CAP-33",
+      "group": "cap",
+      "val": 5,
+      "summary": "Inquiry / support channel candidate.",
+      "href": "../../sdd/11-capability-catalog.html#cap-33"
+    },
+    {
+      "id": "cap-39",
+      "label": "CAP-39",
+      "group": "cap",
+      "val": 5,
+      "summary": "PDPA / compliance adjacent.",
+      "href": "../../sdd/11-capability-catalog.html#cap-39"
+    },
+    {
+      "id": "cap-41",
+      "label": "CAP-41",
+      "group": "cap",
+      "val": 5,
+      "summary": "Staff training evidence.",
+      "href": "../../sdd/11-capability-catalog.html#cap-41"
+    },
+    {
+      "id": "cap-44",
+      "label": "CAP-44",
+      "group": "cap",
+      "val": 5,
+      "summary": "Workspace / access admin.",
+      "href": "../../sdd/11-capability-catalog.html#cap-44"
+    },
+    {
+      "id": "cap-45",
+      "label": "CAP-45",
+      "group": "cap",
+      "val": 5,
+      "summary": "Student fee statement / ledger read.",
+      "href": "../../sdd/11-capability-catalog.html#cap-45"
+    },
+    {
+      "id": "cap-47",
+      "label": "CAP-47",
+      "group": "cap",
+      "val": 5,
+      "summary": "Payment proof / gateway path.",
+      "href": "../../sdd/11-capability-catalog.html#cap-47"
+    },
+    {
+      "id": "cap-50",
+      "label": "CAP-50",
+      "group": "cap",
+      "val": 5,
+      "summary": "Visa / immigration student view.",
+      "href": "../../sdd/11-capability-catalog.html#cap-50"
+    },
+    {
+      "id": "cap-52",
+      "label": "CAP-52",
+      "group": "cap",
+      "val": 5,
+      "summary": "Accommodation request UX.",
+      "href": "../../sdd/11-capability-catalog.html#cap-52"
+    },
+    {
+      "id": "cap-53",
+      "label": "CAP-53",
+      "group": "cap",
+      "val": 6,
+      "summary": "Portal API ↔ CMS anti-corruption layer.",
+      "href": "../../sdd/11-capability-catalog.html#cap-53"
+    }
+  ],
+  "links": [
+    { "source": "cms", "target": "grp-academic" },
+    { "source": "cms", "target": "grp-student" },
+    { "source": "cms", "target": "grp-commercial" },
+    { "source": "cms", "target": "grp-compliance" },
+    { "source": "cms", "target": "grp-cross" },
+    { "source": "cms", "target": "r_student" },
+    { "source": "cms", "target": "portal-api" },
+
+    { "source": "grp-academic", "target": "registry" },
+    { "source": "grp-academic", "target": "faculty" },
+    { "source": "grp-academic", "target": "lecturer" },
+    { "source": "grp-academic", "target": "lec" },
+    { "source": "grp-academic", "target": "cdu" },
+
+    { "source": "grp-student", "target": "services" },
+    { "source": "grp-student", "target": "accommodation" },
+    { "source": "grp-student", "target": "stdfile" },
+    { "source": "grp-student", "target": "siu" },
+    { "source": "grp-student", "target": "library" },
+
+    { "source": "grp-commercial", "target": "bursary" },
+    { "source": "grp-commercial", "target": "marketing" },
+    { "source": "grp-commercial", "target": "payment" },
+
+    { "source": "grp-compliance", "target": "icu" },
+    { "source": "grp-compliance", "target": "icupdpa" },
+    { "source": "grp-compliance", "target": "cmsadminsetup" },
+    { "source": "grp-compliance", "target": "cms_inquiry" },
+
+    { "source": "grp-cross", "target": "reporting" },
+    { "source": "grp-cross", "target": "training" },
+    { "source": "grp-cross", "target": "cyberbatch" },
+
+    { "source": "registry", "target": "r_student", "label": "enrol" },
+    { "source": "marketing", "target": "r_student", "label": "enrol" },
+    { "source": "faculty", "target": "r_student", "label": "classes / marks" },
+    { "source": "bursary", "target": "r_student", "label": "ledger" },
+    { "source": "lecturer", "target": "r_student", "label": "attendance" },
+    { "source": "services", "target": "r_student", "label": "visa / medical" },
+    { "source": "accommodation", "target": "r_student", "label": "occupancy" },
+    { "source": "siu", "target": "r_student", "label": "controlled updates" },
+    { "source": "r_student", "target": "portal-api", "label": "LoginActive / sync" },
+
+    { "source": "cdu", "target": "cap-04" },
+    { "source": "siu", "target": "cap-08" },
+    { "source": "stdfile", "target": "cap-09" },
+    { "source": "library", "target": "cap-31" },
+    { "source": "cms_inquiry", "target": "cap-33" },
+    { "source": "icu", "target": "cap-39" },
+    { "source": "icupdpa", "target": "cap-39" },
+    { "source": "training", "target": "cap-41" },
+    { "source": "cmsadminsetup", "target": "cap-44" },
+    { "source": "bursary", "target": "cap-45" },
+    { "source": "bursary", "target": "cap-47" },
+    { "source": "payment", "target": "cap-47" },
+    { "source": "services", "target": "cap-50" },
+    { "source": "accommodation", "target": "cap-52" },
+    { "source": "cyberbatch", "target": "cap-53" },
+    { "source": "portal-api", "target": "cap-53" }
+  ]
+}

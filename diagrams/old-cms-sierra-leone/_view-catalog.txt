@@ -1,9 +1,7 @@
-ICA Sierra Leone — views
-
-CurTermPopulationlist
 ac_courseeligibility
 c_stdassessment
 c_stdtimetable
+CurTermPopulationlist
 f_moduletermview
 r_stdmoduleview
 statement

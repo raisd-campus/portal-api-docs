@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — LUCT Botswana CMS Analysis</title>
+  <title>Raisd — LUCT Botswana CMS end-to-end flow</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
 </head>
@@ -13,7 +13,7 @@
     <div class="site-header-inner">
       <a class="brand" href="../index.html">
         <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
-        <strong>Raisd Control Plane</strong>
+        <strong>Control Plane</strong>
       </a>
       <nav class="nav" aria-label="Primary">
         <div class="nav-dd">
@@ -43,17 +43,17 @@
             <a href="../architecture.html#sdd">SDD & ADR catalogue</a>
             <a href="../architecture.html#acl">SoR / ACL</a>
             <a href="../architecture.html#academic">Academic model</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a class="nav-dd-main" href="../migration.html">Migration</a>
-          <div class="nav-dd-menu" role="menu">
-            <a href="../migration.html">Plan overview</a>
-            <a href="../migration.html#sequence">Milestone sequence</a>
-            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
-            <a href="../migration.html#m1">M1–M5 detail</a>
-            <a href="../migration.html#hosting">Hosting stages</a>
-            <a href="../migration.html#critical">Critical path</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+                <a href="../migration.html">Plan overview</a>
+                <a href="../migration.html#sequence">Milestone sequence</a>
+                <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+                <a href="../migration.html#m1">M1–M5 detail</a>
+                <a href="../migration.html#hosting">Hosting stages</a>
+                <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="nav-dd">
@@ -70,16 +70,39 @@
         <div class="nav-dd">
           <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
           <div class="nav-dd-menu" role="menu">
-            <a href="../old-cms/index.html">Analysis hub</a>
-            <a href="../old-cms/comparison.html">Comparison</a>
-            <a href="../old-cms/fsd.html">FSD</a>
-            <a href="../old-cms/erd.html">Legacy ERD</a>
-            <a href="../old-cms/flows.html">Flows</a>
-            <a href="../old-cms/database.html">Database</a>
-            <a href="index.html">Botswana</a>
-            <a href="database.html">Botswana DB</a>
-            <a href="../old-cms-sierra-leone/index.html">Sierra Leone</a>
-            <a href="../old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+                <a href="../old-cms/index.html">E2E hub</a>
+                <a href="../old-cms/index.html#fsd">FSD</a>
+                <a href="../old-cms/obsidian.html">Obsidian 3D</a>
+                <a href="../old-cms/index.html#flows">Flows</a>
+                <a href="../old-cms/index.html#erd">ERD</a>
+                <a href="../old-cms/index.html#database">Database</a>
+                <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+                <a href="index.html">E2E hub</a>
+                <a href="index.html#fsd">FSD</a>
+                <a href="index.html#dtef">DTEF</a>
+                <a href="index.html#erd">ERD</a>
+                <a href="database.html">Database</a>
+                <a href="../old-cms/obsidian.html">Obsidian 3D</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+                <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+                <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+                <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+                <a href="../old-cms-sierra-leone/database.html">Database</a>
+                <a href="../old-cms/obsidian.html">Obsidian 3D</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="nav-dd">
@@ -98,6 +121,7 @@
             <a href="../../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
           </div>
@@ -125,104 +149,919 @@
   <main>
 
     <section class="hero">
-      <h1>Existing Botswana CMS — technical analysis</h1>
+      <h1>Botswana CMS — end-to-end functional flow</h1>
       <p>
-        Inventory from the LUCT Botswana source &amp; structure package
-        (<code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code>).
-        Sister <strong>LUCT CMS / PHPMaker</strong> campus (<strong>BWA-GBE</strong>) to Cyberjaya — useful for
-        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion pattern matching.
-        <strong>Not</strong> the launch system of record (<a href="../architecture.html#sdd">ADR-1</a> remains Cyberjaya).
+        Full campus lifecycle for LUCT Botswana (<strong>BWA-GBE</strong>, DB
+        <code>cmsbotswana</code>) broken down by desk / capability — including the
+        campus-local <strong>DTEF → TEF.gov.bw</strong> scholarship admission sync.
+        Package <code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code>.
+        <strong>Not</strong> the launch SoR (<a href="../architecture.html#sdd">ADR-1</a> remains Cyberjaya);
+        use for <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion.
       </p>
       <div class="meta-row">
         <span class="chip ok">DB <code>cmsbotswana</code></span>
         <span class="chip ok">713 tables</span>
-        <span class="chip ok">~554 non-temp</span>
-        <span class="chip ok">46 procedures</span>
-        <span class="chip ok">15 functions</span>
-        <span class="chip ok">157 triggers</span>
-        <span class="chip ok">407 views</span>
-        <span class="chip">Dump date 24 Sep 2026</span>
+        <span class="chip ok">14 desks</span>
+        <span class="chip ok">DTEF gov API</span>
+        <span class="chip">Dump 24 Sep 2026</span>
       </div>
     </section>
 
     <div class="note" style="margin: 0 0 16px">
-      <strong>Scope.</strong>
-      Document structure and desk surfaces only. The PHP tree, <code>botsbatch</code> SQL/logs,
-      credentials, and live student files from the package are <em>not</em> committed to git.
-      Canonical agent notes:
-      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a>.
-      Cyberjaya (launch SoR): <a href="../old-cms/">LUCT CMS / Cyberjaya analysis</a>.
+      <strong>LUCT CMS subsection.</strong>
+      Connected from the Cyberjaya analysis hub:
+      <a href="../old-cms/index.html#botswana">LUCT CMS → Botswana</a>.
+      Use the top nav <strong>LUCT CMS → Botswana</strong> group for ERD, DFD, database, DTEF, and comparison.
     </div>
 
-    <div class="note warn" style="margin: 0 0 28px">
-      <strong>Technology shape.</strong>
-      PHPMaker desks under <code>botswana/campus/&lt;desk&gt;/</code> —
-      registry, faculty, bursary, marketing, lecturer, services, accommodation, setup, reporting, cdu.
-      Same LUCT family as Cyberjaya (<code>r_*</code> / <code>f_*</code> / <code>b_*</code> / <code>app_*</code>),
-      with campus-local <code>bots_*</code>, <code>portal_*_botswana</code>, and <code>api_student_*</code> hooks.
-      Closer to Cyberjaya than the Sierra Leone EMS / <code>ac_*</code> package.
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Scope.</strong>
+      Structure and behaviour only. PHP tree, credentials, and live student data are
+      <em>not</em> committed. Canonical notes:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a>,
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a>.
     </div>
 
     <nav class="toc" aria-label="Botswana CMS sections">
-      <a href="./database.html">
-        <strong>Database — tables, SPs, triggers, views</strong>
-        <span>713 tables · 46 procedures · 157 triggers · 407 views</span>
-      </a>
-      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">
-        <strong>Full inventory (Markdown)</strong>
-        <span>Module map, domain counts, Cyberjaya / Sierra Leone comparison</span>
-      </a>
-      <a href="../old-cms/">
-        <strong>Cyberjaya LUCT CMS hub</strong>
-        <span>Launch SoR analysis (ADR-1)</span>
-      </a>
-      <a href="../old-cms-sierra-leone/">
-        <strong>Sierra Leone CMS</strong>
-        <span>Sister EMS dump — M5 pattern</span>
-      </a>
-      <a href="../../sdd/14-cms-feature-comparison.html">
-        <strong>SDD-14 CAP comparison</strong>
-        <span>Cyberjaya-focused CAP matrix (reference)</span>
-      </a>
+      <a href="#e2e"><strong>1. End-to-end lifecycle</strong><span>Applicant → student → finance → gov sync</span></a>
+      <a href="#fsd"><strong>2. Functional breakdown</strong><span>Desks by domain · module map</span></a>
+      <a href="#flows"><strong>3. Core process flows</strong><span>Admissions · academic · finance · student life</span></a>
+      <a href="#dtef"><strong>4. DTEF → TEF.gov.bw</strong><span>Scholarship gov sync</span></a>
+      <a href="#erd"><strong>5. Physical ERD</strong><span>Core · admissions · finance · DTEF · portal</span></a>
+      <a href="#dfd"><strong>6. Data-flow (DFD)</strong><span>Context · admissions · academic · finance/TEF · batch</span></a>
+      <a href="#database"><strong>7. Database</strong><span>713 tables · SPs · triggers · views</span></a>
+      <a href="#raisd"><strong>8. Raisd mapping</strong><span>Portals · CAP · M5 flags</span></a>
+      <a href="#compare"><strong>9. Campus comparison</strong><span>vs Cyberjaya · Sierra Leone — all aspects</span></a>
     </nav>
 
-    <section class="section">
-      <h2>Desks vs Raisd portals</h2>
-      <p class="lead">Staff desks share MySQL; Raisd portals never talk to campus MySQL directly.</p>
+    <!-- ========== 1. E2E ========== -->
+    <section class="section" id="e2e">
+      <h2>1. End-to-end campus lifecycle</h2>
+      <p class="lead">
+        One shared MySQL SoR. Staff desks own writes; thin student/lecturer PHPMaker UIs and
+        <code>api_student_*</code> / <code>portal_*_botswana</code> hooks sit beside them.
+        The TEF government POST is Botswana-only (no Cyberjaya equivalent).
+      </p>
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Botswana LUCT CMS context</h3>
-            <p>Closest sister dump to Cyberjaya so far (same campus desk tree).</p>
+            <h3>Student journey across desks</h3>
+            <p>Recruitment → offer → register → term study → fees / DTEF → services → reporting.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Recruit["1 · Recruit"]
+    MKT[Marketing<br/>app_* / agents]
+    CDU[CDU / AQA<br/>entry rules]
+  end
+  subgraph Admit["2 · Admit"]
+    REG1[Registry<br/>offer letters]
+    APP[Online / staff<br/>application]
+  end
+  subgraph Enrol["3 · Enrol"]
+    REG2[Registry<br/>r_student / programme]
+    FAC1[Faculty<br/>structure / modules]
+    SET[Setup<br/>terms / fees]
+  end
+  subgraph Study["4 · Study"]
+    FAC2[Faculty<br/>timetable / results]
+    LEC[Lecturer<br/>marks / attendance]
+    STU[Student desk<br/>self-service]
+  end
+  subgraph Money["5 · Finance"]
+    BUR[Bursary<br/>invoice / pay / assist]
+    DTEF[DTEF queue<br/>r_scholarshipapp]
+    TEF[tef.gov.bw]
+  end
+  subgraph Life["6 · Student life"]
+    SVC[Services<br/>visa / welfare]
+    ACC[Accommodation]
+    LIB[Library]
+  end
+  subgraph Close["7 · Close / report"]
+    REP[Reporting]
+    BATCH[botsbatch]
+  end
+
+  MKT --> APP
+  CDU -.-> APP
+  APP --> REG1
+  REG1 --> REG2
+  SET --> REG2
+  FAC1 --> REG2
+  REG2 --> FAC2
+  FAC2 --> LEC
+  FAC2 --> STU
+  REG2 --> BUR
+  BUR --> DTEF
+  DTEF -->|status 31 POST| TEF
+  REG2 --> SVC
+  REG2 --> ACC
+  REG2 --> LIB
+  FAC2 --> REP
+  BUR --> REP
+  BATCH -.-> REP
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 2. FSD ========== -->
+    <section class="section" id="fsd">
+      <h2>2. Functional breakdown by desk</h2>
+      <p class="lead">PHPMaker apps under <code>botswana/campus/&lt;desk&gt;/</code> — same LUCT family as Cyberjaya.</p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Functional structure</h3>
+            <p>Domains map to folders; all share <code>cmsbotswana</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+mindmap
+  root((Botswana CMS<br/>BWA-GBE))
+    Academic
+      registry
+      faculty
+      lecturer
+      cdu
+      training
+    Student life
+      services
+      accommodation
+      library
+      notice
+      student
+    Commercial
+      bursary
+      marketing
+      DTEF_TEF_sync
+    Platform
+      setup
+      reporting
+      botsbatch
+      portal_api_hooks
+          </pre>
+        </div>
+      </div>
+
+      <h3>Module catalogue</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Desk</th>
+              <th>Primary job</th>
+              <th>Key tables / signals</th>
+              <th>~PHP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>registry/</code></td>
+              <td>Student master, offers, forms, transcripts, <strong>DTEF scholarship queue</strong></td>
+              <td><code>r_student</code>, <code>r_stdprogram</code>, <code>r_stdofferletter*</code>, <code>r_scholarshipapp</code></td>
+              <td>~894</td>
+            </tr>
+            <tr>
+              <td><code>setup/</code></td>
+              <td>Institution, terms, fee catalogs, user levels</td>
+              <td><code>f_term</code>, fee / security setup tables</td>
+              <td>~756</td>
+            </tr>
+            <tr>
+              <td><code>bursary/</code></td>
+              <td>Invoices, payments, receipts, assist / DTEF billing</td>
+              <td><code>b_payment*</code>, <code>b_assistbilling*</code>, <code>b_stdassist*</code>, DTEF letters</td>
+              <td>~452</td>
+            </tr>
+            <tr>
+              <td><code>faculty/</code></td>
+              <td>Schools, programmes, modules, attendance, results</td>
+              <td><code>f_program</code>, <code>f_module</code>, <code>bots_program*</code>, timetable</td>
+              <td>~333</td>
+            </tr>
+            <tr>
+              <td><code>services/</code></td>
+              <td>Welfare, counselling, visa / insurance ops</td>
+              <td><code>w_*</code> visa, insurance, applications</td>
+              <td>~308</td>
+            </tr>
+            <tr>
+              <td><code>marketing/</code></td>
+              <td>Applications, agents, recruitment</td>
+              <td><code>app_*</code>, <code>m_agent</code></td>
+              <td>~235</td>
+            </tr>
+            <tr>
+              <td><code>reporting/</code></td>
+              <td>Population, enrolment, payment, scholarship reports</td>
+              <td><code>rep_*</code>, <code>dtef_scholarship</code> view</td>
+              <td>~211</td>
+            </tr>
+            <tr>
+              <td><code>cdu/</code></td>
+              <td>AQA / programme accreditation</td>
+              <td>Entry / accreditation desks</td>
+              <td>~207</td>
+            </tr>
+            <tr>
+              <td><code>training/</code></td>
+              <td>Short-course / training enrolment</td>
+              <td>Training desks</td>
+              <td>~202</td>
+            </tr>
+            <tr>
+              <td><code>lecturer/</code></td>
+              <td>Marks, attendance, module materials</td>
+              <td>Lecturer portal screens</td>
+              <td>~122</td>
+            </tr>
+            <tr>
+              <td><code>library/</code></td>
+              <td>Library desks</td>
+              <td>Library tables / views</td>
+              <td>~121</td>
+            </tr>
+            <tr>
+              <td><code>accommodation/</code></td>
+              <td>Dorms, occupants, room charges</td>
+              <td><code>acc_*</code>, <code>w_occupant</code>, <code>w_room*</code></td>
+              <td>~118</td>
+            </tr>
+            <tr>
+              <td><code>notice/</code></td>
+              <td>Bulletin / noticeboard</td>
+              <td>Notice desks</td>
+              <td>~79</td>
+            </tr>
+            <tr>
+              <td><code>student/</code></td>
+              <td>Thin student self-service</td>
+              <td>Student PHPMaker screens</td>
+              <td>~38</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 3. Core flows ========== -->
+    <section class="section" id="flows">
+      <h2>3. Core process flows</h2>
+
+      <h3 id="flow-admissions">3.1 Admissions &amp; registry</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Application → offer → student record</h3>
+            <p><code>app_*</code> forms, eligibility, offer letters, <code>r_student</code> creation.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  A[Marketing / online app<br/>app_applicationform*] --> B[Docs / eligibility<br/>app_docfile · letters]
+  B --> C[Registry offer<br/>r_stdofferletter* · FetchOfferLetters]
+  C --> D[Confirm registration<br/>confirmReg SP]
+  D --> E[r_student + r_stdprogram<br/>+ r_stdsemester]
+  E --> F[Faculty structure<br/>f_program / bots_program*]
+  E --> G[Bursary fee plan]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-academic">3.2 Academic term cycle</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Modules → attendance → results</h3>
+            <p>Faculty + lecturer desks; SPs <code>GetTimetable</code>, <code>StudentConfirmModule</code>, <code>insertModule</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  T[Term / structure<br/>f_term · bots_structuresemester*] --> M[Module enrolment<br/>r_stdmodule]
+  M --> TT[Timetable<br/>GetTimetable]
+  TT --> ATT[Attendance]
+  M --> MARK[Lecturer marks]
+  MARK --> RR[Release results<br/>f_releaseresult*]
+  RR --> TR[Transcripts / BOE views]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-finance">3.3 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Billing → payment → scholarship assist</h3>
+            <p>Bursary owns money; Registry owns DTEF <em>admission</em> POST to TEF (see §4).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  FEE[Fee catalog / setup] --> INV[Invoices / instalments<br/>b_*]
+  INV --> PAY[Payments / receipts]
+  PAY --> STMT[Statements / ageing views]
+  INV --> ASSIST[Assist programmes<br/>b_stdassistprog / sem]
+  ASSIST --> DSCH[dtef_scholarship view<br/>AssistProviderCode=DTEF]
+  ASSIST --> GSTAT[getSCholarshipStatus fn]
+  REGQ[Registry r_scholarshipapp] -->|status 31| TEF[tef.gov.bw]
+  TEF -.->|34/35 outcomes| REGQ
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-life">3.4 Student life &amp; ops</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Area</th><th>Desk</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Visa / welfare / insurance</td><td><code>services/</code></td><td><code>w_visa</code>, <code>w_insurance*</code>, counselling apps</td></tr>
+            <tr><td>Hostel</td><td><code>accommodation/</code></td><td><code>acc_dorm</code> / occupants / charges; links to bursary accommodation updates</td></tr>
+            <tr><td>Library / notices</td><td><code>library/</code>, <code>notice/</code></td><td>Campus services &amp; bulletins</td></tr>
+            <tr><td>Batch / portal</td><td><code>botsbatch/</code></td><td>Nightly SQL (registry, bursary, examination, portal, attendance) — ops artefacts, not committed</td></tr>
+            <tr><td>Portal hooks</td><td>DB routines</td><td><code>api_student_*</code>, <code>api_faculty_*</code>, <code>portal_*_botswana</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 4. DTEF (combined) ========== -->
+    <section class="section" id="dtef">
+      <h2>4. DTEF scholarship → TEF.gov.bw</h2>
+      <p class="lead">
+        Botswana-specific government integration. Registry queues programme-of-study admissions;
+        saving with status <strong>31 (Sent by Registry)</strong> POSTs HAL+JSON to
+        <code>tef.gov.bw</code>. Finance assist billing is a <em>separate</em> path
+        (<code>b_stdassist*</code> / <code>dtef_scholarship</code>.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Gov API · Drupal HAL+JSON</span>
+        <span class="chip ok">Table <code>r_scholarshipapp</code></span>
+        <span class="chip ok">CAP-48 adjacent</span>
+        <span class="chip">No Cyberjaya equivalent</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Sync sequence</h3>
+            <p>Evidence: <code>r_scholarshipappedit.php</code> / <code>r_dropout_scholarshipappedit.php</code>
+              (lists <code>r_scholarshipapplist.php</code>, <code>r_dropout_scholarshipapplist.php</code>).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  actor Reg as Registry officer
+  participant Edit as Scholarship edit
+  participant DB as r_scholarshipapp
+  participant TEF as tef.gov.bw
+
+  Reg->>Edit: Edit row · set status 31 · Save
+  Edit->>TEF: GET /rest/session/token
+  TEF-->>Edit: CSRF token
+  Edit->>TEF: POST /api/post/studentadmissions<br/>(HAL+JSON program_of_study)
+  alt success or duplicate admission
+    Edit->>DB: app_status=32 · remark=SUCCESS!
+  else API / curl error
+    Edit->>DB: app_status=33 · remark=error
+    Edit-->>Reg: Alert — contact support
+  end
+  Note over DB,TEF: 34 Approved / 35 Rejected<br/>recorded later (outcome path)
+          </pre>
+        </div>
+      </div>
+
+      <h3>Where it sits in the campus flow</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Admission POST vs finance assist</h3>
+            <p>Same campus, two paths — do not conflate.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Registry["Registry"]
+    L1[Active list]
+    L2[Dropout list]
+    E[Edit · status 31]
+    L1 --> E
+    L2 --> E
+  end
+  subgraph Store["cmsbotswana"]
+    T[(r_scholarshipapp)]
+    A[(b_stdassistprog / sem)]
+    V[[dtef_scholarship]]
+  end
+  subgraph Gov["Government"]
+    TEF[tef.gov.bw]
+    DTEF[DTEF financing]
+  end
+  E -->|POST program_of_study| TEF
+  E -->|UPDATE 32/33| T
+  TEF -.->|34/35| T
+  A --> V
+  T -.->|ID overlap| A
+  DTEF -.-> TEF
+          </pre>
+        </div>
+      </div>
+
+      <h3>Status vocabulary (<code>app_status</code>)</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Code</th><th>Meaning</th><th>TEF call?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>30</td><td>Pending</td><td>No</td></tr>
+            <tr><td>31</td><td>Sent by Registry</td><td><strong>Yes — triggers POST</strong></td></tr>
+            <tr><td>32</td><td>Successfully Sent to DTEF</td><td>Result</td></tr>
+            <tr><td>33</td><td>Failed</td><td>Result</td></tr>
+            <tr><td>34</td><td>Approved by DTEF</td><td>Outcome (later)</td></tr>
+            <tr><td>35</td><td>Rejected by DTEF</td><td>Outcome (later)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Registry desks &amp; API contract</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Desk</th><th>List</th><th>Edit (sync)</th><th>Query surface</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Active</td>
+              <td><code>r_scholarshipapplist.php</code></td>
+              <td><code>r_scholarshipappedit.php</code></td>
+              <td>View <code>r_scholarshipapp_v</code></td>
+            </tr>
+            <tr>
+              <td>Dropout</td>
+              <td><code>r_dropout_scholarshipapplist.php</code></td>
+              <td><code>r_dropout_scholarshipappedit.php</code></td>
+              <td><code>r_scholarshipapp</code> ⟕ <code>w_student_sview</code>; requires <code>programCost</code>; skips update when status already 34</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top: 16px">
+        <table class="attr">
+          <thead>
+            <tr><th>Step</th><th>Request</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1 · CSRF</td>
+              <td><code>GET https://tef.gov.bw/rest/session/token</code></td>
+              <td>Sent as <code>X-CSRF-Token</code></td>
+            </tr>
+            <tr>
+              <td>2 · Admission</td>
+              <td><code>POST …/api/post/studentadmissions?_format=hal_json</code></td>
+              <td><code>application/hal+json</code> · HTTP Basic (credentials not published)</td>
+            </tr>
+            <tr>
+              <td>Entity</td>
+              <td><code>type[].target_id = program_of_study</code></td>
+              <td>Fields: title, id, surname, firstname, institution, institution_program_code, program_name, program_duration, start/completion dates, entry_level, cost</td>
+            </tr>
+            <tr>
+              <td>Duplicate</td>
+              <td><code>Duplicate Student Admission!</code></td>
+              <td>Treated as non-fatal → status 32</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top: 12px">
+        Full field map and Raisd security notes:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a>.
+        Legacy deep-link: <a href="dtef-scholarship-sync.html">dtef-scholarship-sync.html</a> → this section.
+      </p>
+    </section>
+
+    <!-- ========== 5. ERD ========== -->
+    <section class="section" id="erd">
+      <h2>5. Physical ERD (<code>cmsbotswana</code>)</h2>
+      <p class="lead">
+        Logical view of real MySQL tables from the Botswana structure dump.
+        Not the Raisd canonical model — <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> translates; it does not clone these tables.
+      </p>
+      <div class="note warn" style="margin: 0 0 20px">
+        Contrast Raisd ERD at <a href="../erd.html">../erd.html</a>. Botswana adds
+        <code>r_scholarshipapp</code>, <code>bots_*</code>, and thicker <code>w_*</code> / <code>acc_*</code>.
+      </div>
+
+      <h3 id="erd-core">5.1 Core student</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>r_student · programme · semester · module</h3>
+            <p>Same LUCT spine as Cyberjaya; Botswana mirrors via <code>bots_program*</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+    string StudentNo
+    string LoginActive
+  }
+  r_stdpersonal {
+    int StudentID PK
+  }
+  r_stdprogram {
+    int StdProgramID PK
+    int StudentID FK
+    int ProgramID FK
+  }
+  r_stdsemester {
+    int StdSemesterID PK
+    int StdProgramID FK
+    int TermID FK
+  }
+  r_stdmodule {
+    int StdModuleID PK
+    int StdSemesterID FK
+    int ModuleID FK
+  }
+  bots_program {
+    int ProgramID FK
+  }
+  r_student ||--|| r_stdpersonal : StudentID
+  r_student ||--o{ r_stdprogram : StudentID
+  r_stdprogram ||--o{ r_stdsemester : StdProgramID
+  r_stdsemester ||--o{ r_stdmodule : StdSemesterID
+  r_stdprogram }o--|| bots_program : Botswana_mirror
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-admissions">5.2 Admissions &amp; offer</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>app_* → offer → student</h3>
+            <p><code>app_applicationform</code>, docs, eligibility, <code>r_stdofferletter*</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  app_applicationform {
+    int ApplicationID PK
+  }
+  app_docfile {
+    int ApplicationID FK
+  }
+  app_eligibilityletter {
+    int ApplicationID FK
+  }
+  r_stdofferletter {
+    int StudentID FK
+    int ApplicationID FK
+  }
+  r_student {
+    int StudentID PK
+  }
+  app_applicationform ||--o{ app_docfile : ApplicationID
+  app_applicationform ||--o{ app_eligibilityletter : ApplicationID
+  app_applicationform ||--o| r_stdofferletter : ApplicationID
+  r_student ||--o{ r_stdofferletter : StudentID
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-finance">5.3 Finance &amp; DTEF scholarship queue</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Assist billing vs TEF admission queue</h3>
+            <p><code>b_stdassist*</code> for campus finance; <code>r_scholarshipapp</code> for gov POST.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+    string StudentNo
+  }
+  r_stdprogram {
+    int StdProgramID PK
+    int StudentID FK
+  }
+  b_stdassistprog {
+    int AssistProgID PK
+    int StdProgramID FK
+    int AssistProviderID FK
+  }
+  b_stdassistsem {
+    int AssistProgID FK
+    int StdSemesterID FK
+  }
+  r_assistprovider {
+    int AssistProviderID PK
+    string AssistProviderCode
+  }
+  r_scholarshipapp {
+    int schctr PK
+    int applicationid
+    string IDNumber
+    string app_status
+    double programCost
+  }
+  r_student ||--o{ r_stdprogram : StudentID
+  r_stdprogram ||--o{ b_stdassistprog : StdProgramID
+  b_stdassistprog ||--o{ b_stdassistsem : AssistProgID
+  r_assistprovider ||--o{ b_stdassistprog : AssistProviderID
+  r_student ||--o{ r_scholarshipapp : "IDNumber=StudentNo"
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-life">5.4 Accommodation, welfare &amp; portal</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>acc_* · w_* · portal_*_botswana</h3>
+            <p>Thicker student-life schema than Sierra Leone; campus-suffixed portal sync tables.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+  }
+  acc_dorm {
+    int DormID PK
+  }
+  acc_occupant {
+    int OccupantID PK
+    int StudentID FK
+  }
+  w_visa {
+    int StudentID FK
+  }
+  w_insurance {
+    int StudentID FK
+  }
+  portal_r_student_botswana {
+    int StudentID FK
+  }
+  r_student ||--o{ acc_occupant : StudentID
+  acc_dorm ||--o{ acc_occupant : houses
+  r_student ||--o{ w_visa : StudentID
+  r_student ||--o{ w_insurance : StudentID
+  r_student ||--o| portal_r_student_botswana : sync
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 6. DFD ========== -->
+    <section class="section" id="dfd">
+      <h2>6. Data-flow diagrams (DFD)</h2>
+      <p class="lead">
+        How data moves between external actors, Botswana desks, <code>cmsbotswana</code>,
+        nightly <code>botsbatch</code>, and TEF.gov.bw.
+      </p>
+
+      <h3 id="dfd-context">6.1 Context diagram (Level 0)</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>External entities ↔ Botswana CMS</h3>
+            <p>Staff desks + thin student/lecturer UIs share one SoR; TEF is outbound only.</p>
           </div>
         </div>
         <div class="card-body">
           <pre class="mermaid">
 flowchart TB
-  subgraph BW["LUCT Botswana CMS BWA-GBE"]
-    REG[Registry]
-    FAC[Faculty]
-    BUR[Bursary]
-    MKT[Marketing]
-    LEC[Lecturer]
-    SVC[Services]
-    ACC[Accommodation]
-    SET[Setup]
-    REP[Reporting]
-    DB[("cmsbotswana MySQL")]
-    REG --> DB
-    FAC --> DB
-    BUR --> DB
-    MKT --> DB
-    LEC --> DB
-    SVC --> DB
-    ACC --> DB
-    SET --> DB
-    REP --> DB
-  end
+  APPLICANT([Applicant / agent])
+  STUDENT([Student])
+  LECTURER([Lecturer])
+  STAFF([Registry · Faculty · Bursary · Services])
+  TEF([tef.gov.bw / DTEF])
+  CMS[["Botswana CMS<br/>PHPMaker desks + cmsbotswana"]]
 
-  subgraph Raisd["Raisd control plane — M5+"]
-    API[Portal API / ACL]
+  APPLICANT -->|application / docs| CMS
+  STAFF -->|operational writes| CMS
+  STUDENT -->|self-service reads / confirms| CMS
+  LECTURER -->|marks / attendance| CMS
+  CMS -->|invoices / letters / portal data| STUDENT
+  CMS -->|HAL+JSON admissions| TEF
+  TEF -.->|approval outcomes 34/35| CMS
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-admit">6.2 Admissions → registry</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Online / staff app → offer → enrol</h3>
+            <p>SPs: <code>AfterInsertApplicationForm</code>, <code>FetchOnlineApplication*</code>, <code>confirmReg</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  EXT([Applicant]) --> MKT[Marketing desk]
+  MKT --> APP[(app_applicationform*)]
+  APP --> REG[Registry desk]
+  REG --> OFF[(r_stdofferletter*)]
+  REG --> STU[(r_student / r_stdprogram)]
+  STU --> FAC[Faculty structures]
+  STU --> BUR[Bursary fee plan]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-academic">6.3 Academic term</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Structure → modules → results</h3>
+            <p><code>GetTimetable</code>, <code>StudentConfirmModule</code>, release-result triggers.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  SET[Setup / Faculty<br/>term · bots_structure*] --> ENR[(r_stdmodule)]
+  ENR --> TT[Timetable / attendance]
+  ENR --> LEC[Lecturer marks]
+  LEC --> RES[(results / transcript views)]
+  RES --> REP[Reporting]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-finance">6.4 Finance + DTEF / TEF</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Two money-related paths</h3>
+            <p>Bursary ledger vs Registry TEF admission POST.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  STU[(r_student)] --> BUR[Bursary desk]
+  BUR --> LED[(b_payment / receipt / assist*)]
+  LED --> VIEW[[dtef_scholarship view]]
+  STU --> REG[Registry scholarship desks]
+  REG --> QUEUE[(r_scholarshipapp)]
+  QUEUE -->|status 31 POST| TEF([tef.gov.bw])
+  TEF -.->|34/35| QUEUE
+  BATCH[[botsbatch SQL]] -.-> LED
+  BATCH -.-> STU
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-batch">6.5 Batch &amp; portal hooks</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>botsbatch + api_* / portal_*_botswana</h3>
+            <p>Ops scripts (not committed) refresh portal/exam/registry/bursary slices; <code>api_student_*</code> SPs feed external clients.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  BATCH[[botsbatch<br/>portal · registry · bursary · exam]] --> DB[(cmsbotswana)]
+  DB --> API[["api_student_* / api_faculty_*"]]
+  DB --> PORT[(portal_*_botswana)]
+  API -.-> EXT([Future Portal API / M5])
+  PORT -.-> EXT
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 7. Database (combined) ========== -->
+    <section class="section" id="database">
+      <h2>7. Database — tables, procedures, triggers &amp; views</h2>
+      <p class="lead">
+        Derived from <code>cmsbotswana</code> structure dumps
+        (<code>CMS_Botswana_Tables|Procedure|Triggers|Views_24_09_2026.sql</code>.
+        Legacy URL <a href="database.html">database.html</a> redirects here.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">713 tables</span>
+        <span class="chip ok">46 SPs</span>
+        <span class="chip ok">15 functions</span>
+        <span class="chip ok">157 triggers</span>
+        <span class="chip ok">407 views</span>
+      </div>
+
+      <h3>Stored procedures (46) — highlights</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead><tr><th>Procedure</th><th>Domain</th></tr></thead>
+          <tbody>
+            <tr><td><code>api_student_login_info</code></td><td>Portal API — student login</td></tr>
+            <tr><td><code>api_student_module_info</code></td><td>Portal API — modules</td></tr>
+            <tr><td><code>api_student_program_info</code></td><td>Portal API — programme</td></tr>
+            <tr><td><code>api_student_semester_info</code></td><td>Portal API — semester</td></tr>
+            <tr><td><code>api_faculty_list</code> / <code>api_faculty_program_list</code></td><td>Portal API — faculty</td></tr>
+            <tr><td><code>AfterInsertApplicationForm</code> / <code>FetchOnlineApplication*</code></td><td>Admissions — online app</td></tr>
+            <tr><td><code>b_Update_billing</code> / <code>b_Update_Student</code></td><td>Finance — billing</td></tr>
+            <tr><td><code>confirmReg</code> / <code>GetTimetable</code> / <code>r_Update_Semester</code></td><td>Registry / academic</td></tr>
+            <tr><td><code>getSCholarshipStatus</code> (function)</td><td>Assist / DTEF status helper</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Full list (46 procedures + 15 functions): <a href="./_proc-catalog.txt"><code>_proc-catalog.txt</code></a></p>
+
+      <h3>Views (407)</h3>
+      <p class="lead">Large reporting forest — finance statements, attendance, transcripts, population, accommodation.</p>
+      <ul>
+        <li>Finance: <code>b_statement*</code>, <code>b_outstanding*</code>, <code>b_receipt*</code>, <code>b_instalmentreport</code></li>
+        <li>Academic / registry: <code>r_stdmoduleview</code>, <code>r_stdtranscript*</code>, <code>r_boe</code>, <code>r_activestudent*</code></li>
+        <li>DTEF / scholarship: <code>dtef_scholarship</code>, <code>r_scholarshipapp_v</code>, <code>r_studentdtefdropoutview</code></li>
+        <li>Attendance: <code>f_attend*</code>, <code>ih_studentattendance</code></li>
+        <li>Accommodation: <code>acc_*</code>, <code>w_occupant*</code>, <code>w_room*</code></li>
+        <li>Reports: <code>rep_curtermpopulation*</code>, <code>rep_preenrollment*</code></li>
+      </ul>
+      <p>Machine extract: <a href="./_view-catalog.txt"><code>_view-catalog.txt</code></a></p>
+
+      <h3>Domain table signals</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead><tr><th>Signal</th><th>Approx.</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>Temp / scratch</td><td>~159</td><td><code>temp_*</code>, <code>tmp_*</code>, one-off billing copies</td></tr>
+            <tr><td><code>r_*</code> student</td><td>~110</td><td><code>r_student</code>, <code>r_stdmodule</code>, <code>r_scholarshipapp</code></td></tr>
+            <tr><td><code>f_*</code> academic</td><td>~74</td><td><code>f_program</code>, <code>f_module</code>, attendance / results</td></tr>
+            <tr><td><code>w_*</code> welfare / visa / acco</td><td>~49</td><td><code>w_visa</code>, <code>w_insurance</code>, <code>w_occupant</code></td></tr>
+            <tr><td><code>b_*</code> finance</td><td>~42</td><td><code>b_payment</code>, <code>b_receipt</code>, <code>b_assistbilling*</code></td></tr>
+            <tr><td><code>app_*</code> admissions</td><td>~21</td><td><code>app_applicationform</code>, <code>app_docfile</code></td></tr>
+            <tr><td><code>bots_*</code> local structs</td><td>~11</td><td><code>bots_program</code>, <code>bots_stdPortal</code></td></tr>
+            <tr><td><code>portal_*</code></td><td>6</td><td><code>portal_r_student_botswana</code>, …</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Full table list:
+        <a href="./_table-catalog.txt"><code>_table-catalog.txt</code></a> ·
+        Triggers (157 — heavy on <code>r_student*</code>, <code>app_*</code>, finance, accommodation):
+        <a href="./_trigger-summary.txt"><code>_trigger-summary.txt</code></a>
+      </p>
+
+      <h3>CAP-53 note</h3>
+      <p>
+        Botswana confirms a third live LUCT schema in the same product family, with campus-suffixed
+        portal tables and <code>api_*</code> procedures. Portal API campus configuration
+        (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)
+        must stay campus-keyed; do not assume Cyberjaya table names or SP signatures match 1:1.
+      </p>
+    </section>
+
+    <!-- ========== 8. Raisd ========== -->
+    <section class="section" id="raisd">
+      <h2>8. Raisd mapping</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Desks vs portals</h3>
+            <p>Portals never talk to campus MySQL; Portal API / ACL is campus-keyed (CAP-53).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph BW["LUCT Botswana CMS"]
+    DESKS[Registry · Faculty · Bursary · Marketing<br/>Lecturer · Services · Accommodation · Setup · Reporting]
+    DB[("cmsbotswana")]
+    DESKS --> DB
+    DESKS -.->|DTEF POST| TEFext[tef.gov.bw]
+  end
+  subgraph Raisd["Raisd — M5+"]
+    API[Portal API]
     AP[Applicant]
     SP[Student]
     LP[Lecturer]
@@ -231,38 +1070,218 @@ flowchart TB
     SP --> API
     LP --> API
     ST --> API
-    API -.->|"campus-keyed CAP-53"| DB
+    API -.->|"campus-keyed"| DB
   end
           </pre>
         </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2>Quick comparison</h2>
       <div class="table-wrap">
         <table class="attr">
           <thead>
-            <tr><th>Signal</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+            <tr><th>Topic</th><th>Guidance</th></tr>
           </thead>
           <tbody>
-            <tr><td>Database</td><td><code>cmscbj</code></td><td><code>cmsbotswana</code></td><td><code>ems_sierraleone</code></td></tr>
-            <tr><td>Tables</td><td>~1,942</td><td>713 (~554 non-temp)</td><td>345</td></tr>
-            <tr><td>Stored procedures</td><td>~318</td><td>46 (+15 fn)</td><td>6</td></tr>
-            <tr><td>Triggers</td><td>~239</td><td>157</td><td>91</td></tr>
-            <tr><td>Views</td><td>(large)</td><td>407</td><td>9</td></tr>
-            <tr><td>Admissions prefix</td><td><code>app_*</code></td><td><code>app_*</code></td><td><code>ac_*</code></td></tr>
-            <tr><td>Portal API hooks</td><td>Yes</td><td>Yes (<code>*_botswana</code>)</td><td>Not in dump</td></tr>
-            <tr><td>ADR-1 launch SoR</td><td>Yes</td><td>No — expansion</td><td>No — expansion</td></tr>
+            <tr><td>Launch SoR</td><td>Cyberjaya remains ADR-1. Botswana is expansion reference.</td></tr>
+            <tr><td>Closest sister</td><td>Same LUCT desk tree and <code>app_*</code> as Cyberjaya — cleaner ACL transfer than Sierra Leone EMS.</td></tr>
+            <tr><td>DTEF / TEF</td><td>Campus feature flag + secret store; Portal API must own any future TEF client (never browser → TEF).</td></tr>
+            <tr><td>CAP-48</td><td>Scholarships — SoR today is registry + bursary; student portal read-only awards later.</td></tr>
+            <tr><td>Accommodation / welfare</td><td>Thicker <code>w_*</code> / <code>acc_*</code> than Sierra Leone — may need earlier staff-portal surfaces for Botswana.</td></tr>
           </tbody>
         </table>
+      </div>
+      <p>Full three-campus matrix: <a href="#compare">§9 Campus comparison</a>.</p>
+    </section>
+
+    <!-- ========== 9. Comparison ========== -->
+    <section class="section" id="compare">
+      <h2>9. Comparison — Cyberjaya · Botswana · Sierra Leone</h2>
+      <p class="lead">
+        All-aspect matrix of the three inventoried campus dumps. Botswana sits between Cyberjaya
+        (fullest LUCT SoR) and Sierra Leone (thinner EMS / <code>ac_*</code> shape) — closest sister
+        to Cyberjaya, with a unique government TEF integration.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Cyberjaya = ADR-1 SoR</span>
+        <span class="chip ok">Botswana = LUCT sister + TEF</span>
+        <span class="chip">Sierra Leone = EMS / M5 pattern</span>
+      </div>
+
+      <div class="card" style="margin-bottom: 24px">
+        <div class="card-head">
+          <div>
+            <h3>Where each campus sits</h3>
+            <p>Product family vs launch role.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Family["Same product family"]
+    CYB["Cyberjaya<br/>cmscbj · LUCT · app_*"]
+    BWA["Botswana<br/>cmsbotswana · LUCT · app_*"]
+    SLE["Sierra Leone<br/>ems_sierraleone · EMS · ac_*"]
+  end
+  CYB -->|closest sister| BWA
+  CYB -.->|same EMS roots<br/>different admissions prefix| SLE
+  CYB ==>|ADR-1 launch SoR| LAUNCH([Raisd portals])
+  BWA -.->|M5 expansion| LAUNCH
+  SLE -.->|M5 expansion| LAUNCH
+  BWA -->|TEF.gov.bw| GOV([DTEF government])
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="compare-identity">9.1 Identity &amp; role</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Aspect</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Package date</td><td>23 Sep 2026</td><td>24 Sep 2026</td><td>23 Sep 2026</td></tr>
+            <tr><td>Database</td><td><code>cmscbj</code></td><td><code>cmsbotswana</code></td><td><code>ems_sierraleone</code></td></tr>
+            <tr><td>Campus / brand code</td><td><code>[MYS-CYB]</code></td><td><code>[BWA-GBE]</code> · CMS 0.9a</td><td>ICA Sierra Leone EMS</td></tr>
+            <tr><td>Product family</td><td>LUCT CMS / PHPMaker</td><td>LUCT CMS / PHPMaker</td><td>EMS / PHPMaker (same roots)</td></tr>
+            <tr><td>Desk path</td><td><code>cyberjaya/campus/&lt;desk&gt;</code></td><td><code>botswana/campus/&lt;desk&gt;</code></td><td><code>sierraleone/&lt;desk&gt;</code></td></tr>
+            <tr><td>ADR-1 launch SoR</td><td><strong>Yes</strong></td><td>No — M5 expansion</td><td>No — M5 expansion</td></tr>
+            <tr><td>Pages hub</td><td><a href="../old-cms/">old-cms/</a></td><td><a href="index.html">old-cms-botswana/</a></td><td><a href="../old-cms-sierra-leone/">old-cms-sierra-leone/</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-scale">9.2 Scale &amp; technology</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Aspect</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tables (structure)</td><td>~1,942</td><td>713 (~554 non-temp)</td><td>345 (~156 non-temp)</td></tr>
+            <tr><td>Stored procedures</td><td>~318</td><td>46 (+15 functions)</td><td>6</td></tr>
+            <tr><td>Triggers</td><td>~239</td><td>157</td><td>91</td></tr>
+            <tr><td>Views</td><td>Large</td><td><strong>407</strong></td><td>9</td></tr>
+            <tr><td>Laravel add-ons</td><td>Payment + ICU PDPA</td><td>Not in dump</td><td>Not in dump</td></tr>
+            <tr><td>Live class / streaming</td><td>Adobe Connect + classroom link</td><td>Not highlighted in dump</td><td>Not in dump</td></tr>
+            <tr><td>Batch / ops</td><td><code>cyberbatch</code> + scripts</td><td><code>botsbatch</code> (SQL + logs)</td><td><code>sleonebatch</code> empty in package</td></tr>
+            <tr><td>Approx. desk PHP</td><td>Largest estate</td><td>~5.7k under campus</td><td>~1.7k PHP desks</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-desks">9.3 Desks / modules</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Capability area</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Registry / student master</td><td><code>registry/</code></td><td><code>registry/</code> (~894)</td><td><code>registry/</code></td></tr>
+            <tr><td>Faculty / academic</td><td><code>faculty/</code></td><td><code>faculty/</code></td><td><code>academic/</code></td></tr>
+            <tr><td>Bursary / finance</td><td><code>bursary/</code> + Laravel payment</td><td><code>bursary/</code></td><td><code>finance/</code></td></tr>
+            <tr><td>Marketing / admissions ops</td><td><code>marketing/</code></td><td><code>marketing/</code></td><td><code>applicationcenter/</code></td></tr>
+            <tr><td>Lecturer</td><td><code>lecturer/</code> · <code>lec/</code></td><td><code>lecturer/</code></td><td>Inside academic desks</td></tr>
+            <tr><td>Student services / affairs</td><td><code>services/</code> (EMGS/KDN/SSD)</td><td><code>services/</code> (<code>w_*</code>)</td><td><code>studentaffair/</code> (<code>sa_*</code>)</td></tr>
+            <tr><td>Accommodation</td><td><code>accommodation/</code></td><td><code>accommodation/</code> + <code>w_*</code></td><td>Thin / not a full desk</td></tr>
+            <tr><td>AQA / curriculum</td><td><code>cdu/</code></td><td><code>cdu/</code></td><td>Setting / academic mix</td></tr>
+            <tr><td>Compliance / PDPA</td><td><code>icu/</code> · Laravel icupdpa</td><td>Not a dedicated dump desk</td><td>Not in dump</td></tr>
+            <tr><td>Reporting</td><td><code>reporting/</code></td><td><code>reporting/</code></td><td><code>reports/</code></td></tr>
+            <tr><td>Setup / settings</td><td><code>cmsadminsetup</code> / setup desks</td><td><code>setup/</code> (~756)</td><td><code>setting/</code></td></tr>
+            <tr><td>Student self-service</td><td>Multiple (stdfile, SIU, …)</td><td>Thin <code>student/</code> (~38)</td><td>Portal extracts only</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-domain">9.4 Domain data model</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Aspect</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Admissions tables</td><td>Mostly <code>app_*</code></td><td>Mostly <code>app_*</code></td><td>Mostly <code>ac_*</code></td></tr>
+            <tr><td>Student spine</td><td><code>r_student</code> → programme → semester → module</td><td>Same + <code>bots_*</code> mirrors</td><td>Same <code>r_*</code> / <code>f_*</code> spine</td></tr>
+            <tr><td>Finance</td><td>Rich <code>b_*</code> + payment app</td><td><code>b_*</code> + assist / DTEF billing</td><td><code>b_*</code> + loans; 6 calc SPs</td></tr>
+            <tr><td>Welfare / visa</td><td>Large EMGS/KDN forest</td><td>Thick <code>w_*</code> (~49)</td><td>Small <code>sa_*</code> (~3)</td></tr>
+            <tr><td>Local campus structs</td><td>Cyberjaya-specific tables</td><td><code>bots_*</code> (~11)</td><td>Fewer campus-only structs</td></tr>
+            <tr><td>Portal sync tables</td><td><code>portal_*_cyberjaya</code></td><td><code>portal_*_botswana</code> (6)</td><td>Not in dump</td></tr>
+            <tr><td>Temp / scratch share</td><td>High (dump includes history)</td><td>~159 temp/scratch</td><td>~189 temp/scratch</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-capabilities">9.5 Functional capabilities</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Capability</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Online / staff applications</td><td>Present (<code>app_*</code>)</td><td>Present (<code>app_*</code> + online SPs)</td><td>Present (<code>ac_*</code>)</td></tr>
+            <tr><td>Offer letters</td><td>Present</td><td>Present</td><td>Present (RTF variants)</td></tr>
+            <tr><td>Timetable / attendance / results</td><td>Full faculty + lecturer</td><td>Present (+ IH mirrors)</td><td>Present (academic desk)</td></tr>
+            <tr><td>Invoices / payments / statements</td><td>Full + Laravel payment</td><td>Full <code>b_*</code></td><td>Full <code>b_*</code> + loans</td></tr>
+            <tr><td>Scholarships / assist</td><td>Bursary incentives / assist</td><td>Assist + <strong>TEF.gov.bw POST</strong></td><td>Assist calc SPs; no gov API</td></tr>
+            <tr><td>Government integration</td><td>EMGS/KDN/eIPTS reporting</td><td><strong>DTEF → tef.gov.bw</strong> HAL API</td><td>Not found in dump</td></tr>
+            <tr><td>Accommodation</td><td>Full desk</td><td>Full desk + <code>w_occupant</code></td><td>Thin</td></tr>
+            <tr><td>Visa / insurance</td><td>Services (rich)</td><td>Services <code>w_*</code></td><td>Student affairs <code>sa_*</code></td></tr>
+            <tr><td>Portal / API procedures</td><td><code>api_student_*</code> + portal tables</td><td>Same pattern (<code>*_botswana</code>)</td><td>Not in dump</td></tr>
+            <tr><td>Nightly batch gating</td><td><code>portal.sql</code> LoginActive rules</td><td><code>botsbatch</code> portal/registry/…</td><td>Empty batch folder</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-integrations">9.6 External integrations</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Integration</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>National financing portal</td><td>—</td><td><code>tef.gov.bw</code> student admissions</td><td>—</td></tr>
+            <tr><td>Immigration / study permit ops</td><td>EMGS / KDN heavy</td><td><code>w_visa</code> / welfare</td><td><code>sa_studentvisa</code></td></tr>
+            <tr><td>Online classroom</td><td>Adobe Connect / streaming host</td><td>—</td><td>—</td></tr>
+            <tr><td>Payment gateway app</td><td>Laravel <code>payment/</code></td><td>—</td><td>—</td></tr>
+            <tr><td>Raisd Portal API readiness</td><td>Highest (launch ACL)</td><td>High (same hooks, campus suffix)</td><td>Lower (no api_* in dump)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="compare-raisd">9.7 Raisd / M5 implications</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Topic</th><th>Cyberjaya</th><th>Botswana</th><th>Sierra Leone</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Launch posture</td><td>SoR for portals (ADR-1)</td><td>Do not treat as launch SoR</td><td>Do not treat as launch SoR</td></tr>
+            <tr><td>ACL transfer</td><td>Baseline</td><td>Cleanest sister (<code>app_*</code> + portal hooks)</td><td>Expect <code>ac_*</code> mapping + thinner SPs</td></tr>
+            <tr><td>CAP-53 campus key</td><td><code>*_cyberjaya</code></td><td><code>*_botswana</code> / <code>bots_*</code></td><td>New campus key when onboarded</td></tr>
+            <tr><td>Feature flags needed</td><td>Core product</td><td>TEF client · thick housing/welfare</td><td>Admissions prefix · loans</td></tr>
+            <tr><td>Staff portal priority extras</td><td>EMGS / payment / PDPA ops</td><td>DTEF queue · accommodation earlier</td><td>Application centre shape</td></tr>
+            <tr><td>Inventory docs</td><td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cyberjaya.md">old-cms-cyberjaya.md</a></td><td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a></td><td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">old-cms-sierra-leone.md</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note" style="margin-top: 20px">
+        <strong>Verdict.</strong>
+        Botswana is the closest dump to Cyberjaya for M5 pattern matching (same LUCT desk tree and
+        <code>app_*</code> admissions, portal <code>api_*</code> hooks present). Sierra Leone proves EMS portability
+        with a different admissions prefix and a much smaller SP/view surface. Only Botswana evidence-backed
+        government scholarship admission sync is <code>tef.gov.bw</code> — keep it campus-flagged.
+        CAP comparison detail (Cyberjaya-focused):
+        <a href="../old-cms/comparison.html">old-cms/comparison.html</a> ·
+        <a href="../../sdd/14-cms-feature-comparison.html">SDD-14</a>.
       </div>
     </section>
 
   </main>
   <p class="footer">
-    Source inventory in
-    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">docs/ai/backend/old-cms-botswana.md</a>
+    Inventory:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">old-cms-botswana.md</a>
+    · DTEF:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a>
     · Package <code>CMS_Botswana_Source_Codes_&amp;_DB_Structure_24_09_2026</code> (structure only — not committed)
   </p>
   <script type="module">

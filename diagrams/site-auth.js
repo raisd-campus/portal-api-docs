@@ -58,7 +58,7 @@
       '  <img class="raisd-auth-logo" src="' +
       scriptBase() +
       'assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />' +
-      '  <h1 id="raisd-auth-title">Raisd Control Plane docs</h1>' +
+      '  <h1 id="raisd-auth-title">Control Plane docs</h1>' +
       '  <p class="raisd-auth-lead">Sign in with the shared docs credentials to continue.</p>' +
       '  <label class="raisd-auth-label">Username' +
       '    <input name="username" type="text" autocomplete="username" required autofocus />' +

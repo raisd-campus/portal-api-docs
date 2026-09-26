@@ -82,6 +82,7 @@
   "ERD": "Entity-relationship diagram — logical or physical data model view.",
   "DFD": "Data-flow diagram — how data moves between actors and systems.",
   "FSD": "Functional structure / functional specification of CMS modules.",
+  "Obsidian": "Interactive 3D force-directed FSD knowledge graph (breakdown, walkthrough, click-to-focus) under LUCT CMS analysis.",
   "API": "Application Programming Interface.",
   "SSO": "Single Sign-On.",
   "IdP": "Identity Provider.",

@@ -40,9 +40,19 @@ a:hover { text-decoration: underline; }
   position: sticky;
   top: 0;
   z-index: 20;
+  /* Blur on ::before so overflow clipping does not hide side flyouts */
+  background: transparent;
+  border-bottom: 1px solid var(--line);
+  overflow: visible;
+}
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   backdrop-filter: blur(10px);
   background: rgba(246, 248, 251, 0.88);
-  border-bottom: 1px solid var(--line);
 }
 .site-header-inner {
   max-width: var(--page-max);
@@ -54,6 +64,7 @@ a:hover { text-decoration: underline; }
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  overflow: visible;
 }
 .brand {
   display: inline-flex;
@@ -84,12 +95,14 @@ a:hover { text-decoration: underline; }
   align-items: center;
   margin-left: auto;
   justify-content: flex-end;
+  overflow: visible;
 }
 .nav a {
   text-decoration: none;
 }
 .nav-dd {
   position: relative;
+  overflow: visible;
 }
 .nav-dd-main {
   display: inline-flex;
@@ -136,7 +149,7 @@ a:hover { text-decoration: underline; }
   /* Flush under trigger — no dead gap; padding creates hit area */
   top: 100%;
   left: 0;
-  min-width: 200px;
+  min-width: 180px;
   padding: 10px 6px 6px;
   border-radius: 0 0 12px 12px;
   border: 1px solid var(--line);
@@ -144,6 +157,7 @@ a:hover { text-decoration: underline; }
   background: var(--surface);
   box-shadow: var(--shadow);
   z-index: 40;
+  overflow: visible;
 }
 /* Invisible bridge so the pointer can leave the pill without closing */
 .nav-dd-menu::before {
@@ -160,7 +174,8 @@ a:hover { text-decoration: underline; }
 .nav-dd.is-hover > .nav-dd-menu {
   display: block;
 }
-.nav-dd-menu a {
+.nav-dd-menu > a,
+.nav-dd-menu .nav-sub-menu a {
   display: block;
   padding: 8px 12px;
   border-radius: 8px;
@@ -168,14 +183,106 @@ a:hover { text-decoration: underline; }
   font-size: 0.88rem;
   white-space: nowrap;
 }
-.nav-dd-menu a:hover {
+.nav-dd-menu > a:hover,
+.nav-dd-menu .nav-sub-menu a:hover {
   background: var(--accent-soft);
   text-decoration: none;
 }
 
-/* legacy inline subchip group (kept harmless if any remain) */
-.nav-group { display: contents; }
-.nav-sub { display: none; }
+/* Nested side flyout under LUCT CMS (Cyberjaya / Botswana / Sierra Leone) */
+.nav-sub {
+  position: relative;
+  display: block;
+}
+.nav-dd-menu .nav-sub-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+.nav-dd-menu .nav-sub-trigger::after {
+  content: "›";
+  flex: 0 0 auto;
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--muted, #6b7280);
+  opacity: 0.85;
+}
+.nav-dd-menu .nav-sub-trigger:hover,
+.nav-sub:focus-within > .nav-sub-trigger,
+.nav-sub.open > .nav-sub-trigger,
+.nav-sub.is-hover > .nav-sub-trigger {
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+.nav-sub-menu {
+  display: none;
+  position: absolute;
+  left: calc(100% - 2px);
+  top: 0;
+  min-width: 210px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  z-index: 50;
+}
+/* Bridge so pointer can move into the side menu without closing */
+.nav-sub-menu::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+}
+.nav-sub:focus-within > .nav-sub-menu,
+.nav-sub.open > .nav-sub-menu,
+.nav-sub.is-hover > .nav-sub-menu {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .nav-sub-menu {
+    position: static;
+    left: auto;
+    top: auto;
+    margin: 0 0 4px;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0 0 0 8px;
+  }
+  .nav-sub-menu::before {
+    display: none;
+  }
+  .nav-sub:not(.open):not(.is-hover):not(:focus-within) > .nav-sub-menu {
+    display: none;
+  }
+  .nav-dd-menu .nav-sub-trigger::after {
+    content: "▾";
+    font-size: 0.75rem;
+  }
+  .nav-sub.open > .nav-sub-trigger::after,
+  .nav-sub.is-hover > .nav-sub-trigger::after,
+  .nav-sub:focus-within > .nav-sub-trigger::after {
+    content: "▴";
+  }
+}
+
+/* retired flat-label styles superseded by .nav-sub */
 
 main {
   max-width: var(--page-max);
@@ -696,4 +803,210 @@ html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
   margin: 0;
   color: #8a1f1f;
   font-size: 0.88rem;
+}
+
+/* Obsidian 3D FSD knowledge graph */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.obsidian-section { margin-top: 8px; }
+.obsidian-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.obsidian-search-row {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.obsidian-search-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font: inherit;
+}
+.obsidian-walk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.obs-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.obs-btn:hover { filter: brightness(1.05); }
+.obs-btn.ghost {
+  background: transparent;
+  color: var(--accent);
+}
+.obs-step {
+  font-size: 0.9rem;
+  color: var(--muted);
+  min-width: 9rem;
+  text-align: center;
+}
+.obs-status {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.obsidian-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+  gap: 16px;
+  align-items: stretch;
+  min-height: 560px;
+}
+.obsidian-graph {
+  position: relative;
+  min-height: 520px;
+  height: 62vh;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid #2a3648;
+  background: #1a2332;
+  box-shadow: var(--shadow);
+}
+.obsidian-graph canvas { display: block; }
+.obsidian-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 20px;
+  overflow: auto;
+  max-height: 62vh;
+}
+.obs-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.obs-panel-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+.obsidian-panel h3 {
+  margin: 16px 0 6px;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.obs-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.obs-list li { margin: 3px 0; }
+.obs-list .muted,
+.obs-links .muted { color: var(--muted); }
+.obs-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.obs-related {
+  display: inline-flex;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+.obs-related:hover { border-color: #a9c2df; text-decoration: none; }
+.obs-related.obs-open {
+  background: var(--ok-bg);
+  border-color: #b9dfc8;
+  color: var(--ok);
+}
+.obsidian-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: 14px;
+}
+.obs-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.obs-legend-item i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+@media (max-width: 960px) {
+  .obsidian-layout {
+    grid-template-columns: 1fr;
+  }
+  .obsidian-panel {
+    max-height: none;
+  }
+  .obsidian-graph {
+    height: 52vh;
+    min-height: 420px;
+  }
+}
+
+/* HTML labels projected onto 3D nodes (above WebGL canvas) */
+.obs-label-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+.obs-node-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border-style: solid;
+  box-sizing: border-box;
+  padding: 6px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-align: center;
+  word-break: break-word;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  will-change: transform;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+.obs-node-chip span {
+  display: block;
+  max-width: 100%;
 }

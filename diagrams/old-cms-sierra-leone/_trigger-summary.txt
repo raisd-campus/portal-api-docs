@@ -1,5 +1,3 @@
-ICA Sierra Leone — triggers (91 unique) from ICA_SierraLeone_Triggers_23092026.sql
-
 ac_application_after_ins_tr1
 ac_application_after_upd_tr1
 ac_application_before_ins_tr1
