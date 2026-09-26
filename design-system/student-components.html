@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../diagrams/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Raisd Control Plane — Student portal components</title>
+  <script src="../diagrams/site-auth.js"></script>
+</head>
+<body>
+  <header class="site-header"><div class="site-header-inner">
+    <a class="brand" href="../diagrams/index.html">
+        <img class="brand-logo" src="../diagrams/assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Raisd Control Plane</strong>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/index.html">Diagrams hub</a>
+            <a href="../diagrams/distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../diagrams/architecture.html">Architecture</a>
+            <a href="../diagrams/migration.html">Migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/distributed-cms-architecture.html">Target architecture</a>
+            <a href="../diagrams/distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../diagrams/distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../diagrams/distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../diagrams/migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/architecture.html">Architecture home</a>
+            <a href="../diagrams/distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../diagrams/architecture.html#sdd">SDD & ADR catalogue</a>
+            <a href="../diagrams/architecture.html#acl">SoR / ACL</a>
+            <a href="../diagrams/architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../diagrams/migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+                <a href="../diagrams/migration.html">Plan overview</a>
+                <a href="../diagrams/migration.html#sequence">Milestone sequence</a>
+                <a href="../diagrams/distributed-cms-architecture.html#journey">Current → ideal</a>
+                <a href="../diagrams/migration.html#m1">M1–M5 detail</a>
+                <a href="../diagrams/migration.html#hosting">Hosting stages</a>
+                <a href="../diagrams/migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../diagrams/raisd-cms/student-portal.html">Student portal</a>
+            <a href="../diagrams/raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../diagrams/raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../diagrams/erd.html">ERD</a>
+            <a href="../diagrams/dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../diagrams/old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../diagrams/old-cms/index.html">Analysis hub</a>
+            <a href="../diagrams/old-cms/comparison.html">Comparison</a>
+            <a href="../diagrams/old-cms/fsd.html">FSD</a>
+            <a href="../diagrams/old-cms/erd.html">Legacy ERD</a>
+            <a href="../diagrams/old-cms/flows.html">Flows</a>
+            <a href="../diagrams/old-cms/database.html">Database</a>
+            <a href="../diagrams/old-cms-botswana/index.html">Botswana</a>
+            <a href="../diagrams/old-cms-botswana/database.html">Botswana DB</a>
+            <a href="../diagrams/old-cms-sierra-leone/index.html">Sierra Leone</a>
+            <a href="../diagrams/old-cms-sierra-leone/database.html">Sierra Leone DB</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Design system hub</a>
+            <a href="foundations.html">Foundations</a>
+            <a href="shared-controls.html">Shared controls</a>
+            <a href="shared-patterns.html">Shared patterns</a>
+            <a href="student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../sdd/index.html">SDD hub</a>
+            <a href="../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+  </div></header>
+  <main>
+    <section class="hero"><p class="eyebrow">Design system · released package 0.1.0</p><h1>Student portal components</h1><p>Student-owned workflows composed with shared visuals</p></section>
+    <nav class="design-subnav" aria-label="Design system pages"><a class="" href="index.html">Overview</a><a class="" href="foundations.html">Foundations</a><a class="" href="shared-controls.html">Shared controls</a><a class="" href="shared-patterns.html">Shared patterns</a><a class="current" href="student-components.html">Student portal components</a></nav>
+    <p class="design-context">Static captures use mock student data. Click a preview to inspect it at full size. Exact props come from the released package declarations or the owning student source.</p><nav class="design-index" aria-label="On this page"><a href="#module-detail-patterns">Module detail patterns</a><a href="#community-service-identities">Community service identities</a><a href="#student-summary-card">Student summary card</a><a href="#programme-enrolment-context">Programme enrolment context</a><a href="#timetable-minute-precision">Timetable minute precision</a><a href="#announcement-articles">Announcement articles</a><a href="#privacy-and-security-guidance">Privacy and security guidance</a><a href="#services-section-content">Services section content</a><a href="#student-next-action">Student next action</a><a href="#embedded-documents-and-case-messages">Embedded documents and case messages</a><a href="#module-card">Module card</a><a href="#student-profile-control">Student profile control</a><a href="#performance-chart-card">Performance chart card</a><a href="#performance-loading-state">Performance loading state</a><a href="#calendar-month-and-agenda">Calendar month and agenda</a><a href="#calendar-loading-state">Calendar loading state</a></nav><div class="design-cards"><article class="design-card" id="module-detail-patterns"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Module detail patterns</h2></div><a href="#module-detail-patterns" aria-label="Link to Module detail patterns">#</a></div><p>Module routing, attendance and assessment decisions belong to the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/module-detail-patterns-desktop.png" target="_blank" rel="noopener"><img src="assets/module-detail-patterns-desktop.png" alt="Dark portal UI: Module detail patterns at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/module-detail-materials-desktop.png" target="_blank" rel="noopener"><img src="assets/module-detail-materials-desktop.png" alt="Dark portal UI: Module detail patterns · Materials at desktop width" loading="lazy" /></a><figcaption>Module detail patterns · Materials · 1440px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/module-detail-attendance-desktop.png" target="_blank" rel="noopener"><img src="assets/module-detail-attendance-desktop.png" alt="Dark portal UI: Module detail patterns · Attendance at desktop width" loading="lazy" /></a><figcaption>Module detail patterns · Attendance · 1440px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/module-detail-patterns-tablet.png" target="_blank" rel="noopener"><img src="assets/module-detail-patterns-tablet.png" alt="Dark portal UI: Module detail patterns · tablet at tablet width" loading="lazy" /></a><figcaption>Module detail patterns · tablet · 820px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/module-detail-patterns-phone.png" target="_blank" rel="noopener"><img src="assets/module-detail-patterns-phone.png" alt="Dark portal UI: Module detail patterns · phone at phone width" loading="lazy" /></a><figcaption>Module detail patterns · phone · 390px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-modules.md">Student guidance</a></p></article>
+<article class="design-card" id="community-service-identities"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Community service identities</h2></div><a href="#community-service-identities" aria-label="Link to Community service identities">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/community-service-identities-desktop.png" target="_blank" rel="noopener"><img src="assets/community-service-identities-desktop.png" alt="Dark portal UI: Community service identities at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/sidebar-behavior.md">Student guidance</a></p></article>
+<article class="design-card" id="student-summary-card"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Student summary card</h2></div><a href="#student-summary-card" aria-label="Link to Student summary card">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/student-summary-card-desktop.png" target="_blank" rel="noopener"><img src="assets/student-summary-card-desktop.png" alt="Dark portal UI: Student summary card at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/personal-profile.md">Student guidance</a></p></article>
+<article class="design-card" id="programme-enrolment-context"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Programme enrolment context</h2></div><a href="#programme-enrolment-context" aria-label="Link to Programme enrolment context">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/programme-enrolment-context-desktop.png" target="_blank" rel="noopener"><img src="assets/programme-enrolment-context-desktop.png" alt="Dark portal UI: Programme enrolment context at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-study-plan.md">Student guidance</a></p></article>
+<article class="design-card" id="timetable-minute-precision"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Timetable minute precision</h2></div><a href="#timetable-minute-precision" aria-label="Link to Timetable minute precision">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/timetable-minute-precision-desktop.png" target="_blank" rel="noopener"><img src="assets/timetable-minute-precision-desktop.png" alt="Dark portal UI: Timetable minute precision at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/timetable-minute-precision-tablet.png" target="_blank" rel="noopener"><img src="assets/timetable-minute-precision-tablet.png" alt="Dark portal UI: Timetable minute precision · tablet at tablet width" loading="lazy" /></a><figcaption>Timetable minute precision · tablet · 820px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/timetable-minute-precision-phone.png" target="_blank" rel="noopener"><img src="assets/timetable-minute-precision-phone.png" alt="Dark portal UI: Timetable minute precision · phone at phone width" loading="lazy" /></a><figcaption>Timetable minute precision · phone · 390px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-timetable.md">Student guidance</a></p></article>
+<article class="design-card" id="announcement-articles"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Announcement articles</h2></div><a href="#announcement-articles" aria-label="Link to Announcement articles">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/announcement-articles-desktop.png" target="_blank" rel="noopener"><img src="assets/announcement-articles-desktop.png" alt="Dark portal UI: Announcement articles at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/announcements.md">Student guidance</a></p></article>
+<article class="design-card" id="privacy-and-security-guidance"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Privacy and security guidance</h2></div><a href="#privacy-and-security-guidance" aria-label="Link to Privacy and security guidance">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/privacy-and-security-guidance-desktop.png" target="_blank" rel="noopener"><img src="assets/privacy-and-security-guidance-desktop.png" alt="Dark portal UI: Privacy and security guidance at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/privacy-security.md">Student guidance</a></p></article>
+<article class="design-card" id="services-section-content"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Services section content</h2></div><a href="#services-section-content" aria-label="Link to Services section content">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/services-section-content-desktop.png" target="_blank" rel="noopener"><img src="assets/services-section-content-desktop.png" alt="Dark portal UI: Services section content at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/campus-services.md">Student guidance</a></p></article>
+<article class="design-card" id="student-next-action"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Student next action</h2></div><a href="#student-next-action" aria-label="Link to Student next action">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/student-next-action-desktop.png" target="_blank" rel="noopener"><img src="assets/student-next-action-desktop.png" alt="Dark portal UI: Student next action at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-graduation.md">Student guidance</a></p></article>
+<article class="design-card" id="embedded-documents-and-case-messages"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Embedded documents and case messages</h2></div><a href="#embedded-documents-and-case-messages" aria-label="Link to Embedded documents and case messages">#</a></div><p>Student form and Community draft policies remain in the portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/embedded-documents-and-case-messages-desktop.png" target="_blank" rel="noopener"><img src="assets/embedded-documents-and-case-messages-desktop.png" alt="Dark portal UI: Embedded documents and case messages at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/online-forms.md">Student guidance</a></p></article>
+<article class="design-card" id="module-card"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Module card</h2></div><a href="#module-card" aria-label="Link to Module card">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/module-card-desktop.png" target="_blank" rel="noopener"><img src="assets/module-card-desktop.png" alt="Dark portal UI: Module card at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-modules.md">Student guidance</a></p></article>
+<article class="design-card" id="student-profile-control"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Student profile control</h2></div><a href="#student-profile-control" aria-label="Link to Student profile control">#</a></div><p>Account issue handling and destination routes remain student-owned.</p><div class="design-shots"><figure class="design-shot"><a href="assets/student-profile-control-desktop.png" target="_blank" rel="noopener"><img src="assets/student-profile-control-desktop.png" alt="Dark portal UI: Student profile control at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/student-profile-control-tablet.png" target="_blank" rel="noopener"><img src="assets/student-profile-control-tablet.png" alt="Dark portal UI: Student profile control · tablet at tablet width" loading="lazy" /></a><figcaption>Student profile control · tablet · 820px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/student-profile-control-phone.png" target="_blank" rel="noopener"><img src="assets/student-profile-control-phone.png" alt="Dark portal UI: Student profile control · phone at phone width" loading="lazy" /></a><figcaption>Student profile control · phone · 390px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/personal-profile.md">Student guidance</a></p></article>
+<article class="design-card" id="performance-chart-card"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Performance chart card</h2></div><a href="#performance-chart-card" aria-label="Link to Performance chart card">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/performance-chart-card-desktop.png" target="_blank" rel="noopener"><img src="assets/performance-chart-card-desktop.png" alt="Dark portal UI: Performance chart card at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-performance.md">Student guidance</a></p></article>
+<article class="design-card" id="performance-loading-state"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Performance loading state</h2></div><a href="#performance-loading-state" aria-label="Link to Performance loading state">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/performance-loading-state-desktop.png" target="_blank" rel="noopener"><img src="assets/performance-loading-state-desktop.png" alt="Dark portal UI: Performance loading state at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/academic-performance.md">Student guidance</a></p></article>
+<article class="design-card" id="calendar-month-and-agenda"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Calendar month and agenda</h2></div><a href="#calendar-month-and-agenda" aria-label="Link to Calendar month and agenda">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/calendar-month-and-agenda-desktop.png" target="_blank" rel="noopener"><img src="assets/calendar-month-and-agenda-desktop.png" alt="Dark portal UI: Calendar month and agenda at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure><figure class="design-shot"><a href="assets/calendar-month-and-agenda-phone.png" target="_blank" rel="noopener"><img src="assets/calendar-month-and-agenda-phone.png" alt="Dark portal UI: Calendar month and agenda · phone at phone width" loading="lazy" /></a><figcaption>Calendar month and agenda · phone · 390px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/calendar.md">Student guidance</a></p></article>
+<article class="design-card" id="calendar-loading-state"><div class="design-card-head"><div><span class="design-badge">Student portal</span><h2>Calendar loading state</h2></div><a href="#calendar-loading-state" aria-label="Link to Calendar loading state">#</a></div><p>This composition and its workflow decisions remain in the student portal.</p><div class="design-shots"><figure class="design-shot"><a href="assets/calendar-loading-state-desktop.png" target="_blank" rel="noopener"><img src="assets/calendar-loading-state-desktop.png" alt="Dark portal UI: Calendar loading state at desktop width" loading="lazy" /></a><figcaption>Desktop · 1440px · student 84c6bf541a4e</figcaption></figure></div><p class="design-reference"><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/calendar.md">Student guidance</a></p></article></div>
+  </main>
+  <script src="../diagrams/nav-dropdown.js" defer></script>
+</body>
+</html>

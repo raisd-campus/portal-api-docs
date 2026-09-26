@@ -1,0 +1,712 @@
+{
+  "packageVersion": "0.1.0",
+  "studentPortalCommit": "84c6bf541a4ecefc985a6429cac8a302b0098723",
+  "capturedAt": "2026-09-24",
+  "captureRoute": "/dev/design-system",
+  "items": [
+    {
+      "id": "surface-tiers",
+      "title": "Surface tiers",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/surface-tiers-desktop.png",
+      "sourceSelector": "section[data-slot=\"token-group\"]"
+    },
+    {
+      "id": "brand-palette",
+      "title": "Brand palette",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/brand-palette-desktop.png",
+      "sourceSelector": "section[data-slot=\"token-group\"]"
+    },
+    {
+      "id": "global-roles",
+      "title": "Global roles",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/global-roles-desktop.png",
+      "sourceSelector": "section[data-slot=\"token-group\"]"
+    },
+    {
+      "id": "service-identity-colours",
+      "title": "Service identity colours",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/service-identity-colours-desktop.png",
+      "sourceSelector": "section[data-slot=\"token-group\"]"
+    },
+    {
+      "id": "typography-colours",
+      "title": "Typography colours",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/typography-colours-desktop.png",
+      "sourceSelector": "section[data-slot=\"token-group\"]"
+    },
+    {
+      "id": "scrollbar",
+      "title": "Scrollbar",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/scrollbar-desktop.png",
+      "sourceSelector": "section[data-slot=\"token-group\"]"
+    },
+    {
+      "id": "typography",
+      "title": "Typography",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/typography-desktop.png",
+      "sourceSelector": "section heading \"Typography\""
+    },
+    {
+      "id": "module-detail-patterns",
+      "title": "Module detail patterns",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/module-detail-patterns-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-module-detail-patterns\"]"
+    },
+    {
+      "id": "scrollbar-2",
+      "title": "Scrollbar",
+      "page": "foundations",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/scrollbar-2-desktop.png",
+      "sourceSelector": "section heading \"Scrollbar\""
+    },
+    {
+      "id": "actions-and-status",
+      "title": "Actions and status",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/actions-and-status-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-actions-status\"]"
+    },
+    {
+      "id": "community-service-identities",
+      "title": "Community service identities",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/community-service-identities-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-service-identities\"]"
+    },
+    {
+      "id": "student-summary-card",
+      "title": "Student summary card",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/student-summary-card-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-student-summary-card\"]"
+    },
+    {
+      "id": "programme-enrolment-context",
+      "title": "Programme enrolment context",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/programme-enrolment-context-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-programme-context\"]"
+    },
+    {
+      "id": "summary-cards",
+      "title": "Summary cards",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/summary-cards-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-summary-cards\"]"
+    },
+    {
+      "id": "content-sections",
+      "title": "Content sections",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/content-sections-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-content-sections\"]"
+    },
+    {
+      "id": "timetable-minute-precision",
+      "title": "Timetable minute precision",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/timetable-minute-precision-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-timetable\"]"
+    },
+    {
+      "id": "tab-panel-banner",
+      "title": "Tab-panel banner",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/tab-panel-banner-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-page-banner\"]"
+    },
+    {
+      "id": "announcement-articles",
+      "title": "Announcement articles",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/announcement-articles-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-announcements\"]"
+    },
+    {
+      "id": "privacy-and-security-guidance",
+      "title": "Privacy and security guidance",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/privacy-and-security-guidance-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-privacy-security-guidance\"]"
+    },
+    {
+      "id": "services-section-content",
+      "title": "Services section content",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/services-section-content-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-services-content\"]"
+    },
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/accordion-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-accordion\"]"
+    },
+    {
+      "id": "linked-list",
+      "title": "Linked list",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/linked-list-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-linked-list\"]"
+    },
+    {
+      "id": "page-action-bar",
+      "title": "Page action bar",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/page-action-bar-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-page-action-bar\"]"
+    },
+    {
+      "id": "student-next-action",
+      "title": "Student next action",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/student-next-action-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-student-next-action\"]"
+    },
+    {
+      "id": "inner-section",
+      "title": "Inner section",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/inner-section-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-inner-section\"]"
+    },
+    {
+      "id": "data-table",
+      "title": "Data table",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/data-table-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-data-table\"]"
+    },
+    {
+      "id": "embedded-documents-and-case-messages",
+      "title": "Embedded documents and case messages",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/embedded-documents-and-case-messages-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-form-communication\"]"
+    },
+    {
+      "id": "responsive-form-grid",
+      "title": "Responsive form grid",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/responsive-form-grid-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-form-grid\"]"
+    },
+    {
+      "id": "text-input",
+      "title": "Text input",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/text-input-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-text-input\"]"
+    },
+    {
+      "id": "textarea",
+      "title": "Textarea",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/textarea-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-textarea\"]"
+    },
+    {
+      "id": "date-picker",
+      "title": "Date picker",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/date-picker-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-date-picker\"]"
+    },
+    {
+      "id": "dropdown-select",
+      "title": "Dropdown select",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/dropdown-select-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-dropdown-select\"]"
+    },
+    {
+      "id": "semester-selector",
+      "title": "Semester selector",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/semester-selector-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-semester-selector\"]"
+    },
+    {
+      "id": "detail-field",
+      "title": "Detail field",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/detail-field-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-detail-field\"]"
+    },
+    {
+      "id": "detail-section-card",
+      "title": "Detail section card",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/detail-section-card-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-detail-section-card\"]"
+    },
+    {
+      "id": "file-link",
+      "title": "File link",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/file-link-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-file-link\"]"
+    },
+    {
+      "id": "add-row",
+      "title": "Add row",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/add-row-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-form-row-actions\"]"
+    },
+    {
+      "id": "module-card",
+      "title": "Module card",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/module-card-desktop.png",
+      "sourceSelector": "section heading \"Module card\""
+    },
+    {
+      "id": "card-grid",
+      "title": "Card grid",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/card-grid-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-card-grid\"]"
+    },
+    {
+      "id": "issue-card",
+      "title": "Issue card",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/issue-card-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-issue-card\"]"
+    },
+    {
+      "id": "student-profile-control",
+      "title": "Student profile control",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/student-profile-control-desktop.png",
+      "sourceSelector": "section[data-slot=\"design-system-student-profile-control\"]"
+    },
+    {
+      "id": "performance-chart-card",
+      "title": "Performance chart card",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/performance-chart-card-desktop.png",
+      "sourceSelector": "section heading \"Performance chart card\""
+    },
+    {
+      "id": "performance-loading-state",
+      "title": "Performance loading state",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/performance-loading-state-desktop.png",
+      "sourceSelector": "section heading \"Performance loading state\""
+    },
+    {
+      "id": "calendar-month-and-agenda",
+      "title": "Calendar month and agenda",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/calendar-month-and-agenda-desktop.png",
+      "sourceRoute": "/",
+      "sourceSelector": "[data-slot=\"calendar-section-card\"]"
+    },
+    {
+      "id": "calendar-loading-state",
+      "title": "Calendar loading state",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/calendar-loading-state-desktop.png",
+      "sourceSelector": "section heading \"Calendar loading state\""
+    },
+    {
+      "id": "query-error-state",
+      "title": "Query error state",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/query-error-state-desktop.png",
+      "sourceSelector": "section heading \"Query error state\""
+    },
+    {
+      "id": "overlays-and-feedback",
+      "title": "Overlays and feedback",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/overlays-and-feedback-desktop.png",
+      "sourceSelector": "section heading \"Overlays and feedback\""
+    },
+    {
+      "id": "module-detail-patterns-phone",
+      "title": "Module detail patterns · phone",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/module-detail-patterns-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-module-detail-patterns\"]"
+    },
+    {
+      "id": "summary-cards-phone",
+      "title": "Summary cards · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/summary-cards-phone.png",
+      "sourceRoute": "design-system/examples/consumer/",
+      "sourceSelector": "[data-slot=\"summary-card\"]"
+    },
+    {
+      "id": "content-sections-phone",
+      "title": "Content sections · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/content-sections-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-content-sections\"]"
+    },
+    {
+      "id": "timetable-minute-precision-phone",
+      "title": "Timetable minute precision · phone",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/timetable-minute-precision-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-timetable\"]"
+    },
+    {
+      "id": "tab-panel-banner-phone",
+      "title": "Tab-panel banner · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/tab-panel-banner-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-page-banner\"]"
+    },
+    {
+      "id": "linked-list-phone",
+      "title": "Linked list · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/linked-list-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-linked-list\"]"
+    },
+    {
+      "id": "page-action-bar-phone",
+      "title": "Page action bar · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/page-action-bar-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-page-action-bar\"]"
+    },
+    {
+      "id": "data-table-phone",
+      "title": "Data table · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/data-table-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-data-table\"]"
+    },
+    {
+      "id": "responsive-form-grid-phone",
+      "title": "Responsive form grid · phone",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/responsive-form-grid-phone.png",
+      "sourceRoute": "design-system/examples/consumer/",
+      "sourceSelector": "[data-slot=\"fixture-form-grid\"]"
+    },
+    {
+      "id": "detail-field-phone",
+      "title": "Detail field · phone",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/detail-field-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-detail-field\"]"
+    },
+    {
+      "id": "student-profile-control-phone",
+      "title": "Student profile control · phone",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/student-profile-control-phone.png",
+      "sourceSelector": "section[data-slot=\"design-system-student-profile-control\"]"
+    },
+    {
+      "id": "calendar-month-and-agenda-phone",
+      "title": "Calendar month and agenda · phone",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "phone",
+      "width": 390,
+      "image": "assets/calendar-month-and-agenda-phone.png",
+      "sourceRoute": "/",
+      "sourceSelector": "[data-slot=\"calendar-section-card\"]"
+    },
+    {
+      "id": "module-detail-patterns-tablet",
+      "title": "Module detail patterns · tablet",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "tablet",
+      "width": 820,
+      "image": "assets/module-detail-patterns-tablet.png",
+      "sourceSelector": "section[data-slot=\"design-system-module-detail-patterns\"]"
+    },
+    {
+      "id": "content-sections-tablet",
+      "title": "Content sections · tablet",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "tablet",
+      "width": 820,
+      "image": "assets/content-sections-tablet.png",
+      "sourceSelector": "section[data-slot=\"design-system-content-sections\"]"
+    },
+    {
+      "id": "timetable-minute-precision-tablet",
+      "title": "Timetable minute precision · tablet",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "tablet",
+      "width": 820,
+      "image": "assets/timetable-minute-precision-tablet.png",
+      "sourceSelector": "section[data-slot=\"design-system-timetable\"]"
+    },
+    {
+      "id": "data-table-tablet",
+      "title": "Data table · tablet",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "tablet",
+      "width": 820,
+      "image": "assets/data-table-tablet.png",
+      "sourceSelector": "section[data-slot=\"design-system-data-table\"]"
+    },
+    {
+      "id": "student-profile-control-tablet",
+      "title": "Student profile control · tablet",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "tablet",
+      "width": 820,
+      "image": "assets/student-profile-control-tablet.png",
+      "sourceSelector": "section[data-slot=\"design-system-student-profile-control\"]"
+    },
+    {
+      "id": "module-detail-materials",
+      "title": "Module detail patterns · Materials",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/module-detail-materials-desktop.png",
+      "sourceSelector": "former Explorer interaction state"
+    },
+    {
+      "id": "module-detail-attendance",
+      "title": "Module detail patterns · Attendance",
+      "page": "student-components",
+      "owner": "student",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/module-detail-attendance-desktop.png",
+      "sourceSelector": "former Explorer interaction state"
+    },
+    {
+      "id": "tab-panel-banner-gradient",
+      "title": "Tab-panel banner · Gradient on",
+      "page": "shared-patterns",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/tab-panel-banner-gradient-desktop.png",
+      "sourceSelector": "former Explorer interaction state"
+    },
+    {
+      "id": "accordion-collapsed",
+      "title": "Accordion · Collapsed",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/accordion-collapsed-desktop.png",
+      "sourceSelector": "former Explorer interaction state"
+    },
+    {
+      "id": "dialog-open",
+      "title": "Overlays and feedback · Dialog open",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/dialog-open-desktop.png",
+      "sourceSelector": "former Explorer interaction state"
+    },
+    {
+      "id": "popup-open",
+      "title": "Overlays and feedback · Popup open",
+      "page": "shared-controls",
+      "owner": "shared",
+      "viewport": "desktop",
+      "width": 1440,
+      "image": "assets/popup-open-desktop.png",
+      "sourceSelector": "former Explorer interaction state"
+    }
+  ]
+}
