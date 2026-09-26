@@ -10,6 +10,7 @@ on:
       - diagrams/**
       - ai/**
       - sdd/**
+      - design-system/**
       - .github/workflows/pages.yml
   workflow_dispatch:
 
@@ -56,6 +57,7 @@ jobs:
           cp -R diagrams _site/diagrams
           cp -R ai _site/ai
           if [ -d sdd ]; then cp -R sdd _site/sdd; fi
+          if [ -d design-system ]; then cp -R design-system _site/design-system; fi
           test -f _site/diagrams/erd.html
           test -f _site/diagrams/dfd.html
           test -f _site/diagrams/old-cms/index.html
@@ -70,6 +72,13 @@ jobs:
           test -f _site/sdd/11-capability-catalog.html
           test -f _site/sdd/03-delivery-milestones.html
           test -f _site/sdd/index.html
+          test -f _site/design-system/index.html
+          test -f _site/design-system/foundations.html
+          test -f _site/design-system/shared-controls.html
+          test -f _site/design-system/shared-patterns.html
+          test -f _site/design-system/student-components.html
+          test -f _site/design-system/styles.css
+          test -f _site/design-system/captures.json
           test -f _site/diagrams/glossary.json
           test -f _site/diagrams/abbr-tooltips.js
           test -f _site/diagrams/site-auth.js
