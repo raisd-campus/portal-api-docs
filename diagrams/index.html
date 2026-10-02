@@ -372,8 +372,9 @@ flowchart LR
           <tbody>
             <tr><td>GET</td><td><code>/</code></td><td>None</td><td>Redirects to <code>/v1/meta</code></td></tr>
             <tr><td>GET</td><td><code>/health</code></td><td>None</td><td>Liveness: service, session store (<code>postgres</code>), CMS mode (<code>stub</code>), server time</td></tr>
-            <tr><td>GET</td><td><code>/v1/meta</code></td><td>None</td><td>Version, Demo scenarios, default scenario, CMS and session modes</td></tr>
+            <tr><td>GET</td><td><code>/v1/meta</code></td><td>None</td><td>Version, Demo scenarios, default scenario, CMS and session modes; links <code>/v1/meta/lms</code></td></tr>
             <tr><td>GET</td><td><code>/v1/meta/staff-progression</code></td><td>None</td><td>Reserved staff methods — <code>deferred</code> until a Live staff API exists</td></tr>
+            <tr><td>GET</td><td><code>/v1/meta/lms</code></td><td>None</td><td>Demo LMS catalogue — Materials / assignments / lecturer review × CAP × tables; deferred quiz / live-class / forum names (not callable). Not a Live LMS</td></tr>
             <tr><td>GET</td><td><code>/openapi.yaml</code></td><td>None</td><td>Redirects to the published contract</td></tr>
             <tr><td>GET</td><td><code>/docs</code></td><td>None</td><td>Redirects to Swagger UI</td></tr>
             <tr><td>GET</td><td><code>/favicon.ico</code> · <code>/favicon.svg</code> · <code>/apple-touch-icon.png</code></td><td>None</td><td>Redirect to the Raisd icons on this site</td></tr>

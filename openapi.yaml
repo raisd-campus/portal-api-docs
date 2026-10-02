@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Raisd Portal API
-  version: 0.4.0
+  version: 0.4.1
   summary: Stage-1 HTTP face of the campus Portal API
   description: |
     Bearer-authenticated RPC over the student-portal `PortalApi` surface.
@@ -42,6 +42,10 @@ info:
     `selectStudentScenario`. Staff milestone simulation stays on student-portal
     `/dev/admin-actions` until Live staff PortalApi methods land (see
     `StaffProgressionDeferred`).
+
+    **LMS surface (Demo)** — Materials, assignment metadata, and lecturer
+    review are tagged `LMS` in this contract. Catalogue + deferred CAP gaps:
+    `GET /v1/meta/lms` (`LmsSurfaceCatalogue`). Not a Live LMS (BASE-44).
 
     **PortalApi methods (55)** — each appears as its own `POST /v1/portal/<method>` operation in Swagger UI.\n\n    **PortalApi method catalog (55 methods from student-portal)**
 
@@ -125,8 +129,15 @@ servers:
 tags:
   - name: Health
     description: Liveness, metadata, and published docs
+  - name: Meta
+    description: Catalogues for deferred or domain-scoped PortalApi surfaces
   - name: Auth
     description: Demo student sessions
+  - name: LMS
+    description: |
+      Student learning surface on Portal API (Materials, assignments, lecturer review).
+      Demo only — Materials alone is not a complete LMS (BASE-44). Proposed quiz /
+      live-class / forum methods are listed at `GET /v1/meta/lms` as deferred.
   - name: Immigration
     description: PortalApi · Immigration
   - name: Online forms
@@ -136,7 +147,7 @@ tags:
   - name: Policies
     description: PortalApi · Policies
   - name: Lecturer review
-    description: PortalApi · Lecturer review
+    description: PortalApi · Lecturer review (also under LMS)
   - name: Dashboard
     description: PortalApi · Dashboard
   - name: Academic
@@ -144,7 +155,7 @@ tags:
   - name: Registration
     description: PortalApi · Registration
   - name: Materials
-    description: PortalApi · Materials
+    description: PortalApi · Materials (also under LMS)
   - name: Profile
     description: PortalApi · Profile
   - name: Services
@@ -234,6 +245,7 @@ paths:
               example:
                 service: portal-api
                 version: 0.1.0
+                schemaVersion: 3
                 scenarios:
                   - mid-programme
                   - first-semester-registration
@@ -245,7 +257,8 @@ paths:
                 data: postgres
                 docs: /docs
                 openapi: /openapi.yaml
-                note: Demo records live in Postgres (one table per record collection) and run through the MockPortalApi engine until CAP-53 connects the existing CMS.
+                lms: /v1/meta/lms
+                note: Demo records live in Postgres (one table per record collection, including Schema v3 campus policy) and run through the MockPortalApi engine until CAP-53 connects the existing CMS. LMS surface catalogue: GET /v1/meta/lms.
 
 
   /v1/meta/staff-progression:
@@ -278,6 +291,51 @@ paths:
                   - advanceGraduationDocument
                   - advanceGraduationStudentPass
                 note: Staff progression is Admin Actions only until Live staff PortalApi exists.
+
+
+  /v1/meta/lms:
+    get:
+      tags: [Meta, LMS]
+      operationId: lmsSurfaceCatalogue
+      summary: Catalogue the Demo LMS PortalApi surface and deferred CAP gaps
+      description: |
+        Lists callable student LMS methods (Materials, assignment metadata,
+        lecturer review), the Neon Demo collections they touch, CAP IDs, and
+        deferred quiz / live-class / forum / feedback method names for M5.
+        Does **not** claim a Live LMS product (BASE-44). Assignment file bytes
+        remain metadata-only until the evidence store (SDD-10 Q5 / phase 7.3).
+      security: []
+      responses:
+        "200":
+          description: LMS surface catalogue
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LmsSurfaceCatalogue"
+              example:
+                status: demo
+                note: Student LMS role surface on Portal API. Materials alone is not a complete LMS (BASE-44). Not Live.
+                methods:
+                  - method: getAcademicModuleMaterials
+                    caps: [CAP-17, CAP-18, CAP-19, CAP-23, CAP-27]
+                    tables: [module_weeks, module_learning_items, learning_progress, module_assessments, assignment_submissions]
+                    domain: lms
+                    demoStatus: Partial
+                  - method: submitAssignment
+                    caps: [CAP-20]
+                    tables: [assignment_submissions]
+                    domain: lms
+                    demoStatus: Demo
+                deferredMethods:
+                  - method: startQuizAttempt
+                    caps: [CAP-24, CAP-29]
+                    tables: [quiz_attempts, quiz_questions, quiz_attempt_answers]
+                    milestone: M5
+                    status: not-started
+                collections:
+                  lms: [module_weeks, module_learning_items, learning_progress, assignment_submissions, lecturer_reviews]
+                  shared: [module_offerings, teaching_assignments, class_schedules, class_sessions, attendances, module_assessments, assessment_results, academic_terms, module_registrations]
+                  proposed: [quiz_attempts, quiz_questions, quiz_attempt_answers, assessment_feedback, live_class_sessions, live_class_attendances, module_forums, module_forum_posts, learning_release_rules, material_qa_reviews, copyright_permissions]
 
 
   /v1/auth/login:
@@ -885,7 +943,7 @@ paths:
 
   /v1/portal/getLecturerReview:
     post:
-      tags: [Lecturer review]
+      tags: [LMS, Lecturer review]
       operationId: portal_getLecturerReview
       summary: Get lecturer review questionnaire
       description: |
@@ -924,7 +982,7 @@ paths:
 
   /v1/portal/submitLecturerReview:
     post:
-      tags: [Lecturer review]
+      tags: [LMS, Lecturer review]
       operationId: portal_submitLecturerReview
       summary: Submit lecturer review
       description: |
@@ -1420,7 +1478,7 @@ paths:
 
   /v1/portal/getAcademicModuleMaterials:
     post:
-      tags: [Materials]
+      tags: [LMS, Materials]
       operationId: portal_getAcademicModuleMaterials
       summary: List module materials
       description: |
@@ -1458,7 +1516,7 @@ paths:
 
   /v1/portal/getAcademicModuleMaterialDetail:
     post:
-      tags: [Materials]
+      tags: [LMS, Materials]
       operationId: portal_getAcademicModuleMaterialDetail
       summary: Get one learning item
       description: |
@@ -1497,7 +1555,7 @@ paths:
 
   /v1/portal/submitAssignment:
     post:
-      tags: [Materials]
+      tags: [LMS, Materials]
       operationId: portal_submitAssignment
       summary: Submit an assignment file
       description: |
@@ -1541,7 +1599,7 @@ paths:
 
   /v1/portal/deleteAssignmentSubmission:
     post:
-      tags: [Materials]
+      tags: [LMS, Materials]
       operationId: portal_deleteAssignmentSubmission
       summary: Delete an assignment submission
       description: |
@@ -2655,6 +2713,10 @@ components:
           type: string
         version:
           type: string
+        schemaVersion:
+          type: integer
+          description: Portal record contract version (`PORTAL_RECORD_SCHEMA_VERSION`). A mismatch reseeds Demo record tables.
+          example: 3
         scenarios:
           type: array
           items:
@@ -2676,6 +2738,10 @@ components:
         openapi:
           type: string
           example: /openapi.yaml
+        lms:
+          type: string
+          description: Path to the Demo LMS surface catalogue
+          example: /v1/meta/lms
         note:
           type: string
 
@@ -4368,6 +4434,116 @@ components:
         note:
           type: string
           example: Staff progression is Admin Actions only until Live staff PortalApi exists.
+
+    LmsSurfaceCatalogue:
+      type: object
+      description: |
+        Demo LMS role surface on Portal API — callable Materials / assignment /
+        lecturer-review methods, Neon collections they touch, and deferred CAP
+        gaps (quiz, live class, forum, feedback). Not a Live LMS product (BASE-44).
+      required: [status, note, methods, deferredMethods, collections]
+      properties:
+        status:
+          type: string
+          enum: [demo]
+        note:
+          type: string
+          example: Student LMS role surface on Portal API. Materials alone is not a complete LMS (BASE-44). Not Live.
+        methods:
+          type: array
+          items:
+            $ref: "#/components/schemas/LmsCallableMethod"
+        deferredMethods:
+          type: array
+          items:
+            $ref: "#/components/schemas/LmsDeferredMethod"
+        collections:
+          $ref: "#/components/schemas/LmsCollectionGroups"
+
+    LmsCallableMethod:
+      type: object
+      required: [method, caps, tables, domain, demoStatus]
+      properties:
+        method:
+          type: string
+          description: Existing POST /v1/portal/{method} name
+          enum:
+            - getAcademicModuleMaterials
+            - getAcademicModuleMaterialDetail
+            - submitAssignment
+            - deleteAssignmentSubmission
+            - getLecturerReview
+            - submitLecturerReview
+            - getAcademicModules
+            - getAcademicModuleDetail
+            - getAcademicModuleAttendance
+            - getAcademicTimetable
+        caps:
+          type: array
+          items:
+            type: string
+            pattern: '^CAP-\d+$'
+        tables:
+          type: array
+          items:
+            type: string
+          description: Neon Demo collection / logical table names
+        domain:
+          type: string
+          enum: [lms, shared]
+        demoStatus:
+          type: string
+          enum: [Demo, Partial, Placeholder]
+          description: Aligns with student-portal CAP demo status wording
+
+    LmsDeferredMethod:
+      type: object
+      description: Reserved PortalApi method names — not callable; do not invent Live handlers.
+      required: [method, caps, tables, milestone, status]
+      properties:
+        method:
+          type: string
+          enum:
+            - startQuizAttempt
+            - submitQuizAttempt
+            - getLiveClassJoin
+            - postForumMessage
+            - getForumThread
+            - publishAssessmentFeedback
+            - getAssessmentFeedback
+        caps:
+          type: array
+          items:
+            type: string
+            pattern: '^CAP-\d+$'
+        tables:
+          type: array
+          items:
+            type: string
+        milestone:
+          type: string
+          example: M5
+        status:
+          type: string
+          enum: [not-started]
+          description: Reserved only — HTTP returns 404 until product sign-off
+
+    LmsCollectionGroups:
+      type: object
+      required: [lms, shared, proposed]
+      properties:
+        lms:
+          type: array
+          items: { type: string }
+          description: In-contract LMS-domain collections
+        shared:
+          type: array
+          items: { type: string }
+          description: Shared CMS↔LMS collections used by the Demo surface
+        proposed:
+          type: array
+          items: { type: string }
+          description: Purple ERD tables — not in PortalRecordGraph yet
 
 
     PortalFile:
