@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-01
+updated: 2026-10-02
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -30,6 +30,8 @@ notes:
   - 2026-10-01: Campus policy surfaced in published ERD, Data Model Explorer, OpenAPI `/v1/meta.schemaVersion`, and db-admin IRREGULAR map.
   - 2026-10-01: Architecture review confirmed Schema v3 good to proceed; CS-01–CS-11 = campus go-Live policy validation (Demo defaults not authoritative LUCT policy). Neon Demo reseeded to schema_version 3 (95 collections); physical verification checklist passed. Production Vercel portal-api redeployed — `/v1/meta` returns `schemaVersion: 3`.
   - 2026-10-01: LMS Q37 Option 1 — published lms-architecture.html + lms-features.html (F01–F37 × CAP) from Raisd sources; hub Moodle-like student map; no PPA comparison.
+  - 2026-10-02: LMS logical database tables + ERD CMS/LMS/shared/proposed colour legend (erd.html §10); agent schema at backend/lms-schema.md.
+  - 2026-10-02: db-admin ERD tab colours CMS / LMS / shared domains, domain filter, and LMS IRREGULAR stems (aligned with lms-schema.md).
 
 entrypoints:
   agents: AGENTS.md
@@ -48,6 +50,7 @@ sibling_repos:
   - portal-api
   - design-system
   - portal-api-docs
+  - db-admin
 
 architecture:
   - path: architecture/overview.md
@@ -56,13 +59,15 @@ architecture:
     topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state]
     pages: ../diagrams/distributed-cms-architecture.html
   - path: architecture/lms.md
-    topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle]
+    topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle, schema, erd]
     pages:
       - ../diagrams/lms.html
       - ../diagrams/lms-architecture.html
       - ../diagrams/lms-features.html
+      - ../diagrams/erd.html
+    related: backend/lms-schema.md
     status: proposed
-    note: Q37 Option 1 published; research posture only — not Live LMS.
+    note: Q37 Option 1 published; research posture only — not Live LMS. ERD §10 catalogues LMS tables with CMS colour legend.
   - path: architecture/repositories.md
     topics: [repo-map, local-paths, ownership]
   - path: architecture/deployment.md
@@ -106,6 +111,12 @@ backend:
     topics: [cap-mapping, gap-analysis, adr-1, old-vs-new, triggers, stored-procedures, batch]
     sdd: ../sdd/14-cms-feature-comparison.md
     pages: ../diagrams/old-cms/
+  - path: backend/lms-schema.md
+    topics: [lms, schema, erd, module-weeks, learning-items, assignments, quizzes, live-class, forums, proposed]
+    pages: ../diagrams/erd.html
+    related: architecture/lms.md
+    status: proposed
+    note: Logical LMS tables + CMS/LMS colour legend; proposed CAP-gap tables not in PortalRecordGraph.
 
 diagrams:
   - path: ../diagrams/index.html

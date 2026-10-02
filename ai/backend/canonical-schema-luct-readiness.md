@@ -49,7 +49,7 @@ Historical migrated `includedInCgpa` (and similar) values are preserved; new res
 |---|---|---|
 | Canonical contract | `student-portal/src/contracts/portal-records.ts` plus `graduation-records.ts`, `immigration-records.ts`, `online-forms.ts`, `lecturer-review.ts`, … | Zod record schemas. Referential integrity and business invariants live in the graph-wide `superRefine` on `portalRecordGraphSchema`. |
 | Postgres projection | `portal-api/src/record-store.ts` | One table per collection: `id`, `position`, `record jsonb` (source of truth), `updated_at`, plus read-only generated columns for browsing. **No FK constraints.** |
-| ERD | `db-admin/api/erd.ts` | Introspects Postgres. Declared FKs are drawn as-is; every other edge is **inferred from `<entity>_id` column names**. |
+| ERD | `db-admin/api/erd.ts` + published `docs/diagrams/erd.html` | Introspects Postgres. Declared FKs are drawn as-is; every other edge is **inferred from `<entity>_id` column names**. db-admin colours table headers **CMS / LMS / shared** (domain filter + legend); published ERD §10 catalogues LMS tables including proposed CAP gaps. |
 
 Consequences for anyone reading the ERD:
 
@@ -335,8 +335,8 @@ Mirrored into SDD-10 as Q29–Q36.
 | §4.9 Audit trail | Done | `audit_events` written on every graph save |
 | §4.10 Reporting projections | Done (Demo) | TS helpers + SQL views; Live CMS report cutover is CS-13 |
 | Schema-version reseed | Done | `portal_meta.schema_version`; mismatch drops record tables, keeps student state + audit. Neon Demo reseeded 1 Oct 2026 → version **3**, 95 collections |
-| Published ERD / db-admin inference | Done | `docs/diagrams/erd.html` (policy tables + reporting joins), `db-admin` IRREGULAR map for Schema v3 policy stems |
-| §0 Campus policy tables (mapping / academic-status / credit / CGPA / document / adjustment) | Done (Demo) | Schema v3 collections + university-default seeds; Data Model Explorer entities; published ERD; `campus-policy.ts` resolver; projections + SQL views; `/v1/meta.schemaVersion` (contract + Neon); db-admin IRREGULAR map. **Production Vercel API still needs redeploy** for `schemaVersion` on `/v1/meta` |
+| Published ERD / db-admin inference | Done | `docs/diagrams/erd.html` (policy + LMS §10 colour legend), `db-admin` IRREGULAR map for Schema v3 policy + LMS stems; ERD tab CMS/LMS/shared domain colours |
+| §0 Campus policy tables (mapping / academic-status / credit / CGPA / document / adjustment) | Done (Demo) | Schema v3 collections + university-default seeds; Data Model Explorer entities; published ERD; `campus-policy.ts` resolver; projections + SQL views; `/v1/meta.schemaVersion` on Neon + production Vercel; db-admin IRREGULAR map |
 | Neon physical Schema v3 verification | Done (1 Oct 2026) | Checklist: six policy tables present; university-default seeds; reporting views return expected rows; `db:seed` idempotent; campus override can change membership without altering view SQL. See decision log |
 | Outcome enum extension beyond pass/fail | Deferred | CS-07 — when a campus Live path needs it |
 | Real RBAC matrix (not demo codes) | Deferred | CS-11 — campus Live readiness |

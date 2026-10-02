@@ -170,15 +170,47 @@
         Logical data model for Raisd campus portals. Attributes and relationships
         mirror Zod contracts in <code>student-portal</code> and admissions entities
         from SDD-04. Split by domain so each diagram stays readable.
+        <strong>CMS</strong> and <strong>LMS</strong> tables share one ERD with distinct colours.
       </p>
       <div class="meta-row">
         <span class="chip">PK / FK annotated</span>
         <span class="chip">Cardinality explicit</span>
         <span class="chip ok">Students map via programme version</span>
-        <span class="chip ok">ProgrammeCampusOffering</span>
+        <span class="chip ok">LMS tables · CAP + F01–F37</span>
         <span class="chip warn">Logical — not a migrated Postgres schema</span>
       </div>
     </section>
+
+    <div class="erd-domain-legend" role="list" aria-label="ERD domain colour legend">
+      <div class="legend-item" role="listitem">
+        <span class="erd-swatch cms" aria-hidden="true"></span>
+        <div>
+          <strong>CMS — campus SoR</strong>
+          <span>Identity, enrolment, curriculum, finance, admissions, immigration, published results. Existing Cyberjaya CMS remains SoR this phase (ADR-1).</span>
+        </div>
+      </div>
+      <div class="legend-item" role="listitem">
+        <span class="erd-swatch lms" aria-hidden="true"></span>
+        <div>
+          <strong>LMS — learning surface</strong>
+          <span>Weeks, materials, submissions, progress, quizzes, live class, forums. Portal API role surfaces; not a fifth portal product.</span>
+        </div>
+      </div>
+      <div class="legend-item" role="listitem">
+        <span class="erd-swatch shared" aria-hidden="true"></span>
+        <div>
+          <strong>Shared bridge</strong>
+          <span>Module offering, teaching assignment, class schedule/session, module assessment, attendance, assessment result — consumed by both CMS and LMS journeys.</span>
+        </div>
+      </div>
+      <div class="legend-item" role="listitem">
+        <span class="erd-swatch proposed" aria-hidden="true"></span>
+        <div>
+          <strong>Proposed LMS</strong>
+          <span>Research-backed CAP / F01–F37 tables not yet in <code>PortalRecordGraph</code>. Marked proposed — not Live.</span>
+        </div>
+      </div>
+    </div>
 
     <div class="note" style="margin: 0 0 16px">
       <strong>Student ↔ programme mapping.</strong>
@@ -224,28 +256,35 @@
     </div>
 
     <div class="toc">
-      <a href="#overview"><strong>0. Domain map</strong><span>How aggregates connect</span></a>
-      <a href="#institution"><strong>1. Institution</strong><span>Campus, staff, policy</span></a>
-      <a href="#curriculum"><strong>2. Curriculum</strong><span>Programme, campus offering, modules</span></a>
-      <a href="#delivery"><strong>3. Delivery</strong><span>Terms, offerings, materials</span></a>
-      <a href="#student"><strong>4. Student record</strong><span>Person, identifiers, enrolment</span></a>
-      <a href="#results"><strong>5. Results &amp; progress</strong><span>Attempts, transfers, publications</span></a>
-      <a href="#finance"><strong>6. Finance</strong><span>Invoices, corrections, funding</span></a>
-      <a href="#admissions"><strong>7. Admissions</strong><span>SDD-04 target CMS entities</span></a>
-      <a href="#immigration"><strong>8. Immigration &amp; forms</strong><span>Cases, online forms, graduation</span></a>
-      <a href="#integration"><strong>9. Integration &amp; audit</strong><span>Status history, views, audit</span></a>
-      <a href="./canonical-schema-confirmations.html"><strong>10. Confirmations</strong><span>Schema proceeds · campus Live policy</span></a>
+      <a href="#overview"><strong>0. Domain map</strong><span>CMS + LMS aggregates</span></a>
+      <a href="#institution"><strong>1. Institution</strong><span>Campus, staff, policy · CMS</span></a>
+      <a href="#curriculum"><strong>2. Curriculum</strong><span>Programme, modules · CMS</span></a>
+      <a href="#delivery"><strong>3. Delivery &amp; LMS core</strong><span>Offerings, weeks, materials</span></a>
+      <a href="#student"><strong>4. Student record</strong><span>Person, enrolment · CMS</span></a>
+      <a href="#results"><strong>5. Results &amp; LMS activity</strong><span>Submissions, attendance, grades</span></a>
+      <a href="#finance"><strong>6. Finance</strong><span>Invoices, corrections · CMS</span></a>
+      <a href="#admissions"><strong>7. Admissions</strong><span>SDD-04 · CMS</span></a>
+      <a href="#immigration"><strong>8. Immigration &amp; forms</strong><span>Cases, graduation · CMS</span></a>
+      <a href="#integration"><strong>9. Integration &amp; audit</strong><span>Status, views · CMS</span></a>
+      <a href="#lms"><strong>10. LMS tables</strong><span>Catalogue · proposed CAP gaps</span></a>
+      <a href="./canonical-schema-confirmations.html"><strong>11. Confirmations</strong><span>Schema · campus Live policy</span></a>
     </div>
 
     <!-- 0 -->
     <section class="section" id="overview">
       <h2>0. Domain map</h2>
-      <p class="lead">High-level aggregates and ownership boundaries.</p>
-      <div class="card">
+      <p class="lead">
+        High-level aggregates and ownership boundaries.
+        Blue = CMS · Green = LMS · Amber = shared bridge.
+      </p>
+      <div class="card erd-shared">
         <div class="card-head">
           <div>
-            <h3>Aggregate hubs</h3>
-            <p><code>ProgrammeEnrolment</code> and <code>Campus</code> are the primary FK hubs.</p>
+            <h3>Aggregate hubs <span class="domain-chip shared">Shared</span></h3>
+            <p>
+              <code>ProgrammeEnrolment</code> and <code>Campus</code> are the primary CMS FK hubs.
+              <code>ModuleOffering</code> is the LMS delivery hub hanging off curriculum + term.
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -266,6 +305,11 @@ erDiagram
   PROGRAMME_VERSION ||--o{ CURRICULUM_MODULE : contains
   MODULE ||--o{ CURRICULUM_MODULE : listed_in
   MODULE ||--o{ MODULE_OFFERING : delivered_as
+  MODULE_OFFERING ||--o{ MODULE_WEEK : weeks
+  MODULE_WEEK ||--o{ MODULE_LEARNING_ITEM : items
+  MODULE_OFFERING ||--o{ MODULE_ASSESSMENT : assesses
+  MODULE_REGISTRATION ||--o{ ASSIGNMENT_SUBMISSION : submits
+  MODULE_REGISTRATION ||--o{ LEARNING_PROGRESS : progress
 
   CAMPUS {
     string id PK
@@ -289,6 +333,22 @@ erDiagram
     string id PK
     string currencyCode
   }
+  MODULE_OFFERING {
+    string id PK
+    string sectionCode
+  }
+  MODULE_WEEK {
+    string id PK
+    int weekNumber
+  }
+  MODULE_LEARNING_ITEM {
+    string id PK
+    string kind
+  }
+  ASSIGNMENT_SUBMISSION {
+    string id PK
+    string fileName
+  }
           </pre>
         </div>
         <div class="note" style="margin:0 18px 12px">
@@ -305,7 +365,8 @@ erDiagram
         <div class="note" style="margin:0 18px 18px">
           Messaging / community read models (Conversation, Meetup, CommunityGroup) exist
           in portal contracts but are session-scoped demos today and are omitted from the
-          durable ERD set.
+          durable ERD set. Proposed durable LMS forum tables live under
+          <a href="#lms">§10 LMS tables</a>.
         </div>
       </div>
     </section>
@@ -320,10 +381,10 @@ erDiagram
         <code>ProgrammeCampusOffering</code>, not by assuming one faculty ⇒ one campus
         for academic offering.
       </p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>Campus · Faculty · Staff · Config · Policy</h3>
+            <h3>Campus · Faculty · Staff · Config · Policy <span class="domain-chip cms">CMS</span></h3>
             <p>
               Prefer effective-dated campus policy tables for operational differences —
               not scattered <code>if (campus === …)</code> in domain code.
@@ -529,10 +590,10 @@ erDiagram
         Programmes, versions, <strong>campus offerings</strong>, module catalogue,
         prerequisites, grading, and fee plans.
       </p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>Programme · ProgrammeCampusOffering · Module · FeePlan</h3>
+            <h3>Programme · ProgrammeCampusOffering · Module · FeePlan <span class="domain-chip cms">CMS</span></h3>
             <p>
               Programme = academic identity · ProgrammeVersion = curriculum/rules ·
               ProgrammeCampusOffering = where that version is delivered.
@@ -659,17 +720,22 @@ erDiagram
 
     <!-- 3 -->
     <section class="section" id="delivery">
-      <h2>3. Delivery</h2>
+      <h2>3. Delivery &amp; LMS core</h2>
       <p class="lead">
-        Academic terms, class offerings, schedules, weeks, learning items, assessments.
-        Keep <strong>AcademicTerm</strong> (calendar e.g. 2026-03) distinct from
-        <code>StudyPeriod.programmeSemesterNumber</code> (student’s semester in the programme).
+        Academic terms and class offerings are the <strong>shared bridge</strong>.
+        Weeks, learning items and assessments are the <strong>LMS core</strong>
+        (CAP-17–19, 27). Keep <strong>AcademicTerm</strong> (calendar e.g. 2026-03)
+        distinct from <code>StudyPeriod.programmeSemesterNumber</code>
+        (student’s semester in the programme).
       </p>
-      <div class="card">
+      <div class="card erd-lms">
         <div class="card-head">
           <div>
-            <h3>Term · Offering · Schedule · Materials</h3>
-            <p>Teaching staff assigned per offering; learning items optionally link to assessments.</p>
+            <h3>Term · Offering · Schedule · Materials <span class="domain-chip lms">LMS</span> <span class="domain-chip shared">Shared</span></h3>
+            <p>
+              Amber entities: offering / schedule / session / teaching / assessment outline.
+              Green entities: weeks and learning items (materials surface).
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -746,6 +812,7 @@ erDiagram
     string title
     datetime availableFrom
     string fileName
+    string mimeType
     int sizeBytes
   }
   MODULE_ASSESSMENT {
@@ -756,8 +823,18 @@ erDiagram
     float weightPercent
     datetime availableFrom
     datetime dueAt
+    datetime scheduledStartsAt
+    datetime scheduledEndsAt
   }
           </pre>
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          <strong>LMS kinds on <code>ModuleLearningItem</code>.</strong>
+          Contract: <code>lecture-note | assignment | quiz | test | midterm | final</code>.
+          Route-facing Materials also project resource/quiz/exam views
+          (<a href="https://github.com/raisd-campus/student-portal/blob/main/src/contracts/module-materials.ts">module-materials.ts</a>).
+          Full LMS catalogue including proposed CAP-24/25/26 tables:
+          <a href="#lms">§10</a>.
         </div>
       </div>
     </section>
@@ -772,10 +849,10 @@ erDiagram
         position; <code>academicStatus</code> is the Registry status used for active-student
         and credit reporting.
       </p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>Person · identifiers · enrolment · study period</h3>
+            <h3>Person · identifiers · enrolment · study period <span class="domain-chip cms">CMS</span></h3>
             <p>
               <code>ProgrammeEnrolment</code> links
               student ↔ <strong>programme version</strong> ↔ campus.
@@ -921,20 +998,21 @@ erDiagram
 
     <!-- 5 -->
     <section class="section" id="results">
-      <h2>5. Registration, progress &amp; results</h2>
+      <h2>5. Registration, LMS activity &amp; results</h2>
       <p class="lead">
-        Module registration is the junction for attendance, submissions, and published results.
+        Module registration is the junction for <strong>LMS</strong> attendance, submissions
+        and progress, and for <strong>CMS</strong> published results.
         Attempts are never overwritten. <code>TermResult</code> is a calculated snapshot;
         published history is versioned via <code>ResultPublication</code>.
       </p>
-      <div class="card">
+      <div class="card erd-lms">
         <div class="card-head">
           <div>
-            <h3>ModuleRegistration lifecycle</h3>
+            <h3>ModuleRegistration lifecycle <span class="domain-chip lms">LMS</span> <span class="domain-chip cms">CMS</span> <span class="domain-chip shared">Shared</span></h3>
             <p>
-              <code>ModuleResult</code> 1:1 registration; <code>TermResult</code> 1:1 study period.
-              Credits earned ≠ CGPA inclusion (<code>includedInCgpa</code>).
-              Credit transfers and substitutions satisfy curriculum modules without a pass result.
+              Green: learning progress, assignment submission.
+              Amber: attendance, assessment result.
+              Blue: module/term results, transfers, publications.
             </p>
           </div>
         </div>
@@ -984,6 +1062,38 @@ erDiagram
     string status
     datetime effectiveFrom
     datetime effectiveTo
+  }
+  ATTENDANCE {
+    string id PK
+    string moduleRegistrationId FK
+    string classSessionId FK
+    string status
+    datetime recordedAt
+  }
+  LEARNING_PROGRESS {
+    string id PK
+    string moduleRegistrationId FK
+    string moduleLearningItemId FK
+    string status
+    datetime completedAt
+  }
+  ASSIGNMENT_SUBMISSION {
+    string id PK
+    string moduleRegistrationId FK
+    string moduleLearningItemId FK
+    string fileName
+    string mimeType
+    int sizeBytes
+    datetime submittedAt
+    datetime deletedAt
+  }
+  ASSESSMENT_RESULT {
+    string id PK
+    string moduleRegistrationId FK
+    string moduleAssessmentId FK
+    float scorePercent
+    float weightedScore
+    datetime publishedAt
   }
   MODULE_RESULT {
     string id PK
@@ -1053,9 +1163,16 @@ erDiagram
           Term totals must equal the values derived from results + credit transfers
           (<code>student_credit_summary</code> view mirrors the TypeScript derivation).
         </div>
-        <div class="note" style="margin:0 18px 18px">
+        <div class="note" style="margin:0 18px 12px">
           A curriculum module is satisfied by at most one of: a published pass, a credit transfer,
           or an approved substitution whose substitute module has a pass.
+        </div>
+        <div class="note" style="margin:0 18px 18px">
+          <strong>LMS activity vs CMS results.</strong>
+          <code>AssignmentSubmission</code> / <code>LearningProgress</code> are LMS metadata
+          (Demo: no durable file bytes yet — SDD-10 Q5).
+          <code>ModuleResult</code> / <code>TermResult</code> remain CMS-published academic outcomes.
+          Attendance is shared: CMS SoR this phase; LMS student/lecturer surfaces read via Portal API.
         </div>
       </div>
     </section>
@@ -1064,10 +1181,10 @@ erDiagram
     <section class="section" id="finance">
       <h2>6. Finance</h2>
       <p class="lead">One finance account per enrolment; payments allocate to invoices (N:M). Reversals, refunds, credit notes and voids are first-class corrections — not in-place rewrites. Result visibility uses rule-based <code>ResultAccessPolicy</code> (balance, funding, holds).</p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>Account · Invoice · Payment · Corrections · Funding</h3>
+            <h3>Account · Invoice · Payment · Corrections · Funding <span class="domain-chip cms">CMS</span></h3>
             <p>Payment proof (uploaded file) is distinct from ledger Payment / Allocation. Adjustments carry an explicit category.</p>
           </div>
         </div>
@@ -1182,10 +1299,10 @@ erDiagram
     <section class="section" id="admissions">
       <h2>7. Admissions (SDD-04 target)</h2>
       <p class="lead">Logical CMS entities for applicant journey — not yet exposed as PortalApi methods.</p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>Applicant → Application → Offer → Enrolment</h3>
+            <h3>Applicant → Application → Offer → Enrolment <span class="domain-chip cms">CMS</span></h3>
             <p>Evidence bytes live on the evidence volume; metadata in CMS / planned Postgres.</p>
           </div>
         </div>
@@ -1257,10 +1374,10 @@ erDiagram
     <section class="section" id="immigration">
       <h2>8. Immigration, online forms &amp; graduation</h2>
       <p class="lead">Case management and form submissions tied to enrolment / invoices.</p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>ImmigrationCase · OnlineForm · GraduationRecord</h3>
+            <h3>ImmigrationCase · OnlineForm · GraduationRecord <span class="domain-chip cms">CMS</span></h3>
             <p>Optional 1:1 links to form submission, visa pass, and invoice.</p>
           </div>
         </div>
@@ -1353,10 +1470,10 @@ erDiagram
         append-only audit live with the portal/integration layer — see
         <a href="./architecture.html">architecture</a>.
       </p>
-      <div class="card">
+      <div class="card erd-cms">
         <div class="card-head">
           <div>
-            <h3>Status history · campus policy · reporting views · AuditEvent · LegacyEntityMap</h3>
+            <h3>Status history · campus policy · reporting views · AuditEvent · LegacyEntityMap <span class="domain-chip cms">CMS</span></h3>
             <p>
               Effective-dated status events and campus policy are first-class collections.
               Postgres reporting views mirror the TypeScript projection helpers and resolve
@@ -1478,10 +1595,318 @@ erDiagram
       </div>
     </section>
 
+    <!-- 10 LMS -->
+    <section class="section" id="lms">
+      <h2>10. LMS database tables</h2>
+      <p class="lead">
+        Logical LMS tables for Raisd learning surfaces (CAP + F01–F37).
+        Demo contract tables already project as snake_case collections in Neon;
+        proposed tables close Moodle-like gaps (quizzes, live class, forums, feedback, QA)
+        and are <strong>not</strong> Live. See
+        <a href="../ai/backend/lms-schema.md">lms-schema.md</a> and
+        <a href="lms.html">LMS hub</a>.
+      </p>
+
+      <div class="card erd-lms" style="margin-bottom:16px">
+        <div class="card-head">
+          <div>
+            <h3>In-contract LMS &amp; shared tables <span class="domain-chip lms">LMS</span> <span class="domain-chip shared">Shared</span></h3>
+            <p>
+              Postgres projection names match <code>PortalRecordGraph</code> collections
+              (<code>PORTAL_RECORD_SCHEMA_VERSION = 3</code>.
+            </p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:16px 18px">
+          <div class="table-wrap" style="margin:0;border:0">
+            <table class="attr">
+              <thead>
+                <tr>
+                  <th>Table</th>
+                  <th>Domain</th>
+                  <th>Owns / purpose</th>
+                  <th>CAP</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>module_offerings</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>Module × term × campus section; LMS delivery root</td>
+                  <td>11–14</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>teaching_assignments</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>Lead / co-lecturer / tutor on an offering</td>
+                  <td>40, 44</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>class_schedules</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>Recurring timetable slots</td>
+                  <td>11</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>class_sessions</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>Dated session instances from a schedule</td>
+                  <td>11, 12</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>attendances</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>present | absent per registration × session (CMS SoR this phase)</td>
+                  <td>12</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>module_assessments</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>Weighted assessment outline (quiz / assignment / exam kinds)</td>
+                  <td>19, 24</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>assessment_results</code></td>
+                  <td><span class="domain-chip shared">Shared</span></td>
+                  <td>Published component scores against an assessment</td>
+                  <td>13, 28</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>module_weeks</code></td>
+                  <td><span class="domain-chip lms">LMS</span></td>
+                  <td>Teaching week / topic container on an offering</td>
+                  <td>23, 27</td>
+                  <td>Demo</td>
+                </tr>
+                <tr>
+                  <td><code>module_learning_items</code></td>
+                  <td><span class="domain-chip lms">LMS</span></td>
+                  <td>Resources, briefs, quizzes, exams with release time</td>
+                  <td>17–19, 24, 27</td>
+                  <td>Partial / Demo</td>
+                </tr>
+                <tr>
+                  <td><code>learning_progress</code></td>
+                  <td><span class="domain-chip lms">LMS</span></td>
+                  <td>Student item status: not-started | viewed | completed | locked</td>
+                  <td>27, 32</td>
+                  <td>Partial</td>
+                </tr>
+                <tr>
+                  <td><code>assignment_submissions</code></td>
+                  <td><span class="domain-chip lms">LMS</span></td>
+                  <td>File metadata for submit / replace / withdraw (bytes need Live store)</td>
+                  <td>20</td>
+                  <td>Demo (metadata)</td>
+                </tr>
+                <tr>
+                  <td><code>lecturer_reviews</code></td>
+                  <td><span class="domain-chip lms">LMS</span></td>
+                  <td>Student CAP-30 course evaluation of a teaching assignment</td>
+                  <td>30</td>
+                  <td>Demo (session)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card erd-proposed" style="margin-bottom:16px">
+        <div class="card-head">
+          <div>
+            <h3>Proposed LMS tables (CAP gaps) <span class="domain-chip proposed">Proposed</span></h3>
+            <p>
+              Research-backed extensions for a complete LMS (BASE-44). Do not treat as implemented.
+              Join keys follow existing hubs: <code>module_offering_id</code>,
+              <code>module_registration_id</code>, <code>module_learning_item_id</code>,
+              <code>module_assessment_id</code>.
+            </p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  MODULE_OFFERING ||--o{ LIVE_CLASS_SESSION : hosts
+  CLASS_SESSION ||--o| LIVE_CLASS_SESSION : may_link
+  MODULE_REGISTRATION ||--o{ LIVE_CLASS_ATTENDANCE : joins
+  LIVE_CLASS_SESSION ||--o{ LIVE_CLASS_ATTENDANCE : attendance
+
+  MODULE_ASSESSMENT ||--o{ QUIZ_ATTEMPT : attempts
+  MODULE_REGISTRATION ||--o{ QUIZ_ATTEMPT : sits
+  QUIZ_ATTEMPT ||--o{ QUIZ_ATTEMPT_ANSWER : answers
+  MODULE_ASSESSMENT ||--o{ QUIZ_QUESTION : questions
+
+  MODULE_ASSESSMENT ||--o{ ASSESSMENT_FEEDBACK : feedback
+  MODULE_REGISTRATION ||--o{ ASSESSMENT_FEEDBACK : receives
+  STAFF_MEMBER ||--o{ ASSESSMENT_FEEDBACK : writes
+
+  MODULE_OFFERING ||--o{ MODULE_FORUM : forums
+  MODULE_FORUM ||--o{ MODULE_FORUM_POST : posts
+  MODULE_FORUM_POST ||--o| MODULE_FORUM_POST : replies_to
+  STUDENT_PROFILE ||--o{ MODULE_FORUM_POST : authors
+  STAFF_MEMBER ||--o{ MODULE_FORUM_POST : may_moderate
+
+  MODULE_LEARNING_ITEM ||--o| LEARNING_RELEASE_RULE : release
+  MODULE_LEARNING_ITEM ||--o{ MATERIAL_QA_REVIEW : qa
+  STAFF_MEMBER ||--o{ MATERIAL_QA_REVIEW : reviews
+  MODULE_LEARNING_ITEM ||--o{ COPYRIGHT_PERMISSION : rights
+
+  LIVE_CLASS_SESSION {
+    string id PK
+    string moduleOfferingId FK
+    string classSessionId FK
+    string meetingUrl
+    string provider
+    datetime startsAt
+    datetime endsAt
+    string status
+  }
+  LIVE_CLASS_ATTENDANCE {
+    string id PK
+    string liveClassSessionId FK
+    string moduleRegistrationId FK
+    datetime joinedAt
+    datetime leftAt
+  }
+  QUIZ_ATTEMPT {
+    string id PK
+    string moduleAssessmentId FK
+    string moduleRegistrationId FK
+    int attemptNumber
+    datetime startedAt
+    datetime submittedAt
+    float scorePercent
+    string integrityStatus
+  }
+  QUIZ_QUESTION {
+    string id PK
+    string moduleAssessmentId FK
+    int displayOrder
+    string questionType
+    string prompt
+    float points
+  }
+  QUIZ_ATTEMPT_ANSWER {
+    string id PK
+    string quizAttemptId FK
+    string quizQuestionId FK
+    string response
+    boolean isCorrect
+    float pointsAwarded
+  }
+  ASSESSMENT_FEEDBACK {
+    string id PK
+    string moduleAssessmentId FK
+    string moduleRegistrationId FK
+    string staffMemberId FK
+    string body
+    datetime publishedAt
+  }
+  MODULE_FORUM {
+    string id PK
+    string moduleOfferingId FK
+    string title
+    string visibility
+  }
+  MODULE_FORUM_POST {
+    string id PK
+    string moduleForumId FK
+    string authorStudentProfileId FK
+    string authorStaffMemberId FK
+    string parentPostId FK
+    string body
+    datetime postedAt
+  }
+  LEARNING_RELEASE_RULE {
+    string id PK
+    string moduleLearningItemId FK
+    string ruleType
+    datetime availableFrom
+    string prerequisiteItemId FK
+  }
+  MATERIAL_QA_REVIEW {
+    string id PK
+    string moduleLearningItemId FK
+    string reviewerStaffMemberId FK
+    string decision
+    datetime reviewedAt
+  }
+  COPYRIGHT_PERMISSION {
+    string id PK
+    string moduleLearningItemId FK
+    string rightsHolder
+    string licence
+    date expiresOn
+  }
+          </pre>
+        </div>
+        <div class="note" style="margin:0 18px 12px">
+          <strong>CAP mapping.</strong>
+          Quizzes / integrity → CAP-24, 29 · Live class → CAP-26 · Forums → CAP-25 ·
+          Feedback → CAP-28 · Release / completion → CAP-27 · Material QA → CAP-43 ·
+          Copyright → CAP-42. Meeting tool for live class remains TBC (SDD-10 Q11).
+        </div>
+        <div class="note warn" style="margin:0 18px 18px">
+          <strong>Proposed ≠ Live.</strong>
+          Do not invent Portal API methods or Neon tables for these until product signs off
+          and the Zod graph / Schema version is bumped. Session-only messaging demos are not
+          these durable forum tables.
+        </div>
+      </div>
+
+      <div class="card erd-lms">
+        <div class="card-head">
+          <div>
+            <h3>Logical DDL sketch (LMS core) <span class="domain-chip lms">LMS</span></h3>
+            <p>
+              Illustrative column shapes for the in-contract LMS set.
+              Live Neon Demo uses <code>id</code> + <code>record jsonb</code> per collection —
+              this sketch is the logical relational target, not a migration script.
+            </p>
+          </div>
+        </div>
+        <div class="card-body" style="padding:16px 18px">
+<pre style="margin:0;white-space:pre-wrap;font-size:0.82rem;line-height:1.45;color:var(--ink)">-- LMS core (logical). Shared bridge tables omitted here; see §3 / §5.
+
+module_weeks (
+  id PK, module_offering_id FK, week_number, starts_on, title
+)
+module_learning_items (
+  id PK, module_week_id FK, module_assessment_id FK NULL,
+  kind, title, available_from, file_name, mime_type, size_bytes
+)
+learning_progress (
+  id PK, module_registration_id FK, module_learning_item_id FK,
+  status, completed_at NULL
+)
+assignment_submissions (
+  id PK, module_registration_id FK, module_learning_item_id FK,
+  file_name, mime_type, size_bytes, submitted_at, deleted_at NULL
+)
+
+-- Proposed (not in PortalRecordGraph yet)
+quiz_attempts, quiz_questions, quiz_attempt_answers
+assessment_feedback
+live_class_sessions, live_class_attendances
+module_forums, module_forum_posts
+learning_release_rules, material_qa_reviews, copyright_permissions</pre>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <h2>Attribute quick reference — hub entities</h2>
-      <div class="card">
-        <div class="card-head"><div><h3>Most referenced keys</h3></div></div>
+      <div class="card erd-cms">
+        <div class="card-head"><div><h3>Most referenced keys <span class="domain-chip cms">CMS</span></h3></div></div>
         <div class="card-body" style="padding:16px 18px">
           <table class="attr">
             <thead>
@@ -1558,6 +1983,42 @@ erDiagram
                 <td><code>financeAccountId</code>, <code>studyPeriodId?</code></td>
                 <td><code>invoiceNumber</code> INV-######</td>
               </tr>
+              <tr>
+                <td><code>ModuleOffering</code> <span class="domain-chip shared">Shared</span></td>
+                <td><code>id</code></td>
+                <td><code>moduleId</code>, <code>academicTermId</code>, <code>campusId</code></td>
+                <td>online | physical | hybrid</td>
+              </tr>
+              <tr>
+                <td><code>ModuleWeek</code> <span class="domain-chip lms">LMS</span></td>
+                <td><code>id</code></td>
+                <td><code>moduleOfferingId</code></td>
+                <td>weekNumber, startsOn, title</td>
+              </tr>
+              <tr>
+                <td><code>ModuleLearningItem</code> <span class="domain-chip lms">LMS</span></td>
+                <td><code>id</code></td>
+                <td><code>moduleWeekId</code>, <code>moduleAssessmentId?</code></td>
+                <td>lecture-note | assignment | quiz | test | midterm | final</td>
+              </tr>
+              <tr>
+                <td><code>AssignmentSubmission</code> <span class="domain-chip lms">LMS</span></td>
+                <td><code>id</code></td>
+                <td><code>moduleRegistrationId</code>, <code>moduleLearningItemId</code></td>
+                <td>metadata; file bytes Live-only (Q5)</td>
+              </tr>
+              <tr>
+                <td><code>LearningProgress</code> <span class="domain-chip lms">LMS</span></td>
+                <td><code>id</code></td>
+                <td><code>moduleRegistrationId</code>, <code>moduleLearningItemId</code></td>
+                <td>not-started | viewed | completed | locked</td>
+              </tr>
+              <tr>
+                <td><code>Attendance</code> <span class="domain-chip shared">Shared</span></td>
+                <td><code>id</code></td>
+                <td><code>moduleRegistrationId</code>, <code>classSessionId</code></td>
+                <td>present | absent</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1566,13 +2027,74 @@ erDiagram
   </main>
 
   <footer class="footer">
-    Logical ERD · raisd-campus/control-plane · contracts in student-portal · SDD-04 admissions
+    Logical ERD · CMS + LMS colour legend · raisd-campus/control-plane · contracts in student-portal
   </footer>
 
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+    const DOMAIN = {
+      lms: new Set([
+        "MODULE_WEEK", "MODULE_LEARNING_ITEM", "LEARNING_PROGRESS",
+        "ASSIGNMENT_SUBMISSION", "LECTURER_REVIEW",
+        "LIVE_CLASS_SESSION", "LIVE_CLASS_ATTENDANCE",
+        "QUIZ_ATTEMPT", "QUIZ_QUESTION", "QUIZ_ATTEMPT_ANSWER",
+        "ASSESSMENT_FEEDBACK", "MODULE_FORUM", "MODULE_FORUM_POST",
+        "LEARNING_RELEASE_RULE", "MATERIAL_QA_REVIEW", "COPYRIGHT_PERMISSION",
+      ]),
+      shared: new Set([
+        "MODULE_OFFERING", "TEACHING_ASSIGNMENT", "CLASS_SCHEDULE",
+        "CLASS_SESSION", "MODULE_ASSESSMENT", "ATTENDANCE",
+        "ASSESSMENT_RESULT", "ACADEMIC_TERM", "MODULE_REGISTRATION",
+      ]),
+      proposed: new Set([
+        "LIVE_CLASS_SESSION", "LIVE_CLASS_ATTENDANCE",
+        "QUIZ_ATTEMPT", "QUIZ_QUESTION", "QUIZ_ATTEMPT_ANSWER",
+        "ASSESSMENT_FEEDBACK", "MODULE_FORUM", "MODULE_FORUM_POST",
+        "LEARNING_RELEASE_RULE", "MATERIAL_QA_REVIEW", "COPYRIGHT_PERMISSION",
+      ]),
+    };
+
+    const FILL = {
+      lms: { fill: "#e8f6ee", stroke: "#1f6b45" },
+      shared: { fill: "#fff6e8", stroke: "#8a5a12" },
+      proposed: { fill: "#f3eef8", stroke: "#6b4f9a" },
+      cms: { fill: "#e8f0f8", stroke: "#1a4f8b" },
+    };
+
+    function domainFor(name) {
+      const n = String(name || "").trim().toUpperCase().replace(/\s+/g, "_");
+      if (DOMAIN.proposed.has(n)) return "proposed";
+      if (DOMAIN.lms.has(n)) return "lms";
+      if (DOMAIN.shared.has(n)) return "shared";
+      return "cms";
+    }
+
+    function tintEntityBoxes(root) {
+      root.querySelectorAll("svg").forEach((svg) => {
+        const texts = svg.querySelectorAll("text");
+        texts.forEach((textEl) => {
+          const label = (textEl.textContent || "").trim();
+          if (!label || !/^[A-Z][A-Z0-9_]+$/.test(label)) return;
+          const colors = FILL[domainFor(label)];
+          let node = textEl.parentElement;
+          while (node && node !== svg) {
+            const rect = node.querySelector(":scope > rect");
+            if (rect) {
+              rect.setAttribute("fill", colors.fill);
+              rect.setAttribute("stroke", colors.stroke);
+              rect.style.fill = colors.fill;
+              rect.style.stroke = colors.stroke;
+              break;
+            }
+            node = node.parentElement;
+          }
+        });
+      });
+    }
+
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,
       theme: "base",
       securityLevel: "loose",
       er: { layoutDirection: "TB" },
@@ -1586,6 +2108,9 @@ erDiagram
         fontFamily: "Segoe UI, system-ui, sans-serif",
       },
     });
+
+    await mermaid.run({ querySelector: ".mermaid" });
+    tintEntityBoxes(document);
   </script>
   <script src="abbr-tooltips.js" defer></script>
   <script src="nav-dropdown.js" defer></script>

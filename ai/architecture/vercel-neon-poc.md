@@ -16,7 +16,7 @@ This note is a **proof-of-concept path**. It is not an ADR and must not be prese
 | Staff portal | https://raisd-staff-portal.vercel.app | `staff-portal` | "Coming soon" placeholder | GitHub Actions `CI/CD` on push to `main` |
 | Portal API | https://raisd-portal-api.vercel.app | `portal-api` | Fastify in one Node 22 Vercel Function, `sin1`, 30 s max | Manual `npm run deploy:vercel` (CI runs checks only) |
 | Database | no public URL | — | Neon Postgres 18, `aws-ap-southeast-1`, database `neondb` | Vercel Neon integration on the portal-api project |
-| DB admin | https://raisd-db-admin.vercel.app (team only) | `db-admin` | Vercel Functions, `sin1`, read-only browser + SQL | Manual `npm run deploy` (no CI/CD) |
+| DB admin | https://raisd-db-admin.vercel.app (team only) | `db-admin` | Vercel Functions, `sin1`, read-only browser + SQL + ERD (CMS/LMS/shared colours) | Manual `npm run deploy` (no CI/CD) |
 | Docs & OpenAPI | https://raisd-campus.github.io/portal-api-docs/ | `portal-api-docs` | GitHub Pages, site password | GitHub Actions `Pages` on push to `main` |
 
 All Vercel projects are in one team and **not Git-connected**; every deploy is prebuilt output (`vercel deploy --prebuilt --prod`) from a workflow or a local checkout.
@@ -77,6 +77,7 @@ Cross-repo status: `npm run ci` in control-plane.
 - Provider: Neon via Vercel Marketplace native integration on `portal-api`; Postgres 18; `aws-ap-southeast-1`; database `neondb`.
 - Connections: pooled `DATABASE_URL` for runtime, direct `DATABASE_URL_UNPOOLED` for DDL/admin; TLS with channel binding.
 - Roles: `neondb_owner` (Portal API); `raisd_db_admin_reader` (DB admin — `pg_read_all_data`, `default_transaction_read_only = on`, no write grants; recreate with `npm run db:create-reader` in db-admin).
+- **ERD in db-admin:** headers coloured by domain (CMS blue · LMS green · shared amber) with a domain filter; inference IRREGULAR map covers Schema v3 policy stems and LMS / proposed CAP-gap stems. Logical catalogue: [lms-schema.md](../backend/lms-schema.md), published [erd.html#lms](../../diagrams/erd.html#lms).
 - Migrations: none. On first use per instance the API runs idempotent DDL and, under an advisory lock, seeds the record tables from the student-portal fixtures when `portal_meta` is missing or `schema_version` ≠ `PORTAL_RECORD_SCHEMA_VERSION` (currently 3). A version mismatch drops record tables and reseeds them; `student_portal_state` and `audit_events` are kept. New collection tables and generated columns from contract changes are added in place. Existing generated columns are never altered; `db:reset` rebuilds everything including audit. `npm run db:reset` in portal-api drops and reseeds the record tables (sessions kept); `npm run db:seed` only fills gaps. After seed it creates four reporting views that mirror the TypeScript projections in `canonical-projections.ts` (active/valid study-period membership resolves via `campus_academic_status_policies`).
 
 ### Demo records

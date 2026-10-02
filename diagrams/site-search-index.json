@@ -183,13 +183,19 @@
     },
     {
       "title": "Raisd ERD",
-      "summary": "Entity-relationship diagrams for the Raisd targeting data model.",
+      "summary": "Logical campus ERD with CMS / LMS / shared / proposed colour legend and LMS table catalogue.",
       "section": "Raisd CMS",
       "keywords": [
         "erd",
         "schema",
         "entities",
-        "database"
+        "database",
+        "lms",
+        "cms",
+        "legend",
+        "module weeks",
+        "assignments",
+        "quizzes"
       ],
       "path": "diagrams/erd.html"
     },

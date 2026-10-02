@@ -31,6 +31,11 @@ Authoritative rows remain [SDD-11](../../sdd/11-capability-catalog.md).
 
 LMS is **role surfaces on the Portal API** (student / lecturer / staff), not a fifth portal product. Detail: [lms-architecture.html](../../diagrams/lms-architecture.html).
 
+## Database tables (logical)
+
+CMS vs LMS colour legend and table catalogue: [erd.html#lms](../../diagrams/erd.html#lms).  
+Agent schema notes: [backend/lms-schema.md](../backend/lms-schema.md).
+
 ## Features matrix (F01–F37)
 
 Full domain × CAP × Demo × milestone: [lms-features.html](../../diagrams/lms-features.html). Supplied research, not universal mandates ([SDD-09](../../sdd/09-requirements-traceability.md)).
@@ -51,5 +56,6 @@ Full domain × CAP × Demo × milestone: [lms-features.html](../../diagrams/lms-
 | Hub + capabilities | [lms.html](../../diagrams/lms.html) |
 | Architecture page | [lms-architecture.html](../../diagrams/lms-architecture.html) |
 | Features page | [lms-features.html](../../diagrams/lms-features.html) |
+| LMS schema / ERD | [lms-schema.md](../backend/lms-schema.md), [erd.html#lms](../../diagrams/erd.html#lms) |
 | Capability catalogue | [SDD-11](../../sdd/11-capability-catalog.md) |
 | Student / lecturer SDD | [SDD-05](../../sdd/05-student-portal.md), [SDD-06](../../sdd/06-lecturer-portal.md) |

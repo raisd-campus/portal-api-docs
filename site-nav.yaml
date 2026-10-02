@@ -380,8 +380,8 @@ search:
   - title: Raisd ERD
     href: erd
     section: Raisd CMS
-    summary: Entity-relationship diagrams for the Raisd targeting data model.
-    keywords: [erd, schema, entities, database]
+    summary: Logical campus ERD with CMS / LMS / shared / proposed colour legend and LMS table catalogue.
+    keywords: [erd, schema, entities, database, lms, cms, legend, module weeks, assignments, quizzes]
 
   - title: Canonical schema confirmations
     href: schema-confirmations

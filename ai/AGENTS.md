@@ -19,6 +19,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Canonical record schema / ERD (LUCT readiness — Schema v3 campus policy Demo done; see §7) → [backend/canonical-schema-luct-readiness.md](backend/canonical-schema-luct-readiness.md)
    - Pending schema confirmations (CS-01–CS-13: Schema v3 policy Demo done; campus Live readiness) → [../diagrams/canonical-schema-confirmations.html](../diagrams/canonical-schema-confirmations.html)
    - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html)
+   - LMS logical schema / ERD colours (CMS vs LMS) → [backend/lms-schema.md](backend/lms-schema.md), [../diagrams/erd.html#lms](../diagrams/erd.html#lms)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)

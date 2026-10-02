@@ -374,6 +374,109 @@ main {
 .legend-item strong { display: block; margin-bottom: 4px; }
 .legend-item span { color: var(--muted); }
 
+/* Raisd ERD — CMS / LMS / shared domain colours */
+.erd-domain-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  margin: 0 0 20px;
+}
+.erd-domain-legend .legend-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.erd-swatch {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid;
+  margin-top: 2px;
+}
+.erd-swatch.cms {
+  background: #e8f0f8;
+  border-color: #1a4f8b;
+}
+.erd-swatch.lms {
+  background: #e8f6ee;
+  border-color: #1f6b45;
+}
+.erd-swatch.shared {
+  background: #fff6e8;
+  border-color: #8a5a12;
+}
+.erd-swatch.proposed {
+  background: #f3eef8;
+  border-color: #6b4f9a;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 3px,
+    rgba(107, 79, 154, 0.12) 3px,
+    rgba(107, 79, 154, 0.12) 6px
+  );
+}
+.card.erd-cms {
+  border-color: #c5d7ea;
+}
+.card.erd-cms > .card-head {
+  border-left: 4px solid #1a4f8b;
+  background: linear-gradient(90deg, #e8f0f8 0%, transparent 48%);
+}
+.card.erd-lms {
+  border-color: #b9dfc8;
+}
+.card.erd-lms > .card-head {
+  border-left: 4px solid #1f6b45;
+  background: linear-gradient(90deg, #e8f6ee 0%, transparent 48%);
+}
+.card.erd-shared {
+  border-color: #efd6a8;
+}
+.card.erd-shared > .card-head {
+  border-left: 4px solid #8a5a12;
+  background: linear-gradient(90deg, #fff6e8 0%, transparent 48%);
+}
+.card.erd-proposed {
+  border-color: #d4c6e8;
+}
+.card.erd-proposed > .card-head {
+  border-left: 4px solid #6b4f9a;
+  background: linear-gradient(90deg, #f3eef8 0%, transparent 48%);
+}
+.domain-chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.domain-chip.cms {
+  color: #1a4f8b;
+  background: #e8f0f8;
+  border-color: #c5d7ea;
+}
+.domain-chip.lms {
+  color: #1f6b45;
+  background: #e8f6ee;
+  border-color: #b9dfc8;
+}
+.domain-chip.shared {
+  color: #8a5a12;
+  background: #fff6e8;
+  border-color: #efd6a8;
+}
+.domain-chip.proposed {
+  color: #6b4f9a;
+  background: #f3eef8;
+  border-color: #d4c6e8;
+}
+
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
