@@ -181,10 +181,14 @@
       <p>
         Plain-language overview of the Raisd portals, how they sit on the existing campus CMS,
         where we are today, where we are going, and the migration stages to get there.
+        <strong>Pilot project: Lesotho</strong> (Working Group, 3 Oct 2026) —
+        first acceptance campus; newer CMS screenshots are the feature benchmark.
+        See <a href="./old-cms-lesotho/">Lesotho feature analysis</a>.
         Technical diagrams and SDD detail live one click away.
       </p>
       <div class="meta-row">
-        <span class="chip ok">This phase: Cyberjaya CMS = system of record</span>
+        <span class="chip ok">Pilot: Lesotho (M4)</span>
+        <span class="chip ok">This phase: campus CMS family = SoR</span>
         <span class="chip ok">Four portals via Portal API</span>
         <span class="chip warn">Do not rebuild working staff desks</span>
         <span class="chip">Ideal: one CMS · country DBs</span>
@@ -193,6 +197,7 @@
 
     <nav class="toc" aria-label="On this page">
       <a href="#exec"><strong>Executive summary</strong><span>In one minute</span></a>
+      <a href="#pilot"><strong>Lesotho pilot</strong><span>Why · M4 · analysis</span></a>
       <a href="#architecture"><strong>Architecture</strong><span>This-phase picture</span></a>
       <a href="#endpoints"><strong>Public endpoints</strong><span>Sites and API you can reach</span></a>
       <a href="#distributed"><strong>Distributed CMS</strong><span>Ideal end state</span></a>
@@ -206,8 +211,9 @@
         <h2>Executive summary</h2>
         <p>
           Raisd is modernising how applicants, students, lecturers, and staff use campus systems —
-          <strong>without throwing away the working Cyberjaya / LUCT CMS</strong> that already holds
-          the official records.
+          <strong>without throwing away the working campus CMS family</strong> that already holds
+          the official records. <strong>Lesotho is the pilot project</strong> and first acceptance
+          campus (Working Group, 3 Oct 2026 — supersedes Cyberjaya-first).
         </p>
         <p>
           Think of it as <strong>four new front doors</strong> (Applicant, Student, Lecturer, Staff)
@@ -215,18 +221,56 @@
           existing CMS. Nobody’s browser talks to the database or file store directly.
         </p>
         <p>
-          <strong>This phase (confirmed 23 Sep 2026):</strong> keep the existing CMS as the
-          system of record; ship better portal experiences; do <em>not</em> rebuild operational
-          desks that already work. <strong>Longer term:</strong> one unified Raisd CMS with
+          <strong>This phase (confirmed 23 Sep 2026; pilot campus updated 3 Oct):</strong> keep the
+          existing campus CMS family as the system of record; ship better portal experiences; do
+          <em>not</em> rebuild operational desks that already work; aim for parity with Lesotho’s
+          newer CMS. <strong>Longer term:</strong> one unified Raisd CMS with
           <a href="./distributed-cms-architecture.html">databases placed by country</a>
-          (Malaysia, Singapore, Sierra Leone, Botswana, …), white-labelling, and feature toggles —
+          (Lesotho, Malaysia, Singapore, Sierra Leone, Botswana, …), white-labelling, and feature toggles —
           reached via M5 progressive migration, not a launch rewrite.
         </p>
         <ol>
           <li><strong>Now:</strong> student UI is largely demo/mock; applicant / lecturer / staff portals and live CMS writes are still ahead.</li>
           <li><strong>Next:</strong> agree rules (M1), then admissions end-to-end on real records (M2).</li>
-          <li><strong>Then:</strong> core student journeys (M3), <strong>Lesotho pilot</strong> (M4), other campuses including Cyberjaya (M5), then distributed ideal.</li>
+          <li><strong>Then:</strong> core student journeys (M3), <strong>Lesotho pilot acceptance</strong> (M4), other campuses including Cyberjaya (M5), then distributed ideal.</li>
         </ol>
+      </div>
+    </section>
+
+    <section class="section" id="pilot">
+      <h2>Lesotho pilot project</h2>
+      <p class="lead">
+        Confirmed Working Group weekly, 3 October 2026 (Read.ai). Full rationale:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>
+        · diagram analysis: <a href="./old-cms-lesotho/">old-cms-lesotho/</a>.
+      </p>
+      <div class="note" style="margin: 0 0 16px">
+        <strong>Why Lesotho.</strong>
+        Sponsor wants Lesotho-first (not Cyberjaya-first) plus weekly % progress;
+        Lesotho is the revenue / adoption priority; Raisd must meet government requirements
+        (NMDS, LGCSE, …) and match the campus’s newer CMS; framed as a
+        <em>pilot project</em> with other campuses in parallel (Eswatini may follow).
+        Migration SoT = Raisd schema + Lesotho CMS materials — not the inaccessible new-system source/DB.
+      </div>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">M4 acceptance gate</span>
+        <span class="chip ok">Feature benchmark = newer CMS screenshots</span>
+        <span class="chip ok">NMDS + LGCSE</span>
+        <span class="chip warn">Old CMS dump pending</span>
+      </div>
+      <div class="toc" aria-label="Lesotho pilot links">
+        <a href="./old-cms-lesotho/">
+          <strong>Lesotho CMS — feature analysis</strong>
+          <span>Admissions · registry · NMDS · graduation · student portal · CAP seed</span>
+        </a>
+        <a href="./migration.html#m4">
+          <strong>M4 — Lesotho pilot acceptance</strong>
+          <span>Release conditions, hosting stage, critical path</span>
+        </a>
+        <a href="../sdd/03-delivery-milestones.html#m4">
+          <strong>SDD-03 §M4</strong>
+          <span>Delivery milestone wording</span>
+        </a>
       </div>
     </section>
 
@@ -297,7 +341,7 @@ flowchart LR
         </div>
         <div class="legend-item">
           <strong>CMS (SoR)</strong>
-          <span>Authoritative campus records for this phase (Cyberjaya / LUCT).</span>
+          <span>Authoritative campus records for this phase (campus CMS family; Lesotho pilot first).</span>
         </div>
       </div>
     </section>
@@ -470,7 +514,7 @@ flowchart LR
       <div class="legend">
         <div class="legend-item">
           <strong>M1–M4</strong>
-          <span>Cyberjaya CMS remains SoR; portals via Portal API in Singapore.</span>
+          <span>Campus CMS family remains SoR; Lesotho is the M4 pilot acceptance campus; portals via Portal API.</span>
         </div>
         <div class="legend-item">
           <strong>M5</strong>
@@ -508,11 +552,11 @@ flowchart LR
         <div class="state-card target">
           <h3>This-phase target (M1–M4)</h3>
           <ul>
-            <li>Four portals on <strong>real Cyberjaya CMS records</strong> via Portal API.</li>
-            <li>Admissions first, then core student journeys and pilot acceptance.</li>
-            <li>Staff stay on verified old CMS unless a gap is proven.</li>
+            <li>Four portals on <strong>real campus CMS records</strong> via Portal API — <strong>Lesotho pilot</strong> first.</li>
+            <li>Admissions first, then core student journeys and <strong>Lesotho acceptance</strong> (M4).</li>
+            <li>Parity with Lesotho’s newer CMS (screenshots); staff stay on verified old CMS unless a gap is proven.</li>
             <li>Phone-friendly core journeys (not a native app mandate).</li>
-            <li>Monitoring, backups, privacy, and training ready for Lesotho pilot.</li>
+            <li>Monitoring, backups, privacy, and training ready for Lesotho pilot go-live.</li>
           </ul>
         </div>
         <div class="state-card gap">
@@ -569,7 +613,7 @@ flowchart LR
             <tr>
               <td>Backend</td>
               <td>Mock runtime; CMS path stubbed</td>
-              <td>Portal API ↔ Cyberjaya CMS (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)</td>
+              <td>Portal API ↔ campus CMS family / Lesotho path (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)</td>
             </tr>
             <tr>
               <td>Auth</td>
@@ -618,12 +662,12 @@ flowchart LR
         <a class="milestone-card" href="./migration.html#m4">
           <span class="mid">M4</span>
           <strong>Lesotho pilot acceptance</strong>
-          <span>Campus accepts the integrated pilot. Training and operations ready. Hosting at pilot stage.</span>
+          <span>Pilot project campus accepts the integrated product. Parity with newer CMS. Training and ops ready.</span>
         </a>
         <a class="milestone-card" href="./migration.html#m5">
           <span class="mid">M5</span>
           <strong>Expansion &amp; remaining CMS</strong>
-          <span>Other campuses (e.g. Sierra Leone pattern). Move SoR only with a written migration strategy per domain.</span>
+          <span>Other campuses (Cyberjaya, Eswatini, Botswana, Sierra Leone, …). Move SoR only with a written migration strategy per domain.</span>
         </a>
         <a class="milestone-card" href="./distributed-cms-architecture.html#phase-ideal">
           <span class="mid">Ideal</span>
@@ -662,8 +706,8 @@ flowchart LR
             </tr>
             <tr>
               <td><a href="./migration.html#m4">M4</a></td>
-              <td>Cyberjaya says “we accept this”</td>
-              <td>Campus accepts pilot; training and ops ready</td>
+              <td>Lesotho says “we accept this”</td>
+              <td>Lesotho campus accepts pilot; training and ops ready; parity with newer CMS</td>
               <td><a href="./migration.html#hosting">Stage 4</a></td>
             </tr>
             <tr>
