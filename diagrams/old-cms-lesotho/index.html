@@ -91,6 +91,7 @@
               <a href="index.html#admissions">Admissions</a>
               <a href="index.html#registry">Registry / NMDS</a>
               <a href="index.html#cap">CAP seed</a>
+              <a href="index.html#db-gap">Database gap</a>
               </div>
             </div>
             <div class="nav-sub">
@@ -153,6 +154,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -227,6 +229,7 @@
       <a href="#rbac"><strong>8. Positions / RBAC</strong><span>CRUD by module</span></a>
       <a href="#cap"><strong>9. CAP seed</strong><span>Parity checklist</span></a>
       <a href="#compare"><strong>10. Campus compare</strong><span>vs BW · CY · SL</span></a>
+      <a href="#db-gap"><strong>11. Database gap</strong><span>Proxy vs BW · CY · Schema</span></a>
     </nav>
 
     <section class="section" id="why">
@@ -499,6 +502,66 @@ flowchart LR
         <li><a href="../old-cms-botswana/index.html">Botswana E2E hub</a> — closest old-CMS cousin + DTEF gov sync pattern.</li>
         <li><a href="../old-cms-sierra-leone/index.html">Sierra Leone E2E hub</a> — EMS sibling for M5.</li>
         <li><a href="../migration.html#m4">Migration M4 — Lesotho pilot</a>.</li>
+        <li><a href="#db-gap">Database gap analysis</a> — proxy UI → BW/CY → Raisd Schema.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="db-gap">
+      <h2>11. Database difference / gap</h2>
+      <p class="lead">
+        No Lesotho MySQL dump yet. This is a <strong>proxy gap</strong>: newer-CMS UI
+        entities vs Botswana (713 tables) / Cyberjaya (~1,942) dumps vs Raisd Schema v3.
+        Full write-up:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>.
+      </p>
+      <div class="note warn" style="margin: 0 0 16px">
+        <strong>Evidence boundary.</strong>
+        Newer CMS schema is unavailable (live student data). Old CMS structure dump
+        pending from Vara. Do not invent Lesotho table names from screenshots.
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  A["A Newer Lesotho CMS<br/>screenshot SoT · no DB"]
+  B["B Older Lesotho CMS<br/>dump TBC · ≈ BW / CY"]
+  C["C Raisd Schema v3<br/>+ Portal API · pilot SoT"]
+  A -->|UX / CAP seed| GAP[Gap matrix]
+  B -->|physical ACL when dump lands| GAP
+  C -->|write path| GAP
+  BW["cmsbotswana<br/>713 tables · DTEF"] -.->|family proxy| B
+  CY["cmscbj<br/>~1942 tables"] -.->|richest LUCT| B
+  GAP --> BLOCK["Blockers<br/>dump · SoR path · NMDS API"]
+          </pre>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Signal</th><th>Cyberjaya</th><th>Botswana</th><th>Lesotho</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tables</td><td>~1,942</td><td>713</td><td><strong>Unknown</strong> (old + newer)</td></tr>
+            <tr><td>Gov sponsorship</td><td>Assist only (no TEF POST)</td><td><strong>DTEF → tef.gov.bw</strong></td><td><strong>NMDS</strong> UI (borrower # · terms)</td></tr>
+            <tr><td>School leaving</td><td>CDU / foreign / EMGS</td><td>Local docs</td><td><strong>LGCSE</strong> (+ Sesotho)</td></tr>
+            <tr><td>Currency</td><td>MYR</td><td>BWP</td><td><strong>LSL / M</strong></td></tr>
+            <tr><td>Portal hooks</td><td><code>api_student_*</code>, <code>portal_*_cyberjaya</code></td><td><code>api_student_*</code>, <code>portal_*_botswana</code></td><td><strong>TBC</strong> after dump</td></tr>
+            <tr><td>Immigration / EMGS</td><td>Heavy <code>w_*</code></td><td>Welfare / visa set</td><td>Not in screenshot pack — do not force MY CAPs</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Highest-risk gaps for M4</h3>
+      <ol>
+        <li><strong>Old dump not received</strong> — cannot confirm table counts, <code>app_*</code>, or <code>api_*</code> / <code>portal_*</code>.</li>
+        <li><strong>Live SoR path undecided</strong> — adapter to old CMS vs Schema v3 cutover.</li>
+        <li><strong>NMDS ≠ DTEF</strong> — do not reuse Botswana TEF client; Lesotho gov path unknown (API vs manual).</li>
+        <li><strong>LGCSE extract</strong> — campus document types + Sesotho subject metadata.</li>
+        <li><strong>Three-step admissions + graduation clearance</strong> — richer workflows than thin Demo.</li>
+      </ol>
+      <ul>
+        <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Full domain matrix + dump checklist</a></li>
+        <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">Botswana DTEF</a> (contrast only)</li>
+        <li><a href="../old-cms-botswana/database.html">Botswana database pages</a> · <a href="../old-cms/index.html#database">Cyberjaya database</a></li>
       </ul>
     </section>
 
@@ -507,6 +570,8 @@ flowchart LR
   <p class="footer">
     Inventory:
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a>
+    · DB gap:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>
     · Pilot approach:
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>
     · Sources: Read.ai WG weekly 3 Oct 2026 · WhatsApp screenshots (not in repo)

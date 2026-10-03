@@ -89,6 +89,42 @@
       "path": "diagrams/old-cms-lesotho/index.html"
     },
     {
+      "title": "Lesotho database gap",
+      "summary": "Proxy DB gap for Lesotho \u2014 newer CMS UI vs Botswana/Cyberjaya dumps vs Raisd Schema v3 until the old CMS structure dump arrives.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "database",
+        "gap",
+        "schema",
+        "nmds",
+        "lgcse",
+        "botswana",
+        "cyberjaya",
+        "tables",
+        "proxy",
+        "m4"
+      ],
+      "path": "diagrams/old-cms-lesotho/index.html#db-gap"
+    },
+    {
+      "title": "Lesotho DB gap (AI knowledge)",
+      "summary": "Full domain matrix for Lesotho DB differences \u2014 NMDS\u2260DTEF, LGCSE, Loti, CAP-53 hooks unknown until Vara dump.",
+      "section": "AI knowledge",
+      "keywords": [
+        "lesotho",
+        "database",
+        "gap",
+        "nmds",
+        "dtef",
+        "lgcse",
+        "schema",
+        "cap-48",
+        "cap-53"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md"
+    },
+    {
       "title": "Obsidian 3D FSD \u2014 Lesotho",
       "summary": "Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
       "section": "LUCT CMS",
