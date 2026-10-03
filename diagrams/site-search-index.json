@@ -89,6 +89,23 @@
       "path": "diagrams/old-cms-lesotho/index.html"
     },
     {
+      "title": "Obsidian 3D FSD \u2014 Lesotho",
+      "summary": "Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "obsidian",
+        "fsd",
+        "graph",
+        "3d",
+        "lesotho",
+        "pilot",
+        "nmds",
+        "lgcse",
+        "m4"
+      ],
+      "path": "diagrams/old-cms/obsidian.html?campus=lesotho"
+    },
+    {
       "title": "Architecture",
       "summary": "System architecture, ADRs, SoR/ACL boundaries, and academic model overview.",
       "section": "Architecture",

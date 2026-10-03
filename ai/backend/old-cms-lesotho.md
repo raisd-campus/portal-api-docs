@@ -104,6 +104,7 @@ Per Vara (WhatsApp, 3 Oct 2026): family-tree wise Lesotho is **branched from Cyb
 |---|---|
 | Lesotho pilot approach | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
+| Obsidian 3D | [`docs/diagrams/old-cms/obsidian.html?campus=lesotho`](../../diagrams/old-cms/obsidian.html?campus=lesotho) |
 | Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |
 | Botswana inventory | [old-cms-botswana.md](old-cms-botswana.md) |
 | CAP comparison posture | [cms-feature-comparison.md](cms-feature-comparison.md) |

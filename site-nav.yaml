@@ -228,6 +228,7 @@ menu:
         href: luct-ls
         children:
           - { label: Feature analysis, href: luct-ls }
+          - { label: Obsidian 3D, href: "luct-obsidian?campus=lesotho" }
           - { label: Why pilot, href: "luct-ls#why" }
           - { label: Admissions, href: "luct-ls#admissions" }
           - { label: Registry / NMDS, href: "luct-ls#registry" }
@@ -350,6 +351,12 @@ search:
     section: LUCT CMS
     summary: Screenshot-based feature and flow analysis for the Lesotho pilot — admissions, registry, NMDS, graduation, student portal, CAP seed.
     keywords: [lesotho, pilot, m4, nmds, lgcse, admissions, registry, screenshots, diagram]
+
+  - title: Obsidian 3D FSD — Lesotho
+    href: "luct-obsidian?campus=lesotho"
+    section: LUCT CMS
+    summary: Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) — admissions, registry, NMDS, graduation, student portal, CAP seed.
+    keywords: [obsidian, fsd, graph, 3d, lesotho, pilot, nmds, lgcse, m4]
 
   - title: Architecture
     href: architecture

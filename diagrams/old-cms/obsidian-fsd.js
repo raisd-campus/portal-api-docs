@@ -6,6 +6,22 @@
 (function () {
   const DEFAULT_CAMPUS = "cyberjaya";
   const CAMPUSES = {
+    lesotho: {
+      label: "Lesotho",
+      code: "LSO-MAS",
+      data: "./fsd-knowledge-lesotho.json",
+      db: "screenshot SoT (dump pending)",
+      heading: "Lesotho newer CMS (pilot)",
+      aliases: ["ls", "lso", "lesotho", "lso-mas", "maseru", "limkokwing", "luct-ls"],
+      toc: [
+        ["../old-cms-lesotho/index.html", "Feature analysis", "Screenshot SoT · M4 pilot"],
+        ["../old-cms-lesotho/index.html#why", "Why pilot", "Meeting reasons"],
+        [null, "Obsidian", "This page"],
+        ["../old-cms-lesotho/index.html#admissions", "Admissions", "LGCSE · 3-step · Loti"],
+        ["../old-cms-lesotho/index.html#registry", "Registry / NMDS", "Transcript · card · sponsors"],
+        ["../old-cms-lesotho/index.html#cap", "CAP seed", "Parity checklist"],
+      ],
+    },
     cyberjaya: {
       label: "Cyberjaya",
       code: "MYS-CYB",
@@ -133,7 +149,7 @@
       note.setAttribute("role", "status");
       note.textContent =
         "Unknown campus “" + campusChoice.requested + "” — showing " + campus.label +
-        ". Use ?campus=cyberjaya, botswana or sierra-leone.";
+        ". Use ?campus=lesotho, cyberjaya, botswana or sierra-leone.";
       heroLead.insertAdjacentElement("afterend", note);
     }
     if (toc) {

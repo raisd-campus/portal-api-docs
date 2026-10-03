@@ -187,6 +187,10 @@ diagrams:
       - ../diagrams/old-cms-botswana/_view-catalog.txt
   - path: ../diagrams/old-cms-lesotho/index.html
     topics: [lesotho, pilot, m4, screenshots, admissions, registry, nmds, lgcse, feature-analysis]
+  - path: ../diagrams/old-cms/fsd-knowledge-lesotho.json
+    topics: [lesotho, pilot, obsidian, fsd, graph, nmds, lgcse, m4]
+    pages:
+      - ../diagrams/old-cms/obsidian.html
 
 frontend:
   student-portal:
