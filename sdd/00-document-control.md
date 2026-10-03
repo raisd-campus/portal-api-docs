@@ -24,6 +24,7 @@ Establish a single design baseline for the Student Portal and Campus Management 
 | 0.8 | 23 Sep 2026 | Iman Suherman | GitHub Pages section `docs/diagrams/old-cms/` — verbose comparison, FSD, legacy ERD, flows, triggers/SPs/batches. |
 | 0.9 | 23 Sep 2026 | Iman Suherman | Aslam confirmed this-phase SoR = Cyberjaya CMS + Portal API (no ops duplication); longer-term progressive unified CMS. Recorded in SDD-01/02/03/14 and architecture overview. |
 | 0.10 | 23 Sep 2026 | Iman Suherman | SDD-15 nomenclature; CAP-* / M* anchors and cross-links in SDD-03/11 and key docs. |
+| 0.11 | 3 Oct 2026 | Iman Suherman | Working Group weekly: first pilot / acceptance campus = **Lesotho** (supersedes Cyberjaya-first gate). Recorded in SDD-01/02/03/09/10/15, `docs/ai/architecture/lesotho-pilot.md`, `docs/ai/backend/old-cms-lesotho.md`. |
 
 ## Sources
 
@@ -40,17 +41,20 @@ Establish a single design baseline for the Student Portal and Campus Management 
 | `raisd-campus/student-portal` agent docs | Extracted into [`docs/ai/frontend/student-portal/`](../ai/frontend/student-portal/) on 23 Sep 2026 for cross-repo agent use. |
 | Aslam WhatsApp, 23 Sep 2026 | Confirmed this-phase CMS-as-SoR + Portal API portals; longer-term progressive unified one-stop CMS on verified gaps + migration strategy. |
 | `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip` | Existing CMS source + structure dump. Inventoried 23 Sep 2026 into [`docs/ai/backend/old-cms-cyberjaya.md`](../ai/backend/old-cms-cyberjaya.md) and [SDD-14](14-cms-feature-comparison.md). |
+| Working Group weekly + Read.ai, 3 Oct 2026 | Lesotho-first pilot; migration via Raisd schema + Lesotho CMS materials. |
+| WhatsApp Working Group CMS 2026, 3 Oct 2026 | Faid Lesotho newer-CMS screenshots; Vara: Lesotho old CMS closer to Botswana / Cyberjaya family. |
 
 ## Product decisions already recorded
 
-From PRODUCT-PRIORITY, PRODUCT-MOBILE, PRODUCT-PORTALS (7 September 2026):
+From PRODUCT-PRIORITY, PRODUCT-MOBILE, PRODUCT-PORTALS (7 September 2026), ADR-1 (23 September 2026), and Working Group weekly (3 October 2026):
 
-1. Cyberjaya first.
+1. **Lesotho first** as pilot / acceptance campus (3 Oct 2026 — supersedes “Cyberjaya first” as the gate).
 2. Admissions before semester registration.
 3. Core mobile at launch (phone-friendly web, not a verified native-app mandate).
-4. Keep the existing CMS as the initial backend. Whole-CMS coverage is a backlog, not an instruction to replace working legacy functions.
+4. Keep the existing CMS family as the initial backend. Whole-CMS coverage is a backlog, not an instruction to replace working legacy functions.
 5. Group delivery by Applicant, Student, Lecturer, Admin / Staff, and Shared System.
-6. **(23 Sep 2026 — Aslam)** This phase: Cyberjaya CMS = SoR; portals via Portal API; no duplication of operational functions. Longer term: progressive unified one-stop CMS on verified gaps with a clear migration strategy.
+6. **(23 Sep 2026 — Aslam)** This phase: existing campus CMS = SoR; portals via Portal API; no duplication of operational functions. Longer term: progressive unified one-stop CMS on verified gaps with a clear migration strategy.
+7. **(3 Oct 2026 — WG)** Lesotho newer CMS = feature benchmark (screenshots); migration SoT = Raisd canonical schema + Lesotho CMS materials (old dump pending). Other campuses continue in parallel; Eswatini may follow. Detail: [`docs/ai/architecture/lesotho-pilot.md`](../ai/architecture/lesotho-pilot.md).
 
 Owners, kickoff date, and backend commitments are TBC.
 
@@ -68,9 +72,10 @@ Owners, kickoff date, and backend commitments are TBC.
 | Partial | Some of the capability exists; key workflow, content, or acceptance is missing. |
 | Live | Accepted, real data, access controls, accountable owner. |
 | Needs checking | Not verified with the owning department or old-CMS owner. |
-| Cyberjaya | First campus acceptance gate, not the whole eight-country footprint. |
+| Lesotho | First campus acceptance / pilot gate (3 Oct 2026), not the whole eight-country footprint. |
+| Cyberjaya | Richest LUCT technical inventory and [M5](03-delivery-milestones.md#m5) expansion campus; was the previous first-gate assumption. |
 | Core mobile | Agreed admissions and student journeys usable on phone/tablet widths. |
-| [M1](03-delivery-milestones.md#m1)–[M5](03-delivery-milestones.md#m5) | Delivery milestones (confirm rules → admissions → core student → Cyberjaya pilot → expansion / remaining CMS). Index: [SDD-15](15-nomenclature.md). |
+| [M1](03-delivery-milestones.md#m1)–[M5](03-delivery-milestones.md#m5) | Delivery milestones (confirm rules → admissions → core student → **Lesotho pilot** → expansion / remaining CMS). Index: [SDD-15](15-nomenclature.md). |
 | [SDD-15](15-nomenclature.md) | Nomenclature index for all CAP-* and M* quick links. |
 
 ## Status meanings

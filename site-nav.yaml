@@ -60,12 +60,14 @@ external:
   agents-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md
   ai-architecture: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md
   ai-distributed: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md
+  ai-lesotho-pilot: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md
   ai-lms: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md
   ai-portal-api: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md
   ai-portal-api-plan: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md
   ai-portal-api-deploy: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md
   ai-portal-api-poc: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md
   ai-cms-comparison: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md
+  ai-old-cms-lesotho: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md
   openapi-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml
   ai-vercel-poc-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vercel-neon-poc.md
 
@@ -263,6 +265,7 @@ menu:
       - { label: AI hub, href: ai }
       - { label: AGENTS.md, href: agents-md }
       - { label: Architecture overview, href: ai-architecture }
+      - { label: Lesotho pilot approach, href: ai-lesotho-pilot }
       - { label: Distributed CMS target, href: ai-distributed }
       - { label: LMS research posture, href: ai-lms }
       - { label: Portal API, href: ai-portal-api }
@@ -270,6 +273,7 @@ menu:
       - { label: Portal API deployment, href: ai-portal-api-deploy }
       - { label: PoC requirements, href: ai-portal-api-poc }
       - { label: CMS comparison, href: ai-cms-comparison }
+      - { label: Lesotho CMS inventory, href: ai-old-cms-lesotho }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
   - label: SDD
@@ -316,6 +320,18 @@ search:
     section: Distributed CMS
     summary: Migration journey from today’s portal-on-CMS phase toward the unified distributed CMS.
     keywords: [journey, migration, roadmap]
+
+  - title: Lesotho pilot approach
+    href: ai-lesotho-pilot
+    section: AI knowledge
+    summary: First acceptance campus is Lesotho (3 Oct 2026). Feature benchmark from newer CMS screenshots; migration via Raisd schema + Lesotho CMS materials.
+    keywords: [lesotho, pilot, m4, launch, acceptance, product-priority, eswatini]
+
+  - title: Lesotho CMS inventory
+    href: ai-old-cms-lesotho
+    section: AI knowledge
+    summary: Lesotho newer Admin/Student CMS surfaces from screenshots; old CMS dump pending (family tree ≈ Botswana / Cyberjaya).
+    keywords: [lesotho, registry, admissions, nmds, inventory, screenshots]
 
   - title: Architecture
     href: architecture

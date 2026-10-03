@@ -190,6 +190,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -197,6 +198,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -321,6 +323,16 @@ SDD-01/02/03/14 and architecture overview.</td>
 <td>SDD-15 nomenclature; CAP-* / M* anchors and cross-links in SDD-03/11
 and key docs.</td>
 </tr>
+<tr>
+<td>0.11</td>
+<td>3 Oct 2026</td>
+<td>Iman Suherman</td>
+<td>Working Group weekly: first pilot / acceptance campus =
+<strong>Lesotho</strong> (supersedes Cyberjaya-first gate). Recorded in
+SDD-01/02/03/09/10/15,
+<code>docs/ai/architecture/lesotho-pilot.md</code>,
+<code>docs/ai/backend/old-cms-lesotho.md</code>.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="sources">Sources</h2>
@@ -395,25 +407,43 @@ strategy.</td>
 href="../ai/backend/old-cms-cyberjaya.html"><code>docs/ai/backend/old-cms-cyberjaya.md</code></a>
 and <a href="14-cms-feature-comparison.html">SDD-14</a>.</td>
 </tr>
+<tr>
+<td>Working Group weekly + Read.ai, 3 Oct 2026</td>
+<td>Lesotho-first pilot; migration via Raisd schema + Lesotho CMS
+materials.</td>
+</tr>
+<tr>
+<td>WhatsApp Working Group CMS 2026, 3 Oct 2026</td>
+<td>Faid Lesotho newer-CMS screenshots; Vara: Lesotho old CMS closer to
+Botswana / Cyberjaya family.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="product-decisions-already-recorded">Product decisions already
 recorded</h2>
 <p>From PRODUCT-PRIORITY, PRODUCT-MOBILE, PRODUCT-PORTALS (7 September
+2026), ADR-1 (23 September 2026), and Working Group weekly (3 October
 2026):</p>
 <ol type="1">
-<li>Cyberjaya first.</li>
+<li><strong>Lesotho first</strong> as pilot / acceptance campus (3 Oct
+2026 — supersedes “Cyberjaya first” as the gate).</li>
 <li>Admissions before semester registration.</li>
 <li>Core mobile at launch (phone-friendly web, not a verified native-app
 mandate).</li>
-<li>Keep the existing CMS as the initial backend. Whole-CMS coverage is
-a backlog, not an instruction to replace working legacy functions.</li>
+<li>Keep the existing CMS family as the initial backend. Whole-CMS
+coverage is a backlog, not an instruction to replace working legacy
+functions.</li>
 <li>Group delivery by Applicant, Student, Lecturer, Admin / Staff, and
 Shared System.</li>
-<li><strong>(23 Sep 2026 — Aslam)</strong> This phase: Cyberjaya CMS =
-SoR; portals via Portal API; no duplication of operational functions.
-Longer term: progressive unified one-stop CMS on verified gaps with a
-clear migration strategy.</li>
+<li><strong>(23 Sep 2026 — Aslam)</strong> This phase: existing campus
+CMS = SoR; portals via Portal API; no duplication of operational
+functions. Longer term: progressive unified one-stop CMS on verified
+gaps with a clear migration strategy.</li>
+<li><strong>(3 Oct 2026 — WG)</strong> Lesotho newer CMS = feature
+benchmark (screenshots); migration SoT = Raisd canonical schema +
+Lesotho CMS materials (old dump pending). Other campuses continue in
+parallel; Eswatini may follow. Detail: <a
+href="../ai/architecture/lesotho-pilot.html"><code>docs/ai/architecture/lesotho-pilot.md</code></a>.</li>
 </ol>
 <p>Owners, kickoff date, and backend commitments are TBC.</p>
 <p><a id="glossary"></a></p>
@@ -469,9 +499,15 @@ is missing.</td>
 <td>Not verified with the owning department or old-CMS owner.</td>
 </tr>
 <tr>
+<td>Lesotho</td>
+<td>First campus acceptance / pilot gate (3 Oct 2026), not the whole
+eight-country footprint.</td>
+</tr>
+<tr>
 <td>Cyberjaya</td>
-<td>First campus acceptance gate, not the whole eight-country
-footprint.</td>
+<td>Richest LUCT technical inventory and <a
+href="03-delivery-milestones.html#m5">M5</a> expansion campus; was the
+previous first-gate assumption.</td>
 </tr>
 <tr>
 <td>Core mobile</td>
@@ -482,7 +518,7 @@ widths.</td>
 <td><a href="03-delivery-milestones.html#m1">M1</a>–<a
 href="03-delivery-milestones.html#m5">M5</a></td>
 <td>Delivery milestones (confirm rules → admissions → core student →
-Cyberjaya pilot → expansion / remaining CMS). Index: <a
+<strong>Lesotho pilot</strong> → expansion / remaining CMS). Index: <a
 href="15-nomenclature.html">SDD-15</a>.</td>
 </tr>
 <tr>

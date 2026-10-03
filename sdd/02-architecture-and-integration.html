@@ -190,6 +190,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -197,6 +198,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -223,27 +225,35 @@
 <h1 id="architecture-and-integration">Architecture and integration</h1>
 <p><strong>Document:</strong> SDD-02<br />
 <strong>Status:</strong> Working draft<br />
-<strong>Date:</strong> 18 September 2026 (updated 23 September 2026)</p>
+<strong>Date:</strong> 18 September 2026 (updated 3 October 2026)</p>
 <h2 id="architectural-decision">1. Architectural decision</h2>
 <p><a id="architectural-decision"></a> <a id="adr-1"></a></p>
 <p><strong>ADR-1 — Existing CMS as initial backend (this
 phase)</strong></p>
-<p>Keep the current campus CMS as system of record. New portals talk to
-it through a Portal API. Do not require a full CMS rewrite to launch
-Cyberjaya.</p>
+<p>Keep the current campus CMS family as system of record. New portals
+talk to it through a Portal API. Do not require a full CMS rewrite to
+launch the first campus.</p>
 <p><strong>Working Group confirmation (23 September 2026 —
-Aslam):</strong> agreed for this phase — use existing Cyberjaya CMS as
-SoR; build modern portal experiences via the Portal API; do not
-duplicate operational functions the old CMS already runs.</p>
+Aslam):</strong> agreed for this phase — use existing campus CMS as SoR;
+build modern portal experiences via the Portal API; do not duplicate
+operational functions the old CMS already runs.</p>
+<p><strong>Pilot campus (3 October 2026 — Working Group
+weekly):</strong> first launch / acceptance campus is
+<strong>Lesotho</strong> (not Cyberjaya). Lesotho’s newer CMS is the
+feature benchmark (screenshots only — source/DB not shareable).
+Migration SoT: Raisd canonical schema + Lesotho CMS materials (old dump
+pending from Vara; family tree closer to Botswana / Cyberjaya). See <a
+href="../ai/architecture/lesotho-pilot.html"><code>docs/ai/architecture/lesotho-pilot.md</code></a>.</p>
 <p>Consequences:</p>
 <ul>
 <li><a href="11-capability-catalog.html#cap-53">CAP-53</a> (existing CMS
 integration and campus configuration) is on the critical path for
-Admissions launch.</li>
-<li>Frontend “ready” screens cannot go Live until the matching old-CMS
+Admissions launch and the Lesotho pilot.</li>
+<li>Frontend “ready” screens cannot go Live until the matching CMS
 capability is verified or replaced.</li>
-<li>New staff screens are built only where the old CMS does not already
-support the workflow.</li>
+<li>New staff screens are built only where the existing CMS does not
+already support the workflow — and should aim for parity with Lesotho’s
+newer Admin CMS for pilot acceptance.</li>
 </ul>
 <p><strong>Longer-term target:</strong> a unified, one-stop CMS,
 delivered progressively on <strong>verified gaps</strong> with an
@@ -262,8 +272,9 @@ web app with replaceable API contracts
 lives in <a
 href="../ai/architecture/"><code>docs/ai/architecture/</code></a> and <a
 href="../ai/backend/portal-api.html"><code>docs/ai/backend/portal-api.md</code></a>.
-Agents must not invent a second integration model. Cyberjaya inventory
-and CAP comparison: <a
+Agents must not invent a second integration model. Lesotho pilot +
+campus inventories: <a
+href="../ai/architecture/lesotho-pilot.html">lesotho-pilot.md</a>, <a
 href="14-cms-feature-comparison.html">SDD-14</a>.</p>
 <h2 id="logical-architecture">2. Logical architecture</h2>
 <pre class="mermaid"><code>flowchart TB

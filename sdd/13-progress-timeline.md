@@ -26,7 +26,7 @@ Applicable rows exclude Frontend = Not applicable. "Started" means Demo, Partial
 | 1. Confirm rules and integration | 1 | 0 | 0 | 0 | 0 |
 | 2. Admissions launch | 23 | 18 | 4 | 14 | 0 |
 | 3. Core student portal | 51 | 51 | 16 | 35 | 0 |
-| 4. Cyberjaya pilot acceptance | 1 | 0 | 0 | 0 | 0 |
+| 4. Lesotho pilot acceptance | 1 | 0 | 0 | 0 | 0 |
 | 5. Campus expansion and remaining CMS | 36 | 34 | 12 | 22 | 0 |
 
 By portal, detailed tab:
@@ -50,7 +50,7 @@ From the Timeline tab, fetched 19 September 2026. Kickoff is TBC. Backend commit
 | 1 | Confirm rules and integration | TBC | Rules, API access, and operating responsibilities agreed |
 | 2 | Admissions launch | TBC | Application to enrolment works on real records |
 | 3 | Core student portal | TBC | Student and staff journeys work with durable records |
-| 4 | Cyberjaya pilot acceptance | TBC | Campus accepts the pilot |
+| 4 | Lesotho pilot acceptance | TBC | Lesotho campus accepts the pilot |
 | 5 | Campus expansion and remaining CMS | TBC | Each campus accepts its rollout |
 
 The bars below are the order only. Their length is not a duration the group has agreed. Do not read the dates as a plan.
@@ -64,7 +64,7 @@ gantt
     M1 Confirm rules and integration     :m1, 2026-09-21, 7d
     M2 Admissions launch                 :m2, after m1, 21d
     M3 Core student portal               :m3, after m2, 28d
-    M4 Cyberjaya pilot acceptance        :m4, after m3, 14d
+    M4 Lesotho pilot acceptance          :m4, after m3, 14d
     M5 Campus expansion                  :m5, after m4, 21d
 ```
 

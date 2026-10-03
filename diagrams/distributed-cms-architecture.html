@@ -249,6 +249,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -256,6 +257,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -290,7 +292,7 @@
         ADR-1 Cyberjaya path through M1–M5.
       </p>
       <div class="meta-row">
-        <span class="chip ok">M1–M4: Cyberjaya CMS = SoR (ADR-1)</span>
+        <span class="chip ok">M1–M4: CMS family = SoR (ADR-1) · Lesotho pilot</span>
         <span class="chip ok">M5: campus expansion + progressive unification</span>
         <span class="chip warn">Ideal state = proposed target (needs ADR when WG confirms)</span>
         <span class="chip">One product · many country data planes</span>
@@ -301,7 +303,7 @@
       <a href="#vision"><strong>1. Ideal end state</strong><span>What “done” looks like</span></a>
       <a href="#journey"><strong>2. Journey map</strong><span>Now → M5 → Ideal</span></a>
       <a href="#phase-now"><strong>3. Now / M1</strong><span>Baseline</span></a>
-      <a href="#phase-m2m4"><strong>4. M2–M4</strong><span>Portal API on Cyberjaya</span></a>
+      <a href="#phase-m2m4"><strong>4. M2–M4</strong><span>Portal API · Lesotho pilot</span></a>
       <a href="#phase-m5"><strong>5. M5</strong><span>Multi-campus + unify</span></a>
       <a href="#phase-ideal"><strong>6. Ideal</strong><span>Distributed Raisd CMS</span></a>
       <a href="#tenancy"><strong>7. White-label &amp; flags</strong><span>Identity per country</span></a>
@@ -451,17 +453,17 @@ flowchart TB
         <div class="journey-step active">
           <div class="n">Now → M1</div>
           <strong>Baseline &amp; rules</strong>
-          <span>Demo portals; Cyberjaya + sister CMS dumps; agree integration owners</span>
+          <span>Demo portals; Lesotho + Cyberjaya + sister CMS dumps; agree integration owners</span>
         </div>
         <div class="journey-step">
           <div class="n">M2</div>
           <strong>Admissions Live</strong>
-          <span>Portal API → CAP-53 → Cyberjaya CMS SoR</span>
+          <span>Portal API → CAP-53 → campus CMS SoR</span>
         </div>
         <div class="journey-step">
           <div class="n">M3–M4</div>
           <strong>Core + pilot</strong>
-          <span>Student/lecturer Live paths; Cyberjaya acceptance</span>
+          <span>Student/lecturer Live paths; Lesotho acceptance</span>
         </div>
         <div class="journey-step">
           <div class="n">M5</div>
@@ -482,7 +484,7 @@ flowchart LR
   N[Now<br/>Demo + dumps] --> M1[M1<br/>Rules &amp; access]
   M1 --> M2[M2<br/>Admissions]
   M2 --> M3[M3<br/>Core student]
-  M3 --> M4[M4<br/>Cyberjaya pilot]
+  M3 --> M4[M4<br/>Lesotho pilot]
   M4 --> M5[M5<br/>Campus expansion<br/>+ progressive SoR]
   M5 --> IDEAL[Ideal<br/>Unified Raisd CMS<br/>distributed DBs]
           </pre>
@@ -507,9 +509,9 @@ flowchart LR
                 </tr>
                 <tr>
                   <td><a href="#phase-m2m4">M2–M4</a></td>
-                  <td>Cyberjaya / LUCT CMS (ADR-1)</td>
+                  <td>Campus CMS family (ADR-1); Lesotho pilot first</td>
                   <td>Singapore UltaHost CMS host + k3s Postgres maps</td>
-                  <td>Cyberjaya only Live</td>
+                  <td>Lesotho first Live; others parallel/M5</td>
                   <td>Campus config seed; single brand</td>
                 </tr>
                 <tr>
@@ -598,12 +600,12 @@ flowchart TB
     <section class="section" id="phase-m2m4">
       <div class="phase-banner">
         <span class="chip ok">This phase — ADR-1</span>
-        <span class="chip">M2 Admissions · M3 Core student · M4 Cyberjaya pilot</span>
+        <span class="chip">M2 Admissions · M3 Core student · M4 Lesotho pilot</span>
       </div>
-      <h2>4. M2–M4 — portals on Cyberjaya CMS (Singapore)</h2>
+      <h2>4. M2–M4 — portals on campus CMS family (Lesotho pilot first)</h2>
       <p class="lead">
-        Four portals talk only to the Portal API. Live writes succeed only after the Cyberjaya CMS
-        acknowledges them (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>).
+        Four portals talk only to the Portal API. Live writes succeed only after the campus CMS
+        acknowledges them (<a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>). First acceptance campus is <strong>Lesotho</strong> (3 Oct 2026).
         Hosting stays on UltaHost Singapore k3s (<a href="../sdd/12-deployment-architecture.html">SDD-12</a>).
         Staff desks remain on verified old CMS unless a gap is proven.
       </p>
@@ -612,7 +614,7 @@ flowchart TB
         <div class="card-head">
           <div>
             <h3>Runtime topology (M2–M4)</h3>
-            <p>One acceptance campus. One legacy SoR. No second control plane yet.</p>
+            <p>One acceptance campus (<strong>Lesotho</strong>). CMS family SoR. No second control plane yet.</p>
           </div>
         </div>
         <div class="card-body">
@@ -667,7 +669,7 @@ flowchart LR
             <tr>
               <td><a href="./migration.html#m4">M4</a></td>
               <td>No new topology; restore drill, training, acceptance</td>
-              <td>Cyberjaya accepts pilot; ops ready</td>
+              <td>Lesotho accepts pilot; ops ready</td>
             </tr>
           </tbody>
         </table>

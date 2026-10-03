@@ -20,6 +20,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Pending schema confirmations (CS-01–CS-13: Schema v3 policy Demo done; campus Live readiness) → [../diagrams/canonical-schema-confirmations.html](../diagrams/canonical-schema-confirmations.html)
    - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html)
    - LMS logical schema / ERD colours (CMS vs LMS) → [backend/lms-schema.md](backend/lms-schema.md), [../diagrams/erd.html#lms](../diagrams/erd.html#lms)
+   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)
@@ -31,9 +32,9 @@ For any portal UI task, also read [design/component-library.md](design/component
 
 ## 2. Product boundaries (campus-wide)
 
-- **Four portals, one existing CMS.** Applicant, Student, Lecturer, and Staff are separate webs. They talk only to the **Portal API**. They never write directly to Postgres or the existing CMS.
-- **Cyberjaya first.** Admissions before semester registration. Core mobile at launch means phone-friendly agreed journeys, not a verified native-app mandate.
-- **This phase — ADR-1 (confirmed Aslam, 23 Sep 2026):** keep the existing Cyberjaya CMS as system of record; build modern portal experiences via the Portal API; **do not duplicate** operational functions. Inventory and CAP mapping: [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md).
+- **Four portals, one existing CMS family.** Applicant, Student, Lecturer, and Staff are separate webs. They talk only to the **Portal API**. They never write directly to Postgres or the existing CMS.
+- **Lesotho first (pilot) — confirmed Working Group 3 Oct 2026.** Supersedes “Cyberjaya first” as the acceptance-campus priority. Admissions before semester registration. Core mobile at launch means phone-friendly agreed journeys, not a verified native-app mandate. Detail: [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md).
+- **This phase — ADR-1 (confirmed Aslam, 23 Sep 2026; pilot campus updated 3 Oct 2026):** keep the existing campus CMS family as system of record; build modern portal experiences via the Portal API; **do not duplicate** operational functions. Lesotho’s newer CMS is the **feature benchmark** (screenshots); migration SoT is Raisd Schema + Lesotho CMS materials (old dump pending). Inventories: [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md).
 - **Longer term:** progressive **unified one-stop CMS**, only on verified gaps with an explicit migration strategy ([M5](../sdd/03-delivery-milestones.md#m5)+ backlog — not launch rewrite). Target vision (proposed): one product with **distributed country data planes**, white-label, and feature flags — [architecture/distributed-cms-target.md](architecture/distributed-cms-target.md), diagram [`docs/diagrams/distributed-cms-architecture.html`](../diagrams/distributed-cms-architecture.html). See [architecture/overview.md](architecture/overview.md) and [SDD-03](../sdd/03-delivery-milestones.md).
 - **Demo ≠ Live.** Sample data and session-only mutations are Demo. Live requires durable save through the Portal API (or approved production path), server-enforced authz, and a named owner.
 - Do not present planned or speculative capabilities as implemented.
@@ -51,6 +52,7 @@ For any portal UI task, also read [design/component-library.md](design/component
 | `staff-portal` | Registry / Faculty / Bursary / QA / Marketing | [frontend/staff-portal.md](frontend/staff-portal.md) |
 | `design-system` | Versioned shared tokens/components | [design/component-library.md](design/component-library.md), [design/design-system.md](design/design-system.md) |
 | `portal-api-docs` | Public OpenAPI + Swagger (GitHub Pages) | [backend/portal-api.md](backend/portal-api.md) |
+| `db-admin` | Read-only Neon browser + ERD (CMS/LMS colours) | [architecture/vercel-neon-poc.md](architecture/vercel-neon-poc.md), [backend/lms-schema.md](backend/lms-schema.md) |
 
 Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositories.md](architecture/repositories.md).
 

@@ -2,7 +2,7 @@
 
 **Document:** SDD-03  
 **Status:** Working draft  
-**Date:** 18 September 2026 (updated 23 September 2026)
+**Date:** 18 September 2026 (updated 3 October 2026)
 
 **Nomenclature:** [M1](#m1)–[M5](#m5) anchors below. Capability IDs: [SDD-11](11-capability-catalog.md) · index [SDD-15](15-nomenclature.md).
 
@@ -14,11 +14,11 @@ Milestone order follows the admissions-first decision and working-system depende
 flowchart LR
   M1[1. Confirm rules<br/>and integration] --> M2[2. Admissions launch]
   M2 --> M3[3. Core student portal]
-  M3 --> M4[4. Cyberjaya pilot<br/>acceptance]
+  M3 --> M4[4. Lesotho pilot<br/>acceptance]
   M4 --> M5[5. Campus expansion<br/>and remaining CMS]
 ```
 
-**SoR posture across milestones:** [M1](#m1)–[M4](#m4) deliver modern portals **on** the existing Cyberjaya CMS via the Portal API (ADR-1, confirmed Aslam 23 Sep 2026). **[M5](#m5)+** is where progressive **unified one-stop CMS** consolidation may begin — only for verified gaps and with an agreed migration strategy. [M5](#m5) is not a licence to rewrite every working desk.
+**SoR posture across milestones:** [M1](#m1)–[M4](#m4) deliver modern portals **on** the existing campus CMS family via the Portal API (ADR-1, confirmed Aslam 23 Sep 2026). **[M4](#m4)** acceptance campus is **Lesotho** (Working Group, 3 Oct 2026 — supersedes Cyberjaya-first gate). **[M5](#m5)+** expands to other campuses (Cyberjaya, proposed Eswatini, …) and is where progressive **unified one-stop CMS** consolidation may begin — only for verified gaps and with an agreed migration strategy. [M5](#m5) is not a licence to rewrite every working desk.
 
 Kickoff: TBC. Backend commitments: TBC.
 
@@ -78,15 +78,17 @@ Student-only demo UI is insufficient. Lecturer publish/mark and staff approval p
 
 <a id="m4"></a>
 
-### M4 — Cyberjaya pilot acceptance
+### M4 — Lesotho pilot acceptance
 
 | | |
 |---|---|
 | Target | TBC |
-| Scope | Test the integrated Cyberjaya pilot, train staff, obtain campus acceptance |
-| Dependencies | Integrations, content, security, recovery, operational support ready |
-| Release condition | Campus accepts the pilot and confirms applicable requirements, including verified existing-CMS or manual alternatives |
+| Scope | Test the integrated **Lesotho** pilot, train staff, obtain campus acceptance. Capability parity with Lesotho’s newer CMS (screenshot benchmark) and applicable government / ODL requirements. |
+| Dependencies | Integrations, content, security, recovery, operational support ready; Lesotho old-CMS dump and/or agreed Live SoR path; sanitized materials (no live student PII in repos) |
+| Release condition | Lesotho campus accepts the pilot and confirms applicable requirements, including verified existing-CMS or manual alternatives. Raisd must be at least equivalent to the campus’s current newer CMS for accepted journeys. |
 | Primary CAP | [CAP-41](11-capability-catalog.md#cap-41) staff training and operating readiness |
+
+Pilot approach and inventory: [`docs/ai/architecture/lesotho-pilot.md`](../ai/architecture/lesotho-pilot.md), [`docs/ai/backend/old-cms-lesotho.md`](../ai/backend/old-cms-lesotho.md).
 
 <a id="m5"></a>
 
@@ -95,8 +97,8 @@ Student-only demo UI is insufficient. Lecturer publish/mark and staff approval p
 | | |
 |---|---|
 | Target | TBC |
-| Scope | Expand campus coverage; remaining approved CMS/staff capabilities; **start progressive consolidation** toward a unified one-stop CMS where gaps are verified |
-| Dependencies | Cyberjaya accepted; campus-specific rules and existing capabilities verified; migration plan per domain before retiring a legacy desk |
+| Scope | Expand campus coverage (Cyberjaya, proposed Eswatini, Botswana, Sierra Leone, …); remaining approved CMS/staff capabilities; **start progressive consolidation** toward a unified one-stop CMS where gaps are verified |
+| Dependencies | Lesotho pilot accepted; campus-specific rules and existing capabilities verified; migration plan per domain before retiring a legacy desk |
 | Release condition | Each campus accepts its rollout. Deferring new software never defers an applicable operating requirement. Any SoR move needs ownership, cutover, rollback, and training agreed |
 
 Includes quizzes/exams, live class, library, visa, accommodation, scholarships, online payment gateway, study centres, remaining staff desks — **prefer Portal API + verified old CMS** first; rebuild or migrate only when the gap and migration strategy are explicit ([SDD-11](11-capability-catalog.md)).
@@ -105,7 +107,7 @@ Includes quizzes/exams, live class, library, visa, accommodation, scholarships, 
 flowchart TB
   subgraph phase ["This phase — M1 to M4"]
     P[Four portals] --> API[Portal API]
-    API --> CMS[Cyberjaya CMS SoR]
+    API --> CMS[Campus CMS family SoR<br/>Lesotho pilot first]
   end
   subgraph later ["Longer term — M5+"]
     G[Verified gap] --> MIG[Migration strategy]
@@ -146,7 +148,7 @@ Re-counted from the [live sheet](https://docs.google.com/spreadsheets/d/1Yux9R8h
 | Confirm rules & integration | 1 | Not applicable | 0 |
 | Admissions launch | 23 | Mostly not started. 4 of 18 applicable rows started, none Live | 0 |
 | Core student portal | 51 | 16 started (student Demo/Partial). 35 not started, including lecturer and staff | 0 |
-| Cyberjaya pilot acceptance | 1 | Not applicable (training) | 0 |
+| Lesotho pilot acceptance | 1 | Not applicable (training) | 0 |
 | Campus expansion & remaining CMS | 36 | 12 started. 22 applicable rows not started | 0 |
 
 ## 6. Related documents

@@ -2,7 +2,7 @@
 
 **Document:** SDD-15  
 **Status:** Working draft  
-**Date:** 23 September 2026  
+**Date:** 23 September 2026 (updated 3 October 2026)  
 **Audience:** Working Group CMS 2026, AI agents
 
 Quick reference for **CAP-*** and **M*** identifiers used across the SDD set. Prefer these links in chat, PRs, and design notes.
@@ -14,7 +14,7 @@ Quick reference for **CAP-*** and **M*** identifiers used across the SDD set. Pr
 | [M1](03-delivery-milestones.md#m1) | Confirm rules and integration | [SDD-03 §M1](03-delivery-milestones.md#m1) |
 | [M2](03-delivery-milestones.md#m2) | Admissions launch | [SDD-03 §M2](03-delivery-milestones.md#m2) |
 | [M3](03-delivery-milestones.md#m3) | Core student portal | [SDD-03 §M3](03-delivery-milestones.md#m3) |
-| [M4](03-delivery-milestones.md#m4) | Cyberjaya pilot acceptance | [SDD-03 §M4](03-delivery-milestones.md#m4) |
+| [M4](03-delivery-milestones.md#m4) | Lesotho pilot acceptance | [SDD-03 §M4](03-delivery-milestones.md#m4) |
 | [M5](03-delivery-milestones.md#m5) | Campus expansion and remaining CMS | [SDD-03 §M5](03-delivery-milestones.md#m5) |
 
 Sequence diagram and release conditions: [SDD-03](03-delivery-milestones.md).

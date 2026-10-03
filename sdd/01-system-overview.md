@@ -2,7 +2,7 @@
 
 **Document:** SDD-01  
 **Status:** Working draft  
-**Date:** 18 September 2026 (updated 23 September 2026)
+**Date:** 18 September 2026 (updated 3 October 2026)
 
 ## 1. Problem
 
@@ -12,11 +12,13 @@ Campuses need one digital operating surface for applicants, students, lecturers,
 
 Build **role portals on top of the existing CMS**, not a greenfield replacement of every legacy function.
 
-**This phase (confirmed 23 September 2026 — Aslam):** Cyberjaya CMS remains the **system of record**. Modern applicant / student / lecturer / staff experiences are delivered through the **Portal API**. Do not duplicate operational desks the old CMS already runs.
+**This phase (confirmed 23 September 2026 — Aslam):** the existing campus CMS family remains the **system of record**. Modern applicant / student / lecturer / staff experiences are delivered through the **Portal API**. Do not duplicate operational desks the old CMS already runs.
 
-**Longer term:** aim for a **unified, one-stop CMS**, delivered **progressively** — only when a gap is verified and a migration strategy (ownership, cutover, rollback, training) is agreed. That consolidation is backlog relative to Admissions launch and Cyberjaya pilot; see [SDD-03](03-delivery-milestones.md) [M5](03-delivery-milestones.md#m5)+ and [SDD-14](14-cms-feature-comparison.md).
+**Pilot campus (confirmed 3 October 2026 — Working Group weekly):** first launch / acceptance focus is **Lesotho**, not Cyberjaya. Lesotho’s newer CMS is the feature benchmark; migration uses Raisd canonical schema + Lesotho CMS materials (old dump pending). Other campuses continue in parallel. Detail: [`docs/ai/architecture/lesotho-pilot.md`](../ai/architecture/lesotho-pilot.md).
 
-**Ideal end state (proposed):** one Raisd CMS product with **distributed databases by country / region** (e.g. Malaysia, Singapore, Sierra Leone, Botswana), plus white-labelling, feature toggles, and country-specific identity — not one global student ledger. Diagram: [`docs/diagrams/distributed-cms-architecture.html`](../diagrams/distributed-cms-architecture.html). Agent summary: [`docs/ai/architecture/distributed-cms-target.md`](../ai/architecture/distributed-cms-target.md). Confirm as ADR before implementation.
+**Longer term:** aim for a **unified, one-stop CMS**, delivered **progressively** — only when a gap is verified and a migration strategy (ownership, cutover, rollback, training) is agreed. That consolidation is backlog relative to Admissions launch and the Lesotho pilot; see [SDD-03](03-delivery-milestones.md) [M5](03-delivery-milestones.md#m5)+ and [SDD-14](14-cms-feature-comparison.md).
+
+**Ideal end state (proposed):** one Raisd CMS product with **distributed databases by country / region** (e.g. Lesotho, Malaysia, Singapore, Sierra Leone, Botswana), plus white-labelling, feature toggles, and country-specific identity — not one global student ledger. Diagram: [`docs/diagrams/distributed-cms-architecture.html`](../diagrams/distributed-cms-architecture.html). Agent summary: [`docs/ai/architecture/distributed-cms-target.md`](../ai/architecture/distributed-cms-target.md). Confirm as ADR before implementation.
 
 ```mermaid
 flowchart LR
@@ -51,9 +53,9 @@ Four doors, one campus:
 ### In scope for this SDD set
 
 - [CAP-01](11-capability-catalog.md#cap-01) through [CAP-55](11-capability-catalog.md#cap-55) as listed in [SDD-11](11-capability-catalog.md).
-- Cyberjaya as first acceptance campus.
+- Lesotho as first acceptance / pilot campus (3 Oct 2026).
 - Phone-friendly core admissions and student journeys.
-- Using the existing CMS as the initial system of record.
+- Using the existing CMS family as the initial system of record.
 
 ### Out of scope unless a later decision says otherwise
 
@@ -86,7 +88,7 @@ Named next-action owners are TBC on every checklist row.
 | Applicant UI | No routes | Application-to-enrolment on CMS via Portal API | Unified admissions surface |
 | Lecturer UI | No routes | Publish / attendance / marking — prefer verified old Lecturer Portal | Progressive lecturer workspace consolidation |
 | Staff UI | No routes; do not rebuild what old CMS already does | Screens only for verified gaps; else old CMS desk | Progressive one-stop staff CMS |
-| Backend | Replaceable contracts, mock runtime, CMS writes stubbed | Portal API ↔ existing Cyberjaya CMS ([CAP-53](11-capability-catalog.md#cap-53)) | Migration strategy per domain when retiring legacy |
+| Backend | Replaceable contracts, mock runtime, CMS writes stubbed | Portal API ↔ existing campus CMS ([CAP-53](11-capability-catalog.md#cap-53)); Lesotho pilot first | Migration strategy per domain when retiring legacy |
 | Mobile | Isolated Services tests only | Core journeys on phone widths | Unchanged principle |
 | Auth | Fixed mock student session; logout no-op | Real login / SSO / provisioning honouring CMS rules where required | Campus-wide identity |
 
@@ -103,7 +105,7 @@ Named next-action owners are TBC on every checklist row.
 
 ## 7. Campus footprint
 
-First gate: **Cyberjaya pilot acceptance**.
+First gate: **Lesotho pilot acceptance** ([M4](03-delivery-milestones.md#m4)). Cyberjaya and other campuses expand under [M5](03-delivery-milestones.md#m5); a near-term Eswatini rollout may be proposed in parallel after Lesotho.
 
 Evidence tab also covers Botswana, Cambodia, Eswatini, Lesotho, Malaysia, Namibia, Sierra Leone, and Uganda. Campus expansion never defers an applicable operating requirement if software is delayed — the campus must still run the process, on old CMS or manually, until the new surface is Live.
 

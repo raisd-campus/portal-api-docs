@@ -133,6 +133,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -140,6 +141,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -213,7 +215,7 @@
         <ol>
           <li><strong>Now:</strong> student UI is largely demo/mock; applicant / lecturer / staff portals and live CMS writes are still ahead.</li>
           <li><strong>Next:</strong> agree rules (M1), then admissions end-to-end on real records (M2).</li>
-          <li><strong>Then:</strong> core student journeys (M3), Cyberjaya pilot (M4), other campuses (M5), then distributed ideal.</li>
+          <li><strong>Then:</strong> core student journeys (M3), <strong>Lesotho pilot</strong> (M4), other campuses including Cyberjaya (M5), then distributed ideal.</li>
         </ol>
       </div>
     </section>
@@ -500,7 +502,7 @@ flowchart LR
             <li>Admissions first, then core student journeys and pilot acceptance.</li>
             <li>Staff stay on verified old CMS unless a gap is proven.</li>
             <li>Phone-friendly core journeys (not a native app mandate).</li>
-            <li>Monitoring, backups, privacy, and training ready for Cyberjaya pilot.</li>
+            <li>Monitoring, backups, privacy, and training ready for Lesotho pilot.</li>
           </ul>
         </div>
         <div class="state-card gap">
@@ -510,7 +512,7 @@ flowchart LR
             <li>Ship Portal API first slice + admissions end-to-end (<a href="./migration.html#m2">M2</a> / <a href="../sdd/11-capability-catalog.html#cap-53">CAP-53</a>).</li>
             <li>Wire Live auth that respects CMS login rules.</li>
             <li>Make student learning, fees, and support paths Live or keep them on verified old CMS (<a href="./migration.html#m3">M3</a>).</li>
-            <li>Complete Cyberjaya pilot acceptance and ops readiness (<a href="./migration.html#m4">M4</a>).</li>
+            <li>Complete Lesotho pilot acceptance and ops readiness (<a href="./migration.html#m4">M4</a>).</li>
             <li>Only then expand campuses and migrate remaining CMS domains with a written strategy (<a href="./migration.html#m5">M5</a>).</li>
           </ul>
         </div>
@@ -582,7 +584,7 @@ flowchart LR
 flowchart LR
   M1["M1 Confirm rules<br/>and integration"] --> M2["M2 Admissions<br/>launch"]
   M2 --> M3["M3 Core student<br/>portal"]
-  M3 --> M4["M4 Cyberjaya<br/>pilot acceptance"]
+  M3 --> M4["M4 Lesotho<br/>pilot acceptance"]
   M4 --> M5["M5 Campus expansion<br/>and remaining CMS"]
           </pre>
         </div>
@@ -605,7 +607,7 @@ flowchart LR
         </a>
         <a class="milestone-card" href="./migration.html#m4">
           <span class="mid">M4</span>
-          <strong>Cyberjaya pilot acceptance</strong>
+          <strong>Lesotho pilot acceptance</strong>
           <span>Campus accepts the integrated pilot. Training and operations ready. Hosting at pilot stage.</span>
         </a>
         <a class="milestone-card" href="./migration.html#m5">
@@ -665,7 +667,7 @@ flowchart LR
       </div>
       <div class="note" style="margin-top:16px">
         <strong>System-of-record posture:</strong>
-        M1–M4 keep Cyberjaya / LUCT CMS as SoR.
+        M1–M4 keep the campus CMS family as SoR; Lesotho is the first acceptance campus (3 Oct 2026).
         M5+ may migrate domains progressively — never by silently duplicating desks.
         See <a href="./migration.html#posture">migration posture</a> and
         <a href="./migration.html#critical">critical path</a>.

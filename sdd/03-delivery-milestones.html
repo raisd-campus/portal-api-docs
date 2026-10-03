@@ -190,6 +190,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -197,6 +198,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -223,7 +225,7 @@
 <h1 id="delivery-milestones">Delivery milestones</h1>
 <p><strong>Document:</strong> SDD-03<br />
 <strong>Status:</strong> Working draft<br />
-<strong>Date:</strong> 18 September 2026 (updated 23 September 2026)</p>
+<strong>Date:</strong> 18 September 2026 (updated 3 October 2026)</p>
 <p><strong>Nomenclature:</strong> <a href="#m1">M1</a>–<a
 href="#m5">M5</a> anchors below. Capability IDs: <a
 href="11-capability-catalog.html">SDD-11</a> · index <a
@@ -236,16 +238,19 @@ unagreed dates remain TBC. A milestone describes when a capability
 <pre class="mermaid"><code>flowchart LR
   M1[1. Confirm rules&lt;br/&gt;and integration] --&gt; M2[2. Admissions launch]
   M2 --&gt; M3[3. Core student portal]
-  M3 --&gt; M4[4. Cyberjaya pilot&lt;br/&gt;acceptance]
+  M3 --&gt; M4[4. Lesotho pilot&lt;br/&gt;acceptance]
   M4 --&gt; M5[5. Campus expansion&lt;br/&gt;and remaining CMS]</code></pre>
 <p><strong>SoR posture across milestones:</strong> <a
 href="#m1">M1</a>–<a href="#m4">M4</a> deliver modern portals
-<strong>on</strong> the existing Cyberjaya CMS via the Portal API
+<strong>on</strong> the existing campus CMS family via the Portal API
 (ADR-1, confirmed Aslam 23 Sep 2026). <strong><a
-href="#m5">M5</a>+</strong> is where progressive <strong>unified
-one-stop CMS</strong> consolidation may begin — only for verified gaps
-and with an agreed migration strategy. <a href="#m5">M5</a> is not a
-licence to rewrite every working desk.</p>
+href="#m4">M4</a></strong> acceptance campus is <strong>Lesotho</strong>
+(Working Group, 3 Oct 2026 — supersedes Cyberjaya-first gate).
+<strong><a href="#m5">M5</a>+</strong> expands to other campuses
+(Cyberjaya, proposed Eswatini, …) and is where progressive
+<strong>unified one-stop CMS</strong> consolidation may begin — only for
+verified gaps and with an agreed migration strategy. <a
+href="#m5">M5</a> is not a licence to rewrite every working desk.</p>
 <p>Kickoff: TBC. Backend commitments: TBC.</p>
 <h2 id="milestone-definitions">2. Milestone definitions</h2>
 <p><a id="m1"></a></p>
@@ -377,8 +382,7 @@ agreed core mobile access</td>
 approval paths for the same CAP IDs must be Live or explicitly served by
 the old CMS.</p>
 <p><a id="m4"></a></p>
-<h3 id="m4-cyberjaya-pilot-acceptance">M4 — Cyberjaya pilot
-acceptance</h3>
+<h3 id="m4-lesotho-pilot-acceptance">M4 — Lesotho pilot acceptance</h3>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -391,18 +395,23 @@ acceptance</h3>
 </tr>
 <tr>
 <td>Scope</td>
-<td>Test the integrated Cyberjaya pilot, train staff, obtain campus
-acceptance</td>
+<td>Test the integrated <strong>Lesotho</strong> pilot, train staff,
+obtain campus acceptance. Capability parity with Lesotho’s newer CMS
+(screenshot benchmark) and applicable government / ODL
+requirements.</td>
 </tr>
 <tr>
 <td>Dependencies</td>
 <td>Integrations, content, security, recovery, operational support
-ready</td>
+ready; Lesotho old-CMS dump and/or agreed Live SoR path; sanitized
+materials (no live student PII in repos)</td>
 </tr>
 <tr>
 <td>Release condition</td>
-<td>Campus accepts the pilot and confirms applicable requirements,
-including verified existing-CMS or manual alternatives</td>
+<td>Lesotho campus accepts the pilot and confirms applicable
+requirements, including verified existing-CMS or manual alternatives.
+Raisd must be at least equivalent to the campus’s current newer CMS for
+accepted journeys.</td>
 </tr>
 <tr>
 <td>Primary CAP</td>
@@ -411,6 +420,10 @@ training and operating readiness</td>
 </tr>
 </tbody>
 </table>
+<p>Pilot approach and inventory: <a
+href="../ai/architecture/lesotho-pilot.html"><code>docs/ai/architecture/lesotho-pilot.md</code></a>,
+<a
+href="../ai/backend/old-cms-lesotho.html"><code>docs/ai/backend/old-cms-lesotho.md</code></a>.</p>
 <p><a id="m5"></a></p>
 <h3 id="m5-campus-expansion-and-remaining-cms">M5 — Campus expansion and
 remaining CMS</h3>
@@ -426,14 +439,16 @@ remaining CMS</h3>
 </tr>
 <tr>
 <td>Scope</td>
-<td>Expand campus coverage; remaining approved CMS/staff capabilities;
+<td>Expand campus coverage (Cyberjaya, proposed Eswatini, Botswana,
+Sierra Leone, …); remaining approved CMS/staff capabilities;
 <strong>start progressive consolidation</strong> toward a unified
 one-stop CMS where gaps are verified</td>
 </tr>
 <tr>
 <td>Dependencies</td>
-<td>Cyberjaya accepted; campus-specific rules and existing capabilities
-verified; migration plan per domain before retiring a legacy desk</td>
+<td>Lesotho pilot accepted; campus-specific rules and existing
+capabilities verified; migration plan per domain before retiring a
+legacy desk</td>
 </tr>
 <tr>
 <td>Release condition</td>
@@ -451,7 +466,7 @@ rebuild or migrate only when the gap and migration strategy are explicit
 <pre class="mermaid"><code>flowchart TB
   subgraph phase [&quot;This phase — M1 to M4&quot;]
     P[Four portals] --&gt; API[Portal API]
-    API --&gt; CMS[Cyberjaya CMS SoR]
+    API --&gt; CMS[Campus CMS family SoR&lt;br/&gt;Lesotho pilot first]
   end
   subgraph later [&quot;Longer term — M5+&quot;]
     G[Verified gap] --&gt; MIG[Migration strategy]
@@ -532,7 +547,7 @@ lecturer and staff</td>
 <td>0</td>
 </tr>
 <tr>
-<td>Cyberjaya pilot acceptance</td>
+<td>Lesotho pilot acceptance</td>
 <td>1</td>
 <td>Not applicable (training)</td>
 <td>0</td>

@@ -22,15 +22,17 @@ Example countries: Malaysia (Cyberjaya), Singapore, Sierra Leone, Botswana, and 
 ## Journey (do not skip)
 
 ```text
-Now/M1  →  M2–M4 (ADR-1 Cyberjaya SoR, SG UltaHost k3s)
-        →  M5 (adapters per legacy campus + tenant/flags + domain cutovers)
+Now/M1  →  M2–M3 (ADR-1 CMS family SoR, SG UltaHost k3s)
+        →  M4 Lesotho pilot acceptance (3 Oct 2026 priority)
+        →  M5 (Cyberjaya, Eswatini, … adapters + tenant/flags + domain cutovers)
         →  Ideal (Raisd SoR everywhere; country DBs; geo-placed compute)
 ```
 
-1. **Now / M1** — Demo portals; inventory separate legacy DBs (Cyberjaya `cmscbj`, Botswana `cmsbotswana`, Sierra Leone `ems_sierraleone`). Agree owners and CMS access.
-2. **M2–M4** — Four portals → Portal API → CAP-53 → Cyberjaya CMS. Single SEA hosting. No second control plane.
-3. **M5** — Campus expansion via **adapter factory**; introduce tenant registry, white-label, feature flags; migrate domains only with ownership, cutover, rollback, training.
-4. **Ideal** — Retire legacy write paths; Raisd CMS DB per country/region; global control plane holds config only.
+1. **Now / M1** — Demo portals; inventory separate legacy DBs (Cyberjaya `cmscbj`, Botswana `cmsbotswana`, Sierra Leone `ems_sierraleone`, Lesotho old dump **TBC**). Agree owners and CMS access. Lesotho newer CMS = feature benchmark via screenshots ([lesotho-pilot.md](lesotho-pilot.md)).
+2. **M2–M3** — Four portals → Portal API → CAP-53 → campus CMS adapters. Single SEA hosting. No second control plane.
+3. **M4** — **Lesotho** pilot acceptance (not Cyberjaya). Parity with Lesotho newer CMS capabilities; government requirements; revenue priority.
+4. **M5** — Campus expansion (Cyberjaya, proposed Eswatini, …) via **adapter factory**; introduce tenant registry, white-label, feature flags; migrate domains only with ownership, cutover, rollback, training.
+5. **Ideal** — Retire legacy write paths; Raisd CMS DB per country/region; global control plane holds config only.
 
 ## Rules agents must not violate
 
@@ -46,6 +48,7 @@ Now/M1  →  M2–M4 (ADR-1 Cyberjaya SoR, SG UltaHost k3s)
 |---|---|
 | This-phase architecture | [overview.md](overview.md) |
 | Hosting stages | [deployment.md](deployment.md), [SDD-12](../../sdd/12-deployment-architecture.md) |
+| Lesotho pilot | [lesotho-pilot.md](lesotho-pilot.md), [../backend/old-cms-lesotho.md](../backend/old-cms-lesotho.md) |
 | Sierra Leone M5 inventory | [../backend/old-cms-sierra-leone.md](../backend/old-cms-sierra-leone.md) |
 | Botswana M5 inventory | [../backend/old-cms-botswana.md](../backend/old-cms-botswana.md) |
 | CAP / gap posture | [../backend/cms-feature-comparison.md](../backend/cms-feature-comparison.md) |

@@ -28,7 +28,7 @@ They are design documents, not a commercial proposal. Dates, named owners, and b
 ## How to use these documents
 
 1. Read SDD-00 and SDD-01 first.
-2. Treat SDD-02 and SDD-03 as the delivery contract: existing CMS stays, admissions before semester registration, Cyberjaya first.
+2. Treat SDD-02 and SDD-03 as the delivery contract: existing CMS family stays, admissions before semester registration, **Lesotho first** (pilot — 3 Oct 2026).
 3. Implement against the portal SDD that owns the screen. The same CAP ID on two portals is one capability with two role surfaces.
 4. Use SDD-11 as the exhaustive inventory. Use SDD-09 when a capability is challenged as “required by government” or “already built”.
 5. Use [SDD-15](15-nomenclature.md) to jump from any `CAP-*` or `M*` ID to its definition.

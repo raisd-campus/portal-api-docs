@@ -43,6 +43,35 @@
       "path": "diagrams/distributed-cms-architecture.html#journey"
     },
     {
+      "title": "Lesotho pilot approach",
+      "summary": "First acceptance campus is Lesotho (3 Oct 2026). Feature benchmark from newer CMS screenshots; migration via Raisd schema + Lesotho CMS materials.",
+      "section": "AI knowledge",
+      "keywords": [
+        "lesotho",
+        "pilot",
+        "m4",
+        "launch",
+        "acceptance",
+        "product-priority",
+        "eswatini"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md"
+    },
+    {
+      "title": "Lesotho CMS inventory",
+      "summary": "Lesotho newer Admin/Student CMS surfaces from screenshots; old CMS dump pending (family tree \u2248 Botswana / Cyberjaya).",
+      "section": "AI knowledge",
+      "keywords": [
+        "lesotho",
+        "registry",
+        "admissions",
+        "nmds",
+        "inventory",
+        "screenshots"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md"
+    },
+    {
       "title": "Architecture",
       "summary": "System architecture, ADRs, SoR/ACL boundaries, and academic model overview.",
       "section": "Architecture",

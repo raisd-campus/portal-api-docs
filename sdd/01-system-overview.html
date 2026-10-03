@@ -190,6 +190,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -197,6 +198,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -223,7 +225,7 @@
 <h1 id="system-overview">System overview</h1>
 <p><strong>Document:</strong> SDD-01<br />
 <strong>Status:</strong> Working draft<br />
-<strong>Date:</strong> 18 September 2026 (updated 23 September 2026)</p>
+<strong>Date:</strong> 18 September 2026 (updated 3 October 2026)</p>
 <h2 id="problem">1. Problem</h2>
 <p>Campuses need one digital operating surface for applicants, students,
 lecturers, and staff, while remaining inside existing CMS records,
@@ -234,21 +236,28 @@ surfaces, plus a live backend, do not.</p>
 <p>Build <strong>role portals on top of the existing CMS</strong>, not a
 greenfield replacement of every legacy function.</p>
 <p><strong>This phase (confirmed 23 September 2026 — Aslam):</strong>
-Cyberjaya CMS remains the <strong>system of record</strong>. Modern
-applicant / student / lecturer / staff experiences are delivered through
-the <strong>Portal API</strong>. Do not duplicate operational desks the
-old CMS already runs.</p>
+the existing campus CMS family remains the <strong>system of
+record</strong>. Modern applicant / student / lecturer / staff
+experiences are delivered through the <strong>Portal API</strong>. Do
+not duplicate operational desks the old CMS already runs.</p>
+<p><strong>Pilot campus (confirmed 3 October 2026 — Working Group
+weekly):</strong> first launch / acceptance focus is
+<strong>Lesotho</strong>, not Cyberjaya. Lesotho’s newer CMS is the
+feature benchmark; migration uses Raisd canonical schema + Lesotho CMS
+materials (old dump pending). Other campuses continue in parallel.
+Detail: <a
+href="../ai/architecture/lesotho-pilot.html"><code>docs/ai/architecture/lesotho-pilot.md</code></a>.</p>
 <p><strong>Longer term:</strong> aim for a <strong>unified, one-stop
 CMS</strong>, delivered <strong>progressively</strong> — only when a gap
 is verified and a migration strategy (ownership, cutover, rollback,
 training) is agreed. That consolidation is backlog relative to
-Admissions launch and Cyberjaya pilot; see <a
+Admissions launch and the Lesotho pilot; see <a
 href="03-delivery-milestones.html">SDD-03</a> <a
 href="03-delivery-milestones.html#m5">M5</a>+ and <a
 href="14-cms-feature-comparison.html">SDD-14</a>.</p>
 <p><strong>Ideal end state (proposed):</strong> one Raisd CMS product
 with <strong>distributed databases by country / region</strong>
-(e.g. Malaysia, Singapore, Sierra Leone, Botswana), plus
+(e.g. Lesotho, Malaysia, Singapore, Sierra Leone, Botswana), plus
 white-labelling, feature toggles, and country-specific identity — not
 one global student ledger. Diagram: <a
 href="../diagrams/distributed-cms-architecture.html"><code>docs/diagrams/distributed-cms-architecture.html</code></a>.
@@ -313,9 +322,9 @@ screens</td>
 <li><a href="11-capability-catalog.html#cap-01">CAP-01</a> through <a
 href="11-capability-catalog.html#cap-55">CAP-55</a> as listed in <a
 href="11-capability-catalog.html">SDD-11</a>.</li>
-<li>Cyberjaya as first acceptance campus.</li>
+<li>Lesotho as first acceptance / pilot campus (3 Oct 2026).</li>
 <li>Phone-friendly core admissions and student journeys.</li>
-<li>Using the existing CMS as the initial system of record.</li>
+<li>Using the existing CMS family as the initial system of record.</li>
 </ul>
 <h3 id="out-of-scope-unless-a-later-decision-says-otherwise">Out of
 scope unless a later decision says otherwise</h3>
@@ -435,8 +444,9 @@ Portal</td>
 <tr>
 <td>Backend</td>
 <td>Replaceable contracts, mock runtime, CMS writes stubbed</td>
-<td>Portal API ↔︎ existing Cyberjaya CMS (<a
-href="11-capability-catalog.html#cap-53">CAP-53</a>)</td>
+<td>Portal API ↔︎ existing campus CMS (<a
+href="11-capability-catalog.html#cap-53">CAP-53</a>); Lesotho pilot
+first</td>
 <td>Migration strategy per domain when retiring legacy</td>
 </tr>
 <tr>
@@ -478,7 +488,11 @@ href="03-delivery-milestones.html#m2">M2</a>–<a
 href="03-delivery-milestones.html#m4">M4</a>.</li>
 </ol>
 <h2 id="campus-footprint">7. Campus footprint</h2>
-<p>First gate: <strong>Cyberjaya pilot acceptance</strong>.</p>
+<p>First gate: <strong>Lesotho pilot acceptance</strong> (<a
+href="03-delivery-milestones.html#m4">M4</a>). Cyberjaya and other
+campuses expand under <a href="03-delivery-milestones.html#m5">M5</a>; a
+near-term Eswatini rollout may be proposed in parallel after
+Lesotho.</p>
 <p>Evidence tab also covers Botswana, Cambodia, Eswatini, Lesotho,
 Malaysia, Namibia, Sierra Leone, and Uganda. Campus expansion never
 defers an applicable operating requirement if software is delayed — the

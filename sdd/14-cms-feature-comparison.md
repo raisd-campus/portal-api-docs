@@ -2,9 +2,10 @@
 
 **Document:** SDD-14  
 **Status:** Working draft  
-**Date:** 23 September 2026  
+**Date:** 23 September 2026 (updated 3 October 2026)  
 **Source package:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip`
-**Also inventoried (M5 pattern, not launch SoR):**
+**Also inventoried:**
+- **Lesotho pilot (3 Oct 2026):** newer-CMS screenshots + old dump pending → [`docs/ai/backend/old-cms-lesotho.md`](../ai/backend/old-cms-lesotho.md), approach [`docs/ai/architecture/lesotho-pilot.md`](../ai/architecture/lesotho-pilot.md)
 - `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` → [`docs/ai/backend/old-cms-sierra-leone.md`](../ai/backend/old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../diagrams/old-cms-sierra-leone/)
 - `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` → [`docs/ai/backend/old-cms-botswana.md`](../ai/backend/old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../diagrams/old-cms-botswana/) (E2E + [DTEF §4](../diagrams/old-cms-botswana/index.html#dtef)), [`botswana-dtef-scholarship-sync.md`](../ai/backend/botswana-dtef-scholarship-sync.md)
 **Canonical detail (agents):** [`docs/ai/backend/cms-feature-comparison.md`](../ai/backend/cms-feature-comparison.md), [`docs/ai/backend/old-cms-cyberjaya.md`](../ai/backend/old-cms-cyberjaya.md)
@@ -30,6 +31,8 @@ Later:        Verified gap + migration plan  →  consolidate into unified CMS p
 ```
 
 **Working Group (23 September 2026 — Aslam):** agreed this-phase posture (CMS as SoR, portals via Portal API, no duplication of operational functions). Longer-term unified CMS remains the aim, delivered progressively.
+
+**Working Group (3 October 2026):** first pilot / acceptance campus is **Lesotho**. Cyberjaya remains the richest technical inventory for the LUCT PHPMaker family; Lesotho newer CMS (screenshots) is the feature benchmark for [M4](03-delivery-milestones.md#m4).
 
 ## 3. Headline findings
 
@@ -92,7 +95,7 @@ Full CAP rows live in the AI comparison doc. Group posture:
 |---|---|---|
 | [M2](03-delivery-milestones.md#m2) Admissions launch | Applicant portal + Registry workflows | Existing CMS |
 | [M3](03-delivery-milestones.md#m3) Core student portal | Student journeys + lecturer/staff support paths | Existing CMS (or verified old desk) |
-| [M4](03-delivery-milestones.md#m4) Cyberjaya pilot | Integrated acceptance, training, ops | Existing CMS + Portal API |
+| [M4](03-delivery-milestones.md#m4) Lesotho pilot | Integrated acceptance, training, ops | Existing CMS + Portal API; Lesotho newer CMS as feature benchmark |
 | [M5](03-delivery-milestones.md#m5)+ Expansion / remaining CMS | Multi-campus + progressive consolidation | Migrate domain-by-domain only with a written strategy |
 
 High-level comparison pages: [`docs/diagrams/old-cms/comparison.html`](../diagrams/old-cms/comparison.html), agent matrix [`docs/ai/backend/cms-feature-comparison.md`](../ai/backend/cms-feature-comparison.md). Milestones: [SDD-03](03-delivery-milestones.md).

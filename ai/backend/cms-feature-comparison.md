@@ -1,8 +1,9 @@
 # Old Cyberjaya CMS ↔ Raisd portals — feature comparison
 
-**Date:** 23 September 2026  
+**Date:** 23 September 2026 (updated 3 October 2026)  
 **Old CMS source:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip` (inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md))  
-**Sister campus dumps (M5, not ADR-1 SoR):**
+**Lesotho pilot (3 Oct 2026):** first acceptance campus — [old-cms-lesotho.md](old-cms-lesotho.md), [lesotho-pilot.md](../architecture/lesotho-pilot.md). Newer CMS = screenshot benchmark; old dump TBC (family tree ≈ Botswana).  
+**Sister campus dumps:**
 - `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` — [old-cms-sierra-leone.md](old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/)
 - `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` — [old-cms-botswana.md](old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../../diagrams/old-cms-botswana/) (E2E flow + [DTEF §4](../../diagrams/old-cms-botswana/index.html#dtef)), Markdown [`botswana-dtef-scholarship-sync.md`](botswana-dtef-scholarship-sync.md)
 **New surface:** Raisd **four portals + Portal API** ([SDD-01](../../sdd/01-system-overview.md), [SDD-11](../../sdd/11-capability-catalog.md)) — **not** a greenfield CMS replacement.  
@@ -74,7 +75,7 @@ flowchart TB
 | **This phase ([M1](../../sdd/03-delivery-milestones.md#m1)–[M4](../../sdd/03-delivery-milestones.md#m4))** | Modern Applicant / Student / Lecturer / Staff experiences via Portal API; staff ops stay on verified old desks unless a gap is proven | Existing Cyberjaya CMS |
 | **[M2](../../sdd/03-delivery-milestones.md#m2)** | Admissions launch (apply → offer → enrol) | Existing CMS |
 | **[M3](../../sdd/03-delivery-milestones.md#m3)** | Core student portal + paired lecturer/staff paths | Existing CMS |
-| **[M4](../../sdd/03-delivery-milestones.md#m4)** | Cyberjaya pilot acceptance | Existing CMS + Portal API |
+| **[M4](../../sdd/03-delivery-milestones.md#m4)** | Lesotho pilot acceptance | Existing CMS + Portal API; Lesotho newer CMS as feature benchmark |
 | **Longer term ([M5](../../sdd/03-delivery-milestones.md#m5)+)** | Campus expansion + progressive consolidation toward one-stop CMS | Migrate domain-by-domain after verified gap + migration strategy |
 
 Published comparison UI: [../../diagrams/old-cms/comparison.html](../../diagrams/old-cms/comparison.html). Milestones: [SDD-03](../../sdd/03-delivery-milestones.md).
@@ -124,7 +125,7 @@ Legend for **Old coverage:** Present = clear module/table/SP evidence · Partial
 | [CAP-12](../../sdd/11-capability-catalog.md#cap-12) | Attendance records | `r_stdattendance*`, `f_attend*`, Adobe Connect attendance | Present | Demo | Read CMS; corrections on Faculty/Lecturer |
 | [CAP-13](../../sdd/11-capability-catalog.md#cap-13) | Grades / results / progress | Mark update SPs, gradebook/BOE faculty paths, dean lists | Present | Demo | Publish rules stay on Registry/Faculty |
 | [CAP-14](../../sdd/11-capability-catalog.md#cap-14) | Study plan / prerequisites | Programme/module structures, entry requirements (CDU) | Present | Demo | Map programme version rules carefully |
-| [CAP-15](../../sdd/11-capability-catalog.md#cap-15) | Graduation / transcripts | `app_graduation*`, PrintTranscript, SIU/Registry | Present | Placeholder | Keep official transcript on old CMS |
+| [CAP-15](../../sdd/11-capability-catalog.md#cap-15) | Graduation / transcripts | `app_graduation*`, PrintTranscript, SIU/Registry | Present | Demo | Student Demo hub; keep official transcript on old CMS |
 | [CAP-16](../../sdd/11-capability-catalog.md#cap-16) | Announcements | `s_notice` | Present | Partial | Feed ownership Needs checking |
 | [CAP-17](../../sdd/11-capability-catalog.md#cap-17) | Study guides | Module materials (`f_modulemat`) — guide-specific Needs checking | Partial | Not started | Confirm Faculty publishing |
 | [CAP-18](../../sdd/11-capability-catalog.md#cap-18) | Lecture notes / learning media | `f_modulemat`, lecturer notes reports | Present | Placeholder | Authorised download via API |
@@ -152,8 +153,8 @@ Legend for **Old coverage:** Present = clear module/table/SP evidence · Partial
 | [CAP-47](../../sdd/11-capability-catalog.md#cap-47) | Online payment / financial documents | Laravel `payment/`, receipts, banks | Present | Placeholder | Confirm gateway path |
 | [CAP-48](../../sdd/11-capability-catalog.md#cap-48) | Scholarships / incentives | Assistance providers, incentive rules, scholarship reports | Present | Demo | Bursary/Marketing ownership |
 | [CAP-49](../../sdd/11-capability-catalog.md#cap-49) | Resume / portfolio builders | Not found | Not found | Demo | New product; low priority vs SoR |
-| [CAP-50](../../sdd/11-capability-catalog.md#cap-50) | Immigration / visa (student view) | Rich SSD/Services visa + student visa tables | Present | Placeholder | Student view via API; ops stay on Services |
-| [CAP-51](../../sdd/11-capability-catalog.md#cap-51) | Requests / complaints / appeals | `r_form`, `f_complaint`, appeals stems in Registry | Present | Placeholder | Online Forms maps here |
+| [CAP-50](../../sdd/11-capability-catalog.md#cap-50) | Immigration / visa (student view) | Rich SSD/Services visa + student visa tables | Present | Demo | Student Demo view via API; ops stay on Services |
+| [CAP-51](../../sdd/11-capability-catalog.md#cap-51) | Requests / complaints / appeals | `r_form`, `f_complaint`, appeals stems in Registry | Present | Demo | Online Forms Demo maps here; Live staff ops Needs checking |
 | [CAP-52](../../sdd/11-capability-catalog.md#cap-52) | Accommodation (student) | Full Accommodation System | Present | Placeholder | Student request UX new; allocation on old CMS |
 | [CAP-54](../../sdd/11-capability-catalog.md#cap-54) | Campus services information | Services desk + forms; published “services info” Partial | Partial | Demo | Content ownership |
 | [CAP-55](../../sdd/11-capability-catalog.md#cap-55) | University policies | Letters/forms; approved policy pack Needs checking | Partial | Partial | Registry publish path |

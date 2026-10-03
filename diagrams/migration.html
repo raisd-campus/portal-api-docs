@@ -133,6 +133,7 @@
             <a href="../ai/index.html">AI hub</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
@@ -140,6 +141,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -189,7 +191,7 @@
       <a href="#m1"><strong>M1</strong><span>Confirm rules</span></a>
       <a href="#m2"><strong>M2</strong><span>Admissions launch</span></a>
       <a href="#m3"><strong>M3</strong><span>Core student portal</span></a>
-      <a href="#m4"><strong>M4</strong><span>Cyberjaya pilot</span></a>
+      <a href="#m4"><strong>M4</strong><span>Lesotho pilot</span></a>
       <a href="#m5"><strong>M5</strong><span>Expansion &amp; migration</span></a>
       <a href="#hosting"><strong>Hosting stages</strong><span>SDD-12 launch plan</span></a>
       <a href="#critical"><strong>Critical path</strong><span>Live rules &amp; next two weeks</span></a>
@@ -213,7 +215,7 @@
               <tbody>
                 <tr>
                   <td><a href="#m1">M1</a>–<a href="#m4">M4</a> (this phase)</td>
-                  <td>Four portals + Portal API on existing Cyberjaya / LUCT CMS</td>
+                  <td>Four portals + Portal API on existing campus CMS family; <strong>Lesotho</strong> first acceptance (3 Oct 2026)</td>
                   <td>Existing CMS — do not duplicate operational desks</td>
                 </tr>
                 <tr>
@@ -228,7 +230,7 @@
 flowchart TB
   subgraph phase ["This phase — M1 to M4"]
     P[Four portals] --> API[Portal API]
-    API --> CMS[Cyberjaya / LUCT CMS SoR]
+    API --> CMS[Campus CMS family SoR<br/>Lesotho pilot first]
   end
   subgraph later ["Longer term — M5+"]
     G[Verified gap] --> MIG[Migration strategy]
@@ -254,7 +256,7 @@ flowchart TB
 flowchart LR
   M1[1. Confirm rules<br/>and integration] --> M2[2. Admissions launch]
   M2 --> M3[3. Core student portal]
-  M3 --> M4[4. Cyberjaya pilot<br/>acceptance]
+  M3 --> M4[4. Lesotho pilot<br/>acceptance]
   M4 --> M5[5. Campus expansion<br/>and remaining CMS]
           </pre>
           <div class="table-wrap" style="margin-top:8px">
@@ -292,7 +294,7 @@ flowchart LR
                 </tr>
                 <tr>
                   <td><a href="#m4">M4</a></td>
-                  <td>Cyberjaya pilot acceptance</td>
+                  <td>Lesotho pilot acceptance</td>
                   <td>TBC</td>
                   <td>Campus accepts pilot; training and ops ready</td>
                   <td><a href="#hosting">Stage 4</a></td>
@@ -395,14 +397,14 @@ flowchart LR
     </section>
 
     <section class="section" id="m4">
-      <h2>M4 — Cyberjaya pilot acceptance</h2>
+      <h2>M4 — Lesotho pilot acceptance</h2>
       <div class="card">
         <div class="card-body" style="padding:0">
           <div class="table-wrap">
             <table class="attr">
               <tbody>
                 <tr><th>Target</th><td>TBC</td></tr>
-                <tr><th>Scope</th><td>Test the integrated Cyberjaya pilot, train staff, obtain campus acceptance</td></tr>
+                <tr><th>Scope</th><td>Test the integrated <strong>Lesotho</strong> pilot, train staff, obtain campus acceptance. Parity with Lesotho newer CMS (screenshot benchmark) and applicable government requirements.</td></tr>
                 <tr><th>Dependencies</th><td>Integrations, content, security, recovery, operational support ready</td></tr>
                 <tr><th>Release condition</th><td>Campus accepts the pilot and confirms applicable requirements, including verified existing-CMS or manual alternatives</td></tr>
                 <tr><th>Primary CAP</th><td><a href="../sdd/11-capability-catalog.html#cap-41">CAP-41</a> staff training and operating readiness</td></tr>
@@ -411,7 +413,7 @@ flowchart LR
             </table>
           </div>
           <p style="padding:14px 18px 18px;margin:0">
-            Full text: <a href="../sdd/03-delivery-milestones.html#m4">SDD-03 §M4</a>.
+            Full text: <a href="../sdd/03-delivery-milestones.html#m4">SDD-03 §M4</a>. Approach: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>.
           </p>
         </div>
       </div>
@@ -426,7 +428,7 @@ flowchart LR
               <tbody>
                 <tr><th>Target</th><td>TBC</td></tr>
                 <tr><th>Scope</th><td>Expand campus coverage; remaining approved CMS/staff capabilities; <strong>start progressive consolidation</strong> toward a unified one-stop CMS where gaps are verified</td></tr>
-                <tr><th>Dependencies</th><td>Cyberjaya accepted; campus-specific rules and existing capabilities verified; migration plan per domain before retiring a legacy desk</td></tr>
+                <tr><th>Dependencies</th><td>Lesotho pilot accepted; campus-specific rules and existing capabilities verified; migration plan per domain before retiring a legacy desk</td></tr>
                 <tr><th>Release condition</th><td>Each campus accepts its rollout. Deferring new software never defers an applicable operating requirement. Any SoR move needs ownership, cutover, rollback, and training agreed</td></tr>
                 <tr><th>Hosting</th><td><a href="#hosting">Stage 5</a> — grow data node only when full</td></tr>
               </tbody>
@@ -612,7 +614,7 @@ flowchart LR
                 <tr><td>Confirm rules &amp; integration (M1)</td><td>1</td><td>Not applicable</td><td>0</td></tr>
                 <tr><td>Admissions launch (M2)</td><td>23</td><td>Mostly not started. 4 of 18 applicable rows started, none Live</td><td>0</td></tr>
                 <tr><td>Core student portal (M3)</td><td>51</td><td>16 started (student Demo/Partial). 35 not started, including lecturer and staff</td><td>0</td></tr>
-                <tr><td>Cyberjaya pilot acceptance (M4)</td><td>1</td><td>Not applicable (training)</td><td>0</td></tr>
+                <tr><td>Lesotho pilot acceptance (M4)</td><td>1</td><td>Not applicable (training)</td><td>0</td></tr>
                 <tr><td>Campus expansion &amp; remaining CMS (M5)</td><td>36</td><td>12 started. 22 applicable rows not started</td><td>0</td></tr>
               </tbody>
             </table>

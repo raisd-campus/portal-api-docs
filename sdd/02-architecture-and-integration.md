@@ -2,27 +2,32 @@
 
 **Document:** SDD-02  
 **Status:** Working draft  
-**Date:** 18 September 2026 (updated 23 September 2026)
+**Date:** 18 September 2026 (updated 3 October 2026)
 
 ## 1. Architectural decision
 
+<a id="architectural-decision"></a>
+<a id="adr-1"></a>
+
 **ADR-1 — Existing CMS as initial backend (this phase)**
 
-Keep the current campus CMS as system of record. New portals talk to it through a Portal API. Do not require a full CMS rewrite to launch Cyberjaya.
+Keep the current campus CMS family as system of record. New portals talk to it through a Portal API. Do not require a full CMS rewrite to launch the first campus.
 
-**Working Group confirmation (23 September 2026 — Aslam):** agreed for this phase — use existing Cyberjaya CMS as SoR; build modern portal experiences via the Portal API; do not duplicate operational functions the old CMS already runs.
+**Working Group confirmation (23 September 2026 — Aslam):** agreed for this phase — use existing campus CMS as SoR; build modern portal experiences via the Portal API; do not duplicate operational functions the old CMS already runs.
+
+**Pilot campus (3 October 2026 — Working Group weekly):** first launch / acceptance campus is **Lesotho** (not Cyberjaya). Lesotho’s newer CMS is the feature benchmark (screenshots only — source/DB not shareable). Migration SoT: Raisd canonical schema + Lesotho CMS materials (old dump pending from Vara; family tree closer to Botswana / Cyberjaya). See [`docs/ai/architecture/lesotho-pilot.md`](../ai/architecture/lesotho-pilot.md).
 
 Consequences:
 
-- [CAP-53](11-capability-catalog.md#cap-53) (existing CMS integration and campus configuration) is on the critical path for Admissions launch.
-- Frontend “ready” screens cannot go Live until the matching old-CMS capability is verified or replaced.
-- New staff screens are built only where the old CMS does not already support the workflow.
+- [CAP-53](11-capability-catalog.md#cap-53) (existing CMS integration and campus configuration) is on the critical path for Admissions launch and the Lesotho pilot.
+- Frontend “ready” screens cannot go Live until the matching CMS capability is verified or replaced.
+- New staff screens are built only where the existing CMS does not already support the workflow — and should aim for parity with Lesotho’s newer Admin CMS for pilot acceptance.
 
 **Longer-term target:** a unified, one-stop CMS, delivered progressively on **verified gaps** with an explicit **migration strategy**. That is post-pilot / remaining-CMS work ([SDD-03](03-delivery-milestones.md) [M5](03-delivery-milestones.md#m5)+), not a mandate to replace working desks for Admissions launch.
 
 Hosting placement is in [SDD-12](12-deployment-architecture.md): the existing UltaHost VDS estate in Singapore, not a new VPS. The concrete old-CMS product name is still TBC. The student frontend baseline implies a TypeScript web app with replaceable API contracts (`src/services/portal-runtime.tsx`, `src/services/portal-api.ts`).
 
-**Agent operating knowledge** for this architecture lives in [`docs/ai/architecture/`](../ai/architecture/) and [`docs/ai/backend/portal-api.md`](../ai/backend/portal-api.md). Agents must not invent a second integration model. Cyberjaya inventory and CAP comparison: [SDD-14](14-cms-feature-comparison.md).
+**Agent operating knowledge** for this architecture lives in [`docs/ai/architecture/`](../ai/architecture/) and [`docs/ai/backend/portal-api.md`](../ai/backend/portal-api.md). Agents must not invent a second integration model. Lesotho pilot + campus inventories: [lesotho-pilot.md](../ai/architecture/lesotho-pilot.md), [SDD-14](14-cms-feature-comparison.md).
 
 ## 2. Logical architecture
 

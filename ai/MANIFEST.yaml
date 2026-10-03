@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-02
+updated: 2026-10-03
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -32,6 +32,8 @@ notes:
   - 2026-10-01: LMS Q37 Option 1 — published lms-architecture.html + lms-features.html (F01–F37 × CAP) from Raisd sources; hub Moodle-like student map; no PPA comparison.
   - 2026-10-02: LMS logical database tables + ERD CMS/LMS/shared/proposed colour legend (erd.html §10); agent schema at backend/lms-schema.md.
   - 2026-10-02: db-admin ERD tab colours CMS / LMS / shared domains, domain filter, and LMS IRREGULAR stems (aligned with lms-schema.md).
+  - 2026-10-02: Portal API LMS surface — OpenAPI tag `LMS`, `GET /v1/meta/lms` catalogue (callable Materials/assignment/lecturer-review + deferred CAP gaps); openapi 0.4.1.
+  - 2026-10-03: Working Group weekly — Lesotho first pilot (supersedes Cyberjaya-first gate). architecture/lesotho-pilot.md + backend/old-cms-lesotho.md; SDD-00/01/02/03/09/10/14/15 updated; M4 = Lesotho pilot acceptance.
 
 entrypoints:
   agents: AGENTS.md
@@ -54,9 +56,12 @@ sibling_repos:
 
 architecture:
   - path: architecture/overview.md
-    topics: [adr-1, portals, portal-api, cms, cyberjaya]
+    topics: [adr-1, portals, portal-api, cms, lesotho, cyberjaya]
+  - path: architecture/lesotho-pilot.md
+    topics: [lesotho, pilot, m4, product-priority, migration, screenshots, eswatini]
+    related: backend/old-cms-lesotho.md
   - path: architecture/distributed-cms-target.md
-    topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state]
+    topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state, lesotho]
     pages: ../diagrams/distributed-cms-architecture.html
   - path: architecture/lms.md
     topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle, schema, erd]
@@ -95,6 +100,10 @@ backend:
     pages: ../diagrams/erd.html
     confirmations: ../diagrams/canonical-schema-confirmations.html
     note: Schema v3 campus policy layer done (Demo); CS-01–CS-11 = per-campus Live confirmation; CS-12 Demo FKs deferred; CS-13 incremental report migration. See §0 / §6 / §7.
+  - path: backend/old-cms-lesotho.md
+    topics: [existing-cms, lesotho, pilot, m4, inventory, screenshots, nmds, admissions, registry]
+    related: architecture/lesotho-pilot.md
+    note: Newer CMS screenshot inventory + old dump pending (Vara); first pilot campus 3 Oct 2026.
   - path: backend/old-cms-cyberjaya.md
     topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker, e2e, erd, dfd, integrations, adr-1]
     pages: ../diagrams/old-cms/

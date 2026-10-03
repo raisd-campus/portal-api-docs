@@ -13,7 +13,7 @@ Related: [SDD-00](00-document-control.md), [SDD-01](01-system-overview.md), [SDD
 
 | ID | Decision | Limitation |
 |---|---|---|
-| PRODUCT-PRIORITY | Cyberjaya first. Admissions before semester registration. Include core mobile. Keep the existing CMS as the initial backend. | Owners, kickoff and backend commitments TBC. Whole-CMS coverage is a backlog, not an instruction to replace working legacy functions. |
+| PRODUCT-PRIORITY | **Lesotho first** (pilot / acceptance campus — Working Group 3 Oct 2026; supersedes Cyberjaya-first gate). Admissions before semester registration. Include core mobile. Keep the existing CMS family as the initial backend. Lesotho newer CMS = feature benchmark; migration SoT = Raisd schema + Lesotho CMS materials. | Owners, kickoff and backend commitments TBC. Whole-CMS coverage is a backlog, not an instruction to replace working legacy functions. Cyberjaya remains [M5](03-delivery-milestones.md#m5) expansion / richest LUCT inventory. |
 | PRODUCT-MOBILE | Core admissions and student journeys must be phone-friendly for launch. | This is a delivery priority, not a verified universal government breakpoint or native-app requirement. Current portal mobile acceptance is outstanding. |
 | PRODUCT-PORTALS | Group delivery by Applicant, Student, Lecturer, Admin / Staff and Shared System. Separate role-specific work and department responsibility; retain the original capability links. | Proposed department split approved. Milestone dates, named owners and unverified old-CMS capabilities remain TBC. This is not a government-prescribed portal architecture. |
 
