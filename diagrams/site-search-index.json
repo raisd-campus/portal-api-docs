@@ -72,6 +72,23 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md"
     },
     {
+      "title": "Lesotho CMS pilot feature analysis",
+      "summary": "Screenshot-based feature and flow analysis for the Lesotho pilot \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "pilot",
+        "m4",
+        "nmds",
+        "lgcse",
+        "admissions",
+        "registry",
+        "screenshots",
+        "diagram"
+      ],
+      "path": "diagrams/old-cms-lesotho/index.html"
+    },
+    {
       "title": "Architecture",
       "summary": "System architecture, ADRs, SoR/ACL boundaries, and academic model overview.",
       "section": "Architecture",

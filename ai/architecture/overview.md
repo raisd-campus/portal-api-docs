@@ -3,15 +3,33 @@
 **Canonical product text:** [SDD-01](../../sdd/01-system-overview.md), [SDD-02](../../sdd/02-architecture-and-integration.md).  
 This file is the short agent-facing summary. Prefer the SDDs when wording must match the working-group baseline.
 
+## Pilot project — Lesotho (highlight)
+
+> **Lesotho is the Raisd Campus pilot project.**  
+> Confirmed Working Group CMS 2026 weekly meeting, **3 October 2026** (Read.ai meeting summary emailed as *Weekly full meeting 10AM Malaysia (GMT +8)*). Supersedes the 7 September “Cyberjaya first” acceptance gate. Detail: [lesotho-pilot.md](lesotho-pilot.md) · screenshot inventory: [../backend/old-cms-lesotho.md](../backend/old-cms-lesotho.md) · diagram analysis: [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html).
+
+### Why Lesotho (from the meeting)
+
+| Reason | What the Working Group said |
+|---|---|
+| **Sponsor priority** | Faid relayed the sponsor wants a **Lesotho-first launch**, not Cyberjaya-first, plus **weekly progress percentages** for reporting. |
+| **Revenue / adoption** | Lesotho remains the priority campus for **securing revenue**. A simultaneous all-campus rollout was called unachievable in the current state. |
+| **Government requirements** | Raisd must meet **Lesotho government** requirements (e.g. NMDS sponsorship, LGCSE admissions evidence) and be **at least equivalent** to the campus’s existing newer CMS. |
+| **Feature benchmark** | Lesotho’s **newer Admin + Student CMS** is comprehensive; its features are the parity checklist (screenshots only — staging holds real student data, so source/DB cannot be shared). |
+| **Pilot framing** | Explicitly framed as a **pilot project** with other campuses continuing in parallel; near-term **Eswatini** may follow. |
+| **Migration SoT** | Use **Raisd canonical schema + Lesotho CMS materials** (old dump when Vara shares it + new-CMS screenshots) — **not** the inaccessible new-system schema/source. |
+
+WhatsApp follow-up (same day): Faid shared newer-CMS screenshots; Vara noted Lesotho’s **old** CMS is family-tree closer to **Botswana** / branched from Cyberjaya.
+
 ## Intent
 
-Four role portals on top of the **existing campus CMS family**, not a greenfield replacement of every legacy function. **Lesotho** is the first acceptance / pilot campus (Working Group, 3 October 2026).
+Four role portals on top of the **existing campus CMS family**, not a greenfield replacement of every legacy function. **Lesotho** is the first acceptance / pilot campus.
 
 ## ADR-1 — Existing CMS as initial backend (this phase)
 
 **Confirmed 23 September 2026 (Aslam / Working Group):** for this phase, use the existing campus CMS as system of record and build modern portal experiences via the **Portal API**. Do **not** duplicate operational staff functions that the old CMS already runs.
 
-**Pilot campus update — 3 October 2026 (Working Group weekly):** first launch / acceptance focus shifts from Cyberjaya to **Lesotho**. Lesotho’s newer CMS is the feature benchmark (screenshots); migration uses Raisd canonical schema + Lesotho CMS materials (old dump pending from Vara). Detail: [lesotho-pilot.md](lesotho-pilot.md).
+**Pilot campus update — 3 October 2026:** first launch / acceptance focus is **Lesotho**. Lesotho’s newer CMS is the feature benchmark; migration uses Raisd canonical schema + Lesotho CMS materials (old dump pending from Vara).
 
 Consequences:
 
@@ -70,6 +88,9 @@ The deepest UI is the **student-portal** Demo frontend (milestone 3 depth). Prod
 
 | Topic | Document |
 |---|---|
+| Lesotho pilot (why + rules) | [lesotho-pilot.md](lesotho-pilot.md) |
+| Lesotho CMS features (screenshots) | [../backend/old-cms-lesotho.md](../backend/old-cms-lesotho.md) |
+| Lesotho diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
 | Integration contract, auth, files, mobile | [SDD-02](../../sdd/02-architecture-and-integration.md) |
 | Hosts, DNS, k3s stages | [deployment.md](deployment.md), [SDD-12](../../sdd/12-deployment-architecture.md) |
 | PoC Vercel + Neon (not production) | [vercel-neon-poc.md](vercel-neon-poc.md) |

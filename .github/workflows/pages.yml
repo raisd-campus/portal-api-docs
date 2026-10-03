@@ -74,6 +74,7 @@ jobs:
           test -f _site/diagrams/old-cms-botswana/index.html
           test -f _site/diagrams/old-cms-botswana/database.html
           test -f _site/diagrams/old-cms-sierra-leone/index.html
+          test -f _site/diagrams/old-cms-lesotho/index.html
           test -f _site/ai/index.html
           test -f _site/poc/vercel-neon.html
           test -f _site/sdd/15-nomenclature.html

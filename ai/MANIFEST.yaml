@@ -34,6 +34,7 @@ notes:
   - 2026-10-02: db-admin ERD tab colours CMS / LMS / shared domains, domain filter, and LMS IRREGULAR stems (aligned with lms-schema.md).
   - 2026-10-02: Portal API LMS surface — OpenAPI tag `LMS`, `GET /v1/meta/lms` catalogue (callable Materials/assignment/lecturer-review + deferred CAP gaps); openapi 0.4.1.
   - 2026-10-03: Working Group weekly — Lesotho first pilot (supersedes Cyberjaya-first gate). architecture/lesotho-pilot.md + backend/old-cms-lesotho.md; SDD-00/01/02/03/09/10/14/15 updated; M4 = Lesotho pilot acceptance.
+  - 2026-10-03: Lesotho newer-CMS screenshot pack analysed (WhatsApp); diagram hub docs/diagrams/old-cms-lesotho/; overview + lesotho-pilot.md emphasise sponsor/revenue/gov reasons from Read.ai.
 
 entrypoints:
   agents: AGENTS.md
@@ -101,8 +102,9 @@ backend:
     confirmations: ../diagrams/canonical-schema-confirmations.html
     note: Schema v3 campus policy layer done (Demo); CS-01–CS-11 = per-campus Live confirmation; CS-12 Demo FKs deferred; CS-13 incremental report migration. See §0 / §6 / §7.
   - path: backend/old-cms-lesotho.md
-    topics: [existing-cms, lesotho, pilot, m4, inventory, screenshots, nmds, admissions, registry]
+    topics: [existing-cms, lesotho, pilot, m4, inventory, screenshots, nmds, admissions, registry, lgcse, rbac]
     related: architecture/lesotho-pilot.md
+    pages: ../diagrams/old-cms-lesotho/
     note: Newer CMS screenshot inventory + old dump pending (Vara); first pilot campus 3 Oct 2026.
   - path: backend/old-cms-cyberjaya.md
     topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker, e2e, erd, dfd, integrations, adr-1]
@@ -183,6 +185,8 @@ diagrams:
       - ../diagrams/old-cms-botswana/_proc-catalog.txt
       - ../diagrams/old-cms-botswana/_table-catalog.txt
       - ../diagrams/old-cms-botswana/_view-catalog.txt
+  - path: ../diagrams/old-cms-lesotho/index.html
+    topics: [lesotho, pilot, m4, screenshots, admissions, registry, nmds, lgcse, feature-analysis]
 
 frontend:
   student-portal:

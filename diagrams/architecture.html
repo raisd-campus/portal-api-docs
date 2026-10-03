@@ -83,6 +83,16 @@
           <a class="nav-dd-main" href="old-cms/index.html">LUCT CMS</a>
           <div class="nav-dd-menu" role="menu">
             <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="old-cms-lesotho/index.html#cap">CAP seed</a>
+              </div>
+            </div>
+            <div class="nav-sub">
               <a class="nav-sub-trigger" href="old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
               <div class="nav-sub-menu" role="menu">
               <a href="old-cms/index.html">E2E hub</a>
@@ -169,10 +179,14 @@
     <section class="hero">
       <h1>Architecture review — <a href="./old-cms/">LUCT CMS</a> / Portal compatibility</h1>
       <p>
-        Guidance incorporated from <a href="./old-cms/">LUCT CMS</a> and Student Portal operational experience.
+        <strong>Pilot project: Lesotho</strong> (Working Group, 3 Oct 2026) —
+        first acceptance campus; newer CMS screenshots are the feature benchmark;
+        see <a href="./old-cms-lesotho/">Lesotho feature analysis</a> and
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>.
+        Guidance also incorporates <a href="./old-cms/">Cyberjaya LUCT CMS</a> and Student Portal operational experience.
         Keep the canonical domain clean; concentrate legacy complexity in the CMS
-        anti-corruption boundary (CAP-53). <strong>This phase (confirmed 23 Sep 2026):</strong>
-        existing Cyberjaya CMS remains System of Record; portals via Portal API; do not
+        anti-corruption boundary (CAP-53). <strong>This phase (confirmed 23 Sep 2026; pilot campus updated 3 Oct):</strong>
+        existing campus CMS family remains System of Record; portals via Portal API; do not
         duplicate operational desks. Longer term: progressive unified one-stop CMS on
         verified gaps + migration strategy
         (<a href="./old-cms/comparison.html#target">target delivery</a>).
@@ -181,6 +195,7 @@
         Portals never talk to CMS / Postgres / files directly.
       </p>
       <div class="meta-row">
+        <span class="chip ok">Pilot: Lesotho (M4)</span>
         <span class="chip ok">This phase: CMS = SoR</span>
         <span class="chip ok">Clean canonical inside</span>
         <span class="chip warn">Ugly legacy translation outside</span>
@@ -226,7 +241,7 @@
                 <tr>
                   <td><a href="../sdd/02-architecture-and-integration.html#adr-1">ADR-1</a></td>
                   <td>Existing CMS as initial backend</td>
-                  <td>Cyberjaya / LUCT CMS remains SoR this phase; portals via Portal API; do not duplicate operational desks. Progressive unified CMS is M5+ on verified gaps.</td>
+                  <td>Campus CMS family remains SoR this phase; portals via Portal API; do not duplicate operational desks. <strong>Pilot acceptance campus = Lesotho (3 Oct 2026)</strong>. Progressive unified CMS is M5+ on verified gaps.</td>
                   <td><a href="../sdd/02-architecture-and-integration.html">SDD-02</a></td>
                 </tr>
                 <tr>

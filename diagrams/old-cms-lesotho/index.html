@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Lesotho CMS pilot feature analysis</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Control Plane</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../distributed-cms-architecture.html">Target architecture</a>
+            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="index.html">Feature analysis</a>
+              <a href="index.html#why">Why pilot</a>
+              <a href="index.html#admissions">Admissions</a>
+              <a href="index.html#registry">Registry / NMDS</a>
+              <a href="index.html#cap">CAP seed</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms-botswana/index.html#dtef">DTEF</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>Lesotho CMS — pilot feature analysis</h1>
+      <p>
+        <strong>Pilot project campus</strong> for Raisd (Working Group, 3 Oct 2026).
+        Reverse-engineered from Faid’s newer Admin / Student CMS screenshots
+        (WhatsApp Working Group CMS 2026). No DB dump yet — this page is a
+        <strong>capability / flow analysis</strong>, not a physical ERD.
+        Old CMS family tree ≈ Botswana / Cyberjaya (Vara).
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">M4 pilot acceptance</span>
+        <span class="chip ok">Screenshot SoT</span>
+        <span class="chip ok">NMDS + LGCSE</span>
+        <span class="chip warn">Old dump pending</span>
+        <span class="chip">limkokwing.ac.ls</span>
+      </div>
+    </section>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Why Lesotho (Read.ai, 3 Oct 2026).</strong>
+      Sponsor wants Lesotho-first (not Cyberjaya-first) plus weekly % progress;
+      Lesotho is the revenue / adoption priority; Raisd must meet government
+      requirements and match the campus’s newer CMS; framed as a
+      <em>pilot project</em> with other campuses in parallel (Eswatini may follow).
+      Full rationale:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>
+      · overview highlight:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">overview.md</a>.
+    </div>
+
+    <div class="note warn" style="margin: 0 0 16px">
+      <strong>PII boundary.</strong>
+      Screenshots contain live student / applicant data. They are
+      <em>not</em> committed to the repo. Inventory text only:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a>.
+    </div>
+
+    <nav class="toc" aria-label="Lesotho CMS sections">
+      <a href="#why"><strong>1. Why pilot</strong><span>Meeting reasons · M4</span></a>
+      <a href="#systems"><strong>2. Two systems</strong><span>Newer CMS vs old LUCT</span></a>
+      <a href="#map"><strong>3. Feature map</strong><span>Admin + student surfaces</span></a>
+      <a href="#admissions"><strong>4. Admissions flow</strong><span>LGCSE · 3-step review · Loti</span></a>
+      <a href="#registry"><strong>5. Registry / academics</strong><span>Transcript · card · NMDS</span></a>
+      <a href="#graduation"><strong>6. Graduation clearance</strong><span>Multi-dept wizard</span></a>
+      <a href="#student"><strong>7. Student portal</strong><span>Card grid journeys</span></a>
+      <a href="#rbac"><strong>8. Positions / RBAC</strong><span>CRUD by module</span></a>
+      <a href="#cap"><strong>9. CAP seed</strong><span>Parity checklist</span></a>
+      <a href="#compare"><strong>10. Campus compare</strong><span>vs BW · CY · SL</span></a>
+    </nav>
+
+    <section class="section" id="why">
+      <h2>1. Why Lesotho is the pilot</h2>
+      <p class="lead">
+        Source: Read.ai summary of the Working Group weekly meeting
+        (email, Sat 3 Oct 2026) + WhatsApp follow-up the same day.
+      </p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  SP[Sponsor directive<br/>Lesotho-first + weekly %]
+  RV[Revenue / adoption<br/>priority campus]
+  GOV[Government requirements<br/>NMDS · LGCSE · fees]
+  BEN[Newer CMS = feature<br/>benchmark / parity bar]
+  MIG[Migration SoT =<br/>Raisd schema + Lesotho materials]
+  PILOT[M4 Lesotho pilot<br/>acceptance]
+  SP --> PILOT
+  RV --> PILOT
+  GOV --> PILOT
+  BEN --> PILOT
+  MIG --> PILOT
+  PILOT --> M5[M5 expansion<br/>Cyberjaya · Eswatini · BW · SL]
+          </pre>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Driver</th><th>Implication for Raisd</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sponsor Lesotho-first</td><td>Acceptance gate moves from Cyberjaya to Lesotho (<a href="../../sdd/03-delivery-milestones.html#m4">M4</a>)</td></tr>
+            <tr><td>Revenue / adoption</td><td>Demonstrate government-ready journeys before multi-campus push</td></tr>
+            <tr><td>Parity with newer CMS</td><td>Screenshot checklist seeds staff + applicant + student scope</td></tr>
+            <tr><td>No shareable new schema</td><td>Reverse-engineer UX/capabilities; wait for old dump + sanitised blueprint</td></tr>
+            <tr><td>Parallel campuses</td><td>Do not freeze Cyberjaya / BW / SL inventory work — they stay M5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="systems">
+      <h2>2. Two Lesotho systems</h2>
+      <p class="lead">
+        Campus already runs a <strong>newer</strong> Admin + Student CMS while extracting
+        data from the <strong>older</strong> LUCT-family CMS.
+      </p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  OLD[Older LUCT CMS<br/>PHPMaker family<br/>dump TBC · ≈ Botswana]
+  NEW[Newer Lesotho CMS<br/>Admin + Student<br/>screenshots only]
+  RAISD[Raisd portals<br/>via Portal API]
+  SCHEMA[Raisd Schema v3<br/>+ Lesotho materials]
+  OLD -->|data extract| NEW
+  NEW -->|feature benchmark| RAISD
+  OLD -.->|adapter when dump lands| RAISD
+  SCHEMA --> RAISD
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="map">
+      <h2>3. Feature map (newer CMS)</h2>
+      <p class="lead">Surfaces observed in the 3 Oct screenshot pack — not a claim of Raisd Live.</p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+mindmap
+  root((Lesotho newer CMS))
+    Registry
+      Students ~22k
+      Registration
+      Graduations
+      Clearance queue
+      Remark requests
+      Referrals
+      Curriculum schools
+    Admissions
+      Review 3-step
+      Applicants
+      Document review
+      Payments Loti
+      Intake settings
+      Pricing
+    Faculty
+      Modules
+      Attendance
+      Assessment types
+      Timetable / venues
+      FiveDays LMS link
+    Admin
+      Users
+      Positions RBAC
+      Calendars
+      Notifications
+      Activity tracker
+    Student portal
+      Registration
+      Curriculum
+      Finance
+      Assessments
+      Timetable
+      Results
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="admissions">
+      <h2>4. Admissions flow</h2>
+      <p class="lead">
+        January 2026 intake sample: rank + score, LGCSE document extract (incl. Sesotho),
+        Academic → QA → Registrar recommendations, payment verified in <strong>M</strong> (Loti).
+      </p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  APP[Applicant record<br/>program · score · rank]
+  DOC[Document Review<br/>LGCSE scan + extract]
+  REV[Admissions Review]
+  AC[Academic recommend]
+  QA[QA recommend]
+  REG[Registrar recommend]
+  PAY[Admissions payment<br/>VERIFIED · Loti]
+  ACC[Accepted / enrolled]
+  APP --> DOC
+  APP --> REV
+  DOC --> REV
+  REV --> AC --> QA --> REG
+  PAY --> ACC
+  REG --> ACC
+          </pre>
+        </div>
+      </div>
+      <ul>
+        <li>Review analytics: Pending / Recommended / Not Recommended; applications by school (FBMG, FICT, FABE, FCM, FFLD).</li>
+        <li>Document Review queue was large in the sample (~3945) — evidence-heavy admissions.</li>
+        <li>Applicant detail tabs: Overview · Academic Records · Documents · Notes &amp; Comments · History.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="registry">
+      <h2>5. Registry, academics, card, NMDS</h2>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  LIST[Student master list]
+  PROF[Profile · Student tab]
+  ACAD[Academics<br/>GPA / CGPA / modules]
+  PRINT[Statement of Results<br/>signature · stamp · QR]
+  CARD[Student Card<br/>photo · LUCT LESOTHO]
+  NMDS[Sponsors · NMDS<br/>borrower · terms]
+  LIST --> PROF
+  LIST --> ACAD
+  ACAD --> PRINT
+  LIST --> CARD
+  LIST --> NMDS
+          </pre>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Academics:</strong> term blocks with Cr / Mk / Gd; Drop vs Compulsory; outstanding modules on Programme Summary.</li>
+        <li><strong>Card:</strong> upload / camera; print history; campus return text for Lesotho Campus.</li>
+        <li><strong>NMDS:</strong> government sponsorship desk — Lesotho-specific analogue to Botswana DTEF (different agency).</li>
+      </ul>
+    </section>
+
+    <section class="section" id="graduation">
+      <h2>6. Graduation clearance</h2>
+      <p class="lead">Large clearance queue; multi-department gates before ceremony.</p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  Q[Graduation Clearance queue]
+  W[Wizard step e.g. Ceremony]
+  A[Academic clearance]
+  F[Finance clearance]
+  DEC{Staff Approve / Reject}
+  MSG[Message e.g. gown / fee]
+  Q --> W
+  W --> A
+  W --> F
+  A --> DEC
+  F --> DEC
+  DEC --> MSG
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="student">
+      <h2>7. Student portal</h2>
+      <p class="lead">Dark card-grid home; registration history by term (Aug 2023 → Feb 2026 sample).</p>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  HOME[Home<br/>program · year · CGPA · modules]
+  HOME --> REG[Registration]
+  HOME --> CUR[Curriculum]
+  HOME --> FIN[Finance]
+  HOME --> ASM[Assessments]
+  HOME --> TT[Timetable]
+  HOME --> RES[Results]
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rbac">
+      <h2>8. Positions / RBAC</h2>
+      <p class="lead">
+        ~23 positions (Library HOD, Registrar, Registry HOD, Faculty Manager, Program Leader, Marketing Staff, …).
+        Permissions are module-scoped with Read / Create / Update / Delete (e.g. Registry Students Read-only vs Student Notes full CRUD).
+      </p>
+    </section>
+
+    <section class="section" id="cap">
+      <h2>9. CAP seed for pilot parity</h2>
+      <p class="lead">
+        Full table in
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a>.
+        Highlight for M2–M4:
+      </p>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Lesotho newer CMS</th><th>Raisd CAP focus</th><th>Pilot bar</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Admissions review + LGCSE docs + Loti pay</td><td>CAP-02–06, CAP-03</td><td>Must match campus workflow</td></tr>
+            <tr><td>Student registry + academics print</td><td>CAP-10–16</td><td>Statement of results + stamp/QR</td></tr>
+            <tr><td>Graduation clearance</td><td>CAP-15</td><td>Multi-dept + fee gate</td></tr>
+            <tr><td>NMDS sponsors</td><td>CAP-48</td><td>Lesotho government sponsorship</td></tr>
+            <tr><td>Remark / referrals</td><td>CAP-51 + ops</td><td>Queue workflows</td></tr>
+            <tr><td>Student portal grid</td><td>Student Demo → Live</td><td>Registration … Results</td></tr>
+            <tr><td>CMS adapter / SoR path</td><td>CAP-53</td><td>TBC after old dump</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <h2>10. Campus comparison (role)</h2>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  LS["Lesotho<br/>M4 pilot · screenshot SoT<br/>NMDS · LGCSE"]
+  CY["Cyberjaya<br/>richest dump · M5<br/>cmscbj"]
+  BW["Botswana<br/>M5 · DTEF/TEF<br/>≈ old Lesotho family"]
+  SL["Sierra Leone<br/>M5 · EMS pattern"]
+  LS -->|acceptance first| RAISD[Raisd Portals]
+  CY -.-> RAISD
+  BW -.->|family tree hint| LS
+  SL -.-> RAISD
+          </pre>
+        </div>
+      </div>
+      <ul>
+        <li><a href="../old-cms/index.html">Cyberjaya E2E hub</a> — technical SoR inventory for LUCT PHPMaker.</li>
+        <li><a href="../old-cms-botswana/index.html">Botswana E2E hub</a> — closest old-CMS cousin + DTEF gov sync pattern.</li>
+        <li><a href="../old-cms-sierra-leone/index.html">Sierra Leone E2E hub</a> — EMS sibling for M5.</li>
+        <li><a href="../migration.html#m4">Migration M4 — Lesotho pilot</a>.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <p class="footer">
+    Inventory:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a>
+    · Pilot approach:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>
+    · Sources: Read.ai WG weekly 3 Oct 2026 · WhatsApp screenshots (not in repo)
+  </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+</body>
+</html>
