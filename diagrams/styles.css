@@ -344,16 +344,29 @@ main {
   height: auto !important;
   min-height: 0 !important;
 }
-/* Keep the milestone bar chart compact so x-axis labels and legend stay readable */
+/* Bar chart: room for axis labels; colour legend lives in HTML below (not clipped in SVG) */
+.progress-charts .card.progress-chart-wide:has(.progress-barchart) {
+  overflow: visible;
+}
+.progress-charts .card.progress-chart-wide:has(.progress-barchart) .card-body {
+  overflow: visible;
+}
 .progress-charts .progress-barchart {
-  max-width: 720px;
-  margin: 0 auto 4px;
+  max-width: 860px;
+  margin: 0 auto 8px;
+  padding: 8px 16px 28px 12px;
+  overflow: visible;
+}
+.progress-charts .progress-barchart .mermaid {
+  line-height: normal;
   overflow: visible;
 }
 .progress-charts .progress-barchart .mermaid svg {
-  max-height: 360px;
   width: 100% !important;
+  max-width: 860px !important;
   height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 /* gantt viewBox is narrow (~300px); width:100% makes it absurdly tall — cap it */
 .progress-charts .card-body .mermaid svg[aria-roledescription="gantt"],
@@ -365,10 +378,19 @@ main {
 .progress-charts .series-swatches {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 22px;
-  margin: 8px 0 0;
+  align-items: center;
+  gap: 10px 20px;
+  margin: 4px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #f7fafc;
   font-size: 0.92rem;
   color: var(--ink);
+}
+.progress-charts .series-swatches-label {
+  margin-right: 4px;
+  font-size: 0.88rem;
 }
 .progress-charts .series-swatch {
   display: inline-flex;

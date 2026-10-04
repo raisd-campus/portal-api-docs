@@ -5,7 +5,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Control Plane — Overview</title>
-  <link rel="stylesheet" href="./styles.css?v=progress-charts-4" />
+  <link rel="stylesheet" href="./styles.css?v=progress-charts-5" />
   <script src="site-auth.js"></script>
 </head>
 <body>
@@ -254,7 +254,7 @@
           <div class="card-body">
             <div class="progress-barchart">
               <pre class="mermaid">
-%%{init: {'xyChart': {'width': 720, 'height': 360, 'showTitle': true, 'showLegend': true, 'legendFontSize': 14, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 55}, 'themeVariables': {'xyChart': {'plotColorPalette': '#1a4f8b, #2f9e6f'}}}}%%
+%%{init: {'xyChart': {'width': 860, 'height': 480, 'showTitle': true, 'showLegend': false, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 40, 'titleFontSize': 16, 'titlePadding': 14, 'xAxis': {'labelFontSize': 15, 'labelPadding': 12}, 'yAxis': {'labelFontSize': 14, 'labelPadding': 12, 'titleFontSize': 15, 'titlePadding': 12}}, 'themeVariables': {'xyChart': {'plotColorPalette': '#1a4f8b, #2f9e6f'}}}}%%
 xychart-beta
   title "Milestone progress %"
   x-axis [M1, M2, M3, M4, M5]
@@ -264,6 +264,7 @@ xychart-beta
               </pre>
             </div>
             <div class="series-swatches" aria-label="Bar chart colour key">
+              <strong class="series-swatches-label">Colour key</strong>
               <span class="series-swatch"><i class="swatch swatch-fe" aria-hidden="true"></i> FE started %</span>
               <span class="series-swatch"><i class="swatch swatch-platform" aria-hidden="true"></i> Platform readiness %</span>
             </div>
@@ -1476,13 +1477,15 @@ flowchart LR
       },
       flowchart: { curve: "basis", htmlLabels: true },
       xyChart: {
-        width: 720,
-        height: 360,
+        width: 860,
+        height: 480,
         titleFontSize: 16,
-        labelFontSize: 13,
-        showLegend: true,
-        legendFontSize: 14,
-        plotReservedSpacePercent: 55,
+        titlePadding: 14,
+        labelFontSize: 14,
+        showLegend: false,
+        plotReservedSpacePercent: 40,
+        xAxis: { labelFontSize: 15, labelPadding: 12 },
+        yAxis: { labelFontSize: 14, labelPadding: 12, titleFontSize: 15, titlePadding: 12 },
       },
       pie: {
         textPosition: 0.5,
