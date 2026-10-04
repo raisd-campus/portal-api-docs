@@ -345,37 +345,80 @@ xychart-beta
         <div class="card progress-chart-wide">
           <div class="card-head">
             <div>
-              <h3>Line — cumulative readiness over WG weeks</h3>
-              <p>Platform work rising; Live stays at zero until CMS-backed acceptance.</p>
+              <h3>Cumulative readiness over WG weeks</h3>
+              <p>Platform work rising; Live stays at zero until CMS-backed acceptance. Dates are Working Group checkpoints, not a committed delivery calendar.</p>
             </div>
           </div>
           <div class="card-body">
-            <pre class="mermaid">
-%%{init: {'xyChart': {'width': 1100, 'height': 720, 'showTitle': true, 'showLegend': false, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 80}}}%%
-xychart-beta
-  title "Cumulative readiness %"
-  x-axis ["18 Sep", "22 Sep", "25 Sep", "1 Oct", "3 Oct", "5 Oct"]
-  y-axis "%" 0 --> 100
-  line "Platform readiness" [15, 30, 45, 55, 60, 65]
-  line "FE started (sheet)" [31, 31, 31, 31, 31, 31]
-  line "Checklist Live" [0, 0, 0, 0, 0, 0]
-            </pre>
-            <div class="legend" aria-label="Line chart legend">
+            <div class="table-wrap">
+              <table class="attr" aria-label="Cumulative readiness over WG weeks">
+                <thead>
+                  <tr>
+                    <th>WG date</th>
+                    <th>Platform readiness</th>
+                    <th>FE started (sheet)</th>
+                    <th>Checklist Live</th>
+                    <th>What changed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>18 Sep 2026</td>
+                    <td><strong>~15%</strong></td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Architecture / WG kickoff context; FE snapshot already at ~31% from student Demo/Partial rows.</td>
+                  </tr>
+                  <tr>
+                    <td>22 Sep 2026</td>
+                    <td><strong>~30%</strong></td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Campus inventories and dump analysis underway; FE sheet unchanged.</td>
+                  </tr>
+                  <tr>
+                    <td>25 Sep 2026</td>
+                    <td><strong>~45%</strong></td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Schema v3 Demo and Portal API / CAP-53 Partial strengthen platform readiness; FE still flat.</td>
+                  </tr>
+                  <tr>
+                    <td>1 Oct 2026</td>
+                    <td><strong>~55%</strong></td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Docs and campus baselines deepen; no Live checklist movement.</td>
+                  </tr>
+                  <tr>
+                    <td>3 Oct 2026</td>
+                    <td><strong>~60%</strong></td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Lesotho pilot decided; screenshot inventory and DB gap probe start to land.</td>
+                  </tr>
+                  <tr>
+                    <td>5 Oct 2026</td>
+                    <td><strong>~65%</strong></td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Current estimate: platform ~65%, FE started still 31% (19 Sep sheet), Live still 0%.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="legend" aria-label="Readiness table series key" style="margin-top:12px">
               <div class="legend-item">
                 <strong>Platform readiness</strong>
-                <span>Rising with architecture review, campus dumps, Schema v3, Lesotho pilot analysis (18 Sep → 5 Oct).</span>
+                <span>Estimate rising with architecture review, campus dumps, Schema v3, and Lesotho pilot analysis (18 Sep → 5 Oct) — not acceptance.</span>
               </div>
               <div class="legend-item">
                 <strong>FE started (sheet)</strong>
-                <span>Flat at ~31% — checklist frontend statuses have not moved since the 19 Sep snapshot.</span>
+                <span>Flat at <strong>31%</strong> — checklist frontend statuses have not moved since the 19 Sep snapshot.</span>
               </div>
               <div class="legend-item">
                 <strong>Checklist Live</strong>
-                <span>Stays at 0% — Demo/Partial/Placeholder do not count as complete.</span>
-              </div>
-              <div class="legend-item">
-                <strong>X-axis weeks</strong>
-                <span>Working Group milestones in September–October 2026, not a committed delivery calendar.</span>
+                <span>Stays at <strong>0%</strong> — Demo/Partial/Placeholder do not count as complete.</span>
               </div>
             </div>
           </div>
