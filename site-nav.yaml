@@ -154,6 +154,7 @@ menu:
     active: [overview]
     children:
       - { label: Diagrams hub, href: overview }
+      - { label: Project progress, href: "overview#progress" }
       - { label: Public endpoints, href: "overview#endpoints" }
       - { label: Distributed CMS, href: distributed }
       - { label: Architecture, href: architecture }
@@ -324,6 +325,12 @@ search:
     section: Overview
     summary: Diagrams hub for Control Plane — architecture maps, public endpoints, CMS inventories, and entry points to SDD and OpenAPI.
     keywords: [home, hub, diagrams, start, endpoints, urls, routes, api, public]
+
+  - title: Project progress
+    href: "overview#progress"
+    section: Overview
+    summary: High-level Raisd progress percentages — Live, frontend started, platform readiness, pending, blockers, timeline charts (bar, line, pie, gantt).
+    keywords: [progress, percent, percentage, timeline, gantt, chart, blocker, pending, milestone, weekly, sponsor]
 
   - title: Distributed CMS target
     href: distributed

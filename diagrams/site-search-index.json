@@ -19,6 +19,25 @@
       "path": "diagrams/index.html"
     },
     {
+      "title": "Project progress",
+      "summary": "High-level Raisd progress percentages \u2014 Live, frontend started, platform readiness, pending, blockers, timeline charts (bar, line, pie, gantt).",
+      "section": "Overview",
+      "keywords": [
+        "progress",
+        "percent",
+        "percentage",
+        "timeline",
+        "gantt",
+        "chart",
+        "blocker",
+        "pending",
+        "milestone",
+        "weekly",
+        "sponsor"
+      ],
+      "path": "diagrams/index.html#progress"
+    },
+    {
       "title": "Distributed CMS target",
       "summary": "Ideal multi-country Raisd CMS with distributed data planes, white-label packs, and feature flags.",
       "section": "Distributed CMS",

@@ -21,6 +21,7 @@
           <a class="nav-dd-main active" href="index.html">Overview</a>
           <div class="nav-dd-menu" role="menu">
             <a href="index.html">Diagrams hub</a>
+            <a href="index.html#progress">Project progress</a>
             <a href="index.html#endpoints">Public endpoints</a>
             <a href="distributed-cms-architecture.html">Distributed CMS</a>
             <a href="architecture.html">Architecture</a>
@@ -193,12 +194,13 @@
         <span class="chip ok">Pilot: Lesotho (M4)</span>
         <span class="chip ok">This phase: campus CMS family = SoR</span>
         <span class="chip ok">Four portals via Portal API</span>
-        <span class="chip warn">Do not rebuild working staff desks</span>
+        <span class="chip warn">Live checklist: 0%</span>
         <span class="chip">Ideal: one CMS · country DBs</span>
       </div>
     </section>
 
     <nav class="toc" aria-label="On this page">
+      <a href="#progress"><strong>Project progress</strong><span>% · charts · timeline</span></a>
       <a href="#exec"><strong>Executive summary</strong><span>In one minute</span></a>
       <a href="#pilot"><strong>Lesotho pilot</strong><span>Why · M4 · analysis</span></a>
       <a href="#architecture"><strong>Architecture</strong><span>This-phase picture</span></a>
@@ -208,6 +210,198 @@
       <a href="#migration"><strong>Migration stages</strong><span>M1 through Ideal</span></a>
       <a href="#explore"><strong>Explore further</strong><span>Diagrams, SDD, API</span></a>
     </nav>
+
+    <section class="section" id="progress">
+      <h2>Project progress (high level)</h2>
+      <p class="lead">
+        Snapshot for sponsor weekly % reporting. Checklist figures from
+        <a href="../sdd/13-progress-timeline.html">SDD-13</a> (sheet 19 Sep 2026).
+        Platform readiness includes work since then (Schema v3, Portal API docs, Lesotho pilot inventory).
+        <strong>Live = 0%</strong> until durable CMS-backed journeys pass acceptance.
+      </p>
+
+      <div class="progress-kpis" aria-label="High-level percentages">
+        <div class="progress-kpi warn">
+          <span>Checklist Live</span>
+          <strong>0%</strong>
+          <span>0 of 112 rows Live</span>
+        </div>
+        <div class="progress-kpi">
+          <span>Frontend started</span>
+          <strong>31%</strong>
+          <span>32 of 103 applicable (Demo/Partial)</span>
+        </div>
+        <div class="progress-kpi ok">
+          <span>Platform readiness</span>
+          <strong>~65%</strong>
+          <span>Schema · API · docs · inventories</span>
+        </div>
+        <div class="progress-kpi">
+          <span>Lesotho pilot (M4)</span>
+          <strong>~20%</strong>
+          <span>Decided · analysed · not Live</span>
+        </div>
+      </div>
+
+      <div class="progress-charts">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>Bar — milestone progress %</h3>
+              <p>Frontend started vs estimated platform readiness (not Live).</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <pre class="mermaid">
+xychart-beta
+  title "Milestone progress %"
+  x-axis [M1, M2, M3, M4, M5]
+  y-axis "%" 0 --> 100
+  bar "FE started %" [0, 22, 31, 0, 35]
+  bar "Platform readiness %" [45, 20, 40, 20, 25]
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>Line — cumulative readiness over WG weeks</h3>
+              <p>Platform work rising; Live stays at zero until CMS-backed acceptance.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <pre class="mermaid">
+xychart-beta
+  title "Cumulative readiness %"
+  x-axis ["18 Sep", "22 Sep", "25 Sep", "1 Oct", "3 Oct", "5 Oct"]
+  y-axis "%" 0 --> 100
+  line "Platform readiness" [15, 30, 45, 55, 60, 65]
+  line "FE started (sheet)" [31, 31, 31, 31, 31, 31]
+  line "Checklist Live" [0, 0, 0, 0, 0, 0]
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>Pie — work mix (applicable rows)</h3>
+              <p>M2 + M3 + M5 frontend rows · Live slice is empty today.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <pre class="mermaid">
+pie showData
+  title Applicable frontend rows (Live = 0, omitted)
+  "Started Demo/Partial" : 32
+  "Not started" : 71
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>Gantt — delivery sequence (order only)</h3>
+              <p>Kickoff and every target week on the sheet are still <strong>TBC</strong>.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <pre class="mermaid">
+gantt
+  title Sequence only — dates illustrative, not agreed calendar
+  dateFormat YYYY-MM-DD
+  axisFormat %d %b
+  section Milestones
+  M1 Confirm rules and integration     :m1, 2026-09-21, 14d
+  M2 Admissions launch                 :m2, after m1, 28d
+  M3 Core student portal               :m3, after m2, 28d
+  M4 Lesotho pilot acceptance          :crit, m4, after m3, 21d
+  M5 Campus expansion                  :m5, after m4, 28d
+  section Parallel foundation
+  Schema v3 + Portal API docs          :done, p1, 2026-09-21, 14d
+  Campus CMS inventories               :done, p2, 2026-09-24, 10d
+  Lesotho screenshot + DB gap probe    :active, p3, 2026-10-03, 14d
+  Lesotho old CMS dump                 :crit, p4, 2026-10-06, 14d
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Status</th><th>Item</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="chip ok">Done / strong</span></td>
+              <td>ADR-1 · Schema v3 Demo · ERD/DFD · campus inventories · Lesotho pilot decision</td>
+              <td>Architecture and evidence base ready for integration design</td>
+            </tr>
+            <tr>
+              <td><span class="chip">In progress</span></td>
+              <td>Portal API · applicant portal UI · student Demo screens · CAP-53 Partial</td>
+              <td>Frontend ahead of Live CMS writes; admissions applicant/staff not started</td>
+            </tr>
+            <tr>
+              <td><span class="chip warn">Pending</span></td>
+              <td>Owners + target weeks · backend off “Needs checking” · M2 applicant/staff CAP rows · Lesotho old dump</td>
+              <td>All 112 sheet owners/dates still TBC (SDD-13)</td>
+            </tr>
+            <tr>
+              <td><span class="chip warn">Blockers</span></td>
+              <td>No Live CMS path yet · Lesotho SoR path undecided · NMDS≠DTEF unknown · no shareable newer-CMS schema</td>
+              <td>Block Live M2–M4 until ACL + campus materials unblock</td>
+            </tr>
+            <tr>
+              <td><span class="chip ok">To achieve</span></td>
+              <td>M1 freeze → M2 admissions Live → M3 core student Live → <strong>M4 Lesotho pilot accept</strong> → M5 expand</td>
+              <td>Parity with Lesotho newer CMS (NMDS, LGCSE, clearance, Loti)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note" style="margin: 16px 0">
+        <strong>How to read the charts.</strong>
+        <strong>Bar:</strong> per-milestone share of frontend started (from the checklist) versus estimated platform readiness
+        (schema, API, docs, inventories). M1/M4 have almost no frontend rows — readiness is operating/rules/pilot work.
+        <strong>Line:</strong> since mid-September the team raised platform readiness (architecture, Schema v3, dumps, Lesotho analysis)
+        while checklist Live stayed at 0% and FE-started stayed flat at ~31% (sheet unchanged).
+        <strong>Pie:</strong> of applicable frontend rows, about one-third have a Demo/Partial start; none are Live.
+        <strong>Gantt:</strong> shows agreed <em>order</em> (M1→M5) and parallel foundation tracks; bar lengths are illustrative —
+        the Working Group has not locked kickoff or target weeks.
+      </div>
+
+      <div class="note warn" style="margin: 0 0 16px">
+        <strong>Pending (next actions).</strong>
+        Name owners and target weeks on the checklist; move backend off Needs checking;
+        finish applicant + staff halves of admissions (CAP-02–07); wire CAP-53 to a real campus CMS;
+        receive Lesotho old CMS structure dump (Vara); confirm Live SoR path for Lesotho
+        (old-CMS adapter vs Schema cutover); seed NMDS / LGCSE / LSL campus policy — not Cyberjaya EMGS or Botswana TEF by default.
+      </div>
+
+      <div class="note" style="margin: 0 0 16px">
+        <strong>Blockers.</strong>
+        (1) <em>Live = 0</em> — no durable CMS-backed portal journey accepted yet.
+        (2) <em>Lesotho materials incomplete</em> — newer CMS schema blocked (PII); old dump pending.
+        (3) <em>Gov sponsorship path</em> — NMDS UI known, API unknown; do not reuse DTEF.
+        (4) <em>Calendar TBC</em> — cannot report a committed end date until Timeline targets are agreed.
+      </div>
+
+      <div class="note" style="margin: 0">
+        <strong>To be achieved (acceptance bar).</strong>
+        Rules and integration frozen (M1); application→enrolment Live on real records (M2);
+        core student + lecturer/staff paths for the same CAPs Live (M3);
+        <strong>Lesotho pilot acceptance</strong> with government-grade parity — NMDS, LGCSE, clearance, Loti (M4);
+        then campus expansion (Cyberjaya, Eswatini, Botswana, Sierra Leone, …) toward the distributed CMS ideal (M5+).
+        Detail: <a href="../sdd/13-progress-timeline.html">SDD-13</a> ·
+        <a href="./migration.html">Migration</a> ·
+        <a href="./old-cms-lesotho/index.html#db-gap">Lesotho DB gap</a>.
+      </div>
+    </section>
 
     <section class="section" id="exec">
       <div class="exec-summary">
