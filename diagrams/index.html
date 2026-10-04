@@ -5,7 +5,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Control Plane — Overview</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=progress-charts-2" />
   <script src="site-auth.js"></script>
 </head>
 <body>
@@ -253,7 +253,7 @@
           </div>
           <div class="card-body">
             <pre class="mermaid">
-%%{init: {'xyChart': {'width': 1100, 'height': 480, 'showTitle': true}}}%%
+%%{init: {'xyChart': {'width': 1100, 'height': 720, 'showTitle': true, 'showLegend': false, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 80}}}%%
 xychart-beta
   title "Milestone progress %"
   x-axis [M1, M2, M3, M4, M5]
@@ -291,7 +291,7 @@ xychart-beta
           </div>
           <div class="card-body">
             <pre class="mermaid">
-%%{init: {'xyChart': {'width': 1100, 'height': 480, 'showTitle': true}}}%%
+%%{init: {'xyChart': {'width': 1100, 'height': 720, 'showTitle': true, 'showLegend': false, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 80}}}%%
 xychart-beta
   title "Cumulative readiness %"
   x-axis ["18 Sep", "22 Sep", "25 Sep", "1 Oct", "3 Oct", "5 Oct"]
@@ -330,7 +330,7 @@ xychart-beta
           </div>
           <div class="card-body">
             <pre class="mermaid">
-%%{init: {'pie': {'textPosition': 0.75}, 'themeVariables': {'pieOuterStrokeWidth': '2px'}}}%%
+%%{init: {'pie': {'textPosition': 0.5}, 'themeVariables': {'pieOuterStrokeWidth': '2px', 'fontSize': '16px'}}}%%
 pie showData
   title Applicable frontend rows (Live = 0, omitted)
   "Started Demo/Partial" : 32
@@ -366,7 +366,7 @@ pie showData
           </div>
           <div class="card-body">
             <pre class="mermaid">
-%%{init: {'gantt': {'barHeight': 28, 'barGap': 8, 'topPadding': 60, 'leftPadding': 90, 'fontSize': 14, 'sectionFontSize': 16}}}%%
+%%{init: {'gantt': {'barHeight': 32, 'barGap': 10, 'topPadding': 50, 'leftPadding': 200, 'fontSize': 14, 'sectionFontSize': 16, 'useMaxWidth': true}}}%%
 gantt
   title Sequence only — dates illustrative, not agreed calendar
   dateFormat YYYY-MM-DD
@@ -1100,20 +1100,23 @@ flowchart LR
       flowchart: { curve: "basis", htmlLabels: true },
       xyChart: {
         width: 1100,
-        height: 480,
+        height: 720,
         titleFontSize: 18,
         labelFontSize: 14,
+        showLegend: false,
+        plotReservedSpacePercent: 80,
       },
       gantt: {
-        barHeight: 28,
-        barGap: 8,
-        topPadding: 60,
-        leftPadding: 90,
+        barHeight: 32,
+        barGap: 10,
+        topPadding: 50,
+        leftPadding: 200,
         fontSize: 14,
         sectionFontSize: 16,
+        useMaxWidth: true,
       },
       pie: {
-        textPosition: 0.75,
+        textPosition: 0.5,
       },
     });
   </script>

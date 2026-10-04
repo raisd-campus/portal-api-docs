@@ -327,36 +327,38 @@ main {
 }
 .progress-charts .card { margin: 0; }
 .progress-charts .card-body {
-  min-height: 480px;
   padding: 12px 16px 20px;
   overflow-x: auto;
 }
 .progress-charts .card-body pre.mermaid,
 .progress-charts .card-body .mermaid {
-  min-height: 440px;
   width: 100%;
+  margin: 0;
+  line-height: 0;
 }
+/* xyChart / pie: fill width, keep aspect ratio — do not force min-height (distorts plot) */
 .progress-charts .card-body .mermaid svg {
+  display: block;
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
   height: auto !important;
-  min-height: 420px;
+  min-height: 0 !important;
 }
-.progress-charts .card.progress-chart-wide .card-body {
-  min-height: 560px;
-}
-.progress-charts .card.progress-chart-wide .card-body .mermaid svg {
-  min-height: 500px;
+/* gantt viewBox is narrow (~300px); width:100% makes it absurdly tall — cap it */
+.progress-charts .card-body .mermaid svg[aria-roledescription="gantt"],
+.progress-charts .card-body .mermaid svg[id^="mermaid"][viewBox^="0 0 3"] {
+  width: 100% !important;
+  max-height: 560px;
+  height: auto !important;
 }
 .progress-charts .legend {
-  margin: 8px 0 0;
-  padding-top: 12px;
+  margin: 12px 0 0;
+  padding-top: 14px;
   border-top: 1px solid var(--line);
+  line-height: 1.4;
 }
 @media (max-width: 900px) {
   .progress-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .progress-charts .card-body { min-height: 400px; }
-  .progress-charts .card-body .mermaid svg { min-height: 360px; }
 }
 
 .section {
