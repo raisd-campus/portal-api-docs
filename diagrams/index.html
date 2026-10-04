@@ -229,7 +229,7 @@
         <div class="progress-kpi">
           <span>Frontend started</span>
           <strong>31%</strong>
-          <span>32 of 103 applicable (Demo/Partial)</span>
+          <span>32 of 103 applicable (Demo/Partial/Placeholder)</span>
         </div>
         <div class="progress-kpi ok">
           <span>Platform readiness</span>
@@ -428,34 +428,223 @@ xychart-beta
           <div class="card-head">
             <div>
               <h3>Pie — work mix (applicable rows)</h3>
-              <p>M2 + M3 + M5 frontend rows · Live slice is empty today.</p>
+              <p>
+                Snapshot from <a href="../sdd/13-progress-timeline.html">SDD-13</a> (sheet 19 Sep 2026).
+                Slice counts sum to <strong>103</strong> applicable frontend rows (M2+M3+M5).
+                Live = <strong>0</strong> is omitted from the pie.
+              </p>
             </div>
           </div>
           <div class="card-body">
             <pre class="mermaid">
 %%{init: {'pie': {'textPosition': 0.5}, 'themeVariables': {'pieOuterStrokeWidth': '2px', 'fontSize': '16px'}}}%%
 pie showData
-  title Applicable frontend rows (Live = 0, omitted)
-  "Started Demo/Partial" : 32
-  "Not started" : 71
+  title Applicable frontend rows by portal (103 total; Live 0 omitted)
+  "Started — Student" : 31
+  "Started — Shared (CAP-53)" : 1
+  "Not started — Student" : 9
+  "Not started — Applicant" : 7
+  "Not started — Lecturer" : 18
+  "Not started — Admin/staff" : 37
             </pre>
-            <div class="legend" aria-label="Pie chart legend">
+            <div class="legend" aria-label="Pie chart series key">
               <div class="legend-item">
-                <strong>Started Demo/Partial — 32</strong>
-                <span>~31% of applicable M2+M3+M5 frontend rows. Mostly student Demo screens.</span>
+                <strong>Started — Student · 31</strong>
+                <span>
+                  Demo / Partial / Placeholder on the student portal only.
+                  Includes the <strong>4</strong> M2 admissions student-side starts (sign-in Placeholder, accessibility Demo, privacy Partial)
+                  plus student rows under M3/M5. <strong>Not Live</strong>.
+                </span>
               </div>
               <div class="legend-item">
-                <strong>Not started — 71</strong>
-                <span>~69% still untouched, including all applicant, lecturer, and most staff rows.</span>
+                <strong>Started — Shared (CAP-53) · 1</strong>
+                <span>
+                  Portal API / integration capability marked Partial on the shared-system row.
+                  Counts toward the global <strong>32 started</strong> total with the 31 student rows.
+                </span>
               </div>
               <div class="legend-item">
-                <strong>Live — 0 (omitted)</strong>
-                <span>No slice drawn: nothing is Live yet. A Live slice appears only when CMS-backed acceptance lands.</span>
+                <strong>Not started — Student · 9</strong>
+                <span>Student portal applicable rows with no frontend start yet (of 40 student applicable).</span>
               </div>
               <div class="legend-item">
-                <strong>Scope of pie</strong>
-                <span>Applicable frontend rows only (excludes Not applicable). Backend is Needs checking on every row.</span>
+                <strong>Not started — Applicant · 7</strong>
+                <span>Entire applicant portal applicable set is untouched (0 of 7 started) — critical path for M2 admissions.</span>
               </div>
+              <div class="legend-item">
+                <strong>Not started — Lecturer · 18</strong>
+                <span>Entire lecturer portal applicable set is untouched (0 of 18 started) — publish, attendance, marking still ahead.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Not started — Admin/staff · 37</strong>
+                <span>Entire admin/staff applicable set is untouched (0 of 37 started), including admissions staff review and M3 staff paths.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Live · 0 (omitted)</strong>
+                <span>No pie slice: a row is complete only when <strong>Live</strong>. Demo/Partial/Placeholder do not count.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Totals check</strong>
+                <span>
+                  Started <strong>31 + 1 = 32</strong> · Not started <strong>9 + 7 + 18 + 37 = 71</strong> ·
+                  <strong>32 + 71 = 103</strong> applicable · <strong>32 ÷ 103 ≈ 31%</strong> (matches KPI and bar chart).
+                  Backend remains Needs checking on every applicable row.
+                </span>
+              </div>
+            </div>
+
+            <div class="table-wrap" style="margin-top:16px">
+              <table class="attr" aria-label="Applicable rows by milestone">
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>Sheet rows</th>
+                    <th>Applicable FE</th>
+                    <th>Started</th>
+                    <th>Not started</th>
+                    <th>Live</th>
+                    <th>FE started %</th>
+                    <th>Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m1">M1</a></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>—</td>
+                    <td>Rules / integration — no frontend rows on the sheet</td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions</td>
+                    <td>23</td>
+                    <td>18</td>
+                    <td><strong>4</strong></td>
+                    <td><strong>14</strong></td>
+                    <td>0</td>
+                    <td><strong>22%</strong> (4÷18)</td>
+                    <td>Student-side starts only; applicant + staff halves not started</td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core portal</td>
+                    <td>51</td>
+                    <td>51</td>
+                    <td><strong>16</strong></td>
+                    <td><strong>35</strong></td>
+                    <td>0</td>
+                    <td><strong>31%</strong> (16÷51)</td>
+                    <td>Student Demo/Partial deepest; lecturer + staff paths still 0</td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m4">M4</a> Lesotho pilot</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>—</td>
+                    <td>Acceptance / training row — no frontend pack</td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m5">M5</a> Expansion</td>
+                    <td>36</td>
+                    <td>34</td>
+                    <td><strong>12</strong></td>
+                    <td><strong>22</strong></td>
+                    <td>0</td>
+                    <td><strong>35%</strong> (12÷34)</td>
+                    <td>Sheet starts only — do not pull ahead of admissions</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pie scope (M2+M3+M5)</strong></td>
+                    <td>110</td>
+                    <td><strong>103</strong></td>
+                    <td><strong>32</strong></td>
+                    <td><strong>71</strong></td>
+                    <td><strong>0</strong></td>
+                    <td><strong>31%</strong> (32÷103)</td>
+                    <td>4+16+12 = 32 · 14+35+22 = 71 · 18+51+34 = 103</td>
+                  </tr>
+                  <tr>
+                    <td>All milestones (sheet)</td>
+                    <td><strong>112</strong></td>
+                    <td>103</td>
+                    <td>32</td>
+                    <td>71</td>
+                    <td>0</td>
+                    <td>31%</td>
+                    <td>112 = 1+23+51+1+36; Live KPI = 0 of 112</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-wrap" style="margin-top:12px">
+              <table class="attr" aria-label="Applicable rows by portal">
+                <thead>
+                  <tr>
+                    <th>Portal</th>
+                    <th>Applicable FE</th>
+                    <th>Started</th>
+                    <th>Not started</th>
+                    <th>Live</th>
+                    <th>How it maps to the pie</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Applicant</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>Whole slice: Not started — Applicant (7)</td>
+                  </tr>
+                  <tr>
+                    <td>Student</td>
+                    <td>40</td>
+                    <td>31</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td>Two slices: Started — Student (31) + Not started — Student (9)</td>
+                  </tr>
+                  <tr>
+                    <td>Lecturer</td>
+                    <td>18</td>
+                    <td>0</td>
+                    <td>18</td>
+                    <td>0</td>
+                    <td>Whole slice: Not started — Lecturer (18)</td>
+                  </tr>
+                  <tr>
+                    <td>Admin / staff</td>
+                    <td>37</td>
+                    <td>0</td>
+                    <td>37</td>
+                    <td>0</td>
+                    <td>Whole slice: Not started — Admin/staff (37)</td>
+                  </tr>
+                  <tr>
+                    <td>Shared system</td>
+                    <td>1*</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Slice: Started — Shared CAP-53 Partial (1). *Counted in the 103 applicable / 32 started totals</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>103</strong></td>
+                    <td><strong>32</strong></td>
+                    <td><strong>71</strong></td>
+                    <td><strong>0</strong></td>
+                    <td>7+40+18+37+1 = 103 · 0+31+0+0+1 = 32 · 7+9+18+37 = 71</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
