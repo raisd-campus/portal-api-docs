@@ -344,6 +344,17 @@ main {
   height: auto !important;
   min-height: 0 !important;
 }
+/* Keep the milestone bar chart compact so x-axis labels and legend stay readable */
+.progress-charts .progress-barchart {
+  max-width: 720px;
+  margin: 0 auto 4px;
+  overflow: visible;
+}
+.progress-charts .progress-barchart .mermaid svg {
+  max-height: 360px;
+  width: 100% !important;
+  height: auto !important;
+}
 /* gantt viewBox is narrow (~300px); width:100% makes it absurdly tall — cap it */
 .progress-charts .card-body .mermaid svg[aria-roledescription="gantt"],
 .progress-charts .card-body .mermaid svg[id^="mermaid"][viewBox^="0 0 3"] {
@@ -351,6 +362,30 @@ main {
   max-height: 560px;
   height: auto !important;
 }
+.progress-charts .series-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.progress-charts .series-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.progress-charts .swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(21, 32, 51, 0.2);
+  flex: 0 0 auto;
+}
+/* Match Mermaid xyChart cScale0 / cScale1 (set in index.html mermaid.initialize) */
+.progress-charts .swatch-fe { background: #1a4f8b; }
+.progress-charts .swatch-platform { background: #2f9e6f; }
 .progress-charts .legend {
   margin: 12px 0 0;
   padding-top: 14px;

@@ -5,7 +5,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Control Plane — Overview</title>
-  <link rel="stylesheet" href="./styles.css?v=progress-charts-2" />
+  <link rel="stylesheet" href="./styles.css?v=progress-charts-3" />
   <script src="site-auth.js"></script>
 </head>
 <body>
@@ -252,15 +252,21 @@
             </div>
           </div>
           <div class="card-body">
-            <pre class="mermaid">
-%%{init: {'xyChart': {'width': 1100, 'height': 720, 'showTitle': true, 'showLegend': false, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 80}}}%%
+            <div class="progress-barchart">
+              <pre class="mermaid">
+%%{init: {'xyChart': {'width': 720, 'height': 360, 'showTitle': true, 'showLegend': true, 'legendFontSize': 14, 'chartOrientation': 'vertical', 'plotReservedSpacePercent': 55}, 'themeVariables': {'xyChart': {'plotColorPalette': '#1a4f8b, #2f9e6f'}}}}%%
 xychart-beta
   title "Milestone progress %"
   x-axis [M1, M2, M3, M4, M5]
   y-axis "%" 0 --> 100
   bar "FE started %" [0, 22, 31, 0, 35]
   bar "Platform readiness %" [45, 20, 40, 20, 25]
-            </pre>
+              </pre>
+            </div>
+            <div class="series-swatches" aria-label="Bar chart colour key">
+              <span class="series-swatch"><i class="swatch swatch-fe" aria-hidden="true"></i> FE started %</span>
+              <span class="series-swatch"><i class="swatch swatch-platform" aria-hidden="true"></i> Platform readiness %</span>
+            </div>
             <div class="legend" aria-label="Bar chart series key">
               <div class="legend-item">
                 <strong>FE started %</strong>
@@ -1458,15 +1464,19 @@ flowchart LR
         secondaryColor: "#e8f6ee",
         tertiaryColor: "#fff6e8",
         fontFamily: "Segoe UI, system-ui, sans-serif",
+        xyChart: {
+          plotColorPalette: "#1a4f8b, #2f9e6f",
+        },
       },
       flowchart: { curve: "basis", htmlLabels: true },
       xyChart: {
-        width: 1100,
-        height: 720,
-        titleFontSize: 18,
-        labelFontSize: 14,
-        showLegend: false,
-        plotReservedSpacePercent: 80,
+        width: 720,
+        height: 360,
+        titleFontSize: 16,
+        labelFontSize: 13,
+        showLegend: true,
+        legendFontSize: 14,
+        plotReservedSpacePercent: 55,
       },
       pie: {
         textPosition: 0.5,
