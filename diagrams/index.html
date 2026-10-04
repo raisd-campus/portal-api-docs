@@ -261,23 +261,83 @@ xychart-beta
   bar "FE started %" [0, 22, 31, 0, 35]
   bar "Platform readiness %" [45, 20, 40, 20, 25]
             </pre>
-            <div class="legend" aria-label="Bar chart legend">
+            <div class="legend" aria-label="Bar chart series key">
               <div class="legend-item">
                 <strong>FE started %</strong>
-                <span>Share of applicable checklist rows with Demo / Partial / Placeholder frontend (SDD-13). Not Live.</span>
+                <span>Share of applicable checklist rows with Demo / Partial / Placeholder frontend (<a href="../sdd/13-progress-timeline.html">SDD-13</a>). Not Live.</span>
               </div>
               <div class="legend-item">
                 <strong>Platform readiness %</strong>
                 <span>Estimate of schema, Portal API, docs, and campus inventories ready for integration — not acceptance.</span>
               </div>
               <div class="legend-item">
-                <strong>M1 / M4 near 0% FE</strong>
-                <span>These milestones are mostly rules, training, and pilot acceptance — few frontend rows on the sheet.</span>
+                <strong>Live checklist</strong>
+                <span>Still <strong>0%</strong> for every milestone. Demo/Partial/Placeholder do not count as complete.</span>
               </div>
-              <div class="legend-item">
-                <strong>Y-axis 0–100%</strong>
-                <span>Neither series means Live. Live checklist remains 0% until CMS-backed journeys pass.</span>
-              </div>
+            </div>
+            <div class="table-wrap" style="margin-top:12px">
+              <table class="attr" aria-label="M1 to M5 bar chart legend">
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>FE started</th>
+                    <th>Platform readiness</th>
+                    <th>What the percentages mean</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m1">M1</a> Confirm rules &amp; integration</td>
+                    <td><strong>0%</strong></td>
+                    <td><strong>~45%</strong></td>
+                    <td>
+                      Almost no frontend rows on the sheet (operating / rules milestone).
+                      Platform ~45% reflects ADR-1 confirmed, Schema v3 Demo, CAP-53 Partial, and architecture docs —
+                      while owners, target weeks, and backend commitment remain TBC.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions launch</td>
+                    <td><strong>22%</strong></td>
+                    <td><strong>~20%</strong></td>
+                    <td>
+                      FE 22% = <strong>4 of 18</strong> applicable admissions rows started (mostly student-side placeholders:
+                      sign-in, accessibility, privacy). Applicant and staff halves are not started.
+                      Platform ~20% = Portal API / CAP-53 Partial exists, but real CMS-backed apply→enrol is not Live.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core student portal</td>
+                    <td><strong>31%</strong></td>
+                    <td><strong>~40%</strong></td>
+                    <td>
+                      FE 31% = <strong>16 of 51</strong> applicable rows started — student Demo/Partial screens are deepest.
+                      Lecturer and staff paths for the same CAPs are still 0. Platform ~40% reflects student portal UI +
+                      Schema academic model, but durable CMS writes and cross-role Live journeys are ahead.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m4">M4</a> Lesotho pilot acceptance</td>
+                    <td><strong>0%</strong></td>
+                    <td><strong>~20%</strong></td>
+                    <td>
+                      FE 0% — acceptance / training row, not a UI feature pack on the sheet.
+                      Platform ~20% = pilot decided (3 Oct), screenshot inventory + DB gap probe published;
+                      Live SoR path undecided, old CMS dump pending, NMDS/LGCSE/Loti parity not yet Live.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="../sdd/03-delivery-milestones.html#m5">M5</a> Campus expansion</td>
+                    <td><strong>35%</strong></td>
+                    <td><strong>~25%</strong></td>
+                    <td>
+                      FE 35% = <strong>12 of 34</strong> applicable expansion rows started on the sheet
+                      (not a licence to pull M5 ahead of admissions). Platform ~25% = Cyberjaya / Botswana / Sierra Leone
+                      inventories and dumps analysed for later rollout; no campus Live acceptance yet.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
