@@ -392,6 +392,35 @@ main {
   border-top: 1px solid var(--line);
   line-height: 1.4;
 }
+.progress-charts .legend-totals {
+  grid-column: 1 / -1;
+  margin-top: 2px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #c5d7ea;
+  background: linear-gradient(180deg, #f7fafc, #eef4fa);
+  font-size: 0.9rem;
+}
+.progress-charts .legend-totals > strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.progress-charts .legend-totals-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  color: var(--muted);
+}
+.progress-charts .legend-totals-line strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+.progress-charts .legend-totals-sep {
+  color: #9aa8b8;
+  user-select: none;
+}
 @media (max-width: 900px) {
   .progress-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

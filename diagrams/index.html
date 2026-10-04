@@ -5,7 +5,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Control Plane — Overview</title>
-  <link rel="stylesheet" href="./styles.css?v=progress-charts-3" />
+  <link rel="stylesheet" href="./styles.css?v=progress-charts-4" />
   <script src="site-auth.js"></script>
 </head>
 <body>
@@ -489,13 +489,19 @@ pie showData
                 <strong>Live · 0 (omitted)</strong>
                 <span>No pie slice: a row is complete only when <strong>Live</strong>. Demo/Partial/Placeholder do not count.</span>
               </div>
-              <div class="legend-item">
+              <div class="legend-totals" role="note" aria-label="Totals check">
                 <strong>Totals check</strong>
-                <span>
-                  Started <strong>31 + 1 = 32</strong> · Not started <strong>9 + 7 + 18 + 37 = 71</strong> ·
-                  <strong>32 + 71 = 103</strong> applicable · <strong>32 ÷ 103 ≈ 31%</strong> (matches KPI and bar chart).
-                  Backend remains Needs checking on every applicable row.
-                </span>
+                <div class="legend-totals-line">
+                  <span>Started <strong>31 + 1 = 32</strong></span>
+                  <span class="legend-totals-sep" aria-hidden="true">·</span>
+                  <span>Not started <strong>9 + 7 + 18 + 37 = 71</strong></span>
+                  <span class="legend-totals-sep" aria-hidden="true">·</span>
+                  <span><strong>32 + 71 = 103</strong> applicable</span>
+                  <span class="legend-totals-sep" aria-hidden="true">·</span>
+                  <span><strong>32 ÷ 103 ≈ 31%</strong> (matches KPI and bar chart)</span>
+                  <span class="legend-totals-sep" aria-hidden="true">·</span>
+                  <span>Backend Needs checking on every applicable row</span>
+                </div>
               </div>
             </div>
 
