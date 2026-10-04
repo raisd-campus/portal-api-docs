@@ -20,14 +20,14 @@
     },
     {
       "title": "Project progress",
-      "summary": "High-level Raisd progress percentages \u2014 Live, frontend started, platform readiness, pending, blockers, timeline charts (bar, line, pie, gantt).",
+      "summary": "High-level Raisd progress percentages \u2014 Live, frontend started, platform readiness, pending, blockers, bar/line/pie charts and delivery sequence table.",
       "section": "Overview",
       "keywords": [
         "progress",
         "percent",
         "percentage",
         "timeline",
-        "gantt",
+        "sequence",
         "chart",
         "blocker",
         "pending",

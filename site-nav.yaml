@@ -329,8 +329,8 @@ search:
   - title: Project progress
     href: "overview#progress"
     section: Overview
-    summary: High-level Raisd progress percentages — Live, frontend started, platform readiness, pending, blockers, timeline charts (bar, line, pie, gantt).
-    keywords: [progress, percent, percentage, timeline, gantt, chart, blocker, pending, milestone, weekly, sponsor]
+    summary: High-level Raisd progress percentages — Live, frontend started, platform readiness, pending, blockers, bar/line/pie charts and delivery sequence table.
+    keywords: [progress, percent, percentage, timeline, sequence, chart, blocker, pending, milestone, weekly, sponsor]
 
   - title: Distributed CMS target
     href: distributed

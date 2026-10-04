@@ -360,45 +360,115 @@ pie showData
         <div class="card progress-chart-wide">
           <div class="card-head">
             <div>
-              <h3>Gantt — delivery sequence (order only)</h3>
-              <p>Kickoff and every target week on the sheet are still <strong>TBC</strong>.</p>
+              <h3>Delivery sequence (order only)</h3>
+              <p>Agreed milestone <em>order</em> — kickoff and every target week on the sheet are still <strong>TBC</strong>.</p>
             </div>
           </div>
           <div class="card-body">
-            <pre class="mermaid">
-%%{init: {'gantt': {'barHeight': 32, 'barGap': 10, 'topPadding': 50, 'leftPadding': 200, 'fontSize': 14, 'sectionFontSize': 16, 'useMaxWidth': true}}}%%
-gantt
-  title Sequence only — dates illustrative, not agreed calendar
-  dateFormat YYYY-MM-DD
-  axisFormat %d %b
-  section Milestones
-  M1 Confirm rules and integration     :m1, 2026-09-21, 14d
-  M2 Admissions launch                 :m2, after m1, 28d
-  M3 Core student portal               :m3, after m2, 28d
-  M4 Lesotho pilot acceptance          :crit, m4, after m3, 21d
-  M5 Campus expansion                  :m5, after m4, 28d
-  section Parallel foundation
-  Schema v3 + Portal API docs          :done, p1, 2026-09-21, 14d
-  Campus CMS inventories               :done, p2, 2026-09-24, 10d
-  Lesotho screenshot + DB gap probe    :active, p3, 2026-10-03, 14d
-  Lesotho old CMS dump                 :crit, p4, 2026-10-06, 14d
-            </pre>
-            <div class="legend" aria-label="Gantt chart legend">
+            <div class="table-wrap">
+              <table class="attr" aria-label="Delivery sequence">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Track</th>
+                    <th>Item</th>
+                    <th>Status</th>
+                    <th>Depends on</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Milestone</td>
+                    <td><a href="../sdd/03-delivery-milestones.html#m1">M1</a> Confirm rules and integration</td>
+                    <td><span class="chip">Open</span></td>
+                    <td>—</td>
+                    <td>Rules, owners, API access — unblocks later work</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Milestone</td>
+                    <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions launch</td>
+                    <td><span class="chip">Open</span></td>
+                    <td>M1</td>
+                    <td>Apply → enrol on real records; CAP-53 first slice</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Milestone</td>
+                    <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core student portal</td>
+                    <td><span class="chip">Open</span></td>
+                    <td>M2</td>
+                    <td>Student + lecturer/staff paths Live or verified old CMS</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Milestone</td>
+                    <td><a href="../sdd/03-delivery-milestones.html#m4">M4</a> Lesotho pilot acceptance</td>
+                    <td><span class="chip warn">Critical</span></td>
+                    <td>M3</td>
+                    <td>Pilot campus accepts product; NMDS / LGCSE / Loti parity</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Milestone</td>
+                    <td><a href="../sdd/03-delivery-milestones.html#m5">M5</a> Campus expansion</td>
+                    <td><span class="chip">Open</span></td>
+                    <td>M4</td>
+                    <td>Cyberjaya, Eswatini, Botswana, Sierra Leone, …</td>
+                  </tr>
+                  <tr>
+                    <td>—</td>
+                    <td>Foundation</td>
+                    <td>Schema v3 + Portal API docs</td>
+                    <td><span class="chip ok">Done</span></td>
+                    <td>Parallel</td>
+                    <td>Published; Demo schema_version 3</td>
+                  </tr>
+                  <tr>
+                    <td>—</td>
+                    <td>Foundation</td>
+                    <td>Campus CMS inventories (CY / BW / SL)</td>
+                    <td><span class="chip ok">Done</span></td>
+                    <td>Parallel</td>
+                    <td>Dump-backed E2E hubs on Pages</td>
+                  </tr>
+                  <tr>
+                    <td>—</td>
+                    <td>Foundation</td>
+                    <td>Lesotho screenshot + DB gap probe</td>
+                    <td><span class="chip">Active</span></td>
+                    <td>Parallel</td>
+                    <td>Feature benchmark + proxy gap vs Schema</td>
+                  </tr>
+                  <tr>
+                    <td>—</td>
+                    <td>Foundation</td>
+                    <td>Lesotho old CMS structure dump</td>
+                    <td><span class="chip warn">Critical</span></td>
+                    <td>Vara</td>
+                    <td>Pending — needed for CAP-53 / physical ACL</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="legend" aria-label="Delivery sequence legend">
               <div class="legend-item">
-                <strong>Milestones M1–M5</strong>
-                <span>Agreed delivery <em>order</em> only. Bar lengths are illustrative — kickoff and targets are TBC on the sheet.</span>
+                <strong>Order 1–5</strong>
+                <span>Product delivery sequence only. No committed calendar dates — all target weeks are TBC (SDD-13).</span>
               </div>
               <div class="legend-item">
-                <strong>done (foundation)</strong>
-                <span>Schema v3 / Portal API docs and campus CMS inventories already published.</span>
+                <strong>Done</strong>
+                <span>Foundation already published (Schema v3, API docs, campus inventories).</span>
               </div>
               <div class="legend-item">
-                <strong>active</strong>
-                <span>Lesotho screenshot reverse-engineering and DB gap probe in progress.</span>
+                <strong>Active</strong>
+                <span>Lesotho reverse-engineering and DB gap work in progress.</span>
               </div>
               <div class="legend-item">
-                <strong>crit</strong>
-                <span>Critical path: M4 Lesotho pilot acceptance, and the pending Lesotho old CMS structure dump (Vara).</span>
+                <strong>Critical</strong>
+                <span>M4 Lesotho pilot acceptance, and the old CMS dump from Vara that unblocks Live ACL design.</span>
               </div>
             </div>
           </div>
@@ -447,7 +517,7 @@ gantt
         <strong>Line:</strong> since mid-September the team raised platform readiness (architecture, Schema v3, dumps, Lesotho analysis)
         while checklist Live stayed at 0% and FE-started stayed flat at ~31% (sheet unchanged).
         <strong>Pie:</strong> of applicable frontend rows, about one-third have a Demo/Partial start; none are Live.
-        <strong>Gantt:</strong> shows agreed <em>order</em> (M1→M5) and parallel foundation tracks; bar lengths are illustrative —
+        <strong>Sequence table:</strong> agreed <em>order</em> (M1→M5) plus parallel foundation tracks — not a calendar;
         the Working Group has not locked kickoff or target weeks.
       </div>
 
@@ -1105,15 +1175,6 @@ flowchart LR
         labelFontSize: 14,
         showLegend: false,
         plotReservedSpacePercent: 80,
-      },
-      gantt: {
-        barHeight: 32,
-        barGap: 10,
-        topPadding: 50,
-        leftPadding: 200,
-        fontSize: 14,
-        sectionFontSize: 16,
-        useMaxWidth: true,
       },
       pie: {
         textPosition: 0.5,
