@@ -244,7 +244,7 @@
       </div>
 
       <div class="progress-charts">
-        <div class="card">
+        <div class="card progress-chart-wide">
           <div class="card-head">
             <div>
               <h3>Bar — milestone progress %</h3>
@@ -253,6 +253,7 @@
           </div>
           <div class="card-body">
             <pre class="mermaid">
+%%{init: {'xyChart': {'width': 1100, 'height': 480, 'showTitle': true}}}%%
 xychart-beta
   title "Milestone progress %"
   x-axis [M1, M2, M3, M4, M5]
@@ -263,7 +264,7 @@ xychart-beta
           </div>
         </div>
 
-        <div class="card">
+        <div class="card progress-chart-wide">
           <div class="card-head">
             <div>
               <h3>Line — cumulative readiness over WG weeks</h3>
@@ -272,6 +273,7 @@ xychart-beta
           </div>
           <div class="card-body">
             <pre class="mermaid">
+%%{init: {'xyChart': {'width': 1100, 'height': 480, 'showTitle': true}}}%%
 xychart-beta
   title "Cumulative readiness %"
   x-axis ["18 Sep", "22 Sep", "25 Sep", "1 Oct", "3 Oct", "5 Oct"]
@@ -283,7 +285,7 @@ xychart-beta
           </div>
         </div>
 
-        <div class="card">
+        <div class="card progress-chart-wide">
           <div class="card-head">
             <div>
               <h3>Pie — work mix (applicable rows)</h3>
@@ -292,6 +294,7 @@ xychart-beta
           </div>
           <div class="card-body">
             <pre class="mermaid">
+%%{init: {'pie': {'textPosition': 0.75}, 'themeVariables': {'pieOuterStrokeWidth': '2px'}}}%%
 pie showData
   title Applicable frontend rows (Live = 0, omitted)
   "Started Demo/Partial" : 32
@@ -300,7 +303,7 @@ pie showData
           </div>
         </div>
 
-        <div class="card">
+        <div class="card progress-chart-wide">
           <div class="card-head">
             <div>
               <h3>Gantt — delivery sequence (order only)</h3>
@@ -309,6 +312,7 @@ pie showData
           </div>
           <div class="card-body">
             <pre class="mermaid">
+%%{init: {'gantt': {'barHeight': 28, 'barGap': 8, 'topPadding': 60, 'leftPadding': 90, 'fontSize': 14, 'sectionFontSize': 16}}}%%
 gantt
   title Sequence only — dates illustrative, not agreed calendar
   dateFormat YYYY-MM-DD
@@ -1022,6 +1026,23 @@ flowchart LR
         fontFamily: "Segoe UI, system-ui, sans-serif",
       },
       flowchart: { curve: "basis", htmlLabels: true },
+      xyChart: {
+        width: 1100,
+        height: 480,
+        titleFontSize: 18,
+        labelFontSize: 14,
+      },
+      gantt: {
+        barHeight: 28,
+        barGap: 8,
+        topPadding: 60,
+        leftPadding: 90,
+        fontSize: 14,
+        sectionFontSize: 16,
+      },
+      pie: {
+        textPosition: 0.75,
+      },
     });
   </script>
   <script src="abbr-tooltips.js" defer></script>
