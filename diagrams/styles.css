@@ -348,6 +348,11 @@ main {
 .progress-charts .card.progress-chart-wide .card-body .mermaid svg {
   min-height: 500px;
 }
+.progress-charts .legend {
+  margin: 8px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
 @media (max-width: 900px) {
   .progress-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .progress-charts .card-body { min-height: 400px; }

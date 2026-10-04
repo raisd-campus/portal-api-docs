@@ -261,6 +261,24 @@ xychart-beta
   bar "FE started %" [0, 22, 31, 0, 35]
   bar "Platform readiness %" [45, 20, 40, 20, 25]
             </pre>
+            <div class="legend" aria-label="Bar chart legend">
+              <div class="legend-item">
+                <strong>FE started %</strong>
+                <span>Share of applicable checklist rows with Demo / Partial / Placeholder frontend (SDD-13). Not Live.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Platform readiness %</strong>
+                <span>Estimate of schema, Portal API, docs, and campus inventories ready for integration — not acceptance.</span>
+              </div>
+              <div class="legend-item">
+                <strong>M1 / M4 near 0% FE</strong>
+                <span>These milestones are mostly rules, training, and pilot acceptance — few frontend rows on the sheet.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Y-axis 0–100%</strong>
+                <span>Neither series means Live. Live checklist remains 0% until CMS-backed journeys pass.</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -282,6 +300,24 @@ xychart-beta
   line "FE started (sheet)" [31, 31, 31, 31, 31, 31]
   line "Checklist Live" [0, 0, 0, 0, 0, 0]
             </pre>
+            <div class="legend" aria-label="Line chart legend">
+              <div class="legend-item">
+                <strong>Platform readiness</strong>
+                <span>Rising with architecture review, campus dumps, Schema v3, Lesotho pilot analysis (18 Sep → 5 Oct).</span>
+              </div>
+              <div class="legend-item">
+                <strong>FE started (sheet)</strong>
+                <span>Flat at ~31% — checklist frontend statuses have not moved since the 19 Sep snapshot.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Checklist Live</strong>
+                <span>Stays at 0% — Demo/Partial/Placeholder do not count as complete.</span>
+              </div>
+              <div class="legend-item">
+                <strong>X-axis weeks</strong>
+                <span>Working Group milestones in September–October 2026, not a committed delivery calendar.</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -300,6 +336,24 @@ pie showData
   "Started Demo/Partial" : 32
   "Not started" : 71
             </pre>
+            <div class="legend" aria-label="Pie chart legend">
+              <div class="legend-item">
+                <strong>Started Demo/Partial — 32</strong>
+                <span>~31% of applicable M2+M3+M5 frontend rows. Mostly student Demo screens.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Not started — 71</strong>
+                <span>~69% still untouched, including all applicant, lecturer, and most staff rows.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Live — 0 (omitted)</strong>
+                <span>No slice drawn: nothing is Live yet. A Live slice appears only when CMS-backed acceptance lands.</span>
+              </div>
+              <div class="legend-item">
+                <strong>Scope of pie</strong>
+                <span>Applicable frontend rows only (excludes Not applicable). Backend is Needs checking on every row.</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -329,6 +383,24 @@ gantt
   Lesotho screenshot + DB gap probe    :active, p3, 2026-10-03, 14d
   Lesotho old CMS dump                 :crit, p4, 2026-10-06, 14d
             </pre>
+            <div class="legend" aria-label="Gantt chart legend">
+              <div class="legend-item">
+                <strong>Milestones M1–M5</strong>
+                <span>Agreed delivery <em>order</em> only. Bar lengths are illustrative — kickoff and targets are TBC on the sheet.</span>
+              </div>
+              <div class="legend-item">
+                <strong>done (foundation)</strong>
+                <span>Schema v3 / Portal API docs and campus CMS inventories already published.</span>
+              </div>
+              <div class="legend-item">
+                <strong>active</strong>
+                <span>Lesotho screenshot reverse-engineering and DB gap probe in progress.</span>
+              </div>
+              <div class="legend-item">
+                <strong>crit</strong>
+                <span>Critical path: M4 Lesotho pilot acceptance, and the pending Lesotho old CMS structure dump (Vara).</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
