@@ -43,7 +43,6 @@ targets:
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
   luct-sz: diagrams/old-cms-eswatini/index.html
-  ai-old-cms-eswatini: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md
   luct-sl: diagrams/old-cms-sierra-leone/index.html
   luct-sl-database: diagrams/old-cms-sierra-leone/database.html
   ai: ai/index.html
@@ -72,6 +71,7 @@ external:
   ai-portal-api-poc: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md
   ai-cms-comparison: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md
   ai-old-cms-lesotho: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md
+  ai-old-cms-eswatini: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
   ai-lesotho-cap53: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md
   ai-luct-online-reg: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md
