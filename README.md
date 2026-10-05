@@ -12,7 +12,8 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 **AI knowledge:** https://raisd-campus.github.io/portal-api-docs/ai/
 **Design system:** https://raisd-campus.github.io/portal-api-docs/design-system/
 **Lesotho pilot:** https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md
-**Lesotho CMS analysis:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/
+**Lesotho CMS analysis:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/  
+**Lesotho analysis briefing (5 Oct 2026):** https://raisd-campus.github.io/portal-api-docs/reports/lesotho-cms-analysis-2026-10-05/
 **SDD / nomenclature:** https://raisd-campus.github.io/portal-api-docs/sdd/
 **Nomenclature HTML:** https://raisd-campus.github.io/portal-api-docs/sdd/15-nomenclature.html (CAP/M hover tooltips on all Pages)
 

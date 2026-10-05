@@ -4,16 +4,22 @@
 **Role after 3 Oct 2026:** **First Raisd pilot / acceptance campus** — see [lesotho-pilot.md](../architecture/lesotho-pilot.md).  
 **Sources (3 Oct 2026):** Working Group weekly (Read.ai email summary); WhatsApp Working Group CMS 2026 — Faid Zamin screenshots of the **newer** Lesotho Admin / Student system (`PHOTO-2026-10-03-12-41-*`); Vara note on old-CMS family tree.  
 **Diagram analysis:** [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html).  
-**Old CMS dump:** **Pending** — Mohd Paramasvara (Vara) to send existing Lesotho CMS source + database structure. Until then, presume LUCT PHPMaker family closer to [Botswana](old-cms-botswana.md) / [Cyberjaya](old-cms-cyberjaya.md) than Sierra Leone EMS.
+**Database gap (proxy → dump):** [lesotho-db-gap.md](lesotho-db-gap.md) · Pages [`#db-gap`](../../diagrams/old-cms-lesotho/index.html#db-gap).  
+**Old CMS dump:** **Received and inventoried (5 Oct 2026)** — Vara Drive pack  
+`CMS_Lesotho_Source_Codes_&_DB_Structure_09_10_2026.zip`  
+(`https://drive.google.com/file/d/1Kgo43-vYpEpTyAg-6B-toAA6cdu3Wtjo/view?usp=sharing`).  
+Local copy under `raisd/_local/lesotho-cms-2026-10-05/` (**never commit** source/SQL/PII).  
+MySQL schema in dumps: **`campus2_lesotho`**. Structure counts: **369 tables · 351 views · 51 procedures · 6 functions**.  
+Confirmed **LUCT PHPMaker family** (~83% table-name overlap with Botswana, ~81% with Cyberjaya). Gap detail: [lesotho-db-gap.md](lesotho-db-gap.md).
 
-This file inventories what we can already see. It does **not** authorise committing live student data. Screenshot evidence stays outside the repo (WhatsApp export only).
+This file inventories what we can already see. It does **not** authorise committing live student data. Screenshot evidence and the Drive pack stay outside the repo.
 
 ## Two systems
 
 | Generation | Status | What we have | Use for Raisd |
 |---|---|---|---|
 | **Newer Lesotho CMS** (Admin Portal + Student Portal) | In campus use; staging has **real student data** — structure share restricted | UI screenshots only (Faid / Aslam). Source code and DB **unavailable** to the WG | **Feature / UX benchmark** for pilot parity |
-| **Older Lesotho CMS** (LUCT family) | Data being extracted into the newer system | Dump **TBC** from Vara | **Migration inventory** + Portal API adapter patterns (with Raisd Schema v3) |
+| **Older Lesotho CMS** (LUCT family) | Data being extracted into the newer system | Structure dump + `campus/` PHPMaker source inventoried 5 Oct 2026 (`campus2_lesotho`) | **Migration inventory** + Portal API adapter patterns (with Raisd Schema v3) |
 
 **Migration SoT (WG, 3 Oct 2026):** Raisd canonical schema + Lesotho CMS materials (old dump when available + new-CMS screenshots) — **not** the inaccessible new-system schema/source.
 
@@ -64,48 +70,57 @@ Modern dark-theme web app (local demo URL pattern `localhost:3000/…`, banner �
 
 ## CAP seed matrix (screenshot → Raisd)
 
-Seed for Lesotho pilot gap list. Status = observed in newer CMS screenshots, not Raisd Live.
+Seed for Lesotho pilot gap list. **Observed** = newer CMS screenshots (not Raisd Live).  
+**SDD CAP** = [SDD-11](../../sdd/11-capability-catalog.md) IDs (authoritative). Full schema×FE×flows: [lesotho-db-gap.md](lesotho-db-gap.md#m4-gap-analysis--schema--frontend--flows).
 
-| Observed capability | Likely CAP / BASE | Pilot note |
-|---|---|---|
-| Online / staff admissions + intake periods | CAP-02 / CAP-04 / Admissions | Jan 2026 intake, rank/score |
-| Document review + LGCSE extract | CAP-03 | High queue; Sesotho subject |
-| Multi-step Academic → QA → Registrar | CAP-05 / staff admissions | 3-step recommendation |
-| Application payment verified (LSL/M) | CAP-06 / finance | M300 sample |
-| Student master + profile | CAP-10 / CAP-11 | ~22k registry |
-| Term registration | CAP-12 | Student + staff |
-| Transcript / GPA / statement of results | CAP-14 / CAP-16 | Print + stamp/QR |
-| Graduation clearance wizard | CAP-15 | Multi-dept + fees gate |
-| Attendance | CAP-20 | Tab present |
-| Timetable / venues | CAP-22 | Generator / Allocations |
-| Fees, fines, payment plans, repeat modules | CAP-40–CAP-42 | Pricing desks |
-| NMDS sponsorship + borrower # | CAP-48 | Lesotho-specific |
-| Remark / reassessment | CAP-51 | Queue |
-| CMS integration / campus config | CAP-53 | Live SoR path TBC |
-| RBAC positions | Shared platform | Granular CRUD |
-| Student portal card grid | Student Demo depth | Registration … Results |
-| FiveDays LMS | LMS research / CAP-44 family | External product — not Raisd Live |
+| Observed capability | SDD CAP | Raisd FE (SDD-11) | Pilot note |
+|---|---|---|---|
+| Online application + intake | CAP-02 | Applicant **Not started** | Jan 2026 intake |
+| Document review + LGCSE extract | CAP-03 | Applicant/Staff **Not started** | Sesotho; certificate # |
+| Multi-step Academic → QA → Registrar | CAP-03–05 staff | Staff **Not started** | Old CMS: `Faculty*` / `AQA*` / `Registry*` statuses |
+| Application payment verified (LSL/M) | CAP-45/46 family | Not started | Not SDD CAP-06 (foreign equivalency) |
+| Student master + profile | profile / CAP-53 reads | Student Demo | ~22k registry |
+| Term / subject registration | **CAP-10** | Student **Demo**; staff Not started | Was mis-seeded as CAP-12 |
+| Timetable / venues | **CAP-11** | Student **Demo**; lect/staff Not started | Was mis-seeded as CAP-22 |
+| Attendance | **CAP-12** | Student **Demo**; lect Not started | Was mis-seeded as CAP-20 |
+| Transcript / GPA / SoR | CAP-13–15 | Student **Demo** | Print + stamp/QR |
+| Graduation clearance wizard | CAP-15 | Student **Demo**; staff Not started | Multi-dept + fees gate |
+| Fees, invoices, proof, online pay | **CAP-45–47** | Demo / Placeholder | Was mis-seeded as CAP-40–42 |
+| NMDS sponsorship + borrower # | CAP-48 | Student **Demo**; staff Not started | Old: assist `nmds` + `AssistStdAcc` |
+| Remark / reassessment | CAP-51 | Student **Demo**; staff Not started | `r_stdremark*` |
+| CMS integration / campus config | CAP-53 | Shared FE **Partial**; BE Needs checking | portal_* + api_*; write SoR TBC |
+| RBAC positions | platform / CS-11 | Staff portal **Not started** | ~23 positions |
+| Student portal card grid | Student Demo depth | Deepest Raisd UI | Registration … Results |
+| FiveDays LMS | CAP-44 family | External | Not Raisd Live SoR |
 
-## Older CMS — expected shape (until dump arrives)
+## Older CMS — measured shape
 
-Per Vara (WhatsApp, 3 Oct 2026): family-tree wise Lesotho is **branched from Cyberjaya** and **closer to Botswana**. Inventory pattern when the dump lands: same structure as [old-cms-botswana.md](old-cms-botswana.md) / [old-cms-cyberjaya.md](old-cms-cyberjaya.md) (PHPMaker desks, `cms*` database, portal/API hooks).
+Vara Drive pack (5 Oct 2026): DB **`campus2_lesotho`** — **369** tables / **351** views / **51** procs / **6** fns; PHPMaker `campus/` desks. Family: thinner LUCT sibling of Botswana (~83% table-name overlap). CAP-53 / NMDS field pass: [lesotho-db-gap.md](lesotho-db-gap.md).
 
 ## Open items
 
 - [x] Reverse-engineer newer-CMS screenshots into feature inventory + diagram analysis (3 Oct 2026 pack).
-- [ ] Receive and inventory Lesotho **old** CMS source + DB structure (Vara).
+- [x] Proxy database gap analysis vs Botswana / Cyberjaya / Raisd Schema ([lesotho-db-gap.md](lesotho-db-gap.md), 4 Oct 2026).
+- [x] Receive and inventory Lesotho **old** CMS structure (Vara, 5 Oct 2026) — dump stays under `raisd/_local/` (not git).
+- [x] CAP-53 / NMDS field-level pass on portal + assist columns ([lesotho-db-gap.md](lesotho-db-gap.md)).
+- [x] Schema × frontend × flows M4 gap analysis ([lesotho-db-gap.md](lesotho-db-gap.md#m4-gap-analysis--schema--frontend--flows); diagram `#gap-x`).
+- [x] CAP-53 Phase R1 read-adapter mapping ([lesotho-cap53-read-adapter.md](lesotho-cap53-read-adapter.md)) + sanitized object catalogs.
+- [ ] Implement `lesothoRead` in `portal-api` once integration MySQL access exists.
 - [ ] Confirm Live SoR path for Lesotho pilot (adapter to old CMS vs cutover to Raisd Schema v3) with Working Group.
 - [ ] Sanitize any future structure share (no student/staff PII).
 - [ ] Expand CAP matrix with Demo vs Live Raisd columns as portals catch up.
+- [ ] Confirm whether newer CMS or government exposes an NMDS HTTP API (old CMS = assist/billing only).
 
 ## Related
 
 | Topic | Path |
 |---|---|
 | Lesotho pilot approach | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
+| Database gap (proxy) | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | Diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
 | Obsidian 3D | [`docs/diagrams/old-cms/obsidian.html?campus=lesotho`](../../diagrams/old-cms/obsidian.html?campus=lesotho) |
 | Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |
 | Botswana inventory | [old-cms-botswana.md](old-cms-botswana.md) |
+| Botswana DTEF (≠ NMDS) | [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md) |
 | CAP comparison posture | [cms-feature-comparison.md](cms-feature-comparison.md) |
 | SDD-14 | [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md) |

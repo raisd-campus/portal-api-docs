@@ -70,6 +70,8 @@ external:
   ai-cms-comparison: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md
   ai-old-cms-lesotho: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
+  ai-lesotho-cap53: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md
+  report-lesotho-analysis: https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md
   openapi-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml
   ai-vercel-poc-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vercel-neon-poc.md
 
@@ -291,6 +293,8 @@ menu:
       - { label: CMS comparison, href: ai-cms-comparison }
       - { label: Lesotho CMS inventory, href: ai-old-cms-lesotho }
       - { label: Lesotho DB gap, href: ai-lesotho-db-gap }
+      - { label: Lesotho CAP-53 reads, href: ai-lesotho-cap53 }
+      - { label: Lesotho analysis briefing, href: report-lesotho-analysis }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
   - label: SDD
@@ -365,14 +369,32 @@ search:
   - title: Lesotho database gap
     href: "luct-ls#db-gap"
     section: LUCT CMS
-    summary: Proxy DB gap for Lesotho — newer CMS UI vs Botswana/Cyberjaya dumps vs Raisd Schema v3 until the old CMS structure dump arrives.
-    keywords: [lesotho, database, gap, schema, nmds, lgcse, botswana, cyberjaya, tables, proxy, m4]
+    summary: Measured campus2_lesotho structure (369/351/51/6) + CAP-53/NMDS field pass vs Botswana/Cyberjaya and Raisd Schema v3.
+    keywords: [lesotho, database, gap, schema, nmds, lgcse, botswana, cyberjaya, tables, m4, cap-53]
+
+  - title: Lesotho schema × FE × flows
+    href: "luct-ls#gap-x"
+    section: LUCT CMS
+    summary: M4 gap rollup across old schema, Raisd Schema v3, and SDD-11 frontend status for admissions, registration, NMDS, finance, graduation.
+    keywords: [lesotho, gap, frontend, flows, admissions, registration, nmds, m4, sdd-11]
 
   - title: Lesotho DB gap (AI knowledge)
     href: ai-lesotho-db-gap
     section: AI knowledge
-    summary: Full domain matrix for Lesotho DB differences — NMDS≠DTEF, LGCSE, Loti, CAP-53 hooks unknown until Vara dump.
+    summary: Structure + CAP-53/NMDS fields + schema×FE×flows M4 gap — NMDS≠DTEF, LGCSE, Loti, portal hooks present.
     keywords: [lesotho, database, gap, nmds, dtef, lgcse, schema, cap-48, cap-53]
+
+  - title: Lesotho CAP-53 read adapter
+    href: ai-lesotho-cap53
+    section: AI knowledge
+    summary: Phase R1 Portal API read mapping from portal_student_*_lesotho and api_student_* — mapping ready; MySQL access required for code.
+    keywords: [lesotho, cap-53, portal-api, adapter, reads, portal tables, m4]
+
+  - title: Lesotho CMS analysis briefing (5 Oct 2026)
+    href: report-lesotho-analysis
+    section: Reports
+    summary: Working Group briefing pack — HTML/PDF + WhatsApp paste of Lesotho dump inventory, CAP-53 R1, NMDS≠DTEF, and M4 asks.
+    keywords: [lesotho, briefing, working group, analysis, nmds, cap-53, whatsapp, pdf, report]
 
   - title: Obsidian 3D FSD — Lesotho
     href: "luct-obsidian?campus=lesotho"

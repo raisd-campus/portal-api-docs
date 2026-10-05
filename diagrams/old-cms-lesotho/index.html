@@ -194,7 +194,7 @@
         <span class="chip ok">M4 pilot acceptance</span>
         <span class="chip ok">Screenshot SoT</span>
         <span class="chip ok">NMDS + LGCSE</span>
-        <span class="chip warn">Old dump pending</span>
+        <span class="chip ok">369 tables invent.</span>
         <span class="chip">limkokwing.ac.ls</span>
       </div>
     </section>
@@ -209,6 +209,16 @@
       <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>
       · overview highlight:
       <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">overview.md</a>.
+    </div>
+
+    <div class="note warn" style="margin: 0 0 16px">
+      <strong>WG briefing (5 Oct 2026) — analysis results.</strong>
+      Old CMS <code>campus2_lesotho</code> measured (369 / 351 / 51 / 6). CAP-53 R1 read mapping ready;
+      Portal API code needs private MySQL. NMDS ≠ DTEF. Share pack:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho CMS analysis briefing</a>
+      (HTML/PDF + WhatsApp paste) · detail
+      <a href="#gap-x">§12 Schema × FE × flows</a> ·
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>.
     </div>
 
     <div class="note warn" style="margin: 0 0 16px">
@@ -230,7 +240,8 @@
       <a href="#rbac"><strong>8. Positions / RBAC</strong><span>CRUD by module</span></a>
       <a href="#cap"><strong>9. CAP seed</strong><span>Parity checklist</span></a>
       <a href="#compare"><strong>10. Campus compare</strong><span>vs BW · CY · SL</span></a>
-      <a href="#db-gap"><strong>11. Database gap</strong><span>Proxy vs BW · CY · Schema</span></a>
+      <a href="#db-gap"><strong>11. Database gap</strong><span>369 tables · CAP-53 · NMDS</span></a>
+      <a href="#gap-x"><strong>12. Schema × FE × flows</strong><span>M4 gap rollup</span></a>
     </nav>
 
     <section class="section" id="why">
@@ -284,7 +295,7 @@ flowchart TB
         <div class="card-body">
           <pre class="mermaid">
 flowchart LR
-  OLD[Older LUCT CMS<br/>PHPMaker family<br/>dump TBC · ≈ Botswana]
+  OLD[Older LUCT CMS<br/>campus2_lesotho<br/>369 tables · ≈ BW]
   NEW[Newer Lesotho CMS<br/>Admin + Student<br/>screenshots only]
   RAISD[Raisd portals<br/>via Portal API]
   SCHEMA[Raisd Schema v3<br/>+ Lesotho materials]
@@ -401,7 +412,7 @@ flowchart LR
       <ul>
         <li><strong>Academics:</strong> term blocks with Cr / Mk / Gd; Drop vs Compulsory; outstanding modules on Programme Summary.</li>
         <li><strong>Card:</strong> upload / camera; print history; campus return text for Lesotho Campus.</li>
-        <li><strong>NMDS:</strong> government sponsorship desk — Lesotho-specific analogue to Botswana DTEF (different agency).</li>
+        <li><strong>NMDS:</strong> government sponsorship — old CMS uses assist provider <code>nmds</code> + <code>AssistStdAcc</code> (borrower-like), not Botswana TEF POST.</li>
       </ul>
     </section>
 
@@ -469,13 +480,14 @@ flowchart TB
             <tr><th>Lesotho newer CMS</th><th>Raisd CAP focus</th><th>Pilot bar</th></tr>
           </thead>
           <tbody>
-            <tr><td>Admissions review + LGCSE docs + Loti pay</td><td>CAP-02–06, CAP-03</td><td>Must match campus workflow</td></tr>
-            <tr><td>Student registry + academics print</td><td>CAP-10–16</td><td>Statement of results + stamp/QR</td></tr>
+            <tr><td>Admissions + LGCSE + Loti pay</td><td>CAP-02–05 · CAP-45/46</td><td>Applicant/staff <strong>Not started</strong></td></tr>
+            <tr><td>Term registration</td><td>CAP-10</td><td>Student Demo → Live</td></tr>
+            <tr><td>Timetable / attendance / results / SoR</td><td>CAP-11–15</td><td>Student Demo; staff Not started</td></tr>
             <tr><td>Graduation clearance</td><td>CAP-15</td><td>Multi-dept + fee gate</td></tr>
-            <tr><td>NMDS sponsors</td><td>CAP-48</td><td>Lesotho government sponsorship</td></tr>
-            <tr><td>Remark / referrals</td><td>CAP-51 + ops</td><td>Queue workflows</td></tr>
-            <tr><td>Student portal grid</td><td>Student Demo → Live</td><td>Registration … Results</td></tr>
-            <tr><td>CMS adapter / SoR path</td><td>CAP-53</td><td>TBC after old dump</td></tr>
+            <tr><td>Fees / proof / online pay</td><td>CAP-45–47</td><td>Demo / Placeholder</td></tr>
+            <tr><td>NMDS sponsors</td><td>CAP-48</td><td>assist <code>nmds</code> + <code>AssistStdAcc</code></td></tr>
+            <tr><td>Remark / referrals</td><td>CAP-51</td><td>Student Demo; staff Not started</td></tr>
+            <tr><td>CMS adapter / SoR path</td><td>CAP-53</td><td>portal_* + api_*; writes TBC</td></tr>
           </tbody>
         </table>
       </div>
@@ -503,44 +515,52 @@ flowchart LR
         <li><a href="../old-cms-botswana/index.html">Botswana E2E hub</a> — closest old-CMS cousin + DTEF gov sync pattern.</li>
         <li><a href="../old-cms-sierra-leone/index.html">Sierra Leone E2E hub</a> — EMS sibling for M5.</li>
         <li><a href="../migration.html#m4">Migration M4 — Lesotho pilot</a>.</li>
-        <li><a href="#db-gap">Database gap analysis</a> — proxy UI → BW/CY → Raisd Schema.</li>
+        <li><a href="#db-gap">Database gap analysis</a> — measured old dump + CAP-53 / NMDS field pass.</li>
       </ul>
     </section>
 
     <section class="section" id="db-gap">
       <h2>11. Database difference / gap</h2>
       <p class="lead">
-        No Lesotho MySQL dump yet. Re-probed from WhatsApp Working Group CMS 2026
-        (3 Oct screenshots + chat). <strong>Proxy</strong>: newer-CMS UI → Botswana
-        (713 tables) / Cyberjaya (~1,942) → Raisd Schema v3 (~95 collections).
+        Old CMS structure dump received (Vara, 5 Oct 2026): schema
+        <code>campus2_lesotho</code> — <strong>369</strong> tables · <strong>351</strong> views ·
+        <strong>51</strong> procs · <strong>6</strong> functions (dump stays local, never in git).
+        Newer CMS schema still unavailable (live student data). Compare to Botswana
+        (713) / Cyberjaya (~1,942) / Raisd Schema v3 (~95 collections).
         Full write-up:
-        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>.
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>
+        · CAP-53 R1 reads:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">lesotho-cap53-read-adapter.md</a>
+        (mapping ready; <code>portal-api</code> code blocked on private MySQL access).
       </p>
       <div class="meta-row" style="margin: 0 0 16px">
-        <span class="chip ok">~22.5k students</span>
-        <span class="chip ok">~5.4k applicants</span>
-        <span class="chip ok">NMDS · LGCSE · M</span>
-        <span class="chip warn">Old dump pending</span>
-        <span class="chip">≈ Botswana skeleton</span>
+        <span class="chip ok">369 tables</span>
+        <span class="chip ok">351 views</span>
+        <span class="chip ok">51 procs</span>
+        <span class="chip ok">CAP-53 R1 mapped</span>
+        <span class="chip ok">nmds assist</span>
+        <span class="chip warn">portal-api MySQL TBC</span>
       </div>
       <div class="note warn" style="margin: 0 0 16px">
         <strong>Evidence boundary.</strong>
-        Newer CMS schema is unavailable (live student data). Old CMS structure dump
-        pending from Vara. Logical names below are <em>not</em> MySQL table names.
+        Newer CMS schema is unavailable (live student data). Old CMS
+        <code>campus2_lesotho</code> structure measured (369 tables). Logical ERD names
+        below are newer-CMS UI concepts — physical CAP-53 / NMDS names are in
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>.
       </div>
       <div class="card">
         <div class="card-body">
           <pre class="mermaid">
 flowchart LR
   A["A Newer Lesotho CMS<br/>screenshot SoT · no DB"]
-  B["B Older Lesotho CMS<br/>dump TBC · ≈ BW"]
+  B["B Older Lesotho CMS<br/>campus2_lesotho · 369"]
   C["C Raisd Schema v3<br/>Postgres Demo · 95 cols"]
   A -->|UX / CAP seed| GAP[Gap matrix]
-  B -->|physical ACL when dump lands| GAP
+  B -->|CAP-53 portal_* · nmds assist| GAP
   C -->|pilot write path| GAP
-  BW["cmsbotswana<br/>713 · DTEF"] -.->|family proxy| B
+  BW["cmsbotswana<br/>713 · DTEF"] -.->|~83% name overlap| B
   CY["cmscbj<br/>~1942"] -.->|richest LUCT| B
-  GAP --> BLOCK["Blockers<br/>dump · SoR · NMDS"]
+  GAP --> BLOCK["Blockers<br/>SoR path · NMDS API?"]
           </pre>
         </div>
       </div>
@@ -572,30 +592,101 @@ erDiagram
             <tr><th>Signal</th><th>Cyberjaya</th><th>Botswana</th><th>Lesotho (probed)</th></tr>
           </thead>
           <tbody>
-            <tr><td>Tables</td><td>~1,942</td><td>713</td><td><strong>Unknown</strong> — expect BW-class old CMS</td></tr>
-            <tr><td>Gov sponsorship</td><td>Assist only</td><td><strong>DTEF → tef.gov.bw</strong></td><td><strong>NMDS</strong> + borrower # + term tags</td></tr>
+            <tr><td>Tables</td><td>~1,942</td><td>713</td><td><strong>369</strong> (<code>campus2_lesotho</code>)</td></tr>
+            <tr><td>Gov sponsorship</td><td>Assist only</td><td><strong>DTEF → tef.gov.bw</strong></td><td><strong>NMDS</strong> = assist <code>nmds</code> + <code>AssistStdAcc</code> (no TEF POST)</td></tr>
             <tr><td>School leaving</td><td>CDU / EMGS path</td><td>Local docs</td><td><strong>LGCSE</strong> + Sesotho + certificate #</td></tr>
-            <tr><td>Currency</td><td>MYR</td><td>BWP</td><td><strong>LSL / M</strong> (e.g. M300 VERIFIED)</td></tr>
-            <tr><td>Admissions workflow</td><td>app_* desks</td><td>app_* (21)</td><td>Rank/score + <strong>Academic→QA→Registrar</strong></td></tr>
-            <tr><td>Portal hooks</td><td><code>portal_*_cyberjaya</code></td><td><code>portal_*_botswana</code> (6)</td><td><strong>TBC</strong> after dump</td></tr>
+            <tr><td>Currency</td><td>MYR</td><td>BWP</td><td><strong>LSL / M</strong> (provider <code>BillCurrency</code> still RM/USD leftover)</td></tr>
+            <tr><td>Admissions workflow</td><td>app_* desks</td><td>app_* (21)</td><td>app_* (13) + newer UI rank/score · <strong>Academic→QA→Registrar</strong></td></tr>
+            <tr><td>Portal hooks</td><td><code>portal_*_cyberjaya</code></td><td><code>portal_*_botswana</code> (6)</td><td><code>portal_student_*_lesotho</code> (5) + <code>api_student_*</code> SPs</td></tr>
             <tr><td>Immigration / EMGS</td><td>Heavy <code>w_*</code></td><td>Welfare / visa</td><td>Not in pack — out of M4 default</td></tr>
           </tbody>
         </table>
       </div>
       <h3>Gaps vs Raisd Schema v3 Demo (today)</h3>
       <ol>
-        <li><strong>NMDS ≠ DTEF</strong> — funding scheme + borrower #; no TEF client reuse.</li>
+        <li><strong>NMDS ≠ DTEF</strong> — map <code>nmds</code> / <code>AssistStdAcc</code> / term bills; no TEF client.</li>
         <li><strong>LGCSE extract</strong> — subject/grade rows + Sesotho + Examinations Council metadata.</li>
         <li><strong>3-step admissions + rank/score</strong> — richer than thin applicant Demo.</li>
         <li><strong>Graduation clearance</strong> — multi-dept gates + gown/grad fee precondition.</li>
         <li><strong>LSL finance + SoR print/QR</strong> — campus currency + staff deliverable.</li>
-        <li><strong>Old dump / CAP-53 hooks unknown</strong> — may need greenfield ACL on Schema.</li>
+        <li><strong>CAP-53 write path</strong> — reads mapped; Live SoR (old CMS vs Schema) still WG.</li>
       </ol>
       <ul>
-        <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Full probed ERD · field matrix · Raisd gap table</a></li>
+        <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">CAP-53 / NMDS field pass · ERD · Raisd gap table</a></li>
+        <li><a href="#gap-x">Schema × FE × flows rollup</a></li>
         <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">Botswana DTEF</a> (contrast only)</li>
         <li><a href="../old-cms-botswana/database.html">Botswana database</a> · <a href="../old-cms/index.html#database">Cyberjaya database</a> · <a href="../erd.html">Raisd ERD</a></li>
       </ul>
+    </section>
+
+    <section class="section" id="gap-x">
+      <h2>12. Schema × frontend × flows (M4)</h2>
+      <p class="lead">
+        Cross-cut of newer CMS UX, old <code>campus2_lesotho</code> schema, Raisd Schema v3,
+        and SDD-11 FE status. Full matrices:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md#m4-gap-analysis--schema--frontend--flows">lesotho-db-gap.md § M4 gap analysis</a>.
+        Live = <strong>0</strong> everywhere.
+      </p>
+      <div class="chips" style="margin: 0 0 16px">
+        <span class="chip warn">Applicant Not started</span>
+        <span class="chip warn">Staff portal Not started</span>
+        <span class="chip ok">Student Demo deepest</span>
+        <span class="chip ok">CAP-53 R1 mapping ready</span>
+        <span class="chip warn">portal-api MySQL TBC</span>
+        <span class="chip ok">Old schema hooks present</span>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph B["B Old schema"]
+    APP["app_* · Faculty/AQA/Registry"]
+    REG["r_std* · online_enrollment"]
+    NMDS["nmds assist · AssistStdAcc"]
+    PORT["portal_*_lesotho · api_*"]
+  end
+  subgraph C["C Raisd"]
+    SCH["Schema v3"]
+    API["Portal API Demo · CMS stub"]
+    FE["Student Demo · App/Staff NS"]
+  end
+  APP -->|CAP-02–05| FE
+  REG -->|CAP-10| FE
+  NMDS -->|CAP-48| FE
+  PORT -->|CAP-53 reads| API
+  API --> SCH
+  FE -.->|Live gap| BLOCK["Blockers: SoR path · staff/applicant FE · NMDS API?"]
+          </pre>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Flow</th><th>Old schema</th><th>Raisd FE</th><th>Severity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Admissions apply + 3-step</td><td><code>app_*</code> + Faculty/AQA/Registry statuses</td><td>Not started</td><td><strong>B</strong></td></tr>
+            <tr><td>Rank / score</td><td>Not in old app cols (newer UI)</td><td>Not started</td><td><strong>H</strong></td></tr>
+            <tr><td>LGCSE extract</td><td>Flat education subjects + docfile</td><td>Not started</td><td><strong>H</strong></td></tr>
+            <tr><td>Term registration</td><td><code>online_enrollment</code> + confirm SP</td><td>Student Demo</td><td><strong>B</strong></td></tr>
+            <tr><td>NMDS</td><td><code>nmds</code> + billing (no TEF)</td><td>Student Demo</td><td><strong>B</strong></td></tr>
+            <tr><td>Finance LSL</td><td><code>b_payment*</code> · RM leftover on assist</td><td>Demo / Placeholder</td><td><strong>H</strong></td></tr>
+            <tr><td>Graduation wizard</td><td>gown/clearance cols; UI richer</td><td>Student Demo</td><td><strong>H</strong></td></tr>
+            <tr><td>CAP-53 writes</td><td>SoR desks / Schema TBD</td><td>Partial FE</td><td><strong>B</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Suggested M4 cut order</h3>
+      <ol>
+        <li>CAP-53 <strong>reads</strong> (portal + api_*) · campus <code>LESOTHO</code> —
+          <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">mapping ready</a>;
+          catalogs in <a href="CATALOG.md">CATALOG.md</a></li>
+        <li>Applicant CAP-02/03 + LSL fee + LGCSE model</li>
+        <li>Staff admissions Faculty → AQA → Registry</li>
+        <li>CAP-10 registration writes + side effects</li>
+        <li>CAP-48 NMDS seed · CAP-15 clearance · CAP-45–47 finance</li>
+        <li>Staff portal shell + positions RBAC</li>
+      </ol>
     </section>
 
   </main>

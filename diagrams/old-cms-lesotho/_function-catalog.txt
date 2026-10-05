@@ -1,0 +1,6 @@
+cap_first
+ExtractNumberFromString
+ISNUMERIC
+Separator1
+Separator2
+test

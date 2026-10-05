@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — Lesotho CMS analysis briefing (2026-10-05)</title>
+<style>
+  :root {
+    --ink: #122028; --ink-soft: #334650; --muted: #62747e; --line: #d5e0e5;
+    --accent: #0f6b5d; --accent-deep: #0a4a41; --accent-soft: #e3f2ee;
+    --warm: #9a6418; --warm-soft: #f7edd8;
+    --green: #166534; --green-soft: #dcfce7;
+    --amber: #9a3412; --amber-soft: #ffedd5;
+    --red: #b42318; --red-soft: #fdecea;
+    --bg: #eef3f6; --panel: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem;
+  }
+  header .wrap, main, footer .wrap { max-width: 1040px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem;
+  }
+  header h1 { margin: 0 0 0.55rem; font-size: 1.65rem; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+  .doc-meta {
+    margin: 0.85rem 0 0; padding: 0.9rem 1.05rem; border-radius: 8px;
+    background: #fff; border: 1px solid #d7e3df; color: #122028;
+    font-size: 0.95rem; line-height: 1.55; max-width: 52rem;
+  }
+  .doc-meta p { margin: 0 0 0.4rem; color: #122028; }
+  .doc-meta p:last-child { margin-bottom: 0; }
+  .doc-meta strong { color: #0a4a41; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .pill {
+    display: inline-block; padding: 0.25rem 0.7rem; border-radius: 999px;
+    font-size: 0.78rem; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  }
+  main { padding: 1.5rem; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem; font-size: 1.22rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+  }
+  h3 { margin: 1.05rem 0 0.45rem; font-size: 1.02rem; color: var(--accent-deep); }
+  p { margin: 0.5rem 0; color: var(--ink-soft); }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.88rem; }
+  th, td { border: 1px solid var(--line); padding: 0.48rem 0.6rem; text-align: left; vertical-align: top; }
+  th {
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.86em; }
+  .status {
+    display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px;
+    font-size: 0.74rem; font-weight: 700;
+  }
+  .ok { background: var(--green-soft); color: var(--green); }
+  .wip { background: var(--amber-soft); color: var(--amber); }
+  .blocked { background: var(--red-soft); color: var(--red); }
+  .demo { background: #dbeafe; color: #1e3a5f; }
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.7rem; margin: 0.75rem 0 0.25rem;
+  }
+  .kpi {
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.85rem 0.9rem; background: #fff;
+  }
+  .kpi .n { font-size: 1.45rem; font-weight: 700; color: var(--accent-deep); line-height: 1.1; }
+  .kpi .l { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+  .banner {
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; color: var(--ink-soft);
+  }
+  .warn {
+    background: var(--warm-soft); border-left: 4px solid var(--warm);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; color: var(--ink-soft);
+  }
+  ul.compact { margin: 0.4rem 0; padding-left: 1.2rem; color: var(--ink-soft); }
+  ul.compact li { margin: 0.28rem 0; }
+  a { color: var(--accent-deep); }
+  footer {
+    padding: 1.25rem 1.5rem 2rem; color: var(--muted); font-size: 0.85rem;
+  }
+  @media print {
+    body { background: #fff; }
+    header { break-inside: avoid; }
+    section { break-inside: avoid; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group · Lesotho M4 pilot</p>
+    <h1>Lesotho CMS analysis results</h1>
+    <div class="doc-meta">
+      <p><strong>Purpose:</strong> Share measured findings from Vara’s old CMS structure pack and the Raisd gap / CAP-53 read plan with the Working Group.</p>
+      <p><strong>Cut:</strong> 5 October 2026 · <strong>Pilot campus:</strong> Lesotho (M4) · <strong>Live:</strong> still 0% (Demo ≠ Live)</p>
+      <p><strong>Audience:</strong> WG CMS 2026 · sponsors · portal / API owners</p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">campus2_lesotho</span>
+      <span class="pill">369 tables</span>
+      <span class="pill">CAP-53 R1 mapped</span>
+      <span class="pill">NMDS ≠ DTEF</span>
+      <span class="pill">No PII in repo</span>
+    </div>
+  </div>
+</header>
+<main>
+
+<section>
+  <h2>1. Headline for everyone</h2>
+  <div class="banner">
+    We now have a <strong>measured</strong> Lesotho old CMS structure (<code>campus2_lesotho</code>), not a proxy guess.
+    CAP-53 <strong>read</strong> mapping is ready. Raisd still needs private MySQL access before Portal API code can go Live.
+    Applicant and staff portals remain <strong>Not started</strong> — student Demo alone will not pass M4 government parity.
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="n">369</div><div class="l">Tables (structure)</div></div>
+    <div class="kpi"><div class="n">351</div><div class="l">Views</div></div>
+    <div class="kpi"><div class="n">51</div><div class="l">Stored procedures</div></div>
+    <div class="kpi"><div class="n">6</div><div class="l">Functions</div></div>
+    <div class="kpi"><div class="n">5</div><div class="l">portal_*_lesotho tables</div></div>
+    <div class="kpi"><div class="n">~83%</div><div class="l">Table-name overlap vs Botswana</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>2. What we analysed</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Evidence</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Older Lesotho CMS (SoR extract)</td>
+        <td>Vara Drive pack 5 Oct — tables / views / procs structure only</td>
+        <td><span class="status ok">Inventoried</span></td>
+      </tr>
+      <tr>
+        <td>Newer Lesotho CMS (feature bar)</td>
+        <td>Screenshots only (staging has live student data)</td>
+        <td><span class="status wip">UX benchmark</span></td>
+      </tr>
+      <tr>
+        <td>Raisd Schema v3 + Portal API</td>
+        <td>Demo records; CMS stub</td>
+        <td><span class="status demo">Demo</span></td>
+      </tr>
+      <tr>
+        <td>Frontend (SDD-11)</td>
+        <td>Student deepest Demo; applicant + staff Not started; Live = 0</td>
+        <td><span class="status wip">FE gap</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="muted">Dump SQL / PHP / credentials stay under local <code>_local/</code> — never committed. Published artefacts are names, field maps, and gap matrices only.</p>
+</section>
+
+<section>
+  <h2>3. Key technical results</h2>
+  <h3>CAP-53 (CMS ↔ Portal API)</h3>
+  <ul class="compact">
+    <li><strong>Hooks exist</strong> (Botswana-class, not Sierra Leone greenfield): 5 × <code>portal_student_*_lesotho</code> + 6 × <code>api_student_*</code> / <code>api_faculty_*</code> SPs.</li>
+    <li>Campus key fits <code>LESOTHO</code> (<code>Campus varchar(7)</code>).</li>
+    <li>Phase R1 <strong>read</strong> mapping documented → student <code>get*</code> methods.</li>
+    <li>Writes still open: WG must decide adapter-to-old-CMS vs Schema cutover.</li>
+    <li><span class="status blocked">Blocked for code</span> — need private MySQL / integration replica for <code>portal-api</code> <code>lesothoRead</code>.</li>
+  </ul>
+  <h3>NMDS (government sponsorship) ≠ Botswana DTEF</h3>
+  <ul class="compact">
+    <li>Old CMS uses assist provider <code>nmds</code> / <code>NMDS</code> + borrower-like <code>AssistStdAcc</code>.</li>
+    <li>Term billing via <code>b_assistbilling*</code> (bill nos like <code>LSO/{YYMM}/…</code>) — <strong>internal</strong>, not a TEF.gov POST.</li>
+    <li><strong>Do not</strong> reuse Botswana DTEF / <code>tef.gov.bw</code> client.</li>
+    <li>National NMDS HTTP API still unproven (may live only in newer CMS).</li>
+    <li>Config debt: assist <code>BillCurrency</code> still RM/USD — Raisd must use <strong>LSL / M</strong>.</li>
+  </ul>
+  <h3>Admissions / flows (schema × FE)</h3>
+  <ul class="compact">
+    <li>3-step review has physical columns: <code>Faculty*</code> → <code>AQA*</code> → <code>Registry*</code> on <code>app_applicationform</code>.</li>
+    <li>Rank / overall score seen in newer UI — <strong>not</strong> in old application table columns (confirm with campus).</li>
+    <li>LGCSE: flat education subjects + document tables; need campus extract model (Sesotho).</li>
+    <li>Online enrolment path: <code>online_enrollment</code> + payment verification SPs.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Gap rollup vs Raisd today</h2>
+  <table>
+    <thead><tr><th>Flow</th><th>Old schema</th><th>Raisd FE</th><th>Severity</th></tr></thead>
+    <tbody>
+      <tr><td>Admissions apply + 3-step</td><td><code>app_*</code> + Faculty/AQA/Registry</td><td>Not started</td><td><span class="status blocked">Blocker</span></td></tr>
+      <tr><td>Term registration</td><td><code>online_enrollment</code> + confirm SPs</td><td>Student Demo</td><td><span class="status blocked">Blocker</span></td></tr>
+      <tr><td>NMDS awards</td><td><code>nmds</code> + billing</td><td>Student Demo</td><td><span class="status blocked">Blocker</span></td></tr>
+      <tr><td>CAP-53 writes / SoR path</td><td>SoR desks vs Schema TBD</td><td>Partial FE</td><td><span class="status blocked">Blocker</span></td></tr>
+      <tr><td>LGCSE / LSL finance / clearance / SoR print</td><td>Present, campus-shaped</td><td>Mostly Demo / Not started</td><td><span class="status wip">High</span></td></tr>
+      <tr><td>EMGS / thick accommodation / FiveDays LMS</td><td>Present or external</td><td>—</td><td><span class="status demo">Out of M4</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>5. Suggested next cut (M4)</h2>
+  <ol>
+    <li>Grant Portal API <strong>read</strong> access to Lesotho integration MySQL → implement <code>lesothoRead</code>.</li>
+    <li>Applicant CAP-02/03 + LSL fee verification + LGCSE extract model.</li>
+    <li>Staff admissions Faculty → AQA → Registry.</li>
+    <li>CAP-10 registration writes + CMS side-effect tests.</li>
+    <li>CAP-48 NMDS scheme seed · CAP-15 clearance · CAP-45–47 finance.</li>
+    <li>Staff portal shell + positions RBAC.</li>
+  </ol>
+  <div class="warn">
+    <strong>Asks for the Working Group:</strong>
+    (1) Private read access to <code>campus2_lesotho</code> for Portal API integration ·
+    (2) Confirm Live SoR path (old CMS adapter vs Schema v3) ·
+    (3) Confirm whether newer CMS / government exposes an NMDS HTTP API ·
+    (4) Confirm rank/score persistence for admissions parity.
+  </div>
+</section>
+
+<section>
+  <h2>6. Where to read more</h2>
+  <table>
+    <thead><tr><th>Artefact</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Diagram hub (Pages)</td>
+        <td><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/">raisd-campus.github.io/…/old-cms-lesotho/</a></td>
+      </tr>
+      <tr>
+        <td>Schema × FE × flows + field passes</td>
+        <td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a></td>
+      </tr>
+      <tr>
+        <td>CAP-53 Phase R1 read adapter</td>
+        <td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">lesotho-cap53-read-adapter.md</a></td>
+      </tr>
+      <tr>
+        <td>UI inventory + CAP seed</td>
+        <td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a></td>
+      </tr>
+      <tr>
+        <td>Pilot framing</td>
+        <td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a></td>
+      </tr>
+      <tr>
+        <td>Object catalogs (names only)</td>
+        <td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/diagrams/old-cms-lesotho/CATALOG.md">CATALOG.md</a></td>
+      </tr>
+      <tr>
+        <td>Botswana DTEF (contrast only)</td>
+        <td><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/botswana-dtef-scholarship-sync.md">botswana-dtef-scholarship-sync.md</a></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    Raisd Campus · Lesotho CMS analysis briefing · 5 Oct 2026 ·
+    No student PII · Structure evidence from Vara pack · Screenshots from WG WhatsApp (3 Oct).
+  </div>
+</footer>
+</body>
+</html>
