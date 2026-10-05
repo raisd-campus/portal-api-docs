@@ -41,6 +41,8 @@ targets:
   luct-ls: diagrams/old-cms-lesotho/index.html
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
+  luct-sz: diagrams/old-cms-eswatini/index.html
+  ai-old-cms-eswatini: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md
   luct-sl: diagrams/old-cms-sierra-leone/index.html
   luct-sl-database: diagrams/old-cms-sierra-leone/database.html
   ai: ai/index.html
@@ -83,6 +85,8 @@ path_rules:
     section: distributed
   - match: { prefix: diagrams/old-cms-lesotho/ }
     section: luct-ls
+  - match: { prefix: diagrams/old-cms-eswatini/ }
+    section: luct-sz
   - match: { prefix: diagrams/old-cms-botswana/, file: database.html }
     section: luct-bw-database
   - match: { prefix: diagrams/old-cms-botswana/ }
@@ -223,6 +227,7 @@ menu:
       - luct-flows
       - luct-database
       - luct-ls
+      - luct-sz
       - luct-bw
       - luct-bw-database
       - luct-sl
@@ -238,6 +243,11 @@ menu:
           - { label: Registry / NMDS, href: "luct-ls#registry" }
           - { label: CAP seed, href: "luct-ls#cap" }
           - { label: Database gap, href: "luct-ls#db-gap" }
+      - label: Eswatini
+        href: luct-sz
+        children:
+          - { label: Inventory hub, href: luct-sz }
+          - { label: AI inventory, href: ai-old-cms-eswatini }
       - label: Cyberjaya
         href: luct
         children:
@@ -395,6 +405,18 @@ search:
     section: Reports
     summary: Working Group briefing pack — HTML/PDF + WhatsApp paste of Lesotho dump inventory, CAP-53 R1, NMDS≠DTEF, and M4 asks.
     keywords: [lesotho, briefing, working group, analysis, nmds, cap-53, whatsapp, pdf, report]
+
+  - title: Eswatini CMS inventory
+    href: luct-sz
+    section: LUCT CMS
+    summary: campus2_eswatini structure inventory (472 tables) — M5 LUCT sibling; portal_*_eswatini; assist ssb (not NMDS/DTEF).
+    keywords: [eswatini, swaziland, m5, campus2_eswatini, portal, ssb, inventory]
+
+  - title: Eswatini CMS inventory (AI knowledge)
+    href: ai-old-cms-eswatini
+    section: AI knowledge
+    summary: Full Eswatini old CMS inventory from Vara pack — counts, portal hooks, assist codes, overlap vs LS/BW/CY.
+    keywords: [eswatini, swaziland, cms, inventory, cap-53, ssb, m5]
 
   - title: Obsidian 3D FSD — Lesotho
     href: "luct-obsidian?campus=lesotho"

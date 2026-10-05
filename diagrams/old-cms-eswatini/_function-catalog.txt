@@ -1,0 +1,3 @@
+ExtractNumberFromString
+ISNUMERIC
+cap_first

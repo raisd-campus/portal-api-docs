@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Eswatini CMS inventory</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Control Plane</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../old-cms-lesotho/index.html">Lesotho (pilot)</a>
+            <a href="index.html">Eswatini</a>
+            <a href="../old-cms-botswana/index.html">Botswana</a>
+            <a href="../old-cms/index.html">Cyberjaya</a>
+            <a href="../old-cms-sierra-leone/index.html">Sierra Leone</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+</header>
+
+<main class="page">
+  <section class="section">
+    <h1>Eswatini CMS — structure inventory</h1>
+    <p class="lead">
+      Vara Drive pack (5 Oct 2026): <code>campus2_eswatini</code> — LUCT PHPMaker sibling for
+      <strong>M5</strong> expansion (after Lesotho M4). Dump stays local; catalogs are names only.
+    </p>
+    <div class="meta-row" style="margin: 0 0 16px">
+      <span class="chip ok">472 tables</span>
+      <span class="chip ok">330 views</span>
+      <span class="chip ok">53 procs</span>
+      <span class="chip ok">70 triggers</span>
+      <span class="chip ok">portal_*_eswatini</span>
+      <span class="chip warn">M5 — not M4 SoR</span>
+    </div>
+    <div class="note warn" style="margin: 0 0 16px">
+      <strong>PII / ops boundary.</strong>
+      Do not commit PHP, batch logs, or SQL dumps. Pack includes <code>eswatinibatch/logs/</code>.
+      Sanitized inventory:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">old-cms-eswatini.md</a>
+      · <a href="CATALOG.md">CATALOG.md</a>.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Family position</h2>
+    <div class="table-wrap">
+      <table class="attr">
+        <thead>
+          <tr><th>Signal</th><th>Eswatini</th><th>Lesotho</th><th>Botswana</th><th>Cyberjaya</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tables</td><td><strong>472</strong></td><td>369</td><td>713</td><td>~1,942</td></tr>
+          <tr><td>Triggers (in dump)</td><td><strong>70</strong></td><td>0 in file</td><td>157</td><td>~239</td></tr>
+          <tr><td>Portal hooks</td><td><code>portal_*_eswatini</code> (+ legacy <code>_swaziland</code>)</td><td><code>portal_*_lesotho</code></td><td><code>portal_*_botswana</code></td><td><code>portal_*_cyberjaya</code></td></tr>
+          <tr><td>Gov / assist</td><td>Assist codes <code>ssb</code> · <code>limkokwing</code></td><td><strong>NMDS</strong> (<code>nmds</code>)</td><td><strong>DTEF</strong> → tef.gov</td><td>Assist</td></tr>
+          <tr><td>Name overlap vs SZ</td><td>—</td><td>~65%</td><td>~60%</td><td>~59%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li>Same LUCT <code>app_*</code> admissions family — not Sierra Leone EMS.</li>
+      <li>CAP-53 reads can follow Lesotho/BW pattern with campus key <code>ESWATINI</code>.</li>
+      <li>Do <strong>not</strong> reuse Lesotho NMDS or Botswana TEF clients for Eswatini assist.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Full inventory (old-cms-eswatini.md)</a></li>
+      <li><a href="../old-cms-lesotho/index.html">Lesotho pilot (M4)</a></li>
+      <li><a href="../old-cms-botswana/index.html">Botswana</a> · <a href="../old-cms/index.html">Cyberjaya</a></li>
+      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot framing</a> (Eswatini may follow)</li>
+    </ul>
+  </section>
+</main>
+
+<p class="footer">
+  Eswatini CMS inventory · structure only · 5 Oct 2026 · Vara Drive pack
+</p>
+<script src="../abbr-tooltips.js" defer></script>
+<script src="../nav-dropdown.js" defer></script>
+<script src="../site-search.js" defer></script>
+</body>
+</html>
