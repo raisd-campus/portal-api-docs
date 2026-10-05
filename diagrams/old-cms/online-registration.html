@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — LUCT online registration (Cyberjaya)</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .reg-shot img {
+      aspect-ratio: auto;
+      object-fit: contain;
+      max-height: 420px;
+      background: #f0f3f8;
+    }
+    .reg-shot figcaption { gap: 6px; }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .process-card h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .process-card p { margin: 0 0 10px; color: var(--muted); }
+    .process-card ul { margin: 0; padding-left: 1.15rem; }
+    .process-card li { margin: 0.25rem 0; }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Control Plane</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../distributed-cms-architecture.html">Target architecture</a>
+            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="obsidian.html?campus=lesotho">Obsidian 3D</a>
+              <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="../old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="../old-cms-lesotho/index.html#cap">CAP seed</a>
+              <a href="../old-cms-lesotho/index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">Inventory hub</a>
+              <a href="../../https:/github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="index.html">E2E hub</a>
+              <a href="online-registration.html">Online registration</a>
+              <a href="index.html#fsd">FSD</a>
+              <a href="obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="index.html#flows">Flows</a>
+              <a href="index.html#erd">ERD</a>
+              <a href="index.html#database">Database</a>
+              <a href="index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms-botswana/index.html#dtef">DTEF</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="obsidian.html?campus=botswana">Obsidian 3D</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho analysis briefing</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>LUCT online registration — Cyberjaya pack</h1>
+      <p>
+        Captured <strong>6 October 2026</strong> from the public Limkokwing applicant wizard
+        (<code>LKW_Online_Registration.pdf</code>) and the <strong>Student Portal Forms</strong> pack.
+        Two procedures: <strong>A</strong> applicant online registration, <strong>B</strong> enrolled
+        Add/Drop maintenance. Malaysia government overlays (EMGS / Student Visa / NOC) are
+        <em>not</em> Lesotho NMDS / LGCSE policy.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">Process A · Applicant</span>
+        <span class="chip ok">Process B · Add/Drop</span>
+        <span class="chip">CAP-02 · 03 · 07 · 10</span>
+        <span class="chip">Cyberjaya / Malaysia</span>
+        <span class="chip">Captured 6 Oct 2026</span>
+      </div>
+    </section>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Canonical Markdown.</strong>
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">luct-online-registration.md</a>
+      · Applicant agents:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal.md">applicant-portal.md</a>
+      · Lesotho pilot substitute overlays:
+      <a href="../old-cms-lesotho/index.html">Lesotho feature analysis</a>
+      /
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>.
+    </div>
+
+    <div class="note" style="margin: 0 0 16px; border-color: #e0c48a; background: var(--warn-bg)">
+      <strong>Government scope.</strong>
+      On-page notes require Malaysian <strong>Student Visa</strong>, certified
+      <strong>Health Examination Report</strong>, and Sub-Saharan African
+      <strong>NOC</strong>. EMGS forms in the zip are Malaysian statutory packs.
+      For Lesotho M4, replace with <strong>NMDS + LGCSE</strong> — do not copy EMGS into Lesotho Live.
+    </div>
+
+    <nav class="toc" aria-label="Online registration sections">
+      <a href="#processes"><strong>1. Two processes</strong><span>Applicant wizard · enrolled Add/Drop</span></a>
+      <a href="#wizard"><strong>2. Wizard screenshots</strong><span>Academic → Documents → Personal → Submit</span></a>
+      <a href="#procedure"><strong>3. Procedure &amp; SLAs</strong><span>24h · 2–3 days · 14-day window · offer</span></a>
+      <a href="#evidence"><strong>4. Evidence &amp; forms</strong><span>MKT-003 · REG024 · EMGS · REG014/015</span></a>
+      <a href="#cap"><strong>5. CAP matrix</strong><span>Raisd mapping · Lesotho substitution</span></a>
+    </nav>
+
+    <section class="section" id="processes">
+      <h2>1. Two processes captured</h2>
+      <div class="two-col">
+        <div class="card process-card">
+          <div class="card-body">
+            <h3>A — Applicant online registration</h3>
+            <p>Public 4-step wizard + formal <code>LUCT-MKT-003</code> + visa/health pack.</p>
+            <ul>
+              <li>Steps: Academic → Documents → Personal → Submit / Application Details</li>
+              <li>3 programme preferences + intake</li>
+              <li>Required: photo, MyKad <em>or</em> full passport, transcript, certificate</li>
+              <li>Optional: CV, portfolio, recommendations, English cert</li>
+              <li>Fees on form: MY <strong>RM 500</strong> · Intl <strong>RM 1000</strong> + visa fee</li>
+              <li>Raisd surface: Applicant portal (SDD-04)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card process-card">
+          <div class="card-body">
+            <h3>B — Enrolled registration maintenance</h3>
+            <p>Registry Add/Drop and related forms after first enrolment.</p>
+            <ul>
+              <li><code>REG014</code> Add Course · <code>REG015</code> Drop Course</li>
+              <li>Approvals: Bursary (payment proof) → Faculty → Registry</li>
+              <li>Add/Drop fee after week 4</li>
+              <li><code>REG006</code> Change of Programme (may trigger new visa)</li>
+              <li>Raisd surface: Student Academic / Online Forms (CAP-10 / 51)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="wizard">
+      <h2>2. Wizard screenshots (Process A)</h2>
+      <p class="lead">
+        Resized previews from the LKW PDF (image-only capture). UI chrome only — no live student PII.
+      </p>
+      <div class="shot-grid">
+        <figure class="shot-card reg-shot">
+          <a href="online-registration/page-1.jpg" target="_blank" rel="noopener">
+            <img src="online-registration/page-1.jpg" alt="Step 1 Academic Qualification — general info, course preferences, education uploads" loading="lazy" />
+          </a>
+          <figcaption>
+            <span class="shot-group">Step 1 · Academic</span>
+            <strong>Academic Qualification</strong>
+            Application type, study method, 3 course preferences, intake, education uploads (≤10&nbsp;MB).
+          </figcaption>
+        </figure>
+        <figure class="shot-card reg-shot">
+          <a href="online-registration/page-2.jpg" target="_blank" rel="noopener">
+            <img src="online-registration/page-2.jpg" alt="Step 2 Supporting Documents — photo, IC/passport, payment proof, optional docs" loading="lazy" />
+          </a>
+          <figcaption>
+            <span class="shot-group">Step 2 · Documents</span>
+            <strong>Supporting Documents</strong>
+            Passport photo (white bg), IC/passport every page, proof of payment, optional CV/portfolio/letters, “how did you find us”.
+          </figcaption>
+        </figure>
+        <figure class="shot-card reg-shot">
+          <a href="online-registration/page-3.jpg" target="_blank" rel="noopener">
+            <img src="online-registration/page-3.jpg" alt="Step 3 Personal Information — demographics, addresses, parents, emergency contact" loading="lazy" />
+          </a>
+          <figcaption>
+            <span class="shot-group">Step 3 · Personal</span>
+            <strong>Personal Information</strong>
+            Demographics, current/permanent address, IC/passport number, parents/guardians, emergency contact → Finalise Application.
+          </figcaption>
+        </figure>
+        <figure class="shot-card reg-shot">
+          <a href="online-registration/page-4.jpg" target="_blank" rel="noopener">
+            <img src="online-registration/page-4.jpg" alt="Application Details — fee status, visa note, registration procedure SLAs" loading="lazy" />
+          </a>
+          <figcaption>
+            <span class="shot-group">Step 4 · Submit / track</span>
+            <strong>Application Details</strong>
+            Application ID, preferences, RM&nbsp;500 registration fee status, Malaysia visa/NOC note, procedure SLAs.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="procedure">
+      <h2>3. Registration procedure &amp; SLAs (on-page)</h2>
+      <div class="card">
+        <div class="card-body">
+          <ol>
+            <li>After form + payment complete → Registrar’s office; processing <strong>2–3 working days</strong>.</li>
+            <li>Confirmation email within <strong>24 hours</strong> of submission.</li>
+            <li>Eligible students notified by mail or phone within that window.</li>
+            <li>Eligible students have <strong>14 days</strong> from confirmation to complete process, payments, and documents — else application discarded.</li>
+            <li>Official <strong>Offer Letter</strong> (with payment details) only after application process and initial payment requirements are met.</li>
+          </ol>
+          <p style="margin: 12px 0 0; color: var(--muted)">
+            Malaysia government note on the same screen: Student Visa required; after offer, Student Service needs certified Full Health Examination Report and (for Sub-Saharan African internationals) NOC from the home education authority.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="evidence">
+      <h2>4. Evidence &amp; forms pack</h2>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Key forms from Student Portal Forms.zip</h3>
+            <p>Text extracts inventoried under control-plane <code>docs/ai/materials/luct-online-registration/forms-extracts/</code>.</p>
+          </div>
+        </div>
+        <div class="card-body" style="overflow-x: auto">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Title</th><th>Process</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>LUCT-MKT-003</code></td><td>Application for Admission (Rev 01, 01/04/2023)</td><td>A</td></tr>
+              <tr><td><code>LUCT-REG-024</code></td><td>Micro-credential / Short Courses</td><td>A (lighter)</td></tr>
+              <tr><td>EMGS Health Examination Report</td><td>Malaysia HEI entry health exam guidelines</td><td>A · gov</td></tr>
+              <tr><td>Lampiran B</td><td>Health Declaration for Applicant</td><td>A · gov</td></tr>
+              <tr><td><code>REG014</code> / <code>REG015</code></td><td>Add / Drop Course</td><td>B</td></tr>
+              <tr><td><code>REG006</code></td><td>Change of Programme</td><td>B</td></tr>
+              <tr><td>REG005–008, 017 · SSD* · LIB · FMG</td><td>Transcript, appeal, credit transfer, accommodation, etc.</td><td>Catalogue seeds</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cap">
+      <h2>5. CAP matrix (Raisd)</h2>
+      <div class="card">
+        <div class="card-body" style="overflow-x: auto">
+          <table>
+            <thead>
+              <tr><th>CAP</th><th>Cyberjaya pack must support</th><th>Lesotho pilot substitution</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="../../sdd/11-capability-catalog.html#cap-02">CAP-02</a></td>
+                <td>Multi-step apply; 3 preferences; intake; repeatable qualifications; marketing source</td>
+                <td>Same journey shape; LGCSE-oriented education levels</td>
+              </tr>
+              <tr>
+                <td><a href="../../sdd/11-capability-catalog.html#cap-03">CAP-03</a></td>
+                <td>Photo; ID every page; colour transcripts/certificates; optional English/CV/portfolio; proof of payment; ≤10&nbsp;MB</td>
+                <td>LGCSE extract + Sesotho; campus document policy — no EMGS gate</td>
+              </tr>
+              <tr>
+                <td><a href="../../sdd/11-capability-catalog.html#cap-07">CAP-07</a></td>
+                <td>Application ID; fee status; offer after payment; 14-day window; Registrar 2–3 days</td>
+                <td>Newer CMS Academic→QA→Registrar; confirm Lesotho SLAs</td>
+              </tr>
+              <tr>
+                <td><a href="../../sdd/11-capability-catalog.html#cap-10">CAP-10</a></td>
+                <td>Add/Drop with Bursary→Faculty→Registry; week-4 fee</td>
+                <td>Confirm Lesotho week rules on newer CMS</td>
+              </tr>
+              <tr>
+                <td><a href="../../sdd/11-capability-catalog.html#cap-50">CAP-50</a></td>
+                <td>Student Visa + health exam + Sub-Saharan NOC (Malaysia)</td>
+                <td>Not Malaysia EMGS for Lesotho locals; intl policy Needs checking</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="lead" style="margin-top: 16px">
+        Fee amounts (RM 500 / RM 1000) are Cyberjaya form facts. Lesotho uses campus currency/policy (LSL / NMDS assist) — confirm before Live.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Related</h2>
+      <nav class="toc" aria-label="Related pages">
+        <a href="index.html"><strong>Cyberjaya E2E hub</strong><span>FSD · flows · ERD · database</span></a>
+        <a href="../old-cms-lesotho/index.html"><strong>Lesotho pilot</strong><span>Feature analysis · DB gap · M4</span></a>
+        <a href="../../sdd/04-applicant-portal.html"><strong>SDD-04 Applicant</strong><span>Admissions launch contract</span></a>
+        <a href="../raisd-cms/student-portal.html"><strong>Raisd Student portal</strong><span>Module registration Demo</span></a>
+      </nav>
+    </section>
+  </main>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+</body>
+</html>

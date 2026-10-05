@@ -109,7 +109,7 @@
     },
     {
       "title": "Lesotho database gap",
-      "summary": "Proxy DB gap for Lesotho \u2014 newer CMS UI vs Botswana/Cyberjaya dumps vs Raisd Schema v3 until the old CMS structure dump arrives.",
+      "summary": "Measured campus2_lesotho structure (369/351/51/6) + CAP-53/NMDS field pass vs Botswana/Cyberjaya and Raisd Schema v3.",
       "section": "LUCT CMS",
       "keywords": [
         "lesotho",
@@ -121,14 +121,31 @@
         "botswana",
         "cyberjaya",
         "tables",
-        "proxy",
-        "m4"
+        "m4",
+        "cap-53"
       ],
       "path": "diagrams/old-cms-lesotho/index.html#db-gap"
     },
     {
+      "title": "Lesotho schema \u00d7 FE \u00d7 flows",
+      "summary": "M4 gap rollup across old schema, Raisd Schema v3, and SDD-11 frontend status for admissions, registration, NMDS, finance, graduation.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "gap",
+        "frontend",
+        "flows",
+        "admissions",
+        "registration",
+        "nmds",
+        "m4",
+        "sdd-11"
+      ],
+      "path": "diagrams/old-cms-lesotho/index.html#gap-x"
+    },
+    {
       "title": "Lesotho DB gap (AI knowledge)",
-      "summary": "Full domain matrix for Lesotho DB differences \u2014 NMDS\u2260DTEF, LGCSE, Loti, CAP-53 hooks unknown until Vara dump.",
+      "summary": "Structure + CAP-53/NMDS fields + schema\u00d7FE\u00d7flows M4 gap \u2014 NMDS\u2260DTEF, LGCSE, Loti, portal hooks present.",
       "section": "AI knowledge",
       "keywords": [
         "lesotho",
@@ -142,6 +159,68 @@
         "cap-53"
       ],
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md"
+    },
+    {
+      "title": "Lesotho CAP-53 read adapter",
+      "summary": "Phase R1 Portal API read mapping from portal_student_*_lesotho and api_student_* \u2014 mapping ready; MySQL access required for code.",
+      "section": "AI knowledge",
+      "keywords": [
+        "lesotho",
+        "cap-53",
+        "portal-api",
+        "adapter",
+        "reads",
+        "portal tables",
+        "m4"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md"
+    },
+    {
+      "title": "Lesotho CMS analysis briefing (5 Oct 2026)",
+      "summary": "Working Group briefing pack \u2014 HTML/PDF + WhatsApp paste of Lesotho dump inventory, CAP-53 R1, NMDS\u2260DTEF, and M4 asks.",
+      "section": "Reports",
+      "keywords": [
+        "lesotho",
+        "briefing",
+        "working group",
+        "analysis",
+        "nmds",
+        "cap-53",
+        "whatsapp",
+        "pdf",
+        "report"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md"
+    },
+    {
+      "title": "Eswatini CMS inventory",
+      "summary": "campus2_eswatini structure inventory (472 tables) \u2014 M5 LUCT sibling; portal_*_eswatini; assist ssb (not NMDS/DTEF).",
+      "section": "LUCT CMS",
+      "keywords": [
+        "eswatini",
+        "swaziland",
+        "m5",
+        "campus2_eswatini",
+        "portal",
+        "ssb",
+        "inventory"
+      ],
+      "path": "diagrams/old-cms-eswatini/index.html"
+    },
+    {
+      "title": "Eswatini CMS inventory (AI knowledge)",
+      "summary": "Full Eswatini old CMS inventory from Vara pack \u2014 counts, portal hooks, assist codes, overlap vs LS/BW/CY.",
+      "section": "AI knowledge",
+      "keywords": [
+        "eswatini",
+        "swaziland",
+        "cms",
+        "inventory",
+        "cap-53",
+        "ssb",
+        "m5"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md"
     },
     {
       "title": "Obsidian 3D FSD \u2014 Lesotho",
@@ -361,6 +440,25 @@
         "php-maker"
       ],
       "path": "diagrams/old-cms/index.html"
+    },
+    {
+      "title": "LUCT online registration (Cyberjaya)",
+      "summary": "Captured applicant wizard and enrolled Add/Drop procedures from LKW PDF and Student Portal Forms \u2014 CAP-02/03/07/10 field checklist; Malaysia EMGS/NOC \u2260 Lesotho NMDS/LGCSE.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "online registration",
+        "admissions",
+        "applicant",
+        "emgs",
+        "noc",
+        "mkt003",
+        "add drop",
+        "government",
+        "cyberjaya",
+        "cap-02",
+        "cap-03"
+      ],
+      "path": "diagrams/old-cms/online-registration.html"
     },
     {
       "title": "Obsidian 3D FSD \u2014 Cyberjaya",

@@ -14,7 +14,8 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 **Lesotho pilot:** https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md
 **Lesotho CMS analysis:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/  
 **Eswatini CMS inventory:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-eswatini/  
-**Lesotho analysis briefing (5 Oct 2026):** https://raisd-campus.github.io/portal-api-docs/reports/lesotho-cms-analysis-2026-10-05/
+**LUCT online registration (Cyberjaya):** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/online-registration.html  
+**Lesotho analysis briefing (5 Oct 2026):** https://raisd-campus.github.io/portal-api-docs/reports/lesotho-cms-analysis-2026-10-05/  
 **SDD / nomenclature:** https://raisd-campus.github.io/portal-api-docs/sdd/
 **Nomenclature HTML:** https://raisd-campus.github.io/portal-api-docs/sdd/15-nomenclature.html (CAP/M hover tooltips on all Pages)
 
@@ -25,6 +26,7 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 | [`diagrams/`](diagrams/) | Mermaid ERD and DFD HTML pages |
 | [`diagrams/distributed-cms-architecture.html`](diagrams/distributed-cms-architecture.html) | Distributed CMS — current milestones → multi-country ideal |
 | [`diagrams/old-cms/`](diagrams/old-cms/) | [LUCT CMS](diagrams/old-cms/) comparison, FSD, Obsidian 3D, legacy ERD, flows, DB tech |
+| [`diagrams/old-cms/online-registration.html`](diagrams/old-cms/online-registration.html) | Cyberjaya applicant wizard + Add/Drop procedure capture (6 Oct 2026) |
 | [`design-system/`](design-system/) | Released `@raisd-campus/design-system` catalogue (captures + foundations) |
 | [`sdd/`](sdd/) | SDD copies; CAP-* / M* nomenclature ([15-nomenclature.md](sdd/15-nomenclature.html)) |
 
