@@ -179,6 +179,7 @@ Raisd mapping today: Student Demo module registration is [academic-module-regist
 | Topic | Path |
 |---|---|
 | GitHub Pages | [`diagrams/old-cms/online-registration.html`](../../diagrams/old-cms/online-registration.html) · https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/online-registration.html |
+| FE gap analysis | [luct-online-registration-fe-gap.md](luct-online-registration-fe-gap.md) · Pages: [online-registration-gap.html](../../diagrams/old-cms/online-registration-gap.html) |
 | Applicant portal agents | [../frontend/applicant-portal.md](../frontend/applicant-portal.md) |
 | SDD Applicant | [../../sdd/04-applicant-portal.md](../../sdd/04-applicant-portal.md) |
 | CAP catalog | [../../sdd/11-capability-catalog.md](../../sdd/11-capability-catalog.md) |

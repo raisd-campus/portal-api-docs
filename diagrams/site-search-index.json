@@ -461,6 +461,24 @@
       "path": "diagrams/old-cms/online-registration.html"
     },
     {
+      "title": "Online registration FE gap analysis",
+      "summary": "Applicant, Student, Staff and Lecturer frontend vs LUCT Process A/B requirements \u2014 Required, Gap, Mismatch, Partial, Out of requirements, Met Demo.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "gap",
+        "mismatch",
+        "required",
+        "out of requirements",
+        "applicant",
+        "student",
+        "staff",
+        "frontend",
+        "admissions",
+        "registration"
+      ],
+      "path": "diagrams/old-cms/online-registration-gap.html"
+    },
+    {
       "title": "Obsidian 3D FSD \u2014 Cyberjaya",
       "summary": "Interactive 3D knowledge graph of the Cyberjaya functional specification.",
       "section": "LUCT CMS",

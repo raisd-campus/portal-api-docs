@@ -78,6 +78,7 @@ jobs:
           test -f _site/diagrams/old-cms/fsd-knowledge-lesotho.json
           test -f _site/diagrams/old-cms/obsidian.html
           test -f _site/diagrams/old-cms/online-registration.html
+          test -f _site/diagrams/old-cms/online-registration-gap.html
           test -f _site/ai/index.html
           test -f _site/poc/vercel-neon.html
           test -f _site/sdd/15-nomenclature.html

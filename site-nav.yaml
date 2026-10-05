@@ -39,6 +39,7 @@ targets:
   luct-flows: diagrams/old-cms/flows.html
   luct-database: diagrams/old-cms/database.html
   luct-online-reg: diagrams/old-cms/online-registration.html
+  luct-online-reg-gap: diagrams/old-cms/online-registration-gap.html
   luct-ls: diagrams/old-cms-lesotho/index.html
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
@@ -75,6 +76,7 @@ external:
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
   ai-lesotho-cap53: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md
   ai-luct-online-reg: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md
+  ai-luct-online-reg-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md
   report-lesotho-analysis: https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md
   openapi-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml
   ai-vercel-poc-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vercel-neon-poc.md
@@ -111,6 +113,8 @@ path_rules:
     section: luct-database
   - match: { prefix: diagrams/old-cms/, file: online-registration.html }
     section: luct-online-reg
+  - match: { prefix: diagrams/old-cms/, file: online-registration-gap.html }
+    section: luct-online-reg-gap
   - match: { prefix: diagrams/old-cms/ }
     section: luct
   - match: { path_contains: raisd-cms, name_contains: student-portal-manual }
@@ -231,6 +235,7 @@ menu:
       - luct-flows
       - luct-database
       - luct-online-reg
+      - luct-online-reg-gap
       - luct-ls
       - luct-sz
       - luct-bw
@@ -258,6 +263,7 @@ menu:
         children:
           - { label: E2E hub, href: luct }
           - { label: Online registration, href: luct-online-reg }
+          - { label: Registration FE gaps, href: luct-online-reg-gap }
           - { label: FSD, href: "luct#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=cyberjaya" }
           - { label: Flows, href: "luct#flows" }
@@ -308,6 +314,7 @@ menu:
       - { label: PoC requirements, href: ai-portal-api-poc }
       - { label: CMS comparison, href: ai-cms-comparison }
       - { label: LUCT online registration, href: ai-luct-online-reg }
+      - { label: Registration FE gaps, href: ai-luct-online-reg-gap }
       - { label: Lesotho CMS inventory, href: ai-old-cms-lesotho }
       - { label: Lesotho DB gap, href: ai-lesotho-db-gap }
       - { label: Lesotho CAP-53 reads, href: ai-lesotho-cap53 }
@@ -520,6 +527,12 @@ search:
     section: LUCT CMS
     summary: Captured applicant wizard and enrolled Add/Drop procedures from LKW PDF and Student Portal Forms — CAP-02/03/07/10 field checklist; Malaysia EMGS/NOC ≠ Lesotho NMDS/LGCSE.
     keywords: [online registration, admissions, applicant, emgs, noc, mkt003, add drop, government, cyberjaya, cap-02, cap-03]
+
+  - title: Online registration FE gap analysis
+    href: luct-online-reg-gap
+    section: LUCT CMS
+    summary: Applicant, Student, Staff and Lecturer frontend vs LUCT Process A/B requirements — Required, Gap, Mismatch, Partial, Out of requirements, Met Demo.
+    keywords: [gap, mismatch, required, out of requirements, applicant, student, staff, frontend, admissions, registration]
 
   - title: Obsidian 3D FSD — Cyberjaya
     href: "luct-obsidian?campus=cyberjaya"
