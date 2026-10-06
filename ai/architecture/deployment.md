@@ -22,12 +22,19 @@ Agents must not:
 ## Request path (target)
 
 ```text
-Browser → Caddy/TLS on edge → portal Deployment
-Browser → api.raisd.co → Portal API Deployment → CMS / Postgres / files
+Browser → Traefik/TLS (k3s built-in) → portal Deployment
+Browser → api.raisd.co → Traefik → portal-api Deployment → CMS / Postgres / files
 ```
+
+Concrete build, image, manifests, probes, env and release flow for the Portal API: [portal-api-deployment.md](../backend/portal-api-deployment.md).
+
+## PoC alternative (not production)
+
+For an early hosted Demo of a portal SPA + Portal API with a free Postgres, see the **Vercel + Neon** path in [vercel-neon-poc.md](vercel-neon-poc.md). That note does **not** change ADR-2/ADR-3; portals still call only the Portal API, and Live campus hosting remains UltaHost / k3s.
 
 ## Related
 
 - Printable overview: [`docs/Raisd-Campus-Architecture.pdf`](../../Raisd-Campus-Architecture.pdf)
 - Diagrams: [`docs/diagrams/`](../../diagrams/)
 - Open questions on hosting: [SDD-10](../../sdd/10-open-questions.md)
+- PoC Vercel + Neon: [vercel-neon-poc.md](vercel-neon-poc.md)

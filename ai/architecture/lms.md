@@ -31,6 +31,8 @@ Authoritative rows remain [SDD-11](../../sdd/11-capability-catalog.md).
 
 LMS is **role surfaces on the Portal API** (student / lecturer / staff), not a fifth portal product. Detail: [lms-architecture.html](../../diagrams/lms-architecture.html).
 
+**Demo API catalogue:** `GET /v1/meta/lms` on Portal API — callable Materials / assignment / lecturer-review methods, Neon collections, and deferred CAP gaps. Contract: [`openapi.yaml`](../../../openapi.yaml) tag `LMS`. Schema notes: [backend/lms-schema.md](../backend/lms-schema.md).
+
 ## Database tables (logical)
 
 CMS vs LMS colour legend and table catalogue: [erd.html#lms](../../diagrams/erd.html#lms).  

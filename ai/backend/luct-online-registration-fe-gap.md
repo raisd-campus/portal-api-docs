@@ -3,7 +3,7 @@
 **Status:** Gap analysis (frontend portals vs captured LUCT Cyberjaya procedures).  
 **Date:** 6 October 2026.  
 **Requirements source:** [luct-online-registration.md](luct-online-registration.md) (Process A applicant wizard + Process B Add/Drop).  
-**FE sources:** Applicant preview (session-only), Student Demo, Lecturer/Staff Not started; SDD-11 catalog statuses.  
+**FE sources:** Applicant validated mock API (session-only), Student Demo, Lecturer/Staff Not started; SDD-11 catalog statuses.\
 **Pages:** [`diagrams/old-cms/online-registration-gap.html`](../../diagrams/old-cms/online-registration-gap.html).
 
 ## Classification legend
@@ -17,15 +17,15 @@
 | **Out of requirements** | In CY pack but **not** Lesotho M4 default, or Raisd FE beyond the captured pack. |
 | **Met (Demo)** | Demo/preview aligns enough for prototype; still not Live. |
 
-**Status language:** Demo ≠ Live. Catalog SDD-11 still marks most Applicant CAPs **Not started**; Applicant UI is a **frontend-only preview** (treat as Demo-like for this matrix).
+**Status language:** Demo ≠ Live. Catalog SDD-11 still marks most Applicant CAPs **Not started**; Applicant now has a **validated session-only mock Portal API**, development reviewer scenarios and explicit accepted-enrolment handoff. These tested Demo capabilities do not establish Live completion. See [mock operations](../frontend/applicant-portal/mock-api.md) and [verified admissions flow](../frontend/student-portal/audits/2026-10-05-admissions-profile-verification.md).
 
 ## Roll-up
 
 | Portal | Required open | Gaps | Mismatches | Partial | Out of req. | Met (Demo) |
 |---|---:|---:|---:|---:|---:|---:|
-| Applicant | 12 | 6 | 4 | 5 | 2 | 3 |
-| Student | 6 | 3 | 2 | 4 | 3 | 4 |
-| Staff | 8 | 8 | 0 | 0 | 1 | 0 |
+| Applicant | 12 | 7 | 3 | 9 | 2 | 1 |
+| Student | 3 | 2 | 1 | 4 | 2 | 3 |
+| Staff | 7 | 7 | 0 | 0 | 1 | 0 |
 | Lecturer | 0 | 0 | 0 | 0 | 1 | 0 |
 
 Counts are row-level (one feature may be Required + Gap). See the Pages table for the full list.
@@ -33,7 +33,7 @@ Counts are row-level (one feature may be Required + Gap). See the Pages table fo
 ## Critical path (frontend)
 
 1. **Applicant CAP-02/03** — finish field parity with Process A; durable upload; Portal API save.  
-2. **Applicant CAP-07** — offer view + accept enrolment (not only review preview).  
+2. **Applicant CAP-07** — Live offer view and durable acceptance/provisioning; mock acceptance and isolated Student handoff are implemented.\
 3. **Staff CAP-03/05/06/07** — Registry review → offer → first enrolment (or verified old CMS for M2).  
 4. **Student CAP-10** — Live term registration write; Process B Add/Drop after first confirm.  
 5. **Lesotho overlays** — LGCSE/Sesotho + NMDS; **exclude** Malaysia EMGS/NOC from M4 default path.
@@ -46,19 +46,19 @@ See published HTML for filterable rows. Markdown summary by portal:
 
 | ID | Requirement (CY pack) | FE today | Class |
 |---|---|---|---|
-| A-01 | CAP-01 sign-in / account | None | Required · Gap |
-| A-02 | CAP-02 multi-step apply (Academic→Documents→Personal→Submit) | 5-step editor (Study / Personal / Academic / Documents / Fee) — session-only | Required · Mismatch |
+| A-01 | CAP-01 sign-in / account | Development logout/sign-in simulation; no real credentials/account service | Required · Gap · Partial |
+| A-02 | CAP-02 multi-step apply (Academic→Documents→Personal→Submit) | Six-step editor (Consent / Study / Personal / Academic / Documents / Fee) with validated session mock saving/submission | Required · Mismatch |
 | A-03 | 3 programme preferences + intake + application type + study method | 3 prefs + intake + applicant/student type; study method label differs | Required · Partial |
-| A-04 | Repeatable education + colour transcript/certificate uploads ≤10 MB | Repeat quals + file tiles; session File objects; limit wording may differ (25 MiB messages path) | Required · Partial |
-| A-05 | CAP-03 required evidence set (photo, IC/passport every page, optional English/CV/portfolio) | Documents step exists; evidence matrix / white-bg photo rules not verified vs pack | Required · Partial |
-| A-06 | Proof of payment on apply | Fee step + payment proof under review preview | Met (Demo) · Partial (no Live verify) |
+| A-04 | Repeatable education + colour transcript/certificate uploads ≤10 MB | Repeated qualifications and scoped evidence metadata; 25 MiB per-file validation differs from captured 10 MB; document contents/colour not verified | Required · Mismatch · Partial |
+| A-05 | CAP-03 required evidence set (photo, IC/passport every page, optional English/CV/portfolio) | Conditional evidence validated from programme/citizenship/age metadata; captured white-background/every-page content rules are not verified | Required · Partial |
+| A-06 | Proof of payment on apply | Required reference/proof and sequential development payment/document verification; no Live Bursary processing | Met (Demo) · Partial (no Live verify) |
 | A-07 | Marketing source (“how did you find us”) | Needs checking in FE | Required · Gap |
 | A-08 | CAP-55 terms finalise + declarations (version + timestamp) | Consent UI fragment; no durable versioned acceptance | Required · Partial |
-| A-09 | CAP-07 track application ID, fee status, SLAs | Submitted detail + review stages; no CMS status / 14-day discard / 24h email | Required · Mismatch |
-| A-10 | Offer letter + accept enrolment | Not in FE | Required · Gap |
+| A-09 | CAP-07 track application ID, fee status, SLAs | Immutable submitted detail, guarded review stages and reviewer messages; no CMS status / 14-day discard / 24h email | Required · Mismatch |
+| A-10 | Offer letter + accept enrolment | Explicit mock acceptance, automatic logout and next-login isolated Student handoff; offer-letter UI and Live acceptance/provisioning remain missing | Required · Gap · Partial |
 | A-11 | CAP-16 applicant announcements | None | Required · Gap |
-| A-12 | CAP-35 accessible forms / assistance / Enquiries | No assistance path; Enquiries control from pack missing | Required · Gap |
-| A-13 | CAP-36 mobile shell | Shared shell + manual phone checks; not certified | Partial |
+| A-12 | CAP-35 accessible forms / assistance / Enquiries | Accessible inline validation and keyboard/browser checks; assistance/Enquiries path is missing | Required · Gap · Partial |
+| A-13 | CAP-36 mobile shell | Shared shell and automated Chromium/WebKit width/accessibility checks; physical-device acceptance unverified | Partial |
 | A-14 | Agent block (MKT-003 §9) | Not in FE | Gap (campus/agent channel — confirm if Raisd scope) |
 | A-15 | Friend-get-friend (MKT-003 §10) | Not in FE | Out of requirements (marketing promo; not CAP launch) |
 | A-16 | Lesotho LGCSE education levels / Sesotho extract | CY-shaped preview only | Required · Gap (LS M4) |

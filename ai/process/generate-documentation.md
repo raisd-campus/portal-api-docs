@@ -10,7 +10,7 @@ This knowledge base is the **input** for human-facing and published documentatio
 | Portal behaviour (student) | `docs/ai/frontend/student-portal/*` | `docs/sdd/05`; student-portal README; audits |
 | Portal API | `docs/ai/backend/portal-api.md`, `openapi.yaml` | `portal-api-docs`, `docs/index.html`, diagrams |
 | Capabilities / status | `docs/sdd/11`, Faid sheet export, `process/status-language.md` | `docs/sdd/13`, briefing HTML, README snapshot |
-| Design tokens | `docs/ai/design/design-system.md` | design-system repo README; explorer copy |
+| Design tokens and component ownership | `docs/ai/design/design-system.md`, `docs/ai/design/component-library.md` | versioned package catalogue; `docs/design-system/` HTML and `portal-api-docs/design-system/` mirror when the released design changes |
 
 ## Generation rules
 
@@ -20,6 +20,11 @@ This knowledge base is the **input** for human-facing and published documentatio
 4. Mark uncertainty as **TBC** or **Needs checking**; do not invent owners, dates, or CMS product names.
 5. Keep Demo/Live language exact ([status-language.md](status-language.md)).
 6. After generating, update [MANIFEST.yaml](../MANIFEST.yaml) if new knowledge files were added.
+7. Refresh design system HTML only for observable shared or student-owned pattern changes. Keep package API text with its version, replace affected static captures when visuals change, and retain capture provenance. Do not regenerate the design system pages for unrelated task completion.
+
+The [catalogue source README](../../design-system/README.md) gives the capture, generation, validation, and mirror commands. Publish shared changes after the corresponding package release so the public pages show an installable version.
+
+For shared sidebar or header changes, capture `system/portal-shell` at phone, tablet, and desktop widths from a fixture using mock account and navigation data. Keep student-only Community examples labelled as student compositions. Update the released version in the public HTML only after the package is installable.
 
 ## Suggested agent workflow
 

@@ -183,6 +183,7 @@ Vercel Postgres is discontinued; databases come from Vercel Marketplace. Neon is
 - Replacing UltaHost / k3s stages or hostnames (`apply.raisd.co`, `api.raisd.co`, …).
 - Moving the Cyberjaya CMS onto Neon or Vercel.
 - Staff Live progression APIs (deferred; `GET /v1/meta/staff-progression`).
+- Live LMS product APIs (quiz / live-class / forum) — Demo catalogue only at `GET /v1/meta/lms`; Materials alone is not a complete LMS (BASE-44).
 - Free-tier Neon as production capacity planning.
 
 ## Related

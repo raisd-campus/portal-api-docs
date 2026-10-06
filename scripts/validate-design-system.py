@@ -87,7 +87,7 @@ def validate(root: Path) -> list[str]:
         seen.add(item["id"])
         if item["page"] not in PAGES[1:]:
             errors.append(f"invalid capture page: {item['id']}")
-        if item["owner"] not in ("shared", "student"):
+        if item["owner"] not in ("shared", "student", "applicant"):
             errors.append(f"invalid capture owner: {item['id']}")
         if item.get("viewport") not in ("phone", "tablet", "desktop") or not isinstance(item.get("width"), int):
             errors.append(f"invalid capture viewport: {item['id']}")
@@ -95,6 +95,8 @@ def validate(root: Path) -> list[str]:
             errors.append(f"missing package version: {item['id']}")
         if item["owner"] == "student" and not item.get("studentPortalCommit", manifest.get("studentPortalCommit")):
             errors.append(f"missing student source commit: {item['id']}")
+        if item["owner"] == "applicant" and not item.get("applicantPortalCommit"):
+            errors.append(f"missing applicant source commit: {item['id']}")
         image = folder / item["image"]
         if not image.is_file():
             errors.append(f"missing capture: {image}")
@@ -105,7 +107,7 @@ def validate(root: Path) -> list[str]:
 
 
 if __name__ == "__main__":
-    site_root = Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
+    site_root = Path(sys.argv[1] if len(sys.argv) > 1 else "docs").resolve()
     problems = validate(site_root)
     if problems:
         print("\n".join(problems), file=sys.stderr)

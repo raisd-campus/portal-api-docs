@@ -60,3 +60,7 @@ Confirmation preserves saved Personal Profile fields, emergency contacts, existi
 ## Verification expectations
 
 Unit coverage validates the quote contract, aggregate explicit Fee Item pricing, citizenship and tax treatment, currency and ownership, absence of module-price leakage, academic selection rules, eVAL confirmation access, pre-eVAL atomic rejection, deterministic tax-inclusive invoice creation, duplicate-confirmation and conflicting-invoice rejection, graph atomicity, award-credit capping, dependent projections, and session reset. Playwright covers Alya's Malaysian-exempt registration and Mei's editable pre-eVAL plan, blocked confirmation, eVAL unlock, international tax-inclusive invoice creation, Finance result and continued Student Pass workflow at 1280px and 1440px. Responsive coverage keeps the structured selection/fee tables semantic inside keyboard-scrollable regions and verifies the editor, confirmation, and action footer at phone and tablet widths.
+
+## Accepted Applicant demo — 6 October 2026
+
+Accepted Applicant demo handoffs open this existing page with an isolated first-semester Design enrolment and no registered modules. The prescribed module draft, credit/fee/clash checks and international eVAL rules remain unchanged. Reference date is carried from Applicant, so intake and registration windows match. International transfers inherit no visa or clearance and remain subject to Immigration requirements. Refresh resets the transferred mock account.

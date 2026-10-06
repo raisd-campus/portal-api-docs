@@ -76,7 +76,9 @@ Statuses at minimum: draft, submitted, under review, offer, accepted, enrolled, 
 
 ## 7. Current baseline
 
-No applicant signup, application, intake-choice, or application-status route exists (`src/app/routes.ts`). Enrolled-student qualification records in Profile are not an admissions flow.
+The Applicant checkout now implements application, intake-choice, submission-status and development review routes backed by its session mock API. Real applicant signup, offers and Live admissions persistence remain unimplemented. Enrolled-student qualification records in Profile remain distinct from admissions.
+
+Working frontend preview (2 October 2026): the unpaid fee summary uses the shared orange warning variant. Submitted Application Fee displays Transfer Proof only, while bank instructions remain in the editor. The two-row review table displays Department (Finance for Payment Proof, Registry for Document Check) as preview labels; Live reviewer routing is not implemented or confirmed by this UI. The completed Documents Checklist offers Create Application beside Edit Answers, opening the new application UI while retaining checklist state in memory. See [Applicant preview guidance](../ai/frontend/applicant-portal.md#submitted-application-ui-preview--1-october-2026).
 
 ## 8. Acceptance ([M2](03-delivery-milestones.md#m2))
 
@@ -89,3 +91,29 @@ No applicant signup, application, intake-choice, or application-status route exi
 ## 9. Open blockers
 
 Confirm minimum applicant journey, evidence matrix per programme, old-CMS applicant tracking, and account provisioning. Owners TBC.
+
+**Captured Cyberjaya / LUCT baseline (6 October 2026):** public wizard + `LUCT-MKT-003` + forms pack documented in [`docs/ai/backend/luct-online-registration.md`](../ai/backend/luct-online-registration.md). Use it to close CAP-02/03/07/55 field questions for Cyberjaya; Lesotho pilot must substitute NMDS/LGCSE for Malaysia EMGS/NOC. Owners still TBC for Live fee amounts, dropdown enumerations, and Lesotho SLAs.
+
+## Local admissions/profile increment — 5 October 2026
+
+Applicant's existing draft/submission/messages flow now uses a validated session-only mock Portal API. Step validation presents errors beside fields and focuses the first invalid control; no page-wide validation list is shown. Student schema v4 aligns Personal, Academic and Documents through an explicitly accepted, versioned handoff; submission alone never enrols a student. Shared UI remains 0.6.1. Lesotho is the acceptance-pilot priority; existing Malaysian sample rules are retained without asserting Lesotho policy. Details: [Applicant mock API](../ai/frontend/applicant-portal/mock-api.md), [accepted handoff and backend prerequisites](../ai/backend/admissions-handoff.md). Automated local gates do not establish hosted HTTP, physical-device or CMS integration. No hosted reseed is authorized by this increment.
+
+## Local development review increment — 5 October 2026
+
+Applicant provides one development-only Admin Actions page with three isolated applicant scenarios (Fresh, completed unsubmitted draft, submitted approved), a shared dropdown, payment/document SummaryCards and reviewer conversation. Scenario switching retains saved work and invalidates stale operations. Payment verification precedes document verification; completion sets Approved without offers, accepted-enrolment context or Student provisioning. Admin viewing does not read messages for the applicant, and approved conversations are read-only on both sides. Production excludes the route, navigation, commands and synthetic fixtures. No HTTP/CMS integration is asserted. Details: [Applicant mock operations](../ai/frontend/applicant-portal/mock-api.md).
+
+## Local enrolment acceptance increment — 6 October 2026
+
+Approved Applicant applications can explicitly accept their first-preference Design enrolment through the shared confirmation popup. Submission starts with no automatic reviewer messages. The next simulated development login transfers accepted serializable data into a new isolated first-semester Student mock account/enrolment and opens existing Module Registration. Both portals use the same captured intake reference and existing curriculum/rules. No offer screens, live authentication, CMS provisioning, durable evidence transfer or backend deployment is implemented. Production and HTTP sessions exclude the simulation. Shared UI stays 0.6.1; Student schema stays 4 and admissions handoff stays version 1. See [accepted handoff](../ai/backend/admissions-handoff.md#development-browser-handoff--6-october-2026).
+
+## Automatic post-acceptance logout — 6 October 2026
+
+Successful enrolment acceptance now automatically logs out Applicant development mock sessions and shows the existing Sign in screen. The applicant explicitly clicks Sign in to open the existing new Student tab at Module Registration. Failed acceptance remains retryable in its popup; failed logout preserves accepted status and offers Retry Sign Out without accepting again. Session/scenario guards prevent stale transitions; records, files and drafts remain in memory until refresh. Production and HTTP sessions exclude this simulation. Shared 0.6.1, contracts and Student bootstrap remain unchanged.
+
+## Checklist action widths — 6 October 2026
+
+Documents Checklist uses equal-width Edit Answers and Create Application actions on phone, tablet and desktop through the existing shared PageActionBar slot. Navigation and checklist retention remain unchanged. Shared Popup trailing-action support is an unpublished candidate awaiting release authorization; Applicant still consumes 0.6.1 and its leave dialog is not yet changed.
+
+## Shared 0.6.2 and save before leaving — 6 October 2026
+
+Released shared 0.6.2 adds an optional trailing Popup action. Applicant uses primary Save & Close after Keep Editing to save incomplete drafts before the originally blocked navigation; pending, failure/retry, duplicate and stale-session handling remain portal-owned. Student upgrades its pin with existing defaults intact. Graph schema 4, admissions handoff 1 and Demo/Live boundaries are unchanged.

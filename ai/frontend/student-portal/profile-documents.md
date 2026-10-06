@@ -31,7 +31,7 @@ Browser verification exposed an existing TabbedPagePanel navigation defect: Radi
 The mock adapter starts from the selected stable Student Profile ID:
 
 - Passport and qualification evidence is projected directly from existing canonical file fields. It is never copied into library fixtures or screens. Null optional file fields are omitted. CAP-50 may reference the same selected-student metadata in an immutable Online Form evidence snapshot; a case-specific replacement remains attached only to that submission and never modifies this library.
-- Canonical Student Document records own additional student-specific letters through `studentProfileId`. Rizal and Alya each have an Enrolment Confirmation record.
+- Canonical Student Document records own additional student-specific letters through `studentProfileId`. Existing student-specific enrolment-confirmation sample records are labelled **Offer Letter**, retaining their stored classification, IDs, filenames and owners. The label change does not make an enrolment-confirmation file satisfy an Immigration offer-letter evidence field. Offer Letter appears first; other documents remain alphabetically ordered by title and stable ID. Legacy records titled Enrolment Confirmation normalize to Offer Letter in the projection, without creating or replacing files.
 - The University Document record and campus relationship are retired. Student Handbook belongs to the CAP-55 catalogue; its policy body or file remains outside the current release. An unknown student remains an error.
 - Student Document records carry an ID, owning student ID, title, filename, and source department. Graph validation rejects unknown owners and duplicate library IDs.
 - Projected IDs encode source kind, owning record ID, and file-field identity in the adapter. Consumers treat them as opaque. Reordering records or renaming a file does not change its identity. Identical filenames from different records remain distinct.
@@ -62,3 +62,7 @@ Playwright covers the legacy replacement redirect, direct URLs, responsive sideb
 - `src/data/portal-sidebar.ts`
 - `src/tests/documents-profile.test.tsx`
 - `tests/e2e/documents-profile.spec.ts`
+
+## Admissions evidence alignment — schema v4
+
+The accepted admissions mapper adds only applicable non-academic evidence to Student Document records. Passport/photo and academic/English evidence remain on their owning records and are projected once into this library. Null optional English certificates and local passport scans are omitted. The complete evidence metadata remains available in the immutable admissions snapshot for provenance. Payment proof stays Finance-owned; application message attachments are not profile documents. Existing letters, translations, grading-scale evidence and title-only no-op presentation are preserved.

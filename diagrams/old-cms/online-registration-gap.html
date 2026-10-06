@@ -266,7 +266,7 @@
         Captured <strong>6 October 2026</strong>. Demo ≠ Live.
       </p>
       <div class="meta-row">
-        <span class="chip ok">Applicant preview</span>
+        <span class="chip ok">Applicant mock API</span>
         <span class="chip ok">Student Demo</span>
         <span class="chip">Staff / Lecturer Not started</span>
         <span class="chip">Lesotho M4 overlays</span>
@@ -287,7 +287,7 @@
     <div class="note" style="margin: 0 0 16px; border-color: #e0c48a; background: var(--warn-bg)">
       <strong>Scope.</strong>
       Malaysia EMGS / Student Visa / NOC rows are marked <em>Out of requirements</em> for Lesotho M4.
-      Applicant catalog CAPs remain Not started in SDD-11; UI preview is treated as Demo-like here.
+      Applicant catalog CAPs remain Not started in SDD-11; validated session mock API, reviewer tooling and accepted handoff are implemented as Demo; Live gaps remain.
     </div>
 
     <nav class="toc" aria-label="Gap sections">
@@ -299,12 +299,12 @@
     <section class="section" id="rollup">
       <h2>1. Roll-up</h2>
       <div class="stat-grid">
-        <div class="stat-card"><strong>26</strong><span>Required open rows</span></div>
-        <div class="stat-card"><strong>17</strong><span>Gaps (no FE)</span></div>
-        <div class="stat-card"><strong>6</strong><span>Mismatches</span></div>
-        <div class="stat-card"><strong>9</strong><span>Partial</span></div>
-        <div class="stat-card"><strong>7</strong><span>Out of requirements</span></div>
-        <div class="stat-card"><strong>7</strong><span>Met (Demo)</span></div>
+        <div class="stat-card"><strong>22</strong><span>Required open rows</span></div>
+        <div class="stat-card"><strong>16</strong><span>Gaps (no FE)</span></div>
+        <div class="stat-card"><strong>4</strong><span>Mismatches</span></div>
+        <div class="stat-card"><strong>13</strong><span>Partial</span></div>
+        <div class="stat-card"><strong>6</strong><span>Out of requirements</span></div>
+        <div class="stat-card"><strong>4</strong><span>Met (Demo)</span></div>
       </div>
       <div class="card">
         <div class="card-head">
@@ -316,7 +316,7 @@
         <div class="card-body">
           <ol>
             <li><strong>Applicant CAP-02/03</strong> — Process A field parity, durable upload, Portal API save.</li>
-            <li><strong>Applicant CAP-07</strong> — offer view + accept enrolment (beyond review preview).</li>
+            <li><strong>Applicant CAP-07</strong> — Live offer view and durable acceptance/provisioning; mock acceptance/handoff exists.</li>
             <li><strong>Staff CAP-03/05/06/07</strong> — Registry review → offer → first enrolment (or verified old CMS).</li>
             <li><strong>Student CAP-10</strong> — Live term write + Process B Add/Drop after first confirm.</li>
             <li><strong>Lesotho overlays</strong> — LGCSE/Sesotho + NMDS; exclude Malaysia EMGS/NOC from M4 default.</li>
@@ -361,19 +361,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr data-portal="applicant" data-class="required gap"><td>A-01</td><td>Applicant</td><td>CAP-01</td><td>Sign-in / account access</td><td>None</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span></td></tr>
-              <tr data-portal="applicant" data-class="required mismatch"><td>A-02</td><td>Applicant</td><td>CAP-02</td><td>Multi-step apply Academic→Documents→Personal→Submit</td><td>5-step editor (Study/Personal/Academic/Documents/Fee); session-only</td><td><span class="tag tag-required">Required</span><span class="tag tag-mismatch">Mismatch</span></td></tr>
+              <tr data-portal="applicant" data-class="required gap partial"><td>A-01</td><td>Applicant</td><td>CAP-01</td><td>Sign-in / account access</td><td>Development logout/sign-in simulation; no real credentials/account service</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span><span class="tag tag-partial">Partial</span></td></tr>
+              <tr data-portal="applicant" data-class="required mismatch"><td>A-02</td><td>Applicant</td><td>CAP-02</td><td>Multi-step apply Academic→Documents→Personal→Submit</td><td>Six-step editor (Consent / Study / Personal / Academic / Documents / Fee) with validated session mock saving/submission</td><td><span class="tag tag-required">Required</span><span class="tag tag-mismatch">Mismatch</span></td></tr>
               <tr data-portal="applicant" data-class="required partial"><td>A-03</td><td>Applicant</td><td>CAP-02</td><td>3 programme preferences + intake + application type + study method</td><td>3 prefs + intake + applicant/student type; study-method naming differs</td><td><span class="tag tag-required">Required</span><span class="tag tag-partial">Partial</span></td></tr>
-              <tr data-portal="applicant" data-class="required partial"><td>A-04</td><td>Applicant</td><td>CAP-02/03</td><td>Repeatable education + colour transcript/certificate ≤10 MB</td><td>Repeat quals + file tiles; session Files; message limits 25 MiB</td><td><span class="tag tag-required">Required</span><span class="tag tag-partial">Partial</span></td></tr>
-              <tr data-portal="applicant" data-class="required partial"><td>A-05</td><td>Applicant</td><td>CAP-03</td><td>Photo (white bg), IC/passport every page, optional English/CV/portfolio</td><td>Documents step; pack evidence matrix not verified</td><td><span class="tag tag-required">Required</span><span class="tag tag-partial">Partial</span></td></tr>
-              <tr data-portal="applicant" data-class="met partial"><td>A-06</td><td>Applicant</td><td>CAP-03/46</td><td>Proof of payment on apply</td><td>Fee step + payment-proof review preview</td><td><span class="tag tag-met">Met (Demo)</span><span class="tag tag-partial">Partial</span></td></tr>
+              <tr data-portal="applicant" data-class="required mismatch partial"><td>A-04</td><td>Applicant</td><td>CAP-02/03</td><td>Repeatable education + colour transcript/certificate ≤10 MB</td><td>Repeated qualifications and scoped evidence metadata; 25 MiB per-file validation differs from captured 10 MB; document contents/colour not verified</td><td><span class="tag tag-required">Required</span><span class="tag tag-mismatch">Mismatch</span><span class="tag tag-partial">Partial</span></td></tr>
+              <tr data-portal="applicant" data-class="required partial"><td>A-05</td><td>Applicant</td><td>CAP-03</td><td>Photo (white bg), IC/passport every page, optional English/CV/portfolio</td><td>Conditional evidence validated from programme/citizenship/age metadata; captured white-background/every-page content rules are not verified</td><td><span class="tag tag-required">Required</span><span class="tag tag-partial">Partial</span></td></tr>
+              <tr data-portal="applicant" data-class="partial met"><td>A-06</td><td>Applicant</td><td>CAP-03/46</td><td>Proof of payment on apply</td><td>Required reference/proof and sequential development payment/document verification; no Live Bursary processing</td><td><span class="tag tag-partial">Partial</span><span class="tag tag-met">Met (Demo)</span></td></tr>
               <tr data-portal="applicant" data-class="required gap"><td>A-07</td><td>Applicant</td><td>CAP-02</td><td>Marketing source (“how did you find us”)</td><td>Needs checking / not confirmed in FE</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span></td></tr>
               <tr data-portal="applicant" data-class="required partial"><td>A-08</td><td>Applicant</td><td>CAP-55</td><td>Terms finalise + versioned declarations</td><td>Consent UI; no durable version/timestamp</td><td><span class="tag tag-required">Required</span><span class="tag tag-partial">Partial</span></td></tr>
-              <tr data-portal="applicant" data-class="required mismatch"><td>A-09</td><td>Applicant</td><td>CAP-07</td><td>Track ID, fee status, 24h / 2–3 day / 14-day SLAs</td><td>Submitted detail + review stages; no CMS SLA behaviour</td><td><span class="tag tag-required">Required</span><span class="tag tag-mismatch">Mismatch</span></td></tr>
-              <tr data-portal="applicant" data-class="required gap"><td>A-10</td><td>Applicant</td><td>CAP-07</td><td>Offer letter + accept enrolment</td><td>Not in FE</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span></td></tr>
+              <tr data-portal="applicant" data-class="required mismatch"><td>A-09</td><td>Applicant</td><td>CAP-07</td><td>Track ID, fee status, 24h / 2–3 day / 14-day SLAs</td><td>Immutable submitted detail, guarded review stages and reviewer messages; no CMS status / 14-day discard / 24h email</td><td><span class="tag tag-required">Required</span><span class="tag tag-mismatch">Mismatch</span></td></tr>
+              <tr data-portal="applicant" data-class="required gap partial"><td>A-10</td><td>Applicant</td><td>CAP-07</td><td>Offer letter + accept enrolment</td><td>Explicit mock acceptance, automatic logout and next-login isolated Student handoff; offer-letter UI and Live acceptance/provisioning remain missing</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span><span class="tag tag-partial">Partial</span></td></tr>
               <tr data-portal="applicant" data-class="required gap"><td>A-11</td><td>Applicant</td><td>CAP-16</td><td>Applicant announcements</td><td>None</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span></td></tr>
-              <tr data-portal="applicant" data-class="required gap"><td>A-12</td><td>Applicant</td><td>CAP-35</td><td>Accessible forms + Enquiries assistance</td><td>No assistance path; pack Enquiries missing</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span></td></tr>
-              <tr data-portal="applicant" data-class="partial"><td>A-13</td><td>Applicant</td><td>CAP-36</td><td>Mobile online-registration shell</td><td>Shared shell + manual phone checks; not certified</td><td><span class="tag tag-partial">Partial</span></td></tr>
+              <tr data-portal="applicant" data-class="required gap partial"><td>A-12</td><td>Applicant</td><td>CAP-35</td><td>Accessible forms + Enquiries assistance</td><td>Accessible inline validation and keyboard/browser checks; assistance/Enquiries path is missing</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span><span class="tag tag-partial">Partial</span></td></tr>
+              <tr data-portal="applicant" data-class="partial"><td>A-13</td><td>Applicant</td><td>CAP-36</td><td>Mobile online-registration shell</td><td>Shared shell and automated Chromium/WebKit width/accessibility checks; physical-device acceptance unverified</td><td><span class="tag tag-partial">Partial</span></td></tr>
               <tr data-portal="applicant" data-class="gap"><td>A-14</td><td>Applicant</td><td>—</td><td>Agent block (MKT-003 §9)</td><td>Not in FE — confirm Raisd scope</td><td><span class="tag tag-gap">Gap</span></td></tr>
               <tr data-portal="applicant" data-class="out"><td>A-15</td><td>Applicant</td><td>—</td><td>Friend-get-friend promo (MKT-003 §10)</td><td>Not in FE</td><td><span class="tag tag-out">Out of requirements</span></td></tr>
               <tr data-portal="applicant" data-class="required gap"><td>A-16</td><td>Applicant</td><td>CAP-02/03</td><td>Lesotho LGCSE levels + Sesotho extract</td><td>CY-shaped preview only</td><td><span class="tag tag-required">Required</span><span class="tag tag-gap">Gap</span></td></tr>

@@ -16,6 +16,17 @@
 
 LMS is **role surfaces on the Portal API**, not a fifth portal. Existing Cyberjaya CMS remains system of record for enrolment / grades / attendance this phase. Assignment **bytes** need a Live file store ([SDD-10 Q5](../../sdd/10-open-questions.md)); Demo stores metadata only.
 
+## Portal API surface (Demo)
+
+| Surface | Path / ops | Notes |
+|---|---|---|
+| Catalogue | `GET /v1/meta/lms` | Callable methods × CAP × tables; deferred quiz / live-class / forum / feedback names (not callable) |
+| Materials | `POST /v1/portal/getAcademicModuleMaterials` · `…MaterialDetail` · `submitAssignment` · `deleteAssignmentSubmission` | OpenAPI tags: `LMS`, `Materials` |
+| Lecturer review | `POST /v1/portal/getLecturerReview` · `submitLecturerReview` | Tags: `LMS`, `Lecturer review` · CAP-30 |
+| Shared academic reads | `getAcademicModules` · `getAcademicModuleDetail` · `getAcademicModuleAttendance` · `getAcademicTimetable` | Listed in the catalogue; domain `shared` |
+
+Do **not** add Live handlers for deferred method names without product sign-off. OpenAPI version **0.4.1+**.
+
 ## In-contract tables (`PortalRecordGraph`)
 
 Snake_case names match Neon Demo collection tables (`id`, `position`, `record jsonb`, …). Field shapes: `student-portal/src/contracts/portal-records.ts`.

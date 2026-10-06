@@ -29,7 +29,7 @@ Four role portals on top of the **existing campus CMS family**, not a greenfield
 
 **Confirmed 23 September 2026 (Aslam / Working Group):** for this phase, use the existing campus CMS as system of record and build modern portal experiences via the **Portal API**. Do **not** duplicate operational staff functions that the old CMS already runs.
 
-**Pilot campus update — 3 October 2026:** first launch / acceptance focus is **Lesotho**. Lesotho’s newer CMS is the feature benchmark; migration uses Raisd canonical schema + Lesotho CMS materials (old dump pending from Vara).
+**Pilot campus update — 3 October 2026:** first launch / acceptance focus is **Lesotho**. Lesotho’s newer CMS is the feature benchmark; migration uses Raisd canonical schema + Lesotho CMS materials (old CMS `campus2_lesotho` structure inventoried 5 Oct 2026 from Vara’s Drive pack — dump stays local, never in git).
 
 Consequences:
 

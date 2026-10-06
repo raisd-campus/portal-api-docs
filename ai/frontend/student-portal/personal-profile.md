@@ -31,9 +31,11 @@ The frontend allows session-only editing of:
 - email address;
 - permanent address;
 - current address; and
-- emergency contacts.
+- emergency contacts, including relationship;
+- father and mother/guardian name, phone and email; and
+- disability answer and conditional details.
 
-The student's name, nationality, derived Student Fee Category, birth details, gender, race, identification number, passport filenames, passport expiry date, and passport issuing country remain read-only. Student Fee Category displays Local when citizenship matches the enrolment campus country and International otherwise; Malaysian Service Tax eligibility still uses the canonical citizenship country code directly. Passport filenames use the reusable underlined brand `FileLink` visual without an icon, but clicking it is a no-op in this phase; it does not start a download or navigate.
+The student's name, nationality, derived Student Fee Category, birth details, gender, race, identification number, passport number/filenames, passport expiry date, passport issuing country, religion and custom religion remain read-only. Student Fee Category displays Local when citizenship matches the enrolment campus country and International otherwise; Malaysian Service Tax eligibility still uses the canonical citizenship country code directly. Passport filenames use the reusable underlined brand `FileLink` visual without an icon, but clicking it is a no-op in this phase; it does not start a download or navigate.
 
 Rizal is an Indonesian citizen classified as International, with a permanent address in Bandung, a current campus address in Cyberjaya, and a Malaysia Student Pass expiring on 28 September 2026. His classification keeps Immigration available in the main navigation and Community services. Alya is consistently Malaysian and classified as Local; she has no Malaysia Student Pass or Immigration entry point, and a stale direct Immigration URL returns her to Dashboard. These private profile and visa records are distinct from the limited Person Summary and Staff Member directory records used elsewhere in the portal.
 
@@ -60,7 +62,7 @@ The trash control uses the normal neutral action colours: muted at rest, title c
 - Cancel restores the last response returned by the current `PortalApi` instance.
 - Save validates the complete editable payload with Zod before sending it to the API boundary.
 - Validation and API errors keep edit mode and the current draft visible.
-- A successful mock save updates the query cache and remains visible while navigating during the same session.
+- A successful mock save atomically updates the canonical graph and saved profile overlay, then refreshes all dependent session caches and remains visible while navigating during the same session.
 - Refreshing or restarting the browser reconstructs the mock adapter and restores the fixtures.
 
 ## Documents library
@@ -102,3 +104,11 @@ PortalApi.getPrivacySecurity (`POST /v1/portal/getPrivacySecurity`) is represent
 - `src/services/portal-api.ts`
 - `src/services/portal-queries.ts`
 - `src/services/mock-academic-profile-api.ts`
+
+## Applicant alignment and accepted handoff — 5 October 2026
+
+Personal now includes country of citizenship, official religion/custom religion, two guardian contact groups, disability answer/details and emergency-contact relationship. Established shared DetailSectionCard/DetailField and 14px/36px controls remain unchanged. Guardian/emergency contacts and disability are editable; official identity/religion are locked. Missing legacy values mean Not provided rather than invented personal information. Disability details use a multiline Textarea.
+
+Academic keeps repeated qualifications and English results; Field of Study, start date, optional English expiry/certificate and Student-only translation/grading-scale evidence retain nullable values. The certificate label is English Language Certificate. Documents projects applicable admissions evidence from owning records without duplicate academic/identity records; payment and application messages remain outside Profile Documents.
+
+Accepted handoff contracts, immutable provenance, schema v4 defaults, cache dependencies and the backend automatic-reseed deployment prerequisite are documented in [Admissions handoff](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md). Submission does not enrol a student; Student's mock accepted-fixture boundary maps only to an existing owned enrolment.

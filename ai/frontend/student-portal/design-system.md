@@ -1,6 +1,6 @@
 # Portal Design System
 
-> Shared tokens, portal shell, and portal-neutral components live in the versioned `@raisd-campus/design-system` package. Read the [canonical component guide](../../design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue for exact APIs ([0.6.0 online](https://github.com/raisd-campus/design-system/blob/v0.6.0/docs/components.md)). This document retains student-specific composition and responsive rules.
+> Shared tokens, portal shell, and portal-neutral components live in the versioned `@raisd-campus/design-system` package. Read the [canonical component guide](../../design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue for exact APIs ([0.6.2 online](https://github.com/raisd-campus/design-system/blob/v0.6.2/docs/components.md)). This document retains student-specific composition and responsive rules.
 
 ## Shared disclosure and avatar refinement
 
@@ -212,3 +212,17 @@ StudentSummaryCard accepts a null semester and renders **No current semester** r
 ### Phone dashboard refinements
 
 The phone timetable uses `TabbedPagePanel` itself, including its selection indicator, navigation inset and divider. Calendar event markers remain contained within day cards: phones show compact dots for up to three events and per-category counts in matching legend colours for busier dates; the event legend aligns left. The phone account-attention control retains a 44px hit target around a 36px visible circle, matching the 36px profile avatar. Tablet and desktop keep the labelled attention button.
+
+## Admissions-aligned profile composition
+
+Personal Details composes the existing shared DetailSectionCard/DetailField, Input, DropdownSelect and multiline Textarea with no local sizing changes. Guardian contacts, emergency relationships and disability are editable; identity and religion remain read-only. The affected phone/tablet/desktop catalogue captures are marked as the schema 4 Student working tree with released shared package 0.6.1. No shared component redesign or release is included.
+
+## Accepted Applicant demo — 6 October 2026
+
+Enrolment acceptance uses the existing shared 0.6.1 Popup, SummaryCard footer and buttons; the next-login entry uses existing PagePanelLayout. No component source or geometry changes. The public catalogue includes accepted-applicant registration captures from the uncommitted working tree. Existing responsive horizontal overflow in Module Registration's tabs/table also occurs for the original demo; the handoff must not increase it. Physical-device review remains pending.
+
+Student expandable sidebar triggers now use the existing shared PortalNavItem title colour through `asChild`, preserving their local routing/expansion. Profile Documents displays Offer Letter first while preserving its existing title-only LinkedList, file identities and ownership. These portal refinements require no shared typography, sizing or colour change.
+
+## Shared Popup 0.6.2 consumer upgrade
+
+Student pins released 0.6.2. Its additive `footerAfterDismiss` slot supports a consumer-owned action after standard dismissal; existing Student popup/default navigation visuals remain unchanged. Applicant owns Save & Close through this slot. No Student contracts, admissions version or graph schema change is required.

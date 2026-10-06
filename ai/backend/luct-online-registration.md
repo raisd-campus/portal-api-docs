@@ -13,7 +13,7 @@
 | Online wizard screenshots | `LKW_Online_Registration.pdf` (4 image pages) | `126b08188a25f4130facfb28bc39aa400f4db7caad26d9bdf9ce7e8f58a53da6` |
 | Student Portal Forms pack | `Student Portal Forms.zip` (22 files) | `9bcafffc91a3a4d85c52d4d92cd8d91a119b5c3786c47c22ce774686fb353e2f` |
 
-**In-repo capture:** resized page previews + text extracts under [`materials/luct-online-registration/`](../materials/luct-online-registration/) (no original zip/PDF binaries). Form inventory: [`materials/luct-online-registration/forms-extracts/_inventory.tsv`](../materials/luct-online-registration/forms-extracts/_inventory.tsv).
+**In-repo capture:** resized page previews + text extracts under [`materials/luct-online-registration/`](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/materials/luct-online-registration) (no original zip/PDF binaries). Form inventory: [`materials/luct-online-registration/forms-extracts/_inventory.tsv`](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/materials/luct-online-registration/forms-extracts/_inventory.tsv).
 
 ## Two processes captured
 
@@ -95,7 +95,7 @@ Captured sample (synthetic historical UI; do not treat IDs as Live data):
 4. Eligible students have **14 days** from confirmation to complete process, payments, and documents — else application discarded.
 5. Official **Offer Letter** (with payment details) only after application process and initial payment requirements are met.
 
-Page previews: [`materials/luct-online-registration/lkw-pages/`](../materials/luct-online-registration/lkw-pages/).
+Page previews: [`materials/luct-online-registration/lkw-pages/`](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/materials/luct-online-registration/lkw-pages).
 
 ### A2. Formal Admission Form — `LUCT-MKT-003` (Rev 01, EFF 01/04/2023)
 
@@ -118,7 +118,7 @@ Paper / PDF equivalent of Process A. Sections:
 
 **Evidence checklist (form §11):** completed form; certified academic results + English results; recommendation letters (if applicable); portfolio (if applicable); IC/passport copies; passport photo rules (international: white bg 3.5×4.5 cm); affidavit; Sudanese **NOC**; scratch card for result verification; Eligibility Letter/LOE; **EMGS Pre-medical Check-up Form with lab report**; CV for postgraduate; registration fee; transfer students need prior Malaysian transcript + Release Letter + Attendance.
 
-Extract: [`forms-extracts/(MKT003)_Application_for_Admission_Form_Rev01.txt`](../materials/luct-online-registration/forms-extracts/(MKT003)_Application_for_Admission_Form_Rev01.txt).
+Extract: [`forms-extracts/(MKT003)_Application_for_Admission_Form_Rev01.txt`](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/materials/luct-online-registration/forms-extracts/(MKT003)_Application_for_Admission_Form_Rev01.txt).
 
 ### A3. Short-course / micro-credential path — `LUCT-REG-024` (Rev 00, EFF 15/02/2024)
 
@@ -131,7 +131,7 @@ Parallel lighter applicant path: Course 1–3 / Others; personal; parent/guardia
 | EMGS **Health Examination Report** | Government of Malaysia / EMGS entry health exam for higher-education institutions; student exam within **7 working days** of arrival at EMGS panel clinic / public university health centre; failure blocks student-pass endorsement |
 | **Lampiran B — Health Declaration Form for Applicant** | Pre-arrival declaration; commit to post-arrival exam; bear exit costs if unsuitable |
 
-Extracts under [`forms-extracts/`](../materials/luct-online-registration/forms-extracts/). These are **Malaysian** statutory overlays for Cyberjaya international students ([CAP-50](../../sdd/11-capability-catalog.md#cap-50) family), not Lesotho NMDS/LGCSE.
+Extracts under [`forms-extracts/`](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/materials/luct-online-registration/forms-extracts). These are **Malaysian** statutory overlays for Cyberjaya international students ([CAP-50](../../sdd/11-capability-catalog.md#cap-50) family), not Lesotho NMDS/LGCSE.
 
 ---
 

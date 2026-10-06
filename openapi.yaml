@@ -21,9 +21,13 @@ info:
     - CAP-53 will replace the stub with a live CMS adapter.
 
     **Frontend consumers (today)**
-    - `student-portal` is the only implemented UI. It calls every method below
+    - `student-portal` is the implemented HTTP UI. It calls every method below
       via React Query hooks except `getPortalRecordGraph` (tests/internals).
-    - `applicant-portal`, `lecturer-portal`, and `staff-portal` are stubs.
+    - `applicant-portal` implements a separate validated session-only in-process mock.
+      Its methods below are documentation schemas, not served HTTP routes.
+      `lecturer-portal` and `staff-portal` remain UI placeholders.
+    - Profile schema 4 additions describe the local Student mock; backend engine
+      upgrade and legacy-overlay checks are prerequisites to serving those additions.
     - HTTP transport: `createHttpPortalApi` → `POST /v1/auth/login` then
       `POST /v1/portal/{method}` with `{ "args": [...] }`.
     - Scenario switches over HTTP use `POST /v1/auth/scenario` on the existing
@@ -171,6 +175,22 @@ tags:
   - name: Chat
     description: PortalApi · Chat
 
+
+x-applicant-mock-operations:
+  implementation: in-process session-only ApplicantPortalApi
+  httpEndpoints: none
+  methods:
+    - getStudyCatalogue
+    - getApplications
+    - getApplication
+    - saveApplicationDraft
+    - submitApplication
+    - getConversation
+    - sendApplicationMessage
+    - markApplicationRead
+    - acceptApplicationEnrolment
+  documentation: ai/frontend/applicant-portal/mock-api.md
+  handoff: ai/backend/admissions-handoff.md
 
 paths:
   /health:
@@ -1661,7 +1681,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PortalCallResponse"
+                $ref: "#/components/schemas/PortalCallResponsePersonalProfileResponse"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -1707,16 +1727,18 @@ paths:
                     state: WP
                     country: MY
                   emergencyContacts:
-                    - name: Parent
+                    - id: null
+                      fullName: Parent
                       relationship: Parent
                       contactNumber: "+60 12-000 0000"
+                      emailAddress: "parent@example.com"
       responses:
         "200":
           description: Method succeeded
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PortalCallResponse"
+                $ref: "#/components/schemas/PortalCallResponsePersonalProfileResponse"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -1753,7 +1775,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PortalCallResponse"
+                $ref: "#/components/schemas/PortalCallResponseAcademicProfileResponse"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -1790,7 +1812,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PortalCallResponse"
+                $ref: "#/components/schemas/PortalCallResponseDocumentsProfileResponse"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -2999,40 +3021,163 @@ components:
 
     UpdatePersonalProfileInput:
       type: object
-      required:
-        - contactNumber
-        - maritalStatus
-        - emailAddress
-        - permanentAddress
-        - currentAddress
-        - emergencyContacts
       properties:
+        fatherGuardian:
+          anyOf:
+          - type: object
+            properties:
+              fullName:
+                type: string
+                minLength: 1
+              contactNumber:
+                type: string
+                minLength: 7
+              emailAddress:
+                type: string
+                format: email
+                pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+            required:
+            - fullName
+            - contactNumber
+            - emailAddress
+          - type: 'null'
+        motherGuardian:
+          anyOf:
+          - type: object
+            properties:
+              fullName:
+                type: string
+                minLength: 1
+              contactNumber:
+                type: string
+                minLength: 7
+              emailAddress:
+                type: string
+                format: email
+                pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+            required:
+            - fullName
+            - contactNumber
+            - emailAddress
+          - type: 'null'
+        disabilityAnswer:
+          anyOf:
+          - type: string
+            enum:
+            - 'yes'
+            - 'no'
+          - type: 'null'
+        disabilityDetails:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
         contactNumber:
           type: string
+          minLength: 7
         maritalStatus:
           type: string
-          enum: [single, married, divorced, widowed]
+          enum:
+          - single
+          - married
+          - divorced
+          - widowed
         emailAddress:
           type: string
           format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
         permanentAddress:
-          $ref: "#/components/schemas/PersonalAddress"
+          type: object
+          properties:
+            addressLine:
+              type: string
+              minLength: 1
+            country:
+              type: string
+              minLength: 1
+            state:
+              type: string
+              minLength: 1
+            city:
+              type: string
+              minLength: 1
+            postcode:
+              type: string
+              minLength: 1
+          required:
+          - addressLine
+          - country
+          - state
+          - city
+          - postcode
         currentAddress:
-          $ref: "#/components/schemas/PersonalAddress"
+          type: object
+          properties:
+            addressLine:
+              type: string
+              minLength: 1
+            country:
+              type: string
+              minLength: 1
+            state:
+              type: string
+              minLength: 1
+            city:
+              type: string
+              minLength: 1
+            postcode:
+              type: string
+              minLength: 1
+          required:
+          - addressLine
+          - country
+          - state
+          - city
+          - postcode
         emergencyContacts:
-          type: array
           minItems: 1
+          type: array
           items:
             type: object
-            required: [name, relationship, contactNumber]
             properties:
-              name:
-                type: string
               relationship:
+                default: null
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              id:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              fullName:
                 type: string
+                minLength: 1
               contactNumber:
                 type: string
-
+                minLength: 7
+              emailAddress:
+                type: string
+                format: email
+                pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+            required:
+            - id
+            - fullName
+            - contactNumber
+            - emailAddress
+      required:
+      - contactNumber
+      - maritalStatus
+      - emailAddress
+      - permanentAddress
+      - currentAddress
+      - emergencyContacts
+      additionalProperties: false
+      description: Actual editable Student profile payload. Legacy requests may omit new guardian/disability
+        fields; omission preserves canonical values. Explicit null clears an optional value. Disability details
+        are required when answered yes. Official identity and religion are locked. Hosted support requires
+        the schema-v4 engine upgrade.
     UpdateResumeProfileInput:
       type: object
       required: [professionalSummary, workExperiences, educations, skills, recognitions]
@@ -4664,3 +4809,4245 @@ components:
         error:
           type: string
         details: {}
+
+    PersonalProfileResponse:
+      type: object
+      properties:
+        timeZone:
+          type: string
+          minLength: 1
+        student:
+          type: object
+          properties:
+            id:
+              type: string
+              minLength: 1
+            studentNumber:
+              anyOf:
+              - type: string
+              - type: 'null'
+            displayName:
+              type: string
+              minLength: 1
+            avatarUrl:
+              anyOf:
+              - type: string
+                format: uri
+              - type: 'null'
+            programmeId:
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+          required:
+          - id
+          - studentNumber
+          - displayName
+          - avatarUrl
+          - programmeId
+          additionalProperties: false
+        programme:
+          type: object
+          properties:
+            id:
+              type: string
+              minLength: 1
+            title:
+              type: string
+              minLength: 1
+            facultyName:
+              type: string
+              minLength: 1
+            totalSemesterCount:
+              type: integer
+              exclusiveMinimum: 0
+              maximum: 9007199254740991
+          required:
+          - id
+          - title
+          - facultyName
+          - totalSemesterCount
+          additionalProperties: false
+        profile:
+          type: object
+          properties:
+            religion:
+              default: null
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+            religionOther:
+              default: null
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+            fatherGuardian:
+              default: null
+              anyOf:
+              - type: object
+                properties:
+                  fullName:
+                    type: string
+                    minLength: 1
+                  contactNumber:
+                    type: string
+                    minLength: 7
+                  emailAddress:
+                    type: string
+                    format: email
+                    pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                required:
+                - fullName
+                - contactNumber
+                - emailAddress
+                additionalProperties: false
+              - type: 'null'
+            motherGuardian:
+              default: null
+              anyOf:
+              - type: object
+                properties:
+                  fullName:
+                    type: string
+                    minLength: 1
+                  contactNumber:
+                    type: string
+                    minLength: 7
+                  emailAddress:
+                    type: string
+                    format: email
+                    pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                required:
+                - fullName
+                - contactNumber
+                - emailAddress
+                additionalProperties: false
+              - type: 'null'
+            disabilityAnswer:
+              default: null
+              anyOf:
+              - type: string
+                enum:
+                - 'yes'
+                - 'no'
+              - type: 'null'
+            disabilityDetails:
+              default: null
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+            citizenshipCountryCode:
+              default: null
+              anyOf:
+              - type: string
+                pattern: ^[A-Z]{2}$
+              - type: 'null'
+            passportNumber:
+              default: null
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+            id:
+              type: string
+              minLength: 1
+            studentId:
+              type: string
+              minLength: 1
+            nationality:
+              type: string
+              minLength: 1
+            studentFeeCategory:
+              type: string
+              enum:
+              - local
+              - international
+            dateOfBirth:
+              type: string
+              pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
+            placeOfBirth:
+              type: string
+              minLength: 1
+            gender:
+              type: string
+              minLength: 1
+            race:
+              type: string
+              minLength: 1
+            contactNumber:
+              type: string
+              minLength: 7
+            maritalStatus:
+              type: string
+              enum:
+              - single
+              - married
+              - divorced
+              - widowed
+            emailAddress:
+              type: string
+              format: email
+              pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+            identificationNumber:
+              type: string
+              minLength: 1
+            passportPhotoFileName:
+              type: string
+              minLength: 1
+            scannedPassportFileName:
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+            passportExpiresOn:
+              anyOf:
+              - type: string
+                pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
+              - type: 'null'
+            passportIssuingCountry:
+              anyOf:
+              - type: string
+                minLength: 1
+              - type: 'null'
+            permanentAddress:
+              type: object
+              properties:
+                addressLine:
+                  type: string
+                  minLength: 1
+                country:
+                  type: string
+                  minLength: 1
+                state:
+                  type: string
+                  minLength: 1
+                city:
+                  type: string
+                  minLength: 1
+                postcode:
+                  type: string
+                  minLength: 1
+              required:
+              - addressLine
+              - country
+              - state
+              - city
+              - postcode
+              additionalProperties: false
+            currentAddress:
+              type: object
+              properties:
+                addressLine:
+                  type: string
+                  minLength: 1
+                country:
+                  type: string
+                  minLength: 1
+                state:
+                  type: string
+                  minLength: 1
+                city:
+                  type: string
+                  minLength: 1
+                postcode:
+                  type: string
+                  minLength: 1
+              required:
+              - addressLine
+              - country
+              - state
+              - city
+              - postcode
+              additionalProperties: false
+          required:
+          - religion
+          - religionOther
+          - fatherGuardian
+          - motherGuardian
+          - disabilityAnswer
+          - disabilityDetails
+          - citizenshipCountryCode
+          - passportNumber
+          - id
+          - studentId
+          - nationality
+          - studentFeeCategory
+          - dateOfBirth
+          - placeOfBirth
+          - gender
+          - race
+          - contactNumber
+          - maritalStatus
+          - emailAddress
+          - identificationNumber
+          - passportPhotoFileName
+          - scannedPassportFileName
+          - passportExpiresOn
+          - passportIssuingCountry
+          - permanentAddress
+          - currentAddress
+          additionalProperties: false
+        emergencyContacts:
+          minItems: 1
+          type: array
+          items:
+            type: object
+            properties:
+              relationship:
+                default: null
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              id:
+                type: string
+                minLength: 1
+              personalProfileId:
+                type: string
+                minLength: 1
+              fullName:
+                type: string
+                minLength: 1
+              contactNumber:
+                type: string
+                minLength: 7
+              emailAddress:
+                type: string
+                format: email
+                pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+            required:
+            - relationship
+            - id
+            - personalProfileId
+            - fullName
+            - contactNumber
+            - emailAddress
+            additionalProperties: false
+        accountIssues:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              studentId:
+                type: string
+                minLength: 1
+              kind:
+                type: string
+                enum:
+                - outstandingFees
+                - expiringVisa
+                - studentPassRequired
+                - studentPassCancelled
+                - moduleRegistration
+                - graduationClearance
+              status:
+                type: string
+                enum:
+                - active
+                - resolved
+              amountMinor:
+                anyOf:
+                - type: integer
+                  minimum: 0
+                  maximum: 9007199254740991
+                - type: 'null'
+              currencyCode:
+                anyOf:
+                - type: string
+                  pattern: ^[A-Z]{3}$
+                - type: 'null'
+              dueAt:
+                anyOf:
+                - type: string
+                  format: date-time
+                  pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+                - type: 'null'
+              timeZone:
+                type: string
+                minLength: 1
+              action:
+                type: object
+                properties:
+                  label:
+                    type: string
+                    minLength: 1
+                  destination:
+                    type: string
+                    enum:
+                    - finance
+                    - module-registration
+                    - immigration-overview
+                    - immigration-applications
+                    - graduation-clearance
+                  programmeEnrolmentId:
+                    type: string
+                    minLength: 1
+                  immigrationStep:
+                    anyOf:
+                    - type: string
+                      enum:
+                      - '1'
+                      - '2'
+                      - '3'
+                      - '4'
+                      - '5'
+                    - type: 'null'
+                required:
+                - label
+                - destination
+                - programmeEnrolmentId
+                - immigrationStep
+                additionalProperties: false
+              immigrationProgress:
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      enum:
+                      - submitted
+                      - information-required
+                      - rejected
+                      - documents-accepted
+                      - emgs-processing
+                      - eval-approved
+                      - arrival-medical
+                      - awaiting-passport
+                      - passport-received
+                      - endorsement-processing
+                      - cancellation-processing
+                      - cancelled
+                      - ready-for-collection
+                      - completed
+                    feeSettled:
+                      type: boolean
+                  required:
+                  - status
+                  - feeSettled
+                  additionalProperties: false
+                - type: 'null'
+            required:
+            - id
+            - studentId
+            - kind
+            - status
+            - amountMinor
+            - currencyCode
+            - dueAt
+            additionalProperties: false
+      required:
+      - timeZone
+      - student
+      - programme
+      - profile
+      - emergencyContacts
+      - accountIssues
+      additionalProperties: false
+      description: Actual local Student mock projection. Schema 4 additions require backend engine upgrade;
+        this document does not assert deployed compatibility.
+    AcademicProfileResponse:
+      type: object
+      properties:
+        academicQualifications:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              studentProfileId:
+                type: string
+                minLength: 1
+              qualificationType:
+                type: string
+                minLength: 1
+              qualificationName:
+                type: string
+                minLength: 1
+              institutionName:
+                type: string
+                minLength: 1
+              countryOfEducation:
+                type: string
+                minLength: 1
+              fieldOfStudy:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              startedOn:
+                anyOf:
+                - type: string
+                  pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
+                - type: 'null'
+              completedOn:
+                type: string
+                pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
+              result:
+                type: string
+                minLength: 1
+              transcriptFileName:
+                type: string
+                minLength: 1
+              academicCertificateFileName:
+                type: string
+                minLength: 1
+              certifiedTranslationFileName:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              gradingScaleFileName:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+            required:
+            - id
+            - studentProfileId
+            - qualificationType
+            - qualificationName
+            - institutionName
+            - countryOfEducation
+            - fieldOfStudy
+            - startedOn
+            - completedOn
+            - result
+            - transcriptFileName
+            - academicCertificateFileName
+            - certifiedTranslationFileName
+            - gradingScaleFileName
+            additionalProperties: false
+        englishProficiencies:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              studentProfileId:
+                type: string
+                minLength: 1
+              qualificationName:
+                type: string
+                minLength: 1
+              examinedOn:
+                type: string
+                pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
+              score:
+                type: string
+                minLength: 1
+              expiresOn:
+                anyOf:
+                - type: string
+                  pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
+                - type: 'null'
+              certificateFileName:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+            required:
+            - id
+            - studentProfileId
+            - qualificationName
+            - examinedOn
+            - score
+            - expiresOn
+            - certificateFileName
+            additionalProperties: false
+      required:
+      - academicQualifications
+      - englishProficiencies
+      additionalProperties: false
+      description: Actual local Student mock projection. Schema 4 additions require backend engine upgrade;
+        this document does not assert deployed compatibility.
+    DocumentsProfileResponse:
+      type: object
+      properties:
+        studentDocuments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              title:
+                type: string
+                minLength: 1
+              fileName:
+                type: string
+                minLength: 1
+              source:
+                type: string
+                minLength: 1
+            required:
+            - id
+            - title
+            - fileName
+            - source
+            additionalProperties: false
+      required:
+      - studentDocuments
+      additionalProperties: false
+      description: Actual local Student mock projection. Schema 4 additions require backend engine upgrade;
+        this document does not assert deployed compatibility.
+    AdmissionsHandoffV1:
+      type: object
+      properties:
+        version:
+          type: number
+          const: 1
+        applicationId:
+          type: string
+          minLength: 1
+        applicantId:
+          type: string
+          minLength: 1
+        personId:
+          type: string
+          minLength: 1
+        submittedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        acceptedContext:
+          type: object
+          properties:
+            status:
+              type: string
+              const: accepted
+            reference:
+              type: string
+              minLength: 1
+            acceptedAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            personId:
+              type: string
+              minLength: 1
+            studentProfileId:
+              type: string
+              minLength: 1
+            programmeEnrolmentId:
+              type: string
+              minLength: 1
+          required:
+          - status
+          - reference
+          - acceptedAt
+          - personId
+          - studentProfileId
+          - programmeEnrolmentId
+          additionalProperties: false
+        snapshot:
+          type: object
+          properties:
+            activeStepId:
+              type: string
+              enum:
+              - consent
+              - study
+              - personal
+              - academic
+              - documents
+              - fee
+            completedStepIds:
+              type: array
+              items:
+                type: string
+                enum:
+                - consent
+                - study
+                - personal
+                - academic
+                - documents
+                - fee
+            consentChecked:
+              type: boolean
+              const: true
+            studyPreferences:
+              type: object
+              properties:
+                studentType:
+                  type: string
+                  enum:
+                  - ''
+                  - local
+                  - international
+                applicantType:
+                  type: string
+                  enum:
+                  - ''
+                  - new
+                  - alumni
+                  - transfer
+                preferences:
+                  type: array
+                  prefixItems:
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                    additionalProperties: false
+              required:
+              - studentType
+              - applicantType
+              - preferences
+              additionalProperties: false
+            personalDetails:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  minLength: 1
+                countryOfCitizenship:
+                  type: string
+                  pattern: ^[A-Z]{2}$
+                dateOfBirth:
+                  type: string
+                  pattern: ^\d{4}-\d{2}-\d{2}$
+                placeOfBirth:
+                  type: string
+                  minLength: 1
+                gender:
+                  type: string
+                  minLength: 1
+                race:
+                  type: string
+                  minLength: 1
+                religion:
+                  type: string
+                  minLength: 1
+                religionOther:
+                  type: string
+                contactNumber:
+                  type: string
+                  minLength: 7
+                maritalStatus:
+                  type: string
+                  enum:
+                  - single
+                  - married
+                  - divorced
+                  - widowed
+                emailAddress:
+                  type: string
+                  format: email
+                  pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                identificationNumber:
+                  type: string
+                  minLength: 1
+                passportNumber:
+                  type: string
+                passportExpiresOn:
+                  anyOf:
+                  - type: string
+                    pattern: ^\d{4}-\d{2}-\d{2}$
+                  - type: 'null'
+                passportIssuingCountry:
+                  type: string
+                permanentAddress:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                      minLength: 1
+                    country:
+                      type: string
+                      minLength: 1
+                    state:
+                      type: string
+                      minLength: 1
+                    city:
+                      type: string
+                      minLength: 1
+                    postcode:
+                      type: string
+                      minLength: 1
+                  required:
+                  - addressLine
+                  - country
+                  - state
+                  - city
+                  - postcode
+                  additionalProperties: false
+                currentAddress:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                      minLength: 1
+                    country:
+                      type: string
+                      minLength: 1
+                    state:
+                      type: string
+                      minLength: 1
+                    city:
+                      type: string
+                      minLength: 1
+                    postcode:
+                      type: string
+                      minLength: 1
+                  required:
+                  - addressLine
+                  - country
+                  - state
+                  - city
+                  - postcode
+                  additionalProperties: false
+                fatherGuardian:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                      minLength: 1
+                    contactNumber:
+                      type: string
+                      minLength: 7
+                    emailAddress:
+                      type: string
+                      format: email
+                      pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  additionalProperties: false
+                motherGuardian:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                      minLength: 1
+                    contactNumber:
+                      type: string
+                      minLength: 7
+                    emailAddress:
+                      type: string
+                      format: email
+                      pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  additionalProperties: false
+                emergencyContact:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                      minLength: 1
+                    contactNumber:
+                      type: string
+                      minLength: 7
+                    emailAddress:
+                      type: string
+                      format: email
+                      pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                    relationship:
+                      type: string
+                      minLength: 1
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  - relationship
+                  additionalProperties: false
+                disabilityAnswer:
+                  type: string
+                  enum:
+                  - 'yes'
+                  - 'no'
+                disabilityDetails:
+                  type: string
+              required:
+              - fullName
+              - countryOfCitizenship
+              - dateOfBirth
+              - placeOfBirth
+              - gender
+              - race
+              - religion
+              - religionOther
+              - contactNumber
+              - maritalStatus
+              - emailAddress
+              - identificationNumber
+              - passportNumber
+              - passportExpiresOn
+              - passportIssuingCountry
+              - permanentAddress
+              - currentAddress
+              - fatherGuardian
+              - motherGuardian
+              - emergencyContact
+              - disabilityAnswer
+              - disabilityDetails
+              additionalProperties: false
+            academicDetails:
+              type: object
+              properties:
+                qualifications:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      qualificationTypeSelection:
+                        type: string
+                      qualificationType:
+                        type: string
+                        minLength: 1
+                      qualificationNameSelection:
+                        type: string
+                      qualificationName:
+                        type: string
+                        minLength: 1
+                      institutionName:
+                        type: string
+                        minLength: 1
+                      countryOfEducation:
+                        type: string
+                        minLength: 1
+                      fieldOfStudy:
+                        type: string
+                      startedOn:
+                        type: string
+                        pattern: ^\d{4}-\d{2}-\d{2}$
+                      completedOn:
+                        type: string
+                        pattern: ^\d{4}-\d{2}-\d{2}$
+                      result:
+                        type: string
+                        minLength: 1
+                      transcript:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            minLength: 1
+                          name:
+                            type: string
+                            minLength: 1
+                          sizeBytes:
+                            type: integer
+                            exclusiveMinimum: 0
+                            maximum: 26214400
+                          mimeType:
+                            type: string
+                            minLength: 1
+                        required:
+                        - id
+                        - name
+                        - sizeBytes
+                        - mimeType
+                        additionalProperties: false
+                      academicCertificate:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            minLength: 1
+                          name:
+                            type: string
+                            minLength: 1
+                          sizeBytes:
+                            type: integer
+                            exclusiveMinimum: 0
+                            maximum: 26214400
+                          mimeType:
+                            type: string
+                            minLength: 1
+                        required:
+                        - id
+                        - name
+                        - sizeBytes
+                        - mimeType
+                        additionalProperties: false
+                    required:
+                    - id
+                    - qualificationTypeSelection
+                    - qualificationType
+                    - qualificationNameSelection
+                    - qualificationName
+                    - institutionName
+                    - countryOfEducation
+                    - fieldOfStudy
+                    - startedOn
+                    - completedOn
+                    - result
+                    - transcript
+                    - academicCertificate
+                    additionalProperties: false
+                englishResults:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      qualificationNameSelection:
+                        type: string
+                      qualificationName:
+                        type: string
+                        minLength: 1
+                      examinedOn:
+                        type: string
+                        pattern: ^\d{4}-\d{2}-\d{2}$
+                      score:
+                        type: string
+                        minLength: 1
+                      expiresOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      certificate:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                          additionalProperties: false
+                        - type: 'null'
+                    required:
+                    - id
+                    - qualificationNameSelection
+                    - qualificationName
+                    - examinedOn
+                    - score
+                    - expiresOn
+                    - certificate
+                    additionalProperties: false
+              required:
+              - qualifications
+              - englishResults
+              additionalProperties: false
+            documents:
+              type: object
+              properties:
+                passportPhoto:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    name:
+                      type: string
+                      minLength: 1
+                    sizeBytes:
+                      type: integer
+                      exclusiveMinimum: 0
+                      maximum: 26214400
+                    mimeType:
+                      type: string
+                      minLength: 1
+                  required:
+                  - id
+                  - name
+                  - sizeBytes
+                  - mimeType
+                  additionalProperties: false
+                myKad:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                passport:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                portfolio:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                cv:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                recommendationLetter:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferRelease:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferAttendance:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferModuleResults:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferSyllabi:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferVisaCancellation:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                medicalExaminationCountry:
+                  type: string
+                medicalReport:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                eligibilityLetter:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                scratchCard:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+              required:
+              - passportPhoto
+              - myKad
+              - passport
+              - portfolio
+              - cv
+              - recommendationLetter
+              - transferRelease
+              - transferAttendance
+              - transferModuleResults
+              - transferSyllabi
+              - transferVisaCancellation
+              - medicalExaminationCountry
+              - medicalReport
+              - eligibilityLetter
+              - scratchCard
+              additionalProperties: false
+            paymentProof:
+              type: object
+              properties:
+                bankReference:
+                  type: string
+                  minLength: 1
+                file:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    name:
+                      type: string
+                      minLength: 1
+                    sizeBytes:
+                      type: integer
+                      exclusiveMinimum: 0
+                      maximum: 26214400
+                    mimeType:
+                      type: string
+                      minLength: 1
+                  required:
+                  - id
+                  - name
+                  - sizeBytes
+                  - mimeType
+                  additionalProperties: false
+              required:
+              - bankReference
+              - file
+              additionalProperties: false
+          required:
+          - activeStepId
+          - completedStepIds
+          - consentChecked
+          - studyPreferences
+          - personalDetails
+          - academicDetails
+          - documents
+          - paymentProof
+          additionalProperties: false
+      required:
+      - version
+      - applicationId
+      - applicantId
+      - personId
+      - submittedAt
+      - acceptedContext
+      - snapshot
+      additionalProperties: false
+      description: Accepted-only version-1 local mock exchange. Semantic validators require complete/distinct
+        preferences, unique repeated records, chronological dates, custom religion when selected and matching
+        accepted identity. Empty English sections use an empty array; populated results must be complete.
+        No HTTP endpoint or Student provisioning is implied.
+      x-implementation: In-process Applicant/Student mock boundary; not a deployed HTTP endpoint.
+    ApplicantSnapshot:
+      type: object
+      properties:
+        activeStepId:
+          type: string
+          enum:
+          - consent
+          - study
+          - personal
+          - academic
+          - documents
+          - fee
+        completedStepIds:
+          type: array
+          items:
+            type: string
+            enum:
+            - consent
+            - study
+            - personal
+            - academic
+            - documents
+            - fee
+        consentChecked:
+          type: boolean
+        studyPreferences:
+          type: object
+          properties:
+            studentType:
+              type: string
+              enum:
+              - ''
+              - local
+              - international
+            applicantType:
+              type: string
+              enum:
+              - ''
+              - new
+              - alumni
+              - transfer
+            preferences:
+              type: array
+              prefixItems:
+              - type: object
+                properties:
+                  intakeId:
+                    type: string
+                  facultyId:
+                    type: string
+                  courseId:
+                    type: string
+                required:
+                - intakeId
+                - facultyId
+                - courseId
+                additionalProperties: false
+              - type: object
+                properties:
+                  intakeId:
+                    type: string
+                  facultyId:
+                    type: string
+                  courseId:
+                    type: string
+                required:
+                - intakeId
+                - facultyId
+                - courseId
+                additionalProperties: false
+              - type: object
+                properties:
+                  intakeId:
+                    type: string
+                  facultyId:
+                    type: string
+                  courseId:
+                    type: string
+                required:
+                - intakeId
+                - facultyId
+                - courseId
+                additionalProperties: false
+          required:
+          - studentType
+          - applicantType
+          - preferences
+          additionalProperties: false
+        personalDetails:
+          type: object
+          properties:
+            fullName:
+              type: string
+            countryOfCitizenship:
+              type: string
+            dateOfBirth:
+              anyOf:
+              - type: string
+                pattern: ^\d{4}-\d{2}-\d{2}$
+              - type: 'null'
+            placeOfBirth:
+              type: string
+            gender:
+              type: string
+            race:
+              type: string
+            religion:
+              type: string
+            religionOther:
+              type: string
+            contactNumber:
+              type: string
+            maritalStatus:
+              type: string
+              enum:
+              - ''
+              - single
+              - married
+              - divorced
+              - widowed
+            emailAddress:
+              type: string
+            identificationNumber:
+              type: string
+            passportNumber:
+              type: string
+            passportExpiresOn:
+              anyOf:
+              - type: string
+                pattern: ^\d{4}-\d{2}-\d{2}$
+              - type: 'null'
+            passportIssuingCountry:
+              type: string
+            permanentAddress:
+              type: object
+              properties:
+                addressLine:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                postcode:
+                  type: string
+              required:
+              - addressLine
+              - country
+              - state
+              - city
+              - postcode
+              additionalProperties: false
+            currentAddress:
+              type: object
+              properties:
+                addressLine:
+                  type: string
+                country:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                postcode:
+                  type: string
+              required:
+              - addressLine
+              - country
+              - state
+              - city
+              - postcode
+              additionalProperties: false
+            fatherGuardian:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                contactNumber:
+                  type: string
+                emailAddress:
+                  type: string
+              required:
+              - fullName
+              - contactNumber
+              - emailAddress
+              additionalProperties: false
+            motherGuardian:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                contactNumber:
+                  type: string
+                emailAddress:
+                  type: string
+              required:
+              - fullName
+              - contactNumber
+              - emailAddress
+              additionalProperties: false
+            emergencyContact:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                contactNumber:
+                  type: string
+                emailAddress:
+                  type: string
+                relationship:
+                  type: string
+              required:
+              - fullName
+              - contactNumber
+              - emailAddress
+              - relationship
+              additionalProperties: false
+            disabilityAnswer:
+              type: string
+              enum:
+              - ''
+              - 'yes'
+              - 'no'
+            disabilityDetails:
+              type: string
+          required:
+          - fullName
+          - countryOfCitizenship
+          - dateOfBirth
+          - placeOfBirth
+          - gender
+          - race
+          - religion
+          - religionOther
+          - contactNumber
+          - maritalStatus
+          - emailAddress
+          - identificationNumber
+          - passportNumber
+          - passportExpiresOn
+          - passportIssuingCountry
+          - permanentAddress
+          - currentAddress
+          - fatherGuardian
+          - motherGuardian
+          - emergencyContact
+          - disabilityAnswer
+          - disabilityDetails
+          additionalProperties: false
+        academicDetails:
+          type: object
+          properties:
+            qualifications:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 9007199254740991
+                  qualificationTypeSelection:
+                    type: string
+                  qualificationType:
+                    type: string
+                  qualificationNameSelection:
+                    type: string
+                  qualificationName:
+                    type: string
+                  institutionName:
+                    type: string
+                  countryOfEducation:
+                    type: string
+                  fieldOfStudy:
+                    type: string
+                  startedOn:
+                    anyOf:
+                    - type: string
+                      pattern: ^\d{4}-\d{2}-\d{2}$
+                    - type: 'null'
+                  completedOn:
+                    anyOf:
+                    - type: string
+                      pattern: ^\d{4}-\d{2}-\d{2}$
+                    - type: 'null'
+                  result:
+                    type: string
+                  transcript:
+                    anyOf:
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                        name:
+                          type: string
+                          minLength: 1
+                        sizeBytes:
+                          type: integer
+                          exclusiveMinimum: 0
+                          maximum: 26214400
+                        mimeType:
+                          type: string
+                          minLength: 1
+                      required:
+                      - id
+                      - name
+                      - sizeBytes
+                      - mimeType
+                      additionalProperties: false
+                    - type: 'null'
+                  academicCertificate:
+                    anyOf:
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                        name:
+                          type: string
+                          minLength: 1
+                        sizeBytes:
+                          type: integer
+                          exclusiveMinimum: 0
+                          maximum: 26214400
+                        mimeType:
+                          type: string
+                          minLength: 1
+                      required:
+                      - id
+                      - name
+                      - sizeBytes
+                      - mimeType
+                      additionalProperties: false
+                    - type: 'null'
+                required:
+                - id
+                - qualificationTypeSelection
+                - qualificationType
+                - qualificationNameSelection
+                - qualificationName
+                - institutionName
+                - countryOfEducation
+                - fieldOfStudy
+                - startedOn
+                - completedOn
+                - result
+                - transcript
+                - academicCertificate
+                additionalProperties: false
+            englishResults:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 9007199254740991
+                  qualificationNameSelection:
+                    type: string
+                  qualificationName:
+                    type: string
+                  examinedOn:
+                    anyOf:
+                    - type: string
+                      pattern: ^\d{4}-\d{2}-\d{2}$
+                    - type: 'null'
+                  score:
+                    type: string
+                  expiresOn:
+                    anyOf:
+                    - type: string
+                      pattern: ^\d{4}-\d{2}-\d{2}$
+                    - type: 'null'
+                  certificate:
+                    anyOf:
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                        name:
+                          type: string
+                          minLength: 1
+                        sizeBytes:
+                          type: integer
+                          exclusiveMinimum: 0
+                          maximum: 26214400
+                        mimeType:
+                          type: string
+                          minLength: 1
+                      required:
+                      - id
+                      - name
+                      - sizeBytes
+                      - mimeType
+                      additionalProperties: false
+                    - type: 'null'
+                required:
+                - id
+                - qualificationNameSelection
+                - qualificationName
+                - examinedOn
+                - score
+                - expiresOn
+                - certificate
+                additionalProperties: false
+          required:
+          - qualifications
+          - englishResults
+          additionalProperties: false
+        documents:
+          type: object
+          properties:
+            passportPhoto:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            myKad:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            passport:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            portfolio:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            cv:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            recommendationLetter:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            transferRelease:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            transferAttendance:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            transferModuleResults:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            transferSyllabi:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            transferVisaCancellation:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            medicalExaminationCountry:
+              type: string
+            medicalReport:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            eligibilityLetter:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+            scratchCard:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+          required:
+          - passportPhoto
+          - myKad
+          - passport
+          - portfolio
+          - cv
+          - recommendationLetter
+          - transferRelease
+          - transferAttendance
+          - transferModuleResults
+          - transferSyllabi
+          - transferVisaCancellation
+          - medicalExaminationCountry
+          - medicalReport
+          - eligibilityLetter
+          - scratchCard
+          additionalProperties: false
+        paymentProof:
+          type: object
+          properties:
+            bankReference:
+              type: string
+            file:
+              anyOf:
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  sizeBytes:
+                    type: integer
+                    exclusiveMinimum: 0
+                    maximum: 26214400
+                  mimeType:
+                    type: string
+                    minLength: 1
+                required:
+                - id
+                - name
+                - sizeBytes
+                - mimeType
+                additionalProperties: false
+              - type: 'null'
+          required:
+          - bankReference
+          - file
+          additionalProperties: false
+      required:
+      - activeStepId
+      - completedStepIds
+      - consentChecked
+      - studyPreferences
+      - personalDetails
+      - academicDetails
+      - documents
+      - paymentProof
+      additionalProperties: false
+      x-implementation: In-process Applicant mock only; no HTTP endpoint
+    DemoAdmissionsContextV1:
+      type: object
+      description: Development-only captured Design reference. Intake starts six Asia/Kuala_Lumpur
+        calendar days after referenceAt. Unknown properties normalize away in the runtime
+        context schema; browser envelope is strict. Not an HTTP endpoint.
+      required:
+      - catalogueVersion
+      - referenceAt
+      - intakeId
+      - startsOn
+      - facultyId
+      - programmeId
+      - programmeVersionId
+      properties:
+        catalogueVersion:
+          type: integer
+          const: 1
+        referenceAt:
+          type: string
+          format: date-time
+        intakeId:
+          type: string
+          const: demo-first-intake
+        startsOn:
+          type: string
+          format: date
+        facultyId:
+          type: string
+          const: faculty-design-innovation
+        programmeId:
+          type: string
+          const: programme-bdes-visual-communication
+        programmeVersionId:
+          type: string
+          const: programme-version-bdes-vc-2025
+    ApplicantEnrolmentAcceptance:
+      type: object
+      properties:
+        status:
+          type: string
+          const: accepted
+        reference:
+          type: string
+          minLength: 1
+        acceptedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        personId:
+          type: string
+          minLength: 1
+        studentProfileId:
+          type: string
+          minLength: 1
+        programmeEnrolmentId:
+          type: string
+          minLength: 1
+        demo:
+          $ref: '#/components/schemas/DemoAdmissionsContextV1'
+      required:
+      - status
+      - reference
+      - acceptedAt
+      - personId
+      - studentProfileId
+      - programmeEnrolmentId
+      - demo
+      additionalProperties: false
+      description: Acceptance metadata outside the submitted snapshot, created only by
+        explicit applicant confirmation in the mock.
+    AcceptApplicantApplicationEnrolmentInput:
+      type: object
+      additionalProperties: false
+      x-implementation: In-process Applicant mock only; no HTTP endpoint
+      description: Requires owned approved submission, both verified checks, current revision/session
+        and idempotent request ID. Immutable submitted snapshot is unchanged.
+      required:
+      - id
+      - requestId
+      - expectedRevision
+      properties:
+        id:
+          type: string
+          minLength: 1
+        requestId:
+          type: string
+          minLength: 1
+        expectedRevision:
+          type: integer
+          minimum: 1
+    BrowserAdmissionsTransferV1:
+      type: object
+      additionalProperties: false
+      description: Development-only one-time browser payload. Verify configured origin,
+        source window and 128-bit nonce outside this envelope. No HTTP endpoint or durable
+        evidence bytes.
+      required:
+      - version
+      - handoff
+      - demo
+      properties:
+        version:
+          type: integer
+          const: 1
+        handoff:
+          $ref: '#/components/schemas/AdmissionsHandoffV1'
+        demo:
+          $ref: '#/components/schemas/DemoAdmissionsContextV1'
+    ApplicantApplication:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        applicantId:
+          type: string
+          minLength: 1
+        personId:
+          type: string
+          minLength: 1
+        revision:
+          type: integer
+          exclusiveMinimum: 0
+          maximum: 9007199254740991
+        previewNumber:
+          type: integer
+          exclusiveMinimum: 0
+          maximum: 9007199254740991
+        status:
+          type: string
+          enum:
+          - draft
+          - pending-review
+          - action-required
+          - approved
+          - accepted
+        acceptance:
+          anyOf:
+          - $ref: "#/components/schemas/ApplicantEnrolmentAcceptance"
+          - type: "null"
+          default: null
+        catalogueReferenceAt:
+          type: string
+          format: date-time
+        verification:
+          type: object
+          additionalProperties: false
+          required: [paymentVerifiedAt, documentsVerifiedAt]
+          properties:
+            paymentVerifiedAt:
+              type: [string, "null"]
+              format: date-time
+            documentsVerifiedAt:
+              type: [string, "null"]
+              format: date-time
+        snapshot:
+          type: object
+          properties:
+            activeStepId:
+              type: string
+              enum:
+              - consent
+              - study
+              - personal
+              - academic
+              - documents
+              - fee
+            completedStepIds:
+              type: array
+              items:
+                type: string
+                enum:
+                - consent
+                - study
+                - personal
+                - academic
+                - documents
+                - fee
+            consentChecked:
+              type: boolean
+            studyPreferences:
+              type: object
+              properties:
+                studentType:
+                  type: string
+                  enum:
+                  - ''
+                  - local
+                  - international
+                applicantType:
+                  type: string
+                  enum:
+                  - ''
+                  - new
+                  - alumni
+                  - transfer
+                preferences:
+                  type: array
+                  prefixItems:
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                    additionalProperties: false
+              required:
+              - studentType
+              - applicantType
+              - preferences
+              additionalProperties: false
+            personalDetails:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                countryOfCitizenship:
+                  type: string
+                dateOfBirth:
+                  anyOf:
+                  - type: string
+                    pattern: ^\d{4}-\d{2}-\d{2}$
+                  - type: 'null'
+                placeOfBirth:
+                  type: string
+                gender:
+                  type: string
+                race:
+                  type: string
+                religion:
+                  type: string
+                religionOther:
+                  type: string
+                contactNumber:
+                  type: string
+                maritalStatus:
+                  type: string
+                  enum:
+                  - ''
+                  - single
+                  - married
+                  - divorced
+                  - widowed
+                emailAddress:
+                  type: string
+                identificationNumber:
+                  type: string
+                passportNumber:
+                  type: string
+                passportExpiresOn:
+                  anyOf:
+                  - type: string
+                    pattern: ^\d{4}-\d{2}-\d{2}$
+                  - type: 'null'
+                passportIssuingCountry:
+                  type: string
+                permanentAddress:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                    country:
+                      type: string
+                    state:
+                      type: string
+                    city:
+                      type: string
+                    postcode:
+                      type: string
+                  required:
+                  - addressLine
+                  - country
+                  - state
+                  - city
+                  - postcode
+                  additionalProperties: false
+                currentAddress:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                    country:
+                      type: string
+                    state:
+                      type: string
+                    city:
+                      type: string
+                    postcode:
+                      type: string
+                  required:
+                  - addressLine
+                  - country
+                  - state
+                  - city
+                  - postcode
+                  additionalProperties: false
+                fatherGuardian:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    contactNumber:
+                      type: string
+                    emailAddress:
+                      type: string
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  additionalProperties: false
+                motherGuardian:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    contactNumber:
+                      type: string
+                    emailAddress:
+                      type: string
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  additionalProperties: false
+                emergencyContact:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    contactNumber:
+                      type: string
+                    emailAddress:
+                      type: string
+                    relationship:
+                      type: string
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  - relationship
+                  additionalProperties: false
+                disabilityAnswer:
+                  type: string
+                  enum:
+                  - ''
+                  - 'yes'
+                  - 'no'
+                disabilityDetails:
+                  type: string
+              required:
+              - fullName
+              - countryOfCitizenship
+              - dateOfBirth
+              - placeOfBirth
+              - gender
+              - race
+              - religion
+              - religionOther
+              - contactNumber
+              - maritalStatus
+              - emailAddress
+              - identificationNumber
+              - passportNumber
+              - passportExpiresOn
+              - passportIssuingCountry
+              - permanentAddress
+              - currentAddress
+              - fatherGuardian
+              - motherGuardian
+              - emergencyContact
+              - disabilityAnswer
+              - disabilityDetails
+              additionalProperties: false
+            academicDetails:
+              type: object
+              properties:
+                qualifications:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      qualificationTypeSelection:
+                        type: string
+                      qualificationType:
+                        type: string
+                      qualificationNameSelection:
+                        type: string
+                      qualificationName:
+                        type: string
+                      institutionName:
+                        type: string
+                      countryOfEducation:
+                        type: string
+                      fieldOfStudy:
+                        type: string
+                      startedOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      completedOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      result:
+                        type: string
+                      transcript:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                          additionalProperties: false
+                        - type: 'null'
+                      academicCertificate:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                          additionalProperties: false
+                        - type: 'null'
+                    required:
+                    - id
+                    - qualificationTypeSelection
+                    - qualificationType
+                    - qualificationNameSelection
+                    - qualificationName
+                    - institutionName
+                    - countryOfEducation
+                    - fieldOfStudy
+                    - startedOn
+                    - completedOn
+                    - result
+                    - transcript
+                    - academicCertificate
+                    additionalProperties: false
+                englishResults:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      qualificationNameSelection:
+                        type: string
+                      qualificationName:
+                        type: string
+                      examinedOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      score:
+                        type: string
+                      expiresOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      certificate:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                          additionalProperties: false
+                        - type: 'null'
+                    required:
+                    - id
+                    - qualificationNameSelection
+                    - qualificationName
+                    - examinedOn
+                    - score
+                    - expiresOn
+                    - certificate
+                    additionalProperties: false
+              required:
+              - qualifications
+              - englishResults
+              additionalProperties: false
+            documents:
+              type: object
+              properties:
+                passportPhoto:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                myKad:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                passport:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                portfolio:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                cv:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                recommendationLetter:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferRelease:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferAttendance:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferModuleResults:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferSyllabi:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                transferVisaCancellation:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                medicalExaminationCountry:
+                  type: string
+                medicalReport:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                eligibilityLetter:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+                scratchCard:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+              required:
+              - passportPhoto
+              - myKad
+              - passport
+              - portfolio
+              - cv
+              - recommendationLetter
+              - transferRelease
+              - transferAttendance
+              - transferModuleResults
+              - transferSyllabi
+              - transferVisaCancellation
+              - medicalExaminationCountry
+              - medicalReport
+              - eligibilityLetter
+              - scratchCard
+              additionalProperties: false
+            paymentProof:
+              type: object
+              properties:
+                bankReference:
+                  type: string
+                file:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                    additionalProperties: false
+                  - type: 'null'
+              required:
+              - bankReference
+              - file
+              additionalProperties: false
+          required:
+          - activeStepId
+          - completedStepIds
+          - consentChecked
+          - studyPreferences
+          - personalDetails
+          - academicDetails
+          - documents
+          - paymentProof
+          additionalProperties: false
+        submittedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        reviewStage:
+          type: string
+          enum:
+          - payment
+          - documents
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              sequence:
+                type: integer
+                exclusiveMinimum: 0
+                maximum: 9007199254740991
+              sender:
+                type: string
+                enum:
+                - reviewer
+                - applicant
+              body:
+                type: string
+              sentAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              attachments:
+                maxItems: 5
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    name:
+                      type: string
+                      minLength: 1
+                    sizeBytes:
+                      type: integer
+                      exclusiveMinimum: 0
+                      maximum: 26214400
+                    mimeType:
+                      type: string
+                      minLength: 1
+                  required:
+                  - id
+                  - name
+                  - sizeBytes
+                  - mimeType
+                  additionalProperties: false
+            required:
+            - id
+            - sequence
+            - sender
+            - body
+            - sentAt
+            - attachments
+            additionalProperties: false
+        readThroughSequence:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        repliedThroughSequence:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+      required:
+      - id
+      - applicantId
+      - personId
+      - revision
+      - previewNumber
+      - status
+      - snapshot
+      - submittedAt
+      - updatedAt
+      - reviewStage
+      - messages
+      - readThroughSequence
+      - repliedThroughSequence
+      additionalProperties: false
+      x-implementation: In-process Applicant mock only; no HTTP endpoint
+    SaveApplicantApplicationInput:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        requestId:
+          type: string
+          minLength: 1
+        expectedRevision:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        snapshot:
+          type: object
+          properties:
+            activeStepId:
+              type: string
+              enum:
+              - consent
+              - study
+              - personal
+              - academic
+              - documents
+              - fee
+            completedStepIds:
+              type: array
+              items:
+                type: string
+                enum:
+                - consent
+                - study
+                - personal
+                - academic
+                - documents
+                - fee
+            consentChecked:
+              type: boolean
+            studyPreferences:
+              type: object
+              properties:
+                studentType:
+                  type: string
+                  enum:
+                  - ''
+                  - local
+                  - international
+                applicantType:
+                  type: string
+                  enum:
+                  - ''
+                  - new
+                  - alumni
+                  - transfer
+                preferences:
+                  type: array
+                  prefixItems:
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+                  - type: object
+                    properties:
+                      intakeId:
+                        type: string
+                      facultyId:
+                        type: string
+                      courseId:
+                        type: string
+                    required:
+                    - intakeId
+                    - facultyId
+                    - courseId
+              required:
+              - studentType
+              - applicantType
+              - preferences
+            personalDetails:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                countryOfCitizenship:
+                  type: string
+                dateOfBirth:
+                  anyOf:
+                  - type: string
+                    pattern: ^\d{4}-\d{2}-\d{2}$
+                  - type: 'null'
+                placeOfBirth:
+                  type: string
+                gender:
+                  type: string
+                race:
+                  type: string
+                religion:
+                  type: string
+                religionOther:
+                  type: string
+                contactNumber:
+                  type: string
+                maritalStatus:
+                  type: string
+                  enum:
+                  - ''
+                  - single
+                  - married
+                  - divorced
+                  - widowed
+                emailAddress:
+                  type: string
+                identificationNumber:
+                  type: string
+                passportNumber:
+                  type: string
+                passportExpiresOn:
+                  anyOf:
+                  - type: string
+                    pattern: ^\d{4}-\d{2}-\d{2}$
+                  - type: 'null'
+                passportIssuingCountry:
+                  type: string
+                permanentAddress:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                    country:
+                      type: string
+                    state:
+                      type: string
+                    city:
+                      type: string
+                    postcode:
+                      type: string
+                  required:
+                  - addressLine
+                  - country
+                  - state
+                  - city
+                  - postcode
+                currentAddress:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                    country:
+                      type: string
+                    state:
+                      type: string
+                    city:
+                      type: string
+                    postcode:
+                      type: string
+                  required:
+                  - addressLine
+                  - country
+                  - state
+                  - city
+                  - postcode
+                fatherGuardian:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    contactNumber:
+                      type: string
+                    emailAddress:
+                      type: string
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                motherGuardian:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    contactNumber:
+                      type: string
+                    emailAddress:
+                      type: string
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                emergencyContact:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    contactNumber:
+                      type: string
+                    emailAddress:
+                      type: string
+                    relationship:
+                      type: string
+                  required:
+                  - fullName
+                  - contactNumber
+                  - emailAddress
+                  - relationship
+                disabilityAnswer:
+                  type: string
+                  enum:
+                  - ''
+                  - 'yes'
+                  - 'no'
+                disabilityDetails:
+                  type: string
+              required:
+              - fullName
+              - countryOfCitizenship
+              - dateOfBirth
+              - placeOfBirth
+              - gender
+              - race
+              - religion
+              - religionOther
+              - contactNumber
+              - maritalStatus
+              - emailAddress
+              - identificationNumber
+              - passportNumber
+              - passportExpiresOn
+              - passportIssuingCountry
+              - permanentAddress
+              - currentAddress
+              - fatherGuardian
+              - motherGuardian
+              - emergencyContact
+              - disabilityAnswer
+              - disabilityDetails
+            academicDetails:
+              type: object
+              properties:
+                qualifications:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      qualificationTypeSelection:
+                        type: string
+                      qualificationType:
+                        type: string
+                      qualificationNameSelection:
+                        type: string
+                      qualificationName:
+                        type: string
+                      institutionName:
+                        type: string
+                      countryOfEducation:
+                        type: string
+                      fieldOfStudy:
+                        type: string
+                      startedOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      completedOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      result:
+                        type: string
+                      transcript:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                        - type: 'null'
+                      academicCertificate:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                        - type: 'null'
+                    required:
+                    - id
+                    - qualificationTypeSelection
+                    - qualificationType
+                    - qualificationNameSelection
+                    - qualificationName
+                    - institutionName
+                    - countryOfEducation
+                    - fieldOfStudy
+                    - startedOn
+                    - completedOn
+                    - result
+                    - transcript
+                    - academicCertificate
+                englishResults:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      qualificationNameSelection:
+                        type: string
+                      qualificationName:
+                        type: string
+                      examinedOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      score:
+                        type: string
+                      expiresOn:
+                        anyOf:
+                        - type: string
+                          pattern: ^\d{4}-\d{2}-\d{2}$
+                        - type: 'null'
+                      certificate:
+                        anyOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 1
+                            name:
+                              type: string
+                              minLength: 1
+                            sizeBytes:
+                              type: integer
+                              exclusiveMinimum: 0
+                              maximum: 26214400
+                            mimeType:
+                              type: string
+                              minLength: 1
+                          required:
+                          - id
+                          - name
+                          - sizeBytes
+                          - mimeType
+                        - type: 'null'
+                    required:
+                    - id
+                    - qualificationNameSelection
+                    - qualificationName
+                    - examinedOn
+                    - score
+                    - expiresOn
+                    - certificate
+              required:
+              - qualifications
+              - englishResults
+            documents:
+              type: object
+              properties:
+                passportPhoto:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                myKad:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                passport:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                portfolio:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                cv:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                recommendationLetter:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                transferRelease:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                transferAttendance:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                transferModuleResults:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                transferSyllabi:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                transferVisaCancellation:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                medicalExaminationCountry:
+                  type: string
+                medicalReport:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                eligibilityLetter:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+                scratchCard:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+              required:
+              - passportPhoto
+              - myKad
+              - passport
+              - portfolio
+              - cv
+              - recommendationLetter
+              - transferRelease
+              - transferAttendance
+              - transferModuleResults
+              - transferSyllabi
+              - transferVisaCancellation
+              - medicalExaminationCountry
+              - medicalReport
+              - eligibilityLetter
+              - scratchCard
+            paymentProof:
+              type: object
+              properties:
+                bankReference:
+                  type: string
+                file:
+                  anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+                      sizeBytes:
+                        type: integer
+                        exclusiveMinimum: 0
+                        maximum: 26214400
+                      mimeType:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                    - name
+                    - sizeBytes
+                    - mimeType
+                  - type: 'null'
+              required:
+              - bankReference
+              - file
+          required:
+          - activeStepId
+          - completedStepIds
+          - consentChecked
+          - studyPreferences
+          - personalDetails
+          - academicDetails
+          - documents
+          - paymentProof
+      required:
+      - id
+      - requestId
+      - expectedRevision
+      - snapshot
+      additionalProperties: false
+      x-implementation: In-process Applicant mock only; no HTTP endpoint
+    SendApplicantMessageInput:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        requestId:
+          type: string
+          minLength: 1
+        expectedRevision:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        body:
+          type: string
+          maxLength: 10000
+        attachments:
+          maxItems: 5
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              name:
+                type: string
+                minLength: 1
+              sizeBytes:
+                type: integer
+                exclusiveMinimum: 0
+                maximum: 26214400
+              mimeType:
+                type: string
+                minLength: 1
+            required:
+            - id
+            - name
+            - sizeBytes
+            - mimeType
+      required:
+      - id
+      - requestId
+      - expectedRevision
+      - body
+      - attachments
+      additionalProperties: false
+      x-implementation: In-process Applicant mock only; no HTTP endpoint
+    PortalCallResponsePersonalProfileResponse:
+      allOf:
+      - $ref: '#/components/schemas/PortalCallResponse'
+      - type: object
+        properties:
+          result:
+            $ref: '#/components/schemas/PersonalProfileResponse'
+    PortalCallResponseAcademicProfileResponse:
+      allOf:
+      - $ref: '#/components/schemas/PortalCallResponse'
+      - type: object
+        properties:
+          result:
+            $ref: '#/components/schemas/AcademicProfileResponse'
+    PortalCallResponseDocumentsProfileResponse:
+      allOf:
+      - $ref: '#/components/schemas/PortalCallResponse'
+      - type: object
+        properties:
+          result:
+            $ref: '#/components/schemas/DocumentsProfileResponse'

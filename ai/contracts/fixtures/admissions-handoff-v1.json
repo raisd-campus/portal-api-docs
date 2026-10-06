@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "applicationId": "application-golden",
+  "applicantId": "applicant-golden",
+  "personId": "person-alya",
+  "submittedAt": "2026-10-05T00:00:00.000Z",
+  "acceptedContext": {
+    "status": "accepted",
+    "reference": "acceptance-golden",
+    "acceptedAt": "2026-10-06T00:00:00.000Z",
+    "personId": "person-alya",
+    "studentProfileId": "student-alya",
+    "programmeEnrolmentId": "programme-enrolment-alya-bdes"
+  },
+  "snapshot": {
+    "activeStepId": "fee",
+    "completedStepIds": [
+      "consent",
+      "study",
+      "personal",
+      "academic",
+      "documents",
+      "fee"
+    ],
+    "consentChecked": true,
+    "studyPreferences": {
+      "studentType": "local",
+      "applicantType": "new",
+      "preferences": [
+        {
+          "intakeId": "demo-first-intake",
+          "facultyId": "faculty-design-innovation",
+          "courseId": "programme-bdes-visual-communication"
+        },
+        {
+          "intakeId": "",
+          "facultyId": "",
+          "courseId": ""
+        },
+        {
+          "intakeId": "",
+          "facultyId": "",
+          "courseId": ""
+        }
+      ]
+    },
+    "personalDetails": {
+      "fullName": "Alya Putri",
+      "countryOfCitizenship": "MY",
+      "dateOfBirth": "2006-02-18",
+      "placeOfBirth": "Shah Alam, Selangor",
+      "gender": "female",
+      "race": "Malay",
+      "religion": "other",
+      "religionOther": "Demo religion",
+      "contactNumber": "+60187654321",
+      "maritalStatus": "single",
+      "emailAddress": "alya@example.com",
+      "identificationNumber": "060218-10-4321",
+      "passportNumber": "",
+      "passportExpiresOn": null,
+      "passportIssuingCountry": "",
+      "permanentAddress": {
+        "addressLine": "42 Jalan Anggerik",
+        "country": "MY",
+        "state": "Selangor",
+        "city": "Shah Alam",
+        "postcode": "40150"
+      },
+      "currentAddress": {
+        "addressLine": "Hostel B",
+        "country": "MY",
+        "state": "Selangor",
+        "city": "Shah Alam",
+        "postcode": "40150"
+      },
+      "fatherGuardian": {
+        "fullName": "Demo Father",
+        "contactNumber": "+60123456789",
+        "emailAddress": "guardian@example.com"
+      },
+      "motherGuardian": {
+        "fullName": "Demo Mother",
+        "contactNumber": "+60123456789",
+        "emailAddress": "guardian@example.com"
+      },
+      "emergencyContact": {
+        "fullName": "Demo Guardian",
+        "contactNumber": "+60123456789",
+        "emailAddress": "guardian@example.com",
+        "relationship": "Parent"
+      },
+      "disabilityAnswer": "yes",
+      "disabilityDetails": "Step-free access requested"
+    },
+    "academicDetails": {
+      "qualifications": [
+        {
+          "id": 1,
+          "qualificationTypeSelection": "secondary",
+          "qualificationType": "Secondary School",
+          "qualificationNameSelection": "SPM",
+          "qualificationName": "SPM",
+          "institutionName": "Demo School",
+          "countryOfEducation": "MY",
+          "fieldOfStudy": "",
+          "startedOn": "2021-01-01",
+          "completedOn": "2024-12-01",
+          "result": "A",
+          "transcript": {
+            "id": "transcript",
+            "name": "transcript.pdf",
+            "sizeBytes": 1024,
+            "mimeType": "application/pdf"
+          },
+          "academicCertificate": {
+            "id": "certificate",
+            "name": "certificate.pdf",
+            "sizeBytes": 1024,
+            "mimeType": "application/pdf"
+          }
+        }
+      ],
+      "englishResults": [
+        {
+          "id": 1,
+          "qualificationNameSelection": "IELTS Academic",
+          "qualificationName": "IELTS Academic",
+          "examinedOn": "2026-03-07",
+          "score": "6.5",
+          "expiresOn": null,
+          "certificate": null
+        }
+      ]
+    },
+    "documents": {
+      "passportPhoto": {
+        "id": "photo",
+        "name": "photo.jpg",
+        "sizeBytes": 1024,
+        "mimeType": "image/jpeg"
+      },
+      "myKad": {
+        "id": "mykad",
+        "name": "mykad.pdf",
+        "sizeBytes": 1024,
+        "mimeType": "application/pdf"
+      },
+      "passport": null,
+      "portfolio": {
+        "id": "portfolio",
+        "name": "portfolio.pdf",
+        "sizeBytes": 1024,
+        "mimeType": "application/pdf"
+      },
+      "cv": null,
+      "recommendationLetter": null,
+      "transferRelease": null,
+      "transferAttendance": null,
+      "transferModuleResults": null,
+      "transferSyllabi": null,
+      "transferVisaCancellation": null,
+      "medicalReport": null,
+      "eligibilityLetter": null,
+      "scratchCard": null,
+      "medicalExaminationCountry": ""
+    },
+    "paymentProof": {
+      "bankReference": "DEMO-REF-1",
+      "file": {
+        "id": "payment",
+        "name": "payment.pdf",
+        "sizeBytes": 1024,
+        "mimeType": "application/pdf"
+      }
+    }
+  }
+}

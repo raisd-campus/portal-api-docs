@@ -21,7 +21,7 @@ docs/ai/
 ├── README.md                 ← you are here
 ├── AGENTS.md                 ← campus-wide agent instructions (read first)
 ├── MANIFEST.yaml             ← machine-readable index
-├── architecture/             ← system, repos, deployment
+├── architecture/             ← system, repos, deployment, PoC (Vercel+Neon)
 ├── backend/                  ← Portal API, existing CMS inventory, CAP comparison
 ├── frontend/                 ← per-portal agent knowledge
 │   └── student-portal/       ← extracted from raisd-campus/student-portal
@@ -42,6 +42,7 @@ Agents running in a portal repo should resolve the knowledge base as a **sibling
 ├── applicant-portal/
 ├── lecturer-portal/
 ├── staff-portal/
+├── portal-api/        ← Portal API service (docs/ are generated working copies)
 ├── design-system/
 └── portal-api-docs/
 ```

@@ -126,6 +126,13 @@ Large reporting surface: finance statements / ageing / outstanding, attendance a
 - Payments, receipts, instalments, assist billing (`b_assistbilling*`, including `bots` variants), statements — classic `b_*` with calculating SPs and many triggers.
 - DTEF / scholarship scratch tables present in the dump (ops history).
 
+### DTEF scholarship → TEF.gov.bw (government API)
+
+- Registry desks `r_scholarshipapplist.php` / `r_dropout_scholarshipapplist.php` queue rows in `r_scholarshipapp`.
+- On edit save with `app_status = 31` (Sent by Registry), CMS POSTs HAL+JSON `program_of_study` admissions to `https://tef.gov.bw` (CSRF token + Basic Auth).
+- Statuses: 30 Pending · 31 Sent by Registry · 32 Successfully Sent · 33 Failed · 34 Approved · 35 Rejected.
+- **Cyberjaya has no equivalent TEF POST** — campus-local M5 pattern. Full functional + technical write-up: [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md), Pages [`old-cms-botswana/index.html#dtef`](../../diagrams/old-cms-botswana/index.html#dtef).
+
 ### Accommodation & student affairs
 
 - Richer than Sierra Leone: `acc_*` + `w_*` dorm / occupant / insurance / visa / extracurricular.
@@ -157,8 +164,9 @@ Large reporting surface: finance statements / ageing / outstanding, attendance a
 
 ## Related
 
+- DTEF / TEF.gov.bw sync (functional + technical): [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md)
 - Cyberjaya inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md)
 - Sierra Leone inventory: [old-cms-sierra-leone.md](old-cms-sierra-leone.md)
 - CAP comparison (Cyberjaya-focused): [cms-feature-comparison.md](cms-feature-comparison.md)
-- GitHub Pages: [../../diagrams/old-cms-botswana/](../../diagrams/old-cms-botswana/)
+- GitHub Pages: [../../diagrams/old-cms-botswana/](../../diagrams/old-cms-botswana/) (E2E · ERD · DFD · database · [DTEF §4](../../diagrams/old-cms-botswana/index.html#dtef))
 - SDD-14: [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md)

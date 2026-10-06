@@ -142,3 +142,7 @@ The development scenario picker includes Nadia Pratama (Graduation ready) and Me
 ## Immigration navigation
 
 The CAP-50 route follows the same URL-backed segmented progression pattern as Graduation, with no Complete tab. New applications expose five numbered steps, renewals four, and cancellations three. A missing or invalid query value renders the current recommended step; selecting an available case step writes `?step=` and remains compatible with browser Back/Forward and main-scroll reset. Legacy `step=complete` resolves to Step 5 before the active case is applied; if that case has fewer steps, the page falls back to its recommended step. A completed case returns Applications to its empty state. Finance invoice and Online Form detail links retain their owning main-navigation state when followed, and **Open Student Immigration** returns from development Admin Actions after switching to the selected case owner in the same mock session. Full workflow behaviour is documented in [Immigration](immigration.md).
+
+## Expandable section labels — 6 October 2026
+
+Academic, Profile and Services disclosure triggers compose `PortalNavItem` with `asChild` around their existing CollapsibleTrigger. This uses the shared white title token already present in 0.6.1, while retaining route-driven expansion and submenu behaviour. The former local trigger bypassed the shared item and inherited grey body text. No shared colour update or local colour override is required.

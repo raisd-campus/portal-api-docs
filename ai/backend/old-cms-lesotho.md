@@ -3,6 +3,7 @@
 **Campus:** Limkokwing University of Creative Technology — Lesotho (`limkokwing.ac.ls`)  
 **Role after 3 Oct 2026:** **First Raisd pilot / acceptance campus** — see [lesotho-pilot.md](../architecture/lesotho-pilot.md).  
 **Sources (3 Oct 2026):** Working Group weekly (Read.ai email summary); WhatsApp Working Group CMS 2026 — Faid Zamin screenshots of the **newer** Lesotho Admin / Student system (`PHOTO-2026-10-03-12-41-*`); Vara note on old-CMS family tree.  
+**Screenshot re-share (5 Oct 2026, 15:18):** Aslam attached 18 Lesotho UI photos — **byte-identical** to the 3 Oct Faid set (MD5 match; no new surfaces). Feature analysis unchanged; provenance only.\
 **Diagram analysis:** [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html).  
 **Database gap (proxy → dump):** [lesotho-db-gap.md](lesotho-db-gap.md) · Pages [`#db-gap`](../../diagrams/old-cms-lesotho/index.html#db-gap).  
 **Old CMS dump:** **Received and inventoried (5 Oct 2026)** — Vara Drive pack  
@@ -18,7 +19,7 @@ This file inventories what we can already see. It does **not** authorise committ
 
 | Generation | Status | What we have | Use for Raisd |
 |---|---|---|---|
-| **Newer Lesotho CMS** (Admin Portal + Student Portal) | In campus use; staging has **real student data** — structure share restricted | UI screenshots only (Faid / Aslam). Source code and DB **unavailable** to the WG | **Feature / UX benchmark** for pilot parity |
+| **Newer Lesotho CMS** (Admin Portal + Student Portal) | In campus use; staging has **real student data** — structure share restricted | UI screenshots only (Faid 3 Oct; Aslam 5 Oct re-share of same files). Source code and DB **unavailable** to the WG | **Feature / UX benchmark** for pilot parity |
 | **Older Lesotho CMS** (LUCT family) | Data being extracted into the newer system | Structure dump + `campus/` PHPMaker source inventoried 5 Oct 2026 (`campus2_lesotho`) | **Migration inventory** + Portal API adapter patterns (with Raisd Schema v3) |
 
 **Migration SoT (WG, 3 Oct 2026):** Raisd canonical schema + Lesotho CMS materials (old dump when available + new-CMS screenshots) — **not** the inaccessible new-system schema/source.
@@ -110,6 +111,7 @@ Vara Drive pack (5 Oct 2026): DB **`campus2_lesotho`** — **369** tables / **35
 - [ ] Sanitize any future structure share (no student/staff PII).
 - [ ] Expand CAP matrix with Demo vs Live Raisd columns as portals catch up.
 - [ ] Confirm whether newer CMS or government exposes an NMDS HTTP API (old CMS = assist/billing only).
+- [x] Aslam further newer-CMS screenshots (5 Oct) — same 18 files as Faid 3 Oct; no incremental UI.
 
 ## Related
 

@@ -12,7 +12,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 2. [architecture/overview.md](architecture/overview.md) and [architecture/repositories.md](architecture/repositories.md).
 3. The portal or service file that owns the change:
    - Student UI → [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md)
-   - Applicant UI → [frontend/applicant-portal.md](frontend/applicant-portal.md)
+   - Applicant UI → [frontend/applicant-portal.md](frontend/applicant-portal.md); LUCT Cyberjaya online-registration procedure capture → [backend/luct-online-registration.md](backend/luct-online-registration.md); FE gaps vs that pack → [backend/luct-online-registration-fe-gap.md](backend/luct-online-registration-fe-gap.md)
    - Lecturer UI → [frontend/lecturer-portal.md](frontend/lecturer-portal.md)
    - Staff UI → [frontend/staff-portal.md](frontend/staff-portal.md)
    - Portal API / identity / campus config → [backend/portal-api.md](backend/portal-api.md), then [development plan](backend/portal-api-development-plan.md), [target deployment](backend/portal-api-deployment.md), [PoC requirements](backend/portal-api-poc-requirements.md)
@@ -20,10 +20,11 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Pending schema confirmations (CS-01–CS-13: Schema v3 policy Demo done; campus Live readiness) → [../diagrams/canonical-schema-confirmations.html](../diagrams/canonical-schema-confirmations.html)
    - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html)
    - LMS logical schema / ERD colours (CMS vs LMS) → [backend/lms-schema.md](backend/lms-schema.md), [../diagrams/erd.html#lms](../diagrams/erd.html#lms)
-   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md)
+   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md) (structure · CAP-53 R1 reads · M4 gap)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)
+   - Eswatini CMS inventory (M5 pattern; may follow Lesotho) → [backend/old-cms-eswatini.md](backend/old-cms-eswatini.md)
    - Botswana DTEF / TEF.gov.bw scholarship sync → [backend/botswana-dtef-scholarship-sync.md](backend/botswana-dtef-scholarship-sync.md)
 4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
@@ -34,7 +35,7 @@ For any portal UI task, also read [design/component-library.md](design/component
 
 - **Four portals, one existing CMS family.** Applicant, Student, Lecturer, and Staff are separate webs. They talk only to the **Portal API**. They never write directly to Postgres or the existing CMS.
 - **Lesotho first (pilot) — confirmed Working Group 3 Oct 2026.** Supersedes “Cyberjaya first” as the acceptance-campus priority. Admissions before semester registration. Core mobile at launch means phone-friendly agreed journeys, not a verified native-app mandate. Detail: [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md).
-- **This phase — ADR-1 (confirmed Aslam, 23 Sep 2026; pilot campus updated 3 Oct 2026):** keep the existing campus CMS family as system of record; build modern portal experiences via the Portal API; **do not duplicate** operational functions. Lesotho’s newer CMS is the **feature benchmark** (screenshots); migration SoT is Raisd Schema + Lesotho CMS materials (old dump pending). Inventories: [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md).
+- **This phase — ADR-1 (confirmed Aslam, 23 Sep 2026; pilot campus updated 3 Oct 2026):** keep the existing campus CMS family as system of record; build modern portal experiences via the Portal API; **do not duplicate** operational functions. Lesotho’s newer CMS is the **feature benchmark** (screenshots); migration SoT is Raisd Schema + Lesotho CMS materials (old CMS `campus2_lesotho` structure inventoried 5 Oct 2026 — dump outside git). Inventories: [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md).
 - **Longer term:** progressive **unified one-stop CMS**, only on verified gaps with an explicit migration strategy ([M5](../sdd/03-delivery-milestones.md#m5)+ backlog — not launch rewrite). Target vision (proposed): one product with **distributed country data planes**, white-label, and feature flags — [architecture/distributed-cms-target.md](architecture/distributed-cms-target.md), diagram [`docs/diagrams/distributed-cms-architecture.html`](../diagrams/distributed-cms-architecture.html). See [architecture/overview.md](architecture/overview.md) and [SDD-03](../sdd/03-delivery-milestones.md).
 - **Demo ≠ Live.** Sample data and session-only mutations are Demo. Live requires durable save through the Portal API (or approved production path), server-enforced authz, and a named owner.
 - Do not present planned or speculative capabilities as implemented.

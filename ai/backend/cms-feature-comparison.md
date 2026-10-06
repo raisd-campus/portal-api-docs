@@ -2,7 +2,7 @@
 
 **Date:** 23 September 2026 (updated 3 October 2026)  
 **Old CMS source:** `CMS_Cyberjaya_Source_Codes_&_DB_Structure_23_09_2026.zip` (inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md))  
-**Lesotho pilot (3 Oct 2026):** first acceptance campus — [old-cms-lesotho.md](old-cms-lesotho.md), [lesotho-pilot.md](../architecture/lesotho-pilot.md). Newer CMS = screenshot benchmark; old dump TBC (family tree ≈ Botswana).  
+**Lesotho pilot (3 Oct 2026):** first acceptance campus — [old-cms-lesotho.md](old-cms-lesotho.md), [lesotho-pilot.md](../architecture/lesotho-pilot.md), [lesotho-db-gap.md](lesotho-db-gap.md). Newer CMS = screenshot benchmark; old `campus2_lesotho` structure inventoried (369 tables; CAP-53 / NMDS field pass).\
 **Sister campus dumps:**
 - `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` — [old-cms-sierra-leone.md](old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/)
 - `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` — [old-cms-botswana.md](old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../../diagrams/old-cms-botswana/) (E2E flow + [DTEF §4](../../diagrams/old-cms-botswana/index.html#dtef)), Markdown [`botswana-dtef-scholarship-sync.md`](botswana-dtef-scholarship-sync.md)
@@ -102,10 +102,12 @@ Legend for **Old coverage:** Present = clear module/table/SP evidence · Partial
 
 ### Applicant / Online Registration
 
+**Procedure capture (6 Oct 2026):** public wizard + `LUCT-MKT-003` + Student Portal Forms pack — [luct-online-registration.md](luct-online-registration.md). Use for CAP-02/03/07 field lists; Malaysia EMGS/NOC is Cyberjaya-only.
+
 | CAP | Feature | Old CMS evidence | Old | New FE | Launch posture |
 |---|---|---|---|---|---|
 | [CAP-01](../../sdd/11-capability-catalog.md#cap-01) | Applicant sign-in / account | Agent/online application SPs; staff logins exist. Dedicated Raisd applicant IdP not verified. | Partial | Not started | Confirm legacy login vs new account; map via Portal API |
-| [CAP-02](../../sdd/11-capability-catalog.md#cap-02) | Online application form | `app_applicationformonline`, Marketing/Registry Application menus, `AgentSubmitApplication*` | Present | Not started | **Expose via Portal API**; reuse CMS fields |
+| [CAP-02](../../sdd/11-capability-catalog.md#cap-02) | Online application form | `app_applicationformonline`, Marketing/Registry Application menus, `AgentSubmitApplication*` | Present | Not started | **Expose via Portal API**; reuse CMS fields; match captured 4-step wizard |
 | [CAP-03](../../sdd/11-capability-catalog.md#cap-03) | Upload application documents | `app_document`, `app_docfile`, doc review screens | Present | Not started | **Expose** durable upload path + Registry review on old CMS |
 | [CAP-07](../../sdd/11-capability-catalog.md#cap-07) | Track application / offer / accept enrolment | `app_zstatus`, pre-offer, offer letters, graduation/enrol handoffs | Present | Not started | Reuse Registry/Marketing workflows; applicant track UI new |
 | [CAP-16](../../sdd/11-capability-catalog.md#cap-16) | Applicant announcements | `s_notice` exists campus-wide; applicant-specific feed Needs checking | Partial | Not started | Confirm Marketing ownership |

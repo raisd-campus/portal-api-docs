@@ -73,7 +73,7 @@ steps:
 ```
 
 ```powershell
-npm install --save-exact @raisd-campus/design-system@0.6.0
+npm install --save-exact @raisd-campus/design-system@0.6.2
 ```
 
 Import the stylesheet once in the portal's entry CSS. Tailwind v4 ignores `node_modules` by default, so register the installed package as a source. For a portal stylesheet under `src/`, the setup is:
@@ -89,7 +89,7 @@ import { Button } from "@raisd-campus/design-system/ui/button"
 import { SummaryCard } from "@raisd-campus/design-system/system/summary-card"
 ```
 
-Import individual `ui/<component>` or `system/<component>` subpaths to keep unused components out of the portal's eager bundle. Do not import `dist` internals or use the root barrel for application code. A consumer should read `node_modules/@raisd-campus/design-system/docs/components.md` and the emitted declarations from its **pinned version** for exact props, states, and examples. The [0.6.0 catalogue](https://github.com/raisd-campus/design-system/blob/v0.6.0/docs/components.md) is the stable online reference; `main` may have newer APIs. The [portal design rules](design-system.md) define token meaning and responsive behaviour. Keep dark-only styling until a cross-portal theming decision is approved. Phone, tablet, and desktop layouts must remain usable.
+Import individual `ui/<component>` or `system/<component>` subpaths to keep unused components out of the portal's eager bundle. Do not import `dist` internals or use the root barrel for application code. A consumer should read `node_modules/@raisd-campus/design-system/docs/components.md` and the emitted declarations from its **pinned version** for exact props, states, and examples. The [0.6.2 catalogue](https://github.com/raisd-campus/design-system/blob/v0.6.2/docs/components.md) is the stable online reference; `main` may have newer APIs. The [portal design rules](design-system.md) define token meaning and responsive behaviour. Keep dark-only styling until a cross-portal theming decision is approved. Phone, tablet, and desktop layouts must remain usable.
 
 `RecordSummaryCard` presents the reference as a labelled row before the other values, followed by an edge-to-edge status footer. `referenceLabel` defaults to "Reference" and can be tailored by the portal. The portal supplies values, status text and tone, and an optional selection action; it owns reference issuance, dates and record workflow.
 
@@ -112,3 +112,7 @@ Use `system/portal-shell` for the shell family in every React portal: `PortalShe
 5. When a student-owned reusable pattern observably changes, update the canonical student design guidance and local mirror, then the affected student HTML examples and captures. Do not edit the shared package catalogue unless its exported API or visuals also changed. Internal refactors with no observable change and unrelated tasks do not trigger design documentation edits.
 
 Lecturer and staff add the package when their apps begin. Each portal pins and upgrades a published package version deliberately.
+
+## Shared Popup trailing action — 6 October 2026
+
+Released package **0.6.2** adds optional `footerAfterDismiss?: ReactNode` to `system/popup`. Footer order is leading `footer`, standard secondary dismiss, then the consumer-owned trailing action. Default layout, colours and dismissal remain unchanged; phone wrapping keeps visual and keyboard order. Applicant uses it for primary Save & Close after Keep Editing. The portal owns draft saving, pending/dismiss locking, failure/retry, resources, stale-session guards and the original blocked destination. Student and Applicant pin the released 0.6.2 package. No contract/schema or live backend change is introduced.

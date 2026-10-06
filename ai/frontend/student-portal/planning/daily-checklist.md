@@ -5,7 +5,7 @@ Baseline reviewed: **7 September 2026**, against portal commit `6811e88` and the
 ## Deliverables and current state
 
 - [Live simplified checklist](https://docs.google.com/spreadsheets/d/1Yux9R8hIgcPrQ5OklKd9Oyq_04qJtaAhcxJvr_7NvYI/edit#gid=1836730462). Use this for the current simplified daily view.
-- [Verified Excel backup](../../outputs/01a06f1b-fd81-7131-8e1a-f7845e088984/student-portal-cms-daily-checklist.xlsx).
+- [Verified Excel backup](https://github.com/raisd-campus/student-portal/blob/main/outputs/01a06f1b-fd81-7131-8e1a-f7845e088984/student-portal-cms-daily-checklist.xlsx).
 - [Baseline data, references and original-file hashes](daily-checklist-baseline.json). This is a dated snapshot, not an automatic synchronisation with the live Google Sheet.
 - The user added a simplified tab, changed its frontend labels/effort values and enabled anyone-with-link reader access. These user choices were preserved. No permissions were changed by this task. The Excel backup now contains all four current tabs.
 
@@ -31,7 +31,7 @@ The user's **Frontend ready** and **Done** values are retained as frontend plann
 
 CAP-51 implementation evidence is tracked locally in [Online Forms](../online-forms.md) and [handoff](../handoff.md). The student slice comprises five campus-owned samples, drafts, immutable submissions, progress and case messages; it does not complete staff review operations or production integration. Student Frontend is **Demo**, verified on 10 September 2026 by 519 unit tests and 198 desktop browser tests; Mobile remains Not started and Backend Needs checking. The live Google tracker and dated Excel/baseline snapshots remain unchanged for the owner to maintain.
 
-1. Pilot Cyberjaya first. Confirm campus rules, old-CMS capabilities, integration access and responsible staff.
+1. Pilot Lesotho first (Working Group, 3 Oct 2026). Confirm campus rules, old-CMS capabilities, integration access and responsible staff.
 2. Deliver new-applicant admissions before semester subject registration. Admissions includes application evidence, staff review, tracking, offers and first enrolment.
 3. Complete core student-portal journeys, including learning resources, timetable, assignment submission, announcements, student policies, core records and semester registration.
 4. Include phone-friendly admissions, sign-in and core student journeys in launch planning. The existing portal still has only isolated responsive Services body content; full mobile implementation is future work.
@@ -104,7 +104,7 @@ Admissions upload and qualification-verification workflows are **Not started** e
 | Confirm rules & integration | TBC | Campus rules, owners, old-CMS inventory and integration access agreed |
 | Admissions launch | TBC | Applicant-to-enrolment journey, required Registry/staff functions, sign-in and core mobile work with real integration |
 | Core student portal | TBC | Student journeys and semester registration work with required lecturer/staff publishing, records and file delivery |
-| Cyberjaya pilot acceptance | TBC | Integrated pilot tested; campus accepts security, recovery, content and operating readiness |
+| Lesotho pilot acceptance | TBC | Integrated pilot tested; campus accepts security, recovery, content and operating readiness |
 | Campus expansion & remaining CMS | TBC | Additional campuses and remaining approved CMS/staff work accepted against their rules |
 
 The order follows the admissions-first product decision and integration dependencies. It is **not government-prescribed phasing or an effort estimate**. The previous P1–P5 codes and illustrative week ranges have been removed. Kickoff, target weeks, backend commitments and named owners remain **TBC** until agreed.
