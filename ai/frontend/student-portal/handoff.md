@@ -4,6 +4,11 @@ Read this after `AGENTS.md` when resuming the project in a new Codex chat or on 
 
 ## Current baseline
 
+### Hosted Student CI budget refinement — 6 October 2026
+
+- Initial hosted run at 239fe40 hit six existing default five-second timeouts despite local full-gate success. CI-only Vitest now uses two workers and a 15-second test budget; local defaults and all assertions remain unchanged.
+- Shared 0.6.2 and all seven initial source commits are pushed; public Pages serves 110 captures. Applicant hosted verification passed. Final Student follow-up and portal deployment results are reported in the delivery evidence. [Verification](audits/2026-10-05-admissions-profile-verification.md#hosted-student-runner-budget-follow-up--6-october-2026).
+
 ### Campus sync and shared 0.6.2 release — 6 October 2026
 
 - All seven local campus checkouts backed up and synchronized. Six stash conflicts in canonical/public docs resolved, preserving incoming research/navigation and local validated mock work. Both clean documentation worktrees retained.
