@@ -38,6 +38,40 @@
         ["./index.html#database", "Database", "Triggers &amp; SPs"],
       ],
     },
+    eswatini: {
+      label: "Eswatini",
+      code: "ESWATINI",
+      data: "./fsd-knowledge-eswatini.json",
+      db: "campus2_eswatini",
+      heading: "Eswatini LUCT CMS",
+      aliases: ["sz", "swz", "eswatini", "swaziland", "campus2_eswatini", "mbabane", "luct-sz"],
+      toc: [
+        ["../old-cms-eswatini/index.html", "E2E hub", "Full campus analysis"],
+        ["../old-cms-eswatini/index.html#fsd", "FSD", "Functional breakdown"],
+        [null, "Obsidian", "This page"],
+        ["../old-cms-eswatini/index.html#integrations", "Integrations", "Assist ssb · portal"],
+        ["../old-cms-eswatini/index.html#erd", "ERD", "Physical tables"],
+        ["../old-cms-eswatini/index.html#dfd", "DFD", "Data flows"],
+        ["../old-cms-eswatini/database.html", "Database", "Triggers &amp; SPs"],
+      ],
+    },
+    cambodia: {
+      label: "Cambodia",
+      code: "CAMBODIA",
+      data: "./fsd-knowledge-cambodia.json",
+      db: "campus2_cambodia",
+      heading: "Cambodia LUCT CMS",
+      aliases: ["kh", "khm", "cambodia", "campus2_cambodia", "portalcambodia", "phnom-penh", "luct-kh"],
+      toc: [
+        ["../old-cms-cambodia/index.html", "E2E hub", "Full campus analysis"],
+        ["../old-cms-cambodia/index.html#fsd", "FSD", "Functional breakdown"],
+        [null, "Obsidian", "This page"],
+        ["../old-cms-cambodia/index.html#integrations", "Integrations", "Assist · portalcambodia"],
+        ["../old-cms-cambodia/index.html#erd", "ERD", "Physical tables"],
+        ["../old-cms-cambodia/index.html#dfd", "DFD", "Data flows"],
+        ["../old-cms-cambodia/database.html", "Database", "Triggers &amp; SPs"],
+      ],
+    },
     botswana: {
       label: "Botswana",
       code: "BWA-GBE",
@@ -149,7 +183,7 @@
       note.setAttribute("role", "status");
       note.textContent =
         "Unknown campus “" + campusChoice.requested + "” — showing " + campus.label +
-        ". Use ?campus=lesotho, cyberjaya, botswana or sierra-leone.";
+        ". Use ?campus=lesotho, eswatini, cambodia, cyberjaya, botswana or sierra-leone.";
       heroLead.insertAdjacentElement("afterend", note);
     }
     if (toc) {

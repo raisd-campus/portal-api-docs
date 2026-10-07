@@ -529,6 +529,38 @@
       "path": "diagrams/old-cms/obsidian.html?campus=cyberjaya"
     },
     {
+      "title": "Obsidian 3D FSD \u2014 Eswatini",
+      "summary": "Interactive 3D knowledge graph of the Eswatini desks, assist ssb/limkokwing, and portal_*_eswatini hooks.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "obsidian",
+        "fsd",
+        "graph",
+        "3d",
+        "eswatini",
+        "campus2_eswatini",
+        "ssb",
+        "limkokwing"
+      ],
+      "path": "diagrams/old-cms/obsidian.html?campus=eswatini"
+    },
+    {
+      "title": "Obsidian 3D FSD \u2014 Cambodia",
+      "summary": "Interactive 3D knowledge graph of the Cambodia desks, assist Limkokwing, and portalcambodia / portal_*_cambodia hooks.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "obsidian",
+        "fsd",
+        "graph",
+        "3d",
+        "cambodia",
+        "campus2_cambodia",
+        "portalcambodia",
+        "limkokwing"
+      ],
+      "path": "diagrams/old-cms/obsidian.html?campus=cambodia"
+    },
+    {
       "title": "Obsidian 3D FSD \u2014 Botswana",
       "summary": "Interactive 3D knowledge graph of the Botswana desks, DTEF \u2192 TEF.gov.bw sync, and api_* hooks.",
       "section": "LUCT CMS",

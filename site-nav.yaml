@@ -271,6 +271,7 @@ menu:
         children:
           - { label: E2E hub, href: luct-sz }
           - { label: FSD, href: "luct-sz#fsd" }
+          - { label: Obsidian 3D, href: "luct-obsidian?campus=eswatini" }
           - { label: Integrations, href: "luct-sz#integrations" }
           - { label: ERD, href: "luct-sz#erd" }
           - { label: Database, href: luct-sz-database }
@@ -280,6 +281,7 @@ menu:
         children:
           - { label: E2E hub, href: luct-kh }
           - { label: FSD, href: "luct-kh#fsd" }
+          - { label: Obsidian 3D, href: "luct-obsidian?campus=cambodia" }
           - { label: Integrations, href: "luct-kh#integrations" }
           - { label: ERD, href: "luct-kh#erd" }
           - { label: Database, href: luct-kh-database }
@@ -579,6 +581,18 @@ search:
     section: LUCT CMS
     summary: Interactive 3D knowledge graph of the Cyberjaya functional specification.
     keywords: [obsidian, fsd, graph, 3d, cyberjaya, cmscbj]
+
+  - title: Obsidian 3D FSD — Eswatini
+    href: "luct-obsidian?campus=eswatini"
+    section: LUCT CMS
+    summary: Interactive 3D knowledge graph of the Eswatini desks, assist ssb/limkokwing, and portal_*_eswatini hooks.
+    keywords: [obsidian, fsd, graph, 3d, eswatini, campus2_eswatini, ssb, limkokwing]
+
+  - title: Obsidian 3D FSD — Cambodia
+    href: "luct-obsidian?campus=cambodia"
+    section: LUCT CMS
+    summary: Interactive 3D knowledge graph of the Cambodia desks, assist Limkokwing, and portalcambodia / portal_*_cambodia hooks.
+    keywords: [obsidian, fsd, graph, 3d, cambodia, campus2_cambodia, portalcambodia, limkokwing]
 
   - title: Obsidian 3D FSD — Botswana
     href: "luct-obsidian?campus=botswana"
