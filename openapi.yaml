@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Raisd Portal API
-  version: 0.4.1
+  version: 0.4.2
   summary: Stage-1 HTTP face of the campus Portal API
   description: |
     Bearer-authenticated RPC over the student-portal `PortalApi` surface.
@@ -23,22 +23,28 @@ info:
     **Frontend consumers (today)**
     - `student-portal` is the implemented HTTP UI. It calls every method below
       via React Query hooks except `getPortalRecordGraph` (tests/internals).
-    - `applicant-portal` implements a separate validated session-only in-process mock.
-      Its methods below are documentation schemas, not served HTTP routes.
+    - `applicant-portal` calls Demo Applicant methods over
+      `POST /v1/auth/applicant/login` and `POST /v1/applicant/{method}` when
+      `VITE_PORTAL_API_URL` is set; otherwise it keeps the in-process mock.
       `lecturer-portal` and `staff-portal` remain UI placeholders.
-    - Profile schema 4 additions describe the local Student mock; backend engine
-      upgrade and legacy-overlay checks are prerequisites to serving those additions.
-    - HTTP transport: `createHttpPortalApi` → `POST /v1/auth/login` then
+    - Student record contract is schema **4** (admissions-aligned profile fields).
+    - HTTP transport (Student): `createHttpPortalApi` → `POST /v1/auth/login` then
       `POST /v1/portal/{method}` with `{ "args": [...] }`.
+    - HTTP transport (Applicant): `createHttpApplicantPortalApi` →
+      `POST /v1/auth/applicant/login` then `POST /v1/applicant/{method}`.
     - Scenario switches over HTTP use `POST /v1/auth/scenario` on the existing
       bearer session (`createHttpPortalApi` / `getHttpPortalHandle`). Logout uses
       `POST /v1/auth/logout`. Mock in-process sessions still call
       `selectStudentScenario` locally.
 
-    **Typical flow**
+    **Typical Student flow**
     1. `POST /v1/auth/login`
     2. `POST /v1/portal/{method}` with `Authorization: Bearer <accessToken>`
     3. Optional `POST /v1/auth/scenario` to switch Demo scenarios without a new login
+
+    **Typical Applicant flow**
+    1. `POST /v1/auth/applicant/login`
+    2. `POST /v1/applicant/{method}` with `Authorization: Bearer <accessToken>`
 
     **Blocked over HTTP (404)**
     `dispose`, `selectStudentScenario`, `runDevelopmentAction`, and any
@@ -136,7 +142,9 @@ tags:
   - name: Meta
     description: Catalogues for deferred or domain-scoped PortalApi surfaces
   - name: Auth
-    description: Demo student sessions
+    description: Demo student and applicant sessions
+  - name: Applicant
+    description: Demo ApplicantPortalApi RPC (`POST /v1/applicant/{method}`)
   - name: LMS
     description: |
       Student learning surface on Portal API (Materials, assignments, lecturer review).
@@ -176,9 +184,11 @@ tags:
     description: PortalApi · Chat
 
 
-x-applicant-mock-operations:
-  implementation: in-process session-only ApplicantPortalApi
-  httpEndpoints: none
+x-applicant-operations:
+  implementation: Demo ApplicantPortalApi over HTTP (Postgres-backed session store) plus in-process mock in the applicant-portal when VITE_PORTAL_API_URL is unset
+  httpEndpoints:
+    - POST /v1/auth/applicant/login
+    - POST /v1/applicant/{method}
   methods:
     - getStudyCatalogue
     - getApplications
@@ -265,20 +275,28 @@ paths:
               example:
                 service: portal-api
                 version: 0.1.0
-                schemaVersion: 3
+                schemaVersion: 4
                 scenarios:
                   - mid-programme
                   - first-semester-registration
                   - new-student-pass
                   - graduation-ready
+                applicantScenarios:
+                  - fresh
+                  - completed
+                  - approved
                 defaultScenarioId: first-semester-registration
+                defaultApplicantScenarioId: fresh
                 cmsMode: stub
                 sessions: postgres
+                applicantSessions: postgres
                 data: postgres
+                applicantData: postgres
                 docs: /docs
                 openapi: /openapi.yaml
                 lms: /v1/meta/lms
-                note: "Demo records live in Postgres (one table per record collection, including Schema v3 campus policy) and run through the MockPortalApi engine until CAP-53 connects the existing CMS. LMS surface catalogue: GET /v1/meta/lms."
+                applicant: /v1/applicant/:method
+                note: "Demo records live in Postgres (one table per record collection, including Schema v4 campus policy and admissions-aligned profile fields) and run through the Student MockPortalApi engine until CAP-53 connects the existing CMS. Applicant Demo methods are at POST /v1/applicant/:method. LMS surface catalogue: GET /v1/meta/lms."
 
 
   /v1/meta/staff-progression:
@@ -469,6 +487,149 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
+
+  /v1/auth/applicant/login:
+    post:
+      tags: [Auth]
+      operationId: applicantLogin
+      summary: Create a demo applicant session
+      description: |
+        Issues a bearer token bound to an applicant Demo scenario (`fresh`,
+        `completed`, or `approved`) after checking the demo applicant password.
+        Seeds Postgres-backed applicant records on first login. Used by
+        `createHttpApplicantPortalApi` in applicant-portal.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [password]
+              properties:
+                scenarioId:
+                  type: string
+                  enum: [fresh, completed, approved]
+                  default: fresh
+                password:
+                  type: string
+                  minLength: 1
+            example:
+              scenarioId: fresh
+              password: "<demo password>"
+      responses:
+        "200":
+          description: Applicant session created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [accessToken, tokenType, expiresIn, scenarioId, applicantId, personId]
+                properties:
+                  accessToken:
+                    type: string
+                  tokenType:
+                    type: string
+                    const: Bearer
+                  expiresIn:
+                    type: integer
+                  scenarioId:
+                    type: string
+                    enum: [fresh, completed, approved]
+                  applicantId:
+                    type: string
+                  personId:
+                    type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          description: Password does not match the demo applicant scenario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "503":
+          description: Demo applicant credentials are not configured on the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/applicant/{method}:
+    post:
+      tags: [Applicant]
+      operationId: callApplicantMethod
+      summary: Call an ApplicantPortalApi method
+      description: |
+        Demo RPC for the nine ApplicantPortalApi methods. Body is
+        `{ "args": [...] }`. Development reviewer actions are not exposed.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: method
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - getStudyCatalogue
+              - getApplications
+              - getApplication
+              - saveApplicationDraft
+              - submitApplication
+              - getConversation
+              - sendApplicationMessage
+              - markApplicationRead
+              - acceptApplicationEnrolment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  items: {}
+              example:
+                args: []
+      responses:
+        "200":
+          description: Method result with stub CMS acknowledgement
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result, cms]
+                properties:
+                  result: {}
+                  cms:
+                    type: object
+                    required: [acknowledged, mode]
+                    properties:
+                      acknowledged:
+                        type: boolean
+                      mode:
+                        type: string
+                        const: stub
+                      note:
+                        type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown applicant method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "503":
+          description: Applicant records temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
 
   # --- PortalApi methods (one operation per student-portal method) ---
   /v1/portal/getImmigration:
@@ -2738,20 +2899,34 @@ components:
         schemaVersion:
           type: integer
           description: Portal record contract version (`PORTAL_RECORD_SCHEMA_VERSION`). A mismatch reseeds Demo record tables.
-          example: 3
+          example: 4
         scenarios:
           type: array
           items:
             $ref: "#/components/schemas/ScenarioId"
+        applicantScenarios:
+          type: array
+          items:
+            type: string
+            enum: [fresh, completed, approved]
         defaultScenarioId:
           $ref: "#/components/schemas/ScenarioId"
+        defaultApplicantScenarioId:
+          type: string
+          enum: [fresh, completed, approved]
         cmsMode:
           type: string
           example: stub
         sessions:
           type: string
           enum: [memory, postgres]
+        applicantSessions:
+          type: string
+          enum: [memory, postgres]
         data:
+          type: string
+          enum: [memory, postgres]
+        applicantData:
           type: string
           enum: [memory, postgres]
         docs:
@@ -2764,6 +2939,10 @@ components:
           type: string
           description: Path to the Demo LMS surface catalogue
           example: /v1/meta/lms
+        applicant:
+          type: string
+          description: Path template for Applicant Demo RPC
+          example: /v1/applicant/:method
         note:
           type: string
 
