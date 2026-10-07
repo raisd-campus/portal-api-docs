@@ -259,6 +259,37 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md"
     },
     {
+      "title": "Botswana CMS inventory (AI knowledge)",
+      "summary": "Full Botswana LUCT CMS inventory \u2014 cmsbotswana desks, portal hooks, DTEF \u2192 TEF.gov.bw, overlap vs CY/SL.",
+      "section": "AI knowledge",
+      "keywords": [
+        "botswana",
+        "cms",
+        "inventory",
+        "cap-53",
+        "dtef",
+        "tef",
+        "m5",
+        "luct"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md"
+    },
+    {
+      "title": "Sierra Leone CMS inventory (AI knowledge)",
+      "summary": "Full Sierra Leone ICA EMS inventory \u2014 ems_sierraleone desks, ac_* admissions, integrations, no TEF.",
+      "section": "AI knowledge",
+      "keywords": [
+        "sierra-leone",
+        "ica",
+        "ems",
+        "cms",
+        "inventory",
+        "cap-53",
+        "m5"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md"
+    },
+    {
       "title": "Obsidian 3D FSD \u2014 Lesotho",
       "summary": "Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
       "section": "LUCT CMS",

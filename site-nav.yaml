@@ -77,6 +77,8 @@ external:
   ai-old-cms-lesotho: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md
   ai-old-cms-eswatini: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md
   ai-old-cms-cambodia: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md
+  ai-old-cms-botswana: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md
+  ai-old-cms-sierra-leone: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
   ai-lesotho-cap53: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md
   ai-luct-online-reg: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md
@@ -303,18 +305,21 @@ menu:
         children:
           - { label: E2E hub, href: luct-bw }
           - { label: FSD, href: "luct-bw#fsd" }
+          - { label: Obsidian 3D, href: "luct-obsidian?campus=botswana" }
           - { label: DTEF, href: "luct-bw#dtef" }
           - { label: ERD, href: "luct-bw#erd" }
           - { label: Database, href: luct-bw-database }
-          - { label: Obsidian 3D, href: "luct-obsidian?campus=botswana" }
+          - { label: AI inventory, href: ai-old-cms-botswana }
       - label: Sierra Leone
         href: luct-sl
         children:
           - { label: E2E hub, href: luct-sl }
           - { label: FSD, href: "luct-sl#fsd" }
+          - { label: Obsidian 3D, href: "luct-obsidian?campus=sierra-leone" }
+          - { label: Integrations, href: "luct-sl#integrations" }
           - { label: ERD, href: "luct-sl#erd" }
           - { label: Database, href: luct-sl-database }
-          - { label: Obsidian 3D, href: "luct-obsidian?campus=sierra-leone" }
+          - { label: AI inventory, href: ai-old-cms-sierra-leone }
 
   - label: Design system
     href: design-system
@@ -349,6 +354,8 @@ menu:
       - { label: Lesotho analysis briefing, href: report-lesotho-analysis }
       - { label: Eswatini CMS inventory, href: ai-old-cms-eswatini }
       - { label: Cambodia CMS inventory, href: ai-old-cms-cambodia }
+      - { label: Botswana CMS inventory, href: ai-old-cms-botswana }
+      - { label: Sierra Leone CMS inventory, href: ai-old-cms-sierra-leone }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
   - label: SDD
@@ -473,6 +480,18 @@ search:
     section: AI knowledge
     summary: Full Cambodia old CMS inventory from Vara pack — counts, portalcambodia export, assist codes, overlap vs LS/BW/CY/SZ.
     keywords: [cambodia, cms, inventory, cap-53, limkokwing, m5, luct]
+
+  - title: Botswana CMS inventory (AI knowledge)
+    href: ai-old-cms-botswana
+    section: AI knowledge
+    summary: Full Botswana LUCT CMS inventory — cmsbotswana desks, portal hooks, DTEF → TEF.gov.bw, overlap vs CY/SL.
+    keywords: [botswana, cms, inventory, cap-53, dtef, tef, m5, luct]
+
+  - title: Sierra Leone CMS inventory (AI knowledge)
+    href: ai-old-cms-sierra-leone
+    section: AI knowledge
+    summary: Full Sierra Leone ICA EMS inventory — ems_sierraleone desks, ac_* admissions, integrations, no TEF.
+    keywords: [sierra-leone, ica, ems, cms, inventory, cap-53, m5]
 
   - title: Obsidian 3D FSD — Lesotho
     href: "luct-obsidian?campus=lesotho"
