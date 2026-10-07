@@ -2,7 +2,7 @@
 
 ## Status and boundaries
 
-The existing application and reviewer-message journeys use a validated, session-only `ApplicantPortalApi`. Shared UI remains pinned to **0.6.2**. No Applicant HTTP adapter, authentication, offers, production reviewer controls, durable file store or database integration is implemented. Separate browsers do not share records. Refresh reconstructs the session, selects Fresh and drops user changes, files and message drafts; development scenarios initialize their fixtures on demand.
+The existing application and reviewer-message journeys use a validated `ApplicantPortalApi`. Shared UI remains pinned to **0.6.2**. Without `VITE_PORTAL_API_URL` the portal keeps a session-only in-process mock (refresh resets the session). With the Portal API URL, Demo builds use `createHttpApplicantPortalApi` against `POST /v1/auth/applicant/login` and `POST /v1/applicant/:method` (Postgres-backed applicant records on the Vercel Demo). Offers, production reviewer controls, durable evidence bytes and Live CMS admissions remain future work. Development reviewer actions stay mock-only and are not HTTP methods.
 
 Lesotho is the first acceptance pilot. Current Malaysian/Cyberjaya sample catalogue, fees and medical exceptions are retained as sample content; they are not new Lesotho admissions policy.
 

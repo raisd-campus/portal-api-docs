@@ -164,3 +164,7 @@ Profile Documents displays the existing Enrolment Confirmation sample as Offer L
 ## Shared 0.6.2 and save before leaving — 6 October 2026
 
 Released shared 0.6.2 adds an optional trailing Popup action. Applicant uses primary Save & Close after Keep Editing to save incomplete drafts before the originally blocked navigation; pending, failure/retry, duplicate and stale-session handling remain portal-owned. Student upgrades its pin with existing defaults intact. Graph schema 4, admissions handoff 1 and Demo/Live boundaries are unchanged.
+
+## Hosted Portal API schema v4 + Applicant Demo HTTP — 7 October 2026
+
+Hosted Portal API Demo now reports `/v1/meta.schemaVersion` **4** (Student engine aligned to admissions profile fields) and exposes Applicant Demo RPC beside existing Student RPC. A Neon backup preceded the schema-mismatch reseed; overlays/`student_portal_state` and `audit_events` were retained. Student SPA behaviour is unchanged aside from reseeded Demo fixtures. Live CMS writes remain out of scope. Details: [Portal API](../ai/backend/portal-api.md), [admissions handoff](../ai/backend/admissions-handoff.md).

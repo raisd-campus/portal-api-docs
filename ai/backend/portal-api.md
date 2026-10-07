@@ -65,6 +65,9 @@ The student portal defines the replaceable `PortalApi` surface (`src/services/po
 - PoC deploy (Vercel SPA + API + Neon): [../architecture/vercel-neon-poc.md](../architecture/vercel-neon-poc.md)
 - ERD / DFD HTML: [`docs/diagrams/`](../../diagrams/)
 
-## Applicant mock and Student schema v4 (local, 5 October 2026)
+## Applicant Demo HTTP and Student schema v4 (7 October 2026)
 
-Applicant now has a separate session-only ApplicantPortalApi and accepted-admissions exchange; it does not call this service's Student RPC allowlist. Local Student schema v4 adds aligned profile fields and immutable admissions provenance. Before updating the hosted Student engine, review the [handoff and automatic-reseed prerequisite](admissions-handoff.md). No backend deployment/migration or Applicant HTTP integration was performed. OpenAPI emergency-contact inputs now match the actual Student editable contract.
+- **Student:** Hosted engine follows sibling `student-portal` `PORTAL_RECORD_SCHEMA_VERSION` **4**. On deploy, a schema mismatch reseeds Demo record tables (overlays/`student_portal_state` and `audit_events` kept). Neon backup was taken before the hosted reseed; see [handoff](admissions-handoff.md).
+- **Applicant:** Demo RPC is live at `POST /v1/auth/applicant/login` and `POST /v1/applicant/:method` for the nine `ApplicantPortalApi` methods. Records persist in Neon `applicant_portal_state`; sessions in `poc_applicant_sessions`. Development reviewer actions stay out of the HTTP allowlist. Applicant portal (`https://applicant-portal-lemon.vercel.app`) uses `createHttpApplicantPortalApi` when `VITE_PORTAL_API_URL` is set.
+- `CORS_ORIGIN` includes the student SPA, applicant SPA and GitHub Pages Swagger origin.
+- OpenAPI `0.4.2` documents Applicant routes and schemaVersion **4**.

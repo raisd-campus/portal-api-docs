@@ -11,7 +11,7 @@ This note is a **proof-of-concept path**. It is not an ADR and must not be prese
 | Component | URL | Repo | Runtime | Deploy path |
 |---|---|---|---|---|
 | Student portal | https://raisd-student-portal.vercel.app | `student-portal` | Vite + React SPA, static prebuilt output | GitHub Actions `CI/CD` on push to `main` |
-| Applicant portal | https://raisd-applicant-portal.vercel.app | `applicant-portal` | Vite SPA (early build) | GitHub Actions `CI/CD` on push to `main` |
+| Applicant portal | https://applicant-portal-lemon.vercel.app | `applicant-portal` | Vite + React SPA, HTTP Portal API when `VITE_PORTAL_API_URL` is set | Manual prebuilt deploy (Actions billing may block CI); same `CI/CD` template as other portals |
 | Lecturer portal | https://raisd-lecturer-portal.vercel.app | `lecturer-portal` | "Coming soon" placeholder | GitHub Actions `CI/CD` on push to `main` |
 | Staff portal | https://raisd-staff-portal.vercel.app | `staff-portal` | "Coming soon" placeholder | GitHub Actions `CI/CD` on push to `main` |
 | Portal API | https://raisd-portal-api.vercel.app | `portal-api` | Fastify in one Node 22 Vercel Function, `sin1`, 30 s max | Manual `npm run deploy:vercel` (CI runs checks only) |
@@ -31,21 +31,23 @@ flowchart TB
   team(["Raisd team"])
   subgraph vercel ["Vercel team · sin1"]
     sp["raisd-student-portal · static SPA"]
-    ap["raisd-applicant-portal · static SPA"]
-    api["raisd-portal-api · Node 22 function<br/>MockPortalApi bundled"]
+    ap["applicant-portal-lemon · static SPA"]
+    api["raisd-portal-api · Node 22 function<br/>Student + Applicant Demo engines"]
     dba["raisd-db-admin · read-only"]
   end
   subgraph neon ["Neon · aws-ap-southeast-1"]
-    db[("neondb · 89 record tables<br/>4 reporting views · audit_events<br/>student_portal_state · portal_meta · poc_sessions")]
+    db[("neondb · schema v4 record tables<br/>4 reporting views · audit_events<br/>student_portal_state · applicant_portal_state<br/>portal_meta · poc_sessions · poc_applicant_sessions")]
   end
   cms[("Cyberjaya CMS · ADR-1")]
   user --> sp
   user --> ap
   sp -- "PortalApi RPC · bearer" --> api
+  ap -- "ApplicantPortalApi RPC · bearer" --> api
   api -- "DATABASE_URL (pooled)" --> db
   team -- "sign-in (session cookie)" --> dba
   dba -- "raisd_db_admin_reader" --> db
   sp -. never .-x db
+  ap -. never .-x db
   api -. no Live writes .-x cms
 ```
 
@@ -54,10 +56,10 @@ flowchart TB
 | `student-portal` | `npm run build:vercel` → `.vercel/output/static`; `/assets/*` immutable, missing chunk → 404, else `index.html` | `VITE_PORTAL_API_URL` (build fails if unset) |
 | `applicant-portal` | `npm run build` → `dist/` packaged by the workflow with SPA fallback | `VITE_PORTAL_API_URL` |
 | `lecturer-portal`, `staff-portal` | Generated placeholder until a `package.json` exists | — |
-| `portal-api` | `scripts/build-vercel.mjs` bundles `src/vercel.ts` + student-portal mock engine into `functions/index.func` | `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `PG*`/`POSTGRES_*` (integration), `CORS_ORIGIN`; demo passwords inlined at build from the gitignored credentials file |
+| `portal-api` | `scripts/build-vercel.mjs` bundles `src/vercel.ts` + student-portal and applicant-portal Demo engines into `functions/index.func` | `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `PG*`/`POSTGRES_*` (integration), `CORS_ORIGIN`; student and applicant demo passwords inlined at build from gitignored credentials |
 | `db-admin` | Zero-build functions `api/*.ts` + `public/` | `DATABASE_URL` (reader), `DB_ADMIN_USER`, `DB_ADMIN_PASSWORD` |
 
-`CORS_ORIGIN` = `https://raisd-student-portal.vercel.app,https://raisd-campus.github.io`. Add an origin before another portal calls the API from a browser.
+`CORS_ORIGIN` = `https://raisd-student-portal.vercel.app,https://applicant-portal-lemon.vercel.app,https://raisd-campus.github.io`. Add an origin before another portal calls the API from a browser.
 
 ## CI/CD pipelines
 
@@ -78,7 +80,7 @@ Cross-repo status: `npm run ci` in control-plane.
 - Connections: pooled `DATABASE_URL` for runtime, direct `DATABASE_URL_UNPOOLED` for DDL/admin; TLS with channel binding.
 - Roles: `neondb_owner` (Portal API); `raisd_db_admin_reader` (DB admin — `pg_read_all_data`, `default_transaction_read_only = on`, no write grants; recreate with `npm run db:create-reader` in db-admin).
 - **ERD in db-admin:** headers coloured by domain (CMS blue · LMS green · shared amber) with a domain filter; inference IRREGULAR map covers Schema v3 policy stems and LMS / proposed CAP-gap stems. Logical catalogue: [lms-schema.md](../backend/lms-schema.md), published [erd.html#lms](../../diagrams/erd.html#lms).
-- Migrations: none. On first use per instance the API runs idempotent DDL and, under an advisory lock, seeds the record tables from the student-portal fixtures when `portal_meta` is missing or `schema_version` ≠ `PORTAL_RECORD_SCHEMA_VERSION` (currently 3). A version mismatch drops record tables and reseeds them; `student_portal_state` and `audit_events` are kept. New collection tables and generated columns from contract changes are added in place. Existing generated columns are never altered; `db:reset` rebuilds everything including audit. `npm run db:reset` in portal-api drops and reseeds the record tables (sessions kept); `npm run db:seed` only fills gaps. After seed it creates four reporting views that mirror the TypeScript projections in `canonical-projections.ts` (active/valid study-period membership resolves via `campus_academic_status_policies`).
+- Migrations: none. On first use per instance the API runs idempotent DDL and, under an advisory lock, seeds the record tables from the student-portal fixtures when `portal_meta` is missing or `schema_version` ≠ `PORTAL_RECORD_SCHEMA_VERSION` (currently **4**). A version mismatch drops record tables and reseeds them; `student_portal_state` and `audit_events` are kept. Applicant Demo state lives in `applicant_portal_state` with sessions in `poc_applicant_sessions`. New collection tables and generated columns from contract changes are added in place. Existing generated columns are never altered; `db:reset` rebuilds everything including audit. `npm run db:reset` in portal-api drops and reseeds the record tables (sessions kept); `npm run db:seed` only fills gaps. After seed it creates four reporting views that mirror the TypeScript projections in `canonical-projections.ts` (active/valid study-period membership resolves via `campus_academic_status_policies`).
 
 ### Demo records
 

@@ -242,10 +242,10 @@
           </tr>
           <tr>
             <td>Applicant portal</td>
-            <td><a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a></td>
+            <td><a href="https://applicant-portal-lemon.vercel.app">applicant-portal-lemon.vercel.app</a></td>
             <td><a href="https://github.com/raisd-campus/applicant-portal">applicant-portal</a></td>
-            <td>Vite SPA (early build), static</td>
-            <td>GitHub Actions <code>CI/CD</code> on push to <code>main</code></td>
+            <td>Vite + React SPA; HTTP Portal API when <code>VITE_PORTAL_API_URL</code> is set</td>
+            <td>Manual prebuilt deploy (same <code>CI/CD</code> template; Actions billing may block CI)</td>
           </tr>
           <tr>
             <td>Lecturer portal</td>
@@ -312,15 +312,15 @@ flowchart TB
 
   subgraph vercel ["Vercel team · Singapore sin1"]
     sp["raisd-student-portal<br/>static SPA"]
-    ap["raisd-applicant-portal<br/>static SPA"]
+    ap["applicant-portal-lemon<br/>static SPA"]
     lp["raisd-lecturer-portal<br/>placeholder"]
     stp["raisd-staff-portal<br/>placeholder"]
-    api["raisd-portal-api<br/>Node 22 function · Fastify<br/>MockPortalApi bundled"]
+    api["raisd-portal-api<br/>Node 22 function · Fastify<br/>Student + Applicant Demo engines"]
     dba["raisd-db-admin<br/>read-only · sign-in"]
   end
 
   subgraph neon ["Neon · aws-ap-southeast-1"]
-    db[("neondb · Postgres 18<br/>89 record tables · 4 views · audit_events<br/>student_portal_state · portal_meta · poc_sessions")]
+    db[("neondb · Postgres 18 · schema v4<br/>record tables · 4 views · audit_events<br/>student_portal_state · applicant_portal_state<br/>portal_meta · poc_sessions · poc_applicant_sessions")]
   end
 
   subgraph prod ["Production — not part of this PoC"]
@@ -333,6 +333,7 @@ flowchart TB
   user --> lp
   user --> stp
   sp -- "PortalApi RPC · bearer<br/>VITE_PORTAL_API_URL" --> api
+  ap -- "ApplicantPortalApi RPC · bearer<br/>VITE_PORTAL_API_URL" --> api
   pages -. "Swagger Try it out" .-> api
   api -- "DATABASE_URL (pooled, TLS)" --> db
   team -- "sign-in (session cookie)" --> dba
@@ -381,9 +382,9 @@ flowchart TB
           </tr>
           <tr>
             <td><code>portal-api</code></td>
-            <td><code>scripts/build-vercel.mjs</code>: esbuild bundles <code>src/vercel.ts</code> plus the student-portal mock engine into <code>functions/index.func</code></td>
-            <td>All paths → the one function; Fastify routes inside</td>
-            <td><code>DATABASE_URL</code> / <code>DATABASE_URL_UNPOOLED</code> + <code>PG*</code> / <code>POSTGRES_*</code> (Neon integration), <code>CORS_ORIGIN</code>. Demo passwords are inlined at build from the gitignored credentials file</td>
+            <td><code>scripts/build-vercel.mjs</code>: esbuild bundles <code>src/vercel.ts</code> plus the student and applicant Demo engines into <code>functions/index.func</code></td>
+            <td>All paths → the one function; Fastify routes inside (<code>/v1/portal/:method</code>, <code>/v1/applicant/:method</code>)</td>
+            <td><code>DATABASE_URL</code> / <code>DATABASE_URL_UNPOOLED</code> + <code>PG*</code> / <code>POSTGRES_*</code> (Neon integration), <code>CORS_ORIGIN</code>. Student and applicant demo passwords are inlined at build from gitignored credentials</td>
           </tr>
           <tr>
             <td><code>db-admin</code></td>
@@ -394,7 +395,7 @@ flowchart TB
         </tbody>
       </table>
     </div>
-    <p><code>CORS_ORIGIN</code> on the API is exactly <code>https://raisd-student-portal.vercel.app,https://raisd-campus.github.io</code> (SPA + Swagger). Add an origin there before another portal calls the API from a browser.</p>
+    <p><code>CORS_ORIGIN</code> on the API is exactly <code>https://raisd-student-portal.vercel.app,https://applicant-portal-lemon.vercel.app,https://raisd-campus.github.io</code> (student SPA + applicant SPA + Swagger). Add an origin there before another portal calls the API from a browser.</p>
 
     <h2 id="cicd">CI/CD pipelines</h2>
     <div class="card">
@@ -497,7 +498,7 @@ npm run deploy                 # vercel deploy --prod --scope &lt;team&gt;</code
           <tr><td>Database</td><td><code>neondb</code></td></tr>
           <tr><td>Connections</td><td>Pooled endpoint for runtime (<code>DATABASE_URL</code>); direct endpoint for DDL / admin (<code>DATABASE_URL_UNPOOLED</code>); TLS with channel binding</td></tr>
           <tr><td>Roles</td><td><code>neondb_owner</code> — used by the Portal API. <code>raisd_db_admin_reader</code> — DB admin only: <code>pg_read_all_data</code>, <code>default_transaction_read_only = on</code>, no write grants</td></tr>
-          <tr><td>Migrations</td><td>None: on first use the API seeds when <code>portal_meta</code> is missing or <code>schema_version</code> ≠ contract version 3 (keeps student state + audit). Creates four reporting views (academic-status membership joins campus policy). <code>npm run db:reset</code> drops and reseeds records (sessions kept)</td></tr>
+          <tr><td>Migrations</td><td>None: on first use the API seeds when <code>portal_meta</code> is missing or <code>schema_version</code> ≠ contract version <strong>4</strong> (keeps student state + audit). Applicant Demo state uses <code>applicant_portal_state</code> / <code>poc_applicant_sessions</code>. Creates four reporting views (academic-status membership joins campus policy). <code>npm run db:reset</code> drops and reseeds records (sessions kept)</td></tr>
           <tr><td>Data</td><td>Demo records for the four sample students (2,895 rows across 73 tables), their per-student portal state, and session rows — fictional data only, no CMS records</td></tr>
         </tbody>
       </table>

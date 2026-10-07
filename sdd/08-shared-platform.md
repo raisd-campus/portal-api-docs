@@ -61,3 +61,11 @@ Names and hosting TBC with the backend owner.
 ## 7. Related documents
 
 Architecture: [SDD-02](02-architecture-and-integration.md). Open questions: [SDD-10](10-open-questions.md).
+
+## Local admissions/profile increment — 5 October 2026
+
+Applicant's existing draft/submission/messages flow now uses a validated session-only mock Portal API. Student schema v4 aligns Personal, Academic and Documents through an explicitly accepted, versioned handoff; submission alone never enrols a student. Shared UI remains 0.6.1. Lesotho is the acceptance-pilot priority; existing Malaysian sample rules are retained without asserting Lesotho policy. Details: [Applicant mock API](../ai/frontend/applicant-portal/mock-api.md), [accepted handoff and backend prerequisites](../ai/backend/admissions-handoff.md). Automated local gates do not establish hosted HTTP, physical-device or CMS integration. No hosted reseed is authorized by this increment.
+
+## Hosted Applicant Demo HTTP and schema v4 — 7 October 2026
+
+Portal API Demo hosts Student schema **4** and Applicant Demo HTTP (`/v1/auth/applicant/login`, `/v1/applicant/:method`) with Neon-backed applicant state. Hosted Applicant uses `VITE_PORTAL_API_URL`; local Applicant without that URL remains session-only mock. `CORS_ORIGIN` allows the student SPA, applicant SPA and GitHub Pages. Live CMS admissions and durable evidence storage remain future work. Details: [Portal API](../ai/backend/portal-api.md), [PoC note](../ai/architecture/vercel-neon-poc.md).

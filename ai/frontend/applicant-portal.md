@@ -6,7 +6,7 @@
 
 ## Status
 
-A validated, session-only mock Portal API is implemented with shared package 0.6.2. Automated validation and tests are now part of this stage; no Applicant HTTP adapter is implemented. See [mock API and validation](applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
+A validated ApplicantPortalApi is implemented with shared package 0.6.2. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). See [mock API and validation](applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
 
 ## Agent rules
 
@@ -31,7 +31,7 @@ Detail, SLAs (24h confirm / 2–3 day Registrar / 14-day completion), evidence m
 
 ## Submitted application UI preview — 1 October 2026
 
-The working Applicant UI pins shared package 0.6.2. This is session-only mock behaviour, not durable admissions records or HTTP Portal API integration. Saved serializable snapshots/conversations and revision/read/response state belong to the API adapter; original File objects and previews belong to its browser resource adapter. Message drafts remain portal-owned across navigation; refresh resets the session. Existing draft and checklist flows remain independent.
+The working Applicant UI pins shared package 0.6.2. Without `VITE_PORTAL_API_URL` this is session-only mock behaviour. Hosted Demo builds wire the same `ApplicantPortalApi` over HTTP to Portal API. Saved serializable snapshots/conversations and revision/read/response state belong to the API adapter; original File objects and previews belong to its browser resource adapter. Message drafts remain portal-owned across navigation; mock refresh still resets the session. Existing draft and checklist flows remain independent.
 
 - `/applications/:applicationId` shows **My Applications → Application Details**. Draft cards still open `/edit`; submitted cards open the detail route. Unavailable IDs show an unavailable state and a return action; submitted records cannot reopen the editor.
 - The shared `PagePanelLayout` groups the review summary and five step accordions with its standard inset, matching Student's enclosing panel. Application Messages remains below the panel. The shared `SummaryCard` keeps its orange `warning` surface during review, including when a reviewer reply is required; **Action Required** is conveyed by its title and orange status badge; the list card uses the same warning tone. It contains reference, review stage/status, programme and dates, plus a shared document-check `DataTable`. The table sits in `SummaryCard.footerContent`, retaining the divider above it, and contains only **Payment Proof** and **Document Check**, with a **Department** column: Finance for payment proof and Registry for document checks. These are frontend preview labels; integration must confirm actual reviewer routing. The active review stage is **Under review**; the other row is **Pending review**. Payment proof shows its filename or **Not provided**; Document Check shows **Awaiting review**. Individual submitted files remain in the read-only step accordions. Phone uses the table's documented compact-card presentation.

@@ -34,13 +34,11 @@ The canonical contract is `docs/ai/contracts/admissions.ts`, with `contracts/fix
 
 Student's `PORTAL_RECORD_SCHEMA_VERSION` is **4**. New religion, guardian, disability, passport-number and admissions provenance fields normalize legacy omissions to explicit null through Zod defaults; old Emergency Contact responses normalize omitted relationship to null. Old profile overlays are parsed on read. Canonical-owned v4 fields take precedence even when a legacy overlay already contains normalized nulls; existing editable contact/address overlays remain compatible. Accepted official identity fields, including passport expiry and issuing country, project from the accepted canonical record rather than historical visa values; existing visa records and relationships remain unchanged. Genuinely unrecorded legacy values remain null. Legacy update payloads may omit the new guardian/disability fields without erasing them. Explicit null remains a deliberate clear operation, and choosing no clears obsolete disability details. Optional English certificates and absent local passport scans may be null. Backend-facing mock-engine fields remain unchanged (`recordGraph`, `recordGraphParser`, `personalProfile`, `writeRevision` and existing resource stores).
 
-OpenAPI now documents actual `fullName`, `id`, `emailAddress` and nullable `relationship` emergency input, the new editable payload and profile responses. Applicant mock methods are documented separately; no future HTTP paths are added as callable endpoints.
+OpenAPI documents actual `fullName`, `id`, `emailAddress` and nullable `relationship` emergency input, the new editable payload and profile responses, plus Applicant Demo HTTP (`/v1/auth/applicant/login`, `/v1/applicant/:method`).
 
-## Backend deployment prerequisite (not performed)
+## Backend deployment (schema v4 + Applicant Demo HTTP — 7 October 2026)
 
-The existing Portal API RecordStore compares its stored schema version with Student's exported version and automatically reseeds canonical record tables on a mismatch. Its saved profile-state overlays and audit events survive that reset. Updating the backend's pinned Student engine to v4 therefore requires backup, an explicit record-preserving migration/reseed decision, legacy-overlay validation, identity reconciliation and a verified rollback plan before deployment. Do not deploy this engine bump blindly against hosted records.
-
-No database migration, hosted reseed or Portal API deployment is part of this change. Existing hosted HTTP may still use schema v3 and will not implement Applicant methods. Contract validation locally is not live HTTP compatibility verification.
+The Portal API RecordStore compares its stored schema version with Student's exported version and automatically reseeds canonical record tables on a mismatch. Saved profile-state overlays and audit events survive that reset. Hosted Demo was upgraded to schema **4** with a Neon backup taken before deploy; Applicant Demo methods were added on the same service (`/v1/auth/applicant/login`, `/v1/applicant/:method`). Live CMS admissions, durable evidence bytes and operational Registry acceptance remain future work.
 
 ## Verification boundaries
 

@@ -117,3 +117,7 @@ Documents Checklist uses equal-width Edit Answers and Create Application actions
 ## Shared 0.6.2 and save before leaving — 6 October 2026
 
 Released shared 0.6.2 adds an optional trailing Popup action. Applicant uses primary Save & Close after Keep Editing to save incomplete drafts before the originally blocked navigation; pending, failure/retry, duplicate and stale-session handling remain portal-owned. Student upgrades its pin with existing defaults intact. Graph schema 4, admissions handoff 1 and Demo/Live boundaries are unchanged.
+
+## Hosted Applicant Demo HTTP — 7 October 2026
+
+Hosted Applicant builds with `VITE_PORTAL_API_URL` call Portal API Demo RPC (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). Neon stores applicant applications in `applicant_portal_state` and sessions in `poc_applicant_sessions`. Local development without the URL keeps the session-only in-process mock. Development Admin Actions and browser Student handoff simulation stay mock-only. Student graph schema remains **4**; Live CMS admissions, durable evidence bytes and operational Registry acceptance remain future work. Public contract: OpenAPI `0.4.2`. Details: [Applicant mock/HTTP API](../ai/frontend/applicant-portal/mock-api.md), [Portal API](../ai/backend/portal-api.md), [admissions handoff](../ai/backend/admissions-handoff.md).
