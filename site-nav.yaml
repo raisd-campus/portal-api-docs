@@ -44,7 +44,9 @@ targets:
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
   luct-sz: diagrams/old-cms-eswatini/index.html
+  luct-sz-database: diagrams/old-cms-eswatini/database.html
   luct-kh: diagrams/old-cms-cambodia/index.html
+  luct-kh-database: diagrams/old-cms-cambodia/database.html
   luct-sl: diagrams/old-cms-sierra-leone/index.html
   luct-sl-database: diagrams/old-cms-sierra-leone/database.html
   ai: ai/index.html
@@ -91,8 +93,12 @@ path_rules:
     section: distributed
   - match: { prefix: diagrams/old-cms-lesotho/ }
     section: luct-ls
+  - match: { prefix: diagrams/old-cms-eswatini/, file: database.html }
+    section: luct-sz-database
   - match: { prefix: diagrams/old-cms-eswatini/ }
     section: luct-sz
+  - match: { prefix: diagrams/old-cms-cambodia/, file: database.html }
+    section: luct-kh-database
   - match: { prefix: diagrams/old-cms-cambodia/ }
     section: luct-kh
   - match: { prefix: diagrams/old-cms-botswana/, file: database.html }
@@ -242,7 +248,9 @@ menu:
       - luct-online-reg-gap
       - luct-ls
       - luct-sz
+      - luct-sz-database
       - luct-kh
+      - luct-kh-database
       - luct-bw
       - luct-bw-database
       - luct-sl
@@ -261,12 +269,20 @@ menu:
       - label: Eswatini
         href: luct-sz
         children:
-          - { label: Inventory hub, href: luct-sz }
+          - { label: E2E hub, href: luct-sz }
+          - { label: FSD, href: "luct-sz#fsd" }
+          - { label: Integrations, href: "luct-sz#integrations" }
+          - { label: ERD, href: "luct-sz#erd" }
+          - { label: Database, href: luct-sz-database }
           - { label: AI inventory, href: ai-old-cms-eswatini }
       - label: Cambodia
         href: luct-kh
         children:
-          - { label: Inventory hub, href: luct-kh }
+          - { label: E2E hub, href: luct-kh }
+          - { label: FSD, href: "luct-kh#fsd" }
+          - { label: Integrations, href: "luct-kh#integrations" }
+          - { label: ERD, href: "luct-kh#erd" }
+          - { label: Database, href: luct-kh-database }
           - { label: AI inventory, href: ai-old-cms-cambodia }
       - label: Cyberjaya
         href: luct
@@ -432,11 +448,11 @@ search:
     summary: Working Group briefing pack — HTML/PDF + WhatsApp paste of Lesotho dump inventory, CAP-53 R1, NMDS≠DTEF, and M4 asks.
     keywords: [lesotho, briefing, working group, analysis, nmds, cap-53, whatsapp, pdf, report]
 
-  - title: Eswatini CMS inventory
+  - title: Eswatini CMS E2E hub
     href: luct-sz
     section: LUCT CMS
-    summary: campus2_eswatini structure inventory (472 tables) — M5 LUCT sibling; portal_*_eswatini; assist ssb (not NMDS/DTEF).
-    keywords: [eswatini, swaziland, m5, campus2_eswatini, portal, ssb, inventory]
+    summary: campus2_eswatini E2E — lifecycle, desks, flows, ERD/DFD, database (472 tables); portal_*_eswatini; assist ssb (not NMDS/DTEF).
+    keywords: [eswatini, swaziland, m5, campus2_eswatini, portal, ssb, inventory, e2e, erd, dfd]
 
   - title: Eswatini CMS inventory (AI knowledge)
     href: ai-old-cms-eswatini
@@ -444,11 +460,11 @@ search:
     summary: Full Eswatini old CMS inventory from Vara pack — counts, portal hooks, assist codes, overlap vs LS/BW/CY.
     keywords: [eswatini, swaziland, cms, inventory, cap-53, ssb, m5]
 
-  - title: Cambodia CMS inventory
+  - title: Cambodia CMS E2E hub
     href: luct-kh
     section: LUCT CMS
-    summary: campus2_cambodia structure inventory (481 tables) — M5 LUCT sibling; portal_*_cambodia; assist Limkokwing.
-    keywords: [cambodia, m5, campus2_cambodia, portal, limkokwing, inventory, luct]
+    summary: campus2_cambodia E2E — lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing.
+    keywords: [cambodia, m5, campus2_cambodia, portal, limkokwing, inventory, luct, e2e, erd, dfd]
 
   - title: Cambodia CMS inventory (AI knowledge)
     href: ai-old-cms-cambodia

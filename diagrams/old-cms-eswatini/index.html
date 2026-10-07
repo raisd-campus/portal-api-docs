@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Eswatini · LUCT CMS inventory</title>
+  <title>Raisd — Eswatini · LUCT CMS E2E</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
 </head>
@@ -98,14 +98,22 @@
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="index.html">Inventory hub</a>
+              <a href="index.html">E2E hub</a>
+              <a href="index.html#fsd">FSD</a>
+              <a href="index.html#integrations">Integrations</a>
+              <a href="index.html#erd">ERD</a>
+              <a href="database.html">Database</a>
               <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
               </div>
             </div>
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="../old-cms-cambodia/index.html">Inventory hub</a>
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
               <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
               </div>
             </div>
@@ -199,76 +207,994 @@
         </div>
       </nav>
     </div>
-</header>
+  </header>
 
-<main class="page">
-  <section class="section">
-    <h1>Eswatini — LUCT CMS structure inventory</h1>
-    <p class="lead">
-      Vara Drive pack (5 Oct 2026): <code>campus2_eswatini</code> — <strong>LUCT CMS</strong> PHPMaker sibling for
-      <strong>M5</strong> expansion (after Lesotho M4). Dump stays local; catalogs are names only.
-    </p>
-    <div class="meta-row" style="margin: 0 0 16px">
-      <span class="chip ok">472 tables</span>
-      <span class="chip ok">330 views</span>
-      <span class="chip ok">53 procs</span>
-      <span class="chip ok">70 triggers</span>
-      <span class="chip ok">portal_*_eswatini</span>
-      <span class="chip warn">M5 — not M4 SoR</span>
-    </div>
+  <main>
+
+    <section class="hero">
+      <h1>Eswatini CMS — end-to-end functional flow</h1>
+      <p>
+        Full campus lifecycle for LUCT Eswatini (DB <code>campus2_eswatini</code>) broken down by desk /
+        capability — including campus-local assist codes <strong>ssb</strong> / <strong>limkokwing</strong>,
+        <code>portal_*_eswatini</code> hooks, and <code>eswatinibatch</code> night scripts.
+        Package <code>CMS_Eswatini_Source_Codes_&amp;_DB_Structure_23_09_2026.zip</code> (Vara, 5 Oct 2026).
+        <strong>Not</strong> the Lesotho M4 acceptance SoR — use for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion (WG: Eswatini may follow Lesotho).
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">DB <code>campus2_eswatini</code></span>
+        <span class="chip ok">472 tables</span>
+        <span class="chip ok">330 views</span>
+        <span class="chip ok">53 procs · 3 fn · 70 triggers</span>
+        <span class="chip ok">app_* admissions</span>
+        <span class="chip">Pack 5 Oct 2026</span>
+      </div>
+    </section>
+
     <div class="note" style="margin: 0 0 16px">
       <strong>LUCT CMS subsection.</strong>
       Connected from the Cyberjaya analysis hub:
       <a href="../old-cms/index.html#eswatini">LUCT CMS → Eswatini</a>.
-      Use the top nav <strong>LUCT CMS → Eswatini</strong> group.
+      Use the top nav <strong>LUCT CMS → Eswatini</strong> flyout for FSD, integrations, ERD, DFD, database, and comparison.
     </div>
-    <div class="note warn" style="margin: 0 0 16px">
-      <strong>PII / ops boundary.</strong>
-      Do not commit PHP, batch logs, or SQL dumps. Pack includes <code>eswatinibatch/logs/</code>.
-      Sanitized inventory:
-      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">old-cms-eswatini.md</a>
-      · <a href="CATALOG.md">CATALOG.md</a>.
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Scope.</strong>
+      Structure and behaviour only. PHP tree, <code>eswatinibatch</code> SQL/logs, credentials, and live student data are
+      <em>not</em> committed. Canonical notes:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">old-cms-eswatini.md</a>.
     </div>
-  </section>
 
-  <section class="section">
-    <h2>Family position</h2>
-    <div class="table-wrap">
-      <table class="attr">
-        <thead>
-          <tr><th>Signal</th><th>Eswatini</th><th>Lesotho</th><th>Botswana</th><th>Cyberjaya</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Tables</td><td><strong>472</strong></td><td>369</td><td>713</td><td>~1,942</td></tr>
-          <tr><td>Triggers (in dump)</td><td><strong>70</strong></td><td>0 in file</td><td>157</td><td>~239</td></tr>
-          <tr><td>Portal hooks</td><td><code>portal_*_eswatini</code> (+ legacy <code>_swaziland</code>)</td><td><code>portal_*_lesotho</code></td><td><code>portal_*_botswana</code></td><td><code>portal_*_cyberjaya</code></td></tr>
-          <tr><td>Gov / assist</td><td>Assist codes <code>ssb</code> · <code>limkokwing</code></td><td><strong>NMDS</strong> (<code>nmds</code>)</td><td><strong>DTEF</strong> → tef.gov</td><td>Assist</td></tr>
-          <tr><td>Name overlap vs SZ</td><td>—</td><td>~65%</td><td>~60%</td><td>~59%</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <ul>
-      <li>Same LUCT <code>app_*</code> admissions family — not Sierra Leone EMS.</li>
-      <li>CAP-53 reads can follow Lesotho/BW pattern with campus key <code>ESWATINI</code>.</li>
-      <li>Do <strong>not</strong> reuse Lesotho NMDS or Botswana TEF clients for Eswatini assist.</li>
-    </ul>
-  </section>
+    <nav class="toc" aria-label="Eswatini CMS sections">
+      <a href="#e2e"><strong>1. End-to-end lifecycle</strong><span>Marketing → registry → faculty → bursary → life → report</span></a>
+      <a href="#fsd"><strong>2. Functional breakdown</strong><span>Desks by domain · module map</span></a>
+      <a href="#flows"><strong>3. Core process flows</strong><span>Admissions · academic · finance · student life</span></a>
+      <a href="#integrations"><strong>4. Integrations</strong><span>Assist ssb/limkokwing · portal · batch · AdBeConnect</span></a>
+      <a href="#erd"><strong>5. Physical ERD</strong><span>Core · admissions · finance · life</span></a>
+      <a href="#dfd"><strong>6. Data-flow (DFD)</strong><span>Context · admissions · academic · finance · batch</span></a>
+      <a href="#database"><strong>7. Database</strong><span>472 tables · SPs · triggers · views</span></a>
+      <a href="#raisd"><strong>8. Raisd mapping</strong><span>CAP-53 · ESWATINI · M5</span></a>
+      <a href="#compare"><strong>9. Campus comparison</strong><span>vs Cyberjaya · Lesotho · Botswana · Cambodia · SL</span></a>
+    </nav>
 
-  <section class="section">
-    <h2>Links</h2>
-    <ul>
-      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Full inventory (old-cms-eswatini.md)</a></li>
-      <li><a href="../old-cms-lesotho/index.html">Lesotho pilot (M4)</a></li>
-      <li><a href="../old-cms-botswana/index.html">Botswana</a> · <a href="../old-cms/index.html">Cyberjaya</a></li>
-      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot framing</a> (Eswatini may follow)</li>
-    </ul>
-  </section>
-</main>
+    <!-- ========== 1. E2E ========== -->
+    <section class="section" id="e2e">
+      <h2>1. End-to-end campus lifecycle</h2>
+      <p class="lead">
+        One shared MySQL SoR. Staff desks own writes; portal projection tables
+        (<code>portal_*_eswatini</code> (+ legacy <code>portal_student_swaziland</code>) and
+        <code>api_student_*</code> SPs sit beside them. Assist is campus-local
+        (<strong>ssb</strong> / <strong>limkokwing</strong> — not Lesotho NMDS, not Botswana TEF POST.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Student journey across desks</h3>
+            <p>Marketing → registry → faculty → bursary → services / accommodation → reporting.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Recruit["1 · Recruit"]
+    MKT[Marketing<br/>app_*]
+    CDU[CDU / AQA]
+  end
+  subgraph Admit["2 · Admit"]
+    REG1[Registry<br/>offer letters]
+    APP[Online / staff<br/>application]
+  end
+  subgraph Enrol["3 · Enrol"]
+    REG2[Registry<br/>r_student / programme]
+    FAC1[Faculty<br/>structure / modules]
+    SET[Setup<br/>terms / fees]
+  end
+  subgraph Study["4 · Study"]
+    FAC2[Faculty<br/>timetable / results]
+    LEC[Lecturer<br/>marks / attendance]
+  end
+  subgraph Money["5 · Finance"]
+    BUR[Bursary<br/>invoice / pay / assist]
+    ASSIST[ssb · limkokwing<br/>b_assistbilling*]
+  end
+  subgraph Life["6 · Student life"]
+    SVC[Services<br/>visa / welfare]
+    ACC[Accommodation<br/>w_occupant / w_room]
+  end
+  subgraph Close["7 · Close / report"]
+    REP[Reporting]
+    BATCH[eswatinibatch]
+  end
 
-<p class="footer">
-  Eswatini · LUCT CMS inventory · structure only · 5 Oct 2026 · Vara Drive pack
-</p>
-<script src="../abbr-tooltips.js" defer></script>
+  MKT --> APP
+  CDU -.-> APP
+  APP --> REG1
+  REG1 --> REG2
+  SET --> REG2
+  FAC1 --> REG2
+  REG2 --> FAC2
+  FAC2 --> LEC
+  REG2 --> BUR
+  BUR --> ASSIST
+  REG2 --> SVC
+  REG2 --> ACC
+  FAC2 --> REP
+  BUR --> REP
+  BATCH -.-> REP
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 2. FSD ========== -->
+    <section class="section" id="fsd">
+      <h2>2. Functional breakdown by desk</h2>
+      <p class="lead">PHPMaker apps under <code>eswatini/campus/&lt;desk&gt;/</code> — same LUCT family as Botswana / Lesotho / Cyberjaya.</p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Functional structure</h3>
+            <p>Domains map to folders; all share <code>campus2_eswatini</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+mindmap
+  root((Eswatini CMS<br/>campus2_eswatini))
+    Academic
+      registry
+      faculty
+      lecturer
+      cdu
+      modulemat
+    Student_life
+      services
+      accommodation
+      notice
+    Commercial
+      bursary
+      marketing
+      assist_ssb_limkokwing
+    Platform
+      setup
+      reporting
+      eswatinibatch
+      api_service
+      AdBeConnect
+      portal_api_hooks
+          </pre>
+        </div>
+      </div>
+
+      <h3>Module catalogue</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Desk</th>
+              <th>Primary job</th>
+              <th>Key tables / signals</th>
+              <th>~PHP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>registry/</code></td>
+              <td>Student master, offers, forms, population</td>
+              <td><code>r_student</code>, <code>r_stdprogram</code>, <code>r_stdofferletter</code></td>
+              <td>421</td>
+            </tr>
+            <tr>
+              <td><code>bursary/</code></td>
+              <td>Invoices, payments, assist billing (ssb / limkokwing)</td>
+              <td><code>b_assistbilling*</code>, <code>r_assistprovider</code>, <code>r_assistscheme*</code></td>
+              <td>353</td>
+            </tr>
+            <tr>
+              <td><code>services/</code></td>
+              <td>Visa, insurance, welfare ops</td>
+              <td><code>w_visa</code>, <code>w_insurance*</code></td>
+              <td>341</td>
+            </tr>
+            <tr>
+              <td><code>faculty/</code></td>
+              <td>Schools, programmes, modules, attendance, results</td>
+              <td><code>f_*</code>, <code>r_stdmodule</code>, <code>gb_*</code></td>
+              <td>332</td>
+            </tr>
+            <tr>
+              <td><code>setup/</code></td>
+              <td>Institution, terms, fee catalogs, user levels</td>
+              <td><code>f_term</code>, fee / security setup</td>
+              <td>303</td>
+            </tr>
+            <tr>
+              <td><code>reporting/</code></td>
+              <td>Population, enrolment, payment, scholarship reports</td>
+              <td><code>rep_*</code></td>
+              <td>258</td>
+            </tr>
+            <tr>
+              <td><code>marketing/</code></td>
+              <td>Applications, recruitment</td>
+              <td><code>app_applicationform</code>, <code>app_applicationform_online</code></td>
+              <td>242</td>
+            </tr>
+            <tr>
+              <td><code>accommodation/</code></td>
+              <td>Rooms, occupants, accommodation charges</td>
+              <td><code>w_occupant</code>, <code>w_room</code>, <code>w_receiptacco</code></td>
+              <td>198</td>
+            </tr>
+            <tr>
+              <td><code>cdu/</code></td>
+              <td>AQA / programme accreditation</td>
+              <td>Entry / accreditation desks</td>
+              <td>168</td>
+            </tr>
+            <tr>
+              <td><code>lecturer/</code></td>
+              <td>Marks, attendance, module materials</td>
+              <td>Lecturer screens · <code>ih_*</code></td>
+              <td>167</td>
+            </tr>
+            <tr>
+              <td><code>notice/</code></td>
+              <td>Bulletin / noticeboard</td>
+              <td>Notice desks</td>
+              <td>86</td>
+            </tr>
+            <tr>
+              <td><code>zemail/</code></td>
+              <td>Outbound email helpers</td>
+              <td>Thin email folder</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lead" style="margin-top:12px">
+        Also present (not in PHP count table): <code>AdBeConnect/</code>, <code>IH/</code>, <code>modulemat/</code>,
+        <code>support/</code>, <code>api-service/</code>. Legacy batch name still says <em>swaziland</em>.
+      </p>
+    </section>
+
+    <!-- ========== 3. Core flows ========== -->
+    <section class="section" id="flows">
+      <h2>3. Core process flows</h2>
+
+      <h3 id="flow-admissions">3.1 Admissions &amp; registry</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Application → offer → student record</h3>
+            <p><code>app_*</code> forms (11 tables), eligibility, offer letters, <code>r_student</code> creation — Botswana-style, not Sierra Leone <code>ac_*</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  A[Marketing / online app<br/>app_applicationform*] --> B[Docs / education<br/>app_docfile · app_applicationeducation]
+  B --> C[Registry offer<br/>r_stdofferletter · FetchOfferLetters]
+  C --> D[Confirm / enrol SPs<br/>OnlineRegNotification]
+  D --> E[r_student + r_stdprogram<br/>+ r_stdsemester]
+  E --> F[Faculty structure<br/>f_program / gb_*]
+  E --> G[Bursary fee plan]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-academic">3.2 Academic term cycle</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Modules → attendance → results</h3>
+            <p>Faculty + lecturer desks; SPs <code>StudentConfirmModule</code>, <code>r_Update_Semester</code>, <code>examination</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  T[Term / structure<br/>setup · faculty] --> M[Module enrolment<br/>r_stdmodule]
+  M --> TT[Timetable / IH]
+  TT --> ATT[Attendance<br/>r_stdattendance · ih_*]
+  M --> MARK[Lecturer marks]
+  MARK --> RR[Results / transcripts]
+  RR --> TR[Reporting / BOE]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-finance">3.3 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Billing → payment → scholarship assist</h3>
+            <p>Bursary owns money; assist provider codes include <strong>ssb</strong> and <strong>limkokwing</strong>. No <code>r_scholarshipapp</code> TEF queue.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  FEE[Fee catalog / setup] --> INV[Invoices / billing<br/>b_*]
+  INV --> PAY[Payments / receipts]
+  PAY --> STMT[Statement views]
+  INV --> ASSIST[Assist programmes<br/>r_assistscheme* · b_assistbilling*]
+  ASSIST --> CODE[Provider codes<br/>ssb · limkokwing]
+  FEE -.-> UPD[b_Update_billing / b_Update_Student]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-life">3.4 Student life &amp; ops</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Area</th><th>Desk</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Visa / insurance</td><td><code>services/</code></td><td><code>w_visa</code>, <code>w_insurance*</code>, <code>sp_student_visaexp</code></td></tr>
+            <tr><td>Hostel</td><td><code>accommodation/</code></td><td><code>w_occupant</code>, <code>w_room</code>, <code>w_receiptacco</code>; <code>b_Update_Accommodation</code></td></tr>
+            <tr><td>Notices</td><td><code>notice/</code></td><td>Campus bulletins</td></tr>
+            <tr><td>Batch / portal</td><td><code>eswatinibatch/</code></td><td><code>portal.sql</code> · <code>registry.sql</code> · <code>bursary.sql</code> · <code>examination.sql</code> · <code>billing.sql</code> + <code>swazilandbatchnight.sh</code> + logs</td></tr>
+            <tr><td>Portal hooks</td><td>DB routines</td><td><code>api_student_*</code>, <code>api_faculty_*</code>, <code>portal_*_eswatini</code>, legacy <code>portal_student_swaziland</code></td></tr>
+            <tr><td>Streaming / class</td><td><code>AdBeConnect/</code></td><td>Adobe Connect–style desk folder (inventory only)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 4. Integrations ========== -->
+    <section class="section" id="integrations">
+      <h2>4. Integrations — assist · portal · batch</h2>
+      <p class="lead">
+        External and ops touchpoints found in the Eswatini pack. <strong>Not</strong> a DTEF/TEF government
+        admission API (that pattern is Botswana-only). Assist ≠ Lesotho NMDS (<code>nmds</code>).
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Assist · ssb</span>
+        <span class="chip ok">Assist · limkokwing</span>
+        <span class="chip ok">portal_*_eswatini</span>
+        <span class="chip ok">api_student_*</span>
+        <span class="chip ok">eswatinibatch</span>
+        <span class="chip">No TEF / no NMDS API</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Assist vs portal vs batch</h3>
+            <p>Three parallel paths — do not conflate with Lesotho NMDS or Botswana TEF POST.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Assist["Assist / CAP-48 adjacent"]
+    PROV[r_assistprovider]
+    SCH[r_assistscheme*]
+    BILL[b_assistbilling*]
+    PROV --> SCH --> BILL
+    CODE[["codes: ssb · limkokwing"]]
+    PROV -.-> CODE
+  end
+  subgraph Portal["Portal projection"]
+    API[["api_student_* · api_faculty_*"]]
+    PT[(portal_*_eswatini)]
+    LEG[(portal_student_swaziland)]
+  end
+  subgraph Batch["Night batch"]
+    SH[swazilandbatchnight.sh]
+    SQL[portal · registry · bursary<br/>examination · billing SQL]
+    SH --> SQL
+  end
+  DB[(campus2_eswatini)]
+  BILL --> DB
+  API --> DB
+  PT --> DB
+  LEG --> DB
+  SQL --> DB
+          </pre>
+        </div>
+      </div>
+
+      <h3>Integration catalogue</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Integration</th><th>Direction</th><th>Evidence</th><th>Raisd note</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Assist provider codes</td>
+              <td>Internal ledger</td>
+              <td>SP / scheme literals <code>ssb</code>, <code>limkokwing</code>; <code>r_assistprovider</code>, <code>b_assistbilling*</code></td>
+              <td>Campus-keyed CAP-48 — do <strong>not</strong> reuse Lesotho NMDS or Botswana TEF clients</td>
+            </tr>
+            <tr>
+              <td>Portal student projection</td>
+              <td>Read / sync</td>
+              <td><code>portal_student_eswatini</code> (+ program / semester / module / attendance) + legacy <code>portal_student_swaziland</code></td>
+              <td>CAP-53 campus key <strong>ESWATINI</strong> / suffix <code>_eswatini</code></td>
+            </tr>
+            <tr>
+              <td>Portal / faculty SPs</td>
+              <td>Read</td>
+              <td><code>api_student_login_info</code>, <code>api_student_program_info</code>, <code>api_student_semester_info</code>, <code>api_student_module_info</code>, <code>api_faculty_list</code>, <code>api_faculty_program_list</code></td>
+              <td>Same pattern as Lesotho / Botswana; ACL must stay campus-keyed</td>
+            </tr>
+            <tr>
+              <td>Night batch</td>
+              <td>Ops refresh</td>
+              <td><code>eswatinibatch/</code> + <code>swazilandbatchnight.sh</code> + SQL slices + <strong>logs/</strong></td>
+              <td>Ops artefacts — never commit; expect nightly portal projection refresh</td>
+            </tr>
+            <tr>
+              <td>API-service tree</td>
+              <td>Campus local</td>
+              <td><code>eswatini/api-service/</code></td>
+              <td>Inventory only — do not republish secrets or endpoints</td>
+            </tr>
+            <tr>
+              <td>AdBeConnect</td>
+              <td>Desk folder</td>
+              <td><code>AdBeConnect/</code> under campus tree</td>
+              <td>Streaming / class desk present; no government API invented here</td>
+            </tr>
+            <tr>
+              <td>Government scholarship POST</td>
+              <td>—</td>
+              <td>Not found (no <code>r_scholarshipapp</code> TEF queue)</td>
+              <td>Botswana owns TEF; Lesotho owns NMDS assist path — neither applies here</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 5. ERD ========== -->
+    <section class="section" id="erd">
+      <h2>5. Physical ERD (<code>campus2_eswatini</code>)</h2>
+      <p class="lead">
+        Logical view of real MySQL tables from the Eswatini structure dump.
+        Not the Raisd canonical model — <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> translates; it does not clone these tables.
+      </p>
+      <div class="note warn" style="margin: 0 0 20px">
+        Contrast Raisd ERD at <a href="../erd.html">../erd.html</a>. Eswatini uses LUCT <code>app_*</code> admissions
+        (like Botswana), <code>portal_*_eswatini</code> (+ legacy <code>_swaziland</code>), and assist codes
+        <code>ssb</code> / <code>limkokwing</code> — not Lesotho NMDS, not Botswana <code>r_scholarshipapp</code>.
+      </div>
+
+      <h3 id="erd-core">5.1 Core student</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>r_student · programme · semester · module</h3>
+            <p>Same LUCT spine as Botswana / Lesotho / Cyberjaya.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+    string StudentNo
+  }
+  r_stdpersonal {
+    int StudentID PK
+  }
+  r_stdprogram {
+    int StdProgramID PK
+    int StudentID FK
+    int ProgramID FK
+  }
+  r_stdsemester {
+    int StdSemesterID PK
+    int StdProgramID FK
+    int TermID FK
+  }
+  r_stdmodule {
+    int StdModuleID PK
+    int StdSemesterID FK
+    int ModuleID FK
+  }
+  r_student ||--|| r_stdpersonal : StudentID
+  r_student ||--o{ r_stdprogram : StudentID
+  r_stdprogram ||--o{ r_stdsemester : StdProgramID
+  r_stdsemester ||--o{ r_stdmodule : StdSemesterID
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-admissions">5.2 Admissions &amp; offer</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>app_* → offer → student</h3>
+            <p>11 <code>app_*</code> tables including <code>app_applicationform</code>, <code>app_applicationform_online</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  app_applicationform {
+    int ApplicationID PK
+  }
+  app_applicationform_online {
+    int ApplicationID PK
+  }
+  app_docfile {
+    int ApplicationID FK
+  }
+  app_applicationeducation {
+    int ApplicationID FK
+  }
+  r_stdofferletter {
+    int StudentID FK
+    int ApplicationID FK
+  }
+  r_student {
+    int StudentID PK
+  }
+  app_applicationform ||--o{ app_docfile : ApplicationID
+  app_applicationform ||--o{ app_applicationeducation : ApplicationID
+  app_applicationform ||--o| r_stdofferletter : ApplicationID
+  app_applicationform_online ||--o| app_applicationform : may_promote
+  r_student ||--o{ r_stdofferletter : StudentID
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-finance">5.3 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Assist provider · scheme · billing</h3>
+            <p>No TEF queue table — assist stays on <code>r_assist*</code> / <code>b_assistbilling*</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+  }
+  r_stdprogram {
+    int StdProgramID PK
+    int StudentID FK
+  }
+  r_assistprovider {
+    int AssistProviderID PK
+    string AssistProviderCode
+  }
+  r_assistscheme {
+    int AssistSchemeID PK
+    int AssistProviderID FK
+  }
+  r_assistschemedetail {
+    int AssistSchemeID FK
+  }
+  b_assistbilling {
+    int AssistBillingID PK
+    int StudentID FK
+  }
+  b_assistbillingdetail {
+    int AssistBillingID FK
+  }
+  r_student ||--o{ r_stdprogram : StudentID
+  r_assistprovider ||--o{ r_assistscheme : AssistProviderID
+  r_assistscheme ||--o{ r_assistschemedetail : AssistSchemeID
+  r_student ||--o{ b_assistbilling : StudentID
+  b_assistbilling ||--o{ b_assistbillingdetail : AssistBillingID
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-life">5.4 Student life &amp; portal</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>w_* · portal_*_eswatini · legacy swaziland</h3>
+            <p>Accommodation / visa on <code>w_*</code>; campus-suffixed portal sync (+ legacy name).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int StudentID PK
+  }
+  w_occupant {
+    int OccupantID PK
+    int StudentID FK
+  }
+  w_room {
+    int RoomID PK
+  }
+  w_visa {
+    int StudentID FK
+  }
+  w_insurance {
+    int StudentID FK
+  }
+  portal_student_eswatini {
+    int StudentID FK
+  }
+  portal_student_program_eswatini {
+    int StudentID FK
+  }
+  portal_student_swaziland {
+    int StudentID FK
+  }
+  r_student ||--o{ w_occupant : StudentID
+  w_room ||--o{ w_occupant : houses
+  r_student ||--o{ w_visa : StudentID
+  r_student ||--o{ w_insurance : StudentID
+  r_student ||--o| portal_student_eswatini : sync
+  portal_student_eswatini ||--o{ portal_student_program_eswatini : programme
+  r_student ||--o| portal_student_swaziland : legacy
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 6. DFD ========== -->
+    <section class="section" id="dfd">
+      <h2>6. Data-flow diagrams (DFD)</h2>
+      <p class="lead">
+        How data moves between external actors, Eswatini desks, <code>campus2_eswatini</code>,
+        nightly <code>eswatinibatch</code>, and portal / assist surfaces — without a government scholarship endpoint.
+      </p>
+
+      <h3 id="dfd-context">6.1 Context diagram (Level 0)</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>External entities ↔ Eswatini CMS</h3>
+            <p>Staff desks + lecturer UI share one SoR; assist/portal stay campus-local.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  APPLICANT([Applicant / agent])
+  STUDENT([Student])
+  LECTURER([Lecturer])
+  STAFF([Registry · Faculty · Bursary · Services])
+  CMS[["Eswatini CMS<br/>PHPMaker desks + campus2_eswatini"]]
+
+  APPLICANT -->|application / docs| CMS
+  STAFF -->|operational writes| CMS
+  STUDENT -->|portal reads via api_*| CMS
+  LECTURER -->|marks / attendance| CMS
+  CMS -->|invoices / letters / portal data| STUDENT
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-admit">6.2 Admissions → registry</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Online / staff app → offer → enrol</h3>
+            <p>SPs: <code>AfterInsertApplicationForm</code>, <code>FetchOnlineApplication*</code>, <code>FetchOfferLetters</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  EXT([Applicant]) --> MKT[Marketing desk]
+  MKT --> APP[(app_applicationform*)]
+  APP --> REG[Registry desk]
+  REG --> OFF[(r_stdofferletter)]
+  REG --> STU[(r_student / r_stdprogram)]
+  STU --> FAC[Faculty structures]
+  STU --> BUR[Bursary fee plan]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-academic">6.3 Academic term</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Structure → modules → results</h3>
+            <p><code>StudentConfirmModule</code>, <code>r_Update_Semester</code>, <code>examination</code>, IH attendance mirrors.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  SET[Setup / Faculty<br/>term · structure] --> ENR[(r_stdmodule)]
+  ENR --> TT[Timetable / attendance]
+  ENR --> LEC[Lecturer marks]
+  LEC --> RES[(results / transcript views)]
+  RES --> REP[Reporting]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-finance">6.4 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Ledger path only</h3>
+            <p>No separate TEF admission queue — contrast Botswana DTEF; assist codes ssb / limkokwing ≠ Lesotho nmds.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  STU[(r_student)] --> BUR[Bursary desk]
+  BUR --> LED[(b_* / b_assistbilling*)]
+  LED --> PROV[[r_assistprovider<br/>ssb · limkokwing]]
+  BUR --> SP[["b_Update_billing / b_Update_Student"]]
+  SP --> LED
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-batch">6.5 Batch &amp; portal hooks</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>eswatinibatch + api_* / portal_*_eswatini</h3>
+            <p>Ops scripts (not committed) refresh portal/registry/bursary/exam/billing slices; <code>api_student_*</code> SPs feed external clients.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  BATCH[[eswatinibatch<br/>portal · registry · bursary · exam · billing]] --> DB[(campus2_eswatini)]
+  DB --> API[["api_student_* / api_faculty_*"]]
+  DB --> PORT[(portal_*_eswatini)]
+  DB --> LEG[(portal_student_swaziland)]
+  API -.-> EXT([Future Portal API / M5])
+  PORT -.-> EXT
+  LEG -.-> EXT
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 7. Database ========== -->
+    <section class="section" id="database">
+      <h2>7. Database — tables, procedures, triggers &amp; views</h2>
+      <p class="lead">
+        Derived from <code>campus2_eswatini</code> structure dumps in
+        <code>CMS_Eswatini_Source_Codes_&amp;_DB_Structure_23_09_2026.zip</code> (Vara, 5 Oct 2026).
+        Legacy URL <a href="database.html">database.html</a> redirects here.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">472 tables</span>
+        <span class="chip ok">330 views</span>
+        <span class="chip ok">53 procs</span>
+        <span class="chip ok">3 functions</span>
+        <span class="chip ok">70 triggers</span>
+      </div>
+
+      <h3>Stored procedures (53) — notable groups</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead><tr><th>Group</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>Portal / API</td><td><code>api_student_login_info</code>, <code>api_student_program_info</code>, <code>api_student_semester_info</code>, <code>api_student_module_info</code>, <code>api_faculty_list</code>, <code>api_faculty_program_list</code></td></tr>
+            <tr><td>Online applications</td><td><code>AfterInsertApplicationForm</code>, <code>FetchOnlineApplication*</code>, <code>InsertOnlineAppPersonalInfo</code>, <code>UpdateOnlineApp*</code>, <code>OnlineAppEmailNotification</code></td></tr>
+            <tr><td>Finance / billing</td><td><code>b_Update_billing</code>, <code>b_Update_Student</code>, <code>b_Update_Accommodation</code>, <code>sp_payment_verification_insert</code></td></tr>
+            <tr><td>Registry / academic</td><td><code>FetchOfferLetters</code>, <code>r_Update_Semester</code>, <code>StudentConfirmModule</code>, <code>examination</code>, <code>fetchCAFDetails</code></td></tr>
+            <tr><td>Local / SWA helpers</td><td><code>sp_swa_Intake</code>, <code>sp_swa_programlist</code>, <code>sp_swa_countrylist</code>, <code>sp_swa_nationality</code>, <code>sp_swa_religion</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Full list: <a href="./_proc-catalog.txt"><code>_proc-catalog.txt</code></a> ·
+        Functions (3: <code>ExtractNumberFromString</code>, <code>ISNUMERIC</code>, <code>cap_first</code>):
+        <a href="./_function-catalog.txt"><code>_function-catalog.txt</code></a>
+      </p>
+
+      <h3>Views (330)</h3>
+      <p class="lead">Large reporting surface — finance, attendance, population, academic, staff desk views.</p>
+      <p>Machine extract: <a href="./_view-catalog.txt"><code>_view-catalog.txt</code></a></p>
+
+      <h3>Domain table signals</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead><tr><th>Signal</th><th>Approx.</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td><code>r_*</code> student</td><td>113</td><td><code>r_student</code>, <code>r_stdprogram</code>, <code>r_stdsemester</code>, <code>r_stdmodule</code></td></tr>
+            <tr><td><code>f_*</code> academic</td><td>77</td><td>programmes, modules, timetable / results</td></tr>
+            <tr><td><code>b_*</code> finance</td><td>54</td><td><code>b_assistbilling*</code>, payments / receipts</td></tr>
+            <tr><td><code>rep_*</code> reports</td><td>40</td><td>population / enrolment helpers</td></tr>
+            <tr><td><code>s_*</code> security / setup</td><td>36</td><td>staff, user levels</td></tr>
+            <tr><td><code>gb_*</code> local structs</td><td>32</td><td><code>gb_student</code>, <code>gb_program</code>, <code>gb_stdmodule</code></td></tr>
+            <tr><td><code>temp_*</code></td><td>25</td><td>scratch / dated copies</td></tr>
+            <tr><td><code>w_*</code> welfare / acco</td><td>16</td><td><code>w_visa</code>, <code>w_occupant</code>, <code>w_room</code></td></tr>
+            <tr><td><code>app_*</code> admissions</td><td>11</td><td><code>app_applicationform</code>, <code>app_applicationform_online</code></td></tr>
+            <tr><td><code>ih_*</code></td><td>9</td><td>IH attendance / marks mirrors</td></tr>
+            <tr><td><code>portal_*</code></td><td>6</td><td><code>portal_student_eswatini</code> … + <code>portal_student_swaziland</code></td></tr>
+            <tr><td><code>swa_*</code></td><td>6</td><td><code>swa_sem1</code> … <code>swa_sem6</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Full table list: <a href="./_table-catalog.txt"><code>_table-catalog.txt</code></a> ·
+        Triggers (70): <a href="./_trigger-catalog.txt"><code>_trigger-catalog.txt</code></a> ·
+        Index: <a href="./CATALOG.md"><code>CATALOG.md</code></a>
+      </p>
+
+      <h3>CAP-53 note</h3>
+      <p>
+        Eswatini confirms another mid-size LUCT schema in the same product family, with campus-suffixed
+        portal tables and <code>api_*</code> procedures. Portal API campus configuration
+        (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)
+        must stay campus-keyed (<strong>ESWATINI</strong>); do not assume Cyberjaya or Lesotho table names match 1:1.
+      </p>
+    </section>
+
+    <!-- ========== 8. Raisd ========== -->
+    <section class="section" id="raisd">
+      <h2>8. Raisd mapping</h2>
+      <p class="lead">
+        Eswatini is an <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> LUCT CMS sibling —
+        <strong>not</strong> the Lesotho M4 acceptance SoR. Portal API must stay campus-keyed
+        (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> key <strong>ESWATINI</strong>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Desks → Raisd portals</h3>
+            <p>Staff desks stay on CMS MySQL; Raisd portals never talk to campus MySQL directly.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph SZ["LUCT Eswatini CMS"]
+    DESKS[Marketing · Registry · Faculty · Bursary<br/>Services · Accommodation · Setup · Reporting]
+    DB[("campus2_eswatini")]
+    DESKS --> DB
+  end
+  subgraph Raisd["Raisd — M5"]
+    API[Portal API / ACL]
+    AP[Applicant]
+    SP[Student]
+    LP[Lecturer]
+    ST[Staff]
+    AP --> API
+    SP --> API
+    LP --> API
+    ST --> API
+    API -.->|"CAP-53 · ESWATINI"| DB
+  end
+          </pre>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:16px">
+        <table class="attr">
+          <thead><tr><th>Topic</th><th>Guidance</th></tr></thead>
+          <tbody>
+            <tr><td>Product role</td><td>LUCT CMS M5 sibling; <strong>not</strong> Lesotho M4 SoR. WG: Eswatini may follow Lesotho.</td></tr>
+            <tr><td>CAP-53 campus key</td><td><strong>ESWATINI</strong> — tables <code>portal_*_eswatini</code> (+ legacy <code>_swaziland</code>)</td></tr>
+            <tr><td>CAP-48 funding</td><td>Assist codes <code>ssb</code> · <code>limkokwing</code> — ≠ NMDS ≠ DTEF/TEF</td></tr>
+            <tr><td>ACL transfer</td><td>Same <code>app_*</code> + <code>api_student_*</code> pattern as Lesotho/BW — clean LUCT adapter path</td></tr>
+            <tr><td>Batch</td><td>Expect nightly portal refresh via <code>eswatinibatch</code> (ops only)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Full multi-campus matrix: <a href="#compare">§9 Campus comparison</a>.</p>
+    </section>
+
+    <!-- ========== 9. Compare ========== -->
+    <section class="section" id="compare">
+      <h2>9. Campus comparison — Eswatini-centric</h2>
+      <p class="lead">
+        Mid-size LUCT sibling: larger than Lesotho (369), thinner than Botswana (713).
+        Table-name overlap vs Eswatini’s 472: Lesotho ~65% · Botswana ~60% · Cyberjaya ~59% · Sierra Leone ~5%.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Eswatini = M5 LUCT</span>
+        <span class="chip ok">Lesotho = M4 pilot SoR</span>
+        <span class="chip">Botswana = TEF · SL = EMS ac_*</span>
+      </div>
+
+      <div class="card" style="margin-bottom: 20px">
+        <div class="card-head">
+          <div>
+            <h3>Where Eswatini sits</h3>
+            <p>Same LUCT <code>app_*</code> family; local assist; no gov TEF POST.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  FAMILY["LUCT CMS / PHPMaker family<br/>r_ · f_ · b_ · app_*"]
+  CYB["Cyberjaya · cmscbj"]
+  LSO["Lesotho · campus2_lesotho · M4"]
+  BWA["Botswana · cmsbotswana · DTEF"]
+  SZ["Eswatini · campus2_eswatini · M5"]
+  KHM["Cambodia · ~481 tables"]
+  SLE["Sierra Leone · EMS · ac_*"]
+  RAISD["Raisd portals · CAP-53"]
+
+  FAMILY --> CYB
+  FAMILY --> LSO
+  FAMILY --> BWA
+  FAMILY --> SZ
+  FAMILY --> KHM
+  FAMILY -.-> SLE
+  LSO ==>|M4 SoR| RAISD
+  SZ -.->|M5 expansion| RAISD
+  BWA -.->|M5| RAISD
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Eswatini</th>
+              <th>Lesotho</th>
+              <th>Botswana</th>
+              <th>Cyberjaya</th>
+              <th>Cambodia</th>
+              <th>Sierra Leone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Database</td><td><code>campus2_eswatini</code></td><td><code>campus2_lesotho</code></td><td><code>cmsbotswana</code></td><td><code>cmscbj</code></td><td>Cambodia dump</td><td><code>ems_sierraleone</code></td></tr>
+            <tr><td>Tables</td><td><strong>472</strong></td><td>369</td><td>713</td><td>~1,942</td><td>481</td><td>345</td></tr>
+            <tr><td>Views</td><td><strong>330</strong></td><td>351</td><td>407</td><td>large</td><td>(inventoried)</td><td>9</td></tr>
+            <tr><td>SPs / fn / triggers</td><td><strong>53 / 3 / 70</strong></td><td>51 / 6 / 0†</td><td>46 / 15 / 157</td><td>~318 / — / ~239</td><td>(inventoried)</td><td>6 / — / 91</td></tr>
+            <tr><td>Overlap vs SZ</td><td>—</td><td>~65%</td><td>~60%</td><td>~59%</td><td>(sibling)</td><td>~5%</td></tr>
+            <tr><td>Admissions</td><td><code>app_*</code> (11)</td><td><code>app_*</code></td><td><code>app_*</code></td><td><code>app_*</code></td><td><code>app_*</code> (10)</td><td><code>ac_*</code></td></tr>
+            <tr><td>Portal hooks</td><td><code>portal_*_eswatini</code> + legacy <code>_swaziland</code></td><td><code>portal_*_lesotho</code></td><td><code>portal_*_botswana</code></td><td><code>portal_*_cyberjaya</code></td><td><code>portal_*_cambodia</code></td><td>Not in dump</td></tr>
+            <tr><td>Assist / gov</td><td><code>ssb</code> · <code>limkokwing</code></td><td><strong>NMDS</strong> (<code>nmds</code>)</td><td><strong>DTEF</strong> → tef.gov</td><td>Assist</td><td>Campus assist</td><td>Local assist</td></tr>
+            <tr><td>Batch</td><td><code>eswatinibatch</code></td><td>present</td><td><code>botsbatch</code></td><td>cyberbatch</td><td>present</td><td>empty</td></tr>
+            <tr><td>Raisd role</td><td>M5 sibling</td><td><strong>M4 SoR</strong></td><td>M5 + TEF</td><td>ADR-1 historic</td><td>M5</td><td>M5 EMS</td></tr>
+            <tr><td>Pages hub</td><td>this page</td><td><a href="../old-cms-lesotho/">old-cms-lesotho/</a></td><td><a href="../old-cms-botswana/">old-cms-botswana/</a></td><td><a href="../old-cms/">old-cms/</a></td><td><a href="../old-cms-cambodia/">old-cms-cambodia/</a></td><td><a href="../old-cms-sierra-leone/">old-cms-sierra-leone/</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lead" style="margin-top:12px">† Lesotho structure export showed 0 triggers in file — contrast Eswatini’s 70.</p>
+      <div class="note" style="margin-top: 20px">
+        <strong>Verdict.</strong>
+        Prefer LUCT adapter patterns (same as Lesotho/BW). Keep CAP-53 campus-keyed
+        <strong>ESWATINI</strong>. Do not invent NMDS or TEF clients for this campus.
+        AI inventory:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">old-cms-eswatini.md</a>
+        · CAP comparison:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">cms-feature-comparison.md</a>.
+      </div>
+    </section>
+
+  </main>
+  <p class="footer">
+    Source inventory in
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">docs/ai/backend/old-cms-eswatini.md</a>
+    · Package <code>CMS_Eswatini_Source_Codes_&amp;_DB_Structure_23_09_2026.zip</code> (Vara 5 Oct 2026 — structure only, not committed)
+  </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../abbr-tooltips.js" defer></script>
   <script src="../nav-dropdown.js" defer></script>
   <script src="../site-search.js" defer></script>
 </body>

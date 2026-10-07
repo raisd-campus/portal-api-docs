@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Cambodia · LUCT CMS inventory</title>
+  <title>Raisd — Cambodia · LUCT CMS E2E</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
 </head>
@@ -98,14 +98,22 @@
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="../old-cms-eswatini/index.html">Inventory hub</a>
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
               <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
               </div>
             </div>
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="index.html">Inventory hub</a>
+              <a href="index.html">E2E hub</a>
+              <a href="index.html#fsd">FSD</a>
+              <a href="index.html#integrations">Integrations</a>
+              <a href="index.html#erd">ERD</a>
+              <a href="database.html">Database</a>
               <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
               </div>
             </div>
@@ -199,76 +207,1127 @@
         </div>
       </nav>
     </div>
-</header>
+  </header>
 
-<main class="page">
-  <section class="section">
-    <h1>Cambodia — LUCT CMS structure inventory</h1>
-    <p class="lead">
-      Vara Drive pack (7 Oct 2026): <code>campus2_cambodia</code> — <strong>LUCT CMS</strong> PHPMaker sibling for
-      <strong>M5</strong> expansion (after Lesotho M4). Dump stays local; catalogs are names only.
-    </p>
-    <div class="meta-row" style="margin: 0 0 16px">
-      <span class="chip ok">481 tables</span>
-      <span class="chip ok">296 views</span>
-      <span class="chip ok">46 procs</span>
-      <span class="chip ok">83 triggers</span>
-      <span class="chip ok">portal_*_cambodia</span>
-      <span class="chip warn">M5 — not M4 SoR</span>
-    </div>
+  <main>
+
+    <section class="hero">
+      <h1>Cambodia CMS — end-to-end functional flow</h1>
+      <p>
+        Full campus lifecycle for LUCT Cambodia (DB <code>campus2_cambodia</code>, shell title
+        <strong>CAMPUS MANAGEMENT SYSTEM 0.9</strong>) broken down by desk / capability — including
+        Assist (provider code <code>Limkokwing</code>), <code>portal_*_cambodia</code> hooks, and nightly
+        dumps into secondary DB <code>portalcambodia</code>.
+        Package <code>CMS_Cambodia_Source_Codes_&amp;_DB_Structure_07_10_2026</code>
+        (Vara WhatsApp <strong>7 Oct 2026</strong>).
+        <strong>Not</strong> the Lesotho M4 acceptance SoR; use for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion / evidence.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">DB <code>campus2_cambodia</code></span>
+        <span class="chip ok">481 tables</span>
+        <span class="chip ok">296 views</span>
+        <span class="chip ok">46 SPs · 2 fn · 83 triggers</span>
+        <span class="chip ok">portalcambodia export</span>
+        <span class="chip warn">M5 — not M4 SoR</span>
+      </div>
+    </section>
+
     <div class="note" style="margin: 0 0 16px">
       <strong>LUCT CMS subsection.</strong>
       Connected from the Cyberjaya analysis hub:
       <a href="../old-cms/index.html#cambodia">LUCT CMS → Cambodia</a>.
-      Use the top nav <strong>LUCT CMS → Cambodia</strong> group.
+      Use the top nav <strong>LUCT CMS → Cambodia</strong> flyout for FSD, integrations, ERD, DFD, database, and comparison.
     </div>
-    <div class="note warn" style="margin: 0 0 16px">
-      <strong>PII / ops boundary.</strong>
-      Do not commit PHP, batch logs, or SQL dumps. Pack includes <code>cambodiabatch/logs/</code>.
-      Sanitized inventory:
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Scope.</strong>
+      Structure and behaviour only. PHP tree, <code>cambodiabatch</code> SQL/logs, credentials (night script embeds DB auth — present, <em>not republished</em>), uploads, and live student data are
+      <em>not</em> committed. Drive pack:
+      <a href="https://drive.google.com/file/d/1iTKUKqREd4dzJ5tXWKCO71Qn5Rl4Xp6v/view?usp=drive_link">Google Drive</a>.
+      Canonical notes:
       <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">old-cms-cambodia.md</a>
       · <a href="CATALOG.md">CATALOG.md</a>.
     </div>
-  </section>
 
-  <section class="section">
-    <h2>Family position</h2>
-    <div class="table-wrap">
-      <table class="attr">
-        <thead>
-          <tr><th>Signal</th><th>Cambodia</th><th>Lesotho</th><th>Botswana</th><th>Cyberjaya</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Tables</td><td><strong>481</strong></td><td>369</td><td>713</td><td>~1,942</td></tr>
-          <tr><td>Triggers (in dump)</td><td><strong>83</strong></td><td>0 in file</td><td>157</td><td>~239</td></tr>
-          <tr><td>Portal hooks</td><td><code>portal_*_cambodia</code> (+ <code>portalcambodia</code> export)</td><td><code>portal_*_lesotho</code></td><td><code>portal_*_botswana</code></td><td><code>portal_*_cyberjaya</code></td></tr>
-          <tr><td>Gov / assist</td><td>Assist code <code>Limkokwing</code> (seen)</td><td><strong>NMDS</strong> (<code>nmds</code>)</td><td><strong>DTEF</strong> → tef.gov</td><td>Assist</td></tr>
-          <tr><td>Name overlap vs KH</td><td>—</td><td>~65%</td><td>~68%</td><td>~67%</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <ul>
-      <li>Same LUCT <code>app_*</code> admissions family — not Sierra Leone EMS.</li>
-      <li>CAP-53 reads can follow Lesotho/BW pattern with campus key <code>CAMBODIA</code>.</li>
-      <li>Do <strong>not</strong> reuse Lesotho NMDS, Botswana TEF, or Eswatini <code>ssb</code> clients for Cambodia assist.</li>
-    </ul>
-  </section>
+    <nav class="toc" aria-label="Cambodia CMS sections">
+      <a href="#e2e"><strong>1. End-to-end lifecycle</strong><span>Marketing → registry → faculty → bursary → life → report</span></a>
+      <a href="#fsd"><strong>2. Functional breakdown</strong><span>Desks by domain · ~PHP counts</span></a>
+      <a href="#flows"><strong>3. Core process flows</strong><span>Admissions · academic · finance · student life</span></a>
+      <a href="#integrations"><strong>4. Integrations</strong><span>Assist · portalcambodia · cambodiabatch</span></a>
+      <a href="#erd"><strong>5. Physical ERD</strong><span>Core · admissions · finance · life</span></a>
+      <a href="#dfd"><strong>6. Data-flow (DFD)</strong><span>Context · admit · academic · finance · batch</span></a>
+      <a href="#database"><strong>7. Database</strong><span>481 · 296 · 46 · 2 · 83</span></a>
+      <a href="#raisd"><strong>8. Raisd mapping</strong><span>CAP-53 · CAMBODIA · M5</span></a>
+      <a href="#compare"><strong>9. Campus comparison</strong><span>CYB · LS · BW · SZ · KH · SL</span></a>
+    </nav>
 
-  <section class="section">
-    <h2>Links</h2>
-    <ul>
-      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Full inventory (old-cms-cambodia.md)</a></li>
-      <li><a href="../old-cms-lesotho/index.html">Lesotho pilot (M4)</a></li>
-      <li><a href="../old-cms-eswatini/index.html">Eswatini</a> · <a href="../old-cms-botswana/index.html">Botswana</a> · <a href="../old-cms/index.html">Cyberjaya</a></li>
-      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot framing</a> (Cambodia = M5 evidence campus)</li>
-    </ul>
-  </section>
-</main>
+    <!-- ========== 1. E2E ========== -->
+    <section class="section" id="e2e">
+      <h2>1. End-to-end campus lifecycle</h2>
+      <p class="lead">
+        One shared MySQL SoR (<code>campus2_cambodia</code>). Staff desks own writes; lecturer + IH desks
+        and <code>api_student_*</code> / <code>portal_*_cambodia</code> hooks sit beside them.
+        Nightly <code>cambodiabatch</code> also projects slices into <code>portalcambodia</code>.
+        Assist is campus-local (<code>Limkokwing</code>) — <strong>not</strong> Lesotho NMDS, Botswana DTEF, or Eswatini <code>ssb</code>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Student journey across desks</h3>
+            <p>Marketing → registry offer → faculty enrol → bursary → services / accommodation → reporting.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Recruit["1 · Recruit"]
+    MKT[Marketing<br/>app_*]
+    CDU[CDU / AQA]
+  end
+  subgraph Admit["2 · Admit"]
+    REG1[Registry<br/>offer letters]
+    APP[Online / staff<br/>app_applicationform*]
+  end
+  subgraph Enrol["3 · Enrol"]
+    REG2[Registry<br/>r_student / programme]
+    FAC1[Faculty<br/>structure / modules]
+    SET[Setup<br/>terms / fees]
+  end
+  subgraph Study["4 · Study"]
+    FAC2[Faculty<br/>timetable / results]
+    LEC[Lecturer<br/>marks / attendance]
+    IH[IH<br/>attendance / marks]
+  end
+  subgraph Money["5 · Finance"]
+    BUR[Bursary<br/>invoice / pay / assist]
+  end
+  subgraph Life["6 · Student life"]
+    SVC[Services<br/>w_* visa / welfare]
+    ACC[Accommodation<br/>w_dorm / w_room]
+  end
+  subgraph Close["7 · Close / report"]
+    REP[Reporting]
+    BATCH[cambodiabatch<br/>→ portalcambodia]
+  end
 
-<p class="footer">
-  Cambodia · LUCT CMS inventory · structure only · 7 Oct 2026 · Vara Drive pack
-</p>
-<script src="../abbr-tooltips.js" defer></script>
+  MKT --> APP
+  CDU -.-> APP
+  APP --> REG1
+  REG1 --> REG2
+  SET --> REG2
+  FAC1 --> REG2
+  REG2 --> FAC2
+  FAC2 --> LEC
+  FAC2 --> IH
+  REG2 --> BUR
+  REG2 --> SVC
+  REG2 --> ACC
+  FAC2 --> REP
+  BUR --> REP
+  BATCH -.-> REP
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 2. FSD ========== -->
+    <section class="section" id="fsd">
+      <h2>2. Functional breakdown by desk</h2>
+      <p class="lead">
+        PHPMaker apps under <code>cambodia/&lt;desk&gt;/</code> (pack layout). Shell
+        <code>cambodia/index.html</code> still links desks as <code>./campus/…</code> in markup — folders are
+        <strong>not</strong> nested under a <code>campus/</code> subfolder in this zip (contrast Botswana / Eswatini).
+      </p>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Functional structure</h3>
+            <p>Domains map to folders; all share <code>campus2_cambodia</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+mindmap
+  root((Cambodia CMS<br/>CMS 0.9))
+    Academic
+      registry
+      faculty
+      lecturer
+      cdu
+      ih
+      modulemat
+    Student_life
+      services
+      accommodation
+      notice
+    Commercial
+      bursary
+      marketing
+      Assist_Limkokwing
+    Platform
+      setup
+      reporting
+      cambodiabatch
+      portal_api_hooks
+      zemail
+          </pre>
+        </div>
+      </div>
+
+      <h3>Module catalogue</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Desk</th>
+              <th>Primary job</th>
+              <th>Key tables / signals</th>
+              <th>~PHP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>setup/</code></td>
+              <td>Institution, terms, fee catalogs, user levels, config</td>
+              <td><code>f_term</code>, <code>s_staff</code>, security / setup tables</td>
+              <td>~830</td>
+            </tr>
+            <tr>
+              <td><code>faculty/</code></td>
+              <td>Schools, programmes, modules, attendance, results</td>
+              <td><code>f_program</code>, <code>f_module</code>, <code>f_modulemat*</code>, release-result</td>
+              <td>~792</td>
+            </tr>
+            <tr>
+              <td><code>reporting/</code></td>
+              <td>Population, enrolment, payment, scholarship reports</td>
+              <td><code>rep_*</code>, <code>rep_curtermpop_camb</code>, <code>rep_scholarship</code></td>
+              <td>~594</td>
+            </tr>
+            <tr>
+              <td><code>registry/</code></td>
+              <td>Student master, offers, forms, transcripts, certs</td>
+              <td><code>r_student</code>, <code>r_stdprogram</code>, <code>r_stdofferletter</code>, <code>r_studentcert_cambodia</code></td>
+              <td>~454</td>
+            </tr>
+            <tr>
+              <td><code>bursary/</code></td>
+              <td>Invoices, payments, receipts, assist billing</td>
+              <td><code>b_*</code>, <code>b_assistbilling*</code>, <code>r_assistscheme*</code></td>
+              <td>~394</td>
+            </tr>
+            <tr>
+              <td><code>lecturer/</code></td>
+              <td>Marks, attendance, module materials</td>
+              <td>Lecturer portal screens; module confirm SPs</td>
+              <td>~360</td>
+            </tr>
+            <tr>
+              <td><code>services/</code></td>
+              <td>Welfare, counselling, visa / insurance ops</td>
+              <td><code>w_application</code>, <code>w_insurance*</code>, immigration views</td>
+              <td>~356</td>
+            </tr>
+            <tr>
+              <td><code>ih/</code></td>
+              <td>In-house / short-course attendance &amp; marks</td>
+              <td><code>ih_student</code>, <code>ih_stdattendance</code>, <code>ih_stdmark</code></td>
+              <td>~287</td>
+            </tr>
+            <tr>
+              <td><code>marketing/</code></td>
+              <td>Applications, agents, recruitment</td>
+              <td><code>app_applicationform*</code>, <code>app_docfile</code>, <code>m_*</code></td>
+              <td>~280</td>
+            </tr>
+            <tr>
+              <td><code>cdu/</code></td>
+              <td>AQA / programme accreditation</td>
+              <td><code>f_programaccreditation*</code>, entry / AQA desks</td>
+              <td>~242</td>
+            </tr>
+            <tr>
+              <td><code>accommodation/</code></td>
+              <td>Dorms, occupants, room charges</td>
+              <td><code>w_dorm</code>, <code>w_room*</code>, <code>w_occupant</code>, <code>w_charges</code></td>
+              <td>~197</td>
+            </tr>
+            <tr>
+              <td><code>notice/</code></td>
+              <td>Bulletin / noticeboard</td>
+              <td>Notice desks</td>
+              <td>~122</td>
+            </tr>
+            <tr>
+              <td><code>zemail/</code></td>
+              <td>Outbound email helpers</td>
+              <td>Shared email helpers (root also has <code>message*.php</code>)</td>
+              <td>~6</td>
+            </tr>
+            <tr>
+              <td><code>modulemat/</code>, <code>support/</code></td>
+              <td>Module materials / support (folders present)</td>
+              <td>No <code>.php</code> under these tops in the zip count</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td><code>lettertemplate/</code>, <code>uploads/</code>, <code>images/</code></td>
+              <td>RTF / media / uploads</td>
+              <td>Ops artefacts — not committed</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lead" style="margin-top:12px">
+        ~9.8k PHP under <code>cambodia/</code>. <strong>No</strong> separate <code>api-service/</code> tree in this pack
+        (contrast Eswatini). No thin dedicated <code>student/</code> desk folder (portal hooks are DB-side).
+      </p>
+    </section>
+
+    <!-- ========== 3. Core flows ========== -->
+    <section class="section" id="flows">
+      <h2>3. Core process flows</h2>
+
+      <h3 id="flow-admissions">3.1 Admissions &amp; registry</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Application → offer → student record</h3>
+            <p><code>app_*</code> (10 tables) including <code>app_applicationformonline</code> — Botswana/Cyberjaya style, not Sierra Leone <code>ac_*</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  A[Marketing / online app<br/>app_applicationform*] --> B[Docs / education<br/>app_docfile · app_applicationeducation]
+  B --> C[Registry offer<br/>r_stdofferletter · FetchOfferLetters]
+  C --> D[Confirm / enrol SPs<br/>AfterInsertApplicationForm · OnlineReg*]
+  D --> E[r_student + r_stdprogram<br/>+ r_stdsemester]
+  E --> F[Faculty structure<br/>f_program / f_module]
+  E --> G[Bursary fee plan]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-academic">3.2 Academic term cycle</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Modules → attendance → results</h3>
+            <p>Faculty + lecturer + IH; SPs <code>StudentConfirmModule</code>, <code>r_Update_Semester</code>, <code>examination</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  T[Term / structure<br/>f_term · f_program*] --> M[Module enrolment<br/>r_stdmodule]
+  M --> TT[Timetable / attendance<br/>r_stdattendance*]
+  M --> MARK[Lecturer / IH marks]
+  MARK --> RR[Release results]
+  RR --> TR[Transcripts / certs<br/>r_studentcert_cambodia]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-finance">3.3 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Billing → payment → Assist (Limkokwing)</h3>
+            <p>Bursary owns money. Assist via <code>r_assistprovider</code> / <code>b_assistbilling*</code> — <strong>no</strong> <code>r_scholarshipapp</code> TEF queue; <code>rep_scholarship</code> reporting exists.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  FEE[Fee catalog / setup] --> INV[Invoices / instalments<br/>b_*]
+  INV --> PAY[Payments / receipts]
+  PAY --> STMT[Statements / ageing views]
+  INV --> ASSIST[Assist programmes<br/>r_assistscheme* · b_assistbilling*]
+  ASSIST --> PROV[AssistProviderCode<br/>Limkokwing]
+  PROV -.-> REP[[rep_scholarship]]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="flow-life">3.4 Student life &amp; ops</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Area</th><th>Desk</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Visa / welfare / insurance</td><td><code>services/</code></td><td>Thick <code>w_*</code> (~52) — insurance, med, applications; thicker than Eswatini</td></tr>
+            <tr><td>Hostel</td><td><code>accommodation/</code></td><td><code>w_dorm</code> / <code>w_room*</code> / <code>w_occupant</code> / charges (acco mostly on <code>w_*</code>, not a large <code>acc_*</code> forest)</td></tr>
+            <tr><td>IH / short courses</td><td><code>ih/</code></td><td><code>ih_student</code>, attendance, marks, sessions</td></tr>
+            <tr><td>Notices</td><td><code>notice/</code></td><td>Campus bulletins</td></tr>
+            <tr><td>Batch / portal</td><td><code>cambodiabatch/</code></td><td>Nightly SQL → <code>portalcambodia</code> (<code>*_cam</code> / <code>*_cambodia</code>) — ops artefacts, not committed</td></tr>
+            <tr><td>Portal hooks</td><td>DB routines</td><td><code>api_student_*</code>, <code>api_faculty_*</code>, <code>portal_student_*_cambodia</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 4. Integrations ========== -->
+    <section class="section" id="integrations">
+      <h2>4. Integrations</h2>
+      <p class="lead">
+        External / cross-DB touchpoints found in the Cambodia pack.
+        <strong>Not</strong> Lesotho NMDS, <strong>not</strong> Botswana DTEF / TEF.gov.bw, <strong>not</strong> Eswatini <code>ssb</code>.
+        No separate <code>api-service/</code> tree (desks live at <code>cambodia/&lt;desk&gt;/</code>).
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Assist · Limkokwing</span>
+        <span class="chip ok">portal_*_cambodia</span>
+        <span class="chip ok">api_student_*</span>
+        <span class="chip ok">portalcambodia dumps</span>
+        <span class="chip">No DTEF / NMDS / ssb</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Portal export night path</h3>
+            <p>Evidence: <code>cambodiabatch/portal.sql</code> (+ registry / bursary / examination / transcript) and <code>cambodiabatchnight.sh</code>. Script embeds DB credentials — <strong>present in pack, do not republish</strong>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  participant Cron as cambodiabatchnight.sh
+  participant SQL as batch SQL files
+  participant SoR as campus2_cambodia
+  participant Portal as portalcambodia
+
+  Cron->>SQL: Run portal / registry / bursary / exam / transcript
+  SQL->>SoR: Read operational slices
+  SQL->>Portal: Dump / refresh *_cam / *_cambodia projections
+  Note over Cron: Credentials in night script — not documented here
+          </pre>
+        </div>
+      </div>
+
+      <h3>Integration catalogue</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Integration</th><th>Direction</th><th>Evidence</th><th>Raisd note</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Assist / sponsorship</td>
+              <td>Internal ledger</td>
+              <td><code>r_assistprovider</code>, <code>r_assistscheme*</code>, <code>b_assistbilling*</code>; SP literal provider code <code>Limkokwing</code></td>
+              <td>CAP-48 campus-local; do not reuse NMDS / TEF / ssb clients</td>
+            </tr>
+            <tr>
+              <td>Portal API SP hooks</td>
+              <td>Read (SP)</td>
+              <td><code>api_student_login_info</code>, <code>api_student_program_info</code>, <code>api_student_semester_info</code>, <code>api_student_module_info</code>, <code>api_faculty_list</code>, <code>api_faculty_program_list</code></td>
+              <td>Campus-keyed ACL candidates for CAP-53 / M5</td>
+            </tr>
+            <tr>
+              <td>Portal sync tables</td>
+              <td>SoR → projection</td>
+              <td><code>portal_student_*_cambodia</code> (5) + <code>r_studentcert_cambodia</code></td>
+              <td>Suffix <code>_cambodia</code> — same pattern as Lesotho / BW / SZ</td>
+            </tr>
+            <tr>
+              <td>Secondary portal DB</td>
+              <td>Batch dump</td>
+              <td><code>portalcambodia</code> via <code>cambodiabatch/</code></td>
+              <td>Ops path; Raisd Live should own durable export via Portal API, not shell credentials</td>
+            </tr>
+            <tr>
+              <td>Government scholarship POST</td>
+              <td>—</td>
+              <td>Not found (<strong>no</strong> <code>r_scholarshipapp</code>)</td>
+              <td>Do not invent; Botswana owns TEF pattern</td>
+            </tr>
+            <tr>
+              <td>api-service tree</td>
+              <td>—</td>
+              <td>Absent in this pack</td>
+              <td>Contrast Eswatini <code>api-service/</code>; use DB <code>api_*</code> + desks only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 5. ERD ========== -->
+    <section class="section" id="erd">
+      <h2>5. Physical ERD (<code>campus2_cambodia</code>)</h2>
+      <p class="lead">
+        Logical view of real MySQL tables from the Cambodia structure dump.
+        Not the Raisd canonical model — <a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> translates; it does not clone these tables.
+      </p>
+      <div class="note warn" style="margin: 0 0 20px">
+        Contrast Raisd ERD at <a href="../erd.html">../erd.html</a>. Cambodia uses LUCT <code>app_*</code> admissions
+        (like Botswana), thick <code>w_*</code> life/acco (~52), and campus-suffixed portal tables — not Sierra Leone <code>ac_*</code> / thin <code>sa_*</code>.
+      </div>
+
+      <h3 id="erd-core">5.1 Core student</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>r_student · programme · semester · module · portal</h3>
+            <p>Same LUCT spine; portal projections use <code>*_cambodia</code> suffix.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int SIdx PK
+    int StudentID UK
+    string StudentNo
+  }
+  r_stdpersonal {
+    int StudentID PK
+  }
+  r_stdprogram {
+    int StdProgramID PK
+    int SIdx FK
+    int ProgramID FK
+  }
+  r_stdsemester {
+    int StdSemesterID PK
+    int StdProgramID FK
+    int TermID FK
+  }
+  r_stdmodule {
+    int StdModuleID PK
+    int StdSemesterID FK
+    int ModuleID FK
+  }
+  f_program {
+    int ProgramID PK
+    string ProgramCode
+  }
+  portal_student_cambodia {
+    int StudentID
+  }
+  r_studentcert_cambodia {
+    int StudentID
+  }
+  r_student ||--|| r_stdpersonal : StudentID
+  r_student ||--o{ r_stdprogram : SIdx
+  r_stdprogram ||--o{ r_stdsemester : StdProgramID
+  r_stdsemester ||--o{ r_stdmodule : StdSemesterID
+  r_stdprogram }o--|| f_program : ProgramID
+  r_student ||--o| portal_student_cambodia : projects
+  r_student ||--o{ r_studentcert_cambodia : certs
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-admissions">5.2 Admissions &amp; offer</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>app_* → offer → student</h3>
+            <p>Ten <code>app_*</code> tables including online form; offer letters on registry.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  app_applicationform {
+    int ApplicationID PK
+  }
+  app_applicationformonline {
+    int ApplicationID PK
+  }
+  app_applicationeducation {
+    int ApplicationID FK
+  }
+  app_docfile {
+    int DocFileID PK
+    int ApplicationID FK
+  }
+  r_stdofferletter {
+    int StudentID FK
+  }
+  r_student {
+    int SIdx PK
+    int StudentID UK
+  }
+  app_applicationform ||--o| app_applicationformonline : online
+  app_applicationform ||--o{ app_applicationeducation : education
+  app_applicationform ||--o{ app_docfile : docs
+  app_applicationform ||--o| r_student : enrols
+  r_student ||--o{ r_stdofferletter : StudentID
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-finance">5.3 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Assist schemes · billing · no TEF queue</h3>
+            <p><code>b_assistbilling*</code> + <code>r_assistscheme*</code>; no <code>r_scholarshipapp</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_assistprovider {
+    int AssistProviderID PK
+    string AssistProviderCode
+  }
+  r_assistscheme {
+    int AssistSchemeID PK
+    int AssistProviderID FK
+  }
+  r_assistschemedetail {
+    int AssistSchemeID FK
+  }
+  b_assistbilling {
+    int AssistBillingID PK
+  }
+  b_assistbillingdetail {
+    int AssistBillingID FK
+  }
+  rep_scholarship {
+    string ScholarshipKey
+  }
+  r_assistprovider ||--o{ r_assistscheme : AssistProviderID
+  r_assistscheme ||--o{ r_assistschemedetail : AssistSchemeID
+  b_assistbilling ||--o{ b_assistbillingdetail : AssistBillingID
+  r_assistprovider -.-> rep_scholarship : reported_via
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="erd-life">5.4 Student life &amp; accommodation</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Thick w_* welfare / dorm / room</h3>
+            <p>~52 <code>w_*</code> tables — thicker than Eswatini; acco primarily on <code>w_dorm</code> / <code>w_room*</code> / <code>w_occupant</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+erDiagram
+  r_student {
+    int SIdx PK
+    int StudentID UK
+  }
+  w_application {
+    int ApplicationID PK
+    int StudentID FK
+  }
+  w_insurance {
+    int StdInsuranceID PK
+    int StudentID FK
+  }
+  w_insuranceclaim {
+    int InsuranceClaimID PK
+    int StdInsuranceID FK
+  }
+  w_dorm {
+    int DormID PK
+  }
+  w_room {
+    int RoomID PK
+    int DormID FK
+  }
+  w_occupant {
+    int OccupantID PK
+    int RoomID FK
+    int StudentID FK
+  }
+  w_charges {
+    int ChargeID PK
+    int OccupantID FK
+  }
+  r_student ||--o{ w_application : StudentID
+  r_student ||--o{ w_insurance : StudentID
+  w_insurance ||--o{ w_insuranceclaim : StdInsuranceID
+  w_dorm ||--o{ w_room : DormID
+  w_room ||--o{ w_occupant : RoomID
+  r_student ||--o{ w_occupant : StudentID
+  w_occupant ||--o{ w_charges : OccupantID
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 6. DFD ========== -->
+    <section class="section" id="dfd">
+      <h2>6. Data-flow diagrams (DFD)</h2>
+      <p class="lead">
+        How data moves between external actors, Cambodia desks, <code>campus2_cambodia</code>,
+        nightly <code>cambodiabatch</code>, and secondary <code>portalcambodia</code> — without a government scholarship endpoint.
+      </p>
+
+      <h3 id="dfd-context">6.1 Context diagram (Level 0)</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>External entities ↔ Cambodia CMS</h3>
+            <p>Staff desks + lecturer/IH share one SoR; portal export is a second MySQL schema.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  APPLICANT([Applicant / agent])
+  STUDENT([Student])
+  LECTURER([Lecturer])
+  STAFF([Registry · Faculty · Bursary · Services])
+  PORTDB([portalcambodia])
+  CMS[["Cambodia CMS<br/>PHPMaker desks + campus2_cambodia"]]
+
+  APPLICANT -->|application / docs| CMS
+  STAFF -->|operational writes| CMS
+  LECTURER -->|marks / attendance| CMS
+  CMS -->|invoices / letters / portal data| STUDENT
+  CMS -->|nightly batch dumps| PORTDB
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-admit">6.2 Admissions → registry</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Online / staff app → offer → enrol</h3>
+            <p>SPs: <code>AfterInsertApplicationForm</code>, <code>FetchOnlineApplication*</code>, <code>FetchOfferLetters</code>, <code>OnlineRegNotification</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  EXT([Applicant]) --> MKT[Marketing desk]
+  MKT --> APP[(app_applicationform*)]
+  APP --> REG[Registry desk]
+  REG --> OFF[(r_stdofferletter)]
+  REG --> STU[(r_student / r_stdprogram)]
+  STU --> FAC[Faculty structures]
+  STU --> BUR[Bursary fee plan]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-academic">6.3 Academic term</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Structure → modules → results</h3>
+            <p><code>StudentConfirmModule</code>, <code>r_Update_Semester</code>, <code>examination</code>; certs via <code>r_studentcert_cambodia</code> / <code>GetStudentCertInfo</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  SET[Setup / Faculty<br/>term · f_program*] --> ENR[(r_stdmodule)]
+  ENR --> TT[Timetable / attendance]
+  ENR --> LEC[Lecturer / IH marks]
+  LEC --> RES[(results / transcript)]
+  RES --> CERT[(r_studentcert_cambodia)]
+  RES --> REP[Reporting]
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-finance">6.4 Finance &amp; assist</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Ledger + Assist only</h3>
+            <p>No TEF admission queue — contrast Botswana DTEF. Assist provider code seen: <code>Limkokwing</code>.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  STU[(r_student)] --> BUR[Bursary desk]
+  BUR --> LED[(b_* / b_assistbilling*)]
+  LED --> SCH[[rep_scholarship]]
+  STU --> SCHEME[(r_assistscheme*)]
+  SCHEME --> LED
+  BATCH[[cambodiabatch bursary.sql]] -.-> LED
+          </pre>
+        </div>
+      </div>
+
+      <h3 id="dfd-batch">6.5 Batch dumps to portalcambodia</h3>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>cambodiabatch + api_* / portal_*_cambodia</h3>
+            <p>Ops scripts (not committed) refresh portal/registry/bursary/exam/transcript slices into <code>portalcambodia</code>; <code>api_student_*</code> SPs feed external clients from SoR.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  BATCH[[cambodiabatch<br/>portal · registry · bursary · exam · transcript]] --> DB[(campus2_cambodia)]
+  BATCH --> PDB[(portalcambodia<br/>*_cam / *_cambodia)]
+  DB --> API[["api_student_* / api_faculty_*"]]
+  DB --> PORT[(portal_student_*_cambodia)]
+  API -.-> EXT([Future Portal API / M5])
+  PORT -.-> EXT
+  PDB -.-> EXT
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 7. Database ========== -->
+    <section class="section" id="database">
+      <h2>7. Database — tables, procedures, triggers &amp; views</h2>
+      <p class="lead">
+        Derived from <code>campus2_cambodia</code> structure dumps
+        <code>CMS_Cambodia_Tables|Views|Procedures|Triggers_*.sql</code> (7 Oct 2026).
+        Legacy URL <a href="database.html">database.html</a> redirects here.
+        Secondary export schema: <code>portalcambodia</code> (batch only).
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">481 tables</span>
+        <span class="chip ok">296 views</span>
+        <span class="chip ok">46 SPs</span>
+        <span class="chip ok">2 functions</span>
+        <span class="chip ok">83 triggers</span>
+      </div>
+
+      <h3>Stored procedures (46) — highlights</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead><tr><th>Group</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>Portal / API</td><td><code>api_student_login_info</code>, <code>api_student_module_info</code>, <code>api_student_program_info</code>, <code>api_student_semester_info</code>, <code>api_faculty_list</code>, <code>api_faculty_program_list</code></td></tr>
+            <tr><td>Online applications</td><td><code>AfterInsertApplicationForm</code>, <code>FetchOnlineApplication*</code>, <code>InsertOnlineAppPersonalInfo</code>, <code>UpdateOnlineApp*</code>, <code>OnlineAppEmailNotification</code>, <code>OnlineRegNotification</code></td></tr>
+            <tr><td>Finance / billing</td><td><code>b_Update_Student</code>, <code>b_Update_Student_All</code>, <code>b_Update_Accommodation</code>, <code>b_Update_Student_Mark</code>, <code>sp_payment_verification_insert</code></td></tr>
+            <tr><td>Registry / academic</td><td><code>FetchOfferLetters</code>, <code>r_Update_Semester</code>, <code>StudentConfirmModule</code>, <code>examination</code>, <code>GetStudentCertInfo</code>, <code>fetchCAFDetails</code></td></tr>
+            <tr><td>Student portal helpers</td><td><code>sp_student_os_info</code>, <code>sp_student_visaexp</code>, <code>sp_student_bank_info*</code>, <code>sp_onlinenrollment_*</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Functions (2): <code>Cap_First</code>, <code>ExtractNumberFromString</code>.
+        Catalogs: <a href="./_proc-catalog.txt"><code>_proc-catalog.txt</code></a> ·
+        <a href="./_function-catalog.txt"><code>_function-catalog.txt</code></a>
+      </p>
+
+      <h3>Views (296)</h3>
+      <p class="lead">Large reporting surface — population, finance, accommodation, local Cambodia scratch views.</p>
+      <ul>
+        <li>Local scratch: <code>rep_curtermpop_camb</code>, <code>rep_nostudents_active_camb</code> (+ <code>*_cam</code> siblings)</li>
+        <li>Scholarship report: <code>rep_scholarship</code></li>
+        <li>Academic / registry: <code>r_std*</code> views, attendance / immigration helpers</li>
+        <li>Accommodation: <code>w_room*</code>, <code>w_occupant*</code>, <code>w_checkout*</code> views</li>
+      </ul>
+      <p>Machine extract: <a href="./_view-catalog.txt"><code>_view-catalog.txt</code></a></p>
+
+      <h3>Domain table signals</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead><tr><th>Signal</th><th>Approx.</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td><code>r_*</code> student</td><td>~117</td><td><code>r_student</code>, <code>r_stdmodule</code>, <code>r_stdofferletter</code>, <code>r_assist*</code></td></tr>
+            <tr><td><code>f_*</code> academic</td><td>~76</td><td><code>f_program</code>, <code>f_module</code>, <code>f_modulemat*</code></td></tr>
+            <tr><td><code>temp_*</code> scratch</td><td>~66</td><td>Temp / dated scratch tables</td></tr>
+            <tr><td><code>w_*</code> welfare / acco</td><td>~52</td><td><code>w_dorm</code>, <code>w_room</code>, <code>w_occupant</code>, <code>w_insurance*</code></td></tr>
+            <tr><td><code>rep_*</code> reports</td><td>~47</td><td><code>rep_curtermpop_camb</code>, <code>rep_scholarship</code></td></tr>
+            <tr><td><code>b_*</code> finance</td><td>~34</td><td><code>b_assistbilling*</code>, payment / receipt family</td></tr>
+            <tr><td><code>s_*</code> security / setup</td><td>~19</td><td><code>s_staff</code>, user levels</td></tr>
+            <tr><td><code>app_*</code> admissions</td><td>~10</td><td><code>app_applicationform</code>, <code>app_applicationformonline</code></td></tr>
+            <tr><td><code>ih_*</code> in-house</td><td>~10</td><td><code>ih_student</code>, <code>ih_stdattendance</code>, <code>ih_stdmark</code></td></tr>
+            <tr><td><code>portal_*</code></td><td>5</td><td><code>portal_student_*_cambodia</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Full lists:
+        <a href="./_table-catalog.txt"><code>_table-catalog.txt</code></a> ·
+        <a href="./_trigger-catalog.txt"><code>_trigger-catalog.txt</code></a> (83) ·
+        <a href="CATALOG.md">CATALOG.md</a>
+      </p>
+
+      <h3>CAP-53 note</h3>
+      <p>
+        Cambodia confirms another live LUCT schema with campus-suffixed portal tables,
+        <code>api_*</code> procedures, and a secondary <code>portalcambodia</code> export DB.
+        Portal API campus configuration
+        (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a>)
+        must stay campus-keyed (<strong>CAMBODIA</strong>); do not assume Cyberjaya or Lesotho table names match 1:1.
+      </p>
+    </section>
+
+    <!-- ========== 8. Raisd ========== -->
+    <section class="section" id="raisd">
+      <h2>8. Raisd mapping</h2>
+      <p class="lead">
+        Cambodia is an <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion / evidence campus —
+        <strong>not</strong> Lesotho M4 SoR. Portal API must stay campus-keyed
+        (<a href="../../sdd/11-capability-catalog.html#cap-53">CAP-53</a> key <strong>CAMBODIA</strong>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Desks → Raisd portals</h3>
+            <p>Staff desks stay on CMS MySQL; Raisd portals never talk to campus MySQL directly.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph KH["LUCT Cambodia CMS"]
+    DESKS[Marketing · Registry · Faculty · Bursary<br/>Lecturer · Services · Accommodation · Setup · Reporting]
+    DB[("campus2_cambodia")]
+    PDB[("portalcambodia")]
+    DESKS --> DB
+    BATCH[cambodiabatch] --> DB
+    BATCH --> PDB
+  end
+  subgraph Raisd["Raisd — M5+"]
+    API[Portal API / ACL]
+    AP[Applicant]
+    SP[Student]
+    LP[Lecturer]
+    ST[Staff]
+    AP --> API
+    SP --> API
+    LP --> API
+    ST --> API
+    API -.->|"CAP-53 CAMBODIA"| DB
+  end
+          </pre>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:16px">
+        <table class="attr">
+          <thead><tr><th>CMS surface</th><th>Raisd portal</th><th>Flag</th></tr></thead>
+          <tbody>
+            <tr><td><code>app_*</code> admissions</td><td>Applicant</td><td>Reuse LUCT <code>app_*</code> mental model (not SL <code>ac_*</code>)</td></tr>
+            <tr><td>Registry / faculty</td><td>Student + Staff</td><td>Reuse <code>r_*</code> / <code>f_*</code>; certs via <code>r_studentcert_cambodia</code></td></tr>
+            <tr><td>Bursary Assist</td><td>Student Finance / Staff Bursary</td><td>Local Assist (<code>Limkokwing</code>) — no NMDS / TEF / ssb flag</td></tr>
+            <tr><td>Services / accommodation</td><td>Staff Services</td><td>Thick <code>w_*</code> — earlier life CAP surfaces than thin EMS campuses</td></tr>
+            <tr><td><code>portal_*_cambodia</code> + batch</td><td>Portal API CAP-53</td><td>Campus key <strong>CAMBODIA</strong>; replace shell-credential batch for Live</td></tr>
+            <tr><td>ACC / MoEYS (KH-*)</td><td>Compliance track</td><td>Separate SDD-09 — not solved by CMS desks alone</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 9. Compare ========== -->
+    <section class="section" id="compare">
+      <h2>9. Campus comparison</h2>
+      <p class="lead">
+        Six inventoried dumps. Lesotho is M4 acceptance SoR; Cyberjaya remains the historic LUCT depth reference;
+        Cambodia is a mid-size LUCT sibling (~68% table-name overlap with Botswana) for M5 evidence.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">Lesotho = M4 SoR</span>
+        <span class="chip ok">Cambodia = M5 evidence</span>
+        <span class="chip">Assist ≠ NMDS ≠ DTEF ≠ ssb</span>
+      </div>
+
+      <div class="card" style="margin-bottom: 20px">
+        <div class="card-head">
+          <div>
+            <h3>Product family</h3>
+            <p>Shared LUCT/EMS DNA; campus-local funding and portal export shapes differ.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  FAMILY["LUCT / ICA EMS family<br/>PHPMaker · r_/f_/b_"]
+  CYB["Cyberjaya · cmscbj"]
+  LS["Lesotho · campus2_lesotho · M4"]
+  BWA["Botswana · cmsbotswana · DTEF"]
+  SZ["Eswatini · campus2_eswatini · ssb"]
+  KH["Cambodia · campus2_cambodia · Assist"]
+  SLE["Sierra Leone · ems_sierraleone · ac_*"]
+  RAISD["Raisd portals · CAP-53"]
+
+  FAMILY --> CYB
+  FAMILY --> LS
+  FAMILY --> BWA
+  FAMILY --> SZ
+  FAMILY --> KH
+  FAMILY --> SLE
+  LS ==>|M4 acceptance| RAISD
+  CYB -.->|depth reference| RAISD
+  BWA -.->|M5| RAISD
+  SZ -.->|M5| RAISD
+  KH -.->|M5| RAISD
+  SLE -.->|M5| RAISD
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Cyberjaya</th>
+              <th>Lesotho</th>
+              <th>Botswana</th>
+              <th>Eswatini</th>
+              <th>Cambodia</th>
+              <th>Sierra Leone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dump / pack</td>
+              <td>23 Sep 2026</td>
+              <td>5 Oct 2026</td>
+              <td>24 Sep 2026</td>
+              <td>5 Oct 2026</td>
+              <td><strong>7 Oct 2026</strong></td>
+              <td>23 Sep 2026</td>
+            </tr>
+            <tr>
+              <td>Database</td>
+              <td><code>cmscbj</code></td>
+              <td><code>campus2_lesotho</code></td>
+              <td><code>cmsbotswana</code></td>
+              <td><code>campus2_eswatini</code></td>
+              <td><code>campus2_cambodia</code> (+ <code>portalcambodia</code>)</td>
+              <td><code>ems_sierraleone</code></td>
+            </tr>
+            <tr>
+              <td>Tables</td>
+              <td>~1,942</td>
+              <td>369</td>
+              <td>713</td>
+              <td>472</td>
+              <td><strong>481</strong></td>
+              <td>345</td>
+            </tr>
+            <tr>
+              <td>Views</td>
+              <td>large</td>
+              <td>(inventory)</td>
+              <td>407</td>
+              <td>330</td>
+              <td><strong>296</strong></td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>SPs / fn / triggers</td>
+              <td>~318 / — / ~239</td>
+              <td>(inventory) / 0 trig file</td>
+              <td>46 / 15 / 157</td>
+              <td>53 / 3 / 70</td>
+              <td><strong>46 / 2 / 83</strong></td>
+              <td>6 / — / 91</td>
+            </tr>
+            <tr>
+              <td>Desk path</td>
+              <td><code>cyberjaya/campus/</code></td>
+              <td>Lesotho pack</td>
+              <td><code>botswana/campus/</code></td>
+              <td><code>eswatini/campus/</code></td>
+              <td><code>cambodia/&lt;desk&gt;/</code> (shell links <code>./campus/</code>)</td>
+              <td><code>sierraleone/&lt;desk&gt;/</code></td>
+            </tr>
+            <tr>
+              <td>Admissions</td>
+              <td><code>app_*</code></td>
+              <td><code>app_*</code></td>
+              <td><code>app_*</code></td>
+              <td><code>app_*</code></td>
+              <td><code>app_*</code> (10)</td>
+              <td><code>ac_*</code></td>
+            </tr>
+            <tr>
+              <td>Funding / gov</td>
+              <td>Assist</td>
+              <td><strong>NMDS</strong></td>
+              <td><strong>DTEF → TEF</strong></td>
+              <td><code>ssb</code></td>
+              <td>Assist <code>Limkokwing</code></td>
+              <td>Local assist</td>
+            </tr>
+            <tr>
+              <td>Portal hooks</td>
+              <td><code>portal_*_cyberjaya</code></td>
+              <td><code>portal_*_lesotho</code></td>
+              <td><code>portal_*_botswana</code></td>
+              <td><code>portal_*_eswatini</code></td>
+              <td><code>portal_*_cambodia</code> + batch DB</td>
+              <td>Not in dump</td>
+            </tr>
+            <tr>
+              <td>api-service tree</td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+              <td>Present</td>
+              <td><strong>Absent</strong></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Name overlap vs KH</td>
+              <td>~67%</td>
+              <td>~65%</td>
+              <td>~68%</td>
+              <td>~62%</td>
+              <td>—</td>
+              <td>~5%</td>
+            </tr>
+            <tr>
+              <td>Raisd role</td>
+              <td>Depth reference</td>
+              <td><strong>M4 SoR</strong></td>
+              <td>M5</td>
+              <td>M5 (may follow LS)</td>
+              <td><strong>M5 evidence</strong></td>
+              <td>M5 EMS pattern</td>
+            </tr>
+            <tr>
+              <td>Pages hub</td>
+              <td><a href="../old-cms/">old-cms/</a></td>
+              <td><a href="../old-cms-lesotho/">old-cms-lesotho/</a></td>
+              <td><a href="../old-cms-botswana/">old-cms-botswana/</a></td>
+              <td><a href="../old-cms-eswatini/">old-cms-eswatini/</a></td>
+              <td>this page</td>
+              <td><a href="../old-cms-sierra-leone/">old-cms-sierra-leone/</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+  <p class="footer">
+    Source inventory in
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">docs/ai/backend/old-cms-cambodia.md</a>
+    · Package <code>CMS_Cambodia_Source_Codes_&amp;_DB_Structure_07_10_2026</code> (structure only — not committed)
+    · <a href="../old-cms/index.html#cambodia">LUCT CMS → Cambodia</a>
+  </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../abbr-tooltips.js" defer></script>
   <script src="../nav-dropdown.js" defer></script>
   <script src="../site-search.js" defer></script>
 </body>

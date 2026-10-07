@@ -193,8 +193,8 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md"
     },
     {
-      "title": "Eswatini CMS inventory",
-      "summary": "campus2_eswatini structure inventory (472 tables) \u2014 M5 LUCT sibling; portal_*_eswatini; assist ssb (not NMDS/DTEF).",
+      "title": "Eswatini CMS E2E hub",
+      "summary": "campus2_eswatini E2E \u2014 lifecycle, desks, flows, ERD/DFD, database (472 tables); portal_*_eswatini; assist ssb (not NMDS/DTEF).",
       "section": "LUCT CMS",
       "keywords": [
         "eswatini",
@@ -203,7 +203,10 @@
         "campus2_eswatini",
         "portal",
         "ssb",
-        "inventory"
+        "inventory",
+        "e2e",
+        "erd",
+        "dfd"
       ],
       "path": "diagrams/old-cms-eswatini/index.html"
     },
@@ -223,8 +226,8 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md"
     },
     {
-      "title": "Cambodia CMS inventory",
-      "summary": "campus2_cambodia structure inventory (481 tables) \u2014 M5 LUCT sibling; portal_*_cambodia; assist Limkokwing.",
+      "title": "Cambodia CMS E2E hub",
+      "summary": "campus2_cambodia E2E \u2014 lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing.",
       "section": "LUCT CMS",
       "keywords": [
         "cambodia",
@@ -233,7 +236,10 @@
         "portal",
         "limkokwing",
         "inventory",
-        "luct"
+        "luct",
+        "e2e",
+        "erd",
+        "dfd"
       ],
       "path": "diagrams/old-cms-cambodia/index.html"
     },
