@@ -108,6 +108,38 @@
       "path": "diagrams/old-cms-lesotho/index.html"
     },
     {
+      "title": "Lesotho CMS vs Applicant portal",
+      "summary": "Standup 8 Oct 2026 \u2014 compare newer Lesotho CMS, campus2_lesotho, and Raisd Applicant Demo admissions flows (12-row matrix, roles, M4 gaps).",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "applicant",
+        "admissions",
+        "gap",
+        "lgcse",
+        "offer-letter",
+        "eligibility",
+        "bursary",
+        "m4",
+        "standup"
+      ],
+      "path": "diagrams/old-cms-lesotho/cms-vs-applicant.html"
+    },
+    {
+      "title": "Lesotho CMS vs Applicant (AI knowledge)",
+      "summary": "Canonical Markdown for the Lesotho CMS vs Raisd Applicant portal flow analysis (8 Oct 2026).",
+      "section": "AI knowledge",
+      "keywords": [
+        "lesotho",
+        "applicant-portal",
+        "admissions",
+        "gap",
+        "lgcse",
+        "markdown"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md"
+    },
+    {
       "title": "Lesotho database gap",
       "summary": "Measured campus2_lesotho structure (369/351/51/6) + CAP-53/NMDS field pass vs Botswana/Cyberjaya and Raisd Schema v3.",
       "section": "LUCT CMS",

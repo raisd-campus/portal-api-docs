@@ -41,6 +41,7 @@ targets:
   luct-online-reg: diagrams/old-cms/online-registration.html
   luct-online-reg-gap: diagrams/old-cms/online-registration-gap.html
   luct-ls: diagrams/old-cms-lesotho/index.html
+  luct-ls-cms-applicant: diagrams/old-cms-lesotho/cms-vs-applicant.html
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
   luct-sz: diagrams/old-cms-eswatini/index.html
@@ -80,6 +81,7 @@ external:
   ai-old-cms-botswana: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md
   ai-old-cms-sierra-leone: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
+  ai-lesotho-cms-applicant: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md
   ai-lesotho-cap53: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md
   ai-luct-online-reg: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md
   ai-luct-online-reg-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md
@@ -93,6 +95,8 @@ path_rules:
     section: openapi
   - match: { exact: diagrams/distributed-cms-architecture.html }
     section: distributed
+  - match: { prefix: diagrams/old-cms-lesotho/, file: cms-vs-applicant.html }
+    section: luct-ls-cms-applicant
   - match: { prefix: diagrams/old-cms-lesotho/ }
     section: luct-ls
   - match: { prefix: diagrams/old-cms-eswatini/, file: database.html }
@@ -249,6 +253,7 @@ menu:
       - luct-online-reg
       - luct-online-reg-gap
       - luct-ls
+      - luct-ls-cms-applicant
       - luct-sz
       - luct-sz-database
       - luct-kh
@@ -262,6 +267,7 @@ menu:
         href: luct-ls
         children:
           - { label: Feature analysis, href: luct-ls }
+          - { label: CMS vs Applicant, href: luct-ls-cms-applicant }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=lesotho" }
           - { label: Flows, href: "luct-ls#admissions" }
           - { label: Why pilot, href: "luct-ls#why" }
@@ -355,6 +361,7 @@ menu:
       - { label: Registration FE gaps, href: ai-luct-online-reg-gap }
       - { label: Lesotho CMS inventory, href: ai-old-cms-lesotho }
       - { label: Lesotho DB gap, href: ai-lesotho-db-gap }
+      - { label: Lesotho CMS vs Applicant, href: ai-lesotho-cms-applicant }
       - { label: Lesotho CAP-53 reads, href: ai-lesotho-cap53 }
       - { label: Lesotho analysis briefing, href: report-lesotho-analysis }
       - { label: Eswatini CMS inventory, href: ai-old-cms-eswatini }
@@ -431,6 +438,18 @@ search:
     section: LUCT CMS
     summary: Screenshot-based feature and flow analysis for the Lesotho pilot — admissions, registry, NMDS, graduation, student portal, CAP seed.
     keywords: [lesotho, pilot, m4, nmds, lgcse, admissions, registry, screenshots, diagram]
+
+  - title: Lesotho CMS vs Applicant portal
+    href: luct-ls-cms-applicant
+    section: LUCT CMS
+    summary: Standup 8 Oct 2026 — compare newer Lesotho CMS, campus2_lesotho, and Raisd Applicant Demo admissions flows (12-row matrix, roles, M4 gaps).
+    keywords: [lesotho, applicant, admissions, gap, lgcse, offer-letter, eligibility, bursary, m4, standup]
+
+  - title: Lesotho CMS vs Applicant (AI knowledge)
+    href: ai-lesotho-cms-applicant
+    section: AI knowledge
+    summary: Canonical Markdown for the Lesotho CMS vs Raisd Applicant portal flow analysis (8 Oct 2026).
+    keywords: [lesotho, applicant-portal, admissions, gap, lgcse, markdown]
 
   - title: Lesotho database gap
     href: "luct-ls#db-gap"
