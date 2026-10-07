@@ -6,6 +6,8 @@
 **Sister campus dumps:**
 - `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` — [old-cms-sierra-leone.md](old-cms-sierra-leone.md), Pages [`docs/diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/)
 - `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` — [old-cms-botswana.md](old-cms-botswana.md), Pages [`docs/diagrams/old-cms-botswana/`](../../diagrams/old-cms-botswana/) (E2E flow + [DTEF §4](../../diagrams/old-cms-botswana/index.html#dtef)), Markdown [`botswana-dtef-scholarship-sync.md`](botswana-dtef-scholarship-sync.md)
+- `CMS_Eswatini_Source_Codes_&_DB_Structure_23_09_2026` — **LUCT CMS** subsection [old-cms-eswatini.md](old-cms-eswatini.md), Pages [`#eswatini`](../../diagrams/old-cms/index.html#eswatini) · [`old-cms-eswatini/`](../../diagrams/old-cms-eswatini/)
+- `CMS_Cambodia_Source_Codes_&_DB_Structure_07_10_2026` — **LUCT CMS** subsection [old-cms-cambodia.md](old-cms-cambodia.md), Pages [`#cambodia`](../../diagrams/old-cms/index.html#cambodia) · [`old-cms-cambodia/`](../../diagrams/old-cms-cambodia/)
 **New surface:** Raisd **four portals + Portal API** ([SDD-01](../../sdd/01-system-overview.md), [SDD-11](../../sdd/11-capability-catalog.md)) — **not** a greenfield CMS replacement.  
 **GitHub Pages (diagrams + verbose HTML):** [`docs/diagrams/old-cms/`](../../diagrams/old-cms/) — Comparison · FSD · Obsidian 3D · Legacy ERD · Flows · Database (triggers / SPs / batches).
 

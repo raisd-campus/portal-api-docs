@@ -139,13 +139,26 @@ backend:
     pages: ../diagrams/old-cms-lesotho/
     note: Phase R1 read mapping portal_student_*_lesotho + api_student_* → Portal API get* methods.
   - path: backend/old-cms-eswatini.md
-    topics: [existing-cms, eswatini, swaziland, campus2_eswatini, inventory, php-maker, m5, portal, ssb, cap-53]
+    topics: [existing-cms, eswatini, swaziland, campus2_eswatini, inventory, php-maker, m5, portal, ssb, cap-53, luct-cms]
     related:
       - architecture/lesotho-pilot.md
       - backend/old-cms-lesotho.md
       - backend/old-cms-botswana.md
-    pages: ../diagrams/old-cms-eswatini/
-    note: Vara pack 5 Oct 2026 — 472/330/53/3/70; portal_*_eswatini + legacy _swaziland; assist ssb; dump outside git; M5 after Lesotho.
+      - backend/old-cms-cambodia.md
+      - backend/old-cms-cyberjaya.md
+    pages: ../diagrams/old-cms/index.html#eswatini
+    note: LUCT CMS subsection — Vara pack 5 Oct 2026 — 472/330/53/3/70; portal_*_eswatini + legacy _swaziland; assist ssb; dump outside git; M5 after Lesotho.
+  - path: backend/old-cms-cambodia.md
+    topics: [existing-cms, cambodia, campus2_cambodia, inventory, php-maker, m5, portal, assist, cap-53, kh, luct-cms]
+    related:
+      - architecture/lesotho-pilot.md
+      - backend/old-cms-lesotho.md
+      - backend/old-cms-eswatini.md
+      - backend/old-cms-botswana.md
+      - backend/old-cms-cyberjaya.md
+      - backend/cms-feature-comparison.md
+    pages: ../diagrams/old-cms/index.html#cambodia
+    note: LUCT CMS subsection — Vara pack 7 Oct 2026 — 481/296/46/2/83; portal_*_cambodia + portalcambodia export; assist Limkokwing; dump outside git; M5 evidence.
   - path: backend/old-cms-cyberjaya.md
     topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker, e2e, erd, dfd, integrations, adr-1]
     pages: ../diagrams/old-cms/

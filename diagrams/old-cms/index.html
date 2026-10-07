@@ -103,6 +103,13 @@
               </div>
             </div>
             <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">Inventory hub</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
               <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
               <div class="nav-sub-menu" role="menu">
               <a href="index.html">E2E hub</a>
@@ -169,6 +176,8 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
             <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -1307,7 +1316,8 @@ flowchart TB
     <section class="section" id="compare">
       <h2>9. Campus comparison — all aspects</h2>
       <p class="lead">
-        Three LUCT-family dumps side by side. Cyberjaya remains launch SoR; Botswana and Sierra Leone are M5 expansion references.
+        LUCT CMS family dumps side by side. Cyberjaya remains the deep E2E reference;
+        Lesotho is M4 pilot; Botswana, Eswatini, Cambodia, and Sierra Leone are M5 expansion references.
       </p>
 
       <div class="card" style="margin-bottom: 20px">
@@ -1320,17 +1330,26 @@ flowchart TB
         <div class="card-body">
           <pre class="mermaid">
 flowchart TB
-  FAMILY["LUCT / ICA EMS family<br/>PHPMaker · r_/f_/b_"]
-  CYB["Cyberjaya<br/>cmscbj · ADR-1 SoR"]
+  FAMILY["LUCT CMS family<br/>PHPMaker · r_/f_/b_/app_*"]
+  CYB["Cyberjaya<br/>cmscbj · E2E SoR ref"]
+  LES["Lesotho<br/>campus2_lesotho · M4 pilot"]
   BWA["Botswana<br/>cmsbotswana · DTEF"]
+  ESW["Eswatini<br/>campus2_eswatini · ssb"]
+  KH["Cambodia<br/>campus2_cambodia · Limkokwing"]
   SLE["Sierra Leone<br/>ems_sierraleone · CMS-ICA"]
   RAISD["Raisd portals<br/>Portal API · CAP-53"]
 
   FAMILY --> CYB
+  FAMILY --> LES
   FAMILY --> BWA
+  FAMILY --> ESW
+  FAMILY --> KH
   FAMILY --> SLE
-  CYB -->|launch ACL| RAISD
+  LES -->|M4 acceptance| RAISD
+  CYB -.->|M5 expansion| RAISD
   BWA -.->|M5 expansion| RAISD
+  ESW -.->|M5 expansion| RAISD
+  KH -.->|M5 expansion| RAISD
   SLE -.->|M5 expansion| RAISD
           </pre>
         </div>
@@ -1403,6 +1422,74 @@ flowchart TB
           <span>NMDS · LGCSE · dump checklist</span>
         </a>
       </nav>
+    </section>
+
+    <section class="section" id="eswatini">
+      <h2>Eswatini — LUCT CMS subsection</h2>
+      <p class="lead">
+        Sister LUCT CMS dump <code>campus2_eswatini</code> (legacy batch name <em>swaziland</em>).
+        Mid-size PHPMaker sibling for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion —
+        <code>portal_*_eswatini</code> + assist codes <code>ssb</code> / <code>limkokwing</code>.
+        Not the Lesotho M4 acceptance SoR.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">DB <code>campus2_eswatini</code></span>
+        <span class="chip ok">472 tables</span>
+        <span class="chip ok">70 triggers</span>
+        <span class="chip">Dump 5 Oct 2026</span>
+      </div>
+      <nav class="toc" aria-label="Eswatini CMS subsection">
+        <a href="../old-cms-eswatini/index.html">
+          <strong>Inventory hub</strong>
+          <span>Counts · family position · CAP-53 notes</span>
+        </a>
+        <a href="../old-cms-eswatini/CATALOG.md">
+          <strong>Object catalogs</strong>
+          <span>Tables · views · procs · triggers (names only)</span>
+        </a>
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">
+          <strong>AI inventory</strong>
+          <span>old-cms-eswatini.md</span>
+        </a>
+      </nav>
+      <p class="note" style="margin-top: 12px">
+        Also under <strong>LUCT CMS</strong> in the top nav → <em>Eswatini</em> group.
+      </p>
+    </section>
+
+    <section class="section" id="cambodia">
+      <h2>Cambodia — LUCT CMS subsection</h2>
+      <p class="lead">
+        Sister LUCT CMS dump <code>campus2_cambodia</code> (+ nightly export DB <code>portalcambodia</code>).
+        Mid-size PHPMaker sibling for
+        <a href="../../sdd/03-delivery-milestones.html#m5">M5</a> expansion —
+        <code>portal_*_cambodia</code> + assist provider <code>Limkokwing</code>.
+        Not the Lesotho M4 acceptance SoR.
+      </p>
+      <div class="meta-row" style="margin-bottom: 16px">
+        <span class="chip ok">DB <code>campus2_cambodia</code></span>
+        <span class="chip ok">481 tables</span>
+        <span class="chip ok">83 triggers</span>
+        <span class="chip">Dump 7 Oct 2026</span>
+      </div>
+      <nav class="toc" aria-label="Cambodia CMS subsection">
+        <a href="../old-cms-cambodia/index.html">
+          <strong>Inventory hub</strong>
+          <span>Counts · family position · CAP-53 notes</span>
+        </a>
+        <a href="../old-cms-cambodia/CATALOG.md">
+          <strong>Object catalogs</strong>
+          <span>Tables · views · procs · triggers (names only)</span>
+        </a>
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">
+          <strong>AI inventory</strong>
+          <span>old-cms-cambodia.md</span>
+        </a>
+      </nav>
+      <p class="note" style="margin-top: 12px">
+        Also under <strong>LUCT CMS</strong> in the top nav → <em>Cambodia</em> group.
+      </p>
     </section>
 
     <section class="section" id="botswana">

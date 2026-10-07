@@ -1,10 +1,12 @@
-# Existing Eswatini CMS — inventory
+# Existing Eswatini CMS — LUCT CMS inventory
+
+**LUCT CMS subsection:** [`docs/diagrams/old-cms/index.html#eswatini`](../../diagrams/old-cms/index.html#eswatini) · top nav **LUCT CMS → Eswatini**
 
 **Source package:** `CMS_Eswatini_Source_Codes_&_DB_Structure_23_09_2026.zip` (shared by Mohd Paramasvara / Vara, WhatsApp **5 Oct 2026**)  
 **Drive:** `https://drive.google.com/file/d/1xLTPreo4xLAE_IWPoEXmwBtjy1WkiJXP/view?usp=sharing`  
 **Database (structure comments):** `campus2_eswatini`  
 **SQL extract stamps in filenames:** 5 Oct 2026 11:17  
-**Product role:** Sister **LUCT CMS / PHPMaker** campus (legacy batch name still says *swaziland*). **Not** the Lesotho M4 acceptance SoR. Use for [M5](../../sdd/03-delivery-milestones.md#m5) expansion (WG: Eswatini may follow Lesotho). Pair with [old-cms-lesotho.md](old-cms-lesotho.md), [old-cms-botswana.md](old-cms-botswana.md), [old-cms-cyberjaya.md](old-cms-cyberjaya.md).
+**Product role:** **LUCT CMS / PHPMaker** campus dump (legacy batch name still says *swaziland*). Same product family as Cyberjaya / Lesotho / Botswana / Cambodia. **Not** the Lesotho M4 acceptance SoR. Use for [M5](../../sdd/03-delivery-milestones.md#m5) expansion (WG: Eswatini may follow Lesotho). Pair with [old-cms-lesotho.md](old-cms-lesotho.md), [old-cms-botswana.md](old-cms-botswana.md), [old-cms-cambodia.md](old-cms-cambodia.md), [old-cms-cyberjaya.md](old-cms-cyberjaya.md).
 
 **Do not commit** the PHP tree, `eswatinibatch` SQL/logs, credentials, uploads, or live student files. Dump stays under `raisd/_local/eswatini-cms-2026-10-05/` only.
 
@@ -83,6 +85,7 @@ Field-level CAP-53 / `ssb` pass — follow-up (same depth as [lesotho-cap53-read
 | Lesotho pilot (M4 first) | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Lesotho inventory | [old-cms-lesotho.md](old-cms-lesotho.md) |
 | Botswana inventory | [old-cms-botswana.md](old-cms-botswana.md) |
+| Cambodia inventory | [old-cms-cambodia.md](old-cms-cambodia.md) |
 | Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |
 | CAP comparison | [cms-feature-comparison.md](cms-feature-comparison.md) |
 | ESHEC / SZ QA rows | [../../sdd/09-requirements-traceability.md](../../sdd/09-requirements-traceability.md) |

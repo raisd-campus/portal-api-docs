@@ -44,6 +44,7 @@ targets:
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
   luct-sz: diagrams/old-cms-eswatini/index.html
+  luct-kh: diagrams/old-cms-cambodia/index.html
   luct-sl: diagrams/old-cms-sierra-leone/index.html
   luct-sl-database: diagrams/old-cms-sierra-leone/database.html
   ai: ai/index.html
@@ -73,6 +74,7 @@ external:
   ai-cms-comparison: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md
   ai-old-cms-lesotho: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md
   ai-old-cms-eswatini: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md
+  ai-old-cms-cambodia: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
   ai-lesotho-cap53: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md
   ai-luct-online-reg: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md
@@ -91,6 +93,8 @@ path_rules:
     section: luct-ls
   - match: { prefix: diagrams/old-cms-eswatini/ }
     section: luct-sz
+  - match: { prefix: diagrams/old-cms-cambodia/ }
+    section: luct-kh
   - match: { prefix: diagrams/old-cms-botswana/, file: database.html }
     section: luct-bw-database
   - match: { prefix: diagrams/old-cms-botswana/ }
@@ -238,6 +242,7 @@ menu:
       - luct-online-reg-gap
       - luct-ls
       - luct-sz
+      - luct-kh
       - luct-bw
       - luct-bw-database
       - luct-sl
@@ -258,6 +263,11 @@ menu:
         children:
           - { label: Inventory hub, href: luct-sz }
           - { label: AI inventory, href: ai-old-cms-eswatini }
+      - label: Cambodia
+        href: luct-kh
+        children:
+          - { label: Inventory hub, href: luct-kh }
+          - { label: AI inventory, href: ai-old-cms-cambodia }
       - label: Cyberjaya
         href: luct
         children:
@@ -319,6 +329,8 @@ menu:
       - { label: Lesotho DB gap, href: ai-lesotho-db-gap }
       - { label: Lesotho CAP-53 reads, href: ai-lesotho-cap53 }
       - { label: Lesotho analysis briefing, href: report-lesotho-analysis }
+      - { label: Eswatini CMS inventory, href: ai-old-cms-eswatini }
+      - { label: Cambodia CMS inventory, href: ai-old-cms-cambodia }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
   - label: SDD
@@ -431,6 +443,18 @@ search:
     section: AI knowledge
     summary: Full Eswatini old CMS inventory from Vara pack — counts, portal hooks, assist codes, overlap vs LS/BW/CY.
     keywords: [eswatini, swaziland, cms, inventory, cap-53, ssb, m5]
+
+  - title: Cambodia CMS inventory
+    href: luct-kh
+    section: LUCT CMS
+    summary: campus2_cambodia structure inventory (481 tables) — M5 LUCT sibling; portal_*_cambodia; assist Limkokwing.
+    keywords: [cambodia, m5, campus2_cambodia, portal, limkokwing, inventory, luct]
+
+  - title: Cambodia CMS inventory (AI knowledge)
+    href: ai-old-cms-cambodia
+    section: AI knowledge
+    summary: Full Cambodia old CMS inventory from Vara pack — counts, portalcambodia export, assist codes, overlap vs LS/BW/CY/SZ.
+    keywords: [cambodia, cms, inventory, cap-53, limkokwing, m5, luct]
 
   - title: Obsidian 3D FSD — Lesotho
     href: "luct-obsidian?campus=lesotho"

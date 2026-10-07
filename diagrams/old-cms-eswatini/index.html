@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Eswatini CMS inventory</title>
+  <title>Raisd — Eswatini · LUCT CMS inventory</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="../site-auth.js"></script>
 </head>
@@ -103,6 +103,13 @@
               </div>
             </div>
             <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">Inventory hub</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
               <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
               <div class="nav-sub-menu" role="menu">
               <a href="../old-cms/index.html">E2E hub</a>
@@ -169,6 +176,8 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
             <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
           </div>
         </div>
@@ -194,9 +203,9 @@
 
 <main class="page">
   <section class="section">
-    <h1>Eswatini CMS — structure inventory</h1>
+    <h1>Eswatini — LUCT CMS structure inventory</h1>
     <p class="lead">
-      Vara Drive pack (5 Oct 2026): <code>campus2_eswatini</code> — LUCT PHPMaker sibling for
+      Vara Drive pack (5 Oct 2026): <code>campus2_eswatini</code> — <strong>LUCT CMS</strong> PHPMaker sibling for
       <strong>M5</strong> expansion (after Lesotho M4). Dump stays local; catalogs are names only.
     </p>
     <div class="meta-row" style="margin: 0 0 16px">
@@ -206,6 +215,12 @@
       <span class="chip ok">70 triggers</span>
       <span class="chip ok">portal_*_eswatini</span>
       <span class="chip warn">M5 — not M4 SoR</span>
+    </div>
+    <div class="note" style="margin: 0 0 16px">
+      <strong>LUCT CMS subsection.</strong>
+      Connected from the Cyberjaya analysis hub:
+      <a href="../old-cms/index.html#eswatini">LUCT CMS → Eswatini</a>.
+      Use the top nav <strong>LUCT CMS → Eswatini</strong> group.
     </div>
     <div class="note warn" style="margin: 0 0 16px">
       <strong>PII / ops boundary.</strong>
@@ -251,7 +266,7 @@
 </main>
 
 <p class="footer">
-  Eswatini CMS inventory · structure only · 5 Oct 2026 · Vara Drive pack
+  Eswatini · LUCT CMS inventory · structure only · 5 Oct 2026 · Vara Drive pack
 </p>
 <script src="../abbr-tooltips.js" defer></script>
   <script src="../nav-dropdown.js" defer></script>

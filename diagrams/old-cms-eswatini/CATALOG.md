@@ -1,4 +1,4 @@
-# Eswatini old CMS — sanitized object catalogs
+# Eswatini LUCT CMS — sanitized object catalogs
 
 **Schema:** `campus2_eswatini` (structure dump 5 Oct 2026 11:17).  
 **Source pack:** local only (`raisd/_local/eswatini-cms-2026-10-05/` — never commit dump SQL, PHP, or batch logs).

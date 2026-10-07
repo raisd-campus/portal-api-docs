@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Cambodia · LUCT CMS inventory</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Control Plane</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../distributed-cms-architecture.html">Target architecture</a>
+            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a>
+              <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="../old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="../old-cms-lesotho/index.html#cap">CAP seed</a>
+              <a href="../old-cms-lesotho/index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">Inventory hub</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="index.html">Inventory hub</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms-botswana/index.html#dtef">DTEF</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+</header>
+
+<main class="page">
+  <section class="section">
+    <h1>Cambodia — LUCT CMS structure inventory</h1>
+    <p class="lead">
+      Vara Drive pack (7 Oct 2026): <code>campus2_cambodia</code> — <strong>LUCT CMS</strong> PHPMaker sibling for
+      <strong>M5</strong> expansion (after Lesotho M4). Dump stays local; catalogs are names only.
+    </p>
+    <div class="meta-row" style="margin: 0 0 16px">
+      <span class="chip ok">481 tables</span>
+      <span class="chip ok">296 views</span>
+      <span class="chip ok">46 procs</span>
+      <span class="chip ok">83 triggers</span>
+      <span class="chip ok">portal_*_cambodia</span>
+      <span class="chip warn">M5 — not M4 SoR</span>
+    </div>
+    <div class="note" style="margin: 0 0 16px">
+      <strong>LUCT CMS subsection.</strong>
+      Connected from the Cyberjaya analysis hub:
+      <a href="../old-cms/index.html#cambodia">LUCT CMS → Cambodia</a>.
+      Use the top nav <strong>LUCT CMS → Cambodia</strong> group.
+    </div>
+    <div class="note warn" style="margin: 0 0 16px">
+      <strong>PII / ops boundary.</strong>
+      Do not commit PHP, batch logs, or SQL dumps. Pack includes <code>cambodiabatch/logs/</code>.
+      Sanitized inventory:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">old-cms-cambodia.md</a>
+      · <a href="CATALOG.md">CATALOG.md</a>.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Family position</h2>
+    <div class="table-wrap">
+      <table class="attr">
+        <thead>
+          <tr><th>Signal</th><th>Cambodia</th><th>Lesotho</th><th>Botswana</th><th>Cyberjaya</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tables</td><td><strong>481</strong></td><td>369</td><td>713</td><td>~1,942</td></tr>
+          <tr><td>Triggers (in dump)</td><td><strong>83</strong></td><td>0 in file</td><td>157</td><td>~239</td></tr>
+          <tr><td>Portal hooks</td><td><code>portal_*_cambodia</code> (+ <code>portalcambodia</code> export)</td><td><code>portal_*_lesotho</code></td><td><code>portal_*_botswana</code></td><td><code>portal_*_cyberjaya</code></td></tr>
+          <tr><td>Gov / assist</td><td>Assist code <code>Limkokwing</code> (seen)</td><td><strong>NMDS</strong> (<code>nmds</code>)</td><td><strong>DTEF</strong> → tef.gov</td><td>Assist</td></tr>
+          <tr><td>Name overlap vs KH</td><td>—</td><td>~65%</td><td>~68%</td><td>~67%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li>Same LUCT <code>app_*</code> admissions family — not Sierra Leone EMS.</li>
+      <li>CAP-53 reads can follow Lesotho/BW pattern with campus key <code>CAMBODIA</code>.</li>
+      <li>Do <strong>not</strong> reuse Lesotho NMDS, Botswana TEF, or Eswatini <code>ssb</code> clients for Cambodia assist.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Full inventory (old-cms-cambodia.md)</a></li>
+      <li><a href="../old-cms-lesotho/index.html">Lesotho pilot (M4)</a></li>
+      <li><a href="../old-cms-eswatini/index.html">Eswatini</a> · <a href="../old-cms-botswana/index.html">Botswana</a> · <a href="../old-cms/index.html">Cyberjaya</a></li>
+      <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot framing</a> (Cambodia = M5 evidence campus)</li>
+    </ul>
+  </section>
+</main>
+
+<p class="footer">
+  Cambodia · LUCT CMS inventory · structure only · 7 Oct 2026 · Vara Drive pack
+</p>
+<script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+</body>
+</html>

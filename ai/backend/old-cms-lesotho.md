@@ -123,6 +123,8 @@ Vara Drive pack (5 Oct 2026): DB **`campus2_lesotho`** — **369** tables / **35
 | Obsidian 3D | [`docs/diagrams/old-cms/obsidian.html?campus=lesotho`](../../diagrams/old-cms/obsidian.html?campus=lesotho) |
 | Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |
 | Botswana inventory | [old-cms-botswana.md](old-cms-botswana.md) |
+| Eswatini inventory | [old-cms-eswatini.md](old-cms-eswatini.md) |
+| Cambodia inventory | [old-cms-cambodia.md](old-cms-cambodia.md) |
 | Botswana DTEF (≠ NMDS) | [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md) |
 | CAP comparison posture | [cms-feature-comparison.md](cms-feature-comparison.md) |
 | SDD-14 | [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md) |

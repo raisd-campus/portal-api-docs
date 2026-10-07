@@ -223,6 +223,36 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md"
     },
     {
+      "title": "Cambodia CMS inventory",
+      "summary": "campus2_cambodia structure inventory (481 tables) \u2014 M5 LUCT sibling; portal_*_cambodia; assist Limkokwing.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "cambodia",
+        "m5",
+        "campus2_cambodia",
+        "portal",
+        "limkokwing",
+        "inventory",
+        "luct"
+      ],
+      "path": "diagrams/old-cms-cambodia/index.html"
+    },
+    {
+      "title": "Cambodia CMS inventory (AI knowledge)",
+      "summary": "Full Cambodia old CMS inventory from Vara pack \u2014 counts, portalcambodia export, assist codes, overlap vs LS/BW/CY/SZ.",
+      "section": "AI knowledge",
+      "keywords": [
+        "cambodia",
+        "cms",
+        "inventory",
+        "cap-53",
+        "limkokwing",
+        "m5",
+        "luct"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md"
+    },
+    {
       "title": "Obsidian 3D FSD \u2014 Lesotho",
       "summary": "Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
       "section": "LUCT CMS",

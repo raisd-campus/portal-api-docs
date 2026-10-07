@@ -24,7 +24,8 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)
-   - Eswatini CMS inventory (M5 pattern; may follow Lesotho) → [backend/old-cms-eswatini.md](backend/old-cms-eswatini.md)
+   - Eswatini LUCT CMS inventory (M5; LUCT CMS → Eswatini) → [backend/old-cms-eswatini.md](backend/old-cms-eswatini.md), Pages [`../diagrams/old-cms/index.html#eswatini`](../diagrams/old-cms/index.html#eswatini)
+   - Cambodia LUCT CMS inventory (M5; LUCT CMS → Cambodia) → [backend/old-cms-cambodia.md](backend/old-cms-cambodia.md), Pages [`../diagrams/old-cms/index.html#cambodia`](../diagrams/old-cms/index.html#cambodia)
    - Botswana DTEF / TEF.gov.bw scholarship sync → [backend/botswana-dtef-scholarship-sync.md](backend/botswana-dtef-scholarship-sync.md)
 4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.

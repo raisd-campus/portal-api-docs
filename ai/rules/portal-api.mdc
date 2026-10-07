@@ -1,0 +1,21 @@
+---
+description: Portal API service constraints (canonical rule extract)
+alwaysApply: true
+---
+
+# Portal API (canonical rule extract)
+
+Full instructions: `docs/ai/backend/portal-api.md` and campus `docs/ai/AGENTS.md` in control-plane.
+Plan: `docs/ai/backend/portal-api-development-plan.md`. Deployment: `portal-api-deployment.md`. PoC: `portal-api-poc-requirements.md`.
+
+Fastify + TypeScript + Zod. RPC over `POST /v1/portal/:method` with `{ "args": [...] }` and a bearer token.
+
+- The contract is `control-plane/openapi.yaml`. Change handlers and the spec together; never add a second spec in this repo.
+- Student-portal `PortalApi` method names and Zod shapes are the client contract. Changing them is a cross-repo change recorded in `portal-api.md`.
+- Only this service holds `DATABASE_URL`, CMS credentials, or evidence-store credentials. Portals never talk to Postgres or the CMS.
+- Return write success only after the CMS acknowledges (once a CMS adapter exists). A CMS rejection is a failed save, never a mock success.
+- Authorise on the server: role and campus on every read and write. Student tokens must not work as staff tokens.
+- While `cms.mode` is `stub`, everything is Demo. Do not label anything Live.
+- Production hosting is UltaHost + k3s (SDD-12). Vercel + Neon is PoC-only.
+- Never commit `.env`, CMS credentials, kubeconfigs, connection strings, or real student data. Never log bearer tokens or file bytes.
+- Keep `docs/` working copies in sync with the canonical files in control-plane `docs/ai/backend/`.

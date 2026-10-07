@@ -77,6 +77,9 @@ jobs:
           test -f _site/diagrams/old-cms-botswana/database.html
           test -f _site/diagrams/old-cms-sierra-leone/index.html
           test -f _site/diagrams/old-cms-lesotho/index.html
+          test -f _site/diagrams/old-cms-eswatini/index.html
+          test -f _site/diagrams/old-cms-cambodia/index.html
+          test -f _site/ai/backend/old-cms-cambodia.md
           test -f _site/diagrams/old-cms/fsd-knowledge-lesotho.json
           test -f _site/diagrams/old-cms/obsidian.html
           test -f _site/diagrams/old-cms/online-registration.html
