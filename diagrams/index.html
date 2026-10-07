@@ -208,6 +208,8 @@
         <span class="chip ok">This phase: campus CMS family = SoR</span>
         <span class="chip ok">Four portals via Portal API</span>
         <span class="chip warn">Live checklist: 0%</span>
+        <span class="chip">FE Demo depth: ~36%</span>
+        <span class="chip ok">Platform: ~72%</span>
         <span class="chip">Ideal: one CMS · country DBs</span>
       </div>
     </section>
@@ -227,9 +229,10 @@
     <section class="section" id="progress">
       <h2>Project progress (high level)</h2>
       <p class="lead">
-        Snapshot for sponsor weekly % reporting. Checklist figures from
+        Snapshot for sponsor weekly % reporting. Checklist Live from
         <a href="../sdd/13-progress-timeline.html">SDD-13</a> (sheet 19 Sep 2026).
-        Platform readiness includes work since then (Schema v3, Portal API docs, Lesotho pilot inventory).
+        FE Demo depth and platform readiness include engineering work through
+        <strong>7 Oct 2026</strong> (Schema v4, Applicant Demo HTTP, Lesotho inventory).
         <strong>Live = 0%</strong> until durable CMS-backed journeys pass acceptance.
       </p>
 
@@ -240,18 +243,18 @@
           <span>0 of 112 rows Live</span>
         </div>
         <div class="progress-kpi">
-          <span>Frontend started</span>
-          <strong>31%</strong>
-          <span>32 of 103 applicable (Demo/Partial/Placeholder)</span>
+          <span>Frontend Demo depth</span>
+          <strong>~36%</strong>
+          <span>37 of 103 applicable (Demo/Partial/Placeholder)</span>
         </div>
         <div class="progress-kpi ok">
           <span>Platform readiness</span>
-          <strong>~65%</strong>
-          <span>Schema · API · docs · inventories</span>
+          <strong>~72%</strong>
+          <span>Schema v4 · API · docs · Demo host</span>
         </div>
         <div class="progress-kpi">
           <span>Lesotho pilot (M4)</span>
-          <strong>~20%</strong>
+          <strong>~22%</strong>
           <span>Decided · analysed · not Live</span>
         </div>
       </div>
@@ -272,23 +275,23 @@ xychart-beta
   title "Milestone progress %"
   x-axis [M1, M2, M3, M4, M5]
   y-axis "%" 0 --> 100
-  bar "FE started %" [0, 22, 31, 0, 35]
-  bar "Platform readiness %" [45, 20, 40, 20, 25]
+  bar "FE Demo depth %" [0, 50, 31, 0, 35]
+  bar "Platform readiness %" [50, 40, 45, 22, 28]
               </pre>
             </div>
             <div class="series-swatches" aria-label="Bar chart colour key">
               <strong class="series-swatches-label">Colour key</strong>
-              <span class="series-swatch"><i class="swatch swatch-fe" aria-hidden="true"></i> FE started %</span>
+              <span class="series-swatch"><i class="swatch swatch-fe" aria-hidden="true"></i> FE Demo depth %</span>
               <span class="series-swatch"><i class="swatch swatch-platform" aria-hidden="true"></i> Platform readiness %</span>
             </div>
             <div class="legend" aria-label="Bar chart series key">
               <div class="legend-item">
-                <strong>FE started %</strong>
-                <span>Share of applicable checklist rows with Demo / Partial / Placeholder frontend (<a href="../sdd/13-progress-timeline.html">SDD-13</a>). Not Live.</span>
+                <strong>FE Demo depth %</strong>
+                <span>Share of applicable rows with Demo / Partial / Placeholder in the estate (sheet baseline + Applicant Demo through 7 Oct). Not Live.</span>
               </div>
               <div class="legend-item">
                 <strong>Platform readiness %</strong>
-                <span>Estimate of schema, Portal API, docs, and campus inventories ready for integration — not acceptance.</span>
+                <span>Estimate of schema, Portal API, docs, Demo hosting, and campus inventories ready for integration — not acceptance.</span>
               </div>
               <div class="legend-item">
                 <strong>Live checklist</strong>
@@ -309,50 +312,51 @@ xychart-beta
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m1">M1</a> Confirm rules &amp; integration</td>
                     <td><strong>0%</strong></td>
-                    <td><strong>~45%</strong></td>
+                    <td><strong>~50%</strong></td>
                     <td>
                       Almost no frontend rows on the sheet (operating / rules milestone).
-                      Platform ~45% reflects ADR-1 confirmed, Schema v3 Demo, CAP-53 Partial, and architecture docs —
+                      Platform ~50% reflects ADR-1, Schema v4 Demo, CAP-53 Partial, and architecture docs —
                       while owners, target weeks, and backend commitment remain TBC.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions launch</td>
-                    <td><strong>22%</strong></td>
-                    <td><strong>~20%</strong></td>
+                    <td><strong>~50%</strong></td>
+                    <td><strong>~40%</strong></td>
                     <td>
-                      FE 22% = <strong>4 of 18</strong> applicable admissions rows started (mostly student-side placeholders:
-                      sign-in, accessibility, privacy). Applicant and staff halves are not started.
-                      Platform ~20% = Portal API / CAP-53 Partial exists, but real CMS-backed apply→enrol is not Live.
+                      FE ~50% = <strong>9 of 18</strong> applicable admissions rows with Demo depth
+                      (4 student-side sheet starts + 5 Applicant Demo capabilities with hosted HTTP).
+                      Staff admissions review remains not started. Platform ~40% = Applicant Demo HTTP + schema v4;
+                      real CMS-backed apply→enrol is not Live.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core student portal</td>
                     <td><strong>31%</strong></td>
-                    <td><strong>~40%</strong></td>
+                    <td><strong>~45%</strong></td>
                     <td>
                       FE 31% = <strong>16 of 51</strong> applicable rows started — student Demo/Partial screens are deepest.
-                      Lecturer and staff paths for the same CAPs are still 0. Platform ~40% reflects student portal UI +
-                      Schema academic model, but durable CMS writes and cross-role Live journeys are ahead.
+                      Lecturer and staff paths for the same CAPs are still 0. Platform ~45% reflects student portal UI +
+                      Schema v4 academic/profile model; durable CMS writes and cross-role Live journeys are ahead.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m4">M4</a> Lesotho pilot acceptance</td>
                     <td><strong>0%</strong></td>
-                    <td><strong>~20%</strong></td>
+                    <td><strong>~22%</strong></td>
                     <td>
                       FE 0% — acceptance / training row, not a UI feature pack on the sheet.
-                      Platform ~20% = pilot decided (3 Oct), screenshot inventory + DB gap probe published;
+                      Platform ~22% = pilot decided (3 Oct), screenshot inventory + DB gap probe published;
                       Live SoR path undecided, old CMS dump pending, NMDS/LGCSE/Loti parity not yet Live.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m5">M5</a> Campus expansion</td>
                     <td><strong>35%</strong></td>
-                    <td><strong>~25%</strong></td>
+                    <td><strong>~28%</strong></td>
                     <td>
                       FE 35% = <strong>12 of 34</strong> applicable expansion rows started on the sheet
-                      (not a licence to pull M5 ahead of admissions). Platform ~25% = Cyberjaya / Botswana / Sierra Leone
+                      (not a licence to pull M5 ahead of admissions). Platform ~28% = Cyberjaya / Botswana / Sierra Leone
                       inventories and dumps analysed for later rollout; no campus Live acceptance yet.
                     </td>
                   </tr>
@@ -422,7 +426,14 @@ xychart-beta
                     <td><strong>~65%</strong></td>
                     <td><strong>31%</strong></td>
                     <td><strong>0%</strong></td>
-                    <td>Current estimate: platform ~65%, FE started still 31% (19 Sep sheet), Live still 0%.</td>
+                    <td>Prior cut: platform ~65%, FE still sheet-flat at 31%, Live still 0%.</td>
+                  </tr>
+                  <tr>
+                    <td>7 Oct 2026</td>
+                    <td><strong>~72%</strong></td>
+                    <td><strong>~36%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Current cut: Schema v4 + Applicant Demo HTTP hosted; FE Demo depth lifts on admissions; Live still 0%.</td>
                   </tr>
                 </tbody>
               </table>
@@ -430,11 +441,11 @@ xychart-beta
             <div class="legend" aria-label="Readiness table series key" style="margin-top:12px">
               <div class="legend-item">
                 <strong>Platform readiness</strong>
-                <span>Estimate rising with architecture review, campus dumps, Schema v3, and Lesotho pilot analysis (18 Sep → 5 Oct) — not acceptance.</span>
+                <span>Estimate rising with architecture review, campus dumps, Schema v4, Applicant Demo HTTP, and Lesotho pilot analysis (18 Sep → 7 Oct) — not acceptance.</span>
               </div>
               <div class="legend-item">
-                <strong>FE started (sheet)</strong>
-                <span>Flat at <strong>31%</strong> — checklist frontend statuses have not moved since the 19 Sep snapshot.</span>
+                <strong>FE Demo depth</strong>
+                <span>Moves to <strong>~36%</strong> on 7 Oct when five Applicant Demo capabilities are counted; WG sheet export remains 19 Sep.</span>
               </div>
               <div class="legend-item">
                 <strong>Checklist Live</strong>
@@ -449,7 +460,8 @@ xychart-beta
             <div>
               <h3>Pie — work mix (applicable rows)</h3>
               <p>
-                Snapshot from <a href="../sdd/13-progress-timeline.html">SDD-13</a> (sheet 19 Sep 2026).
+                Engineering Demo cut 7 Oct 2026 (sheet baseline from
+                <a href="../sdd/13-progress-timeline.html">SDD-13</a> plus Applicant Demo).
                 Slice counts sum to <strong>103</strong> applicable frontend rows (M2+M3+M5).
                 Live = <strong>0</strong> is omitted from the pie.
               </p>
@@ -459,11 +471,12 @@ xychart-beta
             <pre class="mermaid">
 %%{init: {'pie': {'textPosition': 0.5}, 'themeVariables': {'pieOuterStrokeWidth': '2px', 'fontSize': '16px'}}}%%
 pie showData
-  title Applicable frontend rows by portal (103 total; Live 0 omitted)
+  title Applicable frontend rows by portal (103 total; Live 0 omitted · cut 7 Oct)
   "Started — Student" : 31
   "Started — Shared (CAP-53)" : 1
+  "Started — Applicant" : 5
   "Not started — Student" : 9
-  "Not started — Applicant" : 7
+  "Not started — Applicant" : 2
   "Not started — Lecturer" : 18
   "Not started — Admin/staff" : 37
             </pre>
@@ -480,7 +493,13 @@ pie showData
                 <strong>Started — Shared (CAP-53) · 1</strong>
                 <span>
                   Portal API / integration capability marked Partial on the shared-system row.
-                  Counts toward the global <strong>32 started</strong> total with the 31 student rows.
+                </span>
+              </div>
+              <div class="legend-item">
+                <strong>Started — Applicant · 5</strong>
+                <span>
+                  Engineering Demo cut 7 Oct: sign-in, application, evidence, track/accept enrolment, and declarations
+                  with hosted Applicant HTTP. <strong>Not Live</strong>. WG sheet export still shows Applicant Not started.
                 </span>
               </div>
               <div class="legend-item">
@@ -488,8 +507,8 @@ pie showData
                 <span>Student portal applicable rows with no frontend start yet (of 40 student applicable).</span>
               </div>
               <div class="legend-item">
-                <strong>Not started — Applicant · 7</strong>
-                <span>Entire applicant portal applicable set is untouched (0 of 7 started) — critical path for M2 admissions.</span>
+                <strong>Not started — Applicant · 2</strong>
+                <span>Residual applicant applicable rows (e.g. announcements / mobile shell depth) still not started.</span>
               </div>
               <div class="legend-item">
                 <strong>Not started — Lecturer · 18</strong>
@@ -506,13 +525,13 @@ pie showData
               <div class="legend-totals" role="note" aria-label="Totals check">
                 <strong>Totals check</strong>
                 <div class="legend-totals-line">
-                  <span>Started <strong>31 + 1 = 32</strong></span>
+                  <span>Started <strong>31 + 1 + 5 = 37</strong></span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
-                  <span>Not started <strong>9 + 7 + 18 + 37 = 71</strong></span>
+                  <span>Not started <strong>9 + 2 + 18 + 37 = 66</strong></span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
-                  <span><strong>32 + 71 = 103</strong> applicable</span>
+                  <span><strong>37 + 66 = 103</strong> applicable</span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
-                  <span><strong>32 ÷ 103 ≈ 31%</strong> (matches KPI and bar chart)</span>
+                  <span><strong>37 ÷ 103 ≈ 36%</strong> (matches KPI and bar chart)</span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
                   <span>Backend Needs checking on every applicable row</span>
                 </div>
@@ -548,11 +567,11 @@ pie showData
                     <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions</td>
                     <td>23</td>
                     <td>18</td>
-                    <td><strong>4</strong></td>
-                    <td><strong>14</strong></td>
+                    <td><strong>9</strong></td>
+                    <td><strong>9</strong></td>
                     <td>0</td>
-                    <td><strong>22%</strong> (4÷18)</td>
-                    <td>Student-side starts only; applicant + staff halves not started</td>
+                    <td><strong>~50%</strong> (9÷18)</td>
+                    <td>4 student-side sheet starts + 5 Applicant Demo; staff half not started</td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core portal</td>
