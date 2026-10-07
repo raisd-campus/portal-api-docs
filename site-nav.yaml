@@ -263,6 +263,7 @@ menu:
         children:
           - { label: Feature analysis, href: luct-ls }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=lesotho" }
+          - { label: Flows, href: "luct-ls#admissions" }
           - { label: Why pilot, href: "luct-ls#why" }
           - { label: Admissions, href: "luct-ls#admissions" }
           - { label: Registry / NMDS, href: "luct-ls#registry" }
@@ -286,6 +287,7 @@ menu:
           - { label: E2E hub, href: luct-sz }
           - { label: FSD, href: "luct-sz#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=eswatini" }
+          - { label: Flows, href: "luct-sz#flows" }
           - { label: Integrations, href: "luct-sz#integrations" }
           - { label: ERD, href: "luct-sz#erd" }
           - { label: Database, href: luct-sz-database }
@@ -296,6 +298,7 @@ menu:
           - { label: E2E hub, href: luct-kh }
           - { label: FSD, href: "luct-kh#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=cambodia" }
+          - { label: Flows, href: "luct-kh#flows" }
           - { label: Integrations, href: "luct-kh#integrations" }
           - { label: ERD, href: "luct-kh#erd" }
           - { label: Database, href: luct-kh-database }
@@ -306,6 +309,7 @@ menu:
           - { label: E2E hub, href: luct-bw }
           - { label: FSD, href: "luct-bw#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=botswana" }
+          - { label: Flows, href: "luct-bw#flows" }
           - { label: DTEF, href: "luct-bw#dtef" }
           - { label: ERD, href: "luct-bw#erd" }
           - { label: Database, href: luct-bw-database }
@@ -316,6 +320,7 @@ menu:
           - { label: E2E hub, href: luct-sl }
           - { label: FSD, href: "luct-sl#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=sierra-leone" }
+          - { label: Flows, href: "luct-sl#flows" }
           - { label: Integrations, href: "luct-sl#integrations" }
           - { label: ERD, href: "luct-sl#erd" }
           - { label: Database, href: luct-sl-database }
@@ -463,6 +468,12 @@ search:
     summary: campus2_eswatini E2E — lifecycle, desks, flows, ERD/DFD, database (472 tables); portal_*_eswatini; assist ssb (not NMDS/DTEF).
     keywords: [eswatini, swaziland, m5, campus2_eswatini, portal, ssb, inventory, e2e, erd, dfd]
 
+  - title: Eswatini process flows
+    href: "luct-sz#flows"
+    section: LUCT CMS
+    summary: Admissions, academic term, finance/assist, and student-life process flows for campus2_eswatini.
+    keywords: [eswatini, flows, admissions, academic, finance, assist]
+
   - title: Eswatini CMS inventory (AI knowledge)
     href: ai-old-cms-eswatini
     section: AI knowledge
@@ -474,6 +485,12 @@ search:
     section: LUCT CMS
     summary: campus2_cambodia E2E — lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing.
     keywords: [cambodia, m5, campus2_cambodia, portal, limkokwing, inventory, luct, e2e, erd, dfd]
+
+  - title: Cambodia process flows
+    href: "luct-kh#flows"
+    section: LUCT CMS
+    summary: Admissions, academic term, finance/assist, and student-life process flows for campus2_cambodia.
+    keywords: [cambodia, flows, admissions, academic, finance, assist]
 
   - title: Cambodia CMS inventory (AI knowledge)
     href: ai-old-cms-cambodia
@@ -583,6 +600,12 @@ search:
     summary: Cyberjaya old CMS end-to-end hub — FSD, flows, ERD, database, and comparison.
     keywords: [cyberjaya, cmscbj, legacy, php-maker]
 
+  - title: Cyberjaya process flows
+    href: "luct#flows"
+    section: LUCT CMS
+    summary: Admissions, academic term, finance/payment, and student-life process flows for cmscbj.
+    keywords: [cyberjaya, flows, admissions, academic, finance]
+
   - title: LUCT online registration (Cyberjaya)
     href: luct-online-reg
     section: LUCT CMS
@@ -631,6 +654,12 @@ search:
     summary: Botswana campus CMS inventory including DTEF scholarship sync context.
     keywords: [botswana, luct, dtef, tef]
 
+  - title: Botswana process flows
+    href: "luct-bw#flows"
+    section: LUCT CMS
+    summary: Admissions, academic term, finance/assist, and student-life process flows for cmsbotswana.
+    keywords: [botswana, flows, admissions, academic, finance, assist]
+
   - title: Botswana DTEF
     href: "luct-bw#dtef"
     section: LUCT CMS
@@ -642,6 +671,12 @@ search:
     section: LUCT CMS
     summary: Sierra Leone CMS inventory hub with FSD, ERD, and database anchors.
     keywords: [sierra-leone, ems, ica]
+
+  - title: Sierra Leone process flows
+    href: "luct-sl#flows"
+    section: LUCT CMS
+    summary: Admissions, academic term, finance/assist, and student-life process flows for ems_sierraleone.
+    keywords: [sierra-leone, flows, admissions, academic, finance, assist]
 
   - title: Design system
     href: design-system

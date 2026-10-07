@@ -211,6 +211,20 @@
       "path": "diagrams/old-cms-eswatini/index.html"
     },
     {
+      "title": "Eswatini process flows",
+      "summary": "Admissions, academic term, finance/assist, and student-life process flows for campus2_eswatini.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "eswatini",
+        "flows",
+        "admissions",
+        "academic",
+        "finance",
+        "assist"
+      ],
+      "path": "diagrams/old-cms-eswatini/index.html#flows"
+    },
+    {
       "title": "Eswatini CMS inventory (AI knowledge)",
       "summary": "Full Eswatini old CMS inventory from Vara pack \u2014 counts, portal hooks, assist codes, overlap vs LS/BW/CY.",
       "section": "AI knowledge",
@@ -242,6 +256,20 @@
         "dfd"
       ],
       "path": "diagrams/old-cms-cambodia/index.html"
+    },
+    {
+      "title": "Cambodia process flows",
+      "summary": "Admissions, academic term, finance/assist, and student-life process flows for campus2_cambodia.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "cambodia",
+        "flows",
+        "admissions",
+        "academic",
+        "finance",
+        "assist"
+      ],
+      "path": "diagrams/old-cms-cambodia/index.html#flows"
     },
     {
       "title": "Cambodia CMS inventory (AI knowledge)",
@@ -509,6 +537,19 @@
       "path": "diagrams/old-cms/index.html"
     },
     {
+      "title": "Cyberjaya process flows",
+      "summary": "Admissions, academic term, finance/payment, and student-life process flows for cmscbj.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "cyberjaya",
+        "flows",
+        "admissions",
+        "academic",
+        "finance"
+      ],
+      "path": "diagrams/old-cms/index.html#flows"
+    },
+    {
       "title": "LUCT online registration (Cyberjaya)",
       "summary": "Captured applicant wizard and enrolled Add/Drop procedures from LKW PDF and Student Portal Forms \u2014 CAP-02/03/07/10 field checklist; Malaysia EMGS/NOC \u2260 Lesotho NMDS/LGCSE.",
       "section": "LUCT CMS",
@@ -635,6 +676,20 @@
       "path": "diagrams/old-cms-botswana/index.html"
     },
     {
+      "title": "Botswana process flows",
+      "summary": "Admissions, academic term, finance/assist, and student-life process flows for cmsbotswana.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "botswana",
+        "flows",
+        "admissions",
+        "academic",
+        "finance",
+        "assist"
+      ],
+      "path": "diagrams/old-cms-botswana/index.html#flows"
+    },
+    {
       "title": "Botswana DTEF",
       "summary": "DTEF / TEF.gov.bw scholarship sync notes on the Botswana hub.",
       "section": "LUCT CMS",
@@ -655,6 +710,20 @@
         "ica"
       ],
       "path": "diagrams/old-cms-sierra-leone/index.html"
+    },
+    {
+      "title": "Sierra Leone process flows",
+      "summary": "Admissions, academic term, finance/assist, and student-life process flows for ems_sierraleone.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "sierra-leone",
+        "flows",
+        "admissions",
+        "academic",
+        "finance",
+        "assist"
+      ],
+      "path": "diagrams/old-cms-sierra-leone/index.html#flows"
     },
     {
       "title": "Design system",
