@@ -272,7 +272,7 @@
     <nav class="toc" aria-label="Analysis sections">
       <a href="#readai"><strong>1. Read.ai standup</strong><span>Actions · chapters · open Qs</span></a>
       <a href="#expectations"><strong>2. Expectations</strong><span>Meeting → Applicant now</span></a>
-      <a href="#flows"><strong>3. Three flows</strong><span>Newer CMS · old CMS · Raisd Demo</span></a>
+      <a href="#flows"><strong>3. Three flows</strong><span>Mermaid · A · B · C</span></a>
       <a href="#matrix"><strong>4. Step matrix</strong><span>13 rows · verdict · M4 note</span></a>
       <a href="#roles"><strong>5. Roles</strong><span>Bursary · QA · Registry · Applicant</span></a>
       <a href="#gaps"><strong>6. Critical gaps</strong><span>LGCSE · LSL · Staff · hosted</span></a>
@@ -384,41 +384,122 @@
       </div>
 
       <div class="card">
+        <div class="card-head"><div><h3>Overview — three admissions paths</h3></div></div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph A["[A] Newer Lesotho CMS — staff-centric"]
+    direction LR
+    A1[Applicant record] --> A2[Document Review<br/>LGCSE extract]
+    A2 --> A3[Admissions Review<br/>Academic → QA → Registrar]
+    A3 --> A4[Payment VERIFIED<br/>Loti M]
+    A4 --> A5[Accepted / enrolled]
+  end
+  subgraph B["[B] Older campus2_lesotho — online + staff"]
+    direction LR
+    B1[Online apply<br/>app_* SPs] --> B2[LGCSE + fee proof]
+    B2 --> B3[Faculty → AQA → Registry]
+    B3 --> B4[Offer letter]
+    B4 --> B5[Student create]
+  end
+  subgraph C["[C] Raisd Applicant Demo — after Faid 8 Oct"]
+    direction LR
+    C1[Six-step editor] --> C2[Submit]
+    C2 --> C3[Bursary → QA → Confirm → Offer]
+    C3 --> C4[Accept enrolment]
+    C4 --> C5[Handoff v2 → Student]
+  end
+          </pre>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
         <div class="card-head"><div><h3>[A] Newer Lesotho CMS — staff-centric</h3></div></div>
         <div class="card-body">
-          <pre style="white-space:pre-wrap;margin:0;font-size:14px;line-height:1.45">Applicant record (programme · score · rank · intake)
-  → Document Review (LGCSE scan + extract, Sesotho subjects)
-  → Admissions Review
-       Academic recommend → QA recommend → Registrar recommend
-  → Admissions payment VERIFIED (Loti M)
-  → Accepted / enrolled</pre>
+          <pre class="mermaid">
+flowchart TD
+  REC["Applicant record<br/>programme · score · rank · intake"]
+  DOC["Document Review<br/>LGCSE scan + extract · Sesotho subjects"]
+  subgraph REVIEW["Admissions Review"]
+    direction LR
+    ACAD[Academic recommend] --> QA[QA recommend] --> REG[Registrar recommend]
+  end
+  PAY["Admissions payment VERIFIED<br/>Loti M"]
+  DONE["Accepted / enrolled<br/>offer artefacts campus-local"]
+
+  REC --> DOC --> REVIEW --> PAY --> DONE
+          </pre>
+          <p style="margin:12px 0 0">Staff desks: Admissions Review, Document Review, Applicants, Payments, Intake/Certificate settings.</p>
         </div>
       </div>
 
       <div class="card" style="margin-top:12px">
         <div class="card-head"><div><h3>[B] Older Lesotho CMS — online + staff statuses</h3></div></div>
         <div class="card-body">
-          <pre style="white-space:pre-wrap;margin:0;font-size:14px;line-height:1.45">Applicant UI → app_applicationform_online (+ education/guardian SPs)
-  + LGCSE docs (app_docfile / flat Subject1–6)
-  + fee proof (b_paymentverification, LSL/M)
-  → FacultyStatus → AQA* → RegistryStatus
-  → Offer (r_stdofferletter*) → student create</pre>
+          <pre class="mermaid">
+flowchart TD
+  UI[Applicant UI]
+  ONLINE["app_applicationform_online<br/>+ education / guardian SPs"]
+  DOCS["LGCSE docs<br/>app_docfile · Subject1–6"]
+  FEE["Fee proof<br/>b_paymentverification · LSL/M"]
+  subgraph STAFF["Staff statuses"]
+    direction LR
+    FAC[FacultyStatus] --> AQA[AQA*] --> REGST[RegistryStatus]
+  end
+  OFFER["Offer<br/>r_stdofferletter*"]
+  STU[Student create]
+  LATER[Later enrolment / NMDS]
+
+  UI --> ONLINE
+  ONLINE --> DOCS
+  ONLINE --> FEE
+  DOCS --> STAFF
+  FEE --> STAFF
+  STAFF --> OFFER --> STU --> LATER
+          </pre>
           <p style="margin:12px 0 0">SPs: <code>InsertOnlineApp*</code>, <code>UpdateOnlineApp*</code>, <code>FetchOnline*</code>. Rank/score not in old dump.</p>
         </div>
       </div>
 
       <div class="card" style="margin-top:12px">
-        <div class="card-head"><div><h3>[C] Raisd Applicant Demo — after Faid 8 Oct</h3></div></div>
+        <div class="card-head"><div><h3>[C] Raisd Applicant Demo — apply steps</h3></div></div>
         <div class="card-body">
-          <pre style="white-space:pre-wrap;margin:0;font-size:14px;line-height:1.45">Sign-in → Consent → Study (Campus* + type + 3 prefs) → Personal → Academic → Documents → Fee
-  → Submit → Application Progress
-       1. Payment Proof — Bursary
-       2. Document Check — QA → DEMO Eligibility Letter
-       3. Confirm Eligibility — Applicant
-       4. Offer Letter — Registry → Accept Enrolment
-  → Handoff v2 → Student Documents (local mock)
+          <pre class="mermaid">
+flowchart LR
+  LOGIN[Sign-in<br/>Demo accounts] --> CONSENT[Consent]
+  CONSENT --> STUDY["Study<br/>Campus* · type · 3 prefs"]
+  STUDY --> PERS[Personal]
+  PERS --> ACAD[Academic]
+  ACAD --> DOCS[Documents]
+  DOCS --> FEE[Fee]
+  FEE --> SUB[Submit]
+          </pre>
+          <p style="margin:12px 0 0">* Campus, Alumni Previous Student ID, and letter workflow: <strong>local mock only</strong>. Hosted HTTP shows an unavailable notice.</p>
+        </div>
+      </div>
 
-* Campus, Alumni ID, letters: local mock only. Hosted shows unavailable notice.</pre>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>[C] Raisd Applicant Demo — Application Progress → Student</h3></div></div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  SUB[Submitted application]
+  subgraph PROG["Application Progress — four rows"]
+    direction TB
+    P1["1 · Payment Proof<br/>Bursary verify-payment"]
+    P2["2 · Document Check<br/>QA → DEMO Eligibility Letter"]
+    P3["3 · Confirm Eligibility<br/>Applicant confirmApplicationEligibility"]
+    P4["4 · Offer Letter<br/>Registry release-offer"]
+    P1 --> P2 --> P3 --> P4
+  end
+  ACCEPT[Accept Enrolment]
+  LOGOUT[Auto logout · Sign in]
+  HAND["Handoff v2<br/>campus + letters"]
+  STU["Student Profile Documents<br/>Offer then Eligibility — local mock"]
+
+  SUB --> PROG
+  P4 --> ACCEPT --> LOGOUT --> HAND --> STU
+          </pre>
           <p style="margin:12px 0 0">Live Demo URL: <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a>. Faid merge <code>9e007f2</code> + review clarifications on <code>main</code>.</p>
         </div>
       </div>
@@ -539,6 +620,35 @@
     <section class="section" id="roles">
       <h2>5. Role mapping</h2>
       <div class="card">
+        <div class="card-head"><div><h3>Lesotho CMS desks → Raisd Demo progress</h3></div></div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph CMS["Lesotho CMS"]
+    direction TB
+    CB[Bursary / payment]
+    CQ[Document / QA desks]
+    CF[Faculty / Academic]
+    CR[Registrar / Registry]
+    CA[Applicant]
+  end
+  subgraph DEMO["Raisd Demo progress rows"]
+    direction TB
+    DB["Payment Proof — Bursary"]
+    DQ["Document Check — QA<br/>+ Eligibility Letter"]
+    DF["No applicant row<br/>Staff / CMS only"]
+    DR["Prepare and Release Offer"]
+    DA["Confirm and Proceed<br/>Demo gate"]
+  end
+  CB -->|aligned| DB
+  CQ -->|aligned| DQ
+  CF -.->|gap| DF
+  CR -->|aligned| DR
+  CA -->|Demo-only| DA
+          </pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
         <div class="card-body" style="overflow-x:auto">
           <table class="data">
             <thead>
@@ -663,6 +773,24 @@
     <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a>
   </p>
   <script src="../abbr-tooltips.js" defer></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
   <script src="../nav-dropdown.js" defer></script>
   <script src="../site-search.js" defer></script>
 </body>
