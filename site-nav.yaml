@@ -266,6 +266,18 @@ menu:
           - { label: Registry / NMDS, href: "luct-ls#registry" }
           - { label: CAP seed, href: "luct-ls#cap" }
           - { label: Database gap, href: "luct-ls#db-gap" }
+      - label: Cyberjaya
+        href: luct
+        children:
+          - { label: E2E hub, href: luct }
+          - { label: Online registration, href: luct-online-reg }
+          - { label: Registration FE gaps, href: luct-online-reg-gap }
+          - { label: FSD, href: "luct#fsd" }
+          - { label: Obsidian 3D, href: "luct-obsidian?campus=cyberjaya" }
+          - { label: Flows, href: "luct#flows" }
+          - { label: ERD, href: "luct#erd" }
+          - { label: Database, href: "luct#database" }
+          - { label: Comparison, href: "luct#compare" }
       - label: Eswatini
         href: luct-sz
         children:
@@ -286,18 +298,6 @@ menu:
           - { label: ERD, href: "luct-kh#erd" }
           - { label: Database, href: luct-kh-database }
           - { label: AI inventory, href: ai-old-cms-cambodia }
-      - label: Cyberjaya
-        href: luct
-        children:
-          - { label: E2E hub, href: luct }
-          - { label: Online registration, href: luct-online-reg }
-          - { label: Registration FE gaps, href: luct-online-reg-gap }
-          - { label: FSD, href: "luct#fsd" }
-          - { label: Obsidian 3D, href: "luct-obsidian?campus=cyberjaya" }
-          - { label: Flows, href: "luct#flows" }
-          - { label: ERD, href: "luct#erd" }
-          - { label: Database, href: "luct#database" }
-          - { label: Comparison, href: "luct#compare" }
       - label: Botswana
         href: luct-bw
         children:
