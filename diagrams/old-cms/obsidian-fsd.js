@@ -88,7 +88,7 @@
         ["../old-cms-botswana/index.html#fsd", "FSD", "Functional breakdown"],
         [null, "Obsidian", "This page"],
         ["../old-cms-botswana/index.html#flows", "Flows", "Admissions · academic · finance · life"],
-        ["../old-cms-botswana/index.html#dtef", "DTEF", "TEF.gov.bw sync"],
+        ["../old-cms-botswana/index.html#integrations", "Integrations", "DTEF · TEF.gov.bw"],
         ["../old-cms-botswana/index.html#erd", "ERD", "Physical tables"],
         ["../old-cms-botswana/index.html#dfd", "DFD", "Data flows"],
         ["../old-cms-botswana/database.html", "Database", "Triggers &amp; SPs"],

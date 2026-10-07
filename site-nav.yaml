@@ -310,7 +310,7 @@ menu:
           - { label: FSD, href: "luct-bw#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=botswana" }
           - { label: Flows, href: "luct-bw#flows" }
-          - { label: DTEF, href: "luct-bw#dtef" }
+          - { label: Integrations, href: "luct-bw#integrations" }
           - { label: ERD, href: "luct-bw#erd" }
           - { label: Database, href: luct-bw-database }
           - { label: AI inventory, href: ai-old-cms-botswana }
@@ -660,11 +660,17 @@ search:
     summary: Admissions, academic term, finance/assist, and student-life process flows for cmsbotswana.
     keywords: [botswana, flows, admissions, academic, finance, assist]
 
+  - title: Botswana integrations
+    href: "luct-bw#integrations"
+    section: LUCT CMS
+    summary: Botswana integrations — DTEF → TEF.gov.bw scholarship sync, portal hooks, and batch.
+    keywords: [botswana, integrations, scholarship, sponsorship, government, dtef, tef]
+
   - title: Botswana DTEF
     href: "luct-bw#dtef"
     section: LUCT CMS
-    summary: DTEF / TEF.gov.bw scholarship sync notes on the Botswana hub.
-    keywords: [scholarship, sponsorship, government]
+    summary: DTEF / TEF.gov.bw scholarship sync notes on the Botswana hub (integrations §4).
+    keywords: [scholarship, sponsorship, government, dtef]
 
   - title: LUCT Sierra Leone E2E hub
     href: luct-sl

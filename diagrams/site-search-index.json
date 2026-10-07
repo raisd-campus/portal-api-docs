@@ -690,13 +690,29 @@
       "path": "diagrams/old-cms-botswana/index.html#flows"
     },
     {
+      "title": "Botswana integrations",
+      "summary": "Botswana integrations \u2014 DTEF \u2192 TEF.gov.bw scholarship sync, portal hooks, and batch.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "botswana",
+        "integrations",
+        "scholarship",
+        "sponsorship",
+        "government",
+        "dtef",
+        "tef"
+      ],
+      "path": "diagrams/old-cms-botswana/index.html#integrations"
+    },
+    {
       "title": "Botswana DTEF",
-      "summary": "DTEF / TEF.gov.bw scholarship sync notes on the Botswana hub.",
+      "summary": "DTEF / TEF.gov.bw scholarship sync notes on the Botswana hub (integrations \u00a74).",
       "section": "LUCT CMS",
       "keywords": [
         "scholarship",
         "sponsorship",
-        "government"
+        "government",
+        "dtef"
       ],
       "path": "diagrams/old-cms-botswana/index.html#dtef"
     },

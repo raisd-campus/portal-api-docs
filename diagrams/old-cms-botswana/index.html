@@ -143,7 +143,7 @@
               <a href="index.html#fsd">FSD</a>
               <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
               <a href="index.html#flows">Flows</a>
-              <a href="index.html#dtef">DTEF</a>
+              <a href="index.html#integrations">Integrations</a>
               <a href="index.html#erd">ERD</a>
               <a href="database.html">Database</a>
               <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
@@ -262,7 +262,7 @@
       <a href="#fsd"><strong>2. Functional breakdown</strong><span>Desks by domain · module map</span></a>
       <a href="../old-cms/obsidian.html?campus=botswana"><strong>Obsidian 3D</strong><span>Interactive FSD breakdown &amp; walkthrough</span></a>
       <a href="#flows"><strong>3. Core process flows</strong><span>Admissions · academic · finance · student life</span></a>
-      <a href="#dtef"><strong>4. DTEF → TEF.gov.bw</strong><span>Scholarship gov sync</span></a>
+      <a href="#integrations"><strong>4. Integrations</strong><span>DTEF → TEF.gov.bw scholarship sync</span></a>
       <a href="#erd"><strong>5. Physical ERD</strong><span>Core · admissions · finance · DTEF · portal</span></a>
       <a href="#dfd"><strong>6. Data-flow (DFD)</strong><span>Context · admissions · academic · finance/TEF · batch</span></a>
       <a href="#database"><strong>7. Database</strong><span>713 tables · SPs · triggers · views</span></a>
@@ -572,9 +572,9 @@ flowchart TD
       </div>
     </section>
 
-    <!-- ========== 4. DTEF (combined) ========== -->
-    <section class="section" id="dtef">
-      <h2>4. DTEF scholarship → TEF.gov.bw</h2>
+    <!-- ========== 4. Integrations / DTEF (combined) ========== -->
+    <section class="section" id="integrations">
+      <h2 id="dtef">4. Integrations — DTEF scholarship → TEF.gov.bw</h2>
       <p class="lead">
         Botswana-specific government integration. Registry queues programme-of-study admissions;
         saving with status <strong>31 (Sent by Registry)</strong> POSTs HAL+JSON to
