@@ -288,7 +288,7 @@ security, availability, copyright operating controls, and staff
 training. Most of these are <strong>Not applicable</strong> as frontend
 work. They still gate Live.</p>
 <h2 id="capabilities">2. Capabilities</h2>
-<table style="width:99%;">
+<table style="width:100%;">
 <colgroup>
 <col style="width: 16%" />
 <col style="width: 16%" />
@@ -430,31 +430,7 @@ acceptance sign-off.</p>
 <p>Architecture: <a
 href="02-architecture-and-integration.html">SDD-02</a>. Open questions:
 <a href="10-open-questions.html">SDD-10</a>.</p>
-<h2 id="local-admissionsprofile-increment-5-october-2026">Local
-admissions/profile increment — 5 October 2026</h2>
-<p>Applicant’s existing draft/submission/messages flow now uses a
-validated session-only mock Portal API. Student schema v4 aligns
-Personal, Academic and Documents through an explicitly accepted,
-versioned handoff; submission alone never enrols a student. Shared UI
-remains 0.6.1. Lesotho is the acceptance-pilot priority; existing
-Malaysian sample rules are retained without asserting Lesotho policy.
-Details: <a
-href="../ai/frontend/applicant-portal/mock-api.html">Applicant mock
-API</a>, <a href="../ai/backend/admissions-handoff.html">accepted
-handoff and backend prerequisites</a>. Automated local gates do not
-establish hosted HTTP, physical-device or CMS integration. No hosted
-reseed is authorized by this increment.</p>
-<h2 id="hosted-applicant-demo-http-and-schema-v4-7-october-2026">Hosted
-Applicant Demo HTTP and schema v4 — 7 October 2026</h2>
-<p>Portal API Demo hosts Student schema <strong>4</strong> and Applicant
-Demo HTTP (<code>/v1/auth/applicant/login</code>,
-<code>/v1/applicant/:method</code>) with Neon-backed applicant state.
-Hosted Applicant uses <code>VITE_PORTAL_API_URL</code>; local Applicant
-without that URL remains session-only mock. <code>CORS_ORIGIN</code>
-allows the student SPA, applicant SPA and GitHub Pages. Live CMS
-admissions and durable evidence storage remain future work. Details: <a
-href="../ai/backend/portal-api.html">Portal API</a>, <a
-href="../ai/architecture/vercel-neon-poc.html">PoC note</a>.</p>
+<section id="local-admissions-profile-increment"><h2>Local admissions/profile increment — 5 October 2026</h2><p>Applicant&#x27;s existing draft/submission/messages flow now uses a validated session-only mock Portal API. Student schema v4 aligns Personal, Academic and Documents through an explicitly accepted, versioned handoff; submission alone never enrols a student. Shared UI remains 0.6.1. Lesotho is the acceptance-pilot priority; existing Malaysian sample rules are retained without asserting Lesotho policy. Details: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md">Applicant mock API</a>, <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md">accepted handoff and backend prerequisites</a>. Automated local gates do not establish hosted HTTP, physical-device or CMS integration. No hosted reseed is authorized by this increment.</p></section>
   </main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
@@ -491,6 +467,7 @@ href="../ai/architecture/vercel-neon-poc.html">PoC note</a>.</p>
       wrap.appendChild(table);
     });
   </script>
+<section><h2>Campus selection and two-stage enrolment — 7 October 2026</h2><p>Local mock only: required campus and conditional Alumni student ID, optional English results, Bursary payment verification, QA Eligibility Letter release and applicant confirmation, then Registry Offer Letter release and final acceptance. Generated demo PDFs can be previewed/downloaded; only final acceptance signs out. The next explicit Sign in transfers an isolated accepted identity into Student Module Registration.</p><p>Handoff/envelope v2 carries campus and both confirmations/letters; v1 remains readable. Student Documents places Offer Letter first and Eligibility Letter second. Hosted HTTP authentication and supported methods remain unchanged; new hosted letter operations, real CMS provisioning and durable upload delivery require future service work. Shared package remains 0.6.2.</p></section>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
 </body>

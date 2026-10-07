@@ -1,16 +1,16 @@
 {
-  "version": 1,
+  "version": 2,
   "applicationId": "application-golden",
   "applicantId": "applicant-golden",
   "personId": "person-alya",
   "submittedAt": "2026-10-05T00:00:00.000Z",
   "acceptedContext": {
     "status": "accepted",
-    "reference": "acceptance-golden",
-    "acceptedAt": "2026-10-06T00:00:00.000Z",
+    "reference": "demo-acceptance:application-golden",
+    "acceptedAt": "2026-10-05T00:00:00.000Z",
     "personId": "person-alya",
-    "studentProfileId": "student-alya",
-    "programmeEnrolmentId": "programme-enrolment-alya-bdes"
+    "studentProfileId": "admissions-student:person-alya",
+    "programmeEnrolmentId": "admissions-enrolment:application-golden"
   },
   "snapshot": {
     "activeStepId": "fee",
@@ -24,6 +24,8 @@
     ],
     "consentChecked": true,
     "studyPreferences": {
+      "campusId": "campus-cyberjaya",
+      "previousStudentId": "",
       "studentType": "local",
       "applicantType": "new",
       "preferences": [
@@ -42,9 +44,7 @@
           "facultyId": "",
           "courseId": ""
         }
-      ],
-      "campusId": "campus-cyberjaya",
-      "previousStudentId": ""
+      ]
     },
     "personalDetails": {
       "fullName": "Alya Putri",
@@ -162,10 +162,10 @@
       "transferModuleResults": null,
       "transferSyllabi": null,
       "transferVisaCancellation": null,
+      "medicalExaminationCountry": "",
       "medicalReport": null,
       "eligibilityLetter": null,
-      "scratchCard": null,
-      "medicalExaminationCountry": ""
+      "scratchCard": null
     },
     "paymentProof": {
       "bankReference": "DEMO-REF-1",
@@ -175,6 +175,25 @@
         "sizeBytes": 1024,
         "mimeType": "application/pdf"
       }
+    }
+  },
+  "letters": {
+    "eligibility": {
+      "id": "application-golden:eligibility",
+      "kind": "eligibility",
+      "department": "Quality Assurance",
+      "fileName": "eligibility-letter-1.pdf",
+      "releasedAt": "2026-10-05T00:00:00.000Z",
+      "pdfBase64": "JVBERi0xLjcKJYGBgYEKCjYgMCBvYmoKPDwKL0ZpbHRlciAvRmxhdGVEZWNvZGUKL0xlbmd0aCA1MTAKPj4Kc3RyZWFtCnicjVTditYwEL3vU/RaECfzm4AIu/1avPBG6AuIrIuiFyvi83sm/fRjcQMlpG3SyZyZM2fyNN3vE805fj5Ob94/fP/98Ovr50+vg1rVSlHbXMq8f5lY5/3DVLppmdXmaDTvP6a3qmp60Y2JL0y66maKd9EVz00do6lgFl2YzGDRzNWMDbum1mC3YA03uftu3r9N+6tp3aeP09MovhbKXtm8DuNzPuIzX7x5YDImvkOjY7rhS/E8iclEVMla9SGm6IFZgoI6rngBRvPNV7ljktsoZzM1ggOmGKKSv4Dqa2giavElmhdwT5EZg4VzyLBGjcTH+XrUAznxLpH+pWNKJNs473fIH+jnEKsalUplnKvbVXUt8wPqvVtH3Fyw3g5U8MyS00/iOqoapcZQTc5XNTkwJaCpVFFHfrbDhBgcu6kr6brLPkC0GFv4TQ3nIrPKAGCRYWTWDs2hugy/gSdqgXHwkqssYXbBlsy8FB+j1zOmEG5dJ+nJ06Lb4A+8LP+fMkc3Ze7HX4ElkLFenyv/XK4FURhDxTbMNY5c+ayCa62tFHIZetSjd4w7Q8gE+eF66r161RBfpAhuN6zsbM82UW08vDyt1GvRbqAojXSqk1R2XKYRWTiQWA9Ro5G2sL4P2nH9UUr+77lO9gry7d8+CtFLuaQc0oKfl+IPLUdO9AplbmRzdHJlYW0KZW5kb2JqCgo3IDAgb2JqCjw8Ci9GaWx0ZXIgL0ZsYXRlRGVjb2RlCi9UeXBlIC9PYmpTdG0KL04gNQovRmlyc3QgMjYKL0xlbmd0aCA0NTMKPj4Kc3RyZWFtCnic1VPfa9swEH73X3GP28Oqk6wfpxICaRJvMMpKO1jZ2INri+BRrOEoo/vvd7KThlKPPQ9zWHf3fdLpPp0EBAVaQwmOQIMpFRjw3sJiUYjPv38GEDf1LuwL8bFr9/CNMQi38L0Q63joE8hiuSzO2HWd6se4KyYSyAw+IW6G2B6aMMCi2lYVokNEq9ksotrwf83m2RT7nFPEazanj8YxVyKWK85Vk1k3cXJ+xJojf8t/xtqM2UxYTZP/fG4+azvtof5Vj18W4jq2mzoFeLO5VKisZIrUWmr8+pbbMYQ6xf/3cmP9Xez/esMXOmd5s8hDyG9gVFnchn08DA3LnnFV5ExefAiPv0LqmvqdQ09cpyPPb2yknHPeaWVJGUuvc7lfhMaTneMZ1NYrdK9zzjhlytLO8UgblIRyjkeWz3KS3EwthpS2VpXlTE7y7YzS0pmZWojIS8m6zd3Bl1p7dWoLd1rcf3r4EZqxg9ndPqX3dylLMwVy7Dq0XX0Vn3gokT/jzYUiIC0vuME8oKu+jymP7DisfWKpsmePA/xCz6xWIe4OD2l0c1AW4qreh1HHc7FcSt/Etut3IL50/arfd6dA3vEPbx8ObgplbmRzdHJlYW0KZW5kb2JqCgo4IDAgb2JqCjw8Ci9TaXplIDkKL1Jvb3QgMiAwIFIKL0luZm8gMyAwIFIKL0ZpbHRlciAvRmxhdGVEZWNvZGUKL1R5cGUgL1hSZWYKL0xlbmd0aCA0MQovVyBbIDEgMiAyIF0KL0luZGV4IFsgMCA5IF0KPj4Kc3RyZWFtCnicY2Bg+P+fiYGdgQFEMIIIJhDBDCJYGBkEGICC4UCCpYmBAQBd+gMoCmVuZHN0cmVhbQplbmRvYmoKCnN0YXJ0eHJlZgoxMTU0CiUlRU9G"
+    },
+    "eligibilityConfirmedAt": "2026-10-05T00:00:00.000Z",
+    "offer": {
+      "id": "application-golden:offer",
+      "kind": "offer",
+      "department": "Registry",
+      "fileName": "offer-letter-1.pdf",
+      "releasedAt": "2026-10-05T00:00:00.000Z",
+      "pdfBase64": "JVBERi0xLjcKJYGBgYEKCjYgMCBvYmoKPDwKL0ZpbHRlciAvRmxhdGVEZWNvZGUKL0xlbmd0aCA1MTEKPj4Kc3RyZWFtCnicjVRdi9VADH3vr+izIGbyOQMi7Pa2+OCL0D8gsi6KPqyIv9+TmQuXi1toh7bMNM1Jck7yMj3uE825fj9P7z4+/fz79Of71y9vg1rVSlHbXMq8f5tY5/3TVLppmdXmaDTvv6b3qmp60Y2JL0y66maKd9EVz00dq6ngLrowmcGimasZG05NrcFuwR5u8vTDvP+Y9jfTuk+fp5ej+Fooe2Xzehif84hv87wsOHHw1tDcncNhIqpkrfohjujAKUFBvnhz8QKM5puv8sAkt1XOZmcEB0xxiEr+CqqvoYmoxZdoXlBvisyYvZ1DhjV4ET/O16MO5MS7RPqXjilA5KysPyB/oJ9DrGpUKpXjXN2uSmuZH1Af3Tri5oL9NlBRZ5a8/SSug9UoNQ4V5HxVkANTwlBTjdaR706YEIPjNHUlYCI8tY9osbbwmxrORWaVAcAih5FZG5oDuwy/gSe4wBp1yV1SiPiAz6/Hx+jvjCmEW9dJeso+kW6DL/Cy/P+XubfI3MdXgSWQsV/vlX8u14IojKFiO8w1Rq58VsG11lYKuRx61NE7xr1CyAT5YST1Xr1qiC9SBBMNOzvbs01UGx8OTCv1StoNFNRIL3UWlR0DNCKJQxHrEDUaaYu0S0rxBxoO47V/Bw04Bz0gAOMX77WTuKQQslUG8dfhd0/IPzhUTV8KZW5kc3RyZWFtCmVuZG9iagoKNyAwIG9iago8PAovRmlsdGVyIC9GbGF0ZURlY29kZQovVHlwZSAvT2JqU3RtCi9OIDUKL0ZpcnN0IDI2Ci9MZW5ndGggNDUzCj4+CnN0cmVhbQp4nNVT32vbMBB+919xj9vDqpOsH6cSAmkSbzDKSjtY2diDa4vgUazhKKP773eyk4ZSjz0Pc1h3933S6T6dBAQFWkMJjkCDKRUY8N7CYlGIz79/BhA39S7sC/Gxa/fwjTEIt/C9EOt46BPIYrkszth1nerHuCsmEsgMPiFuhtgemjDAotpWFaJDRKvZLKLa8H/N5tkU+5xTxGs2p4/GMVcilivOVZNZN3FyfsSaI3/Lf8bajNlMWE2T/3xuPms77aH+VY9fFuI6tps6BXizuVSorGSK1Fpq/PqW2zGEOsX/93Jj/V3s/3rDFzpnebPIQ8hvYFRZ3IZ9PAwNy55xVeRMXnwIj79C6pr6nUNPXKcjz29spJxz3mllSRlLr3O5X4TGk53jGdTWK3Svc844ZcrSzvFIG5SEco5Hls9yktxMLYaUtlaV5UxO8u2M0tKZmVqIyEvJus3dwZdae3VqC3da3H96+BGasYPZ3T6l93cpSzMFcuw6tF19FZ94KJE/482FIiAtL7jBPKCrvo8pj+w4rH1iqbJnjwP8Qs+sViHuDg9pdHNQFuKq3odRx3OxXErfxLbrdyC+dP2q33enQN7xD28fDm4KZW5kc3RyZWFtCmVuZG9iagoKOCAwIG9iago8PAovU2l6ZSA5Ci9Sb290IDIgMCBSCi9JbmZvIDMgMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCi9UeXBlIC9YUmVmCi9MZW5ndGggNDEKL1cgWyAxIDIgMiBdCi9JbmRleCBbIDAgOSBdCj4+CnN0cmVhbQp4nGNgYPj/n4mBnYEBRDCCCCYQwQwiWBgZBBiAghFAgqWZgQEAXgUDKgplbmRzdHJlYW0KZW5kb2JqCgpzdGFydHhyZWYKMTE1NQolJUVPRg=="
     }
   }
 }

@@ -4,6 +4,13 @@ Read this after `AGENTS.md` when resuming the project in a new Codex chat or on 
 
 ## Current baseline
 
+### Campus and two-letter local flow — 7 October 2026
+
+Applicant now requires one of eight configured demo campuses and Alumni Previous Student ID; English remains optional. Bursary verifies payment, QA releases the generated Eligibility PDF on document approval, the applicant confirms intent, Registry releases Offer PDF, then final acceptance signs out. Explicit Sign in transfers a v2 accepted exchange into an isolated selected-campus Student enrolment. Student's canonical document records own the issued letters; the projection enriches only those owned records with temporary PDF resources. Offer comes first, Eligibility second. Preview state resolves against current scoped query results and releases URLs on owner change. V1 records remain readable; no letters are fabricated. Shared package stays 0.6.2. Incoming Applicant HTTP support is preserved, with the new hosted workflow gated pending service support. No backend/database work, commits or pushes were performed. Existing backups/worktrees are preserved.
+
+Full Student gate: 750 unit tests, 273 Chromium passed (41 intentional skips), 38 WebKit passed (31 intentional skips), using PLAYWRIGHT_WORKERS=2. Follow-up canonical/resource tests and build also pass; all seven cross-portal checks pass. Applicant full gate passes 56 unit tests and 70 browser checks. The final Student unit rerun passes 751 tests, including owned-preview cleanup. All seven final handoffs pass against canonical issued-letter records. OpenAPI validation and canonical/public capture checks pass. Physical devices and hosted v2 integration remain unverified. Existing source-map-js advisory and build chunk-size warnings remain recorded.
+
+
 ### Hosted Student CI budget refinement — 6 October 2026
 
 - Initial hosted run at 239fe40 hit six existing default five-second timeouts despite local full-gate success. CI-only Vitest now uses two workers and a 15-second test budget; local defaults and all assertions remain unchanged.

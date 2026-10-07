@@ -9230,3 +9230,56 @@ components:
         properties:
           result:
             $ref: '#/components/schemas/DocumentsProfileResponse'
+
+    LocalAdmissionsIssuedLetter:
+      type: object
+      description: Generated demo PDF; not an official university letter. Local mock only.
+      x-implementation: Local Applicant/Student mock v2; hosted delivery unsupported.
+      required: [id, kind, department, fileName, releasedAt, pdfBase64]
+      properties:
+        id: {type: string}
+        kind: {type: string, enum: [eligibility, offer]}
+        department: {type: string, enum: [Quality Assurance, Registry]}
+        fileName: {type: string}
+        releasedAt: {type: string, format: date-time}
+        pdfBase64: {type: string, maxLength: 1400000, description: Bounded generated PDF bytes in the local one-time handoff only.}
+    LocalAdmissionsLetterWorkflow:
+      type: object
+      x-implementation: Local mock only; not a hosted RPC input or response requirement.
+      required: [eligibility, eligibilityConfirmedAt, offer]
+      properties:
+        eligibility:
+          oneOf:
+            - {$ref: '#/components/schemas/LocalAdmissionsIssuedLetter'}
+            - {type: 'null'}
+        eligibilityConfirmedAt: {type: [string, 'null'], format: date-time}
+        offer:
+          oneOf:
+            - {$ref: '#/components/schemas/LocalAdmissionsIssuedLetter'}
+            - {type: 'null'}
+    LocalApplicantCampusFields:
+      type: object
+      x-implementation: Local sample catalogue only; hosted snapshot inputs remain unchanged.
+      required: [campusId, previousStudentId]
+      properties:
+        campusId:
+          type: string
+          enum: [campus-lesotho, campus-cyberjaya, campus-botswana, campus-eswatini, campus-sierra-leone, campus-cambodia, campus-uganda, campus-namibia]
+        previousStudentId: {type: string, description: Required nonempty trimmed value for Alumni; blank for other applicant types.}
+    AdmissionsHandoffV2:
+      type: object
+      description: Local accepted exchange; requires Eligibility release and confirmation, Registry Offer release, then final acceptance. V1 remains supported separately.
+      x-implementation: Local mock only; not a hosted endpoint. Campus/letter schema migration remains future server work.
+      required: [version, applicationId, applicantId, personId, submittedAt, acceptedContext, snapshot, letters]
+      properties:
+        version: {type: integer, const: 2}
+        applicationId: {type: string}
+        applicantId: {type: string}
+        personId: {type: string}
+        submittedAt: {type: string, format: date-time}
+        acceptedContext:
+          $ref: '#/components/schemas/AdmissionsHandoffV1/properties/acceptedContext'
+        snapshot:
+          $ref: '#/components/schemas/ApplicantSnapshot'
+        letters:
+          $ref: '#/components/schemas/LocalAdmissionsLetterWorkflow'

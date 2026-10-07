@@ -18,7 +18,7 @@ export const personalDetailsSchema = /* @__PURE__ */ z.object({
   emergencyContact: contactSchema.extend({ relationship: text }), disabilityAnswer: z.enum(["", "yes", "no"]), disabilityDetails: text,
 })
 export const preferenceSchema = /* @__PURE__ */ z.object({ intakeId: text, facultyId: text, courseId: text })
-export const studyPreferencesSchema = /* @__PURE__ */ z.object({ studentType: z.enum(["", "local", "international"]), applicantType: z.enum(["", "new", "alumni", "transfer"]), preferences: z.tuple([preferenceSchema, preferenceSchema, preferenceSchema]) })
+export const studyPreferencesSchema = /* @__PURE__ */ z.object({ campusId: text.default(""), previousStudentId: text.default(""), studentType: z.enum(["", "local", "international"]), applicantType: z.enum(["", "new", "alumni", "transfer"]), preferences: z.tuple([preferenceSchema, preferenceSchema, preferenceSchema]) })
 export const qualificationSchema = /* @__PURE__ */ z.object({ id: z.number().int().positive(), qualificationTypeSelection: text, qualificationType: text, qualificationNameSelection: text, qualificationName: text, institutionName: text, countryOfEducation: text, fieldOfStudy: text, startedOn: calendarDateSchema.nullable(), completedOn: calendarDateSchema.nullable(), result: text, transcript: evidenceSchema.nullable(), academicCertificate: evidenceSchema.nullable() })
 export const englishResultSchema = /* @__PURE__ */ z.object({ id: z.number().int().positive(), qualificationNameSelection: text, qualificationName: text, examinedOn: calendarDateSchema.nullable(), score: text, expiresOn: calendarDateSchema.nullable(), certificate: evidenceSchema.nullable() })
 export const academicDetailsSchema = /* @__PURE__ */ z.object({ qualifications: z.array(qualificationSchema), englishResults: z.array(englishResultSchema) })
@@ -36,9 +36,11 @@ export const acceptedEnrolmentContextSchema = /* @__PURE__ */ z.object({
   personId: z.string().min(1), studentProfileId: z.string().min(1), programmeEnrolmentId: z.string().min(1),
 })
 export const acceptanceSchema = acceptedEnrolmentContextSchema.extend({ demo: demoAdmissionContextSchema })
+export const issuedLetterSchema = z.object({ id: text.min(1), kind: z.enum(["eligibility", "offer"]), department: z.enum(["Quality Assurance", "Registry"]), fileName: text.min(1), releasedAt: z.iso.datetime(), pdfBase64: z.string().min(1).max(1400000).refine(value => { try { return atob(value).startsWith("%PDF-") } catch { return false } }, "A demo PDF resource is required.") }).strict()
+export const letterWorkflowSchema = z.object({ eligibility: issuedLetterSchema.nullable(), eligibilityConfirmedAt: z.iso.datetime().nullable(), offer: issuedLetterSchema.nullable() }).strict()
 export const applicationSchema = /* @__PURE__ */ z.object({
   id: z.string().min(1), applicantId: z.string().min(1), personId: z.string().min(1), revision: z.number().int().positive(), previewNumber: z.number().int().positive(), status: z.enum(["draft", "pending-review", "action-required", "approved", "accepted"]), snapshot: snapshotSchema,
-  acceptance: acceptanceSchema.nullable().default(null), catalogueReferenceAt: z.iso.datetime().default(() => new Date().toISOString()),
+  letters: letterWorkflowSchema.default({ eligibility: null, eligibilityConfirmedAt: null, offer: null }), acceptance: acceptanceSchema.nullable().default(null), catalogueReferenceAt: z.iso.datetime().default(() => new Date().toISOString()),
   submittedAt: z.iso.datetime().nullable(), updatedAt: z.iso.datetime(), reviewStage: z.enum(["payment", "documents"]), verification: verificationSchema.default({ paymentVerifiedAt: null, documentsVerifiedAt: null }), messages: z.array(messageSchema), readThroughSequence: z.number().int().nonnegative(), repliedThroughSequence: z.number().int().nonnegative(),
 })
 export type Evidence = z.infer<typeof evidenceSchema>
@@ -50,7 +52,7 @@ export type Message = z.infer<typeof messageSchema>
 const requiredContact = contactSchema.extend({ fullName: text.min(1), contactNumber: text.min(7), emailAddress: z.email() })
 const requiredAddress = addressSchema.extend({ addressLine: text.min(1), country: text.min(1), state: text.min(1), city: text.min(1), postcode: text.min(1) })
 const submittedPersonalSchema = personalDetailsSchema.extend({ fullName: text.min(1), countryOfCitizenship: text.regex(/^[A-Z]{2}$/), dateOfBirth: calendarDateSchema, placeOfBirth: text.min(1), gender: text.min(1), race: text.min(1), religion: text.min(1), contactNumber: text.min(7), emailAddress: z.email(), maritalStatus: z.enum(["single", "married", "divorced", "widowed"]), identificationNumber: text.min(1), fatherGuardian: requiredContact, motherGuardian: requiredContact, emergencyContact: requiredContact.extend({ relationship: text.min(1) }), permanentAddress: requiredAddress, currentAddress: requiredAddress, disabilityAnswer: z.enum(["yes", "no"]) })
-export const admissionsHandoffSchema = /* @__PURE__ */ z.object({
+export const admissionsHandoffV1Schema = /* @__PURE__ */ z.object({
   version: z.literal(1), applicationId: z.string().min(1), applicantId: z.string().min(1), personId: z.string().min(1), submittedAt: z.iso.datetime(),
   acceptedContext: acceptedEnrolmentContextSchema,
   snapshot: snapshotSchema.extend({ consentChecked: z.literal(true), personalDetails: submittedPersonalSchema, academicDetails: academicDetailsSchema.extend({ qualifications: z.array(qualificationSchema.extend({ qualificationType: text.min(1), qualificationName: text.min(1), institutionName: text.min(1), countryOfEducation: text.min(1), startedOn: calendarDateSchema, completedOn: calendarDateSchema, result: text.min(1), transcript: evidenceSchema, academicCertificate: evidenceSchema })).min(1), englishResults: z.array(englishResultSchema.extend({ qualificationName: text.min(1), examinedOn: calendarDateSchema, score: text.min(1) })) }), paymentProof: snapshotSchema.shape.paymentProof.extend({ bankReference: text.min(1), file: evidenceSchema }), documents: documentsSchema.extend({ passportPhoto: evidenceSchema }) }),
@@ -80,6 +82,14 @@ export const admissionsHandoffSchema = /* @__PURE__ */ z.object({
   if (handoff.acceptedContext.acceptedAt < handoff.submittedAt) context.addIssue({ code: "custom", path: ["acceptedContext", "acceptedAt"], message: "Acceptance cannot precede submission." })
   if (handoff.snapshot.personalDetails.disabilityAnswer === "yes" && !handoff.snapshot.personalDetails.disabilityDetails) context.addIssue({ code: "custom", path: ["snapshot", "personalDetails", "disabilityDetails"], message: "Disability details are required when answered yes." })
 })
+export const admissionsHandoffV2Schema = z.object({ ...admissionsHandoffV1Schema.shape, version: z.literal(2), letters: letterWorkflowSchema }).superRefine((handoff, context) => {
+  const legacy = admissionsHandoffV1Schema.safeParse({ ...handoff, version: 1 })
+  if (!legacy.success) for (const issue of legacy.error.issues) context.addIssue({ code: "custom", path: issue.path, message: issue.message })
+  const w = handoff.letters, p = handoff.snapshot.studyPreferences
+  if (!["campus-lesotho", "campus-cyberjaya", "campus-botswana", "campus-eswatini", "campus-sierra-leone", "campus-cambodia", "campus-uganda", "campus-namibia"].includes(p.campusId) || p.applicantType === "alumni" && !p.previousStudentId) context.addIssue({ code: "custom", path: ["snapshot", "studyPreferences"], message: "Campus and applicable previous student ID are required." })
+  if (!w.eligibility || !w.offer || w.eligibility.id !== `${handoff.applicationId}:eligibility` || w.offer.id !== `${handoff.applicationId}:offer` || !w.eligibilityConfirmedAt || w.eligibility.kind !== "eligibility" || w.offer.kind !== "offer" || w.eligibility.department !== "Quality Assurance" || w.offer.department !== "Registry" || w.eligibility.releasedAt < handoff.submittedAt || w.eligibilityConfirmedAt < w.eligibility.releasedAt || w.offer.releasedAt < w.eligibilityConfirmedAt || handoff.acceptedContext.acceptedAt < w.offer.releasedAt) context.addIssue({ code: "custom", path: ["letters"], message: "Released letters and confirmations must follow the admissions sequence." })
+})
+export const admissionsHandoffSchema = z.union([admissionsHandoffV2Schema, admissionsHandoffV1Schema])
 export type AdmissionsHandoff = z.infer<typeof admissionsHandoffSchema>
 export type AcceptedEnrolmentContext = z.infer<typeof acceptedEnrolmentContextSchema>
 

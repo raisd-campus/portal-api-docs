@@ -19,6 +19,7 @@ notes:
   - 2026-09-23: Raisd CMS Student portal capabilities, screenshots, and use guides under diagrams/raisd-cms/.
   - 2026-09-24: Distributed CMS target (one product, country data planes, white-label/flags) — architecture/distributed-cms-target.md + diagrams/distributed-cms-architecture.html.
   - 2026-09-26: FSD Obsidian 3D knowledge graph (breakdown / walkthrough / click) — diagrams/old-cms/obsidian.html + fsd-knowledge.json; LUCT CMS campus submenus.
+  - 2026-10-07: Obsidian 3D FSD for Eswatini + Cambodia — fsd-knowledge-eswatini.json / fsd-knowledge-cambodia.json; ?campus=eswatini|cambodia.
   - 2026-09-27: PoC Vercel + Neon deploy path (SPA + Portal API + free Postgres) — architecture/vercel-neon-poc.md; does not replace SDD-12.
   - 2026-09-27: Published HTML Primary nav + design-system subnav derive from docs/site-nav.yaml (build-dropdown-nav.py).
   - 2026-09-27: Portal API service split into raisd-campus/portal-api (history kept); openapi.yaml stays here. Added development plan, target deployment and PoC requirements under backend/.
@@ -262,6 +263,14 @@ diagrams:
     topics: [lesotho, pilot, obsidian, fsd, graph, nmds, lgcse, m4]
     pages:
       - ../diagrams/old-cms/obsidian.html
+  - path: ../diagrams/old-cms/fsd-knowledge-eswatini.json
+    topics: [eswatini, obsidian, fsd, graph, ssb, limkokwing, m5]
+    pages:
+      - ../diagrams/old-cms/obsidian.html
+  - path: ../diagrams/old-cms/fsd-knowledge-cambodia.json
+    topics: [cambodia, obsidian, fsd, graph, limkokwing, portalcambodia, m5]
+    pages:
+      - ../diagrams/old-cms/obsidian.html
 
 frontend:
   student-portal:
@@ -321,9 +330,15 @@ admissions_increment:
   - path: backend/admissions-handoff.md
     topics: [admissions, profiles, schema-v4, deployment-prerequisite]
   - path: contracts/admissions.ts
-    topics: [contract, admissions-handoff-v1]
+    topics: [contract, admissions-handoff-v1, admissions-handoff-v2]
+  - path: contracts/fixtures/admissions-handoff-v2.json
+    topics: [contract-fixture, producer-consumer, issued-letters]
+  - path: contracts/fixtures/browser-admissions-v2.json
+    topics: [contract-fixture, browser-transfer, issued-letters]
   - path: contracts/fixtures/admissions-handoff-v1.json
     topics: [contract-fixture, producer-consumer]
+  - path: frontend/student-portal/audits/2026-10-07-campus-letters-verification.md
+    topics: [admissions, issued-letters, verification, mock-api]
   - path: frontend/student-portal/audits/2026-10-05-admissions-profile-verification.md
     topics: [admissions, verification, profile, mock-api]
 

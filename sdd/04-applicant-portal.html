@@ -296,26 +296,25 @@ announcements; it does not issue offers.</p>
 <li>Marketing (communications only)</li>
 </ul>
 <h2 id="primary-flow">3. Primary flow</h2>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode mermaid"><code class="sourceCode mermaid"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sequenceDiagram</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">actor A as Applicant</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">participant</span><span class="vs"> P</span><span class="kw"> as </span><span class="vs">Applicant portal</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">participant</span><span class="vs"> API</span><span class="kw"> as </span><span class="vs">Portal API</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">participant</span><span class="vs"> CMS</span><span class="kw"> as </span><span class="vs">Existing CMS</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">actor R as Registry</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">A</span><span class="pp">-&gt;&gt;</span><span class="dt">P</span><span class="at">:</span><span class="vs"> Sign in / create account (CAP-01)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">P</span><span class="pp">-&gt;&gt;</span><span class="dt">API</span><span class="at">:</span><span class="vs"> Provision applicant</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">API</span><span class="pp">-&gt;&gt;</span><span class="dt">CMS</span><span class="at">:</span><span class="vs"> Create or match identity</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">A</span><span class="pp">-&gt;&gt;</span><span class="dt">P</span><span class="at">:</span><span class="vs"> Complete application (CAP-02)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">A</span><span class="pp">-&gt;&gt;</span><span class="dt">P</span><span class="at">:</span><span class="vs"> Upload evidence (CAP-03)</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">A</span><span class="pp">-&gt;&gt;</span><span class="dt">P</span><span class="at">:</span><span class="vs"> Accept policies (CAP-55)</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">P</span><span class="pp">-&gt;&gt;</span><span class="dt">API</span><span class="at">:</span><span class="vs"> Submit application + files</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">API</span><span class="pp">-&gt;&gt;</span><span class="dt">CMS</span><span class="at">:</span><span class="vs"> Persist application</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">R</span><span class="pp">-&gt;&gt;</span><span class="dt">CMS</span><span class="at">:</span><span class="vs"> Review, qualification checks, offer (CAP-03/05/06/07)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">A</span><span class="pp">-&gt;&gt;</span><span class="dt">P</span><span class="at">:</span><span class="vs"> Track status, view offer, accept (CAP-07)</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">P</span><span class="pp">-&gt;&gt;</span><span class="dt">API</span><span class="at">:</span><span class="vs"> Accept enrolment</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">API</span><span class="pp">-&gt;&gt;</span><span class="dt">CMS</span><span class="at">:</span><span class="vs"> First enrolment record</span></span></code></pre></div>
+<pre class="mermaid"><code>sequenceDiagram
+  actor A as Applicant
+  participant P as Applicant portal
+  participant API as Portal API
+  participant CMS as Existing CMS
+  actor R as Registry
+
+  A-&gt;&gt;P: Sign in / create account (CAP-01)
+  P-&gt;&gt;API: Provision applicant
+  API-&gt;&gt;CMS: Create or match identity
+  A-&gt;&gt;P: Complete application (CAP-02)
+  A-&gt;&gt;P: Upload evidence (CAP-03)
+  A-&gt;&gt;P: Accept policies (CAP-55)
+  P-&gt;&gt;API: Submit application + files
+  API-&gt;&gt;CMS: Persist application
+  R-&gt;&gt;CMS: Review, qualification checks, offer (CAP-03/05/06/07)
+  A-&gt;&gt;P: Track status, view offer, accept (CAP-07)
+  P-&gt;&gt;API: Accept enrolment
+  API-&gt;&gt;CMS: First enrolment record</code></pre>
 <h2 id="capabilities">4. Capabilities</h2>
 <table>
 <colgroup>
@@ -451,11 +450,10 @@ enrolment.</li>
 <li>Announcements never change application status.</li>
 </ul>
 <h2 id="current-baseline">7. Current baseline</h2>
-<p>The Applicant checkout now implements application, intake-choice,
-submission-status and development review routes backed by its session
-mock API. Real applicant signup, offers and Live admissions persistence
-remain unimplemented. Enrolled-student qualification records in Profile
-remain distinct from admissions.</p>
+<p>No applicant signup, application, intake-choice, or
+application-status route exists (<code>src/app/routes.ts</code>).
+Enrolled-student qualification records in Profile are not an admissions
+flow.</p>
 <p>Working frontend preview (2 October 2026): the unpaid fee summary
 uses the shared orange warning variant. Submitted Application Fee
 displays Transfer Proof only, while bank instructions remain in the
@@ -465,7 +463,7 @@ reviewer routing is not implemented or confirmed by this UI. The
 completed Documents Checklist offers Create Application beside Edit
 Answers, opening the new application UI while retaining checklist state
 in memory. See <a
-href="../ai/frontend/applicant-portal.html#submitted-application-ui-preview--1-october-2026">Applicant
+href="../ai/frontend/applicant-portal.md#submitted-application-ui-preview--1-october-2026">Applicant
 preview guidance</a>.</p>
 <h2 id="acceptance-m2">8. Acceptance (<a
 href="03-delivery-milestones.html#m2">M2</a>)</h2>
@@ -482,100 +480,11 @@ mapping is Live for this path.</li>
 <h2 id="open-blockers">9. Open blockers</h2>
 <p>Confirm minimum applicant journey, evidence matrix per programme,
 old-CMS applicant tracking, and account provisioning. Owners TBC.</p>
-<p><strong>Captured Cyberjaya / LUCT baseline (6 October 2026):</strong>
-public wizard + <code>LUCT-MKT-003</code> + forms pack documented in <a
-href="../ai/backend/luct-online-registration.html"><code>docs/ai/backend/luct-online-registration.md</code></a>.
-Use it to close CAP-02/03/07/55 field questions for Cyberjaya; Lesotho
-pilot must substitute NMDS/LGCSE for Malaysia EMGS/NOC. Owners still TBC
-for Live fee amounts, dropdown enumerations, and Lesotho SLAs.</p>
-<h2 id="local-admissionsprofile-increment-5-october-2026">Local
-admissions/profile increment — 5 October 2026</h2>
-<p>Applicant’s existing draft/submission/messages flow now uses a
-validated session-only mock Portal API. Step validation presents errors
-beside fields and focuses the first invalid control; no page-wide
-validation list is shown. Student schema v4 aligns Personal, Academic
-and Documents through an explicitly accepted, versioned handoff;
-submission alone never enrols a student. Shared UI remains 0.6.1.
-Lesotho is the acceptance-pilot priority; existing Malaysian sample
-rules are retained without asserting Lesotho policy. Details: <a
-href="../ai/frontend/applicant-portal/mock-api.html">Applicant mock
-API</a>, <a href="../ai/backend/admissions-handoff.html">accepted
-handoff and backend prerequisites</a>. Automated local gates do not
-establish hosted HTTP, physical-device or CMS integration. No hosted
-reseed is authorized by this increment.</p>
-<h2 id="local-development-review-increment-5-october-2026">Local
-development review increment — 5 October 2026</h2>
-<p>Applicant provides one development-only Admin Actions page with three
-isolated applicant scenarios (Fresh, completed unsubmitted draft,
-submitted approved), a shared dropdown, payment/document SummaryCards
-and reviewer conversation. Scenario switching retains saved work and
-invalidates stale operations. Payment verification precedes document
-verification; completion sets Approved without offers,
-accepted-enrolment context or Student provisioning. Admin viewing does
-not read messages for the applicant, and approved conversations are
-read-only on both sides. Production excludes the route, navigation,
-commands and synthetic fixtures. No HTTP/CMS integration is asserted.
-Details: <a
-href="../ai/frontend/applicant-portal/mock-api.html">Applicant mock
-operations</a>.</p>
-<h2 id="local-enrolment-acceptance-increment-6-october-2026">Local
-enrolment acceptance increment — 6 October 2026</h2>
-<p>Approved Applicant applications can explicitly accept their
-first-preference Design enrolment through the shared confirmation popup.
-Submission starts with no automatic reviewer messages. The next
-simulated development login transfers accepted serializable data into a
-new isolated first-semester Student mock account/enrolment and opens
-existing Module Registration. Both portals use the same captured intake
-reference and existing curriculum/rules. No offer screens, live
-authentication, CMS provisioning, durable evidence transfer or backend
-deployment is implemented. Production and HTTP sessions exclude the
-simulation. Shared UI stays 0.6.1; Student schema stays 4 and admissions
-handoff stays version 1. See <a
-href="../ai/backend/admissions-handoff.html#development-browser-handoff--6-october-2026">accepted
-handoff</a>.</p>
-<h2 id="automatic-post-acceptance-logout-6-october-2026">Automatic
-post-acceptance logout — 6 October 2026</h2>
-<p>Successful enrolment acceptance now automatically logs out Applicant
-development mock sessions and shows the existing Sign in screen. The
-applicant explicitly clicks Sign in to open the existing new Student tab
-at Module Registration. Failed acceptance remains retryable in its
-popup; failed logout preserves accepted status and offers Retry Sign Out
-without accepting again. Session/scenario guards prevent stale
-transitions; records, files and drafts remain in memory until refresh.
-Production and HTTP sessions exclude this simulation. Shared 0.6.1,
-contracts and Student bootstrap remain unchanged.</p>
-<h2 id="checklist-action-widths-6-october-2026">Checklist action widths
-— 6 October 2026</h2>
-<p>Documents Checklist uses equal-width Edit Answers and Create
-Application actions on phone, tablet and desktop through the existing
-shared PageActionBar slot. Navigation and checklist retention remain
-unchanged. Shared Popup trailing-action support is an unpublished
-candidate awaiting release authorization; Applicant still consumes 0.6.1
-and its leave dialog is not yet changed.</p>
-<h2 id="shared-0.6.2-and-save-before-leaving-6-october-2026">Shared
-0.6.2 and save before leaving — 6 October 2026</h2>
-<p>Released shared 0.6.2 adds an optional trailing Popup action.
-Applicant uses primary Save &amp; Close after Keep Editing to save
-incomplete drafts before the originally blocked navigation; pending,
-failure/retry, duplicate and stale-session handling remain portal-owned.
-Student upgrades its pin with existing defaults intact. Graph schema 4,
-admissions handoff 1 and Demo/Live boundaries are unchanged.</p>
-<h2 id="hosted-applicant-demo-http-7-october-2026">Hosted Applicant Demo
-HTTP — 7 October 2026</h2>
-<p>Hosted Applicant builds with <code>VITE_PORTAL_API_URL</code> call
-Portal API Demo RPC (<code>POST /v1/auth/applicant/login</code>,
-<code>POST /v1/applicant/:method</code>). Neon stores applicant
-applications in <code>applicant_portal_state</code> and sessions in
-<code>poc_applicant_sessions</code>. Local development without the URL
-keeps the session-only in-process mock. Development Admin Actions and
-browser Student handoff simulation stay mock-only. Student graph schema
-remains <strong>4</strong>; Live CMS admissions, durable evidence bytes
-and operational Registry acceptance remain future work. Public contract:
-OpenAPI <code>0.4.2</code>. Details: <a
-href="../ai/frontend/applicant-portal/mock-api.html">Applicant mock/HTTP
-API</a>, <a href="../ai/backend/portal-api.html">Portal API</a>, <a
-href="../ai/backend/admissions-handoff.html">admissions handoff</a>.</p>
-  </main>
+<section id="local-admissions-profile-increment"><h2>Local admissions/profile increment — 5 October 2026</h2><p>Applicant&#x27;s existing draft/submission/messages flow now uses a validated session-only mock Portal API. Student schema v4 aligns Personal, Academic and Documents through an explicitly accepted, versioned handoff; submission alone never enrols a student. Shared UI remains 0.6.1. Lesotho is the acceptance-pilot priority; existing Malaysian sample rules are retained without asserting Lesotho policy. Details: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md">Applicant mock API</a>, <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md">accepted handoff and backend prerequisites</a>. Automated local gates do not establish hosted HTTP, physical-device or CMS integration. No hosted reseed is authorized by this increment. Validation errors remain beside fields with focus on the first invalid control; no page-wide validation list is shown.</p></section>
+<section id="local-development-review-increment"><h2>Local development review increment — 5 October 2026</h2><p>Applicant provides one development-only Admin Actions page with three isolated applicant scenarios (Fresh, completed unsubmitted draft, submitted approved), a shared dropdown, payment/document SummaryCards and reviewer conversation. Switching retains saved work and invalidates stale operations. Payment verification precedes document verification; completion sets Approved without offers, accepted-enrolment context or Student provisioning. Admin viewing never reads messages for the applicant; approved conversations are read-only on both sides. Production excludes its route, navigation, commands and synthetic fixtures. No HTTP/CMS integration is asserted. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md">Applicant mock operations</a>.</p></section>
+  <section id="local-enrolment-acceptance-increment--6-october-2026"><h2>Local enrolment acceptance increment — 6 October 2026</h2><p>Approved Applicant applications can explicitly accept their first-preference Design enrolment through the shared confirmation popup. Submission starts with no automatic reviewer messages. The next simulated development login transfers accepted serializable data into a new isolated first-semester Student mock account/enrolment and opens existing Module Registration. Both portals use the same captured intake reference and existing curriculum/rules. No offer screens, live authentication, CMS provisioning, durable evidence transfer or backend deployment is implemented. Production and HTTP sessions exclude the simulation. Shared UI stays 0.6.1; Student schema stays 4 and admissions handoff stays version 1. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md#development-browser-handoff--6-october-2026">accepted handoff</a>.</p></section>
+  <section id="automatic-post-acceptance-logout--6-october-2026"><h2>Automatic post-acceptance logout — 6 October 2026</h2><p>Successful enrolment acceptance automatically logs out Applicant development mock sessions to the existing Sign in screen. The applicant explicitly clicks Sign in to open the existing new Student tab at Module Registration. Failed acceptance stays in its popup; failed logout preserves accepted status with Retry Sign Out, without accepting again. Session/scenario guards prevent stale transitions. Records, files and drafts remain until refresh. Production and HTTP sessions exclude this simulation; shared 0.6.1, contracts and Student bootstrap remain unchanged.</p></section>
+  <section><h2>Review and letter actions — 8 October 2026</h2><p>Document verification releases Eligibility while overall enrolment remains orange and Under review. Application Progress uses Step as the first column. Four ordered checks show Bursary payment, Quality Assurance documents, applicant confirmation and Registry Offer release. Only final enrolment acceptance completes the summary. Equal-width letter actions include icons; Preview opens a separate browser PDF tab and Download retains the issued filename. The generated PDF retains its DEMO marking. No hosted workflow or schema changes are introduced.</p></section></main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -611,6 +520,10 @@ href="../ai/backend/admissions-handoff.html">admissions handoff</a>.</p>
       wrap.appendChild(table);
     });
   </script>
+<section><h2>Checklist action widths — 6 October 2026</h2><p>Documents Checklist uses equal-width Edit Answers and Create Application actions on phone, tablet and desktop through the existing shared PageActionBar slot. Navigation and checklist retention remain unchanged. Shared Popup trailing-action support is an unpublished candidate awaiting release authorization; Applicant still consumes 0.6.1 and its leave dialog is not yet changed.</p></section>
+<section><h2>Shared 0.6.2 and save before leaving — 6 October 2026</h2><p>Released shared 0.6.2 adds an optional trailing Popup action. Applicant uses primary Save & Close after Keep Editing to save incomplete drafts before the originally blocked navigation; pending, failure/retry, duplicate and stale-session handling remain portal-owned. Student upgrades its pin with existing defaults intact. Graph schema 4, admissions handoff 1 and Demo/Live boundaries are unchanged.</p></section>
+<section><h2>Captured Cyberjaya research baseline</h2><p>New registration procedures and frontend gap analysis remain research references. Lesotho is the first acceptance pilot; current Malaysian samples are retained. The implemented session-only mock API and acceptance/handoff do not establish Live offers, authentication or provisioning. See the canonical Applicant guidance and online-registration analysis.</p></section>
+<section><h2>Campus selection and two-stage enrolment — 7 October 2026</h2><p>Local mock only: required campus and conditional Alumni student ID, optional English results, Bursary payment verification, QA Eligibility Letter release and applicant confirmation, then Registry Offer Letter release and final acceptance. Generated demo PDFs can be previewed/downloaded; only final acceptance signs out. The next explicit Sign in transfers an isolated accepted identity into Student Module Registration.</p><p>Handoff/envelope v2 carries campus and both confirmations/letters; v1 remains readable. Student Documents places Offer Letter first and Eligibility Letter second. Hosted HTTP authentication and supported methods remain unchanged; new hosted letter operations, real CMS provisioning and durable upload delivery require future service work. Shared package remains 0.6.2.</p></section>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
 </body>
