@@ -5569,6 +5569,14 @@ components:
               source:
                 type: string
                 minLength: 1
+            issuedLetter:
+              type: object
+              description: Optional local demo PDF payload for issued admissions letters.
+              required: [fileName, pdfBase64]
+              properties:
+                fileName: {type: string}
+                pdfBase64: {type: string, maxLength: 1400000}
+              additionalProperties: false
             required:
             - id
             - title
@@ -5658,6 +5666,12 @@ components:
             studyPreferences:
               type: object
               properties:
+                campusId:
+                  type: string
+                  description: Sample campus id from the local catalogue; blank until the study step is completed.
+                previousStudentId:
+                  type: string
+                  description: Required nonempty trimmed value for Alumni; blank for other applicant types.
                 studentType:
                   type: string
                   enum:
@@ -5714,6 +5728,8 @@ components:
                     - courseId
                     additionalProperties: false
               required:
+                - campusId
+                - previousStudentId
               - studentType
               - applicantType
               - preferences
@@ -6510,6 +6526,12 @@ components:
         studyPreferences:
           type: object
           properties:
+            campusId:
+              type: string
+              description: Sample campus id from the local catalogue; blank until the study step is completed.
+            previousStudentId:
+              type: string
+              description: Required nonempty trimmed value for Alumni; blank for other applicant types.
             studentType:
               type: string
               enum:
@@ -6566,6 +6588,8 @@ components:
                 - courseId
                 additionalProperties: false
           required:
+            - campusId
+            - previousStudentId
           - studentType
           - applicantType
           - preferences
@@ -7438,6 +7462,9 @@ components:
           - $ref: "#/components/schemas/ApplicantEnrolmentAcceptance"
           - type: "null"
           default: null
+        letters:
+          $ref: '#/components/schemas/LocalAdmissionsLetterWorkflow'
+          description: Local mock letter workflow; hosted Demo responses may omit until server migration.
         catalogueReferenceAt:
           type: string
           format: date-time
@@ -7480,6 +7507,12 @@ components:
             studyPreferences:
               type: object
               properties:
+                campusId:
+                  type: string
+                  description: Sample campus id from the local catalogue; blank until the study step is completed.
+                previousStudentId:
+                  type: string
+                  description: Required nonempty trimmed value for Alumni; blank for other applicant types.
                 studentType:
                   type: string
                   enum:
@@ -7536,6 +7569,8 @@ components:
                     - courseId
                     additionalProperties: false
               required:
+                - campusId
+                - previousStudentId
               - studentType
               - applicantType
               - preferences
@@ -8352,6 +8387,7 @@ components:
       - revision
       - previewNumber
       - status
+      - letters
       - snapshot
       - submittedAt
       - updatedAt
@@ -8402,6 +8438,12 @@ components:
             studyPreferences:
               type: object
               properties:
+                campusId:
+                  type: string
+                  description: Sample campus id from the local catalogue; blank until the study step is completed.
+                previousStudentId:
+                  type: string
+                  description: Required nonempty trimmed value for Alumni; blank for other applicant types.
                 studentType:
                   type: string
                   enum:
@@ -8455,6 +8497,8 @@ components:
                     - facultyId
                     - courseId
               required:
+                - campusId
+                - previousStudentId
               - studentType
               - applicantType
               - preferences
@@ -9259,7 +9303,7 @@ components:
             - {type: 'null'}
     LocalApplicantCampusFields:
       type: object
-      x-implementation: Local sample catalogue only; hosted snapshot inputs remain unchanged.
+      x-implementation: Shared with ApplicantSnapshot.studyPreferences; hosted Neon Demo may still omit until server migration.
       required: [campusId, previousStudentId]
       properties:
         campusId:

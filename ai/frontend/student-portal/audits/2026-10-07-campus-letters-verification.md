@@ -20,6 +20,12 @@ The initial ten-worker Student run hit resource-related timeouts; the complete t
 
 Final read-only inspection found `C:/Users/faidz/AppData/Local/Temp/raisd-record-card-public-mirror` at preserved HEAD `349fe68` with 265 missing tracked files. This operation did not modify its path; the initial ledger recorded its ref but not its per-worktree status, so the time/cause of those missing files is not established. It was left untouched rather than discarding or restoring potentially user-owned changes. `raisd-fields-public-mirror` remains clean at `0542017`. The four older backup stashes remain unchanged. The seven primary checkout HEADs retain the incoming fast-forward commits; implementation changes remain uncommitted.
 
+## Review follow-up — 8 October 2026
+
+- Wired `campusId`, `previousStudentId`, and `letters` into the published OpenAPI `studyPreferences` / `ApplicantApplication` shapes (plus optional `issuedLetter` on Documents Profile items) so fixtures are no longer rejected by `additionalProperties: false`.
+- Hosted HTTP approved applications now show an explicit status note that two-stage letter acceptance remains local-mock-only.
+- Registry Offer admin badge reads **Ready to release** after eligibility confirmation; submitted Application Details omit a blank Campus row when campus is unset (hosted builds).
+
 ## Review progress and letter action refinements — 8 October 2026
 
 - Overall review remains orange with Under review through Eligibility release, applicant confirmation, Registry preparation and Offer release. Four rows derive independent Status/Update values; final acceptance alone completes the green summary. Verified legacy/HTTP records without issued letters retain their Verified document update.
