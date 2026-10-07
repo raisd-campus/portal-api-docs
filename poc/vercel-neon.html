@@ -271,7 +271,7 @@
           </tr>
           <tr>
             <td>Applicant portal</td>
-            <td><a href="https://applicant-portal-lemon.vercel.app">applicant-portal-lemon.vercel.app</a></td>
+            <td><a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a></td>
             <td><a href="https://github.com/raisd-campus/applicant-portal">applicant-portal</a></td>
             <td>Vite + React SPA; HTTP Portal API when <code>VITE_PORTAL_API_URL</code> is set</td>
             <td>Manual prebuilt deploy (same <code>CI/CD</code> template; Actions billing may block CI)</td>
@@ -341,7 +341,7 @@ flowchart TB
 
   subgraph vercel ["Vercel team · Singapore sin1"]
     sp["raisd-student-portal<br/>static SPA"]
-    ap["applicant-portal-lemon<br/>static SPA"]
+    ap["raisd-applicant-portal<br/>static SPA"]
     lp["raisd-lecturer-portal<br/>placeholder"]
     stp["raisd-staff-portal<br/>placeholder"]
     api["raisd-portal-api<br/>Node 22 function · Fastify<br/>Student + Applicant Demo engines"]
@@ -424,7 +424,7 @@ flowchart TB
         </tbody>
       </table>
     </div>
-    <p><code>CORS_ORIGIN</code> on the API is exactly <code>https://raisd-student-portal.vercel.app,https://applicant-portal-lemon.vercel.app,https://raisd-campus.github.io</code> (student SPA + applicant SPA + Swagger). Add an origin there before another portal calls the API from a browser.</p>
+    <p><code>CORS_ORIGIN</code> on the API is exactly <code>https://raisd-student-portal.vercel.app,https://raisd-applicant-portal.vercel.app,https://raisd-campus.github.io</code> (student SPA + applicant SPA + Swagger). Add an origin there before another portal calls the API from a browser.</p>
 
     <h2 id="cicd">CI/CD pipelines</h2>
     <div class="card">
