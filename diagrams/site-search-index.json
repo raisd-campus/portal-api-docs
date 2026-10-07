@@ -109,7 +109,7 @@
     },
     {
       "title": "Lesotho CMS vs Applicant portal",
-      "summary": "Standup 8 Oct 2026 \u2014 compare newer Lesotho CMS, campus2_lesotho, and Raisd Applicant Demo admissions flows (12-row matrix, roles, M4 gaps).",
+      "summary": "Standup 8 Oct 2026 \u2014 Lesotho CMS vs Applicant flows, Read.ai expectations, gaps after Faid campus/letters, and Applicant backlog.",
       "section": "LUCT CMS",
       "keywords": [
         "lesotho",
@@ -121,7 +121,9 @@
         "eligibility",
         "bursary",
         "m4",
-        "standup"
+        "standup",
+        "campus",
+        "backlog"
       ],
       "path": "diagrams/old-cms-lesotho/cms-vs-applicant.html"
     },

@@ -235,14 +235,17 @@
       <h1>Lesotho CMS vs Raisd Applicant portal</h1>
       <p>
         Standup action (7 Oct 2026): compare the Lesotho CMS application / admissions flow
-        with the current Raisd Applicant portal Demo, and publish the analysis
-        <strong>8 October 2026</strong>. Demo ≠ Live. Admissions before registration (M4).
+        with the current Raisd Applicant portal Demo. Published
+        <strong>8 October 2026</strong>; refreshed the same day after Faid’s campus +
+        two-stage letters merge. Includes Read.ai expectations, gaps, and Applicant backlog.
+        Demo ≠ Live. Admissions before registration (M4).
       </p>
       <div class="meta-row">
         <span class="chip ok">Standup closed</span>
-        <span class="chip ok">M4 pilot</span>
+        <span class="chip ok">Faid campus/letters</span>
+        <span class="chip ok">Login CORS done</span>
+        <span class="chip">Hosted letters gated</span>
         <span class="chip">LGCSE gap</span>
-        <span class="chip">Staff Not started</span>
       </div>
     </section>
 
@@ -261,19 +264,119 @@
       <strong>Evidence.</strong>
       Newer Lesotho CMS = screenshots only (no shared schema).
       Older CMS = <code>campus2_lesotho</code> structure dump (outside git).
-      Raisd = local mock + partial hosted HTTP (campus/letters/accept local-mock-only on Neon).
+      Raisd = local mock (Faid <code>9e007f2</code> campus + Eligibility→Offer) + partial hosted HTTP
+      (login works; campus/letters/accept still local-mock-only on Neon).
+      Read.ai standup report 7 Oct 2026 (11:00–11:57 MYT).
     </div>
 
     <nav class="toc" aria-label="Analysis sections">
-      <a href="#flows"><strong>1. Three flows</strong><span>Newer CMS · old CMS · Raisd Demo</span></a>
-      <a href="#matrix"><strong>2. Step matrix</strong><span>12 rows · verdict · M4 note</span></a>
-      <a href="#roles"><strong>3. Roles</strong><span>Bursary · QA · Registry · Applicant</span></a>
-      <a href="#gaps"><strong>4. Critical gaps</strong><span>LGCSE · LSL · Staff · CAP-53</span></a>
-      <a href="#next"><strong>5. Next work</strong><span>Ordered recommendations</span></a>
+      <a href="#readai"><strong>1. Read.ai standup</strong><span>Actions · chapters · open Qs</span></a>
+      <a href="#expectations"><strong>2. Expectations</strong><span>Meeting → Applicant now</span></a>
+      <a href="#flows"><strong>3. Three flows</strong><span>Newer CMS · old CMS · Raisd Demo</span></a>
+      <a href="#matrix"><strong>4. Step matrix</strong><span>13 rows · verdict · M4 note</span></a>
+      <a href="#roles"><strong>5. Roles</strong><span>Bursary · QA · Registry · Applicant</span></a>
+      <a href="#gaps"><strong>6. Critical gaps</strong><span>LGCSE · LSL · Staff · hosted</span></a>
+      <a href="#backlog"><strong>7. Applicant backlog</strong><span>What to add / complete</span></a>
+      <a href="#next"><strong>8. Next work</strong><span>Ordered recommendations</span></a>
     </nav>
 
+    <section class="section" id="readai">
+      <h2>1. Read.ai standup — 7 Oct 2026</h2>
+      <p>
+        <em>CMS 2026 Daily Stand-up</em> (Google Meet, 5 participants, report score 80).
+        Summary: applicant portal readiness, Lesotho pilot application flow, and requirements
+        for different applicant types. DSC-shown portals are front-end designs;
+        server deployment, data migration, and API connections remain outstanding.
+        At meeting time login was unreliable and the registration menu was still missing.
+      </p>
+      <div class="card">
+        <div class="card-head"><div><h3>Action items (status 8 Oct)</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Owner</th><th>Action</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Vara</td><td>Send Cambodia QR-system code to Iman</td><td><span class="tag tag-gap">Open</span></td></tr>
+              <tr><td>Iman</td><td>Review QR system → update CMS docs</td><td><span class="tag tag-gap">Blocked</span></td></tr>
+              <tr><td>Iman</td><td>Fix applicant login</td><td><span class="tag tag-partial">Done (CORS)</span></td></tr>
+              <tr><td>Faid</td><td>Analyze CAP analysis / progress report</td><td><span class="tag tag-gap">Open</span></td></tr>
+              <tr><td>Faid</td><td>Add campus selector</td><td><span class="tag tag-partial">Done (local)</span></td></tr>
+              <tr><td>Dexter / MIT</td><td>Registry consult — exchange students</td><td><span class="tag tag-gap">Open</span></td></tr>
+              <tr><td>Iman</td><td>Lesotho CMS vs Applicant analysis (following morning)</td><td><span class="tag tag-partial">Done</span></td></tr>
+              <tr><td>Faid</td><td>Application-flow changes + push GitHub</td><td><span class="tag tag-partial">Done</span></td></tr>
+              <tr><td>Iman</td><td>Manual deploy after Faid push</td><td><span class="tag tag-partial">Done (SPA)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Discussion chapters that set Applicant expectations</h3></div></div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Alumni / campus accounts</strong> — Previous Student ID; campus-aware apply</li>
+            <li><strong>Application types &amp; documents</strong> — New / Alumni / Transfer (not one generic path)</li>
+            <li><strong>Fields, documents, fees, payment</strong> — Lesotho → LGCSE + LSL</li>
+            <li><strong>Eligibility &amp; Offer-letter workflow</strong> — two-stage path (now in local mock)</li>
+            <li><strong>Student login after offer</strong> — accept → Student transition</li>
+            <li><strong>Exchange students</strong> — Registry (out of Applicant alone)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="expectations">
+      <h2>2. Expectations vs Applicant now</h2>
+      <div class="card">
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Expectation (7 Oct)</th><th>Current Applicant (post-Faid)</th><th>Gap</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Reliable hosted login</td>
+                <td>Hosted login works</td>
+                <td><span class="tag tag-partial">Met (Demo)</span></td>
+              </tr>
+              <tr>
+                <td>Campus selector</td>
+                <td>Local mock: 8 campuses incl. Lesotho. Hosted: field hidden</td>
+                <td><span class="tag tag-gap">Hosted API</span></td>
+              </tr>
+              <tr>
+                <td>New / Alumni / Transfer</td>
+                <td>Enum + Alumni Previous Student ID (local)</td>
+                <td><span class="tag tag-partial">Partial</span></td>
+              </tr>
+              <tr>
+                <td>Eligibility → Offer letters</td>
+                <td>Local four-row progress + DEMO PDFs. Hosted notice: unavailable</td>
+                <td><span class="tag tag-gap">Hosted API</span></td>
+              </tr>
+              <tr>
+                <td>Student transition after accept</td>
+                <td>Local logout → Sign in → Student handoff v2</td>
+                <td><span class="tag tag-partial">Partial</span></td>
+              </tr>
+              <tr>
+                <td>Lesotho docs / fee rules</td>
+                <td>Generic quals + Demo fee copy</td>
+                <td><span class="tag tag-gap">LGCSE · LSL</span></td>
+              </tr>
+              <tr>
+                <td>Registration menu (enrolled)</td>
+                <td>Not in Applicant (Student Process B)</td>
+                <td><span class="tag tag-out">Out</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="flows">
-      <h2>1. Three flows</h2>
+      <h2>3. Three flows</h2>
       <div class="stat-grid">
         <div class="stat-card"><strong>[A]</strong><span>Newer Lesotho CMS (screenshots)</span></div>
         <div class="stat-card"><strong>[B]</strong><span>Old campus2_lesotho app_*</span></div>
@@ -305,22 +408,24 @@
       </div>
 
       <div class="card" style="margin-top:12px">
-        <div class="card-head"><div><h3>[C] Raisd Applicant Demo — 8 Oct 2026</h3></div></div>
+        <div class="card-head"><div><h3>[C] Raisd Applicant Demo — after Faid 8 Oct</h3></div></div>
         <div class="card-body">
-          <pre style="white-space:pre-wrap;margin:0;font-size:14px;line-height:1.45">Sign-in → Consent → Study (Campus + 3 prefs) → Personal → Academic → Documents → Fee
+          <pre style="white-space:pre-wrap;margin:0;font-size:14px;line-height:1.45">Sign-in → Consent → Study (Campus* + type + 3 prefs) → Personal → Academic → Documents → Fee
   → Submit → Application Progress
        1. Payment Proof — Bursary
        2. Document Check — QA → DEMO Eligibility Letter
        3. Confirm Eligibility — Applicant
        4. Offer Letter — Registry → Accept Enrolment
-  → Handoff v2 → Student Documents (local mock)</pre>
-          <p style="margin:12px 0 0">Live Demo URL: <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a>. Hosted letter/campus accept still local-mock-only.</p>
+  → Handoff v2 → Student Documents (local mock)
+
+* Campus, Alumni ID, letters: local mock only. Hosted shows unavailable notice.</pre>
+          <p style="margin:12px 0 0">Live Demo URL: <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a>. Faid merge <code>9e007f2</code> + review clarifications on <code>main</code>.</p>
         </div>
       </div>
     </section>
 
     <section class="section" id="matrix">
-      <h2>2. Step matrix</h2>
+      <h2>4. Step matrix</h2>
       <div class="card">
         <div class="card-body" style="overflow-x:auto">
           <table class="data">
@@ -344,9 +449,9 @@
               <tr>
                 <td>2</td>
                 <td>Intake + Opt1/Opt2</td>
-                <td>Campus + intake + 3 prefs + types</td>
+                <td>Campus + intake + 3 prefs + types (local)</td>
                 <td><span class="tag tag-partial">Partial</span></td>
-                <td>Pin real Lesotho programmes/fees for Live</td>
+                <td>Campus shipped locally; pin real Lesotho catalogue; expose on hosted</td>
               </tr>
               <tr>
                 <td>3</td>
@@ -413,6 +518,13 @@
               </tr>
               <tr>
                 <td>12</td>
+                <td>New / Alumni / Transfer paths</td>
+                <td>Applicant type enum + Alumni Previous Student ID</td>
+                <td><span class="tag tag-partial">Partial</span></td>
+                <td>Per-type docs + exchange (Registry) still open</td>
+              </tr>
+              <tr>
+                <td>13</td>
                 <td>NMDS after accept</td>
                 <td>Out of applicant journey</td>
                 <td><span class="tag tag-out">Out</span></td>
@@ -425,7 +537,7 @@
     </section>
 
     <section class="section" id="roles">
-      <h2>3. Role mapping</h2>
+      <h2>5. Role mapping</h2>
       <div class="card">
         <div class="card-body" style="overflow-x:auto">
           <table class="data">
@@ -445,7 +557,7 @@
     </section>
 
     <section class="section" id="gaps">
-      <h2>4. Critical gaps for Lesotho M4 Live</h2>
+      <h2>6. Critical gaps for Lesotho M4 Live</h2>
       <div class="card">
         <div class="card-body">
           <ol>
@@ -455,34 +567,81 @@
             <li><strong>Rank/score</strong> — confirm with Admissions; Schema if required.</li>
             <li><strong>Official offer letter</strong> — replace DEMO PDF with campus print/sign path.</li>
             <li><strong>CMS write-back (CAP-53)</strong> — Applicant never writes CMS directly.</li>
-            <li><strong>Hosted letter/campus methods</strong> — Portal API must catch up to local mock.</li>
+            <li><strong>Hosted campus + letter methods</strong> — Portal API must catch up to local mock (standup “working prototype”).</li>
             <li><strong>Eligibility Letter product fit</strong> — validate with Registry vs CMS recommend chain.</li>
+            <li><strong>Per-type document matrices</strong> + Registry exchange-student rules.</li>
+            <li><strong>Real Lesotho catalogue</strong> — programmes / fees / intakes (not Design clones).</li>
           </ol>
         </div>
       </div>
       <div class="card" style="margin-top:12px">
-        <div class="card-head"><div><h3>What Raisd Demo already covers well</h3></div></div>
+        <div class="card-head"><div><h3>What Raisd Demo already covers well (post-Faid)</h3></div></div>
         <div class="card-body">
           <ul>
             <li>Validated multi-step apply, drafts, messages, immutable snapshots</li>
-            <li>Campus on Study Preferences (Lesotho selectable)</li>
+            <li>Campus selector + New/Alumni/Transfer (+ Alumni Previous Student ID) — local mock</li>
             <li>Sequential payment → document verification</li>
-            <li>Two-stage letter mock + Student document preservation (local)</li>
+            <li>Two-stage letter mock + four-row Application Progress + Student letter docs (local)</li>
+            <li>Hosted login + explicit notice when letter acceptance is unavailable</li>
             <li>Clear DEMO labelling on generated PDFs</li>
           </ul>
         </div>
       </div>
     </section>
 
+    <section class="section" id="backlog">
+      <h2>7. What to add / complete on Applicant portal</h2>
+      <div class="stat-grid">
+        <div class="stat-card"><strong>A</strong><span>Hosted Demo parity — campus + letters on Portal API</span></div>
+        <div class="stat-card"><strong>B</strong><span>Lesotho content — LGCSE, LSL, real catalogue, type docs</span></div>
+        <div class="stat-card"><strong>C</strong><span>Outside Applicant — Staff desks, exchange, QR</span></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h3>A — Hosted Demo parity</h3></div></div>
+        <div class="card-body">
+          <ol>
+            <li>Persist <code>campusId</code> / <code>previousStudentId</code> over HTTP; show campus on hosted UI.</li>
+            <li>Portal API: Eligibility confirm, QA/Registry letter release, guarded accept.</li>
+            <li>Durable issued-letter resources (or signed URLs) for Student Documents.</li>
+            <li>Keep hosted limitation notice until the above land.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>B — Lesotho / M4 applicant content</h3></div></div>
+        <div class="card-body">
+          <ol>
+            <li>LGCSE extract fields (Sesotho, certificate #, institution, exam board).</li>
+            <li>LSL/M fee copy and verification rules.</li>
+            <li>Pin Lesotho programmes / intakes / fees (stop Design clones as “Lesotho”).</li>
+            <li>Document checklists by New / Alumni / Transfer.</li>
+            <li>Confirm Eligibility Letter product fit with Registry.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>C — Outside Applicant (still M4)</h3></div></div>
+        <div class="card-body">
+          <ul>
+            <li>Staff portal: Bursary / Document Review / Academic→QA→Registrar</li>
+            <li>Exchange students — Dexter/MIT ↔ Registry</li>
+            <li>Cambodia QR docs — blocked on Vara</li>
+            <li>Enrolled registration menu / Add-Drop — Student, not Applicant</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="next">
-      <h2>5. Recommended next work</h2>
+      <h2>8. Recommended next work</h2>
       <div class="card">
         <div class="card-body">
           <ol>
             <li>Confirm with Registry whether <strong>Eligibility Letter</strong> + applicant confirm are Lesotho policy or Demo scaffolding.</li>
+            <li>Portal API: hosted campus + letter workflow so Demo matches local mock.</li>
             <li>Specify <strong>LGCSE extract</strong> fields in Schema + CAP-03.</li>
+            <li>Applicant type document matrices + Registry exchange answer.</li>
             <li>Staff portal MVP: payment/document verify, Academic/QA/Registrar recommend, release offer.</li>
-            <li>Portal API: persist campus + letter workflow for hosted Demo; then Live CMS adapter.</li>
             <li>Keep updating <a href="../old-cms/online-registration-gap.html">FE gap matrix</a> and <a href="index.html#gap-x">#gap-x</a> — do not fork a third spreadsheet.</li>
           </ol>
         </div>
@@ -490,7 +649,7 @@
       <div class="note" style="margin-top:16px">
         <strong>Standup closure.</strong>
         Action “compare Lesotho CMS application flow with current applicant portal” —
-        <strong>done</strong> (this page + Markdown, 8 Oct 2026).
+        <strong>done</strong> (this page + Markdown, 8 Oct 2026; refreshed after Faid campus/letters merge).
       </div>
     </section>
   </main>

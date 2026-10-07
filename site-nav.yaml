@@ -442,8 +442,8 @@ search:
   - title: Lesotho CMS vs Applicant portal
     href: luct-ls-cms-applicant
     section: LUCT CMS
-    summary: Standup 8 Oct 2026 — compare newer Lesotho CMS, campus2_lesotho, and Raisd Applicant Demo admissions flows (12-row matrix, roles, M4 gaps).
-    keywords: [lesotho, applicant, admissions, gap, lgcse, offer-letter, eligibility, bursary, m4, standup]
+    summary: Standup 8 Oct 2026 — Lesotho CMS vs Applicant flows, Read.ai expectations, gaps after Faid campus/letters, and Applicant backlog.
+    keywords: [lesotho, applicant, admissions, gap, lgcse, offer-letter, eligibility, bursary, m4, standup, campus, backlog]
 
   - title: Lesotho CMS vs Applicant (AI knowledge)
     href: ai-lesotho-cms-applicant
