@@ -5569,14 +5569,14 @@ components:
               source:
                 type: string
                 minLength: 1
-            issuedLetter:
-              type: object
-              description: Optional local demo PDF payload for issued admissions letters.
-              required: [fileName, pdfBase64]
-              properties:
-                fileName: {type: string}
-                pdfBase64: {type: string, maxLength: 1400000}
-              additionalProperties: false
+              issuedLetter:
+                type: object
+                description: Optional local demo PDF payload for issued admissions letters.
+                required: [fileName, pdfBase64]
+                properties:
+                  fileName: {type: string}
+                  pdfBase64: {type: string, maxLength: 1400000}
+                additionalProperties: false
             required:
             - id
             - title
@@ -5728,8 +5728,8 @@ components:
                     - courseId
                     additionalProperties: false
               required:
-                - campusId
-                - previousStudentId
+              - campusId
+              - previousStudentId
               - studentType
               - applicantType
               - preferences
@@ -6588,8 +6588,8 @@ components:
                 - courseId
                 additionalProperties: false
           required:
-            - campusId
-            - previousStudentId
+          - campusId
+          - previousStudentId
           - studentType
           - applicantType
           - preferences
@@ -7569,8 +7569,8 @@ components:
                     - courseId
                     additionalProperties: false
               required:
-                - campusId
-                - previousStudentId
+              - campusId
+              - previousStudentId
               - studentType
               - applicantType
               - preferences
@@ -8497,8 +8497,8 @@ components:
                     - facultyId
                     - courseId
               required:
-                - campusId
-                - previousStudentId
+              - campusId
+              - previousStudentId
               - studentType
               - applicantType
               - preferences
