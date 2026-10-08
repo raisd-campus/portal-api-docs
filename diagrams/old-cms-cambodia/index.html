@@ -132,6 +132,7 @@
               <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
               <a href="index.html#flows">Flows</a>
               <a href="index.html#integrations">Integrations</a>
+              <a href="certificate-qr.html">Certificate QR</a>
               <a href="index.html#erd">ERD</a>
               <a href="database.html">Database</a>
               <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
@@ -198,6 +199,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho analysis briefing</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="certificate-qr.html">Cambodia certificate QR</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
             <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
@@ -269,7 +271,8 @@
       <a href="#fsd"><strong>2. Functional breakdown</strong><span>Desks by domain · ~PHP counts</span></a>
       <a href="../old-cms/obsidian.html?campus=cambodia"><strong>Obsidian 3D</strong><span>Interactive FSD breakdown &amp; walkthrough</span></a>
       <a href="#flows"><strong>3. Core process flows</strong><span>Admissions · academic · finance · student life</span></a>
-      <a href="#integrations"><strong>4. Integrations</strong><span>Assist · portalcambodia · cambodiabatch</span></a>
+      <a href="#integrations"><strong>4. Integrations</strong><span>Assist · portalcambodia · QR / Verification</span></a>
+      <a href="certificate-qr.html"><strong>Certificate QR</strong><span>Create API · KHM-PNH_ · Verification</span></a>
       <a href="#erd"><strong>5. Physical ERD</strong><span>Core · admissions · finance · life</span></a>
       <a href="#dfd"><strong>6. Data-flow (DFD)</strong><span>Context · admit · academic · finance · batch</span></a>
       <a href="#database"><strong>7. Database</strong><span>481 · 296 · 46 · 2 · 83</span></a>
@@ -599,10 +602,50 @@ flowchart TD
         <span class="chip ok">portal_*_cambodia</span>
         <span class="chip ok">api_student_*</span>
         <span class="chip ok">portalcambodia dumps</span>
+        <span class="chip ok">QR · Verification</span>
         <span class="chip">No DTEF / NMDS / ssb</span>
       </div>
 
       <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Certificate QR → Verification (Registry)</h3>
+            <p>
+              Standup 7–8 Oct 2026: Vara shared QR System + Verification source packs.
+              CMS call site already in <code>cambodia/registry/qrcode_gen*.php</code>.
+              Full Pages write-up:
+              <a href="certificate-qr.html">certificate-qr.html</a>
+              · Markdown:
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md">cambodia-qr-system.md</a>.
+            </p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  participant REG as Registry qrcode_gen.php
+  participant QR as qr.limkokwing.net
+  participant VER as verification.limkokwing.net
+  participant PUB as Certificate PNG
+
+  REG->>REG: short_code KHM-PNH_StdProgramID
+  REG->>REG: AES token from StdProgramID
+  REG->>QR: POST /api/create_qrcode_api
+  Note over REG,QR: name · LUCT · Certificate · short_code · verify URL
+  QR-->>REG: JSON Qrcode base64 PNG
+  REG->>PUB: StudentID_ProgramCode.png
+  Note over VER: Public scan target<br/>/cambodia/token
+          </pre>
+          <p style="margin:12px 0 0">
+            Create API: <code>https://qr.limkokwing.net/api/create_qrcode_api</code>
+            (older scripts also use <code>qrcode.limkokwing.net</code>).
+            Verify: <code>https://verification.limkokwing.net/cambodia/…</code>.
+            Full QR/Verification DB inventory pending local download of Vara’s 8 Oct zips.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
         <div class="card-head">
           <div>
             <h3>Portal export night path</h3>
@@ -667,6 +710,18 @@ sequenceDiagram
               <td>—</td>
               <td>Absent in this pack</td>
               <td>Contrast Eswatini <code>api-service/</code>; use DB <code>api_*</code> + desks only</td>
+            </tr>
+            <tr>
+              <td>Certificate QR SaaS</td>
+              <td>CMS → external</td>
+              <td><code>registry/qrcode_gen*.php</code> → <code>qr.limkokwing.net/api/create_qrcode_api</code></td>
+              <td>M5 campus integration; not Lesotho M4 Applicant DEMO letters. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md">cambodia-qr-system.md</a></td>
+            </tr>
+            <tr>
+              <td>Public Verification site</td>
+              <td>Scan target</td>
+              <td><code>verification.limkokwing.net/cambodia/{token}</code></td>
+              <td>Token = AES of StdProgramID; Verification source zip shared 8 Oct (local extract pending)</td>
             </tr>
           </tbody>
         </table>

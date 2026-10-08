@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Cambodia certificate QR + Verification</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Control Plane</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../distributed-cms-architecture.html">Distributed CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../distributed-cms-architecture.html">Target architecture</a>
+            <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+            <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+            <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+            <a href="../migration.html">M1–M5 migration</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS target</a>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="../old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Flows</a>
+              <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="../old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="../old-cms-lesotho/index.html#cap">CAP seed</a>
+              <a href="../old-cms-lesotho/index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="index.html">E2E hub</a>
+              <a href="index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="index.html#flows">Flows</a>
+              <a href="index.html#integrations">Integrations</a>
+              <a href="certificate-qr.html">Certificate QR</a>
+              <a href="index.html#erd">ERD</a>
+              <a href="database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Cambodia certificate QR + Verification</h1>
+      <p>
+        How LUCT Cambodia CMS Registry generates certificate QR codes via the external
+        Limkokwing QR SaaS, and how public scans land on the Verification site.
+        Evidence from Vara’s CMS pack (7 Oct 2026) and QR / Verification Drive packs (8 Oct 2026).
+        <strong>M5 campus integration</strong> — not Lesotho M4 Applicant Demo letters.
+      </p>
+      <div class="meta-row">
+        <span class="chip ok">CMS→QR call site</span>
+        <span class="chip ok">KHM-PNH_</span>
+        <span class="chip ok">qr.limkokwing.net</span>
+        <span class="chip ok">verification.limkokwing.net</span>
+        <span class="chip warn">QR/Verification zip DB pending local</span>
+      </div>
+    </section>
+
+    <div class="note" style="margin: 0 0 16px">
+      <strong>Canonical Markdown.</strong>
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md">cambodia-qr-system.md</a>
+      · Cambodia CMS hub:
+      <a href="index.html">old-cms-cambodia/</a>
+      · Integrations snippet:
+      <a href="index.html#integrations">#integrations</a>
+      · Standup context:
+      <a href="../old-cms-lesotho/cms-vs-applicant.html">Lesotho CMS vs Applicant</a>.
+    </div>
+
+    <div class="note warn" style="margin: 0 0 16px">
+      <strong>Secrets stay out of Pages.</strong>
+      PHP trees, DB dumps, AES key material, night-script credentials, and live certificate
+      payloads are <em>not</em> published. This page documents hosts, API shape, short-code
+      rules, and Raisd implications only.
+    </div>
+
+    <nav class="toc" aria-label="Certificate QR sections">
+      <a href="#summary"><strong>1. Summary</strong><span>Three systems · standup status</span></a>
+      <a href="#flow"><strong>2. Runtime flow</strong><span>Mermaid · end-to-end</span></a>
+      <a href="#api"><strong>3. Create API</strong><span>POST fields · response</span></a>
+      <a href="#token"><strong>4. Verify token</strong><span>AES · URL · short_code</span></a>
+      <a href="#scripts"><strong>5. CMS scripts</strong><span>registry/qrcode_gen*</span></a>
+      <a href="#hosts"><strong>6. Hosts &amp; packs</strong><span>QR · Verification · Drive</span></a>
+      <a href="#raisd"><strong>7. Raisd implications</strong><span>M5 · Adapter · Demo ≠ Live</span></a>
+      <a href="#next"><strong>8. Next inventory</strong><span>When zips are local</span></a>
+    </nav>
+
+    <!-- ========== 1 ========== -->
+    <section class="section" id="summary">
+      <h2>1. Summary</h2>
+      <p>
+        Certificate QR is <strong>not</strong> generated inside Portal API or the Applicant Demo.
+        Cambodia Registry PHP calls an external QR registry; the QR payload is a URL into the
+        public Verification app. Vara (8 Oct): <em>“Do check in CMS Cambodia, there's a call to
+        the QR system to generate the QR code.”</em>
+      </p>
+      <div class="card">
+        <div class="card-head"><div><h3>Three systems</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>System</th><th>Role</th><th>Host / path</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cambodia CMS (Registry)</td>
+                <td>Builds short_code + verify URL; POSTs create API; saves PNG</td>
+                <td><code>cambodia/registry/qrcode_gen*.php</code> (campus SoR)</td>
+              </tr>
+              <tr>
+                <td>QR System (SaaS)</td>
+                <td>Registers QR identity; returns base64 PNG</td>
+                <td><code>https://qr.limkokwing.net/api/create_qrcode_api</code></td>
+              </tr>
+              <tr>
+                <td>Verification site</td>
+                <td>Public scan target; shows cert validity for campus path</td>
+                <td><code>https://verification.limkokwing.net/cambodia/{token}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Standup actions (7–8 Oct 2026)</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Owner</th><th>Action</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mohd. Paramasvara</td>
+                <td>Send Cambodia QR-system code</td>
+                <td><span class="tag tag-partial">Done</span> — Drive QR System + Verification (WhatsApp 8 Oct)</td>
+              </tr>
+              <tr>
+                <td>Iman Suherman</td>
+                <td>Review QR system → update CMS documentation</td>
+                <td><span class="tag tag-partial">Done (CMS→QR)</span> — this page + Markdown; QR/Verification DB inventory when local</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 2 ========== -->
+    <section class="section" id="flow">
+      <h2>2. Runtime flow</h2>
+      <p>
+        Observed from current-style <code>qrcode_gen.php</code> (Mar 2026). Inputs arrive as
+        query params: <code>StdProgramID</code>, <code>StudentID</code>, <code>ProgramCode</code>.
+      </p>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Registry → QR SaaS → Verification → PNG</h3>
+            <p>Short code + encrypted verify URL are sent to the create API; response PNG is downloaded.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  actor Staff as Registry staff
+  participant REG as qrcode_gen.php
+  participant QR as qr.limkokwing.net
+  participant VER as verification.limkokwing.net
+  participant FILE as StudentID_ProgramCode.png
+
+  Staff->>REG: StdProgramID · StudentID · ProgramCode
+  REG->>REG: short_code = KHM-PNH_ + StdProgramID
+  REG->>REG: token = AES-256-CBC(StdProgramID) → base64
+  REG->>REG: url = verification…/cambodia/{token}
+  REG->>QR: POST /api/create_qrcode_api
+  Note over REG,QR: name · category=LUCT · subcategory=Certificate<br/>short_code · url · created_by
+  QR-->>REG: JSON { Qrcode: base64 PNG }
+  REG->>FILE: decode · imagepng · Content-Disposition attachment
+  Note over VER: Later: public scan opens verify URL
+          </pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Step checklist</h3></div></div>
+        <div class="card-body">
+          <ol>
+            <li>Build <code>short_code = KHM-PNH_{StdProgramID}</code> (Phnom Penh campus prefix).</li>
+            <li>Encrypt <code>StdProgramID</code> → base64 token; build verify URL under <code>/cambodia/</code>.</li>
+            <li>POST form fields to create API (see §3).</li>
+            <li>Parse JSON; require field <code>Qrcode</code> (base64 PNG bytes).</li>
+            <li>Decode with GD; write <code>{StudentID}_{ProgramCode}.png</code>; stream as download; delete temp file.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3 ========== -->
+    <section class="section" id="api">
+      <h2>3. Create API contract</h2>
+      <div class="card">
+        <div class="card-head"><div><h3>Endpoint</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Item</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Method</td><td><code>POST</code></td></tr>
+              <tr><td>Current host</td><td><code>https://qr.limkokwing.net/api/create_qrcode_api</code></td></tr>
+              <tr><td>Older host (variants)</td><td><code>https://qrcode.limkokwing.net/api/create_qrcode_api</code></td></tr>
+              <tr><td>Body</td><td><code>application/x-www-form-urlencoded</code> (PHP cURL <code>POSTFIELDS</code> array)</td></tr>
+              <tr><td>TLS in scripts</td><td><code>CURLOPT_SSL_VERIFYPEER/HOST = false</code> — <strong>do not copy</strong> into Raisd Live adapters</td></tr>
+              <tr><td>Ops note</td><td>Comments mention Cloudflare challenges on the QR host; staff sometimes copy a debug cURL</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Request fields</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Field</th><th>Example / rule</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>name</code></td>
+                <td><code>Verification Cambodia Cert - {StdProgramID}</code></td>
+                <td>Newer script makes name unique per serial; older uses fixed label</td>
+              </tr>
+              <tr>
+                <td><code>category</code></td>
+                <td><code>LUCT</code></td>
+                <td>Institution bucket in QR SaaS</td>
+              </tr>
+              <tr>
+                <td><code>subcategory</code></td>
+                <td><code>Certificate</code></td>
+                <td>Document type</td>
+              </tr>
+              <tr>
+                <td><code>short_code</code></td>
+                <td><code>KHM-PNH_{StdProgramID}</code></td>
+                <td>Campus + city prefix + programme serial</td>
+              </tr>
+              <tr>
+                <td><code>url</code></td>
+                <td><code>https://verification.limkokwing.net/cambodia/{token}</code></td>
+                <td><strong>This</strong> is what the QR encodes — not raw student PII</td>
+              </tr>
+              <tr>
+                <td><code>created_by</code></td>
+                <td><code>User</code></td>
+                <td>Literal in observed scripts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Response</h3></div></div>
+        <div class="card-body">
+          <ul>
+            <li>JSON object; required field <code>Qrcode</code> = base64-encoded PNG.</li>
+            <li>Scripts also check optional <code>message</code> / <code>status</code> on failure.</li>
+            <li>HTTP handling notes 403 (blocked), 404, 500 in the debug-oriented generator.</li>
+            <li>Some variants write raw response to <code>api_debug.log</code> (local ops artefact — not in git).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 4 ========== -->
+    <section class="section" id="token">
+      <h2>4. Verify token &amp; short code</h2>
+      <div class="card">
+        <div class="card-head"><div><h3>Public Verification URL</h3></div></div>
+        <div class="card-body">
+          <p style="margin:0 0 8px"><code>https://verification.limkokwing.net/cambodia/{token}</code></p>
+          <ul>
+            <li><code>{token}</code> = base64(AES-256-CBC ciphertext of <code>StdProgramID</code>).</li>
+            <li>URL-encoded when appended (<code>urlencode</code> / <code>rawurlencode</code> depending on script).</li>
+            <li>QR image payload points at this URL — scanners hit Verification, not the CMS.</li>
+            <li>Key material lives in Registry PHP — <strong>ops secret; never republish on Pages or in git</strong>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Short-code convention</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Part</th><th>Value</th><th>Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Country</td><td><code>KHM</code></td><td>Cambodia (ISO-ish campus code)</td></tr>
+              <tr><td>City / campus</td><td><code>PNH</code></td><td>Phnom Penh</td></tr>
+              <tr><td>Separator</td><td><code>_</code></td><td></td></tr>
+              <tr><td>Serial</td><td><code>StdProgramID</code></td><td>Student–programme row id from CMS</td></tr>
+            </tbody>
+          </table>
+          <p style="margin:12px 0 0">
+            Raisd should treat short-code allocation as owned by the QR SaaS + campus convention —
+            do not invent a parallel allocator in Schema without campus agreement.
+          </p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Crypto evolution (high level)</h3></div></div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Current path:</strong> OpenSSL <code>AES-256-CBC</code> of <code>StdProgramID</code> alone (commented older path appended <code>_timestamp_YYYYMMDD</code>).</li>
+            <li><strong>Legacy:</strong> <code>qrcode_gen1.php</code> / early helpers used mcrypt Rijndael — obsolete; not the create-API path.</li>
+            <li><strong>Local-only QR:</strong> early <code>qrcode.php</code> built images with <code>phpqrcode</code> against Verification base URL — superseded by SaaS create API.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 5 ========== -->
+    <section class="section" id="scripts">
+      <h2>5. CMS Registry scripts</h2>
+      <p>
+        All under <code>cambodia/registry/</code> in the CMS pack
+        (<code>CMS_Cambodia_Source_Codes_&amp;_DB_Structure_07_10_2026</code>). Dates from file mtimes in the extract.
+      </p>
+      <div class="card">
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>File</th><th>~Date</th><th>QR host</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>qrcode_gen.php</code></td>
+                <td>Mar 2026</td>
+                <td><code>qr.limkokwing.net</code></td>
+                <td><strong>Current-style</strong> — unique name, create API, PNG download, debug comments</td>
+              </tr>
+              <tr>
+                <td><code>qrcode_gen_onthespot.php</code></td>
+                <td>Jun 2024</td>
+                <td><code>qr.limkokwing.net</code></td>
+                <td>On-the-spot cert path — same API shape</td>
+              </tr>
+              <tr>
+                <td><code>qrcode_gen_18092025.php</code></td>
+                <td>Jul 2025</td>
+                <td><code>qr.limkokwing.net</code></td>
+                <td>Dated variant — same API shape</td>
+              </tr>
+              <tr>
+                <td><code>qrcode_gen4.php</code></td>
+                <td>Jul 2025</td>
+                <td><code>qrcode.limkokwing.net</code></td>
+                <td>Older hostname; requires all three GET params</td>
+              </tr>
+              <tr>
+                <td><code>qrcode_gen3.php</code></td>
+                <td>Jul 2025</td>
+                <td><code>qrcode.limkokwing.net</code></td>
+                <td>Sample hard-coded verify URL (debug residue)</td>
+              </tr>
+              <tr>
+                <td><code>qrcode.php</code></td>
+                <td>Oct 2023</td>
+                <td>local <code>phpqrcode</code></td>
+                <td>Early helper — encrypt + local image; not SaaS create</td>
+              </tr>
+              <tr>
+                <td><code>qrcode_gen1.php</code></td>
+                <td>Oct 2023</td>
+                <td>—</td>
+                <td>mcrypt encrypt/decrypt smoke test only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Output artefact</h3></div></div>
+        <div class="card-body">
+          <p style="margin:0">
+            Filename pattern: <code>{StudentID}_{ProgramCode}.png</code>
+            (example defaults in the current script: <code>601001001_PUFP.png</code>).
+            Served as <code>Content-Disposition: attachment</code>, then unlinked from the web root.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 6 ========== -->
+    <section class="section" id="hosts">
+      <h2>6. Hosts &amp; source packs</h2>
+      <div class="card">
+        <div class="card-head"><div><h3>External hosts</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Host</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>qr.limkokwing.net</code></td>
+                <td>Current QR registry / create API (+ admin UI presumed in QR System pack)</td>
+              </tr>
+              <tr>
+                <td><code>qrcode.limkokwing.net</code></td>
+                <td>Legacy/alternate create API host still present in older scripts</td>
+              </tr>
+              <tr>
+                <td><code>verification.limkokwing.net</code></td>
+                <td>Public Verification app; Cambodia path <code>/cambodia/{token}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Drive packs (outside git)</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Pack</th><th>Shared</th><th>Local dump</th><th>Status for inventory</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://drive.google.com/file/d/1iTKUKqREd4dzJ5tXWKCO71Qn5Rl4Xp6v/view?usp=drive_link">CMS Cambodia code + DB</a></td>
+                <td>7 Oct 2026</td>
+                <td><code>raisd/_local/cambodia-cms-2026-10-07/</code></td>
+                <td><span class="tag tag-partial">Done</span> — Registry call site extracted</td>
+              </tr>
+              <tr>
+                <td><a href="https://drive.google.com/file/d/1GNjv0kQIfGPomhtRgWPOCMgtr-XsCeSV/view?usp=drive_link">QR System Source Code &amp; Database</a></td>
+                <td>8 Oct 2026</td>
+                <td><code>raisd/_local/cambodia-qr-2026-10-08/</code></td>
+                <td><span class="tag tag-gap">Pending</span> — authenticated browser download (148 MiB)</td>
+              </tr>
+              <tr>
+                <td><a href="https://drive.google.com/file/d/19rI2A6lI9a7cvxQVWom7Bym3CGmNUtKw/view?usp=sharing">Verification Source Code</a></td>
+                <td>8 Oct 2026</td>
+                <td>same folder</td>
+                <td><span class="tag tag-gap">Pending</span> — routes / decrypt / campus pages when local</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 7 ========== -->
+    <section class="section" id="raisd">
+      <h2>7. Raisd implications</h2>
+      <div class="card">
+        <div class="card-body">
+          <ol>
+            <li>
+              <strong>Campus integration, not Portal API core (Lesotho M4).</strong>
+              Applicant Demo DEMO PDFs must not pretend to be this certificate QR path.
+            </li>
+            <li>
+              <strong>Two external SoRs for QR identity:</strong>
+              QR registry (create + short_code) and Verification (public scan). Raisd Schema
+              should not re-allocate <code>KHM-PNH_*</code> without campus agreement.
+            </li>
+            <li>
+              <strong>M5 Cambodia (and peers on the same SaaS)</strong> need an ACL/adapter that
+              calls create API after official cert/letter issuance — TLS verify on, secrets in vault,
+              no Cloudflare bypass hacks in production.
+            </li>
+            <li>
+              <strong>Reference implementation:</strong> Cambodia Registry scripts are the working
+              LUCT wiring pattern for certificate QR. Official offer/cert print remains campus-local
+              until Raisd Live owns that desk.
+            </li>
+            <li>
+              <strong>Other campuses</strong> may share <code>qr.limkokwing.net</code> with different
+              short-code prefixes — confirm when QR System DB is inventoried.
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Architecture sketch (Raisd Live)</h3></div></div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  subgraph Campus["Cambodia CMS / future ACL"]
+    REG[Registry cert issue]
+    ADAPT[QR create adapter]
+  end
+  subgraph Ext["External LUCT SaaS"]
+    QR[qr.limkokwing.net]
+    VER[verification.limkokwing.net]
+  end
+  subgraph Raisd["Raisd portals"]
+    STAFF[Staff CMS]
+    STU[Student portal]
+  end
+  REG --> ADAPT
+  ADAPT -->|POST create_qrcode_api| QR
+  QR -->|PNG / short_code| ADAPT
+  ADAPT --> REG
+  VER -.->|scan| STU
+  STAFF -.->|ops| REG
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 8 ========== -->
+    <section class="section" id="next">
+      <h2>8. Next inventory (when zips are local)</h2>
+      <div class="card">
+        <div class="card-body">
+          <ul>
+            <li>QR System DB tables, admin UI, auth, and multi-campus short-code prefixes.</li>
+            <li>Verification app routes for <code>/cambodia/{token}</code> (and other campus path segments).</li>
+            <li>Whether decrypt happens only on Verification, or CMS also round-trips tokens.</li>
+            <li>Rate limits / Cloudflare posture for automated Raisd adapters.</li>
+            <li>Update this page + <code>cambodia-qr-system.md</code> with sanitized schema notes (still no secrets).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <strong>Publish target.</strong>
+        GitHub Pages:
+        <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-cambodia/certificate-qr.html">raisd-campus.github.io/portal-api-docs/…/certificate-qr.html</a>
+        (synced from control-plane → <code>portal-api-docs</code>).
+      </div>
+    </section>
+  </main>
+
+  <p class="footer">
+    Markdown:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md">cambodia-qr-system.md</a>
+    · Hub:
+    <a href="index.html">Cambodia CMS E2E</a>
+    · Integrations:
+    <a href="index.html#integrations">#integrations</a>
+  </p>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      sequence: { mirrorActors: false },
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+  </script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+</body>
+</html>

@@ -48,6 +48,7 @@ targets:
   luct-sz-database: diagrams/old-cms-eswatini/database.html
   luct-kh: diagrams/old-cms-cambodia/index.html
   luct-kh-database: diagrams/old-cms-cambodia/database.html
+  luct-kh-qr: diagrams/old-cms-cambodia/certificate-qr.html
   luct-sl: diagrams/old-cms-sierra-leone/index.html
   luct-sl-database: diagrams/old-cms-sierra-leone/database.html
   ai: ai/index.html
@@ -78,6 +79,7 @@ external:
   ai-old-cms-lesotho: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md
   ai-old-cms-eswatini: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md
   ai-old-cms-cambodia: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md
+  ai-cambodia-qr: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md
   ai-old-cms-botswana: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md
   ai-old-cms-sierra-leone: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md
   ai-lesotho-db-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md
@@ -105,6 +107,8 @@ path_rules:
     section: luct-sz
   - match: { prefix: diagrams/old-cms-cambodia/, file: database.html }
     section: luct-kh-database
+  - match: { prefix: diagrams/old-cms-cambodia/, file: certificate-qr.html }
+    section: luct-kh-qr
   - match: { prefix: diagrams/old-cms-cambodia/ }
     section: luct-kh
   - match: { prefix: diagrams/old-cms-botswana/, file: database.html }
@@ -258,6 +262,7 @@ menu:
       - luct-sz-database
       - luct-kh
       - luct-kh-database
+      - luct-kh-qr
       - luct-bw
       - luct-bw-database
       - luct-sl
@@ -306,6 +311,7 @@ menu:
           - { label: Obsidian 3D, href: "luct-obsidian?campus=cambodia" }
           - { label: Flows, href: "luct-kh#flows" }
           - { label: Integrations, href: "luct-kh#integrations" }
+          - { label: Certificate QR, href: luct-kh-qr }
           - { label: ERD, href: "luct-kh#erd" }
           - { label: Database, href: luct-kh-database }
           - { label: AI inventory, href: ai-old-cms-cambodia }
@@ -366,6 +372,7 @@ menu:
       - { label: Lesotho analysis briefing, href: report-lesotho-analysis }
       - { label: Eswatini CMS inventory, href: ai-old-cms-eswatini }
       - { label: Cambodia CMS inventory, href: ai-old-cms-cambodia }
+      - { label: Cambodia certificate QR, href: luct-kh-qr }
       - { label: Botswana CMS inventory, href: ai-old-cms-botswana }
       - { label: Sierra Leone CMS inventory, href: ai-old-cms-sierra-leone }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
@@ -502,8 +509,8 @@ search:
   - title: Cambodia CMS E2E hub
     href: luct-kh
     section: LUCT CMS
-    summary: campus2_cambodia E2E — lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing.
-    keywords: [cambodia, m5, campus2_cambodia, portal, limkokwing, inventory, luct, e2e, erd, dfd]
+    summary: campus2_cambodia E2E — lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing; certificate QR.
+    keywords: [cambodia, m5, campus2_cambodia, portal, limkokwing, inventory, luct, e2e, erd, dfd, qr, verification]
 
   - title: Cambodia process flows
     href: "luct-kh#flows"
@@ -516,6 +523,24 @@ search:
     section: AI knowledge
     summary: Full Cambodia old CMS inventory from Vara pack — counts, portalcambodia export, assist codes, overlap vs LS/BW/CY/SZ.
     keywords: [cambodia, cms, inventory, cap-53, limkokwing, m5, luct]
+
+  - title: Cambodia certificate QR + Verification
+    href: luct-kh-qr
+    section: LUCT CMS
+    summary: Full Pages write-up — Registry qrcode_gen → create_qrcode_api → verification.limkokwing.net; KHM-PNH_; API fields; Raisd M5 implications.
+    keywords: [cambodia, qr, verification, certificate, limkokwing, create_qrcode_api, khm-pnh, m5, aes]
+
+  - title: Cambodia certificate QR (AI note)
+    href: ai-cambodia-qr
+    section: AI knowledge
+    summary: Markdown companion to the Cambodia QR Pages — CMS call site, standup closure, pack locations.
+    keywords: [cambodia, qr, verification, markdown, inventory]
+
+  - title: Cambodia CMS integrations (QR)
+    href: "luct-kh#integrations"
+    section: LUCT CMS
+    summary: Assist, portalcambodia export, and certificate QR → Verification sequence from Registry.
+    keywords: [cambodia, qr, verification, integrations, assist, portalcambodia]
 
   - title: Botswana CMS inventory (AI knowledge)
     href: ai-old-cms-botswana

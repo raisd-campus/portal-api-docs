@@ -275,7 +275,7 @@
     },
     {
       "title": "Cambodia CMS E2E hub",
-      "summary": "campus2_cambodia E2E \u2014 lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing.",
+      "summary": "campus2_cambodia E2E \u2014 lifecycle, desks, flows, ERD/DFD, database (481 tables); portalcambodia export; assist Limkokwing; certificate QR.",
       "section": "LUCT CMS",
       "keywords": [
         "cambodia",
@@ -287,7 +287,9 @@
         "luct",
         "e2e",
         "erd",
-        "dfd"
+        "dfd",
+        "qr",
+        "verification"
       ],
       "path": "diagrams/old-cms-cambodia/index.html"
     },
@@ -319,6 +321,50 @@
         "luct"
       ],
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md"
+    },
+    {
+      "title": "Cambodia certificate QR + Verification",
+      "summary": "Full Pages write-up \u2014 Registry qrcode_gen \u2192 create_qrcode_api \u2192 verification.limkokwing.net; KHM-PNH_; API fields; Raisd M5 implications.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "cambodia",
+        "qr",
+        "verification",
+        "certificate",
+        "limkokwing",
+        "create_qrcode_api",
+        "khm-pnh",
+        "m5",
+        "aes"
+      ],
+      "path": "diagrams/old-cms-cambodia/certificate-qr.html"
+    },
+    {
+      "title": "Cambodia certificate QR (AI note)",
+      "summary": "Markdown companion to the Cambodia QR Pages \u2014 CMS call site, standup closure, pack locations.",
+      "section": "AI knowledge",
+      "keywords": [
+        "cambodia",
+        "qr",
+        "verification",
+        "markdown",
+        "inventory"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md"
+    },
+    {
+      "title": "Cambodia CMS integrations (QR)",
+      "summary": "Assist, portalcambodia export, and certificate QR \u2192 Verification sequence from Registry.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "cambodia",
+        "qr",
+        "verification",
+        "integrations",
+        "assist",
+        "portalcambodia"
+      ],
+      "path": "diagrams/old-cms-cambodia/index.html#integrations"
     },
     {
       "title": "Botswana CMS inventory (AI knowledge)",
