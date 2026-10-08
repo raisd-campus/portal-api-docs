@@ -236,10 +236,10 @@
       </p>
       <div class="meta-row">
         <span class="chip ok">CMS→QR call site</span>
-        <span class="chip ok">KHM-PNH_</span>
-        <span class="chip ok">qr.limkokwing.net</span>
-        <span class="chip ok">verification.limkokwing.net</span>
-        <span class="chip warn">QR/Verification zip DB pending local</span>
+        <span class="chip ok">QR System inventoried</span>
+        <span class="chip ok">Verification inventoried</span>
+        <span class="chip ok">685 KHM-PNH_ in dump</span>
+        <span class="chip ok">GetStudentCertInfo</span>
       </div>
     </section>
 
@@ -263,13 +263,14 @@
 
     <nav class="toc" aria-label="Certificate QR sections">
       <a href="#summary"><strong>1. Summary</strong><span>Three systems · standup status</span></a>
-      <a href="#flow"><strong>2. Runtime flow</strong><span>Mermaid · end-to-end</span></a>
-      <a href="#api"><strong>3. Create API</strong><span>POST fields · response</span></a>
-      <a href="#token"><strong>4. Verify token</strong><span>AES · URL · short_code</span></a>
-      <a href="#scripts"><strong>5. CMS scripts</strong><span>registry/qrcode_gen*</span></a>
-      <a href="#hosts"><strong>6. Hosts &amp; packs</strong><span>QR · Verification · Drive</span></a>
-      <a href="#raisd"><strong>7. Raisd implications</strong><span>M5 · Adapter · Demo ≠ Live</span></a>
-      <a href="#next"><strong>8. Next inventory</strong><span>When zips are local</span></a>
+      <a href="#flow"><strong>2. Runtime flow</strong><span>Create · scan · redirect · verify</span></a>
+      <a href="#api"><strong>3. Create API</strong><span>POST fields · SaaS behaviour</span></a>
+      <a href="#qr-system"><strong>4. QR System pack</strong><span>CI4 · DB qrcode · admin</span></a>
+      <a href="#verification"><strong>5. Verification pack</strong><span>Decrypt · GetStudentCertInfo</span></a>
+      <a href="#token"><strong>6. Token &amp; short code</strong><span>AES · KHM-PNH_ · key sync</span></a>
+      <a href="#scripts"><strong>7. CMS scripts</strong><span>registry/qrcode_gen*</span></a>
+      <a href="#hosts"><strong>8. Hosts &amp; packs</strong><span>Drive · local status</span></a>
+      <a href="#raisd"><strong>9. Raisd implications</strong><span>M5 · Adapter · Demo ≠ Live</span></a>
     </nav>
 
     <!-- ========== 1 ========== -->
@@ -342,8 +343,11 @@
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Registry → QR SaaS → Verification → PNG</h3>
-            <p>Short code + encrypted verify URL are sent to the create API; response PNG is downloaded.</p>
+            <h3>Issue (Registry) then scan (public)</h3>
+            <p>
+              Create stores the Verification URL in the QR DB, but the PNG itself encodes the
+              short SaaS URL. Scans hit QR → HTTP redirect → Verification.
+            </p>
           </div>
         </div>
         <div class="card-body">
@@ -351,31 +355,40 @@
 sequenceDiagram
   actor Staff as Registry staff
   participant REG as qrcode_gen.php
-  participant QR as qr.limkokwing.net
+  participant QR as qr.limkokwing.net CI4
   participant VER as verification.limkokwing.net
+  participant CMS as campus2_cambodia
   participant FILE as StudentID_ProgramCode.png
 
   Staff->>REG: StdProgramID · StudentID · ProgramCode
   REG->>REG: short_code = KHM-PNH_ + StdProgramID
-  REG->>REG: token = AES-256-CBC(StdProgramID) → base64
-  REG->>REG: url = verification…/cambodia/{token}
+  REG->>REG: token = AES-256-CBC(StdProgramID)
   REG->>QR: POST /api/create_qrcode_api
-  Note over REG,QR: name · category=LUCT · subcategory=Certificate<br/>short_code · url · created_by
-  QR-->>REG: JSON { Qrcode: base64 PNG }
-  REG->>FILE: decode · imagepng · Content-Disposition attachment
-  Note over VER: Later: public scan opens verify URL
+  Note over REG,QR: name · category=LUCT · short_code<br/>url = verification…/cambodia/token
+  QR->>QR: Insert qrcode.slug + url
+  QR->>QR: PNG data = qr…/qrcode/short_code
+  QR-->>REG: JSON Qrcode base64 PNG
+  REG->>FILE: download PNG for certificate print
+
+  actor Public as Scanner
+  Public->>QR: GET /qrcode/KHM-PNH_…
+  QR-->>Public: 302 → verification…/cambodia/token
+  Public->>VER: GET /cambodia/token
+  VER->>VER: AES decrypt → StdProgramID
+  VER->>CMS: CALL GetStudentCertInfo(StdProgramID)
+  CMS-->>VER: name · programme · CertSN · blob
+  VER-->>Public: Verified HTML page
           </pre>
         </div>
       </div>
       <div class="card" style="margin-top:12px">
-        <div class="card-head"><div><h3>Step checklist</h3></div></div>
+        <div class="card-head"><div><h3>Issue checklist (Registry)</h3></div></div>
         <div class="card-body">
           <ol>
-            <li>Build <code>short_code = KHM-PNH_{StdProgramID}</code> (Phnom Penh campus prefix).</li>
-            <li>Encrypt <code>StdProgramID</code> → base64 token; build verify URL under <code>/cambodia/</code>.</li>
-            <li>POST form fields to create API (see §3).</li>
-            <li>Parse JSON; require field <code>Qrcode</code> (base64 PNG bytes).</li>
-            <li>Decode with GD; write <code>{StudentID}_{ProgramCode}.png</code>; stream as download; delete temp file.</li>
+            <li>Build <code>short_code = KHM-PNH_{StdProgramID}</code>.</li>
+            <li>Encrypt <code>StdProgramID</code> → base64 token; build Verification URL under <code>/cambodia/</code>.</li>
+            <li>POST create API (see §3). SaaS stores <code>url</code>; PNG encodes short redirect URL.</li>
+            <li>Parse JSON field <code>Qrcode</code> (base64 PNG); save as <code>{StudentID}_{ProgramCode}.png</code>.</li>
           </ol>
         </div>
       </div>
@@ -423,7 +436,7 @@ sequenceDiagram
               <tr>
                 <td><code>subcategory</code></td>
                 <td><code>Certificate</code></td>
-                <td>Document type</td>
+                <td>Accepted by API but <strong>not persisted</strong> in SaaS DB (category only)</td>
               </tr>
               <tr>
                 <td><code>short_code</code></td>
@@ -445,21 +458,154 @@ sequenceDiagram
         </div>
       </div>
       <div class="card" style="margin-top:12px">
-        <div class="card-head"><div><h3>Response</h3></div></div>
+        <div class="card-head"><div><h3>Response (from QR System <code>ApiController</code>)</h3></div></div>
         <div class="card-body">
           <ul>
-            <li>JSON object; required field <code>Qrcode</code> = base64-encoded PNG.</li>
-            <li>Scripts also check optional <code>message</code> / <code>status</code> on failure.</li>
-            <li>HTTP handling notes 403 (blocked), 404, 500 in the debug-oriented generator.</li>
-            <li>Some variants write raw response to <code>api_debug.log</code> (local ops artefact — not in git).</li>
+            <li>JSON; field <code>Qrcode</code> = base64 PNG. Also <code>status</code> (1 success / 0 error-or-exists) and <code>message</code>.</li>
+            <li>If <code>short_code</code> already exists: returns existing PNG with <code>status: 0</code>, message “QR code already exists” (CMS still gets an image).</li>
+            <li>PNG payload data = <code>{base_url}/qrcode/{short_code}</code>, <strong>not</strong> the Verification URL. Redirect resolves the stored <code>url</code>.</li>
+            <li>Image via Endroid QR Code (300px, medium ECC). Stored under <code>writable/uploads/qrcodes/{short_code}.png</code>.</li>
+            <li>Category auto-created by name if missing (description “Auto-created category”) — how <code>LUCT</code> appeared in the dump.</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- ========== 4 ========== -->
+    <!-- ========== 4 QR System ========== -->
+    <section class="section" id="qr-system">
+      <h2>4. QR System pack (inventoried)</h2>
+      <p>
+        Pack folder <code>qr.limkokwing.net/qrcode-lkwn</code> — CodeIgniter&nbsp;4 app starter
+        (<code>codeigniter4/appstarter</code>, PHP&nbsp;≥&nbsp;8.1, libraries
+        <code>endroid/qr-code</code> + <code>khanamiryan/qrcode-detector-decoder</code>.
+        Dump file <code>qrcode.sql</code> (MariaDB 10.11, generated <strong>8 Oct 2026</strong>, DB name <code>qrcode</code>).
+      </p>
+      <div class="card">
+        <div class="card-head"><div><h3>Admin UI routes (session auth)</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Path</th><th>Controller</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>/</code>, login / logout / forgot / reset</td><td><code>Qrsystem</code></td><td><code>auth</code> filter on dashboard</td></tr>
+              <tr><td><code>/categories</code>, add/edit</td><td><code>CategoryController</code></td><td>Admin CRUD</td></tr>
+              <tr><td><code>/users</code>, add/edit</td><td><code>UserController</code></td><td>Admin / SuperAdmin</td></tr>
+              <tr><td><code>/add-new-qr</code>, <code>/edit-qrcode/{slug}</code></td><td><code>QrCodeController</code></td><td>Manual QR entry</td></tr>
+              <tr><td><code>/qrcode/{slug}</code></td><td><code>QrCodeController::redirect</code></td><td><strong>Public</strong> 302 → stored URL</td></tr>
+              <tr><td><code>/qrcode-image/{slug}</code></td><td><code>get_image</code></td><td>Serves PNG</td></tr>
+              <tr><td><code>POST /api/create_qrcode_api</code></td><td><code>ApiController</code></td><td><strong>No auth filter</strong> in Routes — campus integration entry</td></tr>
+              <tr><td><code>POST /api/qrcodes</code>, delete/*, check-slug, …</td><td><code>ApiController</code></td><td>Admin AJAX helpers</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Database <code>qrcode</code> (structure)</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Table</th><th>Role</th><th>Key columns</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>qrcode</code></td><td>QR registry</td><td><code>name</code>, <code>slug</code> (= short_code), <code>category_id</code>, <code>url</code>, <code>qr_image_file</code></td></tr>
+              <tr><td><code>categories</code></td><td>Buckets</td><td><code>category_name</code>, <code>description</code></td></tr>
+              <tr><td><code>users</code></td><td>Admin accounts</td><td><code>username</code>, bcrypt <code>password</code>, <code>accesslevel</code> Admin|SuperAdmin — <em>hashes not published</em></td></tr>
+              <tr><td><code>forgetpass</code></td><td>Reset tokens</td><td><code>token</code>, <code>user_id</code></td></tr>
+              <tr><td><code>migrations</code></td><td>CI4</td><td>framework bookkeeping</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Dump snapshot (counts — no PII republished)</h3></div></div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="data">
+            <thead>
+              <tr><th>Metric</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Total <code>qrcode</code> rows (parsed)</td><td><strong>~697</strong></td></tr>
+              <tr><td>Cambodia certs (<code>KHM-PNH_*</code> → Verification)</td><td><strong>685</strong> (category <code>LUCT</code>)</td></tr>
+              <tr><td>Other QR uses</td><td>Namecards (LUCT / CCC / Raisd), Events, Publicity, General intake</td></tr>
+              <tr><td>Categories in dump</td><td>General · Events · Publicity · Namecard LUCT · Namecard CCC · Namecard Raisd · <strong>LUCT</strong></td></tr>
+              <tr><td>Other campus short-code prefixes in dump</td><td><strong>None</strong> — only <code>KHM-PNH_</code> among certificate-style slugs</td></tr>
+            </tbody>
+          </table>
+          <p style="margin:12px 0 0">
+            The QR SaaS is therefore a <strong>multi-purpose</strong> Limkokwing short-link / QR registry
+            (namecards + marketing + certificates), not Cambodia-only. Certificate volume dominates this dump.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 5 Verification ========== -->
+    <section class="section" id="verification">
+      <h2>5. Verification pack (inventoried)</h2>
+      <p>
+        Zip <code>verification.limkokwing.net_source_code_08_10_2026.zip</code> is small (~13 KiB):
+        a front controller, crypto helper, Cambodia cert model, Apache rewrite, and docker stubs.
+        No full framework tree.
+      </p>
+      <div class="card">
+        <div class="card-head"><div><h3>Request path</h3></div></div>
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TD
+  A["GET /{country}/{token}"] --> B[urldecode token]
+  B --> C[AES-256-CBC decrypt]
+  C --> D[StdProgramID]
+  D --> E["CALL GetStudentCertInfo(StdProgramID)"]
+  E --> F{Row found?}
+  F -->|yes| G[Certificate Verified UI]
+  F -->|no| H[No certificate found]
+          </pre>
+          <ul>
+            <li>Apache <code>.htaccess</code> rewrites all non-files to <code>index.php</code>.</li>
+            <li>First path segment is treated as <code>country</code> (UI hard-codes campus label “Cambodia” today).</li>
+            <li>Decrypt supports plain numeric <code>StdProgramID</code> or legacy <code>…_timestamp_date</code> forms (takes trailing segment after last <code>_</code> when non-numeric).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>CMS stored procedure <code>GetStudentCertInfo</code></h3></div></div>
+        <div class="card-body">
+          <p style="margin:0 0 8px">
+            Defined on <code>campus2_cambodia</code> (CMS procedures dump 7 Oct 2026). Verification calls it over MySQL
+            with a dedicated DB user (credentials in pack — <strong>ops secret, not published</strong>).
+          </p>
+          <ul>
+            <li>Input: <code>StdProgID</code> (varchar).</li>
+            <li>Reads <code>r_studentcert_cambodia</code> + join <code>s_upload</code> where <code>UploadType in (11)</code> for cert image blob.</li>
+            <li>Returns: <code>StdProgramID</code>, <code>StudentID</code>, <code>StudentName</code>, <code>PicURL</code>,
+              <code>ProgramCode</code>, <code>ProgramName</code>, <code>GraduationDate</code>,
+              <code>CertSN</code>, <code>CertFileBlob</code>, <code>CertFileName</code>, <code>CertFileType</code>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><div><h3>Verified page fields</h3></div></div>
+        <div class="card-body">
+          <ul>
+            <li>Student photo (<code>PicURL</code>), name, Student ID</li>
+            <li>Programme name · Campus label “Cambodia” · Graduation date</li>
+            <li>Certificate serial (<code>CertSN</code>) · inline certificate PNG from blob when SN present</li>
+            <li>Footer branding: “Raisd AI”</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note warn" style="margin-top:12px">
+        <strong>Ops risk — AES key sync.</strong>
+        Pack copies of CMS <code>qrcode_gen.php</code> and Verification <code>lib/Encryption.php</code> use
+        <em>different</em> AES key/IV material (fingerprints differ). Live systems must keep encrypt/decrypt
+        keys aligned; Raisd adapters should take secrets from vault, not from checked-in dumps.
+      </div>
+    </section>
+
+    <!-- ========== 6 ========== -->
     <section class="section" id="token">
-      <h2>4. Verify token &amp; short code</h2>
+      <h2>6. Verify token &amp; short code</h2>
       <div class="card">
         <div class="card-head"><div><h3>Public Verification URL</h3></div></div>
         <div class="card-body">
@@ -467,8 +613,9 @@ sequenceDiagram
           <ul>
             <li><code>{token}</code> = base64(AES-256-CBC ciphertext of <code>StdProgramID</code>).</li>
             <li>URL-encoded when appended (<code>urlencode</code> / <code>rawurlencode</code> depending on script).</li>
-            <li>QR image payload points at this URL — scanners hit Verification, not the CMS.</li>
-            <li>Key material lives in Registry PHP — <strong>ops secret; never republish on Pages or in git</strong>.</li>
+            <li>Stored as <code>qrcode.url</code> in the SaaS. The <strong>PNG</strong> encodes
+              <code>qr.limkokwing.net/qrcode/{short_code}</code>, which 302-redirects here.</li>
+            <li>Key material in Registry + Verification PHP — <strong>ops secret; never republish</strong>. Packs currently disagree (see §5).</li>
           </ul>
         </div>
       </div>
@@ -504,9 +651,9 @@ sequenceDiagram
       </div>
     </section>
 
-    <!-- ========== 5 ========== -->
+    <!-- ========== 7 ========== -->
     <section class="section" id="scripts">
-      <h2>5. CMS Registry scripts</h2>
+      <h2>7. CMS Registry scripts</h2>
       <p>
         All under <code>cambodia/registry/</code> in the CMS pack
         (<code>CMS_Cambodia_Source_Codes_&amp;_DB_Structure_07_10_2026</code>). Dates from file mtimes in the extract.
@@ -576,9 +723,9 @@ sequenceDiagram
       </div>
     </section>
 
-    <!-- ========== 6 ========== -->
+    <!-- ========== 8 ========== -->
     <section class="section" id="hosts">
-      <h2>6. Hosts &amp; source packs</h2>
+      <h2>8. Hosts &amp; source packs</h2>
       <div class="card">
         <div class="card-head"><div><h3>External hosts</h3></div></div>
         <div class="card-body" style="overflow-x:auto">
@@ -620,14 +767,14 @@ sequenceDiagram
               <tr>
                 <td><a href="https://drive.google.com/file/d/1GNjv0kQIfGPomhtRgWPOCMgtr-XsCeSV/view?usp=drive_link">QR System Source Code &amp; Database</a></td>
                 <td>8 Oct 2026</td>
-                <td><code>raisd/_local/cambodia-qr-2026-10-08/</code></td>
-                <td><span class="tag tag-gap">Pending</span> — authenticated browser download (148 MiB)</td>
+                <td><code>raisd/_local/cambodia-qr-2026-10-08/qr-system/</code></td>
+                <td><span class="tag tag-partial">Done</span> — CI4 + <code>qrcode.sql</code> (§4)</td>
               </tr>
               <tr>
                 <td><a href="https://drive.google.com/file/d/19rI2A6lI9a7cvxQVWom7Bym3CGmNUtKw/view?usp=sharing">Verification Source Code</a></td>
                 <td>8 Oct 2026</td>
-                <td>same folder</td>
-                <td><span class="tag tag-gap">Pending</span> — routes / decrypt / campus pages when local</td>
+                <td><code>…/verification/</code></td>
+                <td><span class="tag tag-partial">Done</span> — front controller + model (§5)</td>
               </tr>
             </tbody>
           </table>
@@ -635,9 +782,9 @@ sequenceDiagram
       </div>
     </section>
 
-    <!-- ========== 7 ========== -->
+    <!-- ========== 9 ========== -->
     <section class="section" id="raisd">
-      <h2>7. Raisd implications</h2>
+      <h2>9. Raisd implications</h2>
       <div class="card">
         <div class="card-body">
           <ol>
@@ -646,74 +793,64 @@ sequenceDiagram
               Applicant Demo DEMO PDFs must not pretend to be this certificate QR path.
             </li>
             <li>
-              <strong>Two external SoRs for QR identity:</strong>
-              QR registry (create + short_code) and Verification (public scan). Raisd Schema
-              should not re-allocate <code>KHM-PNH_*</code> without campus agreement.
+              <strong>Three hops on scan:</strong>
+              PNG → QR short URL → Verification → live <code>campus2_cambodia</code> via
+              <code>GetStudentCertInfo</code>. Raisd Live must not break the SP or upload-type&nbsp;11 cert blob join.
             </li>
             <li>
-              <strong>M5 Cambodia (and peers on the same SaaS)</strong> need an ACL/adapter that
-              calls create API after official cert/letter issuance — TLS verify on, secrets in vault,
-              no Cloudflare bypass hacks in production.
+              <strong>QR SaaS is shared infrastructure</strong> (namecards + marketing + certs).
+              This dump’s certificate short-codes are Cambodia-only (<code>KHM-PNH_</code>); other campuses
+              may adopt new prefixes later.
             </li>
             <li>
-              <strong>Reference implementation:</strong> Cambodia Registry scripts are the working
-              LUCT wiring pattern for certificate QR. Official offer/cert print remains campus-local
-              until Raisd Live owns that desk.
+              <strong>M5 adapter:</strong> after official cert issuance, POST create API (TLS verify on,
+              secrets in vault). Expect idempotent “already exists” responses. Prefer documenting
+              Cloudflare allow-lists over disabling SSL verification.
             </li>
             <li>
-              <strong>Other campuses</strong> may share <code>qr.limkokwing.net</code> with different
-              short-code prefixes — confirm when QR System DB is inventoried.
+              <strong>AES keys</strong> must match between encrypt (Registry/adapter) and decrypt (Verification).
+              Do not ship pack keys into git; resolve live key ownership with campus ops.
+            </li>
+            <li>
+              <strong>Verification DB access</strong> is a direct MySQL read of CMS — treat as high-trust path
+              (network allow-list, least-privilege user, no credentials in repos).
             </li>
           </ol>
         </div>
       </div>
       <div class="card" style="margin-top:12px">
-        <div class="card-head"><div><h3>Architecture sketch (Raisd Live)</h3></div></div>
+        <div class="card-head"><div><h3>Architecture sketch (current + Raisd Live)</h3></div></div>
         <div class="card-body">
           <pre class="mermaid">
 flowchart LR
-  subgraph Campus["Cambodia CMS / future ACL"]
-    REG[Registry cert issue]
-    ADAPT[QR create adapter]
+  subgraph Issue["Issue path"]
+    REG[Registry qrcode_gen]
+    ADAPT[Future Raisd ACL]
   end
-  subgraph Ext["External LUCT SaaS"]
-    QR[qr.limkokwing.net]
-    VER[verification.limkokwing.net]
+  subgraph QRSaaS["qr.limkokwing.net"]
+    API[create_qrcode_api]
+    REDIR["/qrcode/slug → 302"]
   end
-  subgraph Raisd["Raisd portals"]
-    STAFF[Staff CMS]
-    STU[Student portal]
+  subgraph Verify["verification.limkokwing.net"]
+    FRONT[index.php decrypt]
   end
-  REG --> ADAPT
-  ADAPT -->|POST create_qrcode_api| QR
-  QR -->|PNG / short_code| ADAPT
-  ADAPT --> REG
-  VER -.->|scan| STU
-  STAFF -.->|ops| REG
+  subgraph SoR["campus2_cambodia"]
+    SP[GetStudentCertInfo]
+  end
+  REG --> API
+  ADAPT -.-> API
+  API --> REDIR
+  REDIR --> FRONT
+  FRONT --> SP
           </pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== 8 ========== -->
-    <section class="section" id="next">
-      <h2>8. Next inventory (when zips are local)</h2>
-      <div class="card">
-        <div class="card-body">
-          <ul>
-            <li>QR System DB tables, admin UI, auth, and multi-campus short-code prefixes.</li>
-            <li>Verification app routes for <code>/cambodia/{token}</code> (and other campus path segments).</li>
-            <li>Whether decrypt happens only on Verification, or CMS also round-trips tokens.</li>
-            <li>Rate limits / Cloudflare posture for automated Raisd adapters.</li>
-            <li>Update this page + <code>cambodia-qr-system.md</code> with sanitized schema notes (still no secrets).</li>
-          </ul>
         </div>
       </div>
       <div class="note" style="margin-top:16px">
         <strong>Publish target.</strong>
-        GitHub Pages:
-        <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-cambodia/certificate-qr.html">raisd-campus.github.io/portal-api-docs/…/certificate-qr.html</a>
-        (synced from control-plane → <code>portal-api-docs</code>).
+        <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-cambodia/certificate-qr.html">GitHub Pages — certificate-qr.html</a>
+        · Markdown
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cambodia-qr-system.md">cambodia-qr-system.md</a>.
+        Inventory closed for CMS call site + QR System + Verification source packs (8 Oct 2026).
       </div>
     </section>
   </main>
