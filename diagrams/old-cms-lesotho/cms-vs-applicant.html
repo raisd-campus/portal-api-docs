@@ -238,13 +238,14 @@
       <p>
         Standup action (7 Oct 2026): compare the Lesotho CMS application / admissions flow
         with the current Raisd Applicant portal Demo. Published
-        <strong>8 October 2026</strong>; refreshed the same day after Faid’s campus +
-        two-stage letters merge. Includes Read.ai expectations, gaps, and Applicant backlog.
+        <strong>8 October 2026</strong>; refreshed after Faid’s campus + two-stage letters
+        merge and again after production SPA redeploy (<code>532d6f0</code>).
+        Includes Read.ai expectations, gaps, and Applicant backlog.
         Demo ≠ Live. Admissions before registration (M4).
       </p>
       <div class="meta-row">
         <span class="chip ok">Standup closed</span>
-        <span class="chip ok">Faid campus/letters</span>
+        <span class="chip ok">Prod SPA <code>532d6f0</code></span>
         <span class="chip ok">Login CORS done</span>
         <span class="chip">Hosted letters gated</span>
         <span class="chip">LGCSE gap</span>
@@ -266,9 +267,12 @@
       <strong>Evidence.</strong>
       Newer Lesotho CMS = screenshots only (no shared schema).
       Older CMS = <code>campus2_lesotho</code> structure dump (outside git).
-      Raisd = local mock (Faid <code>9e007f2</code> campus + Eligibility→Offer) + partial hosted HTTP
-      (login works; campus/letters/accept still local-mock-only on Neon).
-      Read.ai standup report 7 Oct 2026 (11:00–11:57 MYT).
+      Raisd Applicant Demo at
+      <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a>
+      is on <code>main</code> <code>532d6f0</code> (8 Oct evening prod redeploy — campus + letters
+      from Faid <code>9e007f2</code> + review clarifications). Hosted HTTP: login works;
+      campus field still hidden and two-stage letter accept stays <strong>local-mock-only</strong>
+      (in-UI notice). Read.ai standup report 7 Oct 2026 (11:00–11:57 MYT).
     </div>
 
     <nav class="toc" aria-label="Analysis sections">
@@ -292,7 +296,7 @@
         At meeting time login was unreliable and the registration menu was still missing.
       </p>
       <div class="card">
-        <div class="card-head"><div><h3>Action items (status 8 Oct)</h3></div></div>
+        <div class="card-head"><div><h3>Action items (status 8 Oct evening)</h3></div></div>
         <div class="card-body" style="overflow-x:auto">
           <table class="data">
             <thead>
@@ -303,11 +307,11 @@
               <tr><td>Iman</td><td>Review QR system → update CMS docs</td><td><span class="tag tag-partial">Done</span></td></tr>
               <tr><td>Iman</td><td>Fix applicant login</td><td><span class="tag tag-partial">Done (CORS)</span></td></tr>
               <tr><td>Faid</td><td>Analyze CAP analysis / progress report</td><td><span class="tag tag-gap">Open</span></td></tr>
-              <tr><td>Faid</td><td>Add campus selector</td><td><span class="tag tag-partial">Done (local)</span></td></tr>
+              <tr><td>Faid</td><td>Add campus selector</td><td><span class="tag tag-partial">Done</span> — in prod SPA; hosted API still hides field</td></tr>
               <tr><td>Dexter / MIT</td><td>Registry consult — exchange students</td><td><span class="tag tag-gap">Open</span></td></tr>
               <tr><td>Iman</td><td>Lesotho CMS vs Applicant analysis (following morning)</td><td><span class="tag tag-partial">Done</span></td></tr>
-              <tr><td>Faid</td><td>Application-flow changes + push GitHub</td><td><span class="tag tag-partial">Done</span></td></tr>
-              <tr><td>Iman</td><td>Manual deploy after Faid push</td><td><span class="tag tag-partial">Done (SPA)</span></td></tr>
+              <tr><td>Faid</td><td>Application-flow changes + push GitHub</td><td><span class="tag tag-partial">Done</span> — <code>9e007f2</code> on <code>main</code></td></tr>
+              <tr><td>Iman</td><td>Manual deploy after Faid push</td><td><span class="tag tag-partial">Done</span> — prod <code>532d6f0</code> (8 Oct evening; Actions billing blocked auto-deploy)</td></tr>
             </tbody>
           </table>
         </div>
@@ -343,17 +347,17 @@
               </tr>
               <tr>
                 <td>Campus selector</td>
-                <td>Local mock: 8 campuses incl. Lesotho. Hosted: field hidden</td>
+                <td>Prod SPA: campus selector in local-mock mode. Hosted HTTP: field still hidden</td>
                 <td><span class="tag tag-gap">Hosted API</span></td>
               </tr>
               <tr>
                 <td>New / Alumni / Transfer</td>
-                <td>Enum + Alumni Previous Student ID (local)</td>
+                <td>Enum + Alumni Previous Student ID (in prod SPA mock path)</td>
                 <td><span class="tag tag-partial">Partial</span></td>
               </tr>
               <tr>
                 <td>Eligibility → Offer letters</td>
-                <td>Local four-row progress + DEMO PDFs. Hosted notice: unavailable</td>
+                <td>Prod SPA local-mock: four-row progress + DEMO PDFs. Hosted: in-UI “local mock only” notice</td>
                 <td><span class="tag tag-gap">Hosted API</span></td>
               </tr>
               <tr>
@@ -476,7 +480,7 @@ flowchart LR
   DOCS --> FEE[Fee]
   FEE --> SUB[Submit]
           </pre>
-          <p style="margin:12px 0 0">* Campus, Alumni Previous Student ID, and letter workflow: <strong>local mock only</strong>. Hosted HTTP shows an unavailable notice.</p>
+          <p style="margin:12px 0 0">* Campus, Alumni Previous Student ID, and letter workflow run in the <strong>local mock path</strong> of the prod SPA. Hosted HTTP hides campus and shows the two-stage letter notice.</p>
         </div>
       </div>
 
@@ -502,7 +506,7 @@ flowchart TD
   SUB --> PROG
   P4 --> ACCEPT --> LOGOUT --> HAND --> STU
           </pre>
-          <p style="margin:12px 0 0">Live Demo URL: <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a>. Faid merge <code>9e007f2</code> + review clarifications on <code>main</code>.</p>
+          <p style="margin:12px 0 0">Live Demo URL: <a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a> — production <code>532d6f0</code> (Faid <code>9e007f2</code> campus/letters + review clarifications on <code>main</code>; redeployed 8 Oct evening).</p>
         </div>
       </div>
     </section>
@@ -691,10 +695,11 @@ flowchart LR
         <div class="card-body">
           <ul>
             <li>Validated multi-step apply, drafts, messages, immutable snapshots</li>
-            <li>Campus selector + New/Alumni/Transfer (+ Alumni Previous Student ID) — local mock</li>
+            <li>Campus selector + New/Alumni/Transfer (+ Alumni Previous Student ID) — in prod SPA mock path</li>
             <li>Sequential payment → document verification</li>
-            <li>Two-stage letter mock + four-row Application Progress + Student letter docs (local)</li>
-            <li>Hosted login + explicit notice when letter acceptance is unavailable</li>
+            <li>Two-stage letter mock + four-row Application Progress + Student letter docs (mock path)</li>
+            <li>Hosted login + explicit notice that letter acceptance is local-mock-only</li>
+            <li>Production SPA on Vercel at <code>532d6f0</code> (8 Oct evening)</li>
             <li>Clear DEMO labelling on generated PDFs</li>
           </ul>
         </div>
@@ -761,7 +766,7 @@ flowchart LR
       <div class="note" style="margin-top:16px">
         <strong>Standup closure.</strong>
         Action “compare Lesotho CMS application flow with current applicant portal” —
-        <strong>done</strong> (this page + Markdown, 8 Oct 2026; refreshed after Faid campus/letters merge).
+        <strong>done</strong> (this page + Markdown, 8 Oct 2026; refreshed after Faid campus/letters merge and prod SPA <code>532d6f0</code> redeploy).
       </div>
     </section>
   </main>
