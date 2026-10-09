@@ -88,6 +88,8 @@
               <div class="nav-sub-menu" role="menu">
               <a href="../old-cms-lesotho/index.html">Feature analysis</a>
               <a href="../old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="../old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="../old-cms-lesotho/campus-finance-profile.html">Finance profile (Faid)</a>
               <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a>
               <a href="../old-cms-lesotho/index.html#admissions">Flows</a>
               <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
@@ -264,6 +266,7 @@
     <nav class="toc" aria-label="Certificate QR sections">
       <a href="#summary"><strong>1. Summary</strong><span>Three systems · standup status</span></a>
       <a href="#flow"><strong>2. Runtime flow</strong><span>Create · scan · redirect · verify</span></a>
+      <a href="#manual"><strong>2b. Manual ops</strong><span>Cambodia ↔ Cyberjaya</span></a>
       <a href="#api"><strong>3. Create API</strong><span>POST fields · SaaS behaviour</span></a>
       <a href="#qr-system"><strong>4. QR System pack</strong><span>CI4 · DB qrcode · admin</span></a>
       <a href="#verification"><strong>5. Verification pack</strong><span>Decrypt · GetStudentCertInfo</span></a>
@@ -392,6 +395,37 @@ sequenceDiagram
           </ol>
         </div>
       </div>
+    </section>
+
+    <!-- ========== 2b ========== -->
+    <section class="section" id="manual">
+      <h2>2b. Manual certificate ops (not in CMS code)</h2>
+      <p>
+        Standup 8 Oct (Dexter): Cambodia ↔ Cyberjaya still exchanges printed certificates / QR packs /
+        student data <strong>outside</strong> <code>qrcode_gen*</code>. Do not invent a Portal API
+        courier method. Automated create/scan remains M5; this swimlane is ops documentation only.
+      </p>
+      <div class="card">
+        <div class="card-head"><div><h3>Cambodia ↔ Cyberjaya handoff</h3></div></div>
+        <div class="card-body">
+          <pre class="mermaid">
+sequenceDiagram
+  participant KH as Cambodia campus
+  participant CY as Cyberjaya ops
+  Note over KH,CY: Manual — not modelled in Registry PHP
+  KH->>CY: Certificates · QR PNGs · student data pack
+  CY->>CY: Print / stamp / process
+  CY-->>KH: Return physical certificates
+  Note over KH: Public scan still Verification → GetStudentCertInfo
+          </pre>
+        </div>
+      </div>
+      <p style="margin-top:12px">
+        Combined standup write-up (Applicant merge + fee SPs):
+        <a href="../old-cms-lesotho/fee-payment-sps.html">fee-payment-sps.html</a>
+        · Markdown
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md">applicant-qr-fee-mechanisms.md</a>.
+      </p>
     </section>
 
     <!-- ========== 3 ========== -->

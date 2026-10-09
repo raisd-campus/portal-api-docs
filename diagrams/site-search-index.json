@@ -128,6 +128,73 @@
       "path": "diagrams/old-cms-lesotho/cms-vs-applicant.html"
     },
     {
+      "title": "Applicant merge \u00b7 QR \u00b7 Fee/payment SPs",
+      "summary": "Standup 8\u20139 Oct 2026 \u2014 merged Applicant campus/letters, QR automated+manual ops, fee/payment mechanisms from campus stored procedures.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "fee",
+        "payment",
+        "stored-procedure",
+        "b_Update_Student",
+        "online-enrollment",
+        "qr",
+        "applicant",
+        "standup",
+        "currency",
+        "modular"
+      ],
+      "path": "diagrams/old-cms-lesotho/fee-payment-sps.html"
+    },
+    {
+      "title": "Campus finance profile (Faid review)",
+      "summary": "Proposed campus finance profile seeds and C1\u2013C10 fee-case checklist for Faid \u2014 currency, application fee, semester/modular mode.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "finance",
+        "fee",
+        "profile",
+        "faid",
+        "currency",
+        "lsl",
+        "modular",
+        "application-fee",
+        "standup"
+      ],
+      "path": "diagrams/old-cms-lesotho/campus-finance-profile.html"
+    },
+    {
+      "title": "Applicant merge \u00b7 QR \u00b7 Fee SPs (AI knowledge)",
+      "summary": "Canonical Markdown for Applicant merge analysis, QR generation, and fee/payment SPs (9 Oct 2026).",
+      "section": "AI knowledge",
+      "keywords": [
+        "applicant-portal",
+        "fee",
+        "payment",
+        "qr",
+        "stored-procedure",
+        "markdown",
+        "standup"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md"
+    },
+    {
+      "title": "Campus finance profile (AI knowledge)",
+      "summary": "Canonical Markdown for proposed campus finance profile and Faid fee-case checklist (9 Oct 2026).",
+      "section": "AI knowledge",
+      "keywords": [
+        "finance",
+        "fee",
+        "profile",
+        "faid",
+        "currency",
+        "markdown",
+        "standup"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md"
+    },
+    {
       "title": "Lesotho CMS vs Applicant (AI knowledge)",
       "summary": "Canonical Markdown for the Lesotho CMS vs Raisd Applicant portal flow analysis (8 Oct 2026).",
       "section": "AI knowledge",

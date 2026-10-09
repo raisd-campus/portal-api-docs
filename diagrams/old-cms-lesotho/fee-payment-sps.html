@@ -4,12 +4,19 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — LUCT CMS FSD Obsidian 3D</title>
+  <title>Raisd — Applicant merge · QR · Fee/payment SPs</title>
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .tag { display: inline-block; margin: 0 4px 4px 0; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .tag-gap { background: #fff6e8; border-color: #e0c48a; color: var(--warn); }
+    .tag-mismatch { background: #f3e8fd; border-color: #c9b0e8; color: #5a2a8a; }
+    .tag-partial { background: var(--accent-soft); border-color: #b7c9de; color: var(--accent); }
+    .tag-out { background: #eef1f5; border-color: var(--line); color: var(--muted); }
+  </style>
   <script src="../site-auth.js"></script>
 </head>
 <body>
-  <header class="site-header">
+<header class="site-header">
     <div class="site-header-inner">
       <a class="brand" href="../index.html">
         <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
@@ -81,36 +88,36 @@
           </div>
         </div>
         <div class="nav-dd">
-          <a class="nav-dd-main active" href="index.html">LUCT CMS</a>
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
           <div class="nav-dd-menu" role="menu">
             <div class="nav-sub">
-              <a class="nav-sub-trigger" href="../old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="../old-cms-lesotho/index.html">Feature analysis</a>
-              <a href="../old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
-              <a href="../old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
-              <a href="../old-cms-lesotho/campus-finance-profile.html">Finance profile (Faid)</a>
-              <a href="obsidian.html?campus=lesotho">Obsidian 3D</a>
-              <a href="../old-cms-lesotho/index.html#admissions">Flows</a>
-              <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
-              <a href="../old-cms-lesotho/index.html#admissions">Admissions</a>
-              <a href="../old-cms-lesotho/index.html#registry">Registry / NMDS</a>
-              <a href="../old-cms-lesotho/index.html#cap">CAP seed</a>
-              <a href="../old-cms-lesotho/index.html#db-gap">Database gap</a>
+              <a href="index.html">Feature analysis</a>
+              <a href="cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a>
+              <a href="index.html#admissions">Flows</a>
+              <a href="index.html#why">Why pilot</a>
+              <a href="index.html#admissions">Admissions</a>
+              <a href="index.html#registry">Registry / NMDS</a>
+              <a href="index.html#cap">CAP seed</a>
+              <a href="index.html#db-gap">Database gap</a>
               </div>
             </div>
             <div class="nav-sub">
-              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="index.html">E2E hub</a>
-              <a href="online-registration.html">Online registration</a>
-              <a href="online-registration-gap.html">Registration FE gaps</a>
-              <a href="index.html#fsd">FSD</a>
-              <a href="obsidian.html?campus=cyberjaya">Obsidian 3D</a>
-              <a href="index.html#flows">Flows</a>
-              <a href="index.html#erd">ERD</a>
-              <a href="index.html#database">Database</a>
-              <a href="index.html#compare">Comparison</a>
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
               </div>
             </div>
             <div class="nav-sub">
@@ -118,7 +125,7 @@
               <div class="nav-sub-menu" role="menu">
               <a href="../old-cms-eswatini/index.html">E2E hub</a>
               <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
-              <a href="obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
               <a href="../old-cms-eswatini/index.html#flows">Flows</a>
               <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
               <a href="../old-cms-eswatini/index.html#erd">ERD</a>
@@ -131,7 +138,7 @@
               <div class="nav-sub-menu" role="menu">
               <a href="../old-cms-cambodia/index.html">E2E hub</a>
               <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
-              <a href="obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
               <a href="../old-cms-cambodia/index.html#flows">Flows</a>
               <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
               <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
@@ -145,7 +152,7 @@
               <div class="nav-sub-menu" role="menu">
               <a href="../old-cms-botswana/index.html">E2E hub</a>
               <a href="../old-cms-botswana/index.html#fsd">FSD</a>
-              <a href="obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
               <a href="../old-cms-botswana/index.html#flows">Flows</a>
               <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
               <a href="../old-cms-botswana/index.html#erd">ERD</a>
@@ -158,7 +165,7 @@
               <div class="nav-sub-menu" role="menu">
               <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
               <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
-              <a href="obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
               <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
               <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
               <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
@@ -227,87 +234,240 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1 id="obsidian-hero-title">Obsidian 3D — FSD knowledge</h1>
-      <p id="obsidian-hero-lead">
-        Interactive force-directed graph of Cyberjaya LUCT CMS functional structure.
-        Click a node for module breakdown; use Walkthrough to step desks → student record → Portal API.
-      </p>
-      <nav id="obsidian-campus-switch" class="obs-campus-switch" aria-label="Campus">
-        <a class="obs-campus" href="?campus=lesotho">Lesotho</a>
-        <a class="obs-campus" href="?campus=cyberjaya">Cyberjaya</a>
-        <a class="obs-campus" href="?campus=botswana">Botswana</a>
-        <a class="obs-campus" href="?campus=sierra-leone">Sierra Leone</a>
-      </nav>
-      <div class="meta-row">
-        <span class="chip ok">3D graph</span>
-        <span class="chip">Click to focus</span>
-        <span class="chip">Guided walkthrough</span>
-        <span class="chip">Source <code id="obsidian-source">fsd-knowledge.json</code></span>
-        <span class="chip">Deep link <code>?campus=lesotho|cyberjaya|botswana|sierra-leone</code></span>
+  
+<main class="wrap">
+  <p class="eyebrow">Standup 8 Oct 2026 · SP evidence 9 Oct</p>
+  <h1>Applicant merge · QR generation · Fee/payment from CMS SPs</h1>
+  <p class="lede">
+    Read.ai action: analyze the merged Applicant campus/letters work, document QR-code generation
+    (automated + manual ops), and document fee-payment mechanisms from campus stored procedures.
+    Canonical Markdown:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md">applicant-qr-fee-mechanisms.md</a>.
+  </p>
+
+  <div class="banner">
+    <strong>Demo ≠ Live.</strong>
+    Applicant Demo fees and DEMO letter PDFs do not write to <code>campus2_*</code>.
+    SP bodies below are existing CMS SoR behaviour to configure against.
+    Procedure dumps stay under <code>raisd/_local/</code> (outside git).
+  </div>
+
+  <nav class="toc" aria-label="Sections">
+    <a href="#applicant"><strong>1. Applicant merge</strong><span>9e007f2 · 532d6f0</span></a>
+    <a href="#qr"><strong>2. QR generation</strong><span>Automated + manual</span></a>
+    <a href="#planes"><strong>3. Fee planes</strong><span>App · enrol · semester</span></a>
+    <a href="#sps"><strong>4. Payment SPs</strong><span>Currency matrix</span></a>
+    <a href="#cases"><strong>5. Fee cases</strong><span>b_Update_Student</span></a>
+    <a href="#next"><strong>6. Next work</strong><span>Config · CAP-53</span></a>
+  </nav>
+
+  <section class="section" id="applicant">
+    <h2>1. Merged Applicant portal</h2>
+    <p>
+      Faid <code>9e007f2</code> (campus + Eligibility→Offer) on <code>main</code>; production SPA
+      <code>532d6f0</code> (8 Oct evening redeploy). Portal API Demo includes
+      <code>confirmApplicationEligibility</code> and auto Offer release until Staff owns release.
+    </p>
+    <div class="card">
+      <div class="card-head"><div><h3>What shipped vs still open</h3></div></div>
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data">
+          <thead><tr><th>Shipped</th><th>Still open</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Campus selector · Alumni Previous Student ID · Bursary/QA desks · Eligibility→Confirm→Offer→Accept · Progress rows · handoff v2</td>
+              <td>Staff-owned Offer release · durable letter URLs · LGCSE/LSL · real Lesotho catalogue · Live CMS writes</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
+    </div>
+    <p style="margin-top:12px">
+      Flow compare:
+      <a href="cms-vs-applicant.html">CMS vs Applicant</a>.
+    </p>
+  </section>
 
-    <nav id="obsidian-toc" class="toc" aria-label="Cyberjaya CMS sections">
-      <a href="./index.html"><strong>E2E hub</strong><span>Full campus analysis</span></a>
-      <a href="./index.html#fsd"><strong>FSD</strong><span>Functional breakdown</span></a>
-      <a href="./obsidian.html"><strong>Obsidian</strong><span>This page</span></a>
-      <a href="./index.html#erd"><strong>ERD</strong><span>Physical tables</span></a>
-      <a href="./index.html#dfd"><strong>DFD</strong><span>Data flows</span></a>
-      <a href="./index.html#database"><strong>Database</strong><span>Triggers &amp; SPs</span></a>
-    </nav>
+  <section class="section" id="qr">
+    <h2>2. QR-code generation</h2>
+    <div class="card">
+      <div class="card-head"><div><h3>Automated (in CMS code)</h3></div></div>
+      <div class="card-body">
+        <pre class="mermaid">
+sequenceDiagram
+  actor Staff as Registry
+  participant REG as qrcode_gen.php
+  participant QR as qr.limkokwing.net
+  participant VER as verification.limkokwing.net
+  participant CMS as campus2_cambodia
 
-    <section class="section obsidian-section">
-      <div class="obsidian-toolbar">
-        <div class="obsidian-search-row">
-          <label class="sr-only" for="obsidian-search">Search nodes</label>
-          <input id="obsidian-search" type="search" placeholder="Search module, CAP, group…" autocomplete="off" />
-          <button type="button" id="obsidian-search-btn" class="obs-btn">Find</button>
-        </div>
-        <div class="obsidian-walk" role="group" aria-label="FSD walkthrough">
-          <button type="button" id="walk-prev" class="obs-btn">← Prev</button>
-          <span id="walk-step" class="obs-step">Walkthrough</span>
-          <button type="button" id="walk-next" class="obs-btn">Next →</button>
-          <button type="button" id="walk-reset" class="obs-btn ghost">Reset</button>
-        </div>
-        <p id="obsidian-status" class="obs-status" aria-live="polite">Loading graph…</p>
+  Staff->>REG: StdProgramID · StudentID · ProgramCode
+  REG->>QR: POST create_qrcode_api
+  Note over REG,QR: short_code KHM-PNH_… · verify URL
+  QR-->>REG: PNG (encodes /qrcode/slug)
+  actor Public as Scanner
+  Public->>QR: GET /qrcode/slug
+  QR-->>Public: 302 → /cambodia/token
+  Public->>VER: GET token
+  VER->>CMS: CALL GetStudentCertInfo
+  CMS-->>VER: cert metadata + blob
+        </pre>
+        <p style="margin-top:12px">
+          Full pack inventory:
+          <a href="../old-cms-cambodia/certificate-qr.html">certificate-qr.html</a>.
+        </p>
       </div>
-
-      <div class="obsidian-layout">
-        <div id="obsidian-graph" class="obsidian-graph" role="img" aria-label="3D FSD knowledge graph"></div>
-        <aside class="obsidian-panel" aria-label="Node breakdown">
-          <div class="obs-panel-head">
-            <h2 id="panel-title">Select a node</h2>
-            <span id="panel-group" class="chip">—</span>
-          </div>
-          <p id="panel-summary" class="lead">Click any sphere to open its FSD breakdown.</p>
-          <h3>Primary tables / signals</h3>
-          <ul id="panel-tables" class="obs-list"></ul>
-          <h3>Menu capabilities</h3>
-          <ul id="panel-menus" class="obs-list"></ul>
-          <h3>Raisd mapping</h3>
-          <p id="panel-raisd">—</p>
-          <h3>Linked knowledge</h3>
-          <div id="panel-links" class="obs-links"></div>
-        </aside>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-head"><div><h3>Manual ops (standup — not in code)</h3></div></div>
+      <div class="card-body">
+        <pre class="mermaid">
+sequenceDiagram
+  participant KH as Cambodia campus
+  participant CY as Cyberjaya ops
+  Note over KH,CY: Dexter — manual exchange still happens
+  KH->>CY: Certificates / QR PNGs / student data pack
+  CY->>CY: Print / stamp / process
+  CY-->>KH: Return physical certificates
+  Note over KH: Scan path still Verification → Cambodia SP
+        </pre>
+        <p style="margin-top:12px">
+          Do not invent a Portal API courier method. Document as ops; M5 owns automated create/scan only.
+        </p>
       </div>
+    </div>
+  </section>
 
-      <div id="obsidian-legend" class="obsidian-legend" aria-label="Group legend"></div>
-      <p class="muted" style="margin-top:12px;font-size:0.9rem">
-        Companion to the hub <a href="./index.html#fsd">FSD section</a> and legacy <a href="./fsd.html">fsd.html</a> tables,
-        navigable as an Obsidian-style 3D graph. Linked from every LUCT CMS campus submenu.
-      </p>
-    </section>
-  </main>
+  <section class="section" id="planes">
+    <h2>3. Three fee / payment planes</h2>
+    <div class="card">
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data">
+          <thead>
+            <tr><th>Plane</th><th>When</th><th>CMS</th><th>Raisd today</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A. Application fee</strong></td>
+              <td>Admissions</td>
+              <td><code>b_zapplicationfee*</code> · proof via <code>b_paymentverification</code></td>
+              <td>Applicant Fee step + Bursary Demo</td>
+            </tr>
+            <tr>
+              <td><strong>B. Online enrolment proof</strong></td>
+              <td>After offer / term reg</td>
+              <td><code>sp_onlinenrollment_*</code> + <code>sp_payment_verification_insert</code></td>
+              <td>Student CAP-46 Demo</td>
+            </tr>
+            <tr>
+              <td><strong>C. Semester / module calc</strong></td>
+              <td>Enrolled billing</td>
+              <td><code>b_Update_Student</code> · <code>b_Update_billing</code> (NMDS)</td>
+              <td>Student Finance Demo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  <footer class="footer">
-    Generated for raisd-campus/control-plane · <a href="./index.html">LUCT CMS</a> analysis · GitHub Pages
-  </footer>
+  <section class="section" id="sps">
+    <h2>4. Online enrolment payment SPs — currency matrix</h2>
+    <p>
+      Shared insert shape across Lesotho / Eswatini / Cambodia. Currency and institution are
+      <strong>hard-coded in the SP</strong> — Raisd campus finance profile must mirror this.
+    </p>
+    <div class="card">
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data">
+          <thead>
+            <tr><th>Campus</th><th>InstitutionID</th><th>PaymentCurrency</th><th>RequestSource</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Lesotho</td><td><code>1</code></td><td><strong>M</strong> (Loti)</td><td>OnlineEnrollment</td></tr>
+            <tr><td>Eswatini</td><td><code>1</code></td><td><strong>R</strong></td><td>OnlineEnrollment</td></tr>
+            <tr><td>Cambodia</td><td><code>30</code></td><td><strong>MYR</strong></td><td>OnlineEnrollment</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <pre class="mermaid" style="margin-top:16px">
+flowchart LR
+  A[Student pays / uploads proof] --> B[sp_onlinenrollment_insert]
+  B --> C[online_enrollment row]
+  C --> D[sp_payment_verification_insert]
+  D --> E[b_paymentverification]
+  E --> F[Bursary BurStatus / FacultyStatus]
+    </pre>
+    <p style="margin-top:12px">
+      Application-fee Live must not assume MYR. Lesotho application screenshots show
+      <strong>M</strong> VERIFIED amounts (e.g. M300).
+    </p>
+  </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
-  <script src="./obsidian-fsd.js?v=8" defer></script>
-  <script src="../abbr-tooltips.js" defer></script>
+  <section class="section" id="cases">
+    <h2>5. Semester fee cases — <code>b_Update_Student</code> (Lesotho)</h2>
+    <p>
+      Distilled from the Lesotho procedure body for Faid’s configurable fee work.
+      Cambodia shares the skeleton with different hardcodes (e.g. repeat 150/250).
+    </p>
+    <div class="card">
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data">
+          <thead><tr><th>ID</th><th>Case</th><th>Key</th></tr></thead>
+          <tbody>
+            <tr><td>C1</td><td>Zero fee when AD/module status non-chargeable</td><td><code>*chargable='N'</code></td></tr>
+            <tr><td>C2</td><td>Historical Exempted before 2011-07</td><td><code>termcode</code></td></tr>
+            <tr><td>C3</td><td>Semester fee from <code>f_semester.semesterfee</code></td><td><code>UseModularFee='N'</code></td></tr>
+            <tr><td>C4</td><td>Modular = sum <code>stdmodfee</code></td><td><code>UseModularFee='Y'</code></td></tr>
+            <tr><td>C5</td><td>Repeat/ADD → <code>semmodaddfees</code> (Lesotho hardcodes e.g. 600 / 375)</td><td><code>repeat%</code></td></tr>
+            <tr><td>C6</td><td>Resource fees with many exemptions</td><td><code>stdsemresfees</code></td></tr>
+            <tr><td>C7</td><td>Deferred zeroes / def fees</td><td><code>Deferred</code></td></tr>
+            <tr><td>C8</td><td><code>stdsemtotfees ≈ add + res + rep</code></td><td>totals</td></tr>
+            <tr><td>C9</td><td>Invoice lines → <code>b_invoicedetail</code></td><td>ledger</td></tr>
+            <tr><td>C10</td><td>PayStatus Partial/Full vs outstanding</td><td><code>r_student</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-head"><div><h3>NMDS assist billing (separate)</h3></div></div>
+      <div class="card-body">
+        <p>
+          <code>b_Update_billing</code> stamps Lesotho assist bill nos
+          <code>LSO/{YYMM}/FAID|FDSI|FBS|FCM/…</code> for <code>AssistProviderCode='nmds'</code>.
+          Not Applicant application fee. Cambodia dump has no <code>b_Update_billing</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="next">
+    <h2>6. Recommended next work</h2>
+    <ol>
+      <li>Campus finance profile: applies Y/N · amount · currency (mirror §4).</li>
+      <li>Turn cases C1–C10 into Faid-reviewable config (semester vs modular, repeat, resource).</li>
+      <li>Student online-enrol proof → CAP-53 → <code>sp_onlinenrollment_*</code> + payment verification.</li>
+      <li>Applicant LSL/M copy + durable proof; Staff-owned Offer release.</li>
+      <li>Vara: compile Sierra Leone <code>b_calcmodule</code> / cross-campus SP case matrix.</li>
+    </ol>
+    <p>
+      Markdown detail:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md">applicant-qr-fee-mechanisms.md</a>
+      · QR:
+      <a href="../old-cms-cambodia/certificate-qr.html">certificate-qr.html</a>
+      · CMS vs Applicant:
+      <a href="cms-vs-applicant.html">cms-vs-applicant.html</a>.
+    </p>
+  </section>
+</main>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+      sequence: { mirrorActors: false } });
+  </script>
+  <script src="../abbr-tooltips.js"></script>
   <script src="../nav-dropdown.js" defer></script>
   <script src="../site-search.js" defer></script>
 </body>
