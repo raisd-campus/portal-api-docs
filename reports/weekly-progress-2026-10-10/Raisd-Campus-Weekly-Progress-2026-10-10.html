@@ -49,54 +49,69 @@
     <p class="kicker">Working Group · Weekly progress</p>
     <h1>Raisd Campus — week of 4–10 October 2026</h1>
     <div class="doc-meta">
-      <p><strong>Cut:</strong> 10 October 2026 · Compiled for the next weekly meeting</p>
+      <p><strong>Cut:</strong> morning of 10 October 2026 · refreshed through overnight Pages / portal deploys</p>
       <p><strong>Source standups:</strong> Read.ai CMS 2026 Daily · 7 Oct · 8 Oct · <strong>9 Oct</strong></p>
-      <p><strong>Pilot:</strong> Lesotho (M4) · Demo ≠ Live</p>
+      <p><strong>Pilot:</strong> Lesotho (M4) · Demo ≠ Live · Headline readiness ~54% overall (Platform ~72% · FE Demo ~36% · Live 0%)</p>
     </div>
   </div>
 </header>
 <main>
   <h2>1. Snapshot</h2>
   <div class="callout">
-    Documentation and GitHub Pages caught up on Applicant merge analysis, Cambodia QR (auto + manual ops),
-    fee/payment SPs (C1–C10), campus finance profile YAML for Faid, CAP-53 online-enrolment write path,
-    and the dynamic fee-calculation proposal from the 9 Oct standup.
+    Week closed with hosted Applicant + Student Demo on Vercel talking to Portal API (not mock),
+    fee/finance evidence pack for Faid (YAML + C1–C10 + dynamic fee + cross-campus amount suggestions),
+    Lesotho CAP-53 / CMS vs Applicant analysis, Cambodia QR inventory, and a new
+    <strong>Weekly reports</strong> hub on GitHub Pages (W01–W04 with accumulated %).
   </div>
   <table>
     <thead><tr><th>Theme</th><th>Status</th><th>Notes</th></tr></thead>
     <tbody>
-      <tr><td>Applicant campus / Eligibility→Offer</td><td><span class="tag tag-done">Shipped Demo</span></td><td>Merge <code>9e007f2</code> · prod SPA <code>532d6f0</code>. Open: Staff Offer release, LGCSE, real catalogue.</td></tr>
+      <tr><td>Applicant campus / Eligibility→Offer</td><td><span class="tag tag-done">Shipped Demo</span></td><td>Campus + letters UI · hosted HTTP (<code>c2f4f47</code>) · API confirm + Offer auto-release (<code>9964620</code>). Open: Staff Offer release, LGCSE, real catalogue.</td></tr>
+      <tr><td>Student Faid workflows</td><td><span class="tag tag-done">Shipped Demo</span></td><td>Forms, reviewed registration, document delivery · Vercel prod (<code>a6d250b</code>) · API methods (<code>e387c69</code>).</td></tr>
+      <tr><td>Portal API Demo host</td><td><span class="tag tag-done">Enabled</span></td><td>Applicant + student workflow methods live on Vercel; portals use <code>VITE_PORTAL_API_URL</code> (not mock).</td></tr>
       <tr><td>Fee / payment SP analysis</td><td><span class="tag tag-done">Published</span></td><td>Currency matrix M/R/MYR · cases C1–C10 · NMDS separate.</td></tr>
       <tr><td>Campus finance profile</td><td><span class="tag tag-wait">Awaiting Accept</span></td><td>YAML seeds live; Faid ticks pending. Dexter to validate C1–C10 vs SP.</td></tr>
       <tr><td>Dynamic fee calculation</td><td><span class="tag tag-done">Proposal out</span></td><td>Configurable rules — not hard-coded SP copy (9 Oct action).</td></tr>
+      <tr><td>Cross-campus fee amounts</td><td><span class="tag tag-done">Suggestions out</span></td><td>SP/DB/process seeds for LS/SZ/KH on Pages — not Live policy.</td></tr>
       <tr><td>CAP-53 online-enrolment writes</td><td><span class="tag tag-wait">Path only</span></td><td>W1 documented; not implemented in Portal API.</td></tr>
       <tr><td>Cambodia QR</td><td><span class="tag tag-done">Documented</span></td><td>Auto path + Dexter KH↔CY manual ops.</td></tr>
+      <tr><td>Weekly reports hub</td><td><span class="tag tag-done">Live on Pages</span></td><td>W01–W04 summaries · accumulated % · nav submenus (weeks / packs / executive).</td></tr>
     </tbody>
   </table>
 
   <h2>2. What moved this week</h2>
+  <h3>Portals &amp; API (Demo host)</h3>
+  <ul>
+    <li><strong>Applicant</strong> — campus selection + two-stage enrolment letters; Eligibility confirm → Offer auto-release on Demo API; hosted SPA uses HTTP when <code>VITE_PORTAL_API_URL</code> is set (<code>c2f4f47</code>, <code>9964620</code>).</li>
+    <li><strong>Student</strong> — Faid forms, reviewed registration, document delivery deployed to Vercel (<code>de970c8</code> → <code>a6d250b</code>); Portal API exposes matching Demo methods (<code>e387c69</code>).</li>
+    <li><strong>Portal API</strong> — Applicant Demo HTTP + schema v4 earlier in the week; morning of 10 Oct enabled confirm/accept + student workflow methods on the hosted Demo.</li>
+  </ul>
   <h3>Knowledge base &amp; Pages</h3>
   <ul>
     <li>Lesotho CMS vs Applicant (flows, backlog, Mermaid) — Pages live.</li>
-    <li>Cambodia certificate QR full pack + manual ops swimlane.</li>
+    <li>Eswatini + Cambodia LUCT E2E hubs; Cambodia certificate QR full pack + manual ops swimlane.</li>
     <li>Fee/payment SPs + campus finance profile (Faid) + CAP-53 online-enrol Pages.</li>
     <li>Reviewable config: <code>docs/ai/contracts/campus-finance-profiles.yaml</code>.</li>
-    <li>Dynamic fee-calculation proposal (10 Oct) for 9 Oct standup action.</li>
+    <li>Dynamic fee-calculation proposal (9 Oct standup action) + Pages diagram.</li>
+    <li><strong>Cross-campus fee amount suggestions</strong> from SP/UI seeds (LS/SZ/KH) + dedicated Pages diagram (morning 10 Oct).</li>
+    <li><strong>Weekly reports</strong> hub — W01–W04 pages, per-week + accumulated %, Distributed CMS nested under Architecture, Weekly reports grouped into week / pack / briefing submenus.</li>
+    <li>Executive packs 5 Oct and 7 Oct; this weekly pack refreshed morning 10 Oct.</li>
   </ul>
-  <h3>Published commits (control-plane / portal-api-docs)</h3>
+  <h3>Published commits (through morning 10 Oct)</h3>
   <ul>
-    <li><code>control-plane</code> <code>abd71e3</code> · finance YAML + CAP-53 W1 path (after <code>2250480</code> fee/profile pack).</li>
-    <li><code>portal-api-docs</code> <code>48459d9</code> · Pages deploy succeeded (run after prior <code>51c89f9</code>).</li>
+    <li><code>control-plane</code> <code>f9bd1d2</code> · cross-campus fee amounts · <code>d2d1e74</code>–<code>aa9bb43</code> · Weekly reports hub + nav grouping.</li>
+    <li><code>portal-api-docs</code> <code>95c050d</code>–<code>aa1c199</code> · fee amounts + Weekly reports Pages (deploy succeeded).</li>
+    <li><code>portal-api</code> <code>e387c69</code> · student workflow methods · <code>9964620</code> · Eligibility confirm + Offer auto-release.</li>
+    <li><code>applicant-portal</code> <code>c2f4f47</code> · hosted HTTP campus/letters · <code>student-portal</code> <code>a6d250b</code> · Vercel prod.</li>
   </ul>
-  <p>Hub: <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/">Lesotho LUCT Pages</a></p>
 
   <h2>3. Action items from 9 Oct standup</h2>
   <table>
     <thead><tr><th>#</th><th>Owner</th><th>Action</th><th>Status</th></tr></thead>
     <tbody>
       <tr><td>1</td><td>Dexter</td><td>Validate Iman’s C1–C10 interpretation against stored procedures</td><td><span class="tag tag-wait">Open</span></td></tr>
-      <tr><td>2</td><td>Participant</td><td>Provide fee amounts for add/drop module forms</td><td><span class="tag tag-wait">Open</span></td></tr>
-      <tr><td>3</td><td>Participant</td><td>Confirm fee amount for proposed module-registration flow</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>2</td><td>Iman → Finance</td><td>Provide fee amounts for add/drop module forms</td><td><span class="tag tag-done">Suggested</span></td></tr>
+      <tr><td>3</td><td>Iman → Finance</td><td>Confirm fee amount for proposed module-registration flow</td><td><span class="tag tag-done">Suggested</span></td></tr>
       <tr><td>4</td><td>Faid</td><td>Create Lesotho campus scenario and share with the group</td><td><span class="tag tag-wait">Open</span></td></tr>
       <tr><td>5</td><td>Participant</td><td>Confirm whether lecturer evaluation form is still in use / updated</td><td><span class="tag tag-wait">Open</span></td></tr>
       <tr><td>6</td><td>Iman</td><td>Document proposed dynamic fee-calculation approach</td><td><span class="tag tag-done">Done</span></td></tr>
@@ -105,17 +120,22 @@
       <tr><td>9</td><td>Aslam</td><td>Try to push code changes to a branch</td><td><span class="tag tag-wait">Open</span></td></tr>
     </tbody>
   </table>
+  <p>Items 2–3: SP/UI-derived amount suggestions published on
+    <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+    — still need Finance/Registry Accept (Demo seeds ≠ Live policy).</p>
 
   <h2>4. Asks for this weekly</h2>
   <ol>
     <li><strong>Dexter</strong> — C1–C10 SP validation so finance YAML can leave “proposed”.</li>
-    <li><strong>Faid</strong> — Accept/Change/Defer on campus finance profile; share Lesotho scenario; Lesotho testing.</li>
-    <li><strong>Finance / Registry</strong> — add/drop + module-registration fee amounts (and currency).</li>
+    <li><strong>Faid</strong> — Accept/Change/Defer on campus finance profile; share Lesotho scenario; Lesotho testing on hosted Demo.</li>
+    <li><strong>Finance / Registry</strong> — Accept or correct suggested add/drop + module-registration fee amounts (and currency).</li>
     <li><strong>Product</strong> — lecturer evaluation form currency (still 1–5 scale?).</li>
   </ol>
 
   <h2>5. Links</h2>
   <ul>
+    <li><a href="https://raisd-campus.github.io/portal-api-docs/reports/">Weekly reports hub</a> · <a href="https://raisd-campus.github.io/portal-api-docs/reports/weekly/2026-10-10.html">W04 summary</a></li>
+    <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a></li>
     <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/campus-finance-profile.html">Campus finance profile (Faid)</a></li>
     <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/dynamic-fee-calculation.html">Dynamic fee calculation</a></li>
     <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a></li>
@@ -123,6 +143,6 @@
     <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a></li>
   </ul>
 </main>
-<footer><div class="wrap">Raisd Campus · control-plane · weekly progress 2026-10-10 · Demo ≠ Live</div></footer>
+<footer><div class="wrap">Raisd Campus · control-plane · weekly progress 2026-10-10 (morning refresh) · Demo ≠ Live</div></footer>
 </body>
 </html>
