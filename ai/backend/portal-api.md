@@ -1,7 +1,7 @@
 # Portal API (backend agent knowledge)
 
 **Code:** [`raisd-campus/portal-api`](https://github.com/raisd-campus/portal-api) (private; sibling checkout `~/src/raisd/portal-api`). Moved out of `control-plane/portal-api/` with history on 27 September 2026.<br>
-**OpenAPI source of truth:** [`openapi.yaml`](../../../openapi.yaml) — stays in control-plane.<br>
+**OpenAPI source of truth:** [`openapi.yaml`](https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml) — stays in control-plane.<br>
 **Public docs:** https://raisd-campus.github.io/portal-api-docs/ · Swagger UI: https://raisd-campus.github.io/portal-api-docs/openapi.html<br>
 **Product contract:** [SDD-02](../../sdd/02-architecture-and-integration.md), [SDD-08](../../sdd/08-shared-platform.md).<br>
 **Development plan:** [portal-api-development-plan.md](portal-api-development-plan.md). **Target deployment:** [portal-api-deployment.md](portal-api-deployment.md). **PoC requirements:** [portal-api-poc-requirements.md](portal-api-poc-requirements.md).
@@ -68,6 +68,6 @@ The student portal defines the replaceable `PortalApi` surface (`src/services/po
 ## Applicant Demo HTTP and Student schema v4 (7 October 2026)
 
 - **Student:** Hosted engine follows sibling `student-portal` `PORTAL_RECORD_SCHEMA_VERSION` **4**. On deploy, a schema mismatch reseeds Demo record tables (overlays/`student_portal_state` and `audit_events` kept). Neon backup was taken before the hosted reseed; see [handoff](admissions-handoff.md).
-- **Applicant:** Demo RPC is live at `POST /v1/auth/applicant/login` and `POST /v1/applicant/:method` for the nine `ApplicantPortalApi` methods. Records persist in Neon `applicant_portal_state`; sessions in `poc_applicant_sessions`. Development reviewer actions stay out of the HTTP allowlist. Applicant portal (`https://applicant-portal-lemon.vercel.app`) uses `createHttpApplicantPortalApi` when `VITE_PORTAL_API_URL` is set.
+- **Applicant:** Demo RPC is live at `POST /v1/auth/applicant/login` and `POST /v1/applicant/:method` for the ten `ApplicantPortalApi` methods (includes `confirmApplicationEligibility` + `acceptApplicationEnrolment`; Demo auto-releases Offer after Eligibility confirm). Records persist in Neon `applicant_portal_state`; sessions in `poc_applicant_sessions`. Development reviewer actions stay out of the HTTP allowlist. Applicant portal (`https://raisd-applicant-portal.vercel.app`) uses `createHttpApplicantPortalApi` when `VITE_PORTAL_API_URL` is set.
 - `CORS_ORIGIN` includes the student SPA, applicant SPA and GitHub Pages Swagger origin.
 - OpenAPI `0.4.2` documents Applicant routes and schemaVersion **4**.

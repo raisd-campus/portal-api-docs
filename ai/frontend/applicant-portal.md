@@ -1,20 +1,20 @@
 # Applicant portal — agent knowledge
 
-**Repository:** [`raisd-campus/applicant-portal`](https://github.com/raisd-campus/applicant-portal)  
-**SDD:** [SDD-04](../../sdd/04-applicant-portal.md)  
-**Campus agents:** [../AGENTS.md](../AGENTS.md)
+**Repository:** [`raisd-campus/applicant-portal`](https://github.com/raisd-campus/applicant-portal)
+**SDD:** [SDD-04](https://github.com/raisd-campus/control-plane/blob/main/docs/sdd/04-applicant-portal.md)
+**Campus agents:** [../AGENTS.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md)
 
 ## Status
 
-A validated ApplicantPortalApi is implemented with shared package 0.6.2. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). See [mock API and validation](applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
+A validated ApplicantPortalApi is implemented with shared package 0.6.2. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). See [mock API and validation](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
 
 ## Agent rules
 
-1. Implement against SDD-04 and the campus [AGENTS.md](../AGENTS.md). Do not invent a second admissions architecture.
+1. Implement against SDD-04 and the campus [AGENTS.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md). Do not invent a second admissions architecture.
 2. Talk only to the Portal API. No direct CMS or database access.
-3. Pin a released `@raisd-campus/design-system` version when application UI begins. Compose the shared `system/portal-shell` family with applicant-owned routes, navigation, account details and actions. Follow [component ownership and setup](../design/component-library.md); do not copy student portal components or shells.
-4. Lesotho is the first acceptance pilot. Preserve current Malaysian sample content and use the captured [LUCT procedure](../backend/luct-online-registration.md) as a Cyberjaya research reference. Campus-specific Lesotho NMDS/LGCSE rules remain to be confirmed; Malaysia EMGS/NOC is not its default overlay.
-5. When UI or API contracts appear, add feature docs under `docs/ai/frontend/applicant-portal/` and register them in [../MANIFEST.yaml](../MANIFEST.yaml).
+3. Pin a released `@raisd-campus/design-system` version when application UI begins. Compose the shared `system/portal-shell` family with applicant-owned routes, navigation, account details and actions. Follow [component ownership and setup](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md); do not copy student portal components or shells.
+4. Lesotho is the first acceptance pilot. Preserve current Malaysian sample content and use the captured [LUCT procedure](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md) as a Cyberjaya research reference. Campus-specific Lesotho NMDS/LGCSE rules remain to be confirmed; Malaysia EMGS/NOC is not its default overlay.
+5. When UI or API contracts appear, add feature docs under `docs/ai/frontend/applicant-portal/` and register them in [../MANIFEST.yaml](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/MANIFEST.yaml).
 
 ## LUCT online registration baseline — 6 October 2026
 
@@ -25,9 +25,13 @@ Two campus procedures are captured for Applicant / Online Registration (and enro
 | **A — Applicant online registration** | Public 4-step wizard (Academic → Documents → Personal → Submit) + `LUCT-MKT-003` admission form + EMGS health/visa pack | CAP-02, 03, 07, 55 (CY immigration CAP-50) |
 | **B — Enrolled registration maintenance** | REG014/015 Add/Drop (+ change of programme and related Registry forms) | CAP-10, 51 |
 
-Detail, SLAs (24h confirm / 2–3 day Registrar / 14-day completion), evidence matrix, and Lesotho substitution notes: [../backend/luct-online-registration.md](../backend/luct-online-registration.md). Page previews: [../materials/luct-online-registration/lkw-pages/](../materials/luct-online-registration/lkw-pages/).
+Detail, SLAs (24h confirm / 2–3 day Registrar / 14-day completion), evidence matrix, and Lesotho substitution notes: [../backend/luct-online-registration.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md). Page previews: [../materials/luct-online-registration/lkw-pages/](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/materials/luct-online-registration/lkw-pages).
 
-**FE gap matrix (all portals):** [../backend/luct-online-registration-fe-gap.md](../backend/luct-online-registration-fe-gap.md) · Pages: [online-registration-gap.html](../../diagrams/old-cms/online-registration-gap.html).
+**FE gap matrix (all portals):** [../backend/luct-online-registration-fe-gap.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md) · Pages: [online-registration-gap.html](https://github.com/raisd-campus/control-plane/blob/main/docs/diagrams/old-cms/online-registration-gap.html).
+
+**Lesotho CMS vs Applicant (8 Oct 2026):** [../backend/lesotho-cms-vs-applicant-portal.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md) · Pages: [cms-vs-applicant.html](https://github.com/raisd-campus/control-plane/blob/main/docs/diagrams/old-cms-lesotho/cms-vs-applicant.html). Captures Read.ai 7 Oct expectations, gaps after the campus + Eligibility→Offer merge, and the ordered Applicant backlog (hosted API parity, LGCSE/LSL, type matrices).
+
+**Applicant merge · QR · fee SPs (9 Oct 2026):** [../backend/applicant-qr-fee-mechanisms.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md) · Pages: [fee-payment-sps.html](https://github.com/raisd-campus/control-plane/blob/main/docs/diagrams/old-cms-lesotho/fee-payment-sps.html). Standup 8 Oct — merge analysis (`9e007f2`/`532d6f0`), QR automated+manual, fee/payment from CMS stored procedures (currency matrix · cases C1–C10).
 
 ## Submitted application UI preview — 1 October 2026
 
@@ -46,7 +50,7 @@ Verification uses the full automated gate and responsive browser review. Automat
 
 ## Related CAP focus
 
-Admissions and identity capabilities in [SDD-11](../../sdd/11-capability-catalog.md) (see Applicant rows). CAP-53 is on the critical path for Live.
+Admissions and identity capabilities in [SDD-11](https://github.com/raisd-campus/control-plane/blob/main/docs/sdd/11-capability-catalog.md) (see Applicant rows). CAP-53 is on the critical path for Live.
 
 ## Development Admin Actions — 5 October 2026
 
@@ -56,13 +60,13 @@ Exactly three scenarios switch the active applicant across the whole portal: **F
 
 The page reviews the latest submitted application, otherwise the latest draft or an empty state. Its reference appears once. Verification and messaging are disabled before submission. **Verify Payment** records payment verification and moves review to Documents Under Review while retaining unread/response requirements. **Verify Documents** requires verified payment and a valid immutable submitted snapshot, records verification and sets Approved. Repeated actions are disabled and rejected. No rejection controls: clarification and additional evidence go through messages.
 
-Reviewer messages use the same conversation and limits as applicant replies, setting unread and Action Required. Admin viewing never acknowledges messages for the applicant. Approved takes precedence over response requirements and disables both composers while retaining unread state until the applicant visibly displays the messages. Individual completed checks use success badges, while the overall review summary stays warning until enrolment acceptance; approval alone does not provide accepted-enrolment context or provision Student records. The acceptance and next-login demo described below is separate from review. Development commands are not Applicant API methods or HTTP endpoints. See [mock operation details](applicant-portal/mock-api.md).
+Reviewer messages use the same conversation and limits as applicant replies, setting unread and Action Required. Admin viewing never acknowledges messages for the applicant. Approved takes precedence over response requirements and disables both composers while retaining unread state until the applicant visibly displays the messages. Individual completed checks use success badges, while the overall review summary stays warning until enrolment acceptance; approval alone does not provide accepted-enrolment context or provision Student records. The acceptance and next-login demo described below is separate from review. Development commands are not Applicant API methods or HTTP endpoints. See [mock operation details](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md).
 
 ## Acceptance and simulated Student handoff — 6 October 2026
 
 Approved applications offer **Confirm and Accept Enrolment** in the SummaryCard footer. Its shared Popup shows the first preference's Intake, Faculty and Programme and explains next-sign-in Student Portal/module registration. Cancellation preserves Approved; confirmation stores guarded acceptance metadata, records **Enrolment Accepted**, then automatically logs out to the existing Sign in screen in development mock sessions. Clicking Sign in opens the existing new Student tab; it is never clicked automatically. The popup explicitly explains this sequence. Failed acceptance stays in the popup; failed logout retains accepted status with Retry Sign Out, without reaccepting. Pending confirmation and logout use existing component APIs. Approved/accepted conversations are read-only; submission/scenario initialization creates no automatic messages.
 
-Both portals use independent copies of the canonical Design demo descriptor and a captured first-semester reference date. A development-only next-login exchange transfers accepted serializable data to a new Student tab and a new isolated mock account/enrolment. No data is stored persistently or put in URLs. Production and HTTP sessions exclude the simulation. See [mock operations and transport](applicant-portal/mock-api.md#enrolment-acceptance-and-next-login-simulation--6-october-2026) and [accepted handoff](../backend/admissions-handoff.md#development-browser-handoff--6-october-2026). This is not live authentication, CMS provisioning or durable file delivery.
+Both portals use independent copies of the canonical Design demo descriptor and a captured first-semester reference date. A development-only next-login exchange transfers accepted serializable data to a new Student tab and a new isolated mock account/enrolment. No data is stored persistently or put in URLs. Production and HTTP sessions exclude the simulation. See [mock operations and transport](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md#enrolment-acceptance-and-next-login-simulation--6-october-2026) and [accepted handoff](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md#development-browser-handoff--6-october-2026). This is not live authentication, CMS provisioning or durable file delivery.
 
 ## Save before leaving — 6 October 2026
 
@@ -70,7 +74,7 @@ The Leave application popup uses released 0.6.2 with Discard Changes, Keep Editi
 
 ## Campus selection and issued letters — 7 October 2026
 
-Current local mock workflow supersedes the earlier one-confirmation acceptance increment. Shared UI stays at 0.6.2. Hosted Applicant Demo HTTP authentication and supported methods remain intact; **new campus inputs, QA/Registry letters and final enrolment acceptance are not supported by the hosted server yet**. Final acceptance is gated there rather than calling the old one-stage operation. No Portal API service, database or deployment is changed by this increment.
+Current local mock workflow supersedes the earlier one-confirmation acceptance increment. Shared UI stays at 0.6.2. Hosted Applicant Demo HTTP authentication remains intact. The incoming 9 October backend documentation reports ten RPC methods, including Eligibility confirmation and final acceptance, with automatic Demo Offer release. This frontend checkout still explicitly gates hosted confirmation/acceptance; enabling and verifying that frontend parity is separate work. Staff-owned Offer release, durable authorized Student file delivery and Live CMS writes remain pending. This local increment does not alter Portal API service code or database records.
 
 Step 2 requires Campus (Lesotho, Cyberjaya, Botswana, Eswatini, Sierra Leone, Cambodia, Uganda, Namibia). Alumni additionally requires a trimmed Previous Student ID. A campus change clears dependent preferences. Drafts remain saveable when incomplete. English Language Results are optional for every sample programme; populated rows must be valid. All eight campuses expose the existing Design curriculum as **demo content**, not verified campus offerings, fees or admissions policy. Selected campus metadata and frozen intake reference are retained through acceptance and Student bootstrap.
 
@@ -91,3 +95,7 @@ Document verification and Eligibility Letter release do not complete enrolment. 
 The section is titled **Application Progress**, with **Step** as the first column and accessible table name “Application progress.” The review table has four ordered rows: Payment Proof (Bursary), Document Check (Quality Assurance), Confirm and Proceed with Enrolment (Applicant), and Prepare and Release Offer Letter (Registry). Each row derives its own Status and Update from verification/letter metadata. Document verification shows the released Eligibility filename; applicant confirmation records its date; Registry changes from awaiting applicant confirmation to preparing the Offer, then shows the released Offer filename. A completed row may be green while overall enrolment remains under review. This is presentation of existing guarded workflow state, with no API/schema changes.
 
 Both confirmation popups and Student Documents use two equal-width letter actions with icons and spacing above them. **Preview Letter** opens a temporary PDF URL in a separate tab using the browser's PDF handling; **Download Letter** downloads the same PDF with its issued filename. There is no embedded preview popup or extra disclaimer below a viewer. The generated PDF itself retains its DEMO marking. Temporary resources retain their existing ownership/cleanup behavior. Hosted delivery support and physical-browser PDF handling remain distinct from the local mock checks.
+
+## Student evidence transport — 8 October 2026
+
+DEV next-login delivery uses bounded envelope v3, preserving admissions snapshot v2 and v1/v2 receiver compatibility. Only available owned academic/identity/admissions evidence is delivered individually with MIME/name/length/hash checks; payment evidence is excluded. Missing bytes remain unavailable in Student. URLs carry only a nonce; no persistent storage or new hosted integration is added. See [Student workflows](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/student-portal/student-workflows.md).

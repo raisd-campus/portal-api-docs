@@ -1,0 +1,279 @@
+# Raisd — campus finance profiles (review seed)
+# Standup 8 Oct 2026 · published 9 Oct 2026
+# Status: proposed — Faid / Finance / Registry Accept|Change|Defer
+# Not Live CMS amounts. Not loaded by Portal API yet.
+# Human review: docs/diagrams/old-cms-lesotho/campus-finance-profile.html
+# Narrative: docs/ai/backend/campus-finance-profile.md
+# SP evidence: docs/ai/backend/applicant-qr-fee-mechanisms.md
+
+version: 1
+updated: 2026-10-09
+status: proposed
+reviewOwner: faid
+decisions:
+  D1_isoCurrencyWithCmsCodeMap: proposed
+  D2_applicationFeeOnProfile: proposed
+  D3_semesterBillingHybrid: proposed
+  D4_repeatResourceDeferredFlags: proposed
+  D5_nmdsOutOfApplicantFeeProfile: accepted_standup
+  D6_shipWithAvailableSeeds: accepted_standup
+
+# Shared fee-case catalogue (C1–C10). Campuses enable/override below.
+feeCaseCatalog:
+  - id: C1
+    title: Zero module fee when status not chargeable
+    cms: "r_zadstatus.adstatuschargable / r_zstdmodstatus.stdmodstatchargable = N"
+    configKey: zeroWhenNotChargeable
+  - id: C2
+    title: Historical Exempted before cutover term
+    cms: "stdmodstatcode=Exempted and termcode < cutover"
+    configKey: exemptBeforeTerm
+  - id: C3
+    title: Semester catalogue fee
+    cms: "f_semester.semesterfee → stdsemcrsfees when not modular"
+    configKey: semesterBilling.mode includes semester
+  - id: C4
+    title: Modular sum of module fees
+    cms: "sum(stdmodfee) when UseModularFee=Y"
+    configKey: semesterBilling.mode includes modular
+  - id: C5
+    title: Repeat / ADD add-on fees
+    cms: "semmodaddfees; campus hardcodes possible"
+    configKey: components.modularAdd / repeat
+  - id: C6
+    title: Resource fees with exemptions
+    cms: "stdsemresfees; exempt semester codes"
+    configKey: components.resource
+  - id: C7
+    title: Deferred fee component
+    cms: "StdSemDefFees / Deferred zeroes"
+    configKey: components.deferred
+  - id: C8
+    title: Totals formula
+    cms: "stdsemtotfees / StdSemStdrdFees"
+    configKey: totals
+  - id: C9
+    title: Invoice lines from semester amounts
+    cms: "b_invoicedetail"
+    configKey: invoicing (CAP-53 later)
+  - id: C10
+    title: PayStatus vs outstanding
+    cms: "r_student.paystatus / AccOutstanding"
+    configKey: payStatusProjection (Student Finance)
+
+profiles:
+  - campusId: campus-lesotho
+    campusKey: LESOTHO
+    pilot: true
+    reviewStatus: pending_faid
+    currencyCode: LSL
+    cmsPaymentCurrency: "M"
+    cmsInstitutionId: "1"
+    currencyNote: "CMS SP stamps M (Loti); Raisd ISO = LSL"
+    applicationFee:
+      applies: true
+      amountMinor: 30000
+      currencyCode: LSL
+      label: Application fee
+      proofRequired: true
+      verifiedByRole: bursary
+      evidence: "Lesotho newer-CMS screenshot M300 VERIFIED — confirm exact Live amount"
+      faid: null # accept | change | defer
+    onlineEnrolmentPayment:
+      proofRequired: true
+      requestSourceCms: OnlineEnrollment
+      bursaryStatusField: BurStatus
+      facultyStatusField: FacultyStatus
+      insertProcedure: sp_onlinenrollment_insert
+      verificationProcedure: sp_payment_verification_insert
+      infoProcedure: sp_onlinenrollment_info
+    semesterBilling:
+      mode: hybrid # semester | modular | hybrid
+      useModularFeeDefault: false
+      components:
+        course: true
+        modularAdd: true
+        resource: true
+        repeat: true
+        deferred: true
+      resourceExemptSemesterCodes: ["F3", "L3"]
+      exemptBeforeTerm: "2011-07"
+      totals:
+        studentTotal: [modularAdd, resource, repeat]
+        standardTotal: [course, resource, repeat]
+      cmsHardcodeNotes:
+        - "b_Update_Student may set stdmodfee=600 or 375 on some repeat paths — keep CMS-side until override list agreed"
+    feeCases:
+      C1: { enabled: true, faid: null }
+      C2: { enabled: true, exemptBeforeTerm: "2011-07", faid: null }
+      C3: { enabled: true, faid: null }
+      C4: { enabled: true, faid: null }
+      C5: { enabled: true, hardcodesCmsSide: true, faid: null }
+      C6: { enabled: true, faid: null }
+      C7: { enabled: true, faid: null }
+      C8: { enabled: true, faid: null }
+      C9: { enabled: false, note: "CAP-53 / CMS invoicing later", faid: null }
+      C10: { enabled: false, note: "Student Finance projection later", faid: null }
+    nmdsAssistBilling:
+      inApplicantFeeProfile: false
+      procedure: b_Update_billing
+      billNumberPattern: "LSO/{YYMM}/FAID|FDSI|FBS|FCM/…"
+      providerCode: nmds
+
+  - campusId: campus-eswatini
+    campusKey: ESWATINI
+    pilot: false
+    reviewStatus: pending_faid
+    currencyCode: ZAR # confirm vs SZL
+    cmsPaymentCurrency: "R"
+    cmsInstitutionId: "1"
+    currencyNote: "CMS SP stamps R — confirm Raisd ISO ZAR vs SZL (Lilangeni pegged to Rand)"
+    applicationFee:
+      applies: null # unknown
+      amountMinor: null
+      currencyCode: null
+      label: Application fee
+      proofRequired: true
+      verifiedByRole: bursary
+      evidence: "No screenshot amount in Raisd KB"
+      faid: null
+    onlineEnrolmentPayment:
+      proofRequired: true
+      requestSourceCms: OnlineEnrollment
+      bursaryStatusField: BurStatus
+      facultyStatusField: FacultyStatus
+      insertProcedure: sp_onlinenrollment_insert
+      verificationProcedure: sp_payment_verification_insert
+      infoProcedure: sp_onlinenrollment_info
+    semesterBilling:
+      mode: hybrid
+      useModularFeeDefault: false
+      components:
+        course: true
+        modularAdd: true
+        resource: true
+        repeat: true
+        deferred: true
+      totals:
+        studentTotal: [modularAdd, resource, repeat]
+        standardTotal: [course, resource, repeat]
+    feeCases:
+      C1: { enabled: true, note: "same SP family*", faid: null }
+      C2: { enabled: null, faid: null }
+      C3: { enabled: true, faid: null }
+      C4: { enabled: true, faid: null }
+      C5: { enabled: true, faid: null }
+      C6: { enabled: true, faid: null }
+      C7: { enabled: true, faid: null }
+      C8: { enabled: true, faid: null }
+      C9: { enabled: false, faid: null }
+      C10: { enabled: false, faid: null }
+
+  - campusId: campus-cambodia
+    campusKey: CAMBODIA
+    pilot: false
+    reviewStatus: pending_faid
+    currencyCode: MYR # CMS quirk — confirm Live USD/KHR
+    cmsPaymentCurrency: "MYR"
+    cmsInstitutionId: "30"
+    currencyNote: "CMS SP hard-codes MYR + InstitutionID 30 — unlikely as campus Live currency; confirm"
+    applicationFee:
+      applies: null
+      amountMinor: null
+      currencyCode: null
+      label: Application fee
+      proofRequired: true
+      verifiedByRole: bursary
+      evidence: "TBD"
+      faid: null
+    onlineEnrolmentPayment:
+      proofRequired: true
+      requestSourceCms: OnlineEnrollment
+      bursaryStatusField: BurStatus
+      facultyStatusField: FacultyStatus
+      insertProcedure: sp_onlinenrollment_insert
+      verificationProcedure: sp_payment_verification_insert
+      infoProcedure: sp_onlinenrollment_info
+    semesterBilling:
+      mode: hybrid
+      useModularFeeDefault: false
+      components:
+        course: true
+        modularAdd: true
+        resource: true
+        repeat: true
+        deferred: true
+      totals:
+        studentTotal: [modularAdd, resource, repeat]
+        standardTotal: [course, resource, repeat]
+      cmsHardcodeNotes:
+        - "b_Update_Student repeat hardcodes e.g. 150 (PUFP) / 250 (P1) — CMS-side"
+    feeCases:
+      C1: { enabled: true, faid: null }
+      C2: { enabled: null, faid: null }
+      C3: { enabled: true, faid: null }
+      C4: { enabled: true, faid: null }
+      C5: { enabled: true, hardcodesCmsSide: true, faid: null }
+      C6: { enabled: true, faid: null }
+      C7: { enabled: true, faid: null }
+      C8: { enabled: true, faid: null }
+      C9: { enabled: false, faid: null }
+      C10: { enabled: false, faid: null }
+
+  # Demo catalogue campuses — placeholder until packs arrive
+  - campusId: campus-cyberjaya
+    campusKey: CYBERJAYA
+    pilot: false
+    reviewStatus: research_baseline
+    currencyCode: MYR
+    cmsPaymentCurrency: "MYR"
+    applicationFee:
+      applies: true
+      amountMinor: null
+      currencyCode: MYR
+      label: Application fee
+      proofRequired: true
+      evidence: "LUCT forms RM 500 / RM 1000 research baseline — not Lesotho Live"
+      faid: null
+    semesterBilling:
+      mode: hybrid
+      components:
+        course: true
+        modularAdd: true
+        resource: true
+        repeat: true
+        deferred: true
+    feeCases:
+      C1: { enabled: null }
+      C2: { enabled: null }
+      C3: { enabled: null }
+      C4: { enabled: null }
+      C5: { enabled: null }
+      C6: { enabled: null }
+      C7: { enabled: null }
+      C8: { enabled: null }
+      C9: { enabled: false }
+      C10: { enabled: false }
+
+  - campusId: campus-botswana
+    reviewStatus: placeholder
+    currencyCode: BWP
+    applicationFee: { applies: null, amountMinor: null, faid: null }
+    feeCases: {}
+
+  - campusId: campus-sierra-leone
+    reviewStatus: placeholder
+    currencyCode: SLE
+    note: "Vara to compile b_calcmodule / b_calcsch cases"
+    applicationFee: { applies: null, amountMinor: null, faid: null }
+    feeCases: {}
+
+  - campusId: campus-uganda
+    reviewStatus: placeholder
+    applicationFee: { applies: false, amountMinor: null, faid: null }
+    feeCases: {}
+
+  - campusId: campus-namibia
+    reviewStatus: placeholder
+    applicationFee: { applies: false, amountMinor: null, faid: null }
+    feeCases: {}

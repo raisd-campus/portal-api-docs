@@ -1,5 +1,7 @@
 # Student Finance
 
+Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
+
 ## Scope
 
 Student Finance Phase 1 is a frontend-only responsive account view backed by the replaceable `PortalApi`. Students can review their account balance, issued invoices, confirmed or reversed payments, credits and adjustments, applied scholarships and incentives, academic renewal conditions, and fictional campus payment instructions. They can also submit, replace, or withdraw metadata for one pending bank-transfer proof on an outstanding invoice.

@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-06
+updated: 2026-10-09
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -46,6 +46,12 @@ notes:
   - 2026-10-05: Eswatini CMS pack inventoried — campus2_eswatini 472 tables / 330 views / 53 procs / 3 fns / 70 triggers; portal_*_eswatini + legacy _swaziland; assist ssb/limkokwing; M5 reference; dump under raisd/_local/.
   - 2026-10-06: "LUCT Cyberjaya online registration captured — Process A applicant wizard (LKW PDF) + Process B enrolled Add/Drop/forms pack; Malaysia EMGS/NOC vs Lesotho NMDS/LGCSE called out. backend/luct-online-registration.md + materials/luct-online-registration/. Pages: diagrams/old-cms/online-registration.html."
   - 2026-10-06: Online registration FE gap analysis (all portals) — Required/Gap/Mismatch/Partial/Out/Met; backend/luct-online-registration-fe-gap.md + diagrams/old-cms/online-registration-gap.html.
+  - 2026-10-08: Lesotho CMS vs Raisd Applicant portal flow analysis (standup 7 Oct) — backend/lesotho-cms-vs-applicant-portal.md + diagrams/old-cms-lesotho/cms-vs-applicant.html (12-row matrix, roles, M4 gaps).
+  - 2026-10-08: Cambodia certificate QR — Registry → create_qrcode_api → QR redirect → Verification → GetStudentCertInfo; full pack inventory on diagrams/old-cms-cambodia/certificate-qr.html (685 KHM-PNH_ in dump; AES key-sync ops risk).
+  - 2026-10-08: Refreshed Lesotho CMS vs Applicant after Faid campus/letters merge — Read.ai action/chapter capture, expectation matrix, Applicant backlog (hosted parity · LGCSE/LSL · type docs).
+  - 2026-10-09: Standup 8 Oct follow-up — Applicant merge + QR (auto+manual) + fee/payment from CMS SPs; backend/applicant-qr-fee-mechanisms.md + diagrams/old-cms-lesotho/fee-payment-sps.html (currency matrix · cases C1–C10).
+  - 2026-10-09: Campus finance profile + C1–C10 Faid checklist — backend/campus-finance-profile.md + diagrams/old-cms-lesotho/campus-finance-profile.html (proposed seeds; not Live).
+  - 2026-10-09: Follow-up — reviewable contracts/campus-finance-profiles.yaml (C1–C10 + LS/SZ/KH); CAP-53 W1 online-enrolment write path (backend/lesotho-cap53-online-enrolment-write.md + cap53-online-enrolment.html).
 
 entrypoints:
   agents: AGENTS.md
@@ -125,12 +131,64 @@ backend:
     topics: [lesotho, pilot, m4, database, gap, nmds, lgcse, schema, botswana, cyberjaya, cap-48, cap-53]
     related:
       - backend/old-cms-lesotho.md
+      - backend/lesotho-cms-vs-applicant-portal.md
       - backend/lesotho-cap53-read-adapter.md
       - architecture/lesotho-pilot.md
       - backend/botswana-dtef-scholarship-sync.md
       - backend/canonical-schema-luct-readiness.md
     pages: ../diagrams/old-cms-lesotho/index.html#db-gap
     note: Measured campus2_lesotho structure + CAP-53/NMDS fields + schema×FE×flows M4 gap; dump outside git.
+  - path: backend/lesotho-cms-vs-applicant-portal.md
+    topics: [lesotho, pilot, m4, admissions, applicant-portal, lgcse, offer-letter, gap, standup]
+    related:
+      - backend/old-cms-lesotho.md
+      - backend/lesotho-db-gap.md
+      - frontend/applicant-portal.md
+      - backend/luct-online-registration-fe-gap.md
+      - backend/admissions-handoff.md
+      - architecture/lesotho-pilot.md
+      - backend/applicant-qr-fee-mechanisms.md
+    pages: ../diagrams/old-cms-lesotho/cms-vs-applicant.html
+    note: Standup 7 Oct / published 8 Oct — three-plane flow compare; refreshed same day with Read.ai expectations, Faid campus/letters status, Applicant backlog (hosted API · LGCSE/LSL · type matrices).
+  - path: backend/applicant-qr-fee-mechanisms.md
+    topics: [lesotho, applicant-portal, fee, payment, stored-procedure, qr, cambodia, standup, m4]
+    related:
+      - backend/lesotho-cms-vs-applicant-portal.md
+      - backend/cambodia-qr-system.md
+      - backend/lesotho-db-gap.md
+      - frontend/applicant-portal.md
+      - backend/portal-api.md
+      - backend/campus-finance-profile.md
+    pages: ../diagrams/old-cms-lesotho/fee-payment-sps.html
+    note: Standup 8 Oct action closed 9 Oct — Applicant merge 9e007f2/532d6f0; QR auto+manual; fee planes + SP currency matrix + b_Update_Student cases C1–C10.
+  - path: backend/campus-finance-profile.md
+    topics: [lesotho, finance, fee, currency, profile, faid, standup, m4, modular]
+    related:
+      - backend/applicant-qr-fee-mechanisms.md
+      - contracts/campus-finance-profiles.yaml
+      - backend/lesotho-cap53-online-enrolment-write.md
+      - backend/lesotho-db-gap.md
+      - backend/lesotho-cms-vs-applicant-portal.md
+      - frontend/applicant-portal.md
+    pages: ../diagrams/old-cms-lesotho/campus-finance-profile.html
+    note: Proposed campus_finance_profile seeds + C1–C10 Faid checklist (9 Oct). YAML SoT in contracts/. Not implemented in Portal API yet.
+  - path: contracts/campus-finance-profiles.yaml
+    topics: [lesotho, finance, fee, currency, profile, faid, config, c1-c10, contracts]
+    related:
+      - backend/campus-finance-profile.md
+      - backend/applicant-qr-fee-mechanisms.md
+      - backend/lesotho-cap53-online-enrolment-write.md
+    pages: ../diagrams/old-cms-lesotho/campus-finance-profile.html
+    note: Reviewable C1–C10 + campus fee/currency seeds for Faid Accept (proposed; not Live).
+  - path: backend/lesotho-cap53-online-enrolment-write.md
+    topics: [lesotho, cap-53, online-enrollment, payment, proof, w1, portal-api, standup]
+    related:
+      - backend/lesotho-cap53-read-adapter.md
+      - backend/applicant-qr-fee-mechanisms.md
+      - contracts/campus-finance-profiles.yaml
+      - backend/portal-api-development-plan.md
+    pages: ../diagrams/old-cms-lesotho/cap53-online-enrolment.html
+    note: CAP-53 W1 target write path — sp_onlinenrollment_* + sp_payment_verification_insert (documented 9 Oct; not implemented).
   - path: backend/lesotho-cap53-read-adapter.md
     topics: [lesotho, cap-53, portal-api, adapter, m4, reads, portal-tables]
     related:
@@ -158,8 +216,17 @@ backend:
       - backend/old-cms-botswana.md
       - backend/old-cms-cyberjaya.md
       - backend/cms-feature-comparison.md
+      - backend/cambodia-qr-system.md
     pages: ../diagrams/old-cms/index.html#cambodia
     note: LUCT CMS E2E hub — Vara pack 7 Oct 2026 — 481/296/46/2/83; portal_*_cambodia + portalcambodia export; assist Limkokwing; dump outside git; M5 evidence.
+  - path: backend/cambodia-qr-system.md
+    topics: [cambodia, qr, verification, certificate, limkokwing, m5, registry, integrations]
+    related:
+      - backend/old-cms-cambodia.md
+      - backend/lesotho-cms-vs-applicant-portal.md
+      - backend/applicant-qr-fee-mechanisms.md
+    pages: ../diagrams/old-cms-cambodia/certificate-qr.html
+    note: Full Pages certificate-qr.html — CI4 QR SaaS + Verification + CMS call site + manual Cambodia↔Cyberjaya ops (9 Oct). Dump ~685 KHM-PNH_. Packs outside git.
   - path: backend/old-cms-cyberjaya.md
     topics: [existing-cms, cyberjaya, cmscbj, inventory, php-maker, e2e, erd, dfd, integrations, adr-1]
     pages: ../diagrams/old-cms/
@@ -259,6 +326,10 @@ diagrams:
       - ../diagrams/old-cms-botswana/_view-catalog.txt
   - path: ../diagrams/old-cms-lesotho/index.html
     topics: [lesotho, pilot, m4, screenshots, admissions, registry, nmds, lgcse, feature-analysis]
+    pages:
+      - ../diagrams/old-cms-lesotho/cms-vs-applicant.html
+  - path: ../diagrams/old-cms-lesotho/cms-vs-applicant.html
+    topics: [lesotho, pilot, m4, applicant-portal, admissions, gap, lgcse, offer-letter]
   - path: ../diagrams/old-cms/fsd-knowledge-lesotho.json
     topics: [lesotho, pilot, obsidian, fsd, graph, nmds, lgcse, m4]
     pages:
@@ -346,3 +417,16 @@ admissions_increment:
     topics: [demo-catalogue, design-curriculum, intake-reference]
   - path: contracts/browser-admissions-transfer.ts
     topics: [dev-only, accepted-admissions, one-time-browser-transfer]
+
+student_workflow_increment:
+  - path: frontend/student-portal/student-workflows.md
+    topics: [source-forms, registration-review, document-delivery, funding, transport-v3]
+  - path: contracts/student-workflows.ts
+    topics: [registration-request, source-forms, document-delivery]
+  - path: contracts/admissions-evidence.ts
+    topics: [owned-evidence, transport-v3]
+  - path: frontend/student-portal/audits/2026-10-09-student-workflows-verification.md
+    topics: [verification, source-forms, registration, documents, transport-v3]
+
+  - path: frontend/student-portal/audits/2026-10-09-campus-main-publication.md
+    topics: [publication, verification, reconciliation, main]

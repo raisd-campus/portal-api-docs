@@ -1,5 +1,7 @@
 # Online Forms (CAP-51)
 
+Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
+
 On phone layouts, preparation guidance links wrap within their card rather than clipping at the panel edge. Prefilled records use the shared stacked `DetailField` treatment, and category segments grow with their coarse-pointer targets while keeping long labels clear of their dividers. The selected category is restored into view after Safari page restoration or a late layout resize. These presentation rules preserve all existing submission and case ownership behavior.
 
 Online Forms is the responsive student frontend for campus-owned forms, drafts, submission tracking and case conversations. It replaces the Requests placeholder. All changes are held in the mock Portal API session and reset on refresh. Changing the development student view retains each student's owned form records while clearing scoped UI queries. No staff portal or production submission service is included.
@@ -18,22 +20,9 @@ Online Forms is the responsive student frontend for campus-owned forms, drafts, 
 
 Graduation, Immigration and Services Accessibility link to their published templates. Immigration navigation retains its international-student eligibility. These links do not create drafts or make official decisions. Privacy & Security links to the catalogue and IT Helpdesk without claiming a dedicated privacy form is available.
 
-## Eight catalogue templates and one case-linked form
+## Source-aligned catalogue
 
-| Template                 | Category        | Required and optional input                                                                           |
-| ------------------------ | --------------- | ----------------------------------------------------------------------------------------------------- |
-| Graduation Clearance     | Academic        | Eligibility-gated clearance request; optional Additional comments only; read-only academic summary                    |
-| Convocation Registration | Academic        | Attend or decline; gown size required when attending; optional note; opens after approval and payment |
-| New Student Pass Application | Immigration | University-held passport, photograph, expiry, offer, academic and English evidence; uploaded health declaration |
-| Student Pass Renewal     | Immigration     | University-held passport and photograph, with case-specific replacement when needed                    |
-| Student Pass Cancellation | Immigration    | Cancellation reason, expected departure date and university-held passport                              |
-| Academic Appeal          | Academic        | An owned published module result, appeal grounds and requested outcome; optional evidence             |
-| Accessibility Support    | Student Support | Requested adjustment and affected study activities; no required diagnosis                             |
-| Student Complaint        | Student Support | Subject, description and requested outcome; optional incident date and evidence                       |
-
-The **Medical Screening Result** form is not a ninth catalogue choice. Immigration Step 4 exposes it only for the exact active new-pass case after eVAL approval. It uses the same template, draft, save-and-close, resume, confirmation, immutable submission, withdrawal, status history, and review presentation as every other Online Form. Its single required upload accepts PDF, JPEG, or PNG, and the draft snapshots the exact `immigrationCaseId`.
-
-All four student scenarios receive their owned Cyberjaya templates. Other campuses receive no Cyberjaya fallback. New Student Pass requires an international enrolment without a current pass, or a completed student-requested cancellation on the same active eligible enrolment. Renewal and cancellation require the exact current enrolment-owned valid or expiring pass. Expired passes, graduation or university-directed cancellations, inactive enrolments, and statutory revocation require International Office review. Only one active CAP-50 case is permitted. Academic Appeal requires an owned published result. Graduation Clearance requires all CAP-15 entry checks at both Start and Submit: completed published curriculum, earned credits, minimum CGPA, zero existing debt and applicable pass coverage. Rejected/withdrawn attempts can be replaced when current eligibility permits, but duplicate active or approved cases are blocked. Questions, routing departments and eligibility are synthetic fixture assumptions requiring campus approval.
+See [the source-field and department matrix](student-workflows.md#catalogue-and-source-owned-inputs) for the current catalogue. General Registry/Feedback templates are campus-scoped. Cyberjaya retains three Immigration workflows; the clinician-completed medical report stays case-linked. Accessibility and Complaint history remains immutable while new requests use one Student Feedback v2 template.
 
 The catalogue supplies its campus timezone independently of its template collection, so My Forms retains the correct local timestamps even when all templates are unpublished. Student Pass records explicitly reference their Programme Enrolment; the synthetic Rizal record belongs to his Cyberjaya enrolment. A transferred student cannot use a pass from a different enrolment to start renewal or reapplication. Renewal and cancellation prefills use the student-facing **Student Pass number** and **Student Pass expiry** labels. Every New Student Pass template places the outside-Malaysia requirement and official guidance link inside its existing **Before you start** card; the International Office verifies the condition during review, so no self-attested location field is added. This linkage and copy record prototype ownership and workflow assumptions rather than establishing government eligibility.
 
@@ -77,3 +66,7 @@ The [Graduation hub](academic-graduation.md) owns progress while this feature ow
 ## CAP-50 integration
 
 The [Immigration hub](immigration.md) owns Student Pass availability, progress, invoices and milestone copy. Online Forms owns the new-application, renewal and cancellation drafts, immutable evidence snapshots, status history and case Messages. Submitting one of those catalogue templates atomically creates the matching enrolment-owned `ImmigrationCase`; withdrawal closes its linked active case. A post-cancellation reapplication creates another ordinary New Student Pass submission, snapshots available on-file evidence, and stores missing-record replacements only on that case. After eVAL approval, Immigration Step 4 opens the case-linked Medical Screening Result form. Starting it snapshots the exact case ID; submission atomically attaches immutable file metadata and advances that case to medical review; withdrawal reopens Step 4; staff acceptance completes the form and enables passport handover. Document acceptance, invoice issuance, EMGS/eVAL, medical review, passport, endorsement, expiry and collection milestones remain development-only staff simulations. A graduation-triggered cancellation is created by CAP-15 without a duplicate Online Form because the Graduation Clearance submission already owns that student request.
+
+## Browser review corrections — 9 October 2026
+
+Course rows in Add Modules, Drop Modules and Credit Transfer use the released editableUndivided DetailField variant. Course labels have 16px space before their card/row list. Add course uses the released dashed AddRowButton with its icon; removal, eight-row limits, disabled/error states and saving/submission remain unchanged. Applicant requires Course Syllabi for transfer applicants. Accepted admissions preserve this evidence under its original stable reference; Credit Transfer reuses it and requires only missing/additional uploads. The legacy Rizal fixture has no imported Applicant snapshot, so it must not fabricate admissions syllabi.

@@ -1,5 +1,7 @@
 # Malaysian Student Pass and Immigration — CAP-50
 
+Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
+
 CAP-50 is a session-only frontend demonstration for international students enrolled at the Cyberjaya campus. `/immigration` opens the URL-backed **Student Pass** overview; `/immigration?tab=applications` opens **Applications**, where a current case uses Graduation-style steps. A legacy URL containing only `step` still opens Applications. The feature reuses Online Forms for applications and case conversations, Finance for invoices and transfer proofs, and the existing development-only Admin Actions workspace for simulated review and progress.
 
 Refresh creates a new mock session. No application, upload, payment, government decision, passport movement, or staff action reaches EMGS, Malaysian Immigration, Limkokwing systems, or persistent storage.

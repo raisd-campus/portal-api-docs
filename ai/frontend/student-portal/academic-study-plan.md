@@ -1,5 +1,7 @@
 # Academic Study Plan behaviour
 
+Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
+
 The Academic Study Plan route is a frontend-only, read-only programme journey backed by `PortalApi.getAcademicStudyPlan()`. Its response is derived from the canonical Portal record graph; the page does not calculate official results, maintain a second fixture set, or connect to a live student-record system.
 
 The projection follows the exact URL-backed Programme Enrolment context and returns only its Study Periods, registrations, attempts, results, Finance Account, and Student Pass relationships. Active, completed, deferred, and withdrawn enrolments remain selectable; inactive contexts are historical/read-only and never borrow current-period data or eligibility actions from another enrolment.
@@ -15,7 +17,7 @@ The projection follows the exact URL-backed Programme Enrolment context and retu
 - Programme Status summarizes four graduation-eligibility requirements; it is not the student's enrolment status. It displays `In Progress` while any requirement is unmet and `Eligible for Graduation` only when all four pass. The Graduation tab is the CAP-15 progress hub. Its form entry additionally requires every required semester and curriculum module to have completed, published passing results; approved administrative clearance is tracked separately.
 - Programme Overview uses one shared default-subtle `SummaryCard`: Programme Status is its label/value pair and the four eligibility requirements use the divided content-sized summary-column slot. The action column is omitted while any requirement is unmet. Once all requirements pass it provides the exact **Open Graduation** route; Study Plan never exposes document collection early. For Rizal, Credits shows 60 / 120 Credit Hours and fails; Performance shows the Programme Version's Minimum 2.0 CGPA and passes against the latest published 3.33 CGPA; Outstanding shows the tax-inclusive RM1,852.00 balance and fails; Passport & Visa displays `Expiring` and fails because its expiry does not cover 19 December 2027. Alya's local Malaysian record displays Passport & Visa as `Not applicable` and passes that requirement without inventing a student pass.
 - Every requirement uses the shared column label/value typography and optional indicator position, placing a solid semantic success check or destructive X beside its value with an accessible met/not-met label. The card owns the 16px insets, 4px primary and column label/value rhythm, one divider, and 24px wrapping column gap. Like every `SummaryCard` summary-column composition, the four requirements stack one per row on phones; wider layouts retain content-sized wrapping columns.
-- Transcript delivery remains an intentional no-op only in the completed Graduation view; Study Plan contains no transcript control.
+- Partial Transcript opens a native PDF viewer from published results during study. Final Transcript appears once official completion, final Registry clearance and graduation settlement gates pass. Graduation reuses the same generated resources.
 
 ## Semester outline
 
@@ -49,3 +51,7 @@ At 30rem or less of available item width, the title and status sit together at t
 ## Completed student reading
 
 Nadia has six completed semesters, 120 earned credits and published 3.00 CGPA without a current semester. `currentStudyPeriodId` is nullable; completed history remains readable through the owned enrolment. Once her four eligibility requirements pass, **Open Graduation** links to `/academic/graduation`; the Graduation hub chooses the recommended current step. Graduation approval and its new invoice do not rewrite published results. Study Plan continues to reflect the current Finance balance, while the [Graduation hub](academic-graduation.md) preserves the approved administrative journey.
+
+## Browser review corrections — 9 October 2026
+
+Open Partial Transcript is in the Programme Overview SummaryCard footer. The released Final Transcript action shares that footer once eligible; Open Graduation retains its existing header action. Loading mirrors the footer slot. Native document viewing and release gates are unchanged.
