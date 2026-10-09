@@ -70,7 +70,7 @@
       <tr><td>Student Faid workflows</td><td><span class="tag tag-done">Shipped Demo</span></td><td>Forms, reviewed registration, document delivery · Vercel prod (<code>a6d250b</code>) · API methods (<code>e387c69</code>).</td></tr>
       <tr><td>Portal API Demo host</td><td><span class="tag tag-done">Enabled</span></td><td>Applicant + student workflow methods live on Vercel; portals use <code>VITE_PORTAL_API_URL</code> (not mock).</td></tr>
       <tr><td>Fee / payment SP analysis</td><td><span class="tag tag-done">Published</span></td><td>Currency matrix M/R/MYR · cases C1–C10 · NMDS separate.</td></tr>
-      <tr><td>Campus finance profile</td><td><span class="tag tag-wait">Awaiting Accept</span></td><td>YAML + C1–C10 seeds live; Faid ticks pending after Dexter confirms SP wording.</td></tr>
+      <tr><td>Campus finance profile</td><td><span class="tag tag-wait">Awaiting Accept</span></td><td>YAML + C1–C10 seeds live; Faid ticks pending after Dexter reviews fee-calculation pack.</td></tr>
       <tr><td>Dynamic fee calculation</td><td><span class="tag tag-done">Proposal out</span></td><td>Configurable rules mapped from C1–C10 — not hard-coded SP copy (9 Oct action).</td></tr>
       <tr><td>Cross-campus fee amounts</td><td><span class="tag tag-done">Suggestions out</span></td><td>SP/DB/process seeds for LS/SZ/KH on Pages — strengthens C1–C10 evidence pack for Dexter.</td></tr>
       <tr><td>CAP-53 online-enrolment writes</td><td><span class="tag tag-wait">Path only</span></td><td>W1 documented; not implemented in Portal API.</td></tr>
@@ -109,7 +109,7 @@
   <table>
     <thead><tr><th>#</th><th>Owner</th><th>Action</th><th>Status</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>Dexter</td><td>Validate Iman’s C1–C10 interpretation against stored procedures</td><td><span class="tag tag-wait">Ready for Dexter</span></td></tr>
+      <tr><td>1</td><td>Dexter</td><td>Review proposed dynamic fee calculation + cross-campus amount suggestions (config rules from C1–C10, not hard-coded SP copy)</td><td><span class="tag tag-wait">Ready for review</span></td></tr>
       <tr><td>2</td><td>Iman → Finance</td><td>Provide fee amounts for add/drop module forms</td><td><span class="tag tag-done">Suggested</span></td></tr>
       <tr><td>3</td><td>Iman → Finance</td><td>Confirm fee amount for proposed module-registration flow</td><td><span class="tag tag-done">Suggested</span></td></tr>
       <tr><td>4</td><td>Faid</td><td>Create Lesotho campus scenario and share with the group</td><td><span class="tag tag-wait">Open</span></td></tr>
@@ -120,15 +120,16 @@
       <tr><td>9</td><td>Aslam</td><td>Try to push code changes to a branch</td><td><span class="tag tag-wait">Open</span></td></tr>
     </tbody>
   </table>
-    <p><strong>Item 1 progressed on Iman’s side</strong> (not still stuck): C1–C10 SP analysis →
-    <code>campus-finance-profiles.yaml</code> → dynamic fee-calculation proposal →
-    <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/cross-campus-fee-amounts.html">cross-campus fee amount suggestions</a>.
-    Dexter’s remaining step is to confirm or correct that interpretation against the SP bodies so YAML can leave “proposed”.</p>
+    <p><strong>Item 1</strong> — Dexter reviews the new finance-calculation pack:
+    <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/dynamic-fee-calculation.html">dynamic fee calculation</a> ·
+    <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/cross-campus-fee-amounts.html">cross-campus fee amounts</a> ·
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a>
+    (C1–C10 already folded into those seeds).</p>
   <p>Items 2–3: same amount pack — still need Finance/Registry Accept (Demo seeds ≠ Live policy).</p>
 
   <h2>4. Asks for this weekly</h2>
   <ol>
-    <li><strong>Dexter</strong> — Confirm/correct C1–C10 vs SP bodies (evidence pack ready: fee SPs · finance YAML · dynamic fee · cross-campus amounts).</li>
+    <li><strong>Dexter</strong> — Review dynamic fee calculation + cross-campus amount suggestions; correct seeds before Faid Accept.</li>
     <li><strong>Faid</strong> — Accept/Change/Defer on campus finance profile after Dexter; share Lesotho scenario; Lesotho testing on hosted Demo.</li>
     <li><strong>Finance / Registry</strong> — Accept or correct suggested add/drop + module-registration fee amounts (and currency).</li>
     <li><strong>Product</strong> — lecturer evaluation form currency (still 1–5 scale?).</li>
