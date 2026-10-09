@@ -240,22 +240,19 @@ menu:
       - { label: Migration, href: migration }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
-  - label: Distributed CMS
-    href: distributed
-    active: [distributed]
-    children:
-      - { label: Target architecture, href: distributed }
-      - { label: "Current → ideal", href: "distributed#journey" }
-      - { label: Ideal state, href: "distributed#phase-ideal" }
-      - { label: "White-label & flags", href: "distributed#tenancy" }
-      - { label: "M1–M5 migration", href: migration }
-
   - label: Architecture
     href: architecture
-    active: [architecture, migration, vercel-poc, lms, lms-architecture, lms-features]
+    active: [architecture, distributed, migration, vercel-poc, lms, lms-architecture, lms-features]
     children:
       - { label: Architecture home, href: architecture }
-      - { label: Distributed CMS target, href: distributed }
+      - label: Distributed CMS
+        href: distributed
+        children:
+          - { label: Target architecture, href: distributed }
+          - { label: "Current → ideal", href: "distributed#journey" }
+          - { label: Ideal state, href: "distributed#phase-ideal" }
+          - { label: "White-label & flags", href: "distributed#tenancy" }
+          - { label: "M1–M5 migration", href: migration }
       - { label: LMS research posture, href: lms }
       - { label: LMS architecture, href: lms-architecture }
       - { label: LMS features F01–F37, href: lms-features }
