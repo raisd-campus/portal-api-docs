@@ -181,6 +181,36 @@
       "path": "diagrams/old-cms-lesotho/cap53-online-enrolment.html"
     },
     {
+      "title": "Cross-campus fee amount suggestions",
+      "summary": "Suggested fee amounts and calculation paths per campus from SP/DB/process evidence (LS M300 \u00b7 SZ 2600/3600 \u00b7 KH repeats).",
+      "section": "LUCT CMS",
+      "keywords": [
+        "fee",
+        "amount",
+        "currency",
+        "lesotho",
+        "eswatini",
+        "cambodia",
+        "hardcode",
+        "b_Update_Student",
+        "application-fee"
+      ],
+      "path": "diagrams/old-cms/cross-campus-fee-amounts.html"
+    },
+    {
+      "title": "Cross-campus fee amounts (AI knowledge)",
+      "summary": "Canonical Markdown for cross-campus fee amount suggestions (10 Oct 2026).",
+      "section": "AI knowledge",
+      "keywords": [
+        "fee",
+        "amount",
+        "markdown",
+        "finance",
+        "multi-campus"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cross-campus-fee-amount-suggestions.md"
+    },
+    {
       "title": "Dynamic fee calculation",
       "summary": "Proposed configurable fee engine (profile + C1\u2013C10) instead of hard-coded CMS SP logic \u2014 standup 9 Oct.",
       "section": "LUCT CMS",

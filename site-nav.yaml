@@ -40,7 +40,9 @@ targets:
   luct-database: diagrams/old-cms/database.html
   luct-online-reg: diagrams/old-cms/online-registration.html
   luct-online-reg-gap: diagrams/old-cms/online-registration-gap.html
+  luct-fee-amounts: diagrams/old-cms/cross-campus-fee-amounts.html
   luct-ls: diagrams/old-cms-lesotho/index.html
+  ai-cross-campus-fees: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cross-campus-fee-amount-suggestions.md
   luct-ls-cms-applicant: diagrams/old-cms-lesotho/cms-vs-applicant.html
   luct-ls-fee-sps: diagrams/old-cms-lesotho/fee-payment-sps.html
   luct-ls-finance-profile: diagrams/old-cms-lesotho/campus-finance-profile.html
@@ -152,6 +154,8 @@ path_rules:
     section: luct-online-reg
   - match: { prefix: diagrams/old-cms/, file: online-registration-gap.html }
     section: luct-online-reg-gap
+  - match: { prefix: diagrams/old-cms/, file: cross-campus-fee-amounts.html }
+    section: luct-fee-amounts
   - match: { prefix: diagrams/old-cms/ }
     section: luct
   - match: { path_contains: raisd-cms, name_contains: student-portal-manual }
@@ -273,6 +277,7 @@ menu:
       - luct-database
       - luct-online-reg
       - luct-online-reg-gap
+      - luct-fee-amounts
       - luct-ls
       - luct-ls-cms-applicant
       - luct-ls-fee-sps
@@ -311,6 +316,7 @@ menu:
           - { label: E2E hub, href: luct }
           - { label: Online registration, href: luct-online-reg }
           - { label: Registration FE gaps, href: luct-online-reg-gap }
+          - { label: Cross-campus fee amounts, href: luct-fee-amounts }
           - { label: FSD, href: "luct#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=cyberjaya" }
           - { label: Flows, href: "luct#flows" }
@@ -494,6 +500,18 @@ search:
     section: LUCT CMS
     summary: CAP-53 W1 target — student online-enrolment payment proof → sp_onlinenrollment_* + sp_payment_verification_insert (not implemented).
     keywords: [lesotho, cap-53, online-enrollment, payment, proof, w1, stored-procedure, standup]
+
+  - title: Cross-campus fee amount suggestions
+    href: luct-fee-amounts
+    section: LUCT CMS
+    summary: Suggested fee amounts and calculation paths per campus from SP/DB/process evidence (LS M300 · SZ 2600/3600 · KH repeats).
+    keywords: [fee, amount, currency, lesotho, eswatini, cambodia, hardcode, b_Update_Student, application-fee]
+
+  - title: Cross-campus fee amounts (AI knowledge)
+    href: ai-cross-campus-fees
+    section: AI knowledge
+    summary: Canonical Markdown for cross-campus fee amount suggestions (10 Oct 2026).
+    keywords: [fee, amount, markdown, finance, multi-campus]
 
   - title: Dynamic fee calculation
     href: luct-ls-dynamic-fee
