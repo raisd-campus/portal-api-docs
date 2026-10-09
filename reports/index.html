@@ -7,7 +7,7 @@
   <title>Raisd — Weekly reports</title>
   <link rel="stylesheet" href="../diagrams/styles.css" />
   <style>
-    .week-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 16px 0; }
+    .week-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 16px 0; }
     .week-card { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; text-decoration: none; color: inherit; }
     .week-card:hover { border-color: var(--accent); box-shadow: 0 1px 0 rgba(0,0,0,.04); }
     .week-card .meta { font-size: 12px; color: var(--muted); margin: 0 0 6px; text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
@@ -17,7 +17,16 @@
     .tag-current { background: #e3f2ee; border-color: #9dcdc2; color: #0a4a41; }
     .tag-baseline { background: #fff6e8; border-color: #e0c48a; color: #9a6418; }
     .tag-recon { background: #eef1f5; color: var(--muted); }
-    .pack-links a { margin-right: 12px; }
+    .pct-row { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 10px 0 6px; align-items: baseline; }
+    .pct-big { font-size: 1.6rem; font-weight: 800; color: var(--ink, #0a1a1f); line-height: 1; }
+    .pct-big span { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+    .pct-delta { font-size: 0.85rem; font-weight: 700; color: #0a4a41; }
+    .pct-mini { font-size: 12px; color: var(--muted); }
+    .bar { height: 8px; background: #eef1f5; border-radius: 999px; overflow: hidden; margin: 6px 0 0; }
+    .bar > i { display: block; height: 100%; background: linear-gradient(90deg, #0a4a41, #0f6b5d); border-radius: 999px; }
+    .accum-note { font-size: 0.9rem; color: var(--muted); margin: 8px 0 0; }
+    .accum-table td, .accum-table th { vertical-align: top; }
+    .accum-table .bar { min-width: 120px; }
   </style>
   <script src="../diagrams/site-auth.js"></script>
 </head>
@@ -270,33 +279,164 @@
     <strong>Cadence:</strong> week-ending Friday. Current cut: <strong>10 Oct 2026</strong> (W04).
     Related: <a href="../diagrams/index.html#progress">Overview progress charts</a>.
   </div>
-  <div class="week-grid">
-    
+
+  <section class="section" id="accumulated">
+    <h2>Accumulated progress (W01–W04)</h2>
+    <p class="lead">
+      Headline composite at end of W04: average of <strong>Platform readiness</strong> and <strong>FE Demo depth</strong>.
+      Checklist Live stays at <strong>0%</strong> until durable CMS-backed journeys pass acceptance (Demo ≠ Live).
+    </p>
+    <div class="progress-kpis" aria-label="Accumulated progress percentages">
+      <div class="progress-kpi ok">
+        <span>Overall (cumulative)</span>
+        <strong>~54%</strong>
+        <span>End of W04 · 10 Oct</span>
+      </div>
+      <div class="progress-kpi ok">
+        <span>Platform readiness</span>
+        <strong>~72%</strong>
+        <span>Architecture · schema · pilot · API</span>
+      </div>
+      <div class="progress-kpi">
+        <span>FE Demo depth</span>
+        <strong>~36%</strong>
+        <span>37 of 103 applicable (Demo/Partial)</span>
+      </div>
+      <div class="progress-kpi warn">
+        <span>Checklist Live</span>
+        <strong>0%</strong>
+        <span>0 of 112 rows Live</span>
+      </div>
+    </div>
+    <p class="accum-note">
+      Week contributions to overall: W01 +23 · W02 +15 · W03 +8 · W04 +8 = <strong>~54%</strong> accumulated.
+      Method matches <a href="../diagrams/index.html#progress">Overview · Project progress</a> cuts (18 Sep → 7 Oct engineering; W04 pack through 10 Oct).
+    </p>
+  </section>
+
+  <section class="section" id="by-week">
+    <h2>By week — summary &amp; cumulative %</h2>
+    <div class="week-grid">
+      
     <a class="week-card" href="weekly/2026-09-19.html">
       <div class="meta">W01 · 18–19 September 2026</div>
       <h3>Week 1 · 18–19 Sep 2026</h3>
-      <p>Working Group kickoff week. Faid shared the Student Portal / CMS checklist; Raisd campus repos stood up.</p>
+      <div class="pct-row">
+        <div class="pct-big">~23% <span>cumulative</span></div>
+        <div class="pct-delta">+23 pts this week</div>
+      </div>
+      <div class="bar" aria-hidden="true"><i style="width:23%"></i></div>
+      <p class="pct-mini" style="margin-top:8px">Platform ~15% · FE Demo ~31% · Live 0%</p>
+      <p style="margin-top:8px">Kickoff and baseline inventory. Architecture / ADR context open; student Demo/Partial already on the sheet (~31% FE). No Live checklist rows.</p>
       <p style="margin-top:8px"><span class="tag tag-recon">Reconstructed</span></p>
     </a>
     <a class="week-card" href="weekly/2026-09-26.html">
       <div class="meta">W02 · 20–26 September 2026</div>
       <h3>Week 2 · 20–26 Sep 2026</h3>
-      <p>Shared design system and portal shells; Portal API split begins; first Applicant UI shell.</p>
+      <div class="pct-row">
+        <div class="pct-big">~38% <span>cumulative</span></div>
+        <div class="pct-delta">+15 pts this week</div>
+      </div>
+      <div class="bar" aria-hidden="true"><i style="width:38%"></i></div>
+      <p class="pct-mini" style="margin-top:8px">Platform ~45% · FE Demo ~31% · Live 0%</p>
+      <p style="margin-top:8px">Shared design-system and portal shells landed; Portal API split; Applicant shell started. Platform jumps on schema/API work; FE sheet still flat at 31%.</p>
       <p style="margin-top:8px"><span class="tag tag-recon">Reconstructed</span></p>
     </a>
     <a class="week-card" href="weekly/2026-10-03.html">
       <div class="meta">W03 · 27 September – 3 October 2026</div>
       <h3>Week 3 · 27 Sep–3 Oct 2026</h3>
-      <p>First formal weekly pack. Covers full baseline from WG start through 3 Oct — Vercel+Neon Demo, Lesotho pilot decision, schema/LMS docs.</p>
+      <div class="pct-row">
+        <div class="pct-big">~46% <span>cumulative</span></div>
+        <div class="pct-delta">+8 pts this week</div>
+      </div>
+      <div class="bar" aria-hidden="true"><i style="width:46%"></i></div>
+      <p class="pct-mini" style="margin-top:8px">Platform ~60% · FE Demo ~31% · Live 0%</p>
+      <p style="margin-top:8px">Lesotho confirmed as first pilot; Demo host live; docs/campus baselines deepen. Platform ~60%; FE still sheet-flat; Live still 0%.</p>
       <p style="margin-top:8px"><span class="tag tag-baseline">Baseline pack</span></p>
     </a>
     <a class="week-card" href="weekly/2026-10-10.html">
       <div class="meta">W04 · 4–10 October 2026</div>
       <h3>Week 4 · 4–10 Oct 2026</h3>
-      <p>Lesotho CAP-53 / CMS vs Applicant, Faid campus+letters+forms, fee SP analysis, finance YAML, Vercel API enablement, cross-campus fee amounts.</p>
+      <div class="pct-row">
+        <div class="pct-big">~54% <span>cumulative</span></div>
+        <div class="pct-delta">+8 pts this week</div>
+      </div>
+      <div class="bar" aria-hidden="true"><i style="width:54%"></i></div>
+      <p class="pct-mini" style="margin-top:8px">Platform ~72% · FE Demo ~36% · Live 0%</p>
+      <p style="margin-top:8px">Applicant Demo HTTP + Schema v4 lift FE to ~36%. Lesotho CAP-53 / fee / finance analysis and hosted portals deepen platform to ~72%. Live still 0%.</p>
       <p style="margin-top:8px"><span class="tag tag-current">Current week</span></p>
     </a>
-  </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Accumulation table</h2>
+    <div class="card"><div class="card-body" style="overflow-x:auto">
+      <table class="data accum-table" aria-label="Weekly progress accumulation">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Summary</th>
+            <th>Added</th>
+            <th>Cumulative overall</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+                  <tr>
+                    <td><a href="weekly/2026-09-19.html">W01</a><br><span style="color:var(--muted);font-size:12px">18–19 September 2026</span></td>
+                    <td>Kickoff and baseline inventory. Architecture / ADR context open; student Demo/Partial already on the sheet (~31% FE). No Live checklist rows.</td>
+                    <td><strong>+23</strong> pts</td>
+                    <td>
+                      <strong>~23%</strong>
+                      <div class="bar" aria-hidden="true"><i style="width:23%"></i></div>
+                      <div class="pct-mini">P ~15% · FE ~31% · Live 0%</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="weekly/2026-09-26.html">W02</a><br><span style="color:var(--muted);font-size:12px">20–26 September 2026</span></td>
+                    <td>Shared design-system and portal shells landed; Portal API split; Applicant shell started. Platform jumps on schema/API work; FE sheet still flat at 31%.</td>
+                    <td><strong>+15</strong> pts</td>
+                    <td>
+                      <strong>~38%</strong>
+                      <div class="bar" aria-hidden="true"><i style="width:38%"></i></div>
+                      <div class="pct-mini">P ~45% · FE ~31% · Live 0%</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="weekly/2026-10-03.html">W03</a><br><span style="color:var(--muted);font-size:12px">27 September – 3 October 2026</span></td>
+                    <td>Lesotho confirmed as first pilot; Demo host live; docs/campus baselines deepen. Platform ~60%; FE still sheet-flat; Live still 0%.</td>
+                    <td><strong>+8</strong> pts</td>
+                    <td>
+                      <strong>~46%</strong>
+                      <div class="bar" aria-hidden="true"><i style="width:46%"></i></div>
+                      <div class="pct-mini">P ~60% · FE ~31% · Live 0%</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="weekly/2026-10-10.html">W04</a><br><span style="color:var(--muted);font-size:12px">4–10 October 2026</span></td>
+                    <td>Applicant Demo HTTP + Schema v4 lift FE to ~36%. Lesotho CAP-53 / fee / finance analysis and hosted portals deepen platform to ~72%. Live still 0%.</td>
+                    <td><strong>+8</strong> pts</td>
+                    <td>
+                      <strong>~54%</strong>
+                      <div class="bar" aria-hidden="true"><i style="width:54%"></i></div>
+                      <div class="pct-mini">P ~72% · FE ~36% · Live 0%</div>
+                    </td>
+                  </tr>
+          <tr>
+            <td colspan="2"><strong>Total accumulated (end W04)</strong></td>
+            <td><strong>+54</strong> pts</td>
+            <td>
+              <strong>~54%</strong>
+              <div class="bar" aria-hidden="true"><i style="width:54%"></i></div>
+              <div class="pct-mini">Live still 0% — not included in overall average</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div></div>
+  </section>
+
   <section class="section">
     <h2>Related packs</h2>
     <ul>
