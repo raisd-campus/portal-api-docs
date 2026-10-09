@@ -148,7 +148,7 @@
     },
     {
       "title": "Campus finance profile (Faid review)",
-      "summary": "Proposed campus finance profile seeds and C1\u2013C10 fee-case checklist for Faid \u2014 currency, application fee, semester/modular mode.",
+      "summary": "Proposed campus finance profile seeds and C1\u2013C10 fee-case checklist for Faid \u2014 currency, application fee, semester/modular mode. YAML SoT in contracts/.",
       "section": "LUCT CMS",
       "keywords": [
         "lesotho",
@@ -163,6 +163,22 @@
         "standup"
       ],
       "path": "diagrams/old-cms-lesotho/campus-finance-profile.html"
+    },
+    {
+      "title": "CAP-53 online-enrolment write path",
+      "summary": "CAP-53 W1 target \u2014 student online-enrolment payment proof \u2192 sp_onlinenrollment_* + sp_payment_verification_insert (not implemented).",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "cap-53",
+        "online-enrollment",
+        "payment",
+        "proof",
+        "w1",
+        "stored-procedure",
+        "standup"
+      ],
+      "path": "diagrams/old-cms-lesotho/cap53-online-enrolment.html"
     },
     {
       "title": "Applicant merge \u00b7 QR \u00b7 Fee SPs (AI knowledge)",
@@ -193,6 +209,36 @@
         "standup"
       ],
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md"
+    },
+    {
+      "title": "Campus finance profiles YAML",
+      "summary": "Reviewable C1\u2013C10 + campus fee/currency seeds for Faid Accept (proposed, not Live).",
+      "section": "AI knowledge",
+      "keywords": [
+        "finance",
+        "fee",
+        "yaml",
+        "config",
+        "faid",
+        "c1-c10",
+        "currency",
+        "contracts"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml"
+    },
+    {
+      "title": "CAP-53 online-enrolment write (AI knowledge)",
+      "summary": "CAP-53 W1 online-enrolment payment proof \u2192 CMS SP path (9 Oct 2026).",
+      "section": "AI knowledge",
+      "keywords": [
+        "cap-53",
+        "online-enrollment",
+        "payment",
+        "markdown",
+        "w1",
+        "lesotho"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-online-enrolment-write.md"
     },
     {
       "title": "Lesotho CMS vs Applicant (AI knowledge)",

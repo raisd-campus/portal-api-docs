@@ -97,6 +97,7 @@
               <a href="cms-vs-applicant.html">CMS vs Applicant</a>
               <a href="fee-payment-sps.html">Fee / payment SPs</a>
               <a href="campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="cap53-online-enrolment.html">CAP-53 online-enrol</a>
               <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a>
               <a href="index.html#admissions">Flows</a>
               <a href="index.html#why">Why pilot</a>
@@ -241,20 +242,25 @@
   <h1>Campus finance profile + fee cases</h1>
   <p class="lede">
     Proposed configurable finance profile (currency · application fee · semester/modular mode)
-    and checklist for cases C1–C10 from CMS stored procedures. Canonical Markdown:
+    and checklist for cases C1–C10 from CMS stored procedures.
+    <strong>Reviewable config:</strong>
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a>.
+    Narrative:
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md">campus-finance-profile.md</a>.
     SP evidence:
     <a href="fee-payment-sps.html">fee-payment-sps.html</a>.
+    CAP-53 online-enrol writes:
+    <a href="cap53-online-enrolment.html">cap53-online-enrolment.html</a>.
   </p>
 
   <div class="banner">
     <strong>Proposed — not Live.</strong>
-    Amounts are seeds from SP/UI evidence. Tick Accept / Change / Defer. Do not treat as campus policy until Finance/Registry confirms.
+    Amounts are seeds from SP/UI evidence. Tick Accept / Change / Defer on the YAML <code>faid</code> fields (or reply below). Do not treat as campus policy until Finance/Registry confirms.
   </div>
 
   <nav class="toc" aria-label="Sections">
     <a href="#decisions"><strong>1. Decisions</strong><span>D1–D6</span></a>
-    <a href="#shape"><strong>2. Profile shape</strong><span>YAML sketch</span></a>
+    <a href="#shape"><strong>2. Profile shape</strong><span>YAML SoT</span></a>
     <a href="#cases"><strong>3. Cases C1–C10</strong><span>Checklist</span></a>
     <a href="#seeds"><strong>4. Campus seeds</strong><span>LS · SZ · KH</span></a>
     <a href="#faid"><strong>5. Faid actions</strong><span>What to reply</span></a>
@@ -280,21 +286,22 @@
   </section>
 
   <section class="section" id="shape">
-    <h2>2. Profile shape (sketch)</h2>
+    <h2>2. Profile shape (YAML SoT)</h2>
+    <p>
+      Full C1–C10 + campus seeds:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a>
+      — edit <code>faid</code> fields after review (<code>accept</code> | <code>change</code> | <code>defer</code>).
+    </p>
     <div class="card">
       <div class="card-body">
-        <pre style="margin:0;white-space:pre-wrap;font-size:13px;line-height:1.45">campusFinanceProfile:
-  campusId: campus-lesotho
-  currencyCode: LSL              # portals / invoices
-  cmsPaymentCurrency: "M"        # SP literal
-  cmsInstitutionId: "1"
-  applicationFee:
-    applies: true
-    amountMinor: 30000           # M300 — confirm
-    proofRequired: true
-  semesterBilling:
-    mode: hybrid                 # semester | modular | hybrid
-    components: [course, modularAdd, resource, repeat, deferred]</pre>
+        <pre style="margin:0;white-space:pre-wrap;font-size:13px;line-height:1.45"># excerpt — see contracts/campus-finance-profiles.yaml
+profiles:
+  - campusId: campus-lesotho
+    currencyCode: LSL
+    cmsPaymentCurrency: "M"
+    applicationFee: { applies: true, amountMinor: 30000, faid: null }
+    semesterBilling: { mode: hybrid, components: { course, modularAdd, … } }
+    feeCases: { C1…C10: { enabled, faid } }</pre>
       </div>
     </div>
   </section>
@@ -347,10 +354,14 @@
       <li>Whether Applicant Demo should show LSL copy from this profile before Live CMS.</li>
     </ol>
     <p>
-      Markdown detail:
+      Config YAML:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a>
+      · Markdown:
       <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md">campus-finance-profile.md</a>
       · SP baseline:
-      <a href="fee-payment-sps.html">fee-payment-sps.html</a>.
+      <a href="fee-payment-sps.html">fee-payment-sps.html</a>
+      · CAP-53 W1:
+      <a href="cap53-online-enrolment.html">cap53-online-enrolment.html</a>.
     </p>
   </section>
 </main>

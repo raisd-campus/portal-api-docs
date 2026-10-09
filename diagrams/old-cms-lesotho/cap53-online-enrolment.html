@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd — Applicant merge · QR · Fee/payment SPs</title>
+  <title>Raisd — CAP-53 online-enrolment write path</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
     .tag { display: inline-block; margin: 0 4px 4px 0; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 600; white-space: nowrap; }
@@ -236,233 +236,124 @@
   </header>
 
   
+
+
 <main class="wrap">
-  <p class="eyebrow">Standup 8 Oct 2026 · SP evidence 9 Oct</p>
-  <h1>Applicant merge · QR generation · Fee/payment from CMS SPs</h1>
+  <p class="eyebrow">Standup follow-up · CAP-53 W1 · 9 Oct 2026</p>
+  <h1>Online-enrolment payment proof → CMS SPs</h1>
   <p class="lede">
-    Read.ai action: analyze the merged Applicant campus/letters work, document QR-code generation
-    (automated + manual ops), and document fee-payment mechanisms from campus stored procedures.
+    Trace student online-enrolment payment proof from Raisd / CAP-53 to CMS procedures.
     Canonical Markdown:
-    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md">applicant-qr-fee-mechanisms.md</a>.
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-online-enrolment-write.md">lesotho-cap53-online-enrolment-write.md</a>.
+    Finance profile seeds:
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a>.
+    Fee SP evidence:
+    <a href="fee-payment-sps.html">fee-payment-sps.html</a>.
   </p>
 
   <div class="banner">
-    <strong>Demo ≠ Live.</strong>
-    Applicant Demo fees and DEMO letter PDFs do not write to <code>campus2_*</code>.
-    SP bodies below are existing CMS SoR behaviour to configure against.
-    Procedure dumps stay under <code>raisd/_local/</code> (outside git).
+    <strong>W1 — not implemented.</strong>
+    CAP-53 Phase R1 is reads only. This page is the target write path so adapters do not invent a second ledger.
+    Application fee (Applicant) and NMDS assist bills are out of scope here.
   </div>
 
   <nav class="toc" aria-label="Sections">
-    <a href="#applicant"><strong>1. Applicant merge</strong><span>9e007f2 · 532d6f0</span></a>
-    <a href="#qr"><strong>2. QR generation</strong><span>Automated + manual</span></a>
-    <a href="#planes"><strong>3. Fee planes</strong><span>App · enrol · semester</span></a>
-    <a href="#sps"><strong>4. Payment SPs</strong><span>Currency matrix</span></a>
-    <a href="#cases"><strong>5. Fee cases</strong><span>b_Update_Student</span></a>
-    <a href="#next"><strong>6. Next work</strong><span>Config · CAP-53</span></a>
+    <a href="#planes"><strong>1. Planes</strong><span>A–D</span></a>
+    <a href="#sequence"><strong>2. Write sequence</strong><span>SP chain</span></a>
+    <a href="#map"><strong>3. Procedure map</strong><span>CAP-53</span></a>
+    <a href="#currency"><strong>4. Currency</strong><span>M · R · MYR</span></a>
+    <a href="#checklist"><strong>5. W1 checklist</strong><span>Implement</span></a>
   </nav>
 
-  <section class="section" id="applicant">
-    <h2>1. Merged Applicant portal</h2>
-    <p>
-      Faid <code>9e007f2</code> (campus + Eligibility→Offer) on <code>main</code>; production SPA
-      <code>532d6f0</code> (8 Oct evening redeploy). Portal API Demo includes
-      <code>confirmApplicationEligibility</code> and auto Offer release until Staff owns release.
-    </p>
-    <div class="card">
-      <div class="card-head"><div><h3>What shipped vs still open</h3></div></div>
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data">
-          <thead><tr><th>Shipped</th><th>Still open</th></tr></thead>
-          <tbody>
-            <tr>
-              <td>Campus selector · Alumni Previous Student ID · Bursary/QA desks · Eligibility→Confirm→Offer→Accept · Progress rows · handoff v2</td>
-              <td>Staff-owned Offer release · durable letter URLs · LGCSE/LSL · real Lesotho catalogue · Live CMS writes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <p style="margin-top:12px">
-      Flow compare:
-      <a href="cms-vs-applicant.html">CMS vs Applicant</a>.
-    </p>
-  </section>
-
-  <section class="section" id="qr">
-    <h2>2. QR-code generation</h2>
-    <div class="card">
-      <div class="card-head"><div><h3>Automated (in CMS code)</h3></div></div>
-      <div class="card-body">
-        <pre class="mermaid">
-sequenceDiagram
-  actor Staff as Registry
-  participant REG as qrcode_gen.php
-  participant QR as qr.limkokwing.net
-  participant VER as verification.limkokwing.net
-  participant CMS as campus2_cambodia
-
-  Staff->>REG: StdProgramID · StudentID · ProgramCode
-  REG->>QR: POST create_qrcode_api
-  Note over REG,QR: short_code KHM-PNH_… · verify URL
-  QR-->>REG: PNG (encodes /qrcode/slug)
-  actor Public as Scanner
-  Public->>QR: GET /qrcode/slug
-  QR-->>Public: 302 → /cambodia/token
-  Public->>VER: GET token
-  VER->>CMS: CALL GetStudentCertInfo
-  CMS-->>VER: cert metadata + blob
-        </pre>
-        <p style="margin-top:12px">
-          Full pack inventory:
-          <a href="../old-cms-cambodia/certificate-qr.html">certificate-qr.html</a>.
-        </p>
-      </div>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-head"><div><h3>Manual ops (standup — not in code)</h3></div></div>
-      <div class="card-body">
-        <pre class="mermaid">
-sequenceDiagram
-  participant KH as Cambodia campus
-  participant CY as Cyberjaya ops
-  Note over KH,CY: Dexter — manual exchange still happens
-  KH->>CY: Certificates / QR PNGs / student data pack
-  CY->>CY: Print / stamp / process
-  CY-->>KH: Return physical certificates
-  Note over KH: Scan path still Verification → Cambodia SP
-        </pre>
-        <p style="margin-top:12px">
-          Do not invent a Portal API courier method. Document as ops; M5 owns automated create/scan only.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="planes">
-    <h2>3. Three fee / payment planes</h2>
+    <h2>1. Fee planes</h2>
     <div class="card">
       <div class="card-body" style="overflow-x:auto">
         <table class="data">
-          <thead>
-            <tr><th>Plane</th><th>When</th><th>CMS</th><th>Raisd today</th></tr>
-          </thead>
+          <thead><tr><th>Plane</th><th>What</th><th>Owner</th><th>CMS</th></tr></thead>
           <tbody>
-            <tr>
-              <td><strong>A. Application fee</strong></td>
-              <td>Admissions</td>
-              <td><code>b_zapplicationfee*</code> · proof via <code>b_paymentverification</code></td>
-              <td>Applicant Fee step + Bursary Demo</td>
-            </tr>
-            <tr>
-              <td><strong>B. Online enrolment proof</strong></td>
-              <td>After offer / term reg</td>
-              <td><code>sp_onlinenrollment_*</code> + <code>sp_payment_verification_insert</code></td>
-              <td>Student CAP-46 Demo</td>
-            </tr>
-            <tr>
-              <td><strong>C. Semester / module calc</strong></td>
-              <td>Enrolled billing</td>
-              <td><code>b_Update_Student</code> · <code>b_Update_billing</code> (NMDS)</td>
-              <td>Student Finance Demo</td>
-            </tr>
+            <tr><td>A</td><td>Application fee proof</td><td>Applicant</td><td>Bursary verify</td></tr>
+            <tr><td><strong>B</strong></td><td><strong>Online-enrolment payment proof</strong></td><td><strong>Student / CAP-53 W1</strong></td><td><code>sp_onlinenrollment_*</code> + <code>sp_payment_verification_insert</code></td></tr>
+            <tr><td>C</td><td>Semester / modular billing</td><td>Finance</td><td><code>b_Update_Student</code> C1–C10</td></tr>
+            <tr><td>D</td><td>NMDS assistance bills</td><td>Finance</td><td><code>b_Update_billing</code></td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <section class="section" id="sps">
-    <h2>4. Online enrolment payment SPs — currency matrix</h2>
-    <p>
-      Shared insert shape across Lesotho / Eswatini / Cambodia. Currency and institution are
-      <strong>hard-coded in the SP</strong> — Raisd campus finance profile must mirror this.
-    </p>
+  <section class="section" id="sequence">
+    <h2>2. Target write sequence</h2>
     <div class="card">
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data">
-          <thead>
-            <tr><th>Campus</th><th>InstitutionID</th><th>PaymentCurrency</th><th>RequestSource</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Lesotho</td><td><code>1</code></td><td><strong>M</strong> (Loti)</td><td>OnlineEnrollment</td></tr>
-            <tr><td>Eswatini</td><td><code>1</code></td><td><strong>R</strong></td><td>OnlineEnrollment</td></tr>
-            <tr><td>Cambodia</td><td><code>30</code></td><td><strong>MYR</strong></td><td>OnlineEnrollment</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <pre class="mermaid" style="margin-top:16px">
-flowchart LR
-  A[Student pays / uploads proof] --> B[sp_onlinenrollment_insert]
-  B --> C[online_enrollment row]
-  C --> D[sp_payment_verification_insert]
-  D --> E[b_paymentverification]
-  E --> F[Bursary BurStatus / FacultyStatus]
-    </pre>
-    <p style="margin-top:12px">
-      Application-fee Live must not assume MYR. Lesotho application screenshots show
-      <strong>M</strong> VERIFIED amounts (e.g. M300).
-    </p>
-  </section>
-
-  <section class="section" id="cases">
-    <h2>5. Semester fee cases — <code>b_Update_Student</code> (Lesotho)</h2>
-    <p>
-      Distilled from the Lesotho procedure body for Faid’s configurable fee work.
-      Cambodia shares the skeleton with different hardcodes (e.g. repeat 150/250).
-    </p>
-    <div class="card">
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data">
-          <thead><tr><th>ID</th><th>Case</th><th>Key</th></tr></thead>
-          <tbody>
-            <tr><td>C1</td><td>Zero fee when AD/module status non-chargeable</td><td><code>*chargable='N'</code></td></tr>
-            <tr><td>C2</td><td>Historical Exempted before 2011-07</td><td><code>termcode</code></td></tr>
-            <tr><td>C3</td><td>Semester fee from <code>f_semester.semesterfee</code></td><td><code>UseModularFee='N'</code></td></tr>
-            <tr><td>C4</td><td>Modular = sum <code>stdmodfee</code></td><td><code>UseModularFee='Y'</code></td></tr>
-            <tr><td>C5</td><td>Repeat/ADD → <code>semmodaddfees</code> (Lesotho hardcodes e.g. 600 / 375)</td><td><code>repeat%</code></td></tr>
-            <tr><td>C6</td><td>Resource fees with many exemptions</td><td><code>stdsemresfees</code></td></tr>
-            <tr><td>C7</td><td>Deferred zeroes / def fees</td><td><code>Deferred</code></td></tr>
-            <tr><td>C8</td><td><code>stdsemtotfees ≈ add + res + rep</code></td><td>totals</td></tr>
-            <tr><td>C9</td><td>Invoice lines → <code>b_invoicedetail</code></td><td>ledger</td></tr>
-            <tr><td>C10</td><td>PayStatus Partial/Full vs outstanding</td><td><code>r_student</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-head"><div><h3>NMDS assist billing (separate)</h3></div></div>
       <div class="card-body">
-        <p>
-          <code>b_Update_billing</code> stamps Lesotho assist bill nos
-          <code>LSO/{YYMM}/FAID|FDSI|FBS|FCM/…</code> for <code>AssistProviderCode='nmds'</code>.
-          Not Applicant application fee. Cambodia dump has no <code>b_Update_billing</code>.
-        </p>
+        <pre class="mermaid">
+sequenceDiagram
+  actor Stu as Student
+  participant API as Portal API CAP-53 W1
+  participant OE as sp_onlinenrollment_insert
+  participant PV as sp_payment_verification_insert
+  participant Info as sp_onlinenrollment_info
+  participant Bur as Bursary / Faculty CMS
+
+  Stu->>API: Submit online-enrol + payment proof
+  API->>OE: insert request (BurStatus / FacultyStatus pending)
+  API->>PV: store proof + stamp currency (M / R / MYR)
+  Bur->>OE: verify statuses
+  Stu->>API: poll status
+  API->>Info: read BurStatus / FacultyStatus
+  Info-->>Stu: pending or completed
+        </pre>
       </div>
     </div>
   </section>
 
-  <section class="section" id="next">
-    <h2>6. Follow-ups (9 Oct)</h2>
+  <section class="section" id="map">
+    <h2>3. Procedure map</h2>
+    <div class="card">
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data">
+          <thead><tr><th>Step</th><th>Procedure</th><th>Dir</th><th>CAP-53</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><code>sp_onlinenrollment_insert</code></td><td>write</td><td>W1 POST enrol + proof</td></tr>
+            <tr><td>2</td><td><code>sp_payment_verification_insert</code></td><td>write</td><td>W1 payment proof</td></tr>
+            <tr><td>3</td><td><code>sp_onlinenrollment_info</code></td><td>read</td><td>R1 / W1 poll</td></tr>
+            <tr><td>4</td><td>BurStatus / FacultyStatus</td><td>CMS UI</td><td>later API</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="currency">
+    <h2>4. Currency stamps</h2>
+    <div class="card">
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data">
+          <thead><tr><th>Campus</th><th>CMS stamp</th><th>Proposed ISO</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Lesotho</td><td><code>M</code></td><td>LSL</td><td>Confirm with Faid</td></tr>
+            <tr><td>Eswatini</td><td><code>R</code></td><td>ZAR or SZL</td><td>Confirm</td></tr>
+            <tr><td>Cambodia</td><td><code>MYR</code></td><td>Live TBD</td><td>CMS InstitutionID 30 quirk</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="checklist">
+    <h2>5. W1 implementation checklist</h2>
     <ol>
-      <li><strong>Done (seed)</strong> — Campus finance profile + C1–C10:
-        <a href="campus-finance-profile.html">campus-finance-profile.html</a> ·
-        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a>
-        (Faid Accept pending).</li>
-      <li><strong>Done (path)</strong> — Online-enrolment proof → CAP-53 W1:
-        <a href="cap53-online-enrolment.html">cap53-online-enrolment.html</a>
-        (implement next).</li>
-      <li><strong>Open</strong> — Applicant: Staff-owned Offer release · LGCSE/LSL · real catalogue.</li>
-      <li><strong>Open</strong> — Vara: Sierra Leone <code>b_calcmodule</code> / cross-campus SP case matrix.</li>
+      <li>Map Portal API DTO → <code>sp_onlinenrollment_insert</code>.</li>
+      <li>Call <code>sp_payment_verification_insert</code> using campus <code>cmsPaymentCurrency</code> from finance profile — do not hard-code ISO without Faid Accept.</li>
+      <li>Expose status via <code>sp_onlinenrollment_info</code> on Student portal.</li>
+      <li>Keep Demo ≠ Live; no Live credentials in control-plane.</li>
+      <li>Acceptance: submit proof → bursary pending → verified status back to student.</li>
     </ol>
     <p>
-      Markdown detail:
-      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md">applicant-qr-fee-mechanisms.md</a>
-      · QR:
-      <a href="../old-cms-cambodia/certificate-qr.html">certificate-qr.html</a>
-      · CMS vs Applicant:
-      <a href="cms-vs-applicant.html">cms-vs-applicant.html</a>.
+      Related:
+      <a href="campus-finance-profile.html">campus-finance-profile.html</a> ·
+      <a href="fee-payment-sps.html">fee-payment-sps.html</a> ·
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">CAP-53 R1 reads</a>.
     </p>
   </section>
 </main>
