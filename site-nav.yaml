@@ -45,10 +45,12 @@ targets:
   luct-ls-fee-sps: diagrams/old-cms-lesotho/fee-payment-sps.html
   luct-ls-finance-profile: diagrams/old-cms-lesotho/campus-finance-profile.html
   luct-ls-cap53-enrol: diagrams/old-cms-lesotho/cap53-online-enrolment.html
+  luct-ls-dynamic-fee: diagrams/old-cms-lesotho/dynamic-fee-calculation.html
   ai-applicant-qr-fee: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md
   ai-campus-finance-profile: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md
   ai-campus-finance-yaml: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml
   ai-lesotho-cap53-enrol-write: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-online-enrolment-write.md
+  ai-dynamic-fee: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/dynamic-fee-calculation.md
   luct-bw: diagrams/old-cms-botswana/index.html
   luct-bw-database: diagrams/old-cms-botswana/database.html
   luct-sz: diagrams/old-cms-eswatini/index.html
@@ -112,6 +114,8 @@ path_rules:
     section: luct-ls-finance-profile
   - match: { prefix: diagrams/old-cms-lesotho/, file: cap53-online-enrolment.html }
     section: luct-ls-cap53-enrol
+  - match: { prefix: diagrams/old-cms-lesotho/, file: dynamic-fee-calculation.html }
+    section: luct-ls-dynamic-fee
   - match: { prefix: diagrams/old-cms-lesotho/ }
     section: luct-ls
   - match: { prefix: diagrams/old-cms-eswatini/, file: database.html }
@@ -274,6 +278,7 @@ menu:
       - luct-ls-fee-sps
       - luct-ls-finance-profile
       - luct-ls-cap53-enrol
+      - luct-ls-dynamic-fee
       - luct-sz
       - luct-sz-database
       - luct-kh
@@ -292,6 +297,7 @@ menu:
           - { label: Fee / payment SPs, href: luct-ls-fee-sps }
           - { label: Finance profile (Faid), href: luct-ls-finance-profile }
           - { label: CAP-53 online-enrol, href: luct-ls-cap53-enrol }
+          - { label: Dynamic fee calc, href: luct-ls-dynamic-fee }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=lesotho" }
           - { label: Flows, href: "luct-ls#admissions" }
           - { label: Why pilot, href: "luct-ls#why" }
@@ -488,6 +494,12 @@ search:
     section: LUCT CMS
     summary: CAP-53 W1 target — student online-enrolment payment proof → sp_onlinenrollment_* + sp_payment_verification_insert (not implemented).
     keywords: [lesotho, cap-53, online-enrollment, payment, proof, w1, stored-procedure, standup]
+
+  - title: Dynamic fee calculation
+    href: luct-ls-dynamic-fee
+    section: LUCT CMS
+    summary: Proposed configurable fee engine (profile + C1–C10) instead of hard-coded CMS SP logic — standup 9 Oct.
+    keywords: [lesotho, finance, fee, dynamic, configurable, profile, c1-c10, standup]
 
   - title: Applicant merge · QR · Fee SPs (AI knowledge)
     href: ai-applicant-qr-fee

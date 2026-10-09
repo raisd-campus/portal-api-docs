@@ -181,6 +181,22 @@
       "path": "diagrams/old-cms-lesotho/cap53-online-enrolment.html"
     },
     {
+      "title": "Dynamic fee calculation",
+      "summary": "Proposed configurable fee engine (profile + C1\u2013C10) instead of hard-coded CMS SP logic \u2014 standup 9 Oct.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "finance",
+        "fee",
+        "dynamic",
+        "configurable",
+        "profile",
+        "c1-c10",
+        "standup"
+      ],
+      "path": "diagrams/old-cms-lesotho/dynamic-fee-calculation.html"
+    },
+    {
       "title": "Applicant merge \u00b7 QR \u00b7 Fee SPs (AI knowledge)",
       "summary": "Canonical Markdown for Applicant merge analysis, QR generation, and fee/payment SPs (9 Oct 2026).",
       "section": "AI knowledge",
