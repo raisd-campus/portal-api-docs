@@ -441,15 +441,24 @@ menu:
       - report-lesotho-briefing
     children:
       - { label: Reports hub, href: reports }
-      - { label: "W01 · 18–19 Sep", href: reports-w01 }
-      - { label: "W02 · 20–26 Sep", href: reports-w02 }
-      - { label: "W03 · 27 Sep–3 Oct", href: reports-w03 }
-      - { label: "W04 · 4–10 Oct (current)", href: reports-w04 }
-      - { label: Weekly pack 3 Oct, href: report-weekly-2026-10-03 }
-      - { label: Weekly pack 10 Oct, href: report-weekly-2026-10-10 }
-      - { label: Executive 5 Oct, href: report-exec-2026-10-05 }
-      - { label: Executive 7 Oct, href: report-exec-2026-10-07 }
-      - { label: Lesotho briefing 5 Oct, href: report-lesotho-briefing }
+      - label: Week summaries
+        href: reports
+        children:
+          - { label: "W01 · 18–19 Sep", href: reports-w01 }
+          - { label: "W02 · 20–26 Sep", href: reports-w02 }
+          - { label: "W03 · 27 Sep–3 Oct", href: reports-w03 }
+          - { label: "W04 · 4–10 Oct (current)", href: reports-w04 }
+      - label: Weekly packs
+        href: report-weekly-2026-10-10
+        children:
+          - { label: Baseline pack · 3 Oct, href: report-weekly-2026-10-03 }
+          - { label: Current pack · 10 Oct, href: report-weekly-2026-10-10 }
+      - label: Executive & briefings
+        href: report-exec-2026-10-07
+        children:
+          - { label: Executive review · 5 Oct, href: report-exec-2026-10-05 }
+          - { label: Executive summary · 7 Oct, href: report-exec-2026-10-07 }
+          - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
 
   - label: SDD
     href: sdd
