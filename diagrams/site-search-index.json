@@ -38,6 +38,72 @@
       "path": "diagrams/index.html#progress"
     },
     {
+      "title": "Weekly reports",
+      "summary": "Working Group weekly progress hub \u2014 week pages from 18 Sep 2026 kickoff through the current Friday cut, plus PDF/HTML packs.",
+      "section": "Weekly reports",
+      "keywords": [
+        "weekly",
+        "report",
+        "progress",
+        "pack",
+        "wg",
+        "standup",
+        "status"
+      ],
+      "path": "reports/index.html"
+    },
+    {
+      "title": "Week 1 \u00b7 18\u201319 Sep 2026",
+      "summary": "Kickoff week \u2014 Working Group start, Faid checklist, applicant/student portal repos.",
+      "section": "Weekly reports",
+      "keywords": [
+        "week1",
+        "w01",
+        "kickoff",
+        "september"
+      ],
+      "path": "reports/weekly/2026-09-19.html"
+    },
+    {
+      "title": "Week 2 \u00b7 20\u201326 Sep 2026",
+      "summary": "Design system and portal shells; Portal API repo bootstrap; first Applicant UI.",
+      "section": "Weekly reports",
+      "keywords": [
+        "week2",
+        "w02",
+        "design-system",
+        "portal-api"
+      ],
+      "path": "reports/weekly/2026-09-26.html"
+    },
+    {
+      "title": "Week 3 \u00b7 27 Sep\u20133 Oct 2026",
+      "summary": "First formal weekly pack \u2014 Vercel+Neon Demo, Lesotho pilot decision, schema/LMS docs.",
+      "section": "Weekly reports",
+      "keywords": [
+        "week3",
+        "w03",
+        "lesotho",
+        "pilot",
+        "baseline"
+      ],
+      "path": "reports/weekly/2026-10-03.html"
+    },
+    {
+      "title": "Week 4 \u00b7 4\u201310 Oct 2026",
+      "summary": "CAP-53, CMS vs Applicant, Faid merges, fee/finance YAML, Vercel API enablement, fee amounts.",
+      "section": "Weekly reports",
+      "keywords": [
+        "week4",
+        "w04",
+        "fee",
+        "finance",
+        "cap-53",
+        "faid"
+      ],
+      "path": "reports/weekly/2026-10-10.html"
+    },
+    {
       "title": "Distributed CMS target",
       "summary": "Ideal multi-country Raisd CMS with distributed data planes, white-label packs, and feature flags.",
       "section": "Distributed CMS",

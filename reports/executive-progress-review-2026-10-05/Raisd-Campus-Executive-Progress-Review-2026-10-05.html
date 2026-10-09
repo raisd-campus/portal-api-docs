@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — Executive Progress Review (2026-10-05)</title>
+<style>
+  :root {
+    --ink: #122028;
+    --ink-soft: #334650;
+    --muted: #62747e;
+    --line: #d5e0e5;
+    --accent: #0f6b5d;
+    --accent-deep: #0a4a41;
+    --accent-soft: #e3f2ee;
+    --fe: #1a4f8b;
+    --fe-soft: #dbe7f5;
+    --plat: #2f9e6f;
+    --plat-soft: #d8f3e7;
+    --warm: #9a6418;
+    --warm-soft: #f7edd8;
+    --amber: #9a3412;
+    --amber-soft: #ffedd5;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --bg: #eef3f6;
+    --panel: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem;
+  }
+  header .wrap, main, footer .wrap { max-width: 1040px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem;
+  }
+  header h1 { margin: 0 0 0.55rem; font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; }
+  .doc-meta {
+    margin: 0.85rem 0 0;
+    padding: 0.9rem 1.05rem;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #d7e3df;
+    color: #122028;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 52rem;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .doc-meta p { margin: 0 0 0.45rem; color: #122028; }
+  .doc-meta p:last-child { margin-bottom: 0; }
+  .doc-meta strong { color: #0a4a41; font-weight: 700; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .pill {
+    display: inline-block; padding: 0.25rem 0.7rem; border-radius: 999px;
+    font-size: 0.78rem; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #ffffff;
+  }
+  main { padding: 1.5rem; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem; font-size: 1.22rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+  }
+  h3 { margin: 1.05rem 0 0.45rem; font-size: 1.02rem; color: var(--accent-deep); }
+  p { margin: 0.5rem 0; color: var(--ink-soft); }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.88rem; }
+  th, td { border: 1px solid var(--line); padding: 0.48rem 0.6rem; text-align: left; vertical-align: top; }
+  th {
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .status {
+    display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px;
+    font-size: 0.74rem; font-weight: 700;
+  }
+  .ok { background: var(--green-soft); color: var(--green); }
+  .wip { background: var(--amber-soft); color: var(--amber); }
+  .demo { background: #dbeafe; color: #1e3a5f; }
+  .defer { background: #eef1f4; color: #475569; }
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem; margin: 0.75rem 0 0.25rem;
+  }
+  .kpi {
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.85rem 0.9rem; background: #fff;
+  }
+  .kpi.warn { background: var(--amber-soft); border-color: #efd6a8; }
+  .kpi.ok { background: var(--accent-soft); border-color: #b7d8ce; }
+  .kpi .n { font-size: 1.55rem; font-weight: 700; color: var(--accent-deep); line-height: 1.1; }
+  .kpi.warn .n { color: var(--amber); }
+  .kpi .l { font-size: 0.76rem; color: var(--muted); margin-top: 0.2rem; }
+  .kpi .s { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.15rem; }
+  .banner {
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; color: var(--ink-soft);
+  }
+  .warn {
+    background: var(--warm-soft); border-left: 4px solid var(--warm);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; color: var(--ink-soft);
+  }
+  .key {
+    display: flex; flex-wrap: wrap; gap: 0.85rem 1.4rem;
+    margin: 0.4rem 0 0.85rem; font-size: 0.88rem; color: var(--ink-soft);
+  }
+  .key i {
+    display: inline-block; width: 12px; height: 12px; border-radius: 2px;
+    margin-right: 0.4rem; vertical-align: -1px;
+  }
+  .key .fe { background: var(--fe); }
+  .key .plat { background: var(--plat); }
+  .key .live { background: #cbd5e1; }
+  .key .started { background: var(--fe); }
+  .key .ns { background: #94a3b8; }
+  ul.compact { margin: 0.4rem 0; padding-left: 1.2rem; color: var(--ink-soft); }
+  ul.compact li { margin: 0.28rem 0; }
+  .flow {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem;
+    background: #f7faf9; border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.85rem 1rem; margin: 0.75rem 0;
+  }
+  .flow .node {
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: 8px; padding: 0.5rem 0.65rem; font-size: 0.8rem;
+    font-weight: 600; color: var(--accent-deep); text-align: center; min-width: 6.5rem;
+  }
+  .flow .arrow { color: var(--muted); font-weight: 700; }
+  .chart-wrap {
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.85rem 1rem 1rem; margin: 0.75rem 0; background: #fbfcfd;
+  }
+  .chart-wrap h4 { margin: 0 0 0.35rem; font-size: 0.95rem; color: var(--accent-deep); }
+  .chart-svg { width: 100%; height: auto; display: block; }
+  .pair-bars { display: grid; gap: 0.85rem; margin: 0.6rem 0; }
+  .pair-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.65rem; align-items: center; }
+  .pair-row .name { font-size: 0.88rem; font-weight: 650; color: var(--ink); }
+  .pair-track { display: grid; gap: 0.28rem; }
+  .pair-bar {
+    display: grid; grid-template-columns: 7.2rem 1fr 2.6rem;
+    gap: 0.45rem; align-items: center; font-size: 0.78rem; color: var(--muted);
+  }
+  .pair-bar .track { height: 11px; background: #e8ebef; border-radius: 999px; overflow: hidden; }
+  .pair-bar .track > span { display: block; height: 100%; border-radius: 999px; }
+  .pair-bar .track > span.fe { background: var(--fe); }
+  .pair-bar .track > span.plat { background: var(--plat); }
+  .pair-bar .pct { text-align: right; font-weight: 700; color: var(--ink-soft); }
+  .cumul { display: grid; gap: 0.55rem; margin: 0.5rem 0; }
+  .cumul-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: 0.55rem; align-items: center; }
+  .cumul-row .d { font-size: 0.82rem; font-weight: 650; }
+  .cumul-stack {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem;
+  }
+  .mini {
+    border: 1px solid var(--line); border-radius: 6px; padding: 0.35rem 0.45rem;
+    background: #fff; font-size: 0.74rem;
+  }
+  .mini strong { display: block; font-size: 0.95rem; color: var(--accent-deep); }
+  .pie-layout {
+    display: grid; grid-template-columns: 220px 1fr; gap: 1rem;
+    align-items: center; margin: 0.6rem 0;
+  }
+  .pie-legend { font-size: 0.84rem; color: var(--ink-soft); }
+  .pie-legend div { display: flex; gap: 0.45rem; margin: 0.28rem 0; align-items: flex-start; }
+  .pie-legend i {
+    width: 11px; height: 11px; border-radius: 2px; margin-top: 0.28rem; flex: 0 0 auto;
+  }
+  .goal-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 0.75rem 0;
+  }
+  .goal-card {
+    border: 1px solid var(--line); border-radius: 8px; padding: 0.85rem 1rem; background: #fbfcfd;
+  }
+  .goal-card h4 { margin: 0 0 0.4rem; font-size: 0.92rem; color: var(--accent-deep); }
+  .goal-card.horizon { background: var(--accent-soft); border-color: #b7d8ce; }
+  footer { padding: 1.1rem 1.5rem 2rem; color: var(--muted); font-size: 0.85rem; }
+  @media (max-width: 720px) {
+    .kpi-grid, .goal-grid, .pie-layout { grid-template-columns: 1fr; }
+    .pair-row { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; font-size: 10.5pt; }
+    header, .kpi, .pill, .status, .banner, .warn, .pair-bar .track > span, th, .flow .node, .mini, .doc-meta {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .doc-meta { color: #122028 !important; background: #ffffff !important; }
+    .doc-meta p, .doc-meta strong { color: inherit; }
+    .doc-meta strong { color: #0a4a41 !important; }
+    main { padding: 0.35rem 0; }
+    section { break-inside: avoid; margin-bottom: 0.55rem; padding: 0.95rem 1.05rem; }
+    .no-print { display: none !important; }
+    a { color: inherit; text-decoration: none; }
+  }
+  @page { size: A4; margin: 12mm 11mm; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group CMS 2026 · senior leadership pack · 5 October 2026</p>
+    <h1>Raisd Campus — executive progress review</h1>
+    <div class="doc-meta" aria-label="Document purpose and cut">
+      <p><strong>Purpose:</strong> One pack for senior leadership with current progress charts, milestone intent, and projected goals through Lesotho pilot acceptance and campus expansion.</p>
+      <p><strong>Cut:</strong> 5 Oct 2026 · checklist FE snapshot SDD-13 (sheet 19 Sep 2026) · platform readiness includes work since then</p>
+      <p><strong>Pilot:</strong> Lesotho (M4) · <strong>SoR this phase:</strong> existing campus CMS family via Portal API (ADR-1)</p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Live checklist = 0%</span>
+      <span class="pill">FE started ≈ 31%</span>
+      <span class="pill">Platform readiness ≈ 65%</span>
+      <span class="pill">Lesotho pilot decided</span>
+      <span class="pill">Admissions-first sequence</span>
+      <span class="pill">All target weeks TBC</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="no-print">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#snapshot">Executive snapshot</a></li>
+      <li><a href="#charts">Progress charts</a></li>
+      <li><a href="#intent">Projection, intentions, and goals</a></li>
+      <li><a href="#asks">Leadership asks</a></li>
+      <li><a href="#sources">Sources and reading notes</a></li>
+    </ol>
+  </section>
+
+  <section id="snapshot">
+    <h2>1. Executive snapshot</h2>
+    <p>
+      Raisd is building four modern portals (Applicant, Student, Lecturer, Staff) on the
+      <strong>existing campus CMS</strong> through a single Portal API. The Working Group selected
+      <strong>Lesotho as the first acceptance campus (M4)</strong> on 3 Oct 2026. Product sequence remains
+      <strong>admissions-first</strong>: confirm rules (M1) → admissions Live (M2) → core student journeys (M3) →
+      Lesotho acceptance (M4) → other campuses (M5).
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi warn">
+        <div class="n">0%</div>
+        <div class="l">Checklist Live</div>
+        <div class="s">0 of 112 rows Live</div>
+      </div>
+      <div class="kpi">
+        <div class="n">31%</div>
+        <div class="l">Frontend started</div>
+        <div class="s">32 of 103 applicable</div>
+      </div>
+      <div class="kpi ok">
+        <div class="n">~65%</div>
+        <div class="l">Platform readiness</div>
+        <div class="s">Schema · API · docs · inventories</div>
+      </div>
+      <div class="kpi">
+        <div class="n">~20%</div>
+        <div class="l">Lesotho pilot (M4)</div>
+        <div class="s">Decided · analysed · not Live</div>
+      </div>
+    </div>
+
+    <div class="banner">
+      <strong>How to read the numbers:</strong> Demo / Partial / Placeholder frontend is <em>started</em>, not complete.
+      A capability is <strong>Live</strong> only with durable CMS-backed records, server-enforced permissions, and
+      accepted paired staff/lecturer paths. Platform readiness is an engineering estimate — not campus acceptance.
+    </div>
+
+    <div class="warn">
+      <strong>Leadership tension:</strong> Student UI is deepest (~31% FE started on M3), but product priority is still
+      <strong>M2 admissions on real records</strong>. Do not treat student Demo polish as admissions progress.
+    </div>
+  </section>
+
+  <section id="charts">
+    <h2>2. Progress charts</h2>
+    <p class="muted">
+      Same figures as the Overview progress board on the docs site
+      (<code>portal-api-docs/diagrams/#progress</code>). Charts below are print-safe (no interactive Mermaid).
+    </p>
+
+    <div class="chart-wrap">
+      <h4>2.1 Bar — milestone progress %</h4>
+      <p class="muted" style="margin-top:0">
+        Frontend started % (sheet) vs estimated platform readiness % (not Live). M1 and M4 have almost no frontend rows.
+      </p>
+      <div class="key">
+        <span><i class="fe"></i> FE started %</span>
+        <span><i class="plat"></i> Platform readiness %</span>
+        <span><i class="live"></i> Live = 0% on every milestone</span>
+      </div>
+
+      <div class="pair-bars" aria-label="Milestone progress bar chart">
+        <div class="pair-row">
+          <div class="name">M1 Rules</div>
+          <div class="pair-track">
+            <div class="pair-bar"><span>FE started</span><div class="track"><span class="fe" style="width:0%"></span></div><span class="pct">0%</span></div>
+            <div class="pair-bar"><span>Platform</span><div class="track"><span class="plat" style="width:45%"></span></div><span class="pct">~45%</span></div>
+          </div>
+        </div>
+        <div class="pair-row">
+          <div class="name">M2 Admissions</div>
+          <div class="pair-track">
+            <div class="pair-bar"><span>FE started</span><div class="track"><span class="fe" style="width:22%"></span></div><span class="pct">22%</span></div>
+            <div class="pair-bar"><span>Platform</span><div class="track"><span class="plat" style="width:20%"></span></div><span class="pct">~20%</span></div>
+          </div>
+        </div>
+        <div class="pair-row">
+          <div class="name">M3 Core portal</div>
+          <div class="pair-track">
+            <div class="pair-bar"><span>FE started</span><div class="track"><span class="fe" style="width:31%"></span></div><span class="pct">31%</span></div>
+            <div class="pair-bar"><span>Platform</span><div class="track"><span class="plat" style="width:40%"></span></div><span class="pct">~40%</span></div>
+          </div>
+        </div>
+        <div class="pair-row">
+          <div class="name">M4 Lesotho</div>
+          <div class="pair-track">
+            <div class="pair-bar"><span>FE started</span><div class="track"><span class="fe" style="width:0%"></span></div><span class="pct">0%</span></div>
+            <div class="pair-bar"><span>Platform</span><div class="track"><span class="plat" style="width:20%"></span></div><span class="pct">~20%</span></div>
+          </div>
+        </div>
+        <div class="pair-row">
+          <div class="name">M5 Expansion</div>
+          <div class="pair-track">
+            <div class="pair-bar"><span>FE started</span><div class="track"><span class="fe" style="width:35%"></span></div><span class="pct">35%</span></div>
+            <div class="pair-bar"><span>Platform</span><div class="track"><span class="plat" style="width:25%"></span></div><span class="pct">~25%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Milestone</th>
+            <th>FE started</th>
+            <th>Platform</th>
+            <th>What it means</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>M1</strong> Confirm rules &amp; integration</td>
+            <td>0%</td>
+            <td>~45%</td>
+            <td>Operating / rules milestone. ADR-1, Schema v3 Demo, CAP-53 Partial, architecture docs exist; owners and target weeks still TBC.</td>
+          </tr>
+          <tr>
+            <td><strong>M2</strong> Admissions launch</td>
+            <td>22% (4/18)</td>
+            <td>~20%</td>
+            <td>Student-side starts only. Applicant + staff admissions halves not started. No Live apply→enrol on CMS.</td>
+          </tr>
+          <tr>
+            <td><strong>M3</strong> Core student portal</td>
+            <td>31% (16/51)</td>
+            <td>~40%</td>
+            <td>Deepest student Demo/Partial. Lecturer and staff paths for the same capabilities still 0.</td>
+          </tr>
+          <tr>
+            <td><strong>M4</strong> Lesotho pilot acceptance</td>
+            <td>0%</td>
+            <td>~20%</td>
+            <td>Pilot decided 3 Oct; screenshot inventory + DB gap probe published. Live SoR path and dump still open.</td>
+          </tr>
+          <tr>
+            <td><strong>M5</strong> Campus expansion</td>
+            <td>35% (12/34)</td>
+            <td>~25%</td>
+            <td>Sheet starts + campus inventories (Cyberjaya / Botswana / Sierra Leone). Do not pull ahead of admissions Live.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-wrap">
+      <h4>2.2 Cumulative readiness over Working Group weeks</h4>
+      <p class="muted" style="margin-top:0">
+        Platform work rising; FE started flat at 31% since the 19 Sep sheet; Live stays at 0%.
+        Dates are WG checkpoints, not a committed delivery calendar.
+      </p>
+      <div class="cumul" aria-label="Cumulative readiness">
+        <div class="cumul-row">
+          <div class="d">18 Sep</div>
+          <div class="cumul-stack">
+            <div class="mini"><strong>~15%</strong>Platform</div>
+            <div class="mini"><strong>31%</strong>FE started</div>
+            <div class="mini"><strong>0%</strong>Live</div>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="d">22 Sep</div>
+          <div class="cumul-stack">
+            <div class="mini"><strong>~30%</strong>Platform</div>
+            <div class="mini"><strong>31%</strong>FE started</div>
+            <div class="mini"><strong>0%</strong>Live</div>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="d">25 Sep</div>
+          <div class="cumul-stack">
+            <div class="mini"><strong>~45%</strong>Platform</div>
+            <div class="mini"><strong>31%</strong>FE started</div>
+            <div class="mini"><strong>0%</strong>Live</div>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="d">1 Oct</div>
+          <div class="cumul-stack">
+            <div class="mini"><strong>~55%</strong>Platform</div>
+            <div class="mini"><strong>31%</strong>FE started</div>
+            <div class="mini"><strong>0%</strong>Live</div>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="d">3 Oct</div>
+          <div class="cumul-stack">
+            <div class="mini"><strong>~60%</strong>Platform</div>
+            <div class="mini"><strong>31%</strong>FE started</div>
+            <div class="mini"><strong>0%</strong>Live</div>
+          </div>
+        </div>
+        <div class="cumul-row">
+          <div class="d">5 Oct</div>
+          <div class="cumul-stack">
+            <div class="mini"><strong>~65%</strong>Platform</div>
+            <div class="mini"><strong>31%</strong>FE started</div>
+            <div class="mini"><strong>0%</strong>Live</div>
+          </div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>WG date</th><th>Platform</th><th>FE started</th><th>Live</th><th>What changed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>18 Sep 2026</td><td>~15%</td><td>31%</td><td>0%</td><td>WG kickoff context; FE snapshot already ~31% from student Demo/Partial.</td></tr>
+          <tr><td>22 Sep 2026</td><td>~30%</td><td>31%</td><td>0%</td><td>Campus inventories and dump analysis underway.</td></tr>
+          <tr><td>25 Sep 2026</td><td>~45%</td><td>31%</td><td>0%</td><td>Schema v3 Demo and Portal API / CAP-53 Partial strengthen platform.</td></tr>
+          <tr><td>1 Oct 2026</td><td>~55%</td><td>31%</td><td>0%</td><td>Docs and campus baselines deepen.</td></tr>
+          <tr><td>3 Oct 2026</td><td>~60%</td><td>31%</td><td>0%</td><td>Lesotho pilot decided; screenshot inventory and DB gap probe start.</td></tr>
+          <tr><td>5 Oct 2026</td><td>~65%</td><td>31%</td><td>0%</td><td>Current cut: platform ~65%; FE sheet still flat; Live still 0%.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-wrap">
+      <h4>2.3 Pie — work mix (applicable frontend rows)</h4>
+      <p class="muted" style="margin-top:0">
+        103 applicable M2+M3+M5 frontend rows. Live = 0 omitted. Totals: started 32 · not started 71 · 32÷103 ≈ 31%.
+      </p>
+      <div class="pie-layout">
+        <!-- Pie slices: 31,1,9,7,18,37 of 103 → degrees cumulative -->
+        <svg class="chart-svg" viewBox="0 0 220 220" role="img" aria-label="Work mix pie chart">
+          <!-- slices of 103: 31, 1, 9, 7, 18, 37 — clockwise from top; large-arc only if sweep > 180° -->
+          <path d="M110,110 L110.00,20.00 A90,90 0 0,1 195.42,138.33 Z" fill="#1a4f8b"/>
+          <path d="M110,110 L195.42,138.33 A90,90 0 0,1 193.54,143.49 Z" fill="#2f9e6f"/>
+          <path d="M110,110 L193.54,143.49 A90,90 0 0,1 163.79,182.16 Z" fill="#64748b"/>
+          <path d="M110,110 L163.79,182.16 A90,90 0 0,1 129.07,197.96 Z" fill="#f59e0b"/>
+          <path d="M110,110 L129.07,197.96 A90,90 0 0,1 40.37,167.03 Z" fill="#ef4444"/>
+          <path d="M110,110 L40.37,167.03 A90,90 0 0,1 110.00,20.00 Z" fill="#94a3b8"/>
+          <circle cx="110" cy="110" r="48" fill="#fff"/>
+          <text x="110" y="106" text-anchor="middle" font-size="18" font-weight="700" fill="#0a4a41">103</text>
+          <text x="110" y="124" text-anchor="middle" font-size="11" fill="#62747e">applicable</text>
+        </svg>
+        <div class="pie-legend">
+          <div><i style="background:#1a4f8b"></i><span><strong>Started — Student · 31</strong> — includes 4 M2 student-side starts; not Live</span></div>
+          <div><i style="background:#2f9e6f"></i><span><strong>Started — Shared (CAP-53) · 1</strong> — Portal API Partial</span></div>
+          <div><i style="background:#64748b"></i><span><strong>Not started — Student · 9</strong> — of 40 student applicable</span></div>
+          <div><i style="background:#f59e0b"></i><span><strong>Not started — Applicant · 7</strong> — entire applicant set (M2 critical path)</span></div>
+          <div><i style="background:#ef4444"></i><span><strong>Not started — Lecturer · 18</strong> — publish / attendance / marking</span></div>
+          <div><i style="background:#94a3b8"></i><span><strong>Not started — Admin/staff · 37</strong> — including admissions staff review</span></div>
+        </div>
+      </div>
+      <div class="banner">
+        <strong>Totals check:</strong>
+        Started <strong>31 + 1 = 32</strong> ·
+        Not started <strong>9 + 7 + 18 + 37 = 71</strong> ·
+        <strong>32 + 71 = 103</strong> ·
+        <strong>≈ 31%</strong> FE started (matches KPI and bar chart).
+        Backend remains Needs checking on every applicable row.
+      </div>
+    </div>
+  </section>
+
+  <section id="intent">
+    <h2>3. Projection, intentions, and goals</h2>
+
+    <h3>3.1 Intended delivery sequence (order only)</h3>
+    <p class="muted">Agreed milestone <em>order</em>. Kickoff week and every target week on the sheet remain <strong>TBC</strong>.</p>
+    <div class="flow" aria-label="Delivery sequence">
+      <div class="node">M1<br/>Rules &amp; integration</div>
+      <span class="arrow">→</span>
+      <div class="node">M2<br/>Admissions Live</div>
+      <span class="arrow">→</span>
+      <div class="node">M3<br/>Core student</div>
+      <span class="arrow">→</span>
+      <div class="node">M4<br/>Lesotho accept</div>
+      <span class="arrow">→</span>
+      <div class="node">M5<br/>Expansion</div>
+      <span class="arrow">→</span>
+      <div class="node">Ideal<br/>Distributed CMS</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Milestone</th>
+          <th>Intention</th>
+          <th>Release condition (goal)</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>M1</strong> Confirm rules &amp; integration</td>
+          <td>Name owners, campus rules, API access, operating responsibilities</td>
+          <td>Rules and integration access agreed — unblocks later Live work</td>
+          <td><span class="status defer">TBC</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>M2</strong> Admissions launch</td>
+          <td>Applicant apply → evidence → offer → enrol on <strong>real CMS records</strong>; Portal API first slice (CAP-53)</td>
+          <td>End-to-end admissions Live; staff path via verified old CMS or new screens</td>
+          <td><span class="status defer">TBC</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>M3</strong> Core student portal</td>
+          <td>Learning, records, fees, registration with lecturer/staff support paths</td>
+          <td>Student + staff journeys Live with durable records (Demo alone insufficient)</td>
+          <td><span class="status defer">TBC</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>M4</strong> Lesotho pilot acceptance</td>
+          <td>First campus acceptance; parity with Lesotho newer CMS; training &amp; ops</td>
+          <td>Lesotho campus accepts the integrated pilot</td>
+          <td><span class="status wip">Pilot decided</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>M5</strong> Campus expansion</td>
+          <td>Cyberjaya, Eswatini (proposed), Botswana, Sierra Leone, …; progressive CMS consolidation only on verified gaps</td>
+          <td>Each campus accepts its rollout; no silent SoR rewrites</td>
+          <td><span class="status defer">After M4</span></td>
+        </tr>
+        <tr>
+          <td>Ideal</td>
+          <td><strong>Distributed Raisd CMS</strong></td>
+          <td>One product · country/region DBs · white-label · feature flags</td>
+          <td>Longer-term target after pilot and expansion evidence</td>
+          <td><span class="status defer">Beyond M5</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3.2 Near-term intentions (next engineering focus)</h3>
+    <div class="goal-grid">
+      <div class="goal-card">
+        <h4>Protect admissions-first priority</h4>
+        <ul class="compact">
+          <li>Freeze non-critical student Demo polish unless it is on the M2 path (auth, accessibility, mobile shell).</li>
+          <li>Prioritise CAP-53, applicant CAP-02/03/07/55, and Registry old-CMS verification.</li>
+          <li>Keep student demos labelled Demo until wired to durable SoR.</li>
+        </ul>
+      </div>
+      <div class="goal-card">
+        <h4>Close leadership blockers (M1)</h4>
+        <ul class="compact">
+          <li>Named owners for rules, API access, and operating checks.</li>
+          <li>Agree kickoff and first target weeks (currently TBC).</li>
+          <li>Confirm backend commitment path for CMS bridge.</li>
+        </ul>
+      </div>
+      <div class="goal-card">
+        <h4>Lesotho pilot readiness (M4 path)</h4>
+        <ul class="compact">
+          <li>Secure agreed Live SoR path / old CMS dump (no PII in repos).</li>
+          <li>Map NMDS, LGCSE, Loti, and newer-CMS parity gaps.</li>
+          <li>Treat CAP-41 training/ops as part of acceptance, not an afterthought.</li>
+        </ul>
+      </div>
+      <div class="goal-card horizon">
+        <h4>Projected outcome for leadership</h4>
+        <ul class="compact">
+          <li><strong>This phase (M1–M4):</strong> modern portals on existing CMS; Lesotho accepts first.</li>
+          <li><strong>Success metric:</strong> Live checklist moves off 0% on admissions, then core journeys.</li>
+          <li><strong>Not the goal yet:</strong> rewriting every staff desk or pulling M5 ahead of M2 Live.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>3.3 Goals by horizon</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Horizon</th>
+          <th>Goal</th>
+          <th>Evidence of success</th>
+          <th>Current state (5 Oct)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Immediate</strong></td>
+          <td>Leadership lock on M1 owners, access, and target weeks</td>
+          <td>Named owners + dated plan on the Timeline tab</td>
+          <td><span class="status wip">Open / TBC</span></td>
+        </tr>
+        <tr>
+          <td><strong>First Live product</strong></td>
+          <td>M2 admissions end-to-end on real records</td>
+          <td>Apply→enrol Live; CAP-53 bridge past stub; staff path verified</td>
+          <td><span class="status demo">Demo started · Live 0%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Core campus journeys</strong></td>
+          <td>M3 student + lecturer/staff paths Live or verified on old CMS</td>
+          <td>Durable records; paired role actions accepted</td>
+          <td><span class="status demo">Student Demo deepest</span></td>
+        </tr>
+        <tr>
+          <td><strong>Pilot acceptance</strong></td>
+          <td>M4 Lesotho campus acceptance</td>
+          <td>Campus sign-off; parity with newer CMS for accepted journeys; ops ready</td>
+          <td><span class="status wip">Pilot decided · ~20%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Scale</strong></td>
+          <td>M5 multi-campus rollout + careful CMS consolidation</td>
+          <td>Per-campus acceptance; migration strategy before retiring desks</td>
+          <td><span class="status defer">Inventories only</span></td>
+        </tr>
+        <tr>
+          <td><strong>Ideal end state</strong></td>
+          <td>Distributed Raisd CMS (country DBs, white-label)</td>
+          <td>Architecture accepted; no premature rewrite of working SoR</td>
+          <td><span class="status defer">Documented target</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3.4 Definition of done (any capability)</h3>
+    <ol class="compact">
+      <li>Real data from the system of record (not a mock session).</li>
+      <li>Durable save where the user can mutate data.</li>
+      <li>Server-enforced permission for that role and campus.</li>
+      <li>Paired staff/lecturer action exists in new UI <strong>or</strong> is verified in the old CMS.</li>
+      <li>Accountable owner named.</li>
+      <li>Core mobile accepted if the capability is in the mobile product set.</li>
+      <li>Country/campus operating checks closed or explicitly waived.</li>
+    </ol>
+  </section>
+
+  <section id="asks">
+    <h2>4. Leadership asks</h2>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Ask</th><th>Why it matters</th><th>Blocks</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Confirm named owners for campus rules, Portal API access, and operating checks</td>
+          <td>M1 release condition; unblocks “Needs checking” backend rows</td>
+          <td>M2–M4 planning</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Set kickoff and first milestone target weeks (even provisional)</td>
+          <td>Sheet targets are all TBC; sponsors need a calendar signal</td>
+          <td>Weekly % credibility</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Commit CMS bridge / Live SoR path for Lesotho (and dump access without PII in repos)</td>
+          <td>Without this, Live stays at 0% regardless of UI polish</td>
+          <td>M2 Live and M4 acceptance</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Reaffirm admissions-first priority over further student Demo expansion</td>
+          <td>Current build gravity is M3 student UI</td>
+          <td>M2 critical path focus</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Confirm who receives weekly progress PDFs and Demo credentials</td>
+          <td>Governance cadence for senior review</td>
+          <td>Reporting rhythm</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="sources">
+    <h2>5. Sources and reading notes</h2>
+    <table>
+      <thead>
+        <tr><th>Source</th><th>Use in this pack</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SDD-13 Progress timeline (sheet 19 Sep 2026)</td><td>FE started / applicable / Live counts</td></tr>
+        <tr><td>SDD-03 Delivery milestones (updated 3 Oct 2026)</td><td>M1–M5 sequence, Lesotho M4, definition of done</td></tr>
+        <tr><td>Overview progress board (docs site, 5 Oct 2026)</td><td>Charts, platform readiness estimates, WG-week series</td></tr>
+        <tr><td>Working Group 3 Oct 2026</td><td>Lesotho selected as pilot acceptance campus</td></tr>
+        <tr><td>ADR-1 (Aslam, 23 Sep 2026)</td><td>Existing CMS family remains SoR this phase</td></tr>
+        <tr><td>Weekly pack 2026-10-03</td><td>Baseline delivery detail for engineering estate</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">
+      Companion weekly engineering pack:
+      <code>docs/reports/weekly-progress-2026-10-03/</code>.
+      Live board:
+      <code>https://raisd-campus.github.io/portal-api-docs/diagrams/#progress</code>.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Raisd Campus · Executive progress review · 5 October 2026 · Prepared for senior leadership ·
+    Pack path: <code>docs/reports/executive-progress-review-2026-10-05/</code>
+  </div>
+</footer>
+</body>
+</html>

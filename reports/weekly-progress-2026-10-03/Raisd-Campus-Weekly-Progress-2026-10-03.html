@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — Weekly Progress Report (2026-10-03) · First weekly meeting</title>
+<style>
+  :root {
+    --ink: #122028;
+    --ink-soft: #334650;
+    --muted: #62747e;
+    --line: #d5e0e5;
+    --accent: #0f6b5d;
+    --accent-deep: #0a4a41;
+    --accent-soft: #e3f2ee;
+    --warm: #9a6418;
+    --warm-soft: #f7edd8;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #9a3412;
+    --amber-soft: #ffedd5;
+    --red: #b42318;
+    --red-soft: #fdecea;
+    --bg: #eef3f6;
+    --panel: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem;
+  }
+  header .wrap, main, footer .wrap { max-width: 1040px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem;
+  }
+  header h1 { margin: 0 0 0.45rem; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
+  header .meta { opacity: 0.92; font-size: 0.95rem; max-width: 50rem; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .pill {
+    display: inline-block; padding: 0.25rem 0.7rem; border-radius: 999px;
+    font-size: 0.78rem; background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  main { padding: 1.5rem; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem; font-size: 1.25rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+  }
+  h3 { margin: 1.1rem 0 0.5rem; font-size: 1.05rem; color: var(--accent-deep); }
+  p { margin: 0.5rem 0; color: var(--ink-soft); }
+  .muted { color: var(--muted); }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--line); padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; }
+  th {
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 0.78rem; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  code, .mono { font-family: ui-monospace, Consolas, monospace; font-size: 0.86em; }
+  .status {
+    display: inline-block; padding: 0.1rem 0.5rem; border-radius: 4px;
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.02em;
+  }
+  .ok { background: var(--green-soft); color: var(--green); }
+  .wip { background: var(--amber-soft); color: var(--amber); }
+  .blocked { background: var(--red-soft); color: var(--red); }
+  .defer { background: #eef1f4; color: #475569; }
+  .demo { background: #dbeafe; color: #1e3a5f; }
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 0.75rem; margin: 0.75rem 0 0.25rem;
+  }
+  .kpi {
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.85rem 1rem; background: #fff;
+  }
+  .kpi .n { font-size: 1.5rem; font-weight: 700; color: var(--accent-deep); line-height: 1.1; }
+  .kpi .l { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+  .banner {
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; color: var(--ink-soft);
+  }
+  .warn {
+    background: var(--warm-soft); border-left: 4px solid var(--warm);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; color: var(--ink-soft);
+  }
+  .bar { height: 12px; background: #e8ebef; border-radius: 999px; overflow: hidden; margin: 0.35rem 0 0.15rem; }
+  .bar > span { display: block; height: 100%; background: linear-gradient(90deg, #0a4a41, #0f6b5d); }
+  .progress-row { margin: 0.85rem 0; }
+  .progress-row .label { display: flex; justify-content: space-between; font-size: 0.9rem; }
+  ul.compact { margin: 0.4rem 0; padding-left: 1.2rem; color: var(--ink-soft); }
+  ul.compact li { margin: 0.28rem 0; }
+  .toc a { text-decoration: none; color: var(--accent-deep); }
+  .toc li { margin: 0.2rem 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 0.75rem 0; }
+  .col-box { border: 1px solid var(--line); border-radius: 8px; padding: 0.85rem 1rem; }
+  .col-box.ok-bg { background: var(--accent-soft); }
+  .col-box.no-bg { background: var(--red-soft); }
+  .col-box h4 { margin: 0 0 0.45rem; font-size: 0.92rem; }
+  .flow {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem;
+    background: #f7faf9; border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.9rem 1rem; margin: 0.75rem 0;
+  }
+  .flow .node {
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.82rem;
+    font-weight: 600; color: var(--accent-deep); text-align: center; min-width: 7.2rem;
+  }
+  .flow .arrow { color: var(--muted); font-weight: 700; }
+  .arch {
+    display: grid; gap: 0.55rem; background: #f7faf9; border: 1px solid var(--line);
+    border-radius: 8px; padding: 0.9rem 1rem; margin: 0.75rem 0;
+  }
+  .arch .row { display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; }
+  .arch .node {
+    background: #fff; border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.5rem 0.75rem; font-size: 0.82rem; font-weight: 600; min-width: 6.2rem; text-align: center;
+  }
+  .arch .node.core { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-deep); }
+  .arch .node.sor { background: var(--warm-soft); border-color: var(--warm); }
+  .arch .node.poc { background: #dbeafe; border-color: #1e3a5f; }
+  .arch .caption { text-align: center; font-size: 0.78rem; color: var(--muted); }
+  footer { padding: 1.25rem 1.5rem 2rem; color: var(--muted); font-size: 0.85rem; }
+  a { color: #0a4a41; }
+  @media (max-width: 720px) {
+    .two-col { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    header, .kpi, .pill, .status, .bar > span, th, .banner, .warn, .col-box, .flow .node, .arch .node {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    main { padding: 0.5rem 0; }
+    section { break-inside: avoid; margin-bottom: 0.65rem; }
+    a { color: inherit; text-decoration: none; }
+    .no-print { display: none !important; }
+  }
+  @page { size: A4; margin: 14mm 12mm; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group CMS 2026 · first weekly meeting pack · regenerated 3 Oct 2026</p>
+    <h1>Raisd Campus weekly progress</h1>
+    <p class="meta">
+      <strong>Focus:</strong> Full baseline to first weekly cut — Student + Applicant Demo UIs, design system 0.6.1,
+      Portal API + Neon Schema v3 Demo, Vercel PoC estate, LMS docs, LUCT CMS inventories, ADR-1 SoR posture<br/>
+      <strong>Window:</strong> Working-group formation 18 Sep 2026 → first weekly cut 3 Oct 2026<br/>
+      <strong>Cut source:</strong> Pulled <code>raisd-campus/*</code> mains on 3 Oct 2026 · Prepared by Iman Suherman
+    </p>
+    <div class="pill-row">
+      <span class="pill">First weekly meeting</span>
+      <span class="pill">Live count = 0</span>
+      <span class="pill">ADR-1 confirmed</span>
+      <span class="pill">DS 0.6.1</span>
+      <span class="pill">Schema v3 Demo</span>
+      <span class="pill">Vercel + Neon PoC</span>
+      <span class="pill">Applicant UI started</span>
+      <span class="pill">LMS pages published</span>
+      <span class="pill">CMS hubs CBJ·SL·BW</span>
+      <span class="pill">Owners / dates TBC</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="no-print">
+    <h2>Contents</h2>
+    <ol class="toc">
+      <li><a href="#exec">1. Executive summary</a></li>
+      <li><a href="#blockers">2. Blockers and decisions needed</a></li>
+      <li><a href="#agenda">3. Proposed meeting agenda</a></li>
+      <li><a href="#scope">4. What this pack is (and is not)</a></li>
+      <li><a href="#sequence">5. Delivery sequence vs build centre of gravity</a></li>
+      <li><a href="#delivered">6. What has been delivered</a></li>
+      <li><a href="#poc">7. Demo estate (Vercel + Neon)</a></li>
+      <li><a href="#capabilities">8. Capability status snapshot</a></li>
+      <li><a href="#architecture">9. Architecture and SoR posture</a></li>
+      <li><a href="#estate">10. Repository estate and verification</a></li>
+      <li><a href="#next">11. Proposed next week and asks</a></li>
+      <li><a href="#sources">12. Sources and status language</a></li>
+    </ol>
+  </section>
+
+  <section id="exec">
+    <h2>1. Executive summary</h2>
+    <p>
+      This is the <strong>first Raisd Campus weekly progress pack</strong>. Because the group has not yet run a
+      recurring weekly cadence, this report covers the <strong>full baseline</strong> from the 18 September
+      working-group meeting through the 3 October cut — not a narrow seven-day delta. Content reflects the
+      campus mains pulled on 3 October 2026 (control-plane <code>f8d54d1</code>, design-system <code>v0.6.1</code>,
+      student/applicant portals, portal-api, docs, db-admin).
+    </p>
+    <p>
+      The estate is now a working <strong>Demo platform</strong>: four portal webs on Vercel (Student and Applicant
+      with real UI; Lecturer/Staff placeholders), a dedicated <strong>Portal API</strong> service with
+      <strong>Neon Postgres Schema v3</strong> persistence for Demo records, a read-only DB admin, a published
+      shared design system through <strong>0.6.1</strong>, central AI knowledge base + SDD catalogue, LMS
+      architecture/feature pages (Q37 Option 1), and LUCT CMS inventories for Cyberjaya, Sierra Leone, and Botswana.
+    </p>
+    <p>
+      Product priority remains unchanged: <strong>Cyberjaya first · Admissions before semester registration ·
+      core mobile at launch · existing CMS as this-phase system of record</strong> (ADR-1, Aslam 23 Sep 2026).
+      <strong>Live count remains 0.</strong> Demo persistence on Neon is not CMS-acknowledged Live. CAP-53
+      callable surface, named owners, kickoff, and auth model for campus identity are still open.
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">0</div><div class="l">Capabilities Live<br/>(Demo ≠ done)</div></div>
+      <div class="kpi"><div class="n">0.6.1</div><div class="l">Design system<br/>published package</div></div>
+      <div class="kpi"><div class="n">v3</div><div class="l">Demo schema<br/>Neon + policy tables</div></div>
+      <div class="kpi"><div class="n">6</div><div class="l">Vercel Demo targets<br/>+ Neon + DB admin</div></div>
+      <div class="kpi"><div class="n">727</div><div class="l">Student unit tests<br/>(92 files, latest gate)</div></div>
+      <div class="kpi"><div class="n">Started</div><div class="l">Applicant Demo UI<br/>(M2 surface)</div></div>
+      <div class="kpi"><div class="n">3</div><div class="l">LUCT CMS hubs<br/>CBJ · SL · BW</div></div>
+      <div class="kpi"><div class="n">TBC</div><div class="l">Kickoff · owners<br/>CMS Live access</div></div>
+    </div>
+
+    <div class="banner">
+      <strong>Verdict:</strong> Foundations and Demo hosting are strong enough for a weekly operating rhythm and
+      stakeholder walkthroughs. Highest-leverage next moves remain <strong>owners, kickoff, campus auth, file store,
+      and CAP-53 admissions slice</strong> — not more student polish. Applicant Demo UI is now in progress and
+      should stay the frontend centre of gravity for M2.
+    </div>
+
+    <div class="warn">
+      <strong>Status trap.</strong> Deployed Vercel URLs and Neon-backed Demo edits are still <em>Demo</em>.
+      Live requires real campus data, CMS-acknowledged writes, server-enforced authz, durable evidence store, and
+      an accountable owner. Do not present PoC endpoints as production campus systems.
+    </div>
+  </section>
+
+  <section id="blockers">
+    <h2>2. Blockers and decisions needed</h2>
+    <p class="muted">
+      Absorbs SDD-10 (including CS-01–CS-13 / Q37 decisions of 1 Oct) and the sequence tension in SDD-03 / SDD-13.
+      Closing D1–D4 unblocks measurable Live progress on M2.
+    </p>
+
+    <h3>2.1 Blockers</h3>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Blocker</th><th>What is stuck</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>B1</td>
+          <td>No named next-action owners</td>
+          <td>Checklist next-action owners and target weeks remain TBC. Demo work cannot graduate to Live without accountable departments.</td>
+          <td><span class="status blocked">Blocked</span><br/>Working group</td>
+        </tr>
+        <tr>
+          <td>B2</td>
+          <td>Kickoff and backend commitment TBC</td>
+          <td>Timeline tab has no agreed calendar. Milestone targets cannot be planned as dates.</td>
+          <td><span class="status blocked">Blocked</span><br/>Working group</td>
+        </tr>
+        <tr>
+          <td>B3</td>
+          <td>CAP-53 callable CMS surface</td>
+          <td>Dumps inventoried; Portal API Demo uses stub CMS mode. HTTP surface, credentials path, and owning team for Live writes still TBC.</td>
+          <td><span class="status blocked">Blocked</span><br/>Q1 / Q2 / Q26</td>
+        </tr>
+        <tr>
+          <td>B4</td>
+          <td>Campus auth model undecided</td>
+          <td>Demo student-number + password login exists. CMS password vs SSO vs both for applicants/students (Q3) still open for Live.</td>
+          <td><span class="status blocked">Blocked</span><br/>Q3</td>
+        </tr>
+        <tr>
+          <td>B5</td>
+          <td>Durable file store undecided</td>
+          <td>Evidence, assignments, payment proofs need a durable store for Live (Q5). Current portals use session/metadata Demo uploads.</td>
+          <td><span class="status blocked">Blocked</span><br/>Q5</td>
+        </tr>
+        <tr>
+          <td>B6</td>
+          <td>Per-campus policy confirmation</td>
+          <td>Schema v3 Demo seeds university defaults. CS-01–CS-11 must be confirmed per campus before that campus’s Live features.</td>
+          <td><span class="status wip">Policy gate</span><br/>Q29–Q35</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2.2 Decisions needed this meeting (detail)</h3>
+    <p>
+      These five decisions are the working-group agenda items that unblock Live work on Admissions (M2).
+      Each decision states <strong>why it matters now</strong>, the <strong>options</strong>, the <strong>recommended default</strong>
+      for discussion, and <strong>what happens if we leave it open</strong>. Record the outcome in the checklist Timeline tab
+      and SDD-10 decision log in the same meeting if possible.
+    </p>
+
+    <h3>D1 — Delivery sequence: keep admissions-first?</h3>
+    <p>
+      <strong>Why now.</strong> Product priority (7 Sep) is Cyberjaya first and <em>Admissions before semester registration</em>.
+      Engineering reality has been the opposite for weeks: Student Demo is deepest (M3 depth). Applicant Demo UI has
+      now started and is deployed — so the sequence question is no longer theoretical. We must either reconfirm M2
+      as P0 or explicitly change product priority.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Option</th><th>Meaning</th><th>Consequence</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>(a) Reconfirm admissions-first</strong> <span class="status ok">Recommended</span></td>
+          <td>Applicant journeys + CAP-53 admissions slice are P0. Student Demo continues only for shared design-system reuse, gate hygiene, and blockers that Applicant also needs.</td>
+          <td>Build aligns with M2 Live path; student polish is deprioritised.</td>
+        </tr>
+        <tr>
+          <td><strong>(b) Promote student Demo as near-term showpiece</strong></td>
+          <td>Accept that stakeholder walkthroughs centre on enrolled-student UX; Admissions Live slips until CAP-53/Applicant catch up.</td>
+          <td>Must update the sheet / SDD sequence so the group is not measuring against admissions-first while funding M3 depth.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warn">
+      <strong>If we do nothing:</strong> effort drifts back to more student Demo while Applicant / Registry Live remains empty.
+      Weekly status will keep looking “busy” without moving Live count off 0 on the critical path.
+    </div>
+
+    <h3>D2 — CAP-53 / old CMS API ownership and access</h3>
+    <p>
+      <strong>Why now.</strong> CAP-53 (Portal API ↔ existing Cyberjaya CMS) is the only shared item marked Partial and
+      gates every Live student/applicant write. We have dump inventories and <code>api_student_*</code> / desk evidence,
+      but <strong>no named owner</strong>, no granted callable HTTP surface, and Portal API still runs <code>cms.mode = stub</code>
+      with Neon Demo persistence. Without D2, Demo forever.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Option</th><th>Meaning</th><th>Consequence</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>(a) Name owner + grant access this week</strong> <span class="status ok">Recommended</span></td>
+          <td>Assign a backend / old-CMS owner. Grant read (then controlled write) access for an admissions slice: apply → evidence → offer → enrol mapping to existing SPs/tables.</td>
+          <td>Engineering can start a real CAP-53 spike with evidence, not guesses.</td>
+        </tr>
+        <tr>
+          <td><strong>(b) Time-box a paired spike</strong></td>
+          <td>Frontend + CMS pair for 3–5 days to document callable methods, auth, and first write path; owner named by end of spike.</td>
+          <td>Faster discovery if a single owner is not ready, but still needs access credentials.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="muted">Related open questions: Q1 (stack/access), Q2 (CMS owner / callable surface), Q26 (map <code>api_student_*</code> / <code>portal_r_student_*</code> to Portal API methods).</p>
+    <div class="warn">
+      <strong>If we do nothing:</strong> Neon Demo keeps looking “persistent” while Live count stays 0. Applicant UI cannot graduate beyond Demo.
+    </div>
+
+    <h3>D3 — Cyberjaya Live login path (CAP-01)</h3>
+    <p>
+      <strong>Why now.</strong> Student Demo already has student-number + password login (gitignored credentials; Portal API validates).
+      That is <em>not</em> campus identity. Applicants and enrolled students need an agreed Live path before CAP-01 can leave Demo/Placeholder.
+      Choice also drives Portal API session design, password reset ownership, and whether applicants share the same IdP as students/staff.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Option</th><th>Meaning</th><th>Best fit</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>(a) CMS credentials via Portal API</strong></td>
+          <td>Portal API authenticates against existing CMS user store / login rules; issues portal session only after CMS accepts.</td>
+          <td>Fastest path if CMS login is already the campus source of truth.</td>
+        </tr>
+        <tr>
+          <td><strong>(b) Campus SSO with CMS mapping</strong></td>
+          <td>External IdP (SSO); Portal API maps identity to CMS person/student/staff records before authorising.</td>
+          <td>Better long-term UX; needs IdP owner + attribute mapping + fallback for applicants who are not yet “users”.</td>
+        </tr>
+        <tr>
+          <td><strong>(c) Both, with a clear primary</strong> <span class="status wip">Likely</span></td>
+          <td>e.g. applicants use CMS/account-create path; enrolled students/staff use SSO (or the reverse). Document primary per audience.</td>
+          <td>Matches mixed campus reality; must avoid two conflicting passwords without a policy.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warn">
+      <strong>If we do nothing:</strong> CAP-01 cannot go Live; every journey that assumes real sign-in stays Demo theatre.
+    </div>
+
+    <h3>D4 — Named department owners and kickoff week</h3>
+    <p>
+      <strong>Why now.</strong> All checklist next-action owners and target weeks remain TBC. Schema v3 also needs per-campus
+      policy confirmation (CS-01–CS-11) from Registry / Bursary / IT before Live features. Without names and a kickoff week,
+      weekly meetings have no calendar and “Needs checking” never closes.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Seat to name</th><th>What they own for M1–M2</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Registry</td><td>Admissions rules, offer/enrolment decisions, academic status policy (CS-01–CS-04), CAP-05/06/07 staff path on old CMS</td></tr>
+        <tr><td>Faculty</td><td>Programme/module rules that affect registration later; training readiness toward M4</td></tr>
+        <tr><td>Bursary / Finance</td><td>Fee items, proof-to-allocation, refund/adjustment policy (CS-08–CS-10), bank instructions (Q19)</td></tr>
+        <tr><td>QA / AQA</td><td>Acceptance criteria language; what “Live” means for campus pilot</td></tr>
+        <tr><td>Marketing</td><td>Announcements / recruitment copy only — does not issue offers (CAP-16)</td></tr>
+        <tr><td>IT / old CMS</td><td>CAP-53 access, environments, backups (CAP-38), LoginActive / RBAC mapping (CS-11)</td></tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>Also decide:</strong> a kickoff week (even if later milestone end dates stay TBC). One calendar anchor is enough to start M1/M2 tracking.
+    </p>
+    <div class="warn">
+      <strong>If we do nothing:</strong> SDD-13 stays “all TBC”; Demo work has no accountable path to Live; weekly packs cannot report closed decisions.
+    </div>
+
+    <h3>D5 — Durable file store for Live evidence</h3>
+    <p>
+      <strong>Why now.</strong> Admissions evidence (CAP-03), profile documents (CAP-09), assignment files (CAP-20), and payment proofs (CAP-46)
+      all require a store staff workflows can open. Current portals keep session/metadata Demo uploads only. Choosing the store
+      early avoids rebuilding Applicant upload UX twice.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Option</th><th>Meaning</th><th>Trade-off</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>(a) Reuse existing CMS document trees / stdfile paths</strong> <span class="status ok">Recommended default</span></td>
+          <td>Portal API writes files through the same channels staff already use in the old CMS.</td>
+          <td>Least migration risk; constrained by legacy layout and access rules; needs owner confirm of live paths (Q25).</td>
+        </tr>
+        <tr>
+          <td><strong>(b) Object store + CMS metadata linkage</strong></td>
+          <td>New blob store for bytes; CMS (or Portal API) holds metadata and ACL.</td>
+          <td>Cleaner modern path; more infra + dual-read during transition; still needs CMS visibility for staff desks.</td>
+        </tr>
+        <tr>
+          <td><strong>(c) Defer Live files; Demo metadata until M3</strong></td>
+          <td>Keep Applicant/Student uploads as Demo-only until after core journeys exist.</td>
+          <td>Unblocks screens faster but <strong>blocks M2 Live</strong> for any journey that legally needs evidence on file.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warn">
+      <strong>If we do nothing:</strong> CAP-03 / 09 / 20 / 46 cannot go Live; Admissions launch cannot meet “real records” release conditions.
+    </div>
+
+    <div class="banner">
+      <strong>Meeting ask:</strong> Vote or assign D1–D5 before deep feature demos. Minimum useful outcome today:
+      D1 choice recorded, D2 owner named (or spike dated), D4 kickoff week + at least Registry and IT owners named.
+    </div>
+
+    <h3>2.3 Decisions already recorded</h3>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Decision</th><th>By</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>7 Sep 2026</td>
+          <td>Cyberjaya first; admissions before registration; core mobile; keep existing CMS; five portal groups</td>
+          <td>Product owner (sheet)</td>
+        </tr>
+        <tr>
+          <td>22–23 Sep 2026</td>
+          <td>Central <code>docs/ai/</code> SSOT; student docs extracted; ADR-1 SoR + progressive unified CMS</td>
+          <td>Faid / Aslam / Engineering</td>
+        </tr>
+        <tr>
+          <td>28–29 Sep 2026</td>
+          <td>Demo sign-in (student number + password); Vercel + Neon PoC estate deployed (not Live architecture)</td>
+          <td>Faid request / Engineering</td>
+        </tr>
+        <tr>
+          <td>1 Oct 2026</td>
+          <td>Canonical Schema v3 with university-default → campus-override policy hierarchy; CS-01–CS-11 are Live readiness, not schema blockers</td>
+          <td>Architecture + Engineering</td>
+        </tr>
+        <tr>
+          <td>1 Oct 2026</td>
+          <td>Q37 Option 1 — publish Raisd LMS pages from CAP + F01–F37 (no PPA comparison in this set)</td>
+          <td>Iman / Product architecture</td>
+        </tr>
+        <tr>
+          <td>1–2 Oct 2026</td>
+          <td>Design system releases through 0.6.1; Applicant Demo UI preview; campus repo sync</td>
+          <td>Engineering</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="agenda">
+    <h2>3. Proposed meeting agenda</h2>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Topic</th><th>Time hint</th><th>Outcome</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>01</td><td>Demo vs Live language + PoC disclaimer</td><td>5 min</td><td>Shared status words</td></tr>
+        <tr><td>02</td><td>Executive KPIs and sequence (M2 vs M3)</td><td>5 min</td><td>Align D1</td></tr>
+        <tr><td>03</td><td>Walkthrough: Student Demo + Applicant Demo (optional)</td><td>12 min</td><td>UI awareness, not acceptance</td></tr>
+        <tr><td>04</td><td>Portal API / Neon Schema v3 + Vercel estate</td><td>8 min</td><td>Understand Demo persistence limits</td></tr>
+        <tr><td>05</td><td>LMS pages + CMS hubs + ADR-1 reuse posture</td><td>5 min</td><td>No accidental rebuild of desks</td></tr>
+        <tr><td>06</td><td>Blockers B1–B6 and decisions D1–D5</td><td>15 min</td><td>Named owners / votes</td></tr>
+        <tr><td>07</td><td>Next-week plan + Q&amp;A</td><td>5 min</td><td>Agreed focus</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">Hard stop suggestion: 55 minutes. If D1–D4 are still open at minute 30, defer deep feature demos.</p>
+  </section>
+
+  <section id="scope">
+    <h2>4. What this pack is (and is not)</h2>
+    <div class="two-col">
+      <div class="col-box ok-bg">
+        <h4>WE WILL COVER</h4>
+        <ul class="compact">
+          <li>Full baseline from WG start to 3 Oct (first weekly)</li>
+          <li>Demo / Partial / Live language from the checklist glossary</li>
+          <li>Student + Applicant Demo progress and design system 0.6.1</li>
+          <li>Portal API + Neon Schema v3 + Vercel PoC endpoints</li>
+          <li>LMS docs (Q37), CMS inventories, ADR-1 SoR</li>
+          <li>Explicit decisions required to unblock Live M2</li>
+        </ul>
+      </div>
+      <div class="col-box no-bg">
+        <h4>WE WILL NOT CLAIM</h4>
+        <ul class="compact">
+          <li>That any capability is Live or campus-accepted</li>
+          <li>That Vercel/Neon is production architecture (UltaHost/k3s remains SDD-12)</li>
+          <li>That Neon Demo writes are CMS-acknowledged</li>
+          <li>That Schema v3 university defaults are signed LUCT policy</li>
+          <li>That Botswana / Sierra Leone inventories imply next Live campus</li>
+          <li>Native-app delivery (core mobile = phone-friendly web)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="banner">
+      <strong>THE POINT:</strong> Establish a weekly rhythm with honest status. Demo platform is walkable;
+      Live admissions still needs owners, access, auth, files, and CAP-53.
+    </div>
+  </section>
+
+  <section id="sequence">
+    <h2>5. Delivery sequence vs build centre of gravity</h2>
+    <p>
+      Milestone order follows the admissions-first decision. Bars below are <strong>order only</strong>;
+      every target week on the sheet remains TBC.
+    </p>
+
+    <div class="flow">
+      <div class="node">M1 Confirm rules<br/>and integration</div>
+      <span class="arrow">→</span>
+      <div class="node">M2 Admissions<br/>launch</div>
+      <span class="arrow">→</span>
+      <div class="node">M3 Core student<br/>portal</div>
+      <span class="arrow">→</span>
+      <div class="node">M4 Cyberjaya<br/>pilot acceptance</div>
+      <span class="arrow">→</span>
+      <div class="node">M5 Expansion and<br/>remaining CMS</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Milestone</th><th>Target</th><th>Must work</th><th>Engineering now (3 Oct)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>M1 Confirm rules &amp; integration</td>
+          <td>TBC</td>
+          <td>Rules, owners, old-CMS access, operating responsibilities</td>
+          <td>Schema policy framework + CMS inventories advanced; owners/access still open</td>
+        </tr>
+        <tr>
+          <td>M2 Admissions launch</td>
+          <td>TBC</td>
+          <td>Apply → evidence → offer → enrol on real records</td>
+          <td><span class="status demo">Applicant Demo UI started</span> · CAP-53 still stub · Staff admissions prefer old CMS</td>
+        </tr>
+        <tr>
+          <td>M3 Core student portal</td>
+          <td>TBC</td>
+          <td>Learning, timetable, assignments, fees, registration + lecturer/staff paths</td>
+          <td><span class="status demo">Student deep Demo</span> · Neon-backed session state · lecturer/staff paths Not started</td>
+        </tr>
+        <tr>
+          <td>M4 Cyberjaya pilot acceptance</td>
+          <td>TBC</td>
+          <td>Integrated pilot, training, campus accept</td>
+          <td>Operating readiness only (CAP-41 Not started)</td>
+        </tr>
+        <tr>
+          <td>M5 Expansion &amp; remaining CMS</td>
+          <td>TBC</td>
+          <td>Other campuses + progressive consolidation on verified gaps</td>
+          <td>SL/BW hubs + LMS research published; do not pull ahead of M2 Live</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>5.1 Frontend started vs not started (sheet snapshot basis)</h3>
+    <p class="muted">
+      Filled = frontend started on Faid sheet detailed tab (SDD-13, 19 Sep download; status cells unchanged at last sheet pull).
+      Engineering has since started Applicant Demo UI — sheet rows may lag; Live remains 0 either way.
+    </p>
+    <div class="progress-row">
+      <div class="label"><span>M2 Admissions — started 4 of 18 (sheet)</span><span>22%</span></div>
+      <div class="bar"><span style="width:22%"></span></div>
+    </div>
+    <div class="progress-row">
+      <div class="label"><span>M3 Core student — started 16 of 51 (sheet)</span><span>31%</span></div>
+      <div class="bar"><span style="width:31%"></span></div>
+    </div>
+    <div class="progress-row">
+      <div class="label"><span>M5 Expansion — started 12 of 34 (sheet)</span><span>35%</span></div>
+      <div class="bar"><span style="width:35%"></span></div>
+    </div>
+
+    <div class="warn">
+      <strong>Tension easing, not resolved:</strong> Applicant Demo UI finally moves engineering toward M2, but Student Demo
+      remains deepest. Keep Applicant + CAP-53 as P0 until D1 says otherwise.
+    </div>
+  </section>
+
+  <section id="delivered">
+    <h2>6. What has been delivered (baseline to 3 Oct)</h2>
+
+    <h3>6.1 Product baseline and knowledge system</h3>
+    <ul class="compact">
+      <li><strong>SDD catalogue</strong> SDD-00–15 with nomenclature anchors; open questions extended for Schema CS-01–CS-13 and LMS Q37.</li>
+      <li><strong>Central AI knowledge base</strong> at <code>control-plane/docs/ai/</code> — agents across sibling repos point here as SSOT.</li>
+      <li><strong>Published docs site</strong> — architecture, ERD (Schema v3), LMS hubs, CMS inventories, OpenAPI HTML, PoC page, design-system catalogue, site search.</li>
+      <li><strong>Stack config</strong> <code>repositories.yaml</code> + shared portal CI/CD template; git/CI status tooling.</li>
+    </ul>
+
+    <h3>6.2 Student portal (Demo — deepest Raisd UI)</h3>
+    <ul class="compact">
+      <li>Cyberjaya enrolled-student journeys: Academic, Profile, Online Forms, Immigration, Finance, Announcements, Policies, Services, Community.</li>
+      <li><strong>Demo sign-in + logout</strong> (Faid, 28–29 Sep): student number + password; credentials from gitignored control-plane file; HTTP login via Portal API.</li>
+      <li>Responsive 375–1440px; shared portal shell from design system; Chromium + WebKit gates.</li>
+      <li><strong>Latest recorded gate:</strong> 727 unit tests / 92 files; ~271 Chromium / 35 WebKit with intentional skips; production build + bundle budgets.</li>
+      <li>Pins <code>@raisd-campus/design-system@0.6.1</code>. Deployed Demo: <code>https://raisd-student-portal.vercel.app</code>.</li>
+    </ul>
+
+    <h3>6.3 Applicant portal (Demo — M2 surface now started)</h3>
+    <ul class="compact">
+      <li>Applicant UI preview with application checklist, fee/review summaries, Transfer Proof disclosure, reviewer messages (session-only).</li>
+      <li>Uses shared design system 0.6.1 (fields, conversation, survey/accordion patterns).</li>
+      <li>CI/CD deploys <code>main</code> to <code>https://raisd-applicant-portal.vercel.app</code>.</li>
+      <li>Still Demo — no Live CMS admissions writes; automated Applicant test suite not yet established as a full gate.</li>
+    </ul>
+
+    <h3>6.4 Design system</h3>
+    <ul class="compact">
+      <li>Published through <strong>v0.6.1</strong> (GitHub Packages): portal shell, survey layout, conversation/chat presentation, standard 36px fields, record summary cards, and related patterns.</li>
+      <li>Catalogue HTML + captures (≈89) validated; public mirror PR path documented for portal-api-docs.</li>
+      <li>Change-triggered catalogue / Docs-Impact rules for agents and CI.</li>
+    </ul>
+
+    <h3>6.5 Portal API + Schema v3 Demo</h3>
+    <ul class="compact">
+      <li>Dedicated <code>raisd-campus/portal-api</code> service (Fastify); OpenAPI expanded in control-plane.</li>
+      <li><strong>Schema v3 Demo:</strong> campus policy collections, university-default seeds, projections + SQL reporting views, audit events, <code>/v1/meta.schemaVersion</code>, LMS meta surface.</li>
+      <li>Demo records persist in Neon across instances/cold starts; <code>cms.mode = stub</code> — no Live CMS writes.</li>
+      <li>Demo passwords required on login; CI uses throwaway credentials.</li>
+    </ul>
+
+    <h3>6.6 LMS documentation (Q37 Option 1)</h3>
+    <ul class="compact">
+      <li>Published: <code>lms.html</code>, <code>lms-architecture.html</code>, <code>lms-features.html</code> from CAP + F01–F37.</li>
+      <li>Agent knowledge: <code>docs/ai/architecture/lms.md</code> + <code>lms-schema.md</code>.</li>
+      <li>Student Materials alone is not an LMS (BASE-44). No PPA LMS comparison in this generate set.</li>
+    </ul>
+
+    <h3>6.7 LUCT / existing CMS inventories</h3>
+    <table>
+      <thead>
+        <tr><th>Campus / dump</th><th>What landed</th><th>Use in this phase</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cyberjaya</td>
+          <td>Source + DB dump inventoried; CAP matrix (SDD-14); E2E hub; Obsidian FSD knowledge</td>
+          <td>Primary SoR for M1–M4; reuse staff desks</td>
+        </tr>
+        <tr>
+          <td>Sierra Leone</td>
+          <td>Structure dump + E2E hub on Pages</td>
+          <td>Expansion pattern — not next Live campus</td>
+        </tr>
+        <tr>
+          <td>Botswana</td>
+          <td>Inventory, ERD/DFD, E2E hub, DTEF / TEF.gov.bw sync</td>
+          <td>Expansion / scholarship evidence — not next Live campus</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="poc">
+    <h2>7. Demo estate (Vercel + Neon) — not production</h2>
+    <p>
+      PoC path deployed 28–29 September 2026. <strong>Not an ADR.</strong> Production remains UltaHost + k3s;
+      existing CMS stays SoR for Live writes (ADR-1 / SDD-12).
+    </p>
+    <table>
+      <thead>
+        <tr><th>Target</th><th>URL / location</th><th>State</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Student portal</td>
+          <td><code>https://raisd-student-portal.vercel.app</code></td>
+          <td><span class="status demo">Demo UI</span> · CI/CD on <code>main</code></td>
+        </tr>
+        <tr>
+          <td>Applicant portal</td>
+          <td><code>https://raisd-applicant-portal.vercel.app</code></td>
+          <td><span class="status demo">Demo UI</span> · CI/CD on <code>main</code></td>
+        </tr>
+        <tr>
+          <td>Lecturer portal</td>
+          <td><code>https://raisd-lecturer-portal.vercel.app</code></td>
+          <td><span class="status defer">Coming soon placeholder</span></td>
+        </tr>
+        <tr>
+          <td>Staff portal</td>
+          <td><code>https://raisd-staff-portal.vercel.app</code></td>
+          <td><span class="status defer">Coming soon placeholder</span></td>
+        </tr>
+        <tr>
+          <td>Portal API</td>
+          <td><code>https://raisd-portal-api.vercel.app</code></td>
+          <td><span class="status demo">Demo API</span> · manual deploy; CI smoke checks</td>
+        </tr>
+        <tr>
+          <td>Neon Postgres</td>
+          <td><code>neondb</code> · aws-ap-southeast-1</td>
+          <td><span class="status demo">Schema v3 Demo records</span></td>
+        </tr>
+        <tr>
+          <td>DB admin</td>
+          <td><code>https://raisd-db-admin.vercel.app</code> (team)</td>
+          <td><span class="status ok">Read-only browser</span></td>
+        </tr>
+        <tr>
+          <td>Public docs</td>
+          <td><code>https://raisd-campus.github.io/portal-api-docs/</code></td>
+          <td><span class="status ok">OpenAPI · diagrams · PoC page</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warn">
+      PoC limits: no CMS; free-tier Neon cold starts; shared Demo students; session rows accumulate; credentials stay in gitignored
+      <code>control-plane/.credentials/</code>. Never present these URLs as Live campus systems.
+    </div>
+  </section>
+
+  <section id="capabilities">
+    <h2>8. Capability status snapshot</h2>
+    <p class="muted">
+      Sheet columns from SDD-13 (19 Sep). Engineering notes reflect 3 Oct cut where they diverge.
+      Live = 0 everywhere.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Portal / surface</th><th>Sheet started</th><th>Live</th><th>Engineering read (3 Oct)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Applicant</td>
+          <td>0 of 7</td>
+          <td>0</td>
+          <td><span class="status demo">Demo UI started</span> — update sheet</td>
+        </tr>
+        <tr>
+          <td>Student</td>
+          <td>31 of 40</td>
+          <td>0</td>
+          <td><span class="status demo">Deep Demo + Neon</span></td>
+        </tr>
+        <tr>
+          <td>Lecturer</td>
+          <td>0 of 18</td>
+          <td>0</td>
+          <td><span class="status defer">Placeholder deploy only</span></td>
+        </tr>
+        <tr>
+          <td>Admin / staff</td>
+          <td>0 of 37</td>
+          <td>0</td>
+          <td><span class="status defer">Prefer old CMS desks</span></td>
+        </tr>
+        <tr>
+          <td>Shared system</td>
+          <td>CAP-53 Partial</td>
+          <td>0</td>
+          <td><span class="status wip">Portal API Demo / stub CMS</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>8.1 M2 critical path</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Surface</th><th>Task</th><th>Now</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>CAP-02 / 03 / 07 / 55</td><td>Applicant</td><td>Apply, evidence, track/offer/accept, declarations</td><td>Demo UI in progress — not Live</td></tr>
+        <tr><td>CAP-01</td><td>Applicant / Student</td><td>Sign-in and account</td><td>Student Demo password login · Applicant Demo · campus identity TBC</td></tr>
+        <tr><td>CAP-03/05/06/07</td><td>Staff</td><td>Review evidence, quals, offer, first enrolment</td><td>Not started as Raisd app — use old CMS unless gap</td></tr>
+        <tr><td>CAP-53</td><td>Shared</td><td>Portal API ↔ existing CMS</td><td>Partial / stub — gates Live</td></tr>
+        <tr><td>CAP-35 / 36</td><td>Applicant</td><td>Accessible forms · mobile shell</td><td>Responsive work in progress via shared DS — not Live acceptance</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="architecture">
+    <h2>9. Architecture and SoR posture</h2>
+    <div class="arch">
+      <div class="row">
+        <div class="node">Applicant</div>
+        <div class="node">Student</div>
+        <div class="node">Lecturer</div>
+        <div class="node">Staff</div>
+      </div>
+      <div class="caption">↓ auth · RBAC · responsive shell · design-system 0.6.1 ↓</div>
+      <div class="row"><div class="node core">Portal API</div></div>
+      <div class="caption">↓ Live: write success only after CMS ack · Demo today: stub + Neon ↓</div>
+      <div class="row">
+        <div class="node sor">Cyberjaya CMS SoR</div>
+        <div class="node poc">Neon Demo DB</div>
+        <div class="node">Durable files (TBC)</div>
+        <div class="node">Monitoring / backups</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Horizon</th><th>What we deliver</th><th>System of record</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>This phase (M1–M4)</td>
+          <td>Modern portal UX via Portal API; staff ops on verified old desks unless gap proven</td>
+          <td>Existing Cyberjaya CMS</td>
+        </tr>
+        <tr>
+          <td>Demo PoC (now)</td>
+          <td>Walkable portals + API + Schema v3 on Vercel/Neon</td>
+          <td>Neon Demo only — not campus SoR</td>
+        </tr>
+        <tr>
+          <td>Longer term (M5+)</td>
+          <td>Campus expansion + progressive consolidation toward one-stop CMS</td>
+          <td>Migrate domain-by-domain after verified gap + migration strategy</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="banner">
+      <strong>Schema v3 hierarchy:</strong> canonical vocabulary → university default → campus override (effective-dated).
+      Incomplete campus policy confirmation blocks that campus’s Live feature only — not the schema. Demo defaults are
+      structural examples until department sign-off.
+    </div>
+  </section>
+
+  <section id="estate">
+    <h2>10. Repository estate and verification</h2>
+    <table>
+      <thead>
+        <tr><th>Repository</th><th>Owns</th><th>Baseline state (3 Oct pull)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>control-plane</code></td><td>SSOT docs, SDD, OpenAPI, stack tooling</td><td><span class="status ok">Active SSOT</span> · <code>f8d54d1</code></td></tr>
+        <tr><td><code>student-portal</code></td><td>Enrolled-student web</td><td><span class="status demo">Deep Demo</span> · DS 0.6.1 · Vercel</td></tr>
+        <tr><td><code>applicant-portal</code></td><td>Online registration</td><td><span class="status demo">Demo UI started</span> · Vercel</td></tr>
+        <tr><td><code>portal-api</code></td><td>Only HTTP surface portals call</td><td><span class="status demo">Neon Schema v3</span> · stub CMS</td></tr>
+        <tr><td><code>design-system</code></td><td>Shared tokens/components</td><td><span class="status ok">v0.6.1 published</span></td></tr>
+        <tr><td><code>portal-api-docs</code></td><td>Public OpenAPI + diagram mirrors</td><td><span class="status ok">Publishing</span></td></tr>
+        <tr><td><code>db-admin</code></td><td>Read-only Neon browser</td><td><span class="status ok">Deployed (team)</span></td></tr>
+        <tr><td><code>lecturer-portal</code> / <code>staff-portal</code></td><td>Role webs</td><td><span class="status defer">Placeholder + CI/CD</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>10.1 Quality gates (latest recorded)</h3>
+    <ul class="compact">
+      <li><strong>Student:</strong> lint, 727 unit tests / 92 files, production build/isolation, bundle budgets, Chromium/WebKit matrices (some known date-dependent fixture failures on full runs; focused retries green).</li>
+      <li><strong>Design system:</strong> typecheck, unit + consumer fixture + browser checks per release; package published via CI.</li>
+      <li><strong>Portal API:</strong> CI smoke (health, meta, login, wrong password 401, portal call, logout revoke).</li>
+      <li><strong>Applicant:</strong> TypeScript/build + manual responsive review; automated suite still thin vs Student.</li>
+      <li>Physical iPhone confirmation remains the final device check for some shell behaviours.</li>
+    </ul>
+  </section>
+
+  <section id="next">
+    <h2>11. Proposed next week and asks</h2>
+    <table>
+      <thead>
+        <tr><th>Priority</th><th>Work</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>P0</td>
+          <td>Close D1–D4 in this meeting; write owners into the checklist Timeline tab</td>
+          <td>Unblocks calendar and accountability</td>
+        </tr>
+        <tr>
+          <td>P0</td>
+          <td>CAP-53 admissions slice spike: map callable CMS surface → Portal API methods</td>
+          <td>Only path from Neon Demo to Live writes</td>
+        </tr>
+        <tr>
+          <td>P1</td>
+          <td>Continue Applicant Demo toward CAP-02/03/07 completeness; add Applicant automated smoke</td>
+          <td>Aligns build with M2</td>
+        </tr>
+        <tr>
+          <td>P1</td>
+          <td>Auth decision write-up (CMS vs SSO) with Cyberjaya constraints</td>
+          <td>Closes B4 / Q3</td>
+        </tr>
+        <tr>
+          <td>P2</td>
+          <td>Refresh Faid sheet Applicant rows to Demo where engineering has started</td>
+          <td>Stops false “0 of 7” narrative</td>
+        </tr>
+        <tr>
+          <td>P2</td>
+          <td>Keep student work limited to shared DS reuse / gate hygiene unless D1 changes</td>
+          <td>Protects sequence</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>11.1 Asks of the working group</h3>
+    <ul class="compact">
+      <li>Name owners for Registry, Faculty, Bursary, QA, Marketing, IT, and old-CMS API access.</li>
+      <li>Reconfirm admissions-first now that Applicant Demo exists (D1).</li>
+      <li>Pick a kickoff week even if later milestones stay TBC.</li>
+      <li>Grant (or schedule) access to callable CMS APIs/environments for CAP-53.</li>
+      <li>Agree file-store posture for evidence (D5).</li>
+      <li>Confirm who should receive weekly PDFs / Vercel Demo credentials.</li>
+    </ul>
+  </section>
+
+  <section id="sources">
+    <h2>12. Sources and status language</h2>
+    <table>
+      <thead>
+        <tr><th>Source</th><th>Role in this pack</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Faid Daily Checklist / SDD-13</td><td>Sheet FE start counts; Live = 0</td></tr>
+        <tr><td>SDD-00…15 / <code>docs/ai/</code></td><td>Architecture, milestones, CAP catalogue, open questions</td></tr>
+        <tr><td>Student + Applicant handoff / README</td><td>Verification and Demo depth</td></tr>
+        <tr><td><code>vercel-neon-poc.md</code></td><td>Demo estate endpoints and limits</td></tr>
+        <tr><td>Canonical schema LUCT readiness</td><td>Schema v3 + CS-01–CS-13</td></tr>
+        <tr><td>Aslam WG chat 23 Sep 2026</td><td>ADR-1 SoR confirmation</td></tr>
+        <tr><td>Pulled <code>raisd-campus/*</code> mains 3 Oct 2026</td><td>Engineering cut for this PDF</td></tr>
+      </tbody>
+    </table>
+
+    <h3>12.1 Status glossary</h3>
+    <table>
+      <thead>
+        <tr><th>Term</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Demo</td><td>UI/API on sample or temporary/Neon Demo data; no Live CMS ack; no campus acceptance</td></tr>
+        <tr><td>Placeholder</td><td>Screen or control exists; intended action does not</td></tr>
+        <tr><td>Partial</td><td>Some of the capability exists; key workflow or acceptance missing</td></tr>
+        <tr><td>Live</td><td>Accepted, real data, access controls, accountable owner</td></tr>
+        <tr><td>Needs checking</td><td>Not verified with owning department or old-CMS owner</td></tr>
+        <tr><td>PoC</td><td>Vercel/Neon demonstration path — not production architecture</td></tr>
+      </tbody>
+    </table>
+
+    <p class="muted" style="margin-top:1rem;">
+      Pack path: <code>docs/reports/weekly-progress-2026-10-03/</code>.
+      Subsequent weeks should keep this layout and lead with a week-over-week delta.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Raisd Campus · Working Group CMS 2026 · Weekly Progress Report · 3 October 2026 (regenerated after main pull) · First weekly meeting pack · Prepared by Iman Suherman · Not a Live acceptance record
+  </div>
+</footer>
+</body>
+</html>

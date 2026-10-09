@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — Weekly Progress (2026-10-10)</title>
+<style>
+  :root {
+    --ink: #122028; --muted: #62747e; --line: #d5e0e5;
+    --accent: #0f6b5d; --accent-deep: #0a4a41; --bg: #eef3f6; --panel: #fff;
+    --warm: #9a6418; --warm-soft: #f7edd8; --green: #166534; --green-soft: #dcfce7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif; font-size: 15px; line-height: 1.5; }
+  header { background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem; }
+  header .wrap, main, footer .wrap { max-width: 920px; margin: 0 auto; }
+  .kicker { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem; }
+  header h1 { margin: 0 0 0.55rem; font-size: 1.65rem; font-weight: 700; color: #fff; }
+  .doc-meta { margin-top: 0.9rem; padding: 0.9rem 1.05rem; border-radius: 8px;
+    background: #fff; border: 1px solid #d7e3df; color: var(--ink); max-width: 48rem; }
+  .doc-meta p { margin: 0 0 0.35rem; } .doc-meta p:last-child { margin: 0; }
+  main { padding: 1.5rem 1.25rem 2.5rem; }
+  h2 { margin: 1.75rem 0 0.65rem; font-size: 1.2rem; color: var(--accent-deep); }
+  h3 { margin: 1.1rem 0 0.4rem; font-size: 1.02rem; }
+  p, li { color: #24333a; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: #f4f8f7; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+  .tag { display: inline-block; padding: 0.1rem 0.45rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+  .tag-done { background: var(--green-soft); color: var(--green); }
+  .tag-wait { background: var(--warm-soft); color: var(--warm); }
+  .tag-open { background: #eef1f5; color: var(--muted); }
+  .callout { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; }
+  a { color: var(--accent-deep); }
+  footer { padding: 1rem 1.25rem 2rem; color: var(--muted); font-size: 0.85rem; }
+  ul { padding-left: 1.2rem; }
+  @media print { body { background: #fff; } header { break-after: avoid; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group · Weekly progress</p>
+    <h1>Raisd Campus — week of 4–10 October 2026</h1>
+    <div class="doc-meta">
+      <p><strong>Cut:</strong> 10 October 2026 · Compiled for the next weekly meeting</p>
+      <p><strong>Source standups:</strong> Read.ai CMS 2026 Daily · 7 Oct · 8 Oct · <strong>9 Oct</strong></p>
+      <p><strong>Pilot:</strong> Lesotho (M4) · Demo ≠ Live</p>
+    </div>
+  </div>
+</header>
+<main>
+  <h2>1. Snapshot</h2>
+  <div class="callout">
+    Documentation and GitHub Pages caught up on Applicant merge analysis, Cambodia QR (auto + manual ops),
+    fee/payment SPs (C1–C10), campus finance profile YAML for Faid, CAP-53 online-enrolment write path,
+    and the dynamic fee-calculation proposal from the 9 Oct standup.
+  </div>
+  <table>
+    <thead><tr><th>Theme</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Applicant campus / Eligibility→Offer</td><td><span class="tag tag-done">Shipped Demo</span></td><td>Merge <code>9e007f2</code> · prod SPA <code>532d6f0</code>. Open: Staff Offer release, LGCSE, real catalogue.</td></tr>
+      <tr><td>Fee / payment SP analysis</td><td><span class="tag tag-done">Published</span></td><td>Currency matrix M/R/MYR · cases C1–C10 · NMDS separate.</td></tr>
+      <tr><td>Campus finance profile</td><td><span class="tag tag-wait">Awaiting Accept</span></td><td>YAML seeds live; Faid ticks pending. Dexter to validate C1–C10 vs SP.</td></tr>
+      <tr><td>Dynamic fee calculation</td><td><span class="tag tag-done">Proposal out</span></td><td>Configurable rules — not hard-coded SP copy (9 Oct action).</td></tr>
+      <tr><td>CAP-53 online-enrolment writes</td><td><span class="tag tag-wait">Path only</span></td><td>W1 documented; not implemented in Portal API.</td></tr>
+      <tr><td>Cambodia QR</td><td><span class="tag tag-done">Documented</span></td><td>Auto path + Dexter KH↔CY manual ops.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. What moved this week</h2>
+  <h3>Knowledge base &amp; Pages</h3>
+  <ul>
+    <li>Lesotho CMS vs Applicant (flows, backlog, Mermaid) — Pages live.</li>
+    <li>Cambodia certificate QR full pack + manual ops swimlane.</li>
+    <li>Fee/payment SPs + campus finance profile (Faid) + CAP-53 online-enrol Pages.</li>
+    <li>Reviewable config: <code>docs/ai/contracts/campus-finance-profiles.yaml</code>.</li>
+    <li>Dynamic fee-calculation proposal (10 Oct) for 9 Oct standup action.</li>
+  </ul>
+  <h3>Published commits (control-plane / portal-api-docs)</h3>
+  <ul>
+    <li><code>control-plane</code> <code>abd71e3</code> · finance YAML + CAP-53 W1 path (after <code>2250480</code> fee/profile pack).</li>
+    <li><code>portal-api-docs</code> <code>48459d9</code> · Pages deploy succeeded (run after prior <code>51c89f9</code>).</li>
+  </ul>
+  <p>Hub: <a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/">Lesotho LUCT Pages</a></p>
+
+  <h2>3. Action items from 9 Oct standup</h2>
+  <table>
+    <thead><tr><th>#</th><th>Owner</th><th>Action</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Dexter</td><td>Validate Iman’s C1–C10 interpretation against stored procedures</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>2</td><td>Participant</td><td>Provide fee amounts for add/drop module forms</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>3</td><td>Participant</td><td>Confirm fee amount for proposed module-registration flow</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>4</td><td>Faid</td><td>Create Lesotho campus scenario and share with the group</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>5</td><td>Participant</td><td>Confirm whether lecturer evaluation form is still in use / updated</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>6</td><td>Iman</td><td>Document proposed dynamic fee-calculation approach</td><td><span class="tag tag-done">Done</span></td></tr>
+      <tr><td>7</td><td>Iman</td><td>Compile the week’s updates for the next weekly meeting</td><td><span class="tag tag-done">Done</span></td></tr>
+      <tr><td>8</td><td>Faid</td><td>Test changes, particularly Lesotho work</td><td><span class="tag tag-wait">Open</span></td></tr>
+      <tr><td>9</td><td>Aslam</td><td>Try to push code changes to a branch</td><td><span class="tag tag-wait">Open</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Asks for this weekly</h2>
+  <ol>
+    <li><strong>Dexter</strong> — C1–C10 SP validation so finance YAML can leave “proposed”.</li>
+    <li><strong>Faid</strong> — Accept/Change/Defer on campus finance profile; share Lesotho scenario; Lesotho testing.</li>
+    <li><strong>Finance / Registry</strong> — add/drop + module-registration fee amounts (and currency).</li>
+    <li><strong>Product</strong> — lecturer evaluation form currency (still 1–5 scale?).</li>
+  </ol>
+
+  <h2>5. Links</h2>
+  <ul>
+    <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/campus-finance-profile.html">Campus finance profile (Faid)</a></li>
+    <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/dynamic-fee-calculation.html">Dynamic fee calculation</a></li>
+    <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a></li>
+    <li><a href="https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-lesotho/cap53-online-enrolment.html">CAP-53 online-enrolment W1</a></li>
+    <li><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml">campus-finance-profiles.yaml</a></li>
+  </ul>
+</main>
+<footer><div class="wrap">Raisd Campus · control-plane · weekly progress 2026-10-10 · Demo ≠ Live</div></footer>
+</body>
+</html>

@@ -74,6 +74,16 @@ targets:
   sdd-03: sdd/03-delivery-milestones.html
   openapi: openapi.html
   vercel-poc: poc/vercel-neon.html
+  reports: reports/index.html
+  reports-w01: reports/weekly/2026-09-19.html
+  reports-w02: reports/weekly/2026-09-26.html
+  reports-w03: reports/weekly/2026-10-03.html
+  reports-w04: reports/weekly/2026-10-10.html
+  report-weekly-2026-10-03: reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html
+  report-weekly-2026-10-10: reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html
+  report-exec-2026-10-05: reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html
+  report-exec-2026-10-07: reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html
+  report-lesotho-briefing: reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html
 
 # External (absolute) link ids used in the menu
 external:
@@ -200,6 +210,16 @@ path_rules:
     section: sdd
   - match: { prefix: poc/ }
     section: vercel-poc
+  - match: { prefix: reports/weekly/, file: 2026-09-19.html }
+    section: reports-w01
+  - match: { prefix: reports/weekly/, file: 2026-09-26.html }
+    section: reports-w02
+  - match: { prefix: reports/weekly/, file: 2026-10-03.html }
+    section: reports-w03
+  - match: { prefix: reports/weekly/, file: 2026-10-10.html }
+    section: reports-w04
+  - match: { prefix: reports/ }
+    section: reports
 
 # Primary header menu (top-level chips + flyouts)
 # href / children.href: target id, external id, or "id#anchor"
@@ -210,6 +230,7 @@ menu:
     children:
       - { label: Diagrams hub, href: overview }
       - { label: Project progress, href: "overview#progress" }
+      - { label: Weekly reports, href: reports }
       - { label: Public endpoints, href: "overview#endpoints" }
       - { label: Distributed CMS, href: distributed }
       - { label: Architecture, href: architecture }
@@ -408,6 +429,31 @@ menu:
       - { label: Sierra Leone CMS inventory, href: ai-old-cms-sierra-leone }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
+  - label: Weekly reports
+    href: reports
+    active:
+      - reports
+      - reports-w01
+      - reports-w02
+      - reports-w03
+      - reports-w04
+      - report-weekly-2026-10-03
+      - report-weekly-2026-10-10
+      - report-exec-2026-10-05
+      - report-exec-2026-10-07
+      - report-lesotho-briefing
+    children:
+      - { label: Reports hub, href: reports }
+      - { label: "W01 · 18–19 Sep", href: reports-w01 }
+      - { label: "W02 · 20–26 Sep", href: reports-w02 }
+      - { label: "W03 · 27 Sep–3 Oct", href: reports-w03 }
+      - { label: "W04 · 4–10 Oct (current)", href: reports-w04 }
+      - { label: Weekly pack 3 Oct, href: report-weekly-2026-10-03 }
+      - { label: Weekly pack 10 Oct, href: report-weekly-2026-10-10 }
+      - { label: Executive 5 Oct, href: report-exec-2026-10-05 }
+      - { label: Executive 7 Oct, href: report-exec-2026-10-07 }
+      - { label: Lesotho briefing 5 Oct, href: report-lesotho-briefing }
+
   - label: SDD
     href: sdd
     active: [sdd, sdd-15, sdd-11, sdd-03]
@@ -446,6 +492,36 @@ search:
     section: Overview
     summary: High-level Raisd progress percentages — Live, frontend started, platform readiness, pending, blockers, bar/line/pie charts and delivery sequence table.
     keywords: [progress, percent, percentage, timeline, sequence, chart, blocker, pending, milestone, weekly, sponsor]
+
+  - title: Weekly reports
+    href: reports
+    section: Weekly reports
+    summary: Working Group weekly progress hub — week pages from 18 Sep 2026 kickoff through the current Friday cut, plus PDF/HTML packs.
+    keywords: [weekly, report, progress, pack, wg, standup, status]
+
+  - title: Week 1 · 18–19 Sep 2026
+    href: reports-w01
+    section: Weekly reports
+    summary: Kickoff week — Working Group start, Faid checklist, applicant/student portal repos.
+    keywords: [week1, w01, kickoff, september]
+
+  - title: Week 2 · 20–26 Sep 2026
+    href: reports-w02
+    section: Weekly reports
+    summary: Design system and portal shells; Portal API repo bootstrap; first Applicant UI.
+    keywords: [week2, w02, design-system, portal-api]
+
+  - title: Week 3 · 27 Sep–3 Oct 2026
+    href: reports-w03
+    section: Weekly reports
+    summary: First formal weekly pack — Vercel+Neon Demo, Lesotho pilot decision, schema/LMS docs.
+    keywords: [week3, w03, lesotho, pilot, baseline]
+
+  - title: Week 4 · 4–10 Oct 2026
+    href: reports-w04
+    section: Weekly reports
+    summary: CAP-53, CMS vs Applicant, Faid merges, fee/finance YAML, Vercel API enablement, fee amounts.
+    keywords: [week4, w04, fee, finance, cap-53, faid]
 
   - title: Distributed CMS target
     href: distributed
