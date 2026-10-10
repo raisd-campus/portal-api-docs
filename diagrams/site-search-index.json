@@ -104,6 +104,24 @@
       "path": "reports/weekly/2026-10-10.html"
     },
     {
+      "title": "E2E Demo enrol \u00b7 11 Oct 2026",
+      "summary": "Hosted Demo walkthrough with screenshots \u2014 Applicant fee submit, Staff Bursary approve, Student Alya enrolment path.",
+      "section": "Weekly reports",
+      "keywords": [
+        "e2e",
+        "end-to-end",
+        "applicant",
+        "staff",
+        "bursary",
+        "student",
+        "enrol",
+        "screenshot",
+        "keychain",
+        "demo"
+      ],
+      "path": "reports/e2e-applicant-staff-enrol-2026-10-11/index.html"
+    },
+    {
       "title": "Distributed CMS target",
       "summary": "Ideal multi-country Raisd CMS with distributed data planes, white-label packs, and feature flags.",
       "section": "Distributed CMS",

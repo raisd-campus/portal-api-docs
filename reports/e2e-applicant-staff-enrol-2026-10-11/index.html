@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — E2E Demo: Applicant → Staff → Student (2026-10-11)</title>
+<style>
+  :root {
+    --ink: #122028; --ink-soft: #334650; --muted: #62747e; --line: #d5e0e5;
+    --accent: #0f6b5d; --accent-deep: #0a4a41; --accent-soft: #e3f2ee;
+    --warm: #9a6418; --warm-soft: #f7edd8;
+    --green: #166534; --green-soft: #dcfce7;
+    --bg: #eef3f6; --panel: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem;
+  }
+  header .wrap, main, footer .wrap { max-width: 1040px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem;
+  }
+  header h1 { margin: 0 0 0.55rem; font-size: 1.65rem; font-weight: 700; color: #fff; }
+  .lede { margin: 0; color: #d7ebe6; max-width: 48rem; }
+  .doc-meta {
+    margin: 0.95rem 0 0; padding: 0.9rem 1.05rem; border-radius: 8px;
+    background: #fff; border: 1px solid #d7e3df; color: #122028;
+    font-size: 0.95rem; max-width: 52rem;
+  }
+  .doc-meta p { margin: 0 0 0.4rem; }
+  .doc-meta p:last-child { margin: 0; }
+  .doc-meta strong { color: #0a4a41; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .pill {
+    display: inline-block; padding: 0.25rem 0.7rem; border-radius: 999px;
+    font-size: 0.78rem; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  }
+  main { padding: 1.5rem 1.25rem 2.5rem; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem; font-size: 1.22rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+  }
+  h3 { margin: 0 0 0.45rem; font-size: 1.05rem; color: var(--accent-deep); }
+  p, li { color: var(--ink-soft); }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--line); padding: 0.48rem 0.6rem; text-align: left; vertical-align: top; }
+  th {
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.86em; }
+  a { color: var(--accent-deep); }
+  .status {
+    display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px;
+    font-size: 0.74rem; font-weight: 700;
+  }
+  .ok { background: var(--green-soft); color: var(--green); }
+  .demo { background: #dbeafe; color: #1e3a5f; }
+  .toc ol { margin: 0.4rem 0 0; padding-left: 1.25rem; }
+  .toc li { margin: 0.25rem 0; }
+  .step {
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 1rem 1.1rem; margin: 0 0 1rem; background: #fafcfc;
+  }
+  .step-meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem;
+    align-items: baseline; margin: 0 0 0.55rem;
+  }
+  .step-num {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .shot {
+    display: block; width: 100%; border: 1px solid var(--line);
+    border-radius: 8px; margin-top: 0.65rem; background: #111;
+  }
+  .flow {
+    display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center;
+    margin: 0.75rem 0 0.25rem;
+  }
+  .flow span {
+    background: var(--accent-soft); color: var(--accent-deep);
+    border: 1px solid #9dcdc2; border-radius: 999px;
+    padding: 0.28rem 0.7rem; font-size: 0.82rem; font-weight: 700;
+  }
+  .flow i { color: var(--muted); font-style: normal; }
+  footer { padding: 0.5rem 1.25rem 2rem; color: var(--muted); font-size: 0.85rem; }
+  @media print {
+    body { background: #fff; }
+    .shot { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group · End-to-end Demo test</p>
+    <h1>Applicant → Staff payment → Student enrolment</h1>
+    <p class="lede">
+      Hosted Demo walkthrough executed on 11 Oct 2026 with step screenshots.
+      Demo ≠ Live — sample Neon / Portal API state only.
+    </p>
+    <div class="doc-meta">
+      <p><strong>Captured:</strong> 11 Oct 2026 (UTC morning) · Playwright against production Vercel Demo hosts</p>
+      <p><strong>Result:</strong> <span class="status ok">PASS</span> — submit fee proof → Bursary approve → Enrolment Accepted → Student Portal (Alya <code>10029841</code>)</p>
+      <p><strong>Hub:</strong> <a href="../index.html">Weekly reports</a> · live Pages:
+        <a href="https://raisd-campus.github.io/portal-api-docs/reports/e2e-applicant-staff-enrol-2026-10-11/">portal-api-docs mirror</a>
+      </p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Demo</span>
+      <span class="pill">Applicant Portal</span>
+      <span class="pill">Staff Portal</span>
+      <span class="pill">Student Portal</span>
+      <span class="pill">Keychain</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>Summary</h2>
+    <div class="flow" aria-label="Flow">
+      <span>Keychain</span><i>→</i>
+      <span>Applicant submit</span><i>→</i>
+      <span>Bursary approve</span><i>→</i>
+      <span>Enrolment accepted</span><i>→</i>
+      <span>Student Alya</span>
+    </div>
+    <p>
+      The Demo completed scenario starts as a draft ready to submit (fee step with bank reference + <code>payment.pdf</code>).
+      After submit, Staff Bursary sees <strong>pending verification</strong>, runs
+      <strong>Approve payment → enrol student</strong>, and the applicant card becomes
+      <strong>Enrolment Accepted</strong>. The promoted Demo student path continues as Alya Putri in the Student Portal.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Surface</th><th>URL</th><th>Account used</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Demo Keychain</td>
+          <td><a href="https://raisd-keychain.vercel.app/">raisd-keychain.vercel.app</a></td>
+          <td>Master unlock (WG only)</td>
+        </tr>
+        <tr>
+          <td>Applicant Portal</td>
+          <td><a href="https://raisd-applicant-portal.vercel.app/">raisd-applicant-portal.vercel.app</a></td>
+          <td>Scenario <code>completed</code> (Draft ready to submit)</td>
+        </tr>
+        <tr>
+          <td>Staff Portal</td>
+          <td><a href="https://raisd-staff-portal.vercel.app/">raisd-staff-portal.vercel.app</a></td>
+          <td>Bursary desk <code>bursary</code></td>
+        </tr>
+        <tr>
+          <td>Student Portal</td>
+          <td><a href="https://raisd-student-portal.vercel.app/">raisd-student-portal.vercel.app</a></td>
+          <td>Alya Putri <code>10029841</code></td>
+        </tr>
+        <tr>
+          <td>Portal API</td>
+          <td><a href="https://raisd-portal-api.vercel.app/">raisd-portal-api.vercel.app</a></td>
+          <td>Staff RPC queue / enrol</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="muted">Passwords are not published here. Use Demo Keychain (Open filled) or the WG credential note.</p>
+  </section>
+
+  <section class="toc">
+    <h2>Steps</h2>
+    <ol>
+      <li><a href="#s01">Keychain unlocked</a></li>
+      <li><a href="#s02">Applicant sign-in (draft ready to submit)</a></li>
+      <li><a href="#s03">Applicant home — draft card</a></li>
+      <li><a href="#s04">Application fee step</a></li>
+      <li><a href="#s05">Submitted — payment under review</a></li>
+      <li><a href="#s05b">Submitted application detail</a></li>
+      <li><a href="#s06">Staff sign-in (Bursary)</a></li>
+      <li><a href="#s07">Payment queue — pending</a></li>
+      <li><a href="#s08">Approved — enrolled</a></li>
+      <li><a href="#s09">Applicant — Enrolment Accepted</a></li>
+      <li><a href="#s10">Student sign-in (Alya)</a></li>
+      <li><a href="#s11">Student dashboard</a></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Evidence</h2>
+
+    <article class="step" id="s01">
+      <div class="step-meta">
+        <span class="step-num">Step 01</span>
+        <h3>Demo Keychain unlocked</h3>
+        <span class="status demo">Setup</span>
+      </div>
+      <p>Unlock Keychain, then use Open filled for Staff / Student desks. Confirms the one-place Demo login hub.</p>
+      <img class="shot" src="screenshots/01-keychain-unlocked.png" alt="Demo Keychain unlocked with staff and student desks"/>
+    </article>
+
+    <article class="step" id="s02">
+      <div class="step-meta">
+        <span class="step-num">Step 02</span>
+        <h3>Applicant Portal — Draft ready to submit</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Select scenario <strong>Draft ready to submit</strong> (<code>completed</code>) and sign in through Portal API Demo auth.</p>
+      <img class="shot" src="screenshots/02-applicant-sign-in.png" alt="Applicant Portal sign-in with completed scenario selected"/>
+    </article>
+
+    <article class="step" id="s03">
+      <div class="step-meta">
+        <span class="step-num">Step 03</span>
+        <h3>Applicant home — draft application</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>My Applications shows the draft card (not yet submitted).</p>
+      <img class="shot" src="screenshots/03-applicant-home.png" alt="Applicant My Applications draft card"/>
+    </article>
+
+    <article class="step" id="s04">
+      <div class="step-meta">
+        <span class="step-num">Step 04</span>
+        <h3>Application fee step</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Step 6 of 6 — bank transfer details, reference <code>DEMO-REF-1</code>, proof <code>payment.pdf</code>. Submit Application opens confirmation.</p>
+      <img class="shot" src="screenshots/04-applicant-fee.png" alt="Application fee step with bank reference and payment.pdf"/>
+    </article>
+
+    <article class="step" id="s05">
+      <div class="step-meta">
+        <span class="step-num">Step 05</span>
+        <h3>Submitted — payment proof under review</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>After confirm, status becomes <strong>Payment Proof Under Review</strong> (submitted 11/10/2026).</p>
+      <img class="shot" src="screenshots/05-applicant-submitted.png" alt="Application card Payment Proof Under Review"/>
+    </article>
+
+    <article class="step" id="s05b">
+      <div class="step-meta">
+        <span class="step-num">Step 05b</span>
+        <h3>Submitted application detail</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Opened submitted view while awaiting Bursary.</p>
+      <img class="shot" src="screenshots/05b-applicant-submitted-detail.png" alt="Submitted application detail awaiting Bursary"/>
+    </article>
+
+    <article class="step" id="s06">
+      <div class="step-meta">
+        <span class="step-num">Step 06</span>
+        <h3>Staff Portal — Bursary sign-in</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Bursary desk username filled; Demo ≠ Live banner visible.</p>
+      <img class="shot" src="screenshots/06-staff-sign-in.png" alt="Staff Portal sign-in with bursary username"/>
+    </article>
+
+    <article class="step" id="s07">
+      <div class="step-meta">
+        <span class="step-num">Step 07</span>
+        <h3>Payment verification queue — pending</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Live Demo queue from Portal API. <strong>Demo Draft Applicant</strong> is <strong>pending verification</strong>; approve control enabled.</p>
+      <img class="shot" src="screenshots/07-staff-payment-queue.png" alt="Staff payment queue with pending Demo Draft Applicant"/>
+    </article>
+
+    <article class="step" id="s08">
+      <div class="step-meta">
+        <span class="step-num">Step 08</span>
+        <h3>Approve payment → enrol student</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>
+        Success banners: payment accepted, documents verified, enrolment accepted.
+        Continue as <strong>Alya Putri (10029841)</strong>. Queue status for Demo Draft Applicant is <strong>enrolled</strong>.
+      </p>
+      <img class="shot" src="screenshots/08-staff-approved.png" alt="Staff approved payment with enrolled banners"/>
+    </article>
+
+    <article class="step" id="s09">
+      <div class="step-meta">
+        <span class="step-num">Step 09</span>
+        <h3>Applicant — Enrolment Accepted</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Re-opened Applicant Portal as the same completed scenario; card status is green <strong>Enrolment Accepted</strong>.</p>
+      <img class="shot" src="screenshots/09-applicant-after-enrol.png" alt="Applicant My Applications Enrolment Accepted"/>
+    </article>
+
+    <article class="step" id="s10">
+      <div class="step-meta">
+        <span class="step-num">Step 10</span>
+        <h3>Student Portal sign-in</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Registration Week Demo student Alya Putri <code>10029841</code>.</p>
+      <img class="shot" src="screenshots/10-student-sign-in.png" alt="Student Portal sign-in for Alya Putri"/>
+    </article>
+
+    <article class="step" id="s11">
+      <div class="step-meta">
+        <span class="step-num">Step 11</span>
+        <h3>Student dashboard</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Dashboard loads for Alya with programme context, announcements, and Registration Week action cue.</p>
+      <img class="shot" src="screenshots/11-student-home.png" alt="Student Portal dashboard for Alya Putri"/>
+    </article>
+  </section>
+
+  <section>
+    <h2>Reproduction</h2>
+    <ol>
+      <li>Prefer Keychain → Open filled, or sign in to each portal with WG Demo passwords.</li>
+      <li>Applicant: scenario <code>completed</code> → Resume draft → fee step → Submit Application → Confirm.</li>
+      <li>Staff: Bursary → Payments → select pending row → <strong>Approve payment → enrol student</strong>.</li>
+      <li>Applicant: refresh / re-sign-in → status <strong>Enrolment Accepted</strong>.</li>
+      <li>Student: Alya <code>10029841</code> → Dashboard.</li>
+    </ol>
+    <p class="muted">
+      Re-capture stays in the private control-plane repo (Playwright + gitignored Demo credentials). This Pages pack is evidence only.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Raisd Campus · Demo E2E evidence · 11 Oct 2026 · Not Live CMS.
+    Source: <code>control-plane/docs/reports/e2e-applicant-staff-enrol-2026-10-11/</code>
+  </div>
+</footer>
+</body>
+</html>

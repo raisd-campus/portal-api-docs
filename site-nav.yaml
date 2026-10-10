@@ -84,6 +84,7 @@ targets:
   report-exec-2026-10-05: reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html
   report-exec-2026-10-07: reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html
   report-lesotho-briefing: reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html
+  report-e2e-enrol-2026-10-11: reports/e2e-applicant-staff-enrol-2026-10-11/index.html
 
 # External (absolute) link ids used in the menu
 external:
@@ -439,6 +440,7 @@ menu:
       - report-exec-2026-10-05
       - report-exec-2026-10-07
       - report-lesotho-briefing
+      - report-e2e-enrol-2026-10-11
     children:
       - { label: Reports hub, href: reports }
       - label: Week summaries
@@ -459,6 +461,7 @@ menu:
           - { label: Executive review · 5 Oct, href: report-exec-2026-10-05 }
           - { label: Executive summary · 7 Oct, href: report-exec-2026-10-07 }
           - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
+      - { label: "E2E Demo enrol · 11 Oct", href: report-e2e-enrol-2026-10-11 }
 
   - label: SDD
     href: sdd
@@ -528,6 +531,12 @@ search:
     section: Weekly reports
     summary: CAP-53, CMS vs Applicant, Faid merges, fee/finance YAML, Vercel API enablement, fee amounts.
     keywords: [week4, w04, fee, finance, cap-53, faid]
+
+  - title: E2E Demo enrol · 11 Oct 2026
+    href: report-e2e-enrol-2026-10-11
+    section: Weekly reports
+    summary: Hosted Demo walkthrough with screenshots — Applicant fee submit, Staff Bursary approve, Student Alya enrolment path.
+    keywords: [e2e, end-to-end, applicant, staff, bursary, student, enrol, screenshot, keychain, demo]
 
   - title: Distributed CMS target
     href: distributed

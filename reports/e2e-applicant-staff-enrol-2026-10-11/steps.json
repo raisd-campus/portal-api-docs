@@ -1,0 +1,65 @@
+{
+  "capturedAt": "2026-10-10T21:56:39.006Z",
+  "steps": [
+    {
+      "id": "01-keychain-unlocked",
+      "title": "Demo Keychain unlocked — desks and students",
+      "file": "01-keychain-unlocked.png"
+    },
+    {
+      "id": "02-applicant-sign-in",
+      "title": "Applicant Portal — Draft ready to submit",
+      "file": "02-applicant-sign-in.png"
+    },
+    {
+      "id": "03-applicant-home",
+      "title": "Applicant home — draft application card",
+      "file": "03-applicant-home.png"
+    },
+    {
+      "id": "04-applicant-fee",
+      "title": "Application fee step — bank reference and proof",
+      "file": "04-applicant-fee.png"
+    },
+    {
+      "id": "05-applicant-submitted",
+      "title": "Submitted — payment proof under review",
+      "file": "05-applicant-submitted.png"
+    },
+    {
+      "id": "05b-applicant-submitted-detail",
+      "title": "Submitted application detail awaiting Bursary",
+      "file": "05b-applicant-submitted-detail.png"
+    },
+    {
+      "id": "06-staff-sign-in",
+      "title": "Staff Portal — Bursary desk credentials",
+      "file": "06-staff-sign-in.png"
+    },
+    {
+      "id": "07-staff-payment-queue",
+      "title": "Staff payment queue — pending Demo Draft Applicant",
+      "file": "07-staff-payment-queue.png"
+    },
+    {
+      "id": "08-staff-approved",
+      "title": "Staff approved — applicant enrolled as Demo student",
+      "file": "08-staff-approved.png"
+    },
+    {
+      "id": "09-applicant-after-enrol",
+      "title": "Applicant after enrolment — accepted / student path",
+      "file": "09-applicant-after-enrol.png"
+    },
+    {
+      "id": "10-student-sign-in",
+      "title": "Student Portal — Alya Putri (Registration Week)",
+      "file": "10-student-sign-in.png"
+    },
+    {
+      "id": "11-student-home",
+      "title": "Student Portal dashboard after enrolment path",
+      "file": "11-student-home.png"
+    }
+  ]
+}
