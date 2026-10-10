@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — E2E Demo: Lecturer LMS publish → Student Materials (2026-10-11)</title>
+<style>
+  :root {
+    --ink: #122028; --ink-soft: #334650; --muted: #62747e; --line: #d5e0e5;
+    --accent: #0f6b5d; --accent-deep: #0a4a41; --accent-soft: #e3f2ee;
+    --green: #166534; --green-soft: #dcfce7;
+    --bg: #eef3f6; --panel: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem;
+  }
+  header .wrap, main, footer .wrap { max-width: 1040px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem;
+  }
+  header h1 { margin: 0 0 0.55rem; font-size: 1.65rem; font-weight: 700; color: #fff; }
+  .lede { margin: 0; color: #d7ebe6; max-width: 48rem; }
+  .doc-meta {
+    margin: 0.95rem 0 0; padding: 0.9rem 1.05rem; border-radius: 8px;
+    background: #fff; border: 1px solid #d7e3df; color: #122028;
+    font-size: 0.95rem; max-width: 52rem;
+  }
+  .doc-meta p { margin: 0 0 0.4rem; }
+  .doc-meta p:last-child { margin: 0; }
+  .doc-meta strong { color: #0a4a41; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .pill {
+    display: inline-block; padding: 0.25rem 0.7rem; border-radius: 999px;
+    font-size: 0.78rem; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  }
+  main { padding: 1.5rem 1.25rem 2.5rem; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem; font-size: 1.22rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+  }
+  h3 { margin: 0 0 0.45rem; font-size: 1.05rem; color: var(--accent-deep); }
+  p, li { color: var(--ink-soft); }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--line); padding: 0.48rem 0.6rem; text-align: left; vertical-align: top; }
+  th {
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.86em; }
+  a { color: var(--accent-deep); }
+  .status {
+    display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px;
+    font-size: 0.74rem; font-weight: 700;
+  }
+  .ok { background: var(--green-soft); color: var(--green); }
+  .demo { background: #dbeafe; color: #1e3a5f; }
+  .toc ol { margin: 0.4rem 0 0; padding-left: 1.25rem; }
+  .step {
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 1rem 1.1rem; margin: 0 0 1rem; background: #fafcfc;
+  }
+  .step-meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem;
+    align-items: baseline; margin: 0 0 0.55rem;
+  }
+  .step-num {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .shot {
+    display: block; width: 100%; border: 1px solid var(--line);
+    border-radius: 8px; margin-top: 0.65rem; background: #111;
+  }
+  .flow {
+    display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center;
+    margin: 0.75rem 0 0.25rem;
+  }
+  .flow span {
+    background: var(--accent-soft); color: var(--accent-deep);
+    border: 1px solid #9dcdc2; border-radius: 999px;
+    padding: 0.28rem 0.7rem; font-size: 0.82rem; font-weight: 700;
+  }
+  .flow i { color: var(--muted); font-style: normal; }
+  footer { padding: 0.5rem 1.25rem 2rem; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group · End-to-end Demo test</p>
+    <h1>Lecturer LMS publish → Student Materials</h1>
+    <p class="lede">
+      Hosted Demo walkthrough (11 Oct 2026). After unit enrolment,
+      Prof. Adam Watson publishes FDN101 lecture notes; Alya opens Academic → Modules → Materials.
+      Demo ≠ Live — not a complete LMS (BASE-44).
+    </p>
+    <div class="doc-meta">
+      <p><strong>Captured:</strong> 11 Oct 2026 · Playwright against production Vercel Demo hosts</p>
+      <p><strong>Result:</strong> <span class="status ok">PASS</span> — lecturer publish → student Materials teaching weeks for FDN101</p>
+      <p><strong>Prior:</strong> <a href="../e2e-student-module-enrol-2026-10-11/index.html">Student modules enrol</a> · live Pages:
+        <a href="https://raisd-campus.github.io/portal-api-docs/reports/e2e-student-learning-lms-2026-10-11/">portal-api-docs mirror</a>
+      </p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Demo</span>
+      <span class="pill">Lecturer Portal</span>
+      <span class="pill">Student Portal</span>
+      <span class="pill">LMS surface</span>
+      <span class="pill">CAP-17–19</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>Summary</h2>
+    <div class="flow" aria-label="Flow">
+      <span>Lecturer Adam</span><i>→</i>
+      <span>Publish notes</span><i>→</i>
+      <span>Student Alya</span><i>→</i>
+      <span>Materials weeks</span>
+    </div>
+    <p>
+      Lecturer Portal Demo auth (<code>POST /v1/auth/lecturer/login</code>) and RPC
+      (<code>publishModuleMaterial</code>) write learning items onto Alya’s enrolled FDN101 offering.
+      Student Portal Materials shows teaching weeks for that offering. Week rows may show
+      <strong>Locked</strong> until the week’s <code>availableFrom</code> (Demo calendar) — publish still succeeds.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Surface</th><th>URL</th><th>Account</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lecturer Portal</td>
+          <td><a href="https://raisd-lecturer-portal.vercel.app/">raisd-lecturer-portal.vercel.app</a></td>
+          <td><code>adam</code> / Prof. Adam Watson</td>
+        </tr>
+        <tr>
+          <td>Student Portal</td>
+          <td><a href="https://raisd-student-portal.vercel.app/">raisd-student-portal.vercel.app</a></td>
+          <td>Alya <code>10029841</code></td>
+        </tr>
+        <tr>
+          <td>Portal API LMS meta</td>
+          <td><a href="https://raisd-portal-api.vercel.app/v1/meta/lms">/v1/meta/lms</a></td>
+          <td>Catalogue (Demo)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="muted">Passwords via Demo Keychain Open filled. Not Live CMS / BASE-44 complete LMS.</p>
+  </section>
+
+  <section class="toc">
+    <h2>Steps</h2>
+    <ol>
+      <li><a href="#s01">Lecturer sign-in</a></li>
+      <li><a href="#s02">Lecturer workspace</a></li>
+      <li><a href="#s03">Materials desk</a></li>
+      <li><a href="#s04">Published notes</a></li>
+      <li><a href="#s05">Student sign-in</a></li>
+      <li><a href="#s06">Student Materials</a></li>
+      <li><a href="#s07">Week / published item</a></li>
+      <li><a href="#s08">LMS meta catalogue</a></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Evidence</h2>
+
+    <article class="step" id="s01">
+      <div class="step-meta"><span class="step-num">Step 01</span><h3>Lecturer sign-in</h3><span class="status ok">Pass</span></div>
+      <p>Demo lecturer Adam selected; Portal API lecturer login.</p>
+      <img class="shot" src="screenshots/01-lecturer-sign-in.png" alt="Lecturer Portal sign-in"/>
+    </article>
+
+    <article class="step" id="s02">
+      <div class="step-meta"><span class="step-num">Step 02</span><h3>Lecturer workspace</h3><span class="status ok">Pass</span></div>
+      <p>Teaching allocations with registered students (incl. Alya FDN101 / DIG101).</p>
+      <img class="shot" src="screenshots/02-lecturer-workspace.png" alt="Lecturer workspace modules"/>
+    </article>
+
+    <article class="step" id="s03">
+      <div class="step-meta"><span class="step-num">Step 03</span><h3>Materials desk</h3><span class="status ok">Pass</span></div>
+      <p>FDN101 Design Fundamentals selected for publish.</p>
+      <img class="shot" src="screenshots/03-lecturer-materials-desk.png" alt="Lecturer materials desk"/>
+    </article>
+
+    <article class="step" id="s04">
+      <div class="step-meta"><span class="step-num">Step 04</span><h3>Published to student Materials</h3><span class="status ok">Pass</span></div>
+      <p>Success banner; published items list includes Week 1 lecture notes.</p>
+      <img class="shot" src="screenshots/04-lecturer-published.png" alt="Lecturer published materials"/>
+    </article>
+
+    <article class="step" id="s05">
+      <div class="step-meta"><span class="step-num">Step 05</span><h3>Student sign-in</h3><span class="status ok">Pass</span></div>
+      <p>Alya Putri <code>10029841</code> after Faculty unit enrolment.</p>
+      <img class="shot" src="screenshots/05-student-sign-in.png" alt="Student sign-in Alya"/>
+    </article>
+
+    <article class="step" id="s06">
+      <div class="step-meta"><span class="step-num">Step 06</span><h3>Student Materials — FDN101</h3><span class="status ok">Pass</span></div>
+      <p>Module Details → Materials tab with teaching weeks (LMS student surface).</p>
+      <img class="shot" src="screenshots/06-student-materials.png" alt="Student Materials teaching weeks"/>
+    </article>
+
+    <article class="step" id="s07">
+      <div class="step-meta"><span class="step-num">Step 07</span><h3>Week / published item</h3><span class="status demo">Demo calendar</span></div>
+      <p>Weeks may remain Locked until Demo <code>availableFrom</code>; lecturer publish is already on the graph.</p>
+      <img class="shot" src="screenshots/07-student-week-open.png" alt="Student Materials week state"/>
+    </article>
+
+    <article class="step" id="s08">
+      <div class="step-meta"><span class="step-num">Step 08</span><h3>LMS meta catalogue</h3><span class="status ok">Pass</span></div>
+      <p><code>GET /v1/meta/lms</code> lists student + lecturer Demo methods (BASE-44 incomplete).</p>
+      <img class="shot" src="screenshots/08-lms-meta-catalogue.png" alt="LMS meta JSON catalogue"/>
+    </article>
+  </section>
+
+  <section>
+    <h2>Reproduction</h2>
+    <ol>
+      <li>Complete <a href="../e2e-student-module-enrol-2026-10-11/index.html">module enrolment</a> for Alya if needed.</li>
+      <li>Lecturer: <code>adam</code> → Materials → FDN101 → Publish lecture note.</li>
+      <li>Student: Alya → Modules → FDN101 → Materials.</li>
+    </ol>
+    <p class="muted">
+      <code>node docs/reports/e2e-student-learning-lms-2026-10-11/capture.mjs</code>
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Raisd Campus · Demo E2E evidence · 11 Oct 2026 · Not Live LMS.
+    Source: <code>control-plane/docs/reports/e2e-student-learning-lms-2026-10-11/</code>
+  </div>
+</footer>
+</body>
+</html>

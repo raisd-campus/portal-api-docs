@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-10-10T23:56:58.345Z",
+  "steps": [
+    {
+      "id": "01-lecturer-sign-in",
+      "title": "Lecturer Portal — Prof. Adam Watson",
+      "file": "01-lecturer-sign-in.png"
+    },
+    {
+      "id": "02-lecturer-workspace",
+      "title": "Lecturer workspace — teaching modules",
+      "file": "02-lecturer-workspace.png"
+    },
+    {
+      "id": "03-lecturer-materials-desk",
+      "title": "Materials desk — FDN101 selected",
+      "file": "03-lecturer-materials-desk.png"
+    },
+    {
+      "id": "04-lecturer-published",
+      "title": "Lecturer published lecture notes to Materials",
+      "file": "04-lecturer-published.png"
+    },
+    {
+      "id": "05-student-sign-in",
+      "title": "Student Portal — Alya after enrolment",
+      "file": "05-student-sign-in.png"
+    },
+    {
+      "id": "06-student-materials",
+      "title": "Student Materials — FDN101 LMS weeks",
+      "file": "06-student-materials.png"
+    },
+    {
+      "id": "07-student-week-open",
+      "title": "Student Materials — published item visible",
+      "file": "07-student-week-open.png"
+    },
+    {
+      "id": "08-lms-meta-catalogue",
+      "title": "Portal API GET /v1/meta/lms — Demo LMS catalogue",
+      "file": "08-lms-meta-catalogue.png"
+    }
+  ]
+}

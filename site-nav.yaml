@@ -86,6 +86,7 @@ targets:
   report-lesotho-briefing: reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html
   report-e2e-enrol-2026-10-11: reports/e2e-applicant-staff-enrol-2026-10-11/index.html
   report-e2e-module-enrol-2026-10-11: reports/e2e-student-module-enrol-2026-10-11/index.html
+  report-e2e-learning-lms-2026-10-11: reports/e2e-student-learning-lms-2026-10-11/index.html
 
 # External (absolute) link ids used in the menu
 external:
@@ -443,6 +444,7 @@ menu:
       - report-lesotho-briefing
       - report-e2e-enrol-2026-10-11
       - report-e2e-module-enrol-2026-10-11
+      - report-e2e-learning-lms-2026-10-11
     children:
       - { label: Reports hub, href: reports }
       - label: Week summaries
@@ -465,6 +467,7 @@ menu:
           - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
       - { label: "E2E Demo enrol · 11 Oct", href: report-e2e-enrol-2026-10-11 }
       - { label: "E2E Demo modules · 11 Oct", href: report-e2e-module-enrol-2026-10-11 }
+      - { label: "E2E Demo LMS learning · 11 Oct", href: report-e2e-learning-lms-2026-10-11 }
 
   - label: SDD
     href: sdd
@@ -546,6 +549,12 @@ search:
     section: Weekly reports
     summary: Hosted Demo walkthrough — Student module registration, Bursary clearance, Faculty enrol units, Student Modules with lecturers.
     keywords: [e2e, end-to-end, student, modules, registration, bursary, faculty, registry, lecturer, screenshot, demo]
+
+  - title: E2E Demo LMS learning · 11 Oct 2026
+    href: report-e2e-learning-lms-2026-10-11
+    section: Weekly reports
+    summary: Hosted Demo — Lecturer publishes FDN101 materials; student opens Materials teaching weeks (LMS surface).
+    keywords: [e2e, lms, lecturer, materials, student, learning, publish, screenshot, demo]
 
   - title: Distributed CMS target
     href: distributed
