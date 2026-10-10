@@ -44,6 +44,48 @@
     if (el) el.remove();
   }
 
+  var KEYCHAIN_PROTOCOL_VERSION = 1;
+  var KEYCHAIN_READY_TYPE = 'raisd.keychain.ready';
+  var KEYCHAIN_FILL_TYPE = 'raisd.keychain.fill';
+  var KEYCHAIN_ORIGINS = [
+    'https://raisd-keychain.vercel.app',
+    'http://localhost:5180',
+    'http://127.0.0.1:5180',
+  ];
+
+  function wantsKeychain() {
+    try {
+      return new URLSearchParams(window.location.search).get('keychain') === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function announceKeychainReady() {
+    if (!window.opener || window.opener.closed) return;
+    for (var i = 0; i < KEYCHAIN_ORIGINS.length; i++) {
+      try {
+        window.opener.postMessage(
+          { type: KEYCHAIN_READY_TYPE, version: KEYCHAIN_PROTOCOL_VERSION },
+          KEYCHAIN_ORIGINS[i],
+        );
+      } catch (e) {
+        /* ignore */
+      }
+    }
+  }
+
+  function isKeychainFillMessage(data) {
+    return (
+      data &&
+      typeof data === 'object' &&
+      data.type === KEYCHAIN_FILL_TYPE &&
+      data.version === KEYCHAIN_PROTOCOL_VERSION &&
+      typeof data.username === 'string' &&
+      typeof data.password === 'string'
+    );
+  }
+
   function showOverlay(onSubmit) {
     document.documentElement.classList.add('raisd-auth-gate');
     if (document.getElementById(OVERLAY_ID)) return;
@@ -84,6 +126,20 @@
           err.hidden = false;
         });
       });
+
+      if (wantsKeychain() || window.opener) {
+        window.addEventListener('message', function (event) {
+          if (KEYCHAIN_ORIGINS.indexOf(event.origin) === -1) return;
+          if (!isKeychainFillMessage(event.data)) return;
+          form.username.value = event.data.username;
+          form.password.value = event.data.password;
+          err.hidden = true;
+          if (event.data.autoSubmit) {
+            form.requestSubmit();
+          }
+        });
+        announceKeychainReady();
+      }
     }
 
     if (document.body) mount();
@@ -106,6 +162,7 @@
         return sessionToken(cfg.userHash, cfg.passHash).then(function (token) {
           if (sessionStorage.getItem(SESSION_KEY) === token) {
             markAuthed();
+            if (wantsKeychain() || window.opener) announceKeychainReady();
             return;
           }
           showOverlay(function (username, password) {
