@@ -122,6 +122,25 @@
       "path": "reports/e2e-applicant-staff-enrol-2026-10-11/index.html"
     },
     {
+      "title": "E2E Demo modules \u00b7 11 Oct 2026",
+      "summary": "Hosted Demo walkthrough \u2014 Student module registration, Bursary clearance, Faculty enrol units, Student Modules with lecturers.",
+      "section": "Weekly reports",
+      "keywords": [
+        "e2e",
+        "end-to-end",
+        "student",
+        "modules",
+        "registration",
+        "bursary",
+        "faculty",
+        "registry",
+        "lecturer",
+        "screenshot",
+        "demo"
+      ],
+      "path": "reports/e2e-student-module-enrol-2026-10-11/index.html"
+    },
+    {
       "title": "Distributed CMS target",
       "summary": "Ideal multi-country Raisd CMS with distributed data planes, white-label packs, and feature flags.",
       "section": "Distributed CMS",

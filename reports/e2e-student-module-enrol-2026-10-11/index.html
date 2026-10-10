@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Raisd Campus — E2E Demo: Student modules → Staff → Units enrolled (2026-10-11)</title>
+<style>
+  :root {
+    --ink: #122028; --ink-soft: #334650; --muted: #62747e; --line: #d5e0e5;
+    --accent: #0f6b5d; --accent-deep: #0a4a41; --accent-soft: #e3f2ee;
+    --warm: #9a6418; --warm-soft: #f7edd8;
+    --green: #166534; --green-soft: #dcfce7;
+    --bg: #eef3f6; --panel: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--bg);
+    font-family: "Source Sans 3", "Segoe UI", Calibri, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0a1a1f 0%, #0f3d36 55%, #0f6b5d 100%);
+    color: #f3faf8; padding: 2rem 1.5rem 1.75rem;
+  }
+  header .wrap, main, footer .wrap { max-width: 1040px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9dcdc2; font-weight: 600; margin: 0 0 0.35rem;
+  }
+  header h1 { margin: 0 0 0.55rem; font-size: 1.65rem; font-weight: 700; color: #fff; }
+  .lede { margin: 0; color: #d7ebe6; max-width: 48rem; }
+  .doc-meta {
+    margin: 0.95rem 0 0; padding: 0.9rem 1.05rem; border-radius: 8px;
+    background: #fff; border: 1px solid #d7e3df; color: #122028;
+    font-size: 0.95rem; max-width: 52rem;
+  }
+  .doc-meta p { margin: 0 0 0.4rem; }
+  .doc-meta p:last-child { margin: 0; }
+  .doc-meta strong { color: #0a4a41; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .pill {
+    display: inline-block; padding: 0.25rem 0.7rem; border-radius: 999px;
+    font-size: 0.78rem; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  }
+  main { padding: 1.5rem 1.25rem 2.5rem; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem; font-size: 1.22rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+  }
+  h3 { margin: 0 0 0.45rem; font-size: 1.05rem; color: var(--accent-deep); }
+  p, li { color: var(--ink-soft); }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--line); padding: 0.48rem 0.6rem; text-align: left; vertical-align: top; }
+  th {
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.86em; }
+  a { color: var(--accent-deep); }
+  .status {
+    display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px;
+    font-size: 0.74rem; font-weight: 700;
+  }
+  .ok { background: var(--green-soft); color: var(--green); }
+  .demo { background: #dbeafe; color: #1e3a5f; }
+  .toc ol { margin: 0.4rem 0 0; padding-left: 1.25rem; }
+  .toc li { margin: 0.25rem 0; }
+  .step {
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 1rem 1.1rem; margin: 0 0 1rem; background: #fafcfc;
+  }
+  .step-meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem;
+    align-items: baseline; margin: 0 0 0.55rem;
+  }
+  .step-num {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .shot {
+    display: block; width: 100%; border: 1px solid var(--line);
+    border-radius: 8px; margin-top: 0.65rem; background: #111;
+  }
+  .flow {
+    display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center;
+    margin: 0.75rem 0 0.25rem;
+  }
+  .flow span {
+    background: var(--accent-soft); color: var(--accent-deep);
+    border: 1px solid #9dcdc2; border-radius: 999px;
+    padding: 0.28rem 0.7rem; font-size: 0.82rem; font-weight: 700;
+  }
+  .flow i { color: var(--muted); font-style: normal; }
+  footer { padding: 0.5rem 1.25rem 2rem; color: var(--muted); font-size: 0.85rem; }
+  @media print {
+    body { background: #fff; }
+    .shot { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Working Group · End-to-end Demo test</p>
+    <h1>Student modules → payment → Staff → units enrolled</h1>
+    <p class="lede">
+      Hosted Demo walkthrough executed on 11 Oct 2026 with step screenshots.
+      Continues after applicant enrolment: Alya registers Semester 1 units, Bursary clears finance,
+      Registry (Faculty stand-in) activates registrations so lecturers can teach materials.
+      Demo ≠ Live.
+    </p>
+    <div class="doc-meta">
+      <p><strong>Captured:</strong> 11 Oct 2026 · Playwright against production Vercel Demo hosts</p>
+      <p><strong>Result:</strong> <span class="status ok">PASS</span> — confirm modules → Bursary clearance → Faculty approve → five units on Student Modules (lecturers assigned)</p>
+      <p><strong>Hub:</strong> <a href="../index.html">Weekly reports</a> · prior pack:
+        <a href="../e2e-applicant-staff-enrol-2026-10-11/index.html">Applicant → Student enrol</a> · live Pages:
+        <a href="https://raisd-campus.github.io/portal-api-docs/reports/e2e-student-module-enrol-2026-10-11/">portal-api-docs mirror</a>
+      </p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Demo</span>
+      <span class="pill">Student Portal</span>
+      <span class="pill">Staff Portal</span>
+      <span class="pill">Bursary</span>
+      <span class="pill">Registry / Faculty</span>
+      <span class="pill">Lecturer (placeholder)</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>Summary</h2>
+    <div class="flow" aria-label="Flow">
+      <span>Alya modules</span><i>→</i>
+      <span>Confirm + invoices</span><i>→</i>
+      <span>Bursary clear</span><i>→</i>
+      <span>Faculty enrol</span><i>→</i>
+      <span>Units + lecturers</span>
+    </div>
+    <p>
+      Registration Week student <strong>Alya Putri</strong> (<code>10029841</code>) confirms Semester 1 module selection
+      (FDN101, DRW101, VIS101, DIG101, COM101). Staff <strong>Bursary</strong> clears payment / arrangement on the new
+      <strong>Registrations</strong> desk; <strong>Registry</strong> completes Faculty academic approval and activates
+      module registrations. Student Modules then lists five enrolled units with assigned lecturers — the handoff point
+      for teaching materials. Lecturer Portal remains a Demo placeholder (authoring not Live yet).
+    </p>
+    <table>
+      <thead>
+        <tr><th>Surface</th><th>URL</th><th>Account used</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Student Portal</td>
+          <td><a href="https://raisd-student-portal.vercel.app/">raisd-student-portal.vercel.app</a></td>
+          <td>Alya Putri <code>10029841</code> (Registration Week)</td>
+        </tr>
+        <tr>
+          <td>Staff Portal</td>
+          <td><a href="https://raisd-staff-portal.vercel.app/">raisd-staff-portal.vercel.app</a></td>
+          <td>Bursary then Registry (<code>/registrations</code>)</td>
+        </tr>
+        <tr>
+          <td>Portal API</td>
+          <td><a href="https://raisd-portal-api.vercel.app/">raisd-portal-api.vercel.app</a></td>
+          <td><code>listRegistrationQueue</code> / <code>reviewRegistrationRequest</code></td>
+        </tr>
+        <tr>
+          <td>Lecturer Portal</td>
+          <td><a href="https://raisd-lecturer-portal.vercel.app/">raisd-lecturer-portal.vercel.app</a></td>
+          <td>Placeholder only</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="muted">Passwords are not published here. Use Demo Keychain (Open filled) or the WG credential note.</p>
+  </section>
+
+  <section class="toc">
+    <h2>Steps</h2>
+    <ol>
+      <li><a href="#s01">Student sign-in (Alya)</a></li>
+      <li><a href="#s02">Student dashboard</a></li>
+      <li><a href="#s03">Module Registration</a></li>
+      <li><a href="#s04">Confirm — fee preview</a></li>
+      <li><a href="#s05">Registration completed</a></li>
+      <li><a href="#s06">Finance invoices</a></li>
+      <li><a href="#s07">Staff Bursary sign-in</a></li>
+      <li><a href="#s07b">Staff Registry sign-in</a></li>
+      <li><a href="#s08">Registration queue</a></li>
+      <li><a href="#s09">Bursary clearance</a></li>
+      <li><a href="#s10">Faculty queue (Registry)</a></li>
+      <li><a href="#s11">Units enrolled</a></li>
+      <li><a href="#s12">Student Modules</a></li>
+      <li><a href="#s13">Units ready for materials</a></li>
+      <li><a href="#s14">Lecturer placeholder</a></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Evidence</h2>
+
+    <article class="step" id="s01">
+      <div class="step-meta">
+        <span class="step-num">Step 01</span>
+        <h3>Student Portal — Alya Registration Week</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Sign in as Registration Week Demo student Alya Putri <code>10029841</code>.</p>
+      <img class="shot" src="screenshots/01-student-sign-in.png" alt="Student Portal sign-in for Alya Putri"/>
+    </article>
+
+    <article class="step" id="s02">
+      <div class="step-meta">
+        <span class="step-num">Step 02</span>
+        <h3>Student dashboard</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Dashboard loads with programme context and Registration Week cues before module confirmation.</p>
+      <img class="shot" src="screenshots/02-student-home.png" alt="Student dashboard for Alya Putri"/>
+    </article>
+
+    <article class="step" id="s03">
+      <div class="step-meta">
+        <span class="step-num">Step 03</span>
+        <h3>Module Registration</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Academic → Module Registration shows the Semester 1 selection (Design Fundamentals, Drawing Studies, Visual Communication, Digital Imaging, Communication Skills).</p>
+      <img class="shot" src="screenshots/03-module-registration.png" alt="Module Registration under review with module list"/>
+    </article>
+
+    <article class="step" id="s04">
+      <div class="step-meta">
+        <span class="step-num">Step 04</span>
+        <h3>Confirm registration — fee preview</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Confirm dialog presents fee preview before submit (captured on first run when Confirm was available).</p>
+      <img class="shot" src="screenshots/04-confirm-fee-preview.png" alt="Confirm registration fee preview dialog"/>
+    </article>
+
+    <article class="step" id="s05">
+      <div class="step-meta">
+        <span class="step-num">Step 05</span>
+        <h3>Registration completed</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>After Bursary + Faculty approvals: <strong>Registration Completed</strong> with both reviews Approved and modules retained.</p>
+      <img class="shot" src="screenshots/05-registration-submitted.png" alt="Registration Completed with Bursary and Faculty approved"/>
+    </article>
+
+    <article class="step" id="s06">
+      <div class="step-meta">
+        <span class="step-num">Step 06</span>
+        <h3>Finance — invoices / payment path</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Finance surface shows registration-linked invoices that Bursary clearance addresses (payment or arrangement).</p>
+      <img class="shot" src="screenshots/06-finance-invoices.png" alt="Student Finance invoices for registration"/>
+    </article>
+
+    <article class="step" id="s07">
+      <div class="step-meta">
+        <span class="step-num">Step 07</span>
+        <h3>Staff Portal — Bursary sign-in</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Bursary desk for payment / funding clearance.</p>
+      <img class="shot" src="screenshots/07-staff-bursary-sign-in.png" alt="Staff Portal Bursary sign-in"/>
+    </article>
+
+    <article class="step" id="s07b">
+      <div class="step-meta">
+        <span class="step-num">Step 07b</span>
+        <h3>Staff Portal — Registry sign-in</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Registry desk acts as Faculty stand-in for academic approval in this Demo.</p>
+      <img class="shot" src="screenshots/07b-staff-registry-sign-in.png" alt="Staff Portal Registry sign-in"/>
+    </article>
+
+    <article class="step" id="s08">
+      <div class="step-meta">
+        <span class="step-num">Step 08</span>
+        <h3>Registrations queue</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Live Demo queue from Portal API — Alya with 5 modules / 2 invoices; Bursary then Faculty columns track review state.</p>
+      <img class="shot" src="screenshots/08-staff-registration-queue.png" alt="Staff module registration queue for Alya"/>
+    </article>
+
+    <article class="step" id="s09">
+      <div class="step-meta">
+        <span class="step-num">Step 09</span>
+        <h3>Bursary clearance approved</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p><strong>Approve Bursary clearance</strong> records funding / payment arrangement; next step is Faculty.</p>
+      <img class="shot" src="screenshots/09-staff-bursary-cleared.png" alt="Bursary approved awaiting Faculty"/>
+    </article>
+
+    <article class="step" id="s10">
+      <div class="step-meta">
+        <span class="step-num">Step 10</span>
+        <h3>Faculty approval (Registry desk)</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Registry session on Registrations — Faculty column moves from pending to approved as units enrol.</p>
+      <img class="shot" src="screenshots/10-staff-faculty-queue.png" alt="Registry desk registration queue Faculty stage"/>
+    </article>
+
+    <article class="step" id="s11">
+      <div class="step-meta">
+        <span class="step-num">Step 11</span>
+        <h3>Faculty approved — units enrolled</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>Queue row: Bursary <strong>approved</strong>, Faculty <strong>approved</strong>, status <strong>completed</strong>, Next: Complete.</p>
+      <img class="shot" src="screenshots/11-staff-units-enrolled.png" alt="Staff queue showing registration completed"/>
+    </article>
+
+    <article class="step" id="s12">
+      <div class="step-meta">
+        <span class="step-num">Step 12</span>
+        <h3>Student Modules — registered units</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>
+        Academic → Modules lists five Semester 1 units with lecturers
+        (e.g. Prof. Adam Watson, Dr. Laura Schneider, Dr. Jerry Lynch, Asst. Prof. Nicolas Foster).
+      </p>
+      <img class="shot" src="screenshots/12-student-modules.png" alt="Student Modules with five enrolled units"/>
+    </article>
+
+    <article class="step" id="s13">
+      <div class="step-meta">
+        <span class="step-num">Step 13</span>
+        <h3>Units ready for teaching materials</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p>
+        Enrolled units are the student-side precondition for module materials / community delivery.
+        Lecturer authoring UI is not Live yet — see next step.
+      </p>
+      <img class="shot" src="screenshots/13-student-materials.png" alt="Enrolled modules ready for materials delivery"/>
+    </article>
+
+    <article class="step" id="s14">
+      <div class="step-meta">
+        <span class="step-num">Step 14</span>
+        <h3>Lecturer Portal — placeholder</h3>
+        <span class="status demo">Demo gap</span>
+      </div>
+      <p>Lecturer Portal host is still a Demo placeholder. Materials authoring for lecturers is not Live on this stack yet.</p>
+      <img class="shot" src="screenshots/14-lecturer-placeholder.png" alt="Lecturer Portal Demo placeholder"/>
+    </article>
+  </section>
+
+  <section>
+    <h2>Reproduction</h2>
+    <ol>
+      <li>Student: Alya <code>10029841</code> → Academic → Module Registration → Confirm registration (when draft).</li>
+      <li>Staff Bursary → Registrations → <strong>Approve Bursary clearance</strong>.</li>
+      <li>Staff Registry → Registrations → <strong>Approve Faculty → enrol units</strong>.</li>
+      <li>Student → Academic → Modules — five units with lecturers.</li>
+    </ol>
+    <p class="muted">
+      Capture script (local): <code>node docs/reports/e2e-student-module-enrol-2026-10-11/capture.mjs</code>
+      (requires Playwright Chromium from <code>applicant-portal</code> and gitignored <code>.credentials/demo-*.json</code>).
+      Re-run after resetting Alya’s Demo registration graph if Confirm is already spent.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Raisd Campus · Demo E2E evidence · 11 Oct 2026 · Not Live CMS.
+    Source: <code>control-plane/docs/reports/e2e-student-module-enrol-2026-10-11/</code>
+  </div>
+</footer>
+</body>
+</html>

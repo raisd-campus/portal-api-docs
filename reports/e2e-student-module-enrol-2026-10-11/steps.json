@@ -1,0 +1,80 @@
+{
+  "capturedAt": "2026-10-10T22:46:00.814630+00:00",
+  "steps": [
+    {
+      "id": "01-student-sign-in",
+      "title": "Student Portal \u2014 Alya Registration Week",
+      "file": "01-student-sign-in.png"
+    },
+    {
+      "id": "02-student-home",
+      "title": "Student dashboard before module confirmation",
+      "file": "02-student-home.png"
+    },
+    {
+      "id": "03-module-registration",
+      "title": "Module Registration \u2014 draft / under review",
+      "file": "03-module-registration.png"
+    },
+    {
+      "id": "04-confirm-fee-preview",
+      "title": "Confirm registration \u2014 fee preview",
+      "file": "04-confirm-fee-preview.png"
+    },
+    {
+      "id": "05-registration-submitted",
+      "title": "Registration completed after Faculty approval",
+      "file": "05-registration-submitted.png"
+    },
+    {
+      "id": "06-finance-invoices",
+      "title": "Finance \u2014 registration invoices / payment",
+      "file": "06-finance-invoices.png"
+    },
+    {
+      "id": "07-staff-bursary-sign-in",
+      "title": "Staff Portal \u2014 Bursary sign-in",
+      "file": "07-staff-bursary-sign-in.png"
+    },
+    {
+      "id": "07b-staff-registry-sign-in",
+      "title": "Staff Portal \u2014 Registry sign-in for Faculty",
+      "file": "07b-staff-registry-sign-in.png"
+    },
+    {
+      "id": "08-staff-registration-queue",
+      "title": "Staff Registrations \u2014 Bursary / Faculty queue",
+      "file": "08-staff-registration-queue.png"
+    },
+    {
+      "id": "09-staff-bursary-cleared",
+      "title": "Bursary clearance approved",
+      "file": "09-staff-bursary-cleared.png"
+    },
+    {
+      "id": "10-staff-faculty-queue",
+      "title": "Staff Registrations \u2014 Faculty (Registry desk)",
+      "file": "10-staff-faculty-queue.png"
+    },
+    {
+      "id": "11-staff-units-enrolled",
+      "title": "Faculty approved \u2014 units enrolled (completed)",
+      "file": "11-staff-units-enrolled.png"
+    },
+    {
+      "id": "12-student-modules",
+      "title": "Student Modules \u2014 five registered units with lecturers",
+      "file": "12-student-modules.png"
+    },
+    {
+      "id": "13-student-materials",
+      "title": "Enrolled units ready for teaching materials",
+      "file": "13-student-materials.png"
+    },
+    {
+      "id": "14-lecturer-placeholder",
+      "title": "Lecturer Portal \u2014 Demo placeholder (materials authoring not Live yet)",
+      "file": "14-lecturer-placeholder.png"
+    }
+  ]
+}
