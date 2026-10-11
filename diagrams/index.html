@@ -1120,28 +1120,34 @@ flowchart LR
           </thead>
           <tbody>
             <tr>
+              <td>Demo Keychain</td>
+              <td><a href="https://raisd-keychain.vercel.app">raisd-keychain.vercel.app</a></td>
+              <td>WG master password · Open filled for Demo desks</td>
+              <td>Vercel · manual / CLI deploy</td>
+            </tr>
+            <tr>
               <td>Student portal</td>
               <td><a href="https://raisd-student-portal.vercel.app">raisd-student-portal.vercel.app</a></td>
-              <td>Demo student number + password (issued by the team)</td>
+              <td>Demo student number + password (via Keychain)</td>
               <td>Vercel · GitHub Actions on push to <code>main</code></td>
             </tr>
             <tr>
               <td>Applicant portal</td>
               <td><a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a></td>
-              <td>Open (early build)</td>
+              <td>Demo scenarios (via Keychain)</td>
               <td>Vercel · GitHub Actions on push to <code>main</code></td>
             </tr>
             <tr>
               <td>Lecturer portal</td>
               <td><a href="https://raisd-lecturer-portal.vercel.app">raisd-lecturer-portal.vercel.app</a></td>
-              <td>Open (“Coming soon” placeholder)</td>
-              <td>Vercel · GitHub Actions on push to <code>main</code></td>
+              <td>Demo lecturers Adam / Laura (via Keychain) · Materials publish</td>
+              <td>Vercel · CLI / Actions deploy</td>
             </tr>
             <tr>
               <td>Staff portal</td>
               <td><a href="https://raisd-staff-portal.vercel.app">raisd-staff-portal.vercel.app</a></td>
-              <td>Open (“Coming soon” placeholder)</td>
-              <td>Vercel · GitHub Actions on push to <code>main</code></td>
+              <td>Demo Registry / Bursary desks (via Keychain)</td>
+              <td>Vercel · CLI / Actions deploy</td>
             </tr>
             <tr>
               <td>Portal API</td>
@@ -1152,7 +1158,7 @@ flowchart LR
             <tr>
               <td>Documentation (this site)</td>
               <td><a href="https://raisd-campus.github.io/portal-api-docs/">raisd-campus.github.io/portal-api-docs</a></td>
-              <td>Site password</td>
+              <td>Site password (via Keychain → Control Plane)</td>
               <td>GitHub Pages · GitHub Actions on push to <code>main</code></td>
             </tr>
             <tr>
@@ -1164,7 +1170,7 @@ flowchart LR
             <tr>
               <td>DB admin</td>
               <td><a href="https://raisd-db-admin.vercel.app">raisd-db-admin.vercel.app</a></td>
-              <td>Team only — sign-in screen (Basic auth for scripts); read-only</td>
+              <td>Team only — sign-in via Keychain; read-only</td>
               <td>Vercel (Singapore) · manual deploy from a local checkout</td>
             </tr>
           </tbody>
