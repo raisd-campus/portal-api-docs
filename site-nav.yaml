@@ -233,7 +233,7 @@ menu:
     children:
       - { label: Diagrams hub, href: overview }
       - { label: Project progress, href: "overview#progress" }
-      - { label: Weekly reports, href: reports }
+      - { label: Reports, href: reports }
       - { label: Public endpoints, href: "overview#endpoints" }
       - { label: Distributed CMS, href: distributed }
       - { label: Architecture, href: architecture }
@@ -429,7 +429,7 @@ menu:
       - { label: Sierra Leone CMS inventory, href: ai-old-cms-sierra-leone }
       - { label: "Vercel + Neon PoC", href: vercel-poc }
 
-  - label: Weekly reports
+  - label: Reports
     href: reports
     active:
       - reports
@@ -465,9 +465,12 @@ menu:
           - { label: Executive review · 5 Oct, href: report-exec-2026-10-05 }
           - { label: Executive summary · 7 Oct, href: report-exec-2026-10-07 }
           - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
-      - { label: "E2E Demo enrol · 11 Oct", href: report-e2e-enrol-2026-10-11 }
-      - { label: "E2E Demo modules · 11 Oct", href: report-e2e-module-enrol-2026-10-11 }
-      - { label: "E2E Demo LMS learning · 11 Oct", href: report-e2e-learning-lms-2026-10-11 }
+      - label: End to End Demo
+        href: report-e2e-enrol-2026-10-11
+        children:
+          - { label: "E2E Demo enrol · 11 Oct", href: report-e2e-enrol-2026-10-11 }
+          - { label: "E2E Demo modules · 11 Oct", href: report-e2e-module-enrol-2026-10-11 }
+          - { label: "E2E Demo LMS learning · 11 Oct", href: report-e2e-learning-lms-2026-10-11 }
 
   - label: SDD
     href: sdd
@@ -508,51 +511,51 @@ search:
     summary: High-level Raisd progress percentages — Live, frontend started, platform readiness, pending, blockers, bar/line/pie charts and delivery sequence table.
     keywords: [progress, percent, percentage, timeline, sequence, chart, blocker, pending, milestone, weekly, sponsor]
 
-  - title: Weekly reports
+  - title: Reports
     href: reports
-    section: Weekly reports
-    summary: Working Group weekly progress hub — week pages from 18 Sep 2026 kickoff through the current Friday cut, plus PDF/HTML packs.
-    keywords: [weekly, report, progress, pack, wg, standup, status]
+    section: Reports
+    summary: Working Group progress hub — week pages from 18 Sep 2026 kickoff through the current Friday cut, packs, and End to End Demo walkthroughs.
+    keywords: [weekly, report, progress, pack, wg, standup, status, e2e]
 
   - title: Week 1 · 18–19 Sep 2026
     href: reports-w01
-    section: Weekly reports
+    section: Reports
     summary: Kickoff week — Working Group start, Faid checklist, applicant/student portal repos.
     keywords: [week1, w01, kickoff, september]
 
   - title: Week 2 · 20–26 Sep 2026
     href: reports-w02
-    section: Weekly reports
+    section: Reports
     summary: Design system and portal shells; Portal API repo bootstrap; first Applicant UI.
     keywords: [week2, w02, design-system, portal-api]
 
   - title: Week 3 · 27 Sep–3 Oct 2026
     href: reports-w03
-    section: Weekly reports
+    section: Reports
     summary: First formal weekly pack — Vercel+Neon Demo, Lesotho pilot decision, schema/LMS docs.
     keywords: [week3, w03, lesotho, pilot, baseline]
 
   - title: Week 4 · 4–10 Oct 2026
     href: reports-w04
-    section: Weekly reports
+    section: Reports
     summary: CAP-53, CMS vs Applicant, Faid merges, fee/finance YAML, Vercel API enablement, fee amounts.
     keywords: [week4, w04, fee, finance, cap-53, faid]
 
   - title: E2E Demo enrol · 11 Oct 2026
     href: report-e2e-enrol-2026-10-11
-    section: Weekly reports
+    section: End to End Demo
     summary: Hosted Demo walkthrough with screenshots — Applicant fee submit, Staff Bursary approve, Student Alya enrolment path.
     keywords: [e2e, end-to-end, applicant, staff, bursary, student, enrol, screenshot, keychain, demo]
 
   - title: E2E Demo modules · 11 Oct 2026
     href: report-e2e-module-enrol-2026-10-11
-    section: Weekly reports
+    section: End to End Demo
     summary: Hosted Demo walkthrough — Student module registration, Bursary clearance, Faculty enrol units, Student Modules with lecturers.
     keywords: [e2e, end-to-end, student, modules, registration, bursary, faculty, registry, lecturer, screenshot, demo]
 
   - title: E2E Demo LMS learning · 11 Oct 2026
     href: report-e2e-learning-lms-2026-10-11
-    section: Weekly reports
+    section: End to End Demo
     summary: Hosted Demo — Lecturer publishes FDN101 materials; student opens Materials teaching weeks (LMS surface).
     keywords: [e2e, lms, lecturer, materials, student, learning, publish, screenshot, demo]
 

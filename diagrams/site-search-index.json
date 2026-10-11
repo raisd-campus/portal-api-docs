@@ -38,9 +38,9 @@
       "path": "diagrams/index.html#progress"
     },
     {
-      "title": "Weekly reports",
-      "summary": "Working Group weekly progress hub \u2014 week pages from 18 Sep 2026 kickoff through the current Friday cut, plus PDF/HTML packs.",
-      "section": "Weekly reports",
+      "title": "Reports",
+      "summary": "Working Group progress hub \u2014 week pages from 18 Sep 2026 kickoff through the current Friday cut, packs, and End to End Demo walkthroughs.",
+      "section": "Reports",
       "keywords": [
         "weekly",
         "report",
@@ -48,14 +48,15 @@
         "pack",
         "wg",
         "standup",
-        "status"
+        "status",
+        "e2e"
       ],
       "path": "reports/index.html"
     },
     {
       "title": "Week 1 \u00b7 18\u201319 Sep 2026",
       "summary": "Kickoff week \u2014 Working Group start, Faid checklist, applicant/student portal repos.",
-      "section": "Weekly reports",
+      "section": "Reports",
       "keywords": [
         "week1",
         "w01",
@@ -67,7 +68,7 @@
     {
       "title": "Week 2 \u00b7 20\u201326 Sep 2026",
       "summary": "Design system and portal shells; Portal API repo bootstrap; first Applicant UI.",
-      "section": "Weekly reports",
+      "section": "Reports",
       "keywords": [
         "week2",
         "w02",
@@ -79,7 +80,7 @@
     {
       "title": "Week 3 \u00b7 27 Sep\u20133 Oct 2026",
       "summary": "First formal weekly pack \u2014 Vercel+Neon Demo, Lesotho pilot decision, schema/LMS docs.",
-      "section": "Weekly reports",
+      "section": "Reports",
       "keywords": [
         "week3",
         "w03",
@@ -92,7 +93,7 @@
     {
       "title": "Week 4 \u00b7 4\u201310 Oct 2026",
       "summary": "CAP-53, CMS vs Applicant, Faid merges, fee/finance YAML, Vercel API enablement, fee amounts.",
-      "section": "Weekly reports",
+      "section": "Reports",
       "keywords": [
         "week4",
         "w04",
@@ -106,7 +107,7 @@
     {
       "title": "E2E Demo enrol \u00b7 11 Oct 2026",
       "summary": "Hosted Demo walkthrough with screenshots \u2014 Applicant fee submit, Staff Bursary approve, Student Alya enrolment path.",
-      "section": "Weekly reports",
+      "section": "End to End Demo",
       "keywords": [
         "e2e",
         "end-to-end",
@@ -124,7 +125,7 @@
     {
       "title": "E2E Demo modules \u00b7 11 Oct 2026",
       "summary": "Hosted Demo walkthrough \u2014 Student module registration, Bursary clearance, Faculty enrol units, Student Modules with lecturers.",
-      "section": "Weekly reports",
+      "section": "End to End Demo",
       "keywords": [
         "e2e",
         "end-to-end",
@@ -143,7 +144,7 @@
     {
       "title": "E2E Demo LMS learning \u00b7 11 Oct 2026",
       "summary": "Hosted Demo \u2014 Lecturer publishes FDN101 materials; student opens Materials teaching weeks (LMS surface).",
-      "section": "Weekly reports",
+      "section": "End to End Demo",
       "keywords": [
         "e2e",
         "lms",
