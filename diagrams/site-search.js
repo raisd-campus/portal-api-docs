@@ -125,6 +125,11 @@
   function openResult(href) {
     closeModal();
     if (!href) return;
+    var path = href.split('?')[0].split('#')[0];
+    if (path.indexOf('reports/') !== -1) {
+      window.open(href, '_blank', 'noopener,noreferrer');
+      return;
+    }
     window.location.href = href;
   }
 

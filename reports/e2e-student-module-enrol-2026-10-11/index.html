@@ -118,8 +118,9 @@
     <div class="doc-meta">
       <p><strong>Captured:</strong> 11 Oct 2026 · Playwright against production Vercel Demo hosts</p>
       <p><strong>Result:</strong> <span class="status ok">PASS</span> — confirm modules → Bursary clearance → Faculty approve → five units on Student Modules (lecturers assigned)</p>
-      <p><strong>Hub:</strong> <a href="../index.html">Weekly reports</a> · prior pack:
-        <a href="../e2e-applicant-staff-enrol-2026-10-11/index.html">Applicant → Student enrol</a> · live Pages:
+      <p><strong>Hub:</strong> <a href="../index.html">Reports</a> · prior pack:
+        <a href="../e2e-applicant-staff-enrol-2026-10-11/index.html">Applicant → Student enrol</a> · next:
+        <a href="../e2e-student-learning-lms-2026-10-11/index.html">E2E LMS learning</a> · live Pages:
         <a href="https://raisd-campus.github.io/portal-api-docs/reports/e2e-student-module-enrol-2026-10-11/">portal-api-docs mirror</a>
       </p>
     </div>
@@ -129,7 +130,7 @@
       <span class="pill">Staff Portal</span>
       <span class="pill">Bursary</span>
       <span class="pill">Registry / Faculty</span>
-      <span class="pill">Lecturer (placeholder)</span>
+      <span class="pill">Lecturer Portal</span>
     </div>
   </div>
 </header>
@@ -199,7 +200,7 @@
       <li><a href="#s11">Units enrolled</a></li>
       <li><a href="#s12">Student Modules</a></li>
       <li><a href="#s13">Units ready for materials</a></li>
-      <li><a href="#s14">Lecturer placeholder</a></li>
+      <li><a href="#s14">Lecturer Portal (handoff)</a></li>
     </ol>
   </section>
 
@@ -346,8 +347,8 @@
         <span class="status ok">Pass</span>
       </div>
       <p>
-        Enrolled units are the student-side precondition for module materials / community delivery.
-        Lecturer authoring UI is not Live yet — see next step.
+        Enrolled units are the student-side precondition for module materials.
+        Alya can open Academic → Materials once the lecturer publishes week items.
       </p>
       <img class="shot" src="screenshots/13-student-materials.png" alt="Enrolled modules ready for materials delivery"/>
     </article>
@@ -355,15 +356,16 @@
     <article class="step" id="s14">
       <div class="step-meta">
         <span class="step-num">Step 14</span>
-        <h3>Next — Lecturer LMS publish</h3>
-        <span class="status ok">Follow-on</span>
+        <h3>Lecturer Portal — handoff to LMS publish</h3>
+        <span class="status ok">Pass</span>
       </div>
       <p>
-        Lecturer Portal Demo is enabled. Continue the learning path in
-        <a href="../e2e-student-learning-lms-2026-10-11/index.html">E2E student learning · LMS (11 Oct)</a>
-        (Adam publishes → Alya Materials).
+        <a href="https://raisd-lecturer-portal.vercel.app/">Lecturer Portal</a> Demo is live
+        (Prof. Adam Watson via Keychain). Workspace lists assigned offerings such as FDN101.
+        Continue Adam publish → Alya Materials in
+        <a href="../e2e-student-learning-lms-2026-10-11/index.html">E2E student learning · LMS (11 Oct)</a>.
       </p>
-      <img class="shot" src="screenshots/14-lecturer-placeholder.png" alt="Lecturer Portal (superseded by LMS learning pack)"/>
+      <img class="shot" src="screenshots/14-lecturer-portal.png" alt="Lecturer Portal workspace for Prof. Adam Watson"/>
     </article>
   </section>
 

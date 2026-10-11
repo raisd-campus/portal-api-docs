@@ -160,7 +160,7 @@ async function main() {
   // Lecturer placeholder
   await page.goto(LECTURER, { waitUntil: "networkidle" })
   await page.waitForTimeout(1500)
-  await shot(page, "14-lecturer-placeholder", "Lecturer Portal — Demo placeholder (materials authoring not Live yet)")
+  await shot(page, "14-lecturer-portal", "Lecturer Portal — workspace handoff to LMS publish")
 
   writeFileSync(path.join(here, "steps.json"), JSON.stringify({ capturedAt: new Date().toISOString(), steps }, null, 2))
   await browser.close()

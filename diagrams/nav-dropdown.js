@@ -126,9 +126,25 @@
     if (e.key === 'Escape') closeAll(null);
   });
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bindHoverIntent);
-  } else {
+  function openReportsInNewWindow() {
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute('href') || '';
+      if (!href || href.charAt(0) === '#') return;
+      var path = href.split('?')[0].split('#')[0];
+      if (path.indexOf('reports/') === -1) return;
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    });
+  }
+
+  function boot() {
     bindHoverIntent();
+    openReportsInNewWindow();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 })();
