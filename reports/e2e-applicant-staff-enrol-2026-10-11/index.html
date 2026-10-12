@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Raisd Campus — E2E Demo: Applicant → Staff → Student (2026-10-11)</title>
+<title>Raisd Campus — E2E Demo: Applicant → Staff → Student (staged admissions)</title>
 <style>
   :root {
     --ink: #122028; --ink-soft: #334650; --muted: #62747e; --line: #d5e0e5;
@@ -108,14 +108,15 @@
 <header>
   <div class="wrap">
     <p class="kicker">Working Group · End-to-end Demo test</p>
-    <h1>Applicant → Staff payment → Student enrolment</h1>
+    <h1>Applicant → staged Staff desks → Student</h1>
     <p class="lede">
-      Hosted Demo walkthrough executed on 11 Oct 2026 with step screenshots.
-      Demo ≠ Live — sample Neon / Portal API state only.
+      Hosted Demo admissions walkthrough re-captured 13 Oct 2026:
+      Bursary payment → QA documents → applicant confirm → Registry Offer → Accept Enrolment.
+      Payment approval does <strong>not</strong> enrol. Demo ≠ Live.
     </p>
     <div class="doc-meta">
-      <p><strong>Captured:</strong> 11 Oct 2026 (UTC morning) · Playwright against production Vercel Demo hosts</p>
-      <p><strong>Result:</strong> <span class="status ok">PASS</span> — submit fee proof → Bursary approve → Enrolment Accepted → Student Portal (Alya <code>10029841</code>)</p>
+      <p><strong>Captured:</strong> 13 Oct 2026 · Playwright against production Vercel Demo hosts</p>
+      <p><strong>Result:</strong> <span class="status ok">PASS</span> — staged desks through Accept Enrolment → Student Alya <code>10029841</code></p>
       <p><strong>Hub:</strong> <a href="../index.html">Weekly reports</a> · live Pages:
         <a href="https://raisd-campus.github.io/portal-api-docs/reports/e2e-applicant-staff-enrol-2026-10-11/">portal-api-docs mirror</a>
       </p>
@@ -126,6 +127,7 @@
       <span class="pill">Staff Portal</span>
       <span class="pill">Student Portal</span>
       <span class="pill">Keychain</span>
+      <span class="pill">No auto-enrol</span>
     </div>
   </div>
 </header>
@@ -136,35 +138,39 @@
     <div class="flow" aria-label="Flow">
       <span>Keychain</span><i>→</i>
       <span>Applicant submit</span><i>→</i>
-      <span>Bursary approve</span><i>→</i>
-      <span>Enrolment accepted</span><i>→</i>
+      <span>Bursary payment</span><i>→</i>
+      <span>QA documents</span><i>→</i>
+      <span>Confirm Eligibility</span><i>→</i>
+      <span>Release Offer</span><i>→</i>
+      <span>Accept Enrolment</span><i>→</i>
       <span>Student Alya</span>
     </div>
     <p>
-      The Demo completed scenario starts as a draft ready to submit (fee step with bank reference + <code>payment.pdf</code>).
-      After submit, Staff Bursary sees <strong>pending verification</strong>, runs
-      <strong>Approve payment → enrol student</strong>, and the applicant card becomes
-      <strong>Enrolment Accepted</strong>. The promoted Demo student path continues as Alya Putri in the Student Portal.
+      Scenario <code>completed</code> starts as a draft ready to submit (fee step with bank reference + <code>payment.pdf</code>).
+      Staff <strong>Admissions review</strong> (<code>/payments</code>) advances one desk at a time:
+      Bursary <strong>Approve payment</strong> → Registry (QA stand-in) <strong>Verify documents (QA)</strong> →
+      applicant <strong>Confirm Eligibility</strong> → Registry <strong>Release Offer Letter</strong> →
+      applicant <strong>Accept Enrolment</strong>. Only Accept Enrolment completes the path; continue in Student as Alya Putri.
     </p>
     <table>
       <thead>
-        <tr><th>Surface</th><th>URL</th><th>Account used</th></tr>
+        <tr><th>Surface</th><th>URL</th><th>Account / role</th></tr>
       </thead>
       <tbody>
         <tr>
           <td>Demo Keychain</td>
           <td><a href="https://raisd-keychain.vercel.app/">raisd-keychain.vercel.app</a></td>
-          <td>Master unlock (WG only)</td>
+          <td>Master unlock · <strong>Start here</strong> sequence</td>
         </tr>
         <tr>
           <td>Applicant Portal</td>
           <td><a href="https://raisd-applicant-portal.vercel.app/">raisd-applicant-portal.vercel.app</a></td>
-          <td>Scenario <code>completed</code> (Draft ready to submit)</td>
+          <td>Scenario <code>completed</code></td>
         </tr>
         <tr>
           <td>Staff Portal</td>
-          <td><a href="https://raisd-staff-portal.vercel.app/">raisd-staff-portal.vercel.app</a></td>
-          <td>Bursary desk <code>bursary</code></td>
+          <td><a href="https://raisd-staff-portal.vercel.app/payments">raisd-staff-portal.vercel.app/payments</a></td>
+          <td>Bursary <code>bursary</code> · Registry <code>registry</code></td>
         </tr>
         <tr>
           <td>Student Portal</td>
@@ -174,7 +180,7 @@
         <tr>
           <td>Portal API</td>
           <td><a href="https://raisd-portal-api.vercel.app/">raisd-portal-api.vercel.app</a></td>
-          <td>Staff RPC queue / enrol</td>
+          <td><code>approvePayment</code> · <code>verifyDocuments</code> · <code>releaseOffer</code> · confirm / accept</td>
         </tr>
       </tbody>
     </table>
@@ -184,15 +190,19 @@
   <section class="toc">
     <h2>Steps</h2>
     <ol>
-      <li><a href="#s01">Keychain unlocked</a></li>
+      <li><a href="#s01">Keychain unlocked (Start here)</a></li>
       <li><a href="#s02">Applicant sign-in (draft ready to submit)</a></li>
       <li><a href="#s03">Applicant home — draft card</a></li>
       <li><a href="#s04">Application fee step</a></li>
       <li><a href="#s05">Submitted — payment under review</a></li>
       <li><a href="#s05b">Submitted application detail</a></li>
       <li><a href="#s06">Staff sign-in (Bursary)</a></li>
-      <li><a href="#s07">Payment queue — pending</a></li>
-      <li><a href="#s08">Approved — enrolled</a></li>
+      <li><a href="#s07">Admissions queue — pending payment</a></li>
+      <li><a href="#s08">Bursary Approve payment only</a></li>
+      <li><a href="#s08b">QA Verify documents</a></li>
+      <li><a href="#s08c">Applicant Confirm Eligibility</a></li>
+      <li><a href="#s08d">Registry Release Offer</a></li>
+      <li><a href="#s08e">Applicant Accept Enrolment</a></li>
       <li><a href="#s09">Applicant — Enrolment Accepted</a></li>
       <li><a href="#s10">Student sign-in (Alya)</a></li>
       <li><a href="#s11">Student dashboard</a></li>
@@ -208,8 +218,8 @@
         <h3>Demo Keychain unlocked</h3>
         <span class="status demo">Setup</span>
       </div>
-      <p>Unlock Keychain, then use Open filled for Staff / Student desks. Confirms the one-place Demo login hub.</p>
-      <img class="shot" src="screenshots/01-keychain-unlocked.png" alt="Demo Keychain unlocked with staff and student desks"/>
+      <p>Unlock Keychain. Use the <strong>Start here</strong> admissions sequence, then Open filled for each desk.</p>
+      <img class="shot" src="screenshots/01-keychain-unlocked.png" alt="Demo Keychain unlocked with Start here sequence"/>
     </article>
 
     <article class="step" id="s02">
@@ -218,7 +228,7 @@
         <h3>Applicant Portal — Draft ready to submit</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Select scenario <strong>Draft ready to submit</strong> (<code>completed</code>) and sign in through Portal API Demo auth.</p>
+      <p>Scenario <strong>Draft ready to submit</strong> (<code>completed</code>) via Portal API Demo auth.</p>
       <img class="shot" src="screenshots/02-applicant-sign-in.png" alt="Applicant Portal sign-in with completed scenario selected"/>
     </article>
 
@@ -238,7 +248,7 @@
         <h3>Application fee step</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Step 6 of 6 — bank transfer details, reference <code>DEMO-REF-1</code>, proof <code>payment.pdf</code>. Submit Application opens confirmation.</p>
+      <p>Bank reference + proof <code>payment.pdf</code>, then Submit Application.</p>
       <img class="shot" src="screenshots/04-applicant-fee.png" alt="Application fee step with bank reference and payment.pdf"/>
     </article>
 
@@ -248,7 +258,7 @@
         <h3>Submitted — payment proof under review</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>After confirm, status becomes <strong>Payment Proof Under Review</strong> (submitted 11/10/2026).</p>
+      <p>Status becomes <strong>Payment Proof Under Review</strong>.</p>
       <img class="shot" src="screenshots/05-applicant-submitted.png" alt="Application card Payment Proof Under Review"/>
     </article>
 
@@ -258,7 +268,7 @@
         <h3>Submitted application detail</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Opened submitted view while awaiting Bursary.</p>
+      <p>Application Progress: Payment Proof → Document Check → Confirm → Registry Offer.</p>
       <img class="shot" src="screenshots/05b-applicant-submitted-detail.png" alt="Submitted application detail awaiting Bursary"/>
     </article>
 
@@ -268,31 +278,68 @@
         <h3>Staff Portal — Bursary sign-in</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Bursary desk username filled; Demo ≠ Live banner visible.</p>
+      <p>Bursary desk credentials; Demo ≠ Live banner visible.</p>
       <img class="shot" src="screenshots/06-staff-sign-in.png" alt="Staff Portal sign-in with bursary username"/>
     </article>
 
     <article class="step" id="s07">
       <div class="step-meta">
         <span class="step-num">Step 07</span>
-        <h3>Payment verification queue — pending</h3>
+        <h3>Admissions review — pending payment</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Live Demo queue from Portal API. <strong>Demo Draft Applicant</strong> is <strong>pending verification</strong>; approve control enabled.</p>
-      <img class="shot" src="screenshots/07-staff-payment-queue.png" alt="Staff payment queue with pending Demo Draft Applicant"/>
+      <p>Next desk <strong>Bursary — verify payment</strong>. Control: <strong>Approve payment</strong> (not enrol).</p>
+      <img class="shot" src="screenshots/07-staff-payment-queue.png" alt="Staff admissions queue pending payment"/>
     </article>
 
     <article class="step" id="s08">
       <div class="step-meta">
         <span class="step-num">Step 08</span>
-        <h3>Approve payment → enrol student</h3>
+        <h3>Bursary — Approve payment only</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>
-        Success banners: payment accepted, documents verified, enrolment accepted.
-        Continue as <strong>Alya Putri (10029841)</strong>. Queue status for Demo Draft Applicant is <strong>enrolled</strong>.
-      </p>
-      <img class="shot" src="screenshots/08-staff-approved.png" alt="Staff approved payment with enrolled banners"/>
+      <p>Payment verified. Next desk <strong>QA — verify documents</strong>. Applicant is not enrolled.</p>
+      <img class="shot" src="screenshots/08-staff-payment-approved.png" alt="Bursary approved payment next desk QA"/>
+    </article>
+
+    <article class="step" id="s08b">
+      <div class="step-meta">
+        <span class="step-num">Step 08b</span>
+        <h3>Registry / QA — Verify documents</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p><strong>Verify documents (QA)</strong> releases the Eligibility Letter. Next: applicant confirm.</p>
+      <img class="shot" src="screenshots/08b-staff-qa-verified.png" alt="QA verified documents Eligibility released"/>
+    </article>
+
+    <article class="step" id="s08c">
+      <div class="step-meta">
+        <span class="step-num">Step 08c</span>
+        <h3>Applicant — Confirm Eligibility</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p><strong>Confirm Eligibility Letter</strong> popup — intent only; Registry prepares Offer after confirm.</p>
+      <img class="shot" src="screenshots/08c-applicant-confirm-eligibility.png" alt="Applicant Confirm Eligibility Letter popup"/>
+    </article>
+
+    <article class="step" id="s08d">
+      <div class="step-meta">
+        <span class="step-num">Step 08d</span>
+        <h3>Registry — Release Offer Letter</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p><strong>Release Offer Letter</strong> (<code>releaseOffer</code>). Next: Applicant Accept Enrolment.</p>
+      <img class="shot" src="screenshots/08d-staff-offer-released.png" alt="Registry released Offer Letter"/>
+    </article>
+
+    <article class="step" id="s08e">
+      <div class="step-meta">
+        <span class="step-num">Step 08e</span>
+        <h3>Applicant — Accept Enrolment</h3>
+        <span class="status ok">Pass</span>
+      </div>
+      <p><strong>Accept Enrolment</strong> popup with Offer Letter preview/download. Successful accept signs out.</p>
+      <img class="shot" src="screenshots/08e-applicant-accepted.png" alt="Applicant Accept Enrolment popup"/>
     </article>
 
     <article class="step" id="s09">
@@ -301,8 +348,8 @@
         <h3>Applicant — Enrolment Accepted</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Re-opened Applicant Portal as the same completed scenario; card status is green <strong>Enrolment Accepted</strong>.</p>
-      <img class="shot" src="screenshots/09-applicant-after-enrol.png" alt="Applicant My Applications Enrolment Accepted"/>
+      <p>My Applications card status is green <strong>Enrolment Accepted</strong>.</p>
+      <img class="shot" src="screenshots/09-applicant-after-enrol.png" alt="Applicant Enrolment Accepted card"/>
     </article>
 
     <article class="step" id="s10">
@@ -321,7 +368,7 @@
         <h3>Student dashboard</h3>
         <span class="status ok">Pass</span>
       </div>
-      <p>Dashboard loads for Alya with programme context, announcements, and Registration Week action cue.</p>
+      <p>Dashboard loads for Alya with programme context and Registration Week cue.</p>
       <img class="shot" src="screenshots/11-student-home.png" alt="Student Portal dashboard for Alya Putri"/>
     </article>
   </section>
@@ -329,22 +376,26 @@
   <section>
     <h2>Reproduction</h2>
     <ol>
-      <li>Prefer Keychain → Open filled, or sign in to each portal with WG Demo passwords.</li>
-      <li>Applicant: scenario <code>completed</code> → Resume draft → fee step → Submit Application → Confirm.</li>
-      <li>Staff: Bursary → Payments → select pending row → <strong>Approve payment → enrol student</strong>.</li>
-      <li>Applicant: refresh / re-sign-in → status <strong>Enrolment Accepted</strong>.</li>
-      <li>Student: Alya <code>10029841</code> → Dashboard.</li>
+      <li>Prefer Keychain <strong>Start here</strong> → Open filled for each desk.</li>
+      <li>Applicant <code>completed</code> → Resume draft → fee step → Submit Application → Confirm.</li>
+      <li>Staff Bursary → <code>/payments</code> → <strong>Approve payment</strong>.</li>
+      <li>Staff Registry → <strong>Verify documents (QA)</strong>.</li>
+      <li>Applicant → <strong>Confirm Eligibility</strong>.</li>
+      <li>Staff Registry → <strong>Release Offer Letter</strong>.</li>
+      <li>Applicant → <strong>Accept Enrolment</strong> → Sign in / continue.</li>
+      <li>Student Alya <code>10029841</code> → Dashboard.</li>
     </ol>
     <p class="muted">
-      Capture script (local): <code>node docs/reports/e2e-applicant-staff-enrol-2026-10-11/capture.mjs</code>
-      (requires Playwright Chromium from <code>applicant-portal</code> and gitignored <code>.credentials/demo-*.json</code>).
+      Capture script: <code>node docs/reports/e2e-applicant-staff-enrol-2026-10-11/capture.mjs</code>
+      (Playwright from <code>applicant-portal</code> + <code>.credentials/demo-*.json</code>).
+      If <code>completed</code> is already accepted in Neon, delete <code>applicant-completed</code> so the draft fixture reseeds.
     </p>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    Raisd Campus · Demo E2E evidence · 11 Oct 2026 · Not Live CMS.
+    Raisd Campus · Demo E2E evidence · re-captured 13 Oct 2026 · Not Live CMS.
     Source: <code>control-plane/docs/reports/e2e-applicant-staff-enrol-2026-10-11/</code>
   </div>
 </footer>

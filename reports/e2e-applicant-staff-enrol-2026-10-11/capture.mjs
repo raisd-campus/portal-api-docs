@@ -1,5 +1,6 @@
 /**
- * Hosted Demo E2E capture: Applicant fee submit → Staff approve → Student.
+ * Hosted Demo E2E capture: staged admissions
+ * Applicant submit → Bursary payment → QA documents → Confirm → Offer → Accept → Student.
  *
  *   node docs/reports/e2e-applicant-staff-enrol-2026-10-11/capture.mjs
  */
@@ -24,15 +25,16 @@ const keychainMaster =
       return null
     }
   })()
-const bursaryPassword =
-  process.env.RAISD_STAFF_BURSARY_PASSWORD ||
-  (() => {
-    try {
-      return JSON.parse(readFileSync(path.join(credentialsDir, "demo-staff.json"), "utf8")).bursary
-    } catch {
-      return null
-    }
-  })()
+const staffCreds = (() => {
+  try {
+    return JSON.parse(readFileSync(path.join(credentialsDir, "demo-staff.json"), "utf8"))
+  } catch {
+    return null
+  }
+})()
+const bursaryPassword = process.env.RAISD_STAFF_BURSARY_PASSWORD || staffCreds?.bursary || null
+const registryPassword =
+  process.env.RAISD_STAFF_REGISTRY_PASSWORD || staffCreds?.registry || "registry2026"
 if (!keychainMaster || !bursaryPassword) {
   throw new Error(
     "Missing Demo Keychain / Bursary passwords. Set RAISD_KEYCHAIN_MASTER and RAISD_STAFF_BURSARY_PASSWORD, or add .credentials/demo-keychain.json and demo-staff.json",
@@ -53,6 +55,77 @@ async function shot(page, id, title) {
   console.log("captured", id, title)
 }
 
+async function staffSignIn(page, context, username, password) {
+  await context.clearCookies()
+  await page.goto(`${STAFF}/sign-in`, { waitUntil: "networkidle" })
+  await page.evaluate(() => {
+    try {
+      sessionStorage.clear()
+      localStorage.clear()
+    } catch {
+      /* ignore */
+    }
+  })
+  await page.reload({ waitUntil: "networkidle" })
+  const logout = page.getByRole("button", { name: /log out/i })
+  if (await logout.count()) {
+    await logout.click()
+    await page.waitForTimeout(800)
+    await page.goto(`${STAFF}/sign-in`, { waitUntil: "networkidle" })
+  }
+  await page.getByLabel(/^username$/i).waitFor({ state: "visible", timeout: 15000 })
+  await page.getByLabel(/^username$/i).fill(username)
+  await page.getByLabel(/^password$/i).fill(password)
+  await page.getByRole("button", { name: /^sign in$/i }).click()
+  await page.waitForTimeout(2000)
+  await page.goto(`${STAFF}/payments`, { waitUntil: "networkidle" })
+  await page.getByRole("heading", { name: /admissions review|payment verification/i }).waitFor()
+  await page.waitForTimeout(1500)
+}
+
+async function applicantSignOut(page, context) {
+  await context.clearCookies()
+  await page.goto(`${APPLICANT}/`, { waitUntil: "networkidle" })
+  await page.evaluate(() => {
+    try {
+      sessionStorage.clear()
+      localStorage.clear()
+    } catch {
+      /* ignore */
+    }
+  })
+}
+
+async function selectDraftRow(page) {
+  const draftRow = page.getByRole("row", { name: /demo draft applicant/i })
+  if (await draftRow.count()) await draftRow.click()
+  await page.waitForTimeout(500)
+  return draftRow
+}
+
+async function clickWhenEnabled(page, button, label) {
+  await button.waitFor({ state: "visible" })
+  for (let i = 0; i < 6 && !(await button.isEnabled()); i++) {
+    await selectDraftRow(page)
+    await page.getByRole("button", { name: /^refresh$/i }).click().catch(() => {})
+    await page.waitForTimeout(1200)
+  }
+  if (!(await button.isEnabled())) {
+    throw new Error(`${label} stayed disabled`)
+  }
+  await button.click()
+}
+
+async function applicantSignInCompleted(page, context) {
+  await applicantSignOut(page, context)
+  await page.goto(`${APPLICANT}/`, { waitUntil: "networkidle" })
+  await page.getByRole("button", { name: /draft ready to submit/i }).click()
+  await page.getByLabel(/^password$/i).fill(applicants.completed)
+  await page.getByRole("button", { name: /^sign in$/i }).click()
+  await page.getByRole("heading", { name: /my applications/i }).waitFor({ timeout: 45000 })
+  await page.waitForTimeout(1000)
+}
+
 async function main() {
   const browser = await chromium.launch({ headless: true })
   const context = await browser.newContext({
@@ -67,7 +140,7 @@ async function main() {
   await page.getByLabel(/master password/i).fill(keychainMaster)
   await page.getByRole("button", { name: /^unlock$/i }).click()
   await page.getByRole("heading", { name: /demo keychain/i }).waitFor()
-  await shot(page, "01-keychain-unlocked", "Demo Keychain unlocked — desks and students")
+  await shot(page, "01-keychain-unlocked", "Demo Keychain unlocked — Start here admissions sequence")
 
   // 02–05 Applicant: completed draft → fee → submit
   await page.goto(`${APPLICANT}/`, { waitUntil: "networkidle" })
@@ -79,7 +152,6 @@ async function main() {
   await page.waitForTimeout(1000)
   await shot(page, "03-applicant-home", "Applicant home — draft application card")
 
-  // Open draft editor (fee step)
   const resume = page.getByRole("button", { name: /resume draft|application no/i }).first()
   if (await resume.count()) {
     await resume.click()
@@ -87,7 +159,6 @@ async function main() {
     await page.locator("text=Not submitted").first().click()
   }
   await page.waitForTimeout(2000)
-  // Ensure fee step
   const feeStep = page.getByRole("button", { name: /application fee|fee/i }).first()
   if (await feeStep.count()) await feeStep.click().catch(() => {})
   await page.waitForTimeout(800)
@@ -97,7 +168,6 @@ async function main() {
     const current = await bank.inputValue().catch(() => "")
     if (!current) await bank.fill(`E2E-${Date.now()}`)
   }
-  // Seed usually already has payment.pdf; upload only when the field is empty.
   const hasProof = await page.getByText(/payment\.pdf/i).count()
   const fileInput = page.locator('input[type="file"]')
   if (!hasProof && (await fileInput.count())) {
@@ -118,10 +188,9 @@ async function main() {
   await submitBtn.click()
   await page.getByRole("heading", { name: /submit application/i }).waitFor({ timeout: 10000 }).catch(() => {})
   await page.waitForTimeout(500)
-  // Confirm in popup footer
-  const confirm = page.getByRole("dialog").getByRole("button", { name: /^submit application$/i })
-  if (await confirm.count()) {
-    await confirm.click()
+  const confirmSubmit = page.getByRole("dialog").getByRole("button", { name: /^submit application$/i })
+  if (await confirmSubmit.count()) {
+    await confirmSubmit.click()
   } else {
     await page.getByRole("button", { name: /^submit application$/i }).last().click()
   }
@@ -129,17 +198,14 @@ async function main() {
   await page.waitForTimeout(1500)
   await shot(page, "05-applicant-submitted", "Submitted — payment proof under review")
 
-  // Open submitted detail for richer shot (optional replace 05b)
   const viewApp = page.getByRole("button", { name: /view application/i }).first()
   if (await viewApp.count()) {
     await viewApp.click()
     await page.waitForTimeout(1500)
     await shot(page, "05b-applicant-submitted-detail", "Submitted application detail awaiting Bursary")
-    await page.goto(`${APPLICANT}/applications`, { waitUntil: "networkidle" })
   }
 
-  // 06–08 Staff approve
-  await context.clearCookies()
+  // 06–08 Bursary approve payment only
   await page.goto(`${STAFF}/sign-in`, { waitUntil: "networkidle" })
   await page.getByLabel(/^username$/i).fill("bursary")
   await page.getByLabel(/^password$/i).fill(bursaryPassword)
@@ -147,59 +213,97 @@ async function main() {
   await page.getByRole("button", { name: /^sign in$/i }).click()
   await page.waitForTimeout(2000)
   await page.goto(`${STAFF}/payments`, { waitUntil: "networkidle" })
-  await page.getByRole("heading", { name: /payment verification/i }).waitFor()
+  await page.getByRole("heading", { name: /admissions review|payment verification/i }).waitFor()
   await page.waitForTimeout(2000)
 
-  const draftRow = page.getByRole("row", { name: /demo draft applicant/i })
-  if (await draftRow.count()) await draftRow.click()
-  await page.waitForTimeout(500)
-  await shot(page, "07-staff-payment-queue", "Staff payment queue — pending Demo Draft Applicant")
+  await selectDraftRow(page)
+  await shot(page, "07-staff-payment-queue", "Staff admissions queue — pending payment desk")
 
-  const approve = page.getByRole("button", { name: /approve payment/i })
-  await approve.waitFor({ state: "visible" })
-  // Force enable check
-  for (let i = 0; i < 5 && !(await approve.isEnabled()); i++) {
-    if (await draftRow.count()) await draftRow.click()
-    await page.getByRole("button", { name: /^refresh$/i }).click().catch(() => {})
-    await page.waitForTimeout(1500)
-  }
-  if (!(await approve.isEnabled())) {
-    throw new Error("Approve button stayed disabled — expected pending_verification for completed scenario")
-  }
-  await approve.click()
-  // Wait for success banner or enrolled status
+  const approve = page.getByRole("button", { name: /^approve payment$/i })
+  await clickWhenEnabled(page, approve, "Approve payment")
   await page.waitForFunction(
-    () => {
-      const text = document.body.innerText
-      return /Applicant is now a student|Continue as|enrolled/i.test(text) && !/Please correct the highlighted fields/i.test(text)
-    },
+    () => /QA|verify documents|payment verified|Documents/i.test(document.body.innerText),
     { timeout: 60000 },
-  ).catch(async () => {
-    const alert = await page.locator('[role="alert"]').allInnerTexts().catch(() => [])
-    throw new Error(`Approve did not complete. Alerts: ${alert.join(" | ")}`)
-  })
-  await page.waitForTimeout(1500)
-  await shot(page, "08-staff-approved", "Staff approved — applicant enrolled as Demo student")
+  )
+  await page.waitForTimeout(1200)
+  await shot(page, "08-staff-payment-approved", "Bursary approved payment — next desk QA")
 
-  // 09 Applicant after enrol
-  await context.clearCookies()
-  await page.goto(`${APPLICANT}/`, { waitUntil: "networkidle" })
-  await page.getByRole("button", { name: /draft ready to submit|verified application|completed/i }).first().click()
-  // Prefer completed account to see accepted state; if UI shows verified card use that
-  const approvedCard = page.getByRole("button", { name: /verified application ready to accept/i })
-  // Stay on completed for post-enrol of the same scenario
-  await page.getByRole("button", { name: /draft ready to submit/i }).click().catch(() => {})
-  await page.getByLabel(/^password$/i).fill(applicants.completed)
-  await page.getByRole("button", { name: /^sign in$/i }).click()
-  await page.waitForTimeout(3000)
-  // If still on sign-in (wrong), try approved
-  if (await page.getByRole("heading", { name: /sign in to applicant/i }).count()) {
-    if (await approvedCard.count()) await approvedCard.click()
-    await page.getByLabel(/^password$/i).fill(applicants.approved)
+  // 08b Registry / QA verify documents
+  await staffSignIn(page, context, "registry", registryPassword)
+  await selectDraftRow(page)
+  const verifyDocs = page.getByRole("button", { name: /verify documents/i })
+  await clickWhenEnabled(page, verifyDocs, "Verify documents (QA)")
+  await page.waitForFunction(
+    () => /confirm Eligibility|Eligibility|applicant confirm/i.test(document.body.innerText),
+    { timeout: 60000 },
+  )
+  await page.waitForTimeout(1200)
+  await shot(page, "08b-staff-qa-verified", "QA verified documents — Eligibility released")
+
+  // 08c Applicant confirm eligibility
+  await applicantSignInCompleted(page, context)
+  const openSubmitted = page.getByRole("button", { name: /view application|application no/i }).first()
+  if (await openSubmitted.count()) await openSubmitted.click()
+  await page.waitForTimeout(1500)
+  const confirmElig = page.getByRole("button", { name: /confirm and continue|confirm eligibility/i }).first()
+  if (await confirmElig.count()) {
+    await confirmElig.click()
+    await page.waitForTimeout(800)
+    await shot(page, "08c-applicant-confirm-eligibility", "Applicant Confirm Eligibility Letter popup")
+    const dialogConfirm = page
+      .getByRole("dialog")
+      .getByRole("button", { name: /^(confirm|continue|accept)$/i })
+      .last()
+    if (await dialogConfirm.count()) await dialogConfirm.click()
+    await page.getByRole("dialog").waitFor({ state: "hidden", timeout: 60000 }).catch(() => {})
+    await page.waitForTimeout(1500)
+  } else {
+    await shot(page, "08c-applicant-confirm-eligibility", "Applicant Confirm Eligibility Letter popup")
+  }
+
+  // 08d Registry release offer
+  await staffSignIn(page, context, "registry", registryPassword)
+  await selectDraftRow(page)
+  const releaseOffer = page.getByRole("button", { name: /release offer/i })
+  await clickWhenEnabled(page, releaseOffer, "Release Offer Letter")
+  await page.waitForFunction(
+    () => /Accept Enrolment|Offer Letter|offer released/i.test(document.body.innerText),
+    { timeout: 60000 },
+  )
+  await page.waitForTimeout(1200)
+  await shot(page, "08d-staff-offer-released", "Registry released Offer Letter")
+
+  // 08e Applicant accept enrolment
+  await applicantSignInCompleted(page, context)
+  const openForAccept = page.getByRole("button", { name: /view application|application no/i }).first()
+  if (await openForAccept.count()) await openForAccept.click()
+  await page.waitForTimeout(1500)
+  const accept = page.getByRole("button", { name: /accept enrolment|confirm and accept/i }).first()
+  if (await accept.count()) {
+    await accept.click()
+    await page.waitForTimeout(800)
+    await shot(page, "08e-applicant-accepted", "Applicant Accept Enrolment popup")
+    const dialogAccept = page.getByRole("dialog").getByRole("button", { name: /^accept$/i }).last()
+    if (await dialogAccept.count()) await dialogAccept.click()
+    await page
+      .waitForFunction(
+        () => /Enrolment Accepted|Sign in to Applicant|sign in again/i.test(document.body.innerText),
+        { timeout: 60000 },
+      )
+      .catch(() => {})
+    await page.waitForTimeout(1500)
+  } else {
+    await shot(page, "08e-applicant-accepted", "Applicant Accept Enrolment popup")
+  }
+
+  // Home / sign-in after accept
+  if (await page.getByRole("heading", { name: /sign in/i }).count()) {
+    await page.getByRole("button", { name: /draft ready to submit/i }).click().catch(() => {})
+    await page.getByLabel(/^password$/i).fill(applicants.completed)
     await page.getByRole("button", { name: /^sign in$/i }).click()
     await page.waitForTimeout(2500)
   }
-  await shot(page, "09-applicant-after-enrol", "Applicant after enrolment — accepted / student path")
+  await shot(page, "09-applicant-after-enrol", "Applicant after Accept Enrolment — Enrolment Accepted")
 
   // 10–11 Student
   await context.clearCookies()
@@ -210,10 +314,9 @@ async function main() {
   await shot(page, "10-student-sign-in", "Student Portal — Alya Putri (Registration Week)")
   await page.getByRole("button", { name: /^sign in$/i }).click()
   await page.waitForTimeout(5000)
-  // Wait for dashboard chrome
   await page.getByRole("link", { name: /dashboard/i }).first().waitFor({ timeout: 30000 }).catch(() => {})
   await page.waitForTimeout(2000)
-  await shot(page, "11-student-home", "Student Portal dashboard after enrolment path")
+  await shot(page, "11-student-home", "Student Portal dashboard after staged admissions path")
 
   writeFileSync(path.join(here, "steps.json"), JSON.stringify({ capturedAt: new Date().toISOString(), steps }, null, 2))
   await browser.close()
