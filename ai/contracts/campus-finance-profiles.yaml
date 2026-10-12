@@ -7,9 +7,10 @@
 # SP evidence: docs/ai/backend/applicant-qr-fee-mechanisms.md
 
 version: 1
-updated: 2026-10-09
+updated: 2026-10-10
 status: proposed
 reviewOwner: faid
+# Amount suggestions: docs/ai/backend/cross-campus-fee-amount-suggestions.md
 decisions:
   D1_isoCurrencyWithCmsCodeMap: proposed
   D2_applicationFeeOnProfile: proposed
@@ -102,7 +103,10 @@ profiles:
         studentTotal: [modularAdd, resource, repeat]
         standardTotal: [course, resource, repeat]
       cmsHardcodeNotes:
-        - "b_Update_Student may set stdmodfee=600 or 375 on some repeat paths — keep CMS-side until override list agreed"
+        - "b_Update_Student LAN/MPW: Add/Current=600, repeat=375 (CMS double units — confirm ×100 minor)"
+      hardcodeOverrides:
+        - { id: ls-lan-mpw-current, match: { moduleRefPrefix: [LAN, MPW], status: [Add, Compulsory, Current] }, amount: 600, faid: null }
+        - { id: ls-lan-mpw-repeat, match: { moduleRefPrefix: [LAN, MPW], statusPrefix: repeat }, amount: 375, faid: null }
     feeCases:
       C1: { enabled: true, faid: null }
       C2: { enabled: true, exemptBeforeTerm: "2011-07", faid: null }
@@ -157,12 +161,19 @@ profiles:
       totals:
         studentTotal: [modularAdd, resource, repeat]
         standardTotal: [course, resource, repeat]
+      cmsHardcodeNotes:
+        - "LAN/MPW 600/375 plus Associate repeat 2600 / Degree repeat 3600 from term 2022-01"
+      hardcodeOverrides:
+        - { id: sz-lan-mpw-current, match: { moduleRefPrefix: [LAN, MPW], status: [Add, Compulsory, Current] }, amount: 600, faid: null }
+        - { id: sz-lan-mpw-repeat, match: { moduleRefPrefix: [LAN, MPW], statusPrefix: repeat }, amount: 375, faid: null }
+        - { id: sz-assoc-repeat-2022, match: { statusPrefix: repeat, programCat: Associate Degree, termGte: "2022-01" }, amount: 2600, faid: null }
+        - { id: sz-degree-repeat-2022, match: { statusPrefix: repeat, programCat: Degree, termGte: "2022-01" }, amount: 3600, faid: null }
     feeCases:
       C1: { enabled: true, note: "same SP family*", faid: null }
       C2: { enabled: null, faid: null }
       C3: { enabled: true, faid: null }
       C4: { enabled: true, faid: null }
-      C5: { enabled: true, faid: null }
+      C5: { enabled: true, hardcodesCmsSide: true, faid: null }
       C6: { enabled: true, faid: null }
       C7: { enabled: true, faid: null }
       C8: { enabled: true, faid: null }
@@ -207,7 +218,12 @@ profiles:
         studentTotal: [modularAdd, resource, repeat]
         standardTotal: [course, resource, repeat]
       cmsHardcodeNotes:
-        - "b_Update_Student repeat hardcodes e.g. 150 (PUFP) / 250 (P1) — CMS-side"
+        - "b_Update_Student repeat: PUFP/P3=150, P1=250, P2=220 (200 commented)"
+      hardcodeOverrides:
+        - { id: kh-pufp-repeat, match: { semesterRefContains: PUFP, statusPrefix: repeat }, amount: 150, faid: null }
+        - { id: kh-p1-repeat, match: { semesterRefSuffix: P1, statusPrefix: repeat }, amount: 250, faid: null }
+        - { id: kh-p2-repeat, match: { semesterRefSuffix: P2, statusPrefix: repeat }, amount: 220, faid: null }
+        - { id: kh-p3-repeat, match: { semesterRefSuffix: P3, statusPrefix: repeat }, amount: 150, faid: null }
     feeCases:
       C1: { enabled: true, faid: null }
       C2: { enabled: null, faid: null }

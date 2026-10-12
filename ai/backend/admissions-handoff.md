@@ -79,3 +79,7 @@ Mock operations: `confirmApplicationEligibility` (applicant), `verify-documents`
 ## Bounded evidence transport v3 — 8 October 2026
 
 Admissions snapshot v2 remains unchanged. DEV envelope v3 adds an owned file manifest and one-at-a-time requested resources with 25 MiB bounds, exact name/MIME/length, SHA-256, trusted origin/window/nonce and replay validation. Payment proof is excluded. No persistent storage or URL payload is used. Student resources attach to stable evidence references; Credit Transfer reuses them without rewriting the immutable snapshot. Standard PDFs open natively; resources survive navigation until session disposal. Hosted durable authorized delivery and reviewer operations remain future service support.
+
+## Applicant–Student synchronization — 12 October 2026
+
+The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.

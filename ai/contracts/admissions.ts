@@ -6,7 +6,7 @@ export const calendarDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine
   return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value
 }, "Enter a valid calendar date.")
 const text = z.string().trim()
-export const evidenceSchema = /* @__PURE__ */ z.object({ id: z.string().min(1), name: text.min(1), sizeBytes: z.number().int().positive().max(25 * 1024 ** 2), mimeType: text.min(1) })
+export const evidenceSchema = /* @__PURE__ */ z.object({ id: z.string().min(1), name: z.string().min(1), sizeBytes: z.number().int().positive().max(25 * 1024 ** 2), mimeType: text.min(1) })
 export const addressSchema = /* @__PURE__ */ z.object({ addressLine: text, country: text, state: text, city: text, postcode: text })
 export const contactSchema = /* @__PURE__ */ z.object({ fullName: text, contactNumber: text, emailAddress: text })
 export const personalDetailsSchema = /* @__PURE__ */ z.object({

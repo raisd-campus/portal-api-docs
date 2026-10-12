@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-09
+updated: 2026-10-12
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -52,6 +52,12 @@ notes:
   - 2026-10-09: Standup 8 Oct follow-up — Applicant merge + QR (auto+manual) + fee/payment from CMS SPs; backend/applicant-qr-fee-mechanisms.md + diagrams/old-cms-lesotho/fee-payment-sps.html (currency matrix · cases C1–C10).
   - 2026-10-09: Campus finance profile + C1–C10 Faid checklist — backend/campus-finance-profile.md + diagrams/old-cms-lesotho/campus-finance-profile.html (proposed seeds; not Live).
   - 2026-10-09: Follow-up — reviewable contracts/campus-finance-profiles.yaml (C1–C10 + LS/SZ/KH); CAP-53 W1 online-enrolment write path (backend/lesotho-cap53-online-enrolment-write.md + cap53-online-enrolment.html).
+  - 2026-10-10: Standup 9 Oct — dynamic fee-calculation proposal (backend/dynamic-fee-calculation.md + Pages); weekly progress pack docs/reports/weekly-progress-2026-10-10/.
+  - 2026-10-10: Cross-campus fee amount suggestions from SP/DB/process — backend/cross-campus-fee-amount-suggestions.md + diagrams/old-cms/cross-campus-fee-amounts.html (LS/SZ/KH hardcodes).
+  - 2026-10-10: Weekly reports hub on Pages — docs/reports/index.html + weekly/W01–W04 (18 Sep–10 Oct); primary nav Weekly reports.
+  - 2026-10-11: Staff portal Demo shell — applicant/student status + payment verification (session store); docs/ai/frontend/staff-portal.md.
+  - 2026-10-11: Demo keychain launcher — Open filled postMessage into student/applicant/staff sign-in; docs/ai/frontend/keychain.md.
+  - 2026-10-10: Refresh W04 / weekly-progress-2026-10-10 through morning cut — hosted Demo API enablement, cross-campus fee amounts, Weekly reports hub.
 
 entrypoints:
   agents: AGENTS.md
@@ -67,6 +73,7 @@ sibling_repos:
   - student-portal
   - lecturer-portal
   - staff-portal
+  - keychain
   - portal-api
   - design-system
   - portal-api-docs
@@ -189,6 +196,24 @@ backend:
       - backend/portal-api-development-plan.md
     pages: ../diagrams/old-cms-lesotho/cap53-online-enrolment.html
     note: CAP-53 W1 target write path — sp_onlinenrollment_* + sp_payment_verification_insert (documented 9 Oct; not implemented).
+  - path: backend/dynamic-fee-calculation.md
+    topics: [lesotho, finance, fee, dynamic, configurable, profile, standup, m4]
+    related:
+      - backend/campus-finance-profile.md
+      - contracts/campus-finance-profiles.yaml
+      - backend/applicant-qr-fee-mechanisms.md
+      - backend/cross-campus-fee-amount-suggestions.md
+    pages: ../diagrams/old-cms-lesotho/dynamic-fee-calculation.html
+    note: Standup 9 Oct — proposed configurable fee engine; Dexter validates C1–C10 before final config.
+  - path: backend/cross-campus-fee-amount-suggestions.md
+    topics: [finance, fee, amount, currency, lesotho, eswatini, cambodia, botswana, sierra-leone, hardcode, multi-campus]
+    related:
+      - contracts/campus-finance-profiles.yaml
+      - backend/dynamic-fee-calculation.md
+      - backend/applicant-qr-fee-mechanisms.md
+      - backend/campus-finance-profile.md
+    pages: ../diagrams/old-cms/cross-campus-fee-amounts.html
+    note: Suggested amounts from b_Update_Student / payment SP dumps — LS M300+600/375 · SZ 2600/3600 · KH 150/250/220 (10 Oct).
   - path: backend/lesotho-cap53-read-adapter.md
     topics: [lesotho, cap-53, portal-api, adapter, m4, reads, portal-tables]
     related:
@@ -376,6 +401,7 @@ frontend:
   applicant-portal: frontend/applicant-portal.md
   lecturer-portal: frontend/lecturer-portal.md
   staff-portal: frontend/staff-portal.md
+  keychain: frontend/keychain.md
 
 design:
   - path: design/design-system.md
@@ -430,3 +456,11 @@ student_workflow_increment:
 
   - path: frontend/student-portal/audits/2026-10-09-campus-main-publication.md
     topics: [publication, verification, reconciliation, main]
+
+applicant_student_sync_audit:
+  - path: backend/admissions-resources.md
+    topics: [demo-files, original-bytes, continuation, local-postgres]
+  - path: contracts/hosted-admissions.ts
+    topics: [owned-evidence, chunk-upload, continuation-grant]
+  - path: frontend/student-portal/audits/2026-10-12-cross-portal-sync-ui-audit.md
+    topics: [ui-audit, shared-062, evidence-matrix, verification]

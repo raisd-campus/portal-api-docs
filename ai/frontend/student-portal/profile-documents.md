@@ -96,3 +96,7 @@ Both confirmation popups and Student Documents use two equal-width letter action
 ## Browser review corrections — 9 October 2026
 
 Accepted transfer applicants retain Course Syllabi as one owned Student Documents row with the original filename/provenance. The same resource is reused by Credit Transfer, not uploaded again. The regression validates original PDF bytes through both the document row and raw evidence reference. Legacy profiles without imported syllabi retain an honest missing-file state.
+
+## Applicant–Student synchronization — 12 October 2026
+
+The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.

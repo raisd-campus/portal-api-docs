@@ -1,8 +1,8 @@
 # Portal API — PoC requirements (Vercel + Neon)
 
-**Status:** Partial (28 September 2026). Demo live: SPA <https://raisd-student-portal.vercel.app> → API <https://raisd-portal-api.vercel.app> → Neon. Checked: PoC-F2, F3, F5, F6, F7, F8, F9 and PoC-S1, S2 (token survives a redeploy; logout → 401; deep links refresh; `CORS_ORIGIN` = SPA + GitHub Pages, other origins refused; only portal-api holds `DATABASE_URL`). Open: PoC-F1 (the SPA uses the HTTP adapter, but `MockPortalApi` fixtures still ship in the bundle because `portal-runtime.tsx` imports the mock statically), PoC-N7 (both projects deploy prebuilt from a maintainer checkout, not from Git), Preview-origin CORS. Hosted on a personal Hobby team, not the PoC-P1 Pro team.  
-**Architecture and how-to:** [architecture/vercel-neon-poc.md](../architecture/vercel-neon-poc.md) (diagram, provisioning steps).  
-**This file:** what the PoC must do, what it needs, how it is accepted, and what it does not prove.  
+**Status:** Partial (28 September 2026). Demo live: SPA <https://raisd-student-portal.vercel.app> → API <https://raisd-portal-api.vercel.app> → Neon. Checked: PoC-F2, F3, F5, F6, F7, F8, F9 and PoC-S1, S2 (token survives a redeploy; logout → 401; deep links refresh; `CORS_ORIGIN` = SPA + GitHub Pages, other origins refused; only portal-api holds `DATABASE_URL`). Open: PoC-F1 (the SPA uses the HTTP adapter, but `MockPortalApi` fixtures still ship in the bundle because `portal-runtime.tsx` imports the mock statically), PoC-N7 (both projects deploy prebuilt from a maintainer checkout, not from Git), Preview-origin CORS. Hosted on a personal Hobby team, not the PoC-P1 Pro team.
+**Architecture and how-to:** [architecture/vercel-neon-poc.md](../architecture/vercel-neon-poc.md) (diagram, provisioning steps).
+**This file:** what the PoC must do, what it needs, how it is accepted, and what it does not prove.
 **Production target (unchanged):** [portal-api-deployment.md](portal-api-deployment.md), [SDD-12](../../sdd/12-deployment-architecture.md). The PoC is not an ADR and never Live.
 
 ## 1. Purpose

@@ -1,0 +1,2808 @@
+{
+  "date": "2026-10-12",
+  "packageVersion": "0.6.2",
+  "publication": "Prepared for authorized main publication; Vercel deployment disabled",
+  "inventoriedViews": [
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/",
+      "headings": [
+        "News and Announcements",
+        "Academic Performance",
+        "Timetable",
+        "Modules"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/announcements",
+      "headings": [
+        "Announcements",
+        "Important Announcements",
+        "All Announcements"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--announcements.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/announcements/absent-id",
+      "headings": [
+        "Announcements",
+        "Announcement unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--announcements-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/policies",
+      "headings": [
+        "University Policies"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--policies.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/performance",
+      "headings": [
+        "Academic",
+        "CGPA & GPA",
+        "Grades",
+        "A-GRD201Graphic Design 24.00 Credits",
+        "B+DMP101Design Management Principles 14.00 Credits",
+        "A-TYP301Typography 34.00 Credits",
+        "B+ELE201Elective 24.00 Credits",
+        "BMMD201Motion and Media Design4.00 Credits",
+        "B+ART201Art and Design History4.00 Credits"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-performance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/modules",
+      "headings": [
+        "Academic",
+        "Modules"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/modules/module-grd301",
+      "headings": [
+        "Academic",
+        "Graphic Design 3",
+        "Lecturers",
+        "Module Outline",
+        "Summary"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-modules-module-grd301.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/modules/module-grd301?tab=materials",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-modules-module-grd301-tab-materials.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/modules/module-grd301?tab=attendance",
+      "headings": [
+        "Academic",
+        "Graphic Design 3"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-modules-module-grd301-tab-attendance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/modules/module-grd301/lecturers/lecturer-adam-watson/review?semesterId=semester-2026-aug",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-modules-module-grd301-lecturers-lecturer-adam-watson-review-semesterId-semester-2026-aug.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/modules/absent-id",
+      "headings": [
+        "Academic",
+        "Module details unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-modules-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/timetable",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-timetable.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/attendance",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-attendance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/study-plan",
+      "headings": [
+        "Academic",
+        "Programme Overview",
+        "Semester Outline",
+        "Semester 1Credits attempted20Credits earned20GPA3.27CGPA3.27Completed",
+        "Semester 2Credits attempted20Credits earned16GPA2.67CGPA2.97Completed",
+        "Semester 3Credits attempted24Credits earned24GPA3.39CGPA3.33Completed",
+        "Semester 4Current load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Current",
+        "Semester 5Planned load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Planned",
+        "Semester 6Planned load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Planned"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-study-plan.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/module-registration",
+      "headings": [
+        "Academic",
+        "Registration completed"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-module-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/academic/graduation",
+      "headings": [
+        "Academic",
+        "Not eligible for graduation"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--academic-graduation.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/personal-info",
+      "headings": [
+        "Profile",
+        "Personal Details",
+        "General",
+        "Permanent Address",
+        "Current Address",
+        "Father / Guardian",
+        "Mother / Guardian",
+        "Disability Details",
+        "Emergency Contact"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-personal-info.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/academic",
+      "headings": [
+        "Profile",
+        "Academic Qualifications",
+        "Qualification 1",
+        "Qualification 2",
+        "English Proficiency"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-academic.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/resume",
+      "headings": [
+        "Profile",
+        "Professional Summary",
+        "Work Experience",
+        "Education",
+        "Skills",
+        "Awards & Recognition"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-resume.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/portfolio",
+      "headings": [
+        "Profile",
+        "Portfolio"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-portfolio.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/portfolio/new",
+      "headings": [
+        "Profile",
+        "Add Project"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-portfolio-new.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/portfolio/absent-id",
+      "headings": [
+        "Profile",
+        "Portfolio project unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-portfolio-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/portfolio/absent-id/edit",
+      "headings": [
+        "Profile",
+        "Portfolio project unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-portfolio-absent-id-edit.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/documents",
+      "headings": [
+        "Profile",
+        "Student Documents"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-documents.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/privacy-security",
+      "headings": [
+        "Profile",
+        "Your information",
+        "Your portal access",
+        "Keeping your account secure",
+        "Protect your sign-in details",
+        "Check links before signing in",
+        "Sign out on shared devices",
+        "Report unusual activity",
+        "Privacy questions and requests"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-privacy-security.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/finance",
+      "headings": [
+        "Finance",
+        "Invoices"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--finance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/finance?tab=payments",
+      "headings": [
+        "Finance",
+        "Transfer Proofs",
+        "No transfer proofs pending",
+        "Recorded Payments",
+        "Credits and Adjustments"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--finance-tab-payments.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/finance?tab=awards",
+      "headings": [
+        "Finance",
+        "Scholarships & Incentives",
+        "Creative Excellence ScholarshipActive",
+        "Early Confirmation IncentiveCompleted"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--finance-tab-awards.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/finance/invoices/invoice-rizal-s4-tuition",
+      "headings": [
+        "Finance",
+        "Semester 4 Tuition Fee",
+        "Invoice Activity"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--finance-invoices-invoice-rizal-s4-tuition.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/finance/invoices/absent-id",
+      "headings": [
+        "Finance",
+        "Invoice unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--finance-invoices-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration",
+      "headings": [
+        "Immigration",
+        "Malaysia Student Pass",
+        "Student Pass details"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration?tab=applications",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration-tab-applications.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms",
+      "headings": [
+        "Online Forms",
+        "Available Forms"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms?tab=my-forms",
+      "headings": [
+        "Online Forms",
+        "My Forms"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-tab-my-forms.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/submissions/absent-id",
+      "headings": [
+        "Online Forms",
+        "Form unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-submissions-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/services",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--services.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/services/accessibility",
+      "headings": [
+        "Services",
+        "Accessibility Support",
+        "Accessibility Support information is not available yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--services-accessibility.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/dev/admin-actions",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--dev-admin-actions.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/dev/scenarios",
+      "headings": [
+        "Student Scenarios"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--dev-scenarios.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/dev/data-model",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--dev-data-model.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/announcements/announcement-registration",
+      "headings": [
+        "Announcements",
+        "Check your semester registration",
+        "What to check"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--announcements-announcement-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/portfolio/portfolio-project-rizal-living-spaces",
+      "headings": [
+        "Profile",
+        "Living Spaces"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-portfolio-portfolio-project-rizal-living-spaces.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/profile/portfolio/portfolio-project-rizal-living-spaces/edit",
+      "headings": [
+        "Profile",
+        "Edit Project"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--profile-portfolio-portfolio-project-rizal-living-spaces-edit.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/services/academic",
+      "headings": [
+        "Services"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--services-academic.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/services/it-helpdesk",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--services-it-helpdesk.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/add-modules",
+      "headings": [
+        "Online Forms",
+        "Add Modules",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-add-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/drop-modules",
+      "headings": [
+        "Online Forms",
+        "Drop Modules",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-drop-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/change-programme",
+      "headings": [
+        "Online Forms",
+        "Change of Programme",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-change-programme.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/academic-appeal",
+      "headings": [
+        "Online Forms",
+        "Academic Appeal",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-academic-appeal.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/credit-transfer",
+      "headings": [
+        "Online Forms",
+        "Credit Transfer",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-credit-transfer.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/study-leave",
+      "headings": [
+        "Online Forms",
+        "Study Leave",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-study-leave.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/custom-certification-letter",
+      "headings": [
+        "Online Forms",
+        "Custom Certification Letter",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-custom-certification-letter.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/student-complaint",
+      "headings": [
+        "Online Forms",
+        "Student Feedback",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-student-complaint.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/graduation-clearance",
+      "headings": [
+        "Online Forms",
+        "Graduation Clearance",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-graduation-clearance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/convocation-registration",
+      "headings": [
+        "Online Forms",
+        "Convocation Registration",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-convocation-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/new-student-pass",
+      "headings": [
+        "Online Forms",
+        "New Student Pass Application",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-new-student-pass.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/visa-renewal",
+      "headings": [
+        "Online Forms",
+        "Student Pass Renewal",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-visa-renewal.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/visa-cancellation",
+      "headings": [
+        "Online Forms",
+        "Student Pass Cancellation",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-visa-cancellation.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/student-pass-medical-result",
+      "headings": [
+        "Online Forms",
+        "Medical Screening Result",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-student-pass-medical-result.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/accessibility-support",
+      "headings": [
+        "Online Forms",
+        "Accessibility Support",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-accessibility-support.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/forms/absent-form",
+      "headings": [
+        "Online Forms",
+        "Form unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-forms-absent-form.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/submissions/online-form-student-rizal-1",
+      "headings": [
+        "Online Forms",
+        "Accessibility Support",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-submissions-online-form-student-rizal-1.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/submissions/online-form-student-rizal-2",
+      "headings": [
+        "Online Forms",
+        "Student Complaint",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-submissions-online-form-student-rizal-2.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/online-forms/submissions/online-form-student-rizal-3",
+      "headings": [
+        "Online Forms",
+        "Student Complaint",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--online-forms-submissions-online-form-student-rizal-3.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration?tab=applications&step=1",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration-tab-applications-step-1.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration?tab=applications&step=2",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration-tab-applications-step-2.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration?tab=applications&step=3",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration-tab-applications-step-3.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration?tab=applications&step=4",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration-tab-applications-step-4.png"
+    },
+    {
+      "portal": "Student",
+      "width": 1440,
+      "route": "/immigration?tab=applications&step=5",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-1440/student--immigration-tab-applications-step-5.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/",
+      "headings": [
+        "News and Announcements",
+        "Check your semester registration",
+        "Prepare for your semester examinations",
+        "Get to know your campus library",
+        "Academic writing: build a stronger argument",
+        "Prepare your work for the student showcase",
+        "Plan ahead for print-workshop visits",
+        "Make room for wellbeing between classes",
+        "Campus Wi-Fi maintenance on 12 September",
+        "Keep your student contact details current",
+        "Plan your journey to campus",
+        "Academic Performance",
+        "Semester 3",
+        "Timetable",
+        "Monday",
+        "Calendar",
+        "Modules"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/announcements",
+      "headings": [
+        "Announcements",
+        "Important Announcements",
+        "All Announcements"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--announcements.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/announcements/absent-id",
+      "headings": [
+        "Announcements",
+        "Announcement unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--announcements-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/policies",
+      "headings": [
+        "University Policies"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--policies.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/performance",
+      "headings": [
+        "Academic",
+        "CGPA & GPA",
+        "Grades",
+        "A-GRD201Graphic Design 24.00 Credits",
+        "B+DMP101Design Management Principles 14.00 Credits",
+        "A-TYP301Typography 34.00 Credits",
+        "B+ELE201Elective 24.00 Credits",
+        "BMMD201Motion and Media Design4.00 Credits",
+        "B+ART201Art and Design History4.00 Credits"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-performance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/modules",
+      "headings": [
+        "Academic",
+        "Modules"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/modules/module-grd301",
+      "headings": [
+        "Academic",
+        "Graphic Design 3",
+        "Lecturers",
+        "Module Outline",
+        "Summary"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-modules-module-grd301.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/modules/module-grd301?tab=materials",
+      "headings": [
+        "Academic",
+        "Graphic Design 3"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-modules-module-grd301-tab-materials.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/modules/module-grd301?tab=attendance",
+      "headings": [
+        "Academic",
+        "Graphic Design 3"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-modules-module-grd301-tab-attendance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/modules/module-grd301/lecturers/lecturer-adam-watson/review?semesterId=semester-2026-aug",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-modules-module-grd301-lecturers-lecturer-adam-watson-review-semesterId-semester-2026-aug.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/modules/absent-id",
+      "headings": [
+        "Academic",
+        "Module details unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-modules-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/timetable",
+      "headings": [
+        "Academic",
+        "Timetable",
+        "Monday"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-timetable.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/attendance",
+      "headings": [
+        "Academic",
+        "Attendance",
+        "October 2026",
+        "Monday, 12 October 2026"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-attendance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/study-plan",
+      "headings": [
+        "Academic",
+        "Programme Overview",
+        "Semester Outline",
+        "Semester 1Credits attempted20Credits earned20GPA3.27CGPA3.27Completed",
+        "Semester 2Credits attempted20Credits earned16GPA2.67CGPA2.97Completed",
+        "Semester 3Credits attempted24Credits earned24GPA3.39CGPA3.33Completed",
+        "Semester 4Current load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Current",
+        "Semester 5Planned load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Planned",
+        "Semester 6Planned load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Planned"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-study-plan.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/module-registration",
+      "headings": [
+        "Academic",
+        "Registration completed"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-module-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/academic/graduation",
+      "headings": [
+        "Academic",
+        "Not eligible for graduation"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--academic-graduation.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/personal-info",
+      "headings": [
+        "Profile",
+        "Personal Details",
+        "General",
+        "Permanent Address",
+        "Current Address",
+        "Father / Guardian",
+        "Mother / Guardian",
+        "Disability Details",
+        "Emergency Contact"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-personal-info.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/academic",
+      "headings": [
+        "Profile",
+        "Academic Qualifications",
+        "Qualification 1",
+        "Qualification 2",
+        "English Proficiency"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-academic.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/resume",
+      "headings": [
+        "Profile",
+        "Professional Summary",
+        "Work Experience",
+        "Education",
+        "Skills",
+        "Awards & Recognition"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-resume.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/portfolio",
+      "headings": [
+        "Profile",
+        "Portfolio"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-portfolio.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/portfolio/new",
+      "headings": [
+        "Profile",
+        "Add Project"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-portfolio-new.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/portfolio/absent-id",
+      "headings": [
+        "Profile",
+        "Portfolio project unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-portfolio-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/portfolio/absent-id/edit",
+      "headings": [
+        "Profile",
+        "Portfolio project unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-portfolio-absent-id-edit.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/documents",
+      "headings": [
+        "Profile",
+        "Student Documents"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-documents.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/privacy-security",
+      "headings": [
+        "Profile",
+        "Your information",
+        "Your portal access",
+        "Keeping your account secure",
+        "Protect your sign-in details",
+        "Check links before signing in",
+        "Sign out on shared devices",
+        "Report unusual activity",
+        "Privacy questions and requests"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-privacy-security.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/finance",
+      "headings": [
+        "Finance",
+        "Invoices"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--finance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/finance?tab=payments",
+      "headings": [
+        "Finance",
+        "Transfer Proofs",
+        "No transfer proofs pending",
+        "Recorded Payments",
+        "Credits and Adjustments"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--finance-tab-payments.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/finance?tab=awards",
+      "headings": [
+        "Finance",
+        "Scholarships & Incentives",
+        "Creative Excellence ScholarshipActive",
+        "Early Confirmation IncentiveCompleted"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--finance-tab-awards.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/finance/invoices/invoice-rizal-s4-tuition",
+      "headings": [
+        "Finance",
+        "Semester 4 Tuition Fee",
+        "Invoice Activity"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--finance-invoices-invoice-rizal-s4-tuition.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/finance/invoices/absent-id",
+      "headings": [
+        "Finance",
+        "Invoice unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--finance-invoices-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration",
+      "headings": [
+        "Immigration",
+        "Malaysia Student Pass",
+        "Student Pass details"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration?tab=applications",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration-tab-applications.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms",
+      "headings": [
+        "Online Forms",
+        "Available Forms"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms?tab=my-forms",
+      "headings": [
+        "Online Forms",
+        "My Forms"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-tab-my-forms.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/submissions/absent-id",
+      "headings": [
+        "Online Forms",
+        "Form unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-submissions-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/services",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--services.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/services/accessibility",
+      "headings": [
+        "Services",
+        "Accessibility Support",
+        "Accessibility Support information is not available yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--services-accessibility.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/dev/admin-actions",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--dev-admin-actions.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/dev/scenarios",
+      "headings": [
+        "Student Scenarios"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--dev-scenarios.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/dev/data-model",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--dev-data-model.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/announcements/announcement-registration",
+      "headings": [
+        "Announcements",
+        "Check your semester registration",
+        "What to check"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--announcements-announcement-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/portfolio/portfolio-project-rizal-living-spaces",
+      "headings": [
+        "Profile",
+        "Living Spaces"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-portfolio-portfolio-project-rizal-living-spaces.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/profile/portfolio/portfolio-project-rizal-living-spaces/edit",
+      "headings": [
+        "Profile",
+        "Edit Project"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--profile-portfolio-portfolio-project-rizal-living-spaces-edit.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/services/academic",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--services-academic.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/services/it-helpdesk",
+      "headings": [
+        "Services",
+        "Transportation",
+        "KLIA Transit",
+        "Terminal Location",
+        "Trip Duration"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--services-it-helpdesk.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/add-modules",
+      "headings": [
+        "Online Forms",
+        "Add Modules",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-add-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/drop-modules",
+      "headings": [
+        "Online Forms",
+        "Drop Modules",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-drop-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/change-programme",
+      "headings": [
+        "Online Forms",
+        "Change of Programme",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-change-programme.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/academic-appeal",
+      "headings": [
+        "Online Forms",
+        "Academic Appeal",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-academic-appeal.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/credit-transfer",
+      "headings": [
+        "Online Forms",
+        "Credit Transfer",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-credit-transfer.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/study-leave",
+      "headings": [
+        "Online Forms",
+        "Study Leave",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-study-leave.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/custom-certification-letter",
+      "headings": [
+        "Online Forms",
+        "Custom Certification Letter",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-custom-certification-letter.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/student-complaint",
+      "headings": [
+        "Online Forms",
+        "Student Feedback",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-student-complaint.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/graduation-clearance",
+      "headings": [
+        "Online Forms",
+        "Graduation Clearance",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-graduation-clearance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/convocation-registration",
+      "headings": [
+        "Online Forms",
+        "Convocation Registration",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-convocation-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/new-student-pass",
+      "headings": [
+        "Online Forms",
+        "New Student Pass Application",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-new-student-pass.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/visa-renewal",
+      "headings": [
+        "Online Forms",
+        "Student Pass Renewal",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-visa-renewal.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/visa-cancellation",
+      "headings": [
+        "Online Forms",
+        "Student Pass Cancellation",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-visa-cancellation.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/student-pass-medical-result",
+      "headings": [
+        "Online Forms",
+        "Medical Screening Result",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-student-pass-medical-result.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/accessibility-support",
+      "headings": [
+        "Online Forms",
+        "Accessibility Support",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-accessibility-support.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/forms/absent-form",
+      "headings": [
+        "Online Forms",
+        "Form unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-forms-absent-form.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/submissions/online-form-student-rizal-1",
+      "headings": [
+        "Online Forms",
+        "Accessibility Support",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-submissions-online-form-student-rizal-1.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/submissions/online-form-student-rizal-2",
+      "headings": [
+        "Online Forms",
+        "Student Complaint",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-submissions-online-form-student-rizal-2.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/online-forms/submissions/online-form-student-rizal-3",
+      "headings": [
+        "Online Forms",
+        "Student Complaint",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--online-forms-submissions-online-form-student-rizal-3.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration?tab=applications&step=1",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration-tab-applications-step-1.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration?tab=applications&step=2",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration-tab-applications-step-2.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration?tab=applications&step=3",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration-tab-applications-step-3.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration?tab=applications&step=4",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration-tab-applications-step-4.png"
+    },
+    {
+      "portal": "Student",
+      "width": 375,
+      "route": "/immigration?tab=applications&step=5",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-375/student--immigration-tab-applications-step-5.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/",
+      "headings": [
+        "News and Announcements",
+        "Check your semester registration",
+        "Prepare for your semester examinations",
+        "Get to know your campus library",
+        "Academic writing: build a stronger argument",
+        "Prepare your work for the student showcase",
+        "Plan ahead for print-workshop visits",
+        "Make room for wellbeing between classes",
+        "Campus Wi-Fi maintenance on 12 September",
+        "Keep your student contact details current",
+        "Plan your journey to campus",
+        "Academic Performance",
+        "Semester 3",
+        "Timetable",
+        "Monday",
+        "Calendar",
+        "Modules"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/announcements",
+      "headings": [
+        "Announcements",
+        "Important Announcements",
+        "All Announcements"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--announcements.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/announcements/absent-id",
+      "headings": [
+        "Announcements",
+        "Announcement unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--announcements-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/policies",
+      "headings": [
+        "University Policies"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--policies.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/performance",
+      "headings": [
+        "Academic",
+        "CGPA & GPA",
+        "Grades",
+        "A-GRD201Graphic Design 24.00 Credits",
+        "B+DMP101Design Management Principles 14.00 Credits",
+        "A-TYP301Typography 34.00 Credits",
+        "B+ELE201Elective 24.00 Credits",
+        "BMMD201Motion and Media Design4.00 Credits",
+        "B+ART201Art and Design History4.00 Credits"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-performance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/modules",
+      "headings": [
+        "Academic",
+        "Modules"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/modules/module-grd301",
+      "headings": [
+        "Academic",
+        "Graphic Design 3",
+        "Lecturers",
+        "Module Outline",
+        "Summary"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-modules-module-grd301.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/modules/module-grd301?tab=materials",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-modules-module-grd301-tab-materials.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/modules/module-grd301?tab=attendance",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-modules-module-grd301-tab-attendance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/modules/module-grd301/lecturers/lecturer-adam-watson/review?semesterId=semester-2026-aug",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-modules-module-grd301-lecturers-lecturer-adam-watson-review-semesterId-semester-2026-aug.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/modules/absent-id",
+      "headings": [
+        "Academic",
+        "Module details unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-modules-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/timetable",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-timetable.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/attendance",
+      "headings": [
+        "Academic"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-attendance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/study-plan",
+      "headings": [
+        "Academic",
+        "Programme Overview",
+        "Semester Outline",
+        "Semester 1Credits attempted20Credits earned20GPA3.27CGPA3.27Completed",
+        "Semester 2Credits attempted20Credits earned16GPA2.67CGPA2.97Completed",
+        "Semester 3Credits attempted24Credits earned24GPA3.39CGPA3.33Completed",
+        "Semester 4Current load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Current",
+        "Semester 5Planned load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Planned",
+        "Semester 6Planned load20 CreditsCredits earned\u2014GPA\u2014CGPA\u2014Planned"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-study-plan.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/module-registration",
+      "headings": [
+        "Academic",
+        "Registration completed"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-module-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/academic/graduation",
+      "headings": [
+        "Academic",
+        "Not eligible for graduation"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--academic-graduation.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/personal-info",
+      "headings": [
+        "Profile",
+        "Personal Details",
+        "General",
+        "Permanent Address",
+        "Current Address",
+        "Father / Guardian",
+        "Mother / Guardian",
+        "Disability Details",
+        "Emergency Contact"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-personal-info.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/academic",
+      "headings": [
+        "Profile",
+        "Academic Qualifications",
+        "Qualification 1",
+        "Qualification 2",
+        "English Proficiency"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-academic.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/resume",
+      "headings": [
+        "Profile",
+        "Professional Summary",
+        "Work Experience",
+        "Education",
+        "Skills",
+        "Awards & Recognition"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-resume.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/portfolio",
+      "headings": [
+        "Profile",
+        "Portfolio"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-portfolio.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/portfolio/new",
+      "headings": [
+        "Profile",
+        "Add Project"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-portfolio-new.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/portfolio/absent-id",
+      "headings": [
+        "Profile",
+        "Portfolio project unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-portfolio-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/portfolio/absent-id/edit",
+      "headings": [
+        "Profile",
+        "Portfolio project unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-portfolio-absent-id-edit.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/documents",
+      "headings": [
+        "Profile",
+        "Student Documents"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-documents.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/privacy-security",
+      "headings": [
+        "Profile",
+        "Your information",
+        "Your portal access",
+        "Keeping your account secure",
+        "Protect your sign-in details",
+        "Check links before signing in",
+        "Sign out on shared devices",
+        "Report unusual activity",
+        "Privacy questions and requests"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-privacy-security.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/finance",
+      "headings": [
+        "Finance",
+        "Invoices"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--finance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/finance?tab=payments",
+      "headings": [
+        "Finance",
+        "Transfer Proofs",
+        "No transfer proofs pending",
+        "Recorded Payments",
+        "Credits and Adjustments"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--finance-tab-payments.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/finance?tab=awards",
+      "headings": [
+        "Finance",
+        "Scholarships & Incentives",
+        "Creative Excellence ScholarshipActive",
+        "Early Confirmation IncentiveCompleted"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--finance-tab-awards.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/finance/invoices/invoice-rizal-s4-tuition",
+      "headings": [
+        "Finance",
+        "Semester 4 Tuition Fee",
+        "Invoice Activity"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--finance-invoices-invoice-rizal-s4-tuition.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/finance/invoices/absent-id",
+      "headings": [
+        "Finance",
+        "Invoice unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--finance-invoices-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration",
+      "headings": [
+        "Immigration",
+        "Malaysia Student Pass",
+        "Student Pass details"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration?tab=applications",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration-tab-applications.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms",
+      "headings": [
+        "Online Forms",
+        "Available Forms"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms?tab=my-forms",
+      "headings": [
+        "Online Forms",
+        "My Forms"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-tab-my-forms.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/submissions/absent-id",
+      "headings": [
+        "Online Forms",
+        "Form unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-submissions-absent-id.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/services",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--services.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/services/accessibility",
+      "headings": [
+        "Services",
+        "Accessibility Support",
+        "Accessibility Support information is not available yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--services-accessibility.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/dev/admin-actions",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--dev-admin-actions.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/dev/scenarios",
+      "headings": [
+        "Student Scenarios"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--dev-scenarios.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/dev/data-model",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--dev-data-model.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/announcements/announcement-registration",
+      "headings": [
+        "Announcements",
+        "Check your semester registration",
+        "What to check"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--announcements-announcement-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/portfolio/portfolio-project-rizal-living-spaces",
+      "headings": [
+        "Profile",
+        "Living Spaces"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-portfolio-portfolio-project-rizal-living-spaces.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/profile/portfolio/portfolio-project-rizal-living-spaces/edit",
+      "headings": [
+        "Profile",
+        "Edit Project"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--profile-portfolio-portfolio-project-rizal-living-spaces-edit.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/services/academic",
+      "headings": [],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--services-academic.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/services/it-helpdesk",
+      "headings": [
+        "Services",
+        "Transportation",
+        "KLIA Transit",
+        "Terminal Location",
+        "Trip Duration"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--services-it-helpdesk.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/add-modules",
+      "headings": [
+        "Online Forms",
+        "Add Modules",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-add-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/drop-modules",
+      "headings": [
+        "Online Forms",
+        "Drop Modules",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-drop-modules.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/change-programme",
+      "headings": [
+        "Online Forms",
+        "Change of Programme",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-change-programme.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/academic-appeal",
+      "headings": [
+        "Online Forms",
+        "Academic Appeal",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-academic-appeal.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/credit-transfer",
+      "headings": [
+        "Online Forms",
+        "Credit Transfer",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-credit-transfer.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/study-leave",
+      "headings": [
+        "Online Forms",
+        "Study Leave",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-study-leave.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/custom-certification-letter",
+      "headings": [
+        "Online Forms",
+        "Custom Certification Letter",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-custom-certification-letter.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/student-complaint",
+      "headings": [
+        "Online Forms",
+        "Student Feedback",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-student-complaint.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/graduation-clearance",
+      "headings": [
+        "Online Forms",
+        "Graduation Clearance",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-graduation-clearance.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/convocation-registration",
+      "headings": [
+        "Online Forms",
+        "Convocation Registration",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-convocation-registration.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/new-student-pass",
+      "headings": [
+        "Online Forms",
+        "New Student Pass Application",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-new-student-pass.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/visa-renewal",
+      "headings": [
+        "Online Forms",
+        "Student Pass Renewal",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-visa-renewal.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/visa-cancellation",
+      "headings": [
+        "Online Forms",
+        "Student Pass Cancellation",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-visa-cancellation.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/student-pass-medical-result",
+      "headings": [
+        "Online Forms",
+        "Medical Screening Result",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-student-pass-medical-result.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/accessibility-support",
+      "headings": [
+        "Online Forms",
+        "Accessibility Support",
+        "Prefilled Details",
+        "Before you start"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-accessibility-support.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/forms/absent-form",
+      "headings": [
+        "Online Forms",
+        "Form unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-forms-absent-form.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/submissions/online-form-student-rizal-1",
+      "headings": [
+        "Online Forms",
+        "Accessibility Support",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-submissions-online-form-student-rizal-1.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/submissions/online-form-student-rizal-2",
+      "headings": [
+        "Online Forms",
+        "Student Complaint",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-submissions-online-form-student-rizal-2.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/online-forms/submissions/online-form-student-rizal-3",
+      "headings": [
+        "Online Forms",
+        "Student Complaint",
+        "Progress",
+        "Prefilled Details",
+        "Your request",
+        "Case messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--online-forms-submissions-online-form-student-rizal-3.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration?tab=applications&step=1",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration-tab-applications-step-1.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration?tab=applications&step=2",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration-tab-applications-step-2.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration?tab=applications&step=3",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration-tab-applications-step-3.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration?tab=applications&step=4",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration-tab-applications-step-4.png"
+    },
+    {
+      "portal": "Student",
+      "width": 768,
+      "route": "/immigration?tab=applications&step=5",
+      "headings": [
+        "Immigration",
+        "No application in progress"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-output-next\\pages-student-route-inventory-audit-768/student--immigration-tab-applications-step-5.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/applications",
+      "headings": [
+        "My Applications",
+        "No applications yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--applications.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/applications/new",
+      "headings": [
+        "Create Application",
+        "Applicant Consent"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--applications-new.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/applications/absent-id",
+      "headings": [
+        "Application Details",
+        "Application unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--applications-absent-id.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/applications/absent-id/edit",
+      "headings": [
+        "My Applications",
+        "No applications yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--applications-absent-id-edit.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/documents-checklist",
+      "headings": [
+        "Documents Checklist",
+        "Are you a local or international student?"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--documents-checklist.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/dev/admin-actions",
+      "headings": [
+        "Admin Actions",
+        "Application Messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--dev-admin-actions.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 1440,
+      "route": "/dev/sign-in",
+      "headings": [
+        "Sign in"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-1440/applicant--dev-sign-in.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/applications",
+      "headings": [
+        "My Applications",
+        "No applications yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--applications.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/applications/new",
+      "headings": [
+        "Create Application",
+        "Applicant Consent"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--applications-new.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/applications/absent-id",
+      "headings": [
+        "Application Details",
+        "Application unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--applications-absent-id.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/applications/absent-id/edit",
+      "headings": [
+        "My Applications",
+        "No applications yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--applications-absent-id-edit.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/documents-checklist",
+      "headings": [
+        "Documents Checklist",
+        "Are you a local or international student?"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--documents-checklist.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/dev/admin-actions",
+      "headings": [
+        "Admin Actions",
+        "Application Messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--dev-admin-actions.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 375,
+      "route": "/dev/sign-in",
+      "headings": [
+        "Sign in"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-375/applicant--dev-sign-in.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/applications",
+      "headings": [
+        "My Applications",
+        "No applications yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--applications.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/applications/new",
+      "headings": [
+        "Create Application",
+        "Applicant Consent"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--applications-new.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/applications/absent-id",
+      "headings": [
+        "Application Details",
+        "Application unavailable"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--applications-absent-id.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/applications/absent-id/edit",
+      "headings": [
+        "My Applications",
+        "No applications yet"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--applications-absent-id-edit.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/documents-checklist",
+      "headings": [
+        "Documents Checklist",
+        "Are you a local or international student?"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--documents-checklist.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/dev/admin-actions",
+      "headings": [
+        "Admin Actions",
+        "Application Messages"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--dev-admin-actions.png"
+    },
+    {
+      "portal": "Applicant",
+      "width": 768,
+      "route": "/dev/sign-in",
+      "headings": [
+        "Sign in"
+      ],
+      "overflow": 0,
+      "capture": "logs\\ui-audit-editors\\pages-applicant-route-inventory-audit-768/applicant--dev-sign-in.png"
+    }
+  ],
+  "additionalCoverage": [
+    "All six Applicant steps and submitted accordions",
+    "Eligibility confirmation and leave popup",
+    "Eight editable source-form drafts",
+    "Four Resume dialogs and Personal edit/cancel",
+    "Finance proof popup and inline errors",
+    "All seven Services categories",
+    "Mei, Nadia and Lesotho scenario variants",
+    "HTTP continuation at 375/768/1440 and WebKit 390",
+    "375/768 registration viewport bounds and keyboard horizontal scrolling"
+  ],
+  "overflowMeasurement": "Historical raw main.scrollWidth. It can include clipped descendants; use follow-up viewport bounds and keyboard checks to assess visible overflow.",
+  "registrationContainment": {
+    "widths": [
+      375,
+      768
+    ],
+    "result": "Passed; table and tab viewports fit page bounds; shared clipping and keyboard scrolling verified; no editor redesign"
+  },
+  "verification": {
+    "student": {
+      "unit": 788,
+      "chromium": 278,
+      "chromiumSkipped": 46,
+      "webkit": 41,
+      "webkitSkipped": 31,
+      "fullGate": "passed"
+    },
+    "applicant": {
+      "unit": 65,
+      "browser": 70,
+      "fullGate": "passed"
+    },
+    "devHandoffs": 7,
+    "localHttpJourneys": 5,
+    "localDatabaseChecks": 96,
+    "hosted": "not deployed or exercised"
+  }
+}

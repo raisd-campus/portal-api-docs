@@ -16,6 +16,13 @@ info:
     server capability advertisement; unsupported writes never fall back to mock.
     See ai/frontend/student-portal/student-workflows.md for the approved local baseline.
 
+    **12 October local admissions preparation (not deployed)**
+    Original-file delivery and accepted applicant-specific Student continuation are
+    prepared behind DEMO_ADMISSIONS_RESOURCES, default false. Explicit Demo artifact
+    migration is required. One MiB chunks, 25 MiB/file, SHA-256, ownership, five-minute
+    session-bound one-time grants and capability-gated delivery do not replace Live storage.
+    getPortalRecordGraph is local mock tooling only and is not advertised over HTTP.
+
     **Stage 1 behaviour**
     - Each call runs the student-portal `MockPortalApi` engine over Demo records.
       On the Vercel Demo, sessions and records live in Neon Postgres (one table
@@ -29,11 +36,12 @@ info:
 
     **Frontend consumers (today)**
     - `student-portal` is the implemented HTTP UI. It calls every method below
-      via React Query hooks except `getPortalRecordGraph` (tests/internals).
+      via React Query hooks except `getPortalRecordGraph` (local mock tests/internals; forbidden over HTTP).
     - `applicant-portal` calls Demo Applicant methods over
       `POST /v1/auth/applicant/login` and `POST /v1/applicant/{method}` when
       `VITE_PORTAL_API_URL` is set; otherwise it keeps the in-process mock.
-      `lecturer-portal` and `staff-portal` remain UI placeholders.
+      Lecturer and Staff expose partial Demo LMS/payment/registration HTTP surfaces;
+      their remaining Live department workflows are deferred.
     - Student record contract is schema **4** (admissions-aligned profile fields).
     - HTTP transport (Student): `createHttpPortalApi` → `POST /v1/auth/login` then
       `POST /v1/portal/{method}` with `{ "args": [...] }`.
@@ -562,6 +570,217 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
+
+  /v1/applicant/evidence/{operation}:
+    post:
+      tags: [Applicant]
+      operationId: demoApplicantEvidence
+      summary: Upload or read an owned Demo original file
+      description: |
+        Prepared locally, not deployed. Requires DEMO_ADMISSIONS_RESOURCES and an
+        explicit Demo artifact migration. One MiB chunks, maximum 25 MiB per file,
+        immutable metadata, SHA-256 finalization and authenticated ownership.
+        Incomplete resources remain unavailable; abandoned sessions expire after
+        24 hours without deleting referenced drafts/submissions. Message purpose
+        preserves existing case attachment formats; it does not bypass admissions rules.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: operation
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [begin, chunk, finish, read, cleanup]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/DemoEvidenceUpload'
+                - $ref: '#/components/schemas/DemoEvidenceChunk'
+                - $ref: '#/components/schemas/DemoEvidenceRead'
+      responses:
+        '200':
+          description: Initiated, chunk acknowledged, finalized, owned chunk, unavailable, or cleanup status
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result]
+                properties:
+                  result:
+                    oneOf:
+                      - $ref: '#/components/schemas/DemoEvidenceResource'
+                      - type: object
+                        additionalProperties: true
+                      - type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Capability disabled or unknown operation
+  /v1/portal/getStudentDocumentDelivery:
+    post:
+      tags: [Profile]
+      operationId: demoStudentDocumentDelivery
+      summary: Resolve an owned Student document for native viewing or original download
+      description: |
+        Prepared locally and capability-gated. RPC args contain documentId and optional
+        programmeEnrolmentId. Admissions originals return a resource descriptor for bounded
+        reads; generated Demo PDFs retain the existing available response. Missing originals
+        return unavailable without synthetic replacement. No profile record contains original bytes.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [args]
+              properties:
+                args:
+                  type: array
+                  minItems: 1
+                  maxItems: 1
+                  items:
+                    type: object
+                    required: [documentId]
+                    properties:
+                      documentId: {type: string}
+                      programmeEnrolmentId: {type: [string, 'null']}
+      responses:
+        '200':
+          description: Owned resource descriptor, generated document or honest unavailable state
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result]
+                properties:
+                  result:
+                    oneOf:
+                      - $ref: '#/components/schemas/DemoDocumentResource'
+                      - type: object
+                        required: [status, documentId, fileName, mimeType, contentBase64]
+                        properties:
+                          status: {type: string, const: available}
+                          documentId: {type: string}
+                          fileName: {type: string}
+                          mimeType: {type: string}
+                          contentBase64: {type: string, maxLength: 34952536}
+                      - type: object
+                        required: [status, documentId, reason]
+                        properties:
+                          status: {type: string, const: unavailable}
+                          documentId: {type: string}
+                          reason: {type: string}
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Server does not advertise this capability
+        '503':
+          description: Records temporarily unavailable
+
+  /v1/student/evidence/read:
+    post:
+      tags: [Profile]
+      operationId: demoStudentEvidenceRead
+      summary: Read original evidence through the accepted admissions relationship
+      description: Prepared locally; active authenticated Student and exact owned evidence required. Payment and case attachments are excluded.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemoEvidenceRead'
+      responses:
+        '200':
+          description: One verified metadata/chunk result or an explicit unavailable result
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result]
+                properties:
+                  result:
+                    $ref: '#/components/schemas/DemoEvidenceResource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Capability disabled
+  /v1/applicant/continuation:
+    post:
+      tags: [Applicant]
+      operationId: demoAcceptedStudentContinuation
+      summary: Issue a five-minute one-time Student continuation grant
+      description: Prepared locally. Requires accepted ownership, expected revision, configured Student origin and an active originating Applicant session. Never send this grant in a URL.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemoContinuationInput'
+      responses:
+        '200':
+          description: One-time grant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoContinuationGrant'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Capability disabled
+  /v1/auth/admissions/claim:
+    post:
+      tags: [Auth]
+      operationId: demoClaimAcceptedStudentContinuation
+      summary: Exchange the browser-delivered grant for the correct Student session
+      description: Prepared locally. Exact request origin, nonce, active source session, expiry and replay are checked. Repeat fresh grants reuse the same owned account/enrolment; this is Demo provisioning, not Live CMS integration.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [grant, nonce]
+              properties:
+                grant: {type: string, minLength: 32, maxLength: 128}
+                nonce: {type: string, pattern: '^[a-f0-9]{32}$'}
+      responses:
+        '200':
+          description: Correct accepted Student session
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [accessToken, supportedMethods, studentProfileId, programmeEnrolmentId]
+                properties:
+                  accessToken: {type: string, minLength: 32, maxLength: 128}
+                  supportedMethods: {type: array, maxItems: 200, items: {type: string}}
+                  studentProfileId: {type: string}
+                  programmeEnrolmentId: {type: string}
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          description: Capability disabled
 
   /v1/applicant/{method}:
     post:
@@ -2544,43 +2763,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
 
-  /v1/portal/getPortalRecordGraph:
-    post:
-      tags: [Internal]
-      operationId: portal_getPortalRecordGraph
-      summary: Get canonical mock record graph (tests)
-      description: |
-        No arguments. Used by tests/internals; not wired in production UI hooks.
-        Result is wrapped with stub CMS acknowledgement.
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PortalCallRequest"
-            example:
-              args:
-                []
-      responses:
-        "200":
-          description: Method succeeded
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PortalCallResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          description: Unknown or blocked method
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorBody"
-
   /v1/portal/getChatConversations:
     post:
       tags: [Chat]
@@ -2800,6 +2982,80 @@ components:
             error: Session expired or missing. Sign in again.
 
   schemas:
+    DemoDocumentResource:
+      type: object
+      additionalProperties: false
+      required: [status, documentId, resourceId, fileName, mimeType, sizeBytes, sha256]
+      properties:
+        status: {type: string, const: resource}
+        documentId: {type: string}
+        resourceId: {type: string}
+        fileName: {type: string}
+        mimeType: {type: string}
+        sizeBytes: {type: integer, minimum: 1, maximum: 26214400}
+        sha256: {type: string, pattern: '^[a-f0-9]{64}$'}
+    DemoEvidenceUpload:
+      type: object
+      additionalProperties: false
+      required: [id, name, mimeType, sizeBytes, sha256]
+      properties:
+        id: {type: string, minLength: 1, maxLength: 200}
+        name: {type: string, minLength: 1, maxLength: 300}
+        mimeType: {type: string, minLength: 1, maxLength: 200}
+        sizeBytes: {type: integer, minimum: 1, maximum: 26214400}
+        sha256: {type: string, pattern: '^[a-f0-9]{64}$'}
+        purpose: {type: string, enum: [admissions, message], default: admissions}
+    DemoEvidenceChunk:
+      type: object
+      additionalProperties: false
+      required: [id, offset, contentBase64]
+      properties:
+        id: {type: string, minLength: 1}
+        offset: {type: integer, minimum: 0, multipleOf: 1048576}
+        contentBase64: {type: string, maxLength: 1398104, pattern: '^[A-Za-z0-9+/]*={0,2}$'}
+    DemoEvidenceRead:
+      type: object
+      additionalProperties: false
+      required: [id]
+      properties:
+        id: {type: string, minLength: 1}
+        offset: {type: integer, minimum: 0, default: 0}
+    DemoEvidenceResource:
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required: [status, id, name, mimeType, sizeBytes, sha256, offset, contentBase64]
+          properties:
+            status: {type: string, const: available}
+            id: {type: string}
+            name: {type: string}
+            mimeType: {type: string}
+            sizeBytes: {type: integer, minimum: 1, maximum: 26214400}
+            sha256: {type: string, pattern: '^[a-f0-9]{64}$'}
+            offset: {type: integer, minimum: 0}
+            contentBase64: {type: string, maxLength: 1398104}
+        - type: object
+          additionalProperties: false
+          required: [status, reason]
+          properties:
+            status: {type: string, const: unavailable}
+            reason: {type: string}
+    DemoContinuationInput:
+      type: object
+      additionalProperties: false
+      required: [applicationId, expectedRevision, nonce, studentOrigin]
+      properties:
+        applicationId: {type: string, minLength: 1}
+        expectedRevision: {type: integer, minimum: 1}
+        nonce: {type: string, pattern: '^[a-f0-9]{32}$'}
+        studentOrigin: {type: string, format: uri}
+    DemoContinuationGrant:
+      type: object
+      additionalProperties: false
+      required: [grant, expiresAt]
+      properties:
+        grant: {type: string, minLength: 32, maxLength: 128}
+        expiresAt: {type: integer, minimum: 1, description: "Unix milliseconds, five minutes after issue"}
     ScenarioId:
       type: string
       enum:
@@ -2863,7 +3119,6 @@ components:
         - getFinanceStatement
         - submitFinancePaymentProof
         - deleteFinancePaymentProof
-        - getPortalRecordGraph
         - getChatConversations
         - getChatConversation
         - markChatConversationRead

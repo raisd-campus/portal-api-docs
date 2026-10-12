@@ -69,5 +69,10 @@ The student portal defines the replaceable `PortalApi` surface (`src/services/po
 
 - **Student:** Hosted engine follows sibling `student-portal` `PORTAL_RECORD_SCHEMA_VERSION` **4**. On deploy, a schema mismatch reseeds Demo record tables (overlays/`student_portal_state` and `audit_events` kept). Neon backup was taken before the hosted reseed; see [handoff](admissions-handoff.md).
 - **Applicant:** Demo RPC is live at `POST /v1/auth/applicant/login` and `POST /v1/applicant/:method` for the ten `ApplicantPortalApi` methods (includes `confirmApplicationEligibility` + `acceptApplicationEnrolment`; Demo auto-releases Offer after Eligibility confirm). Records persist in Neon `applicant_portal_state`; sessions in `poc_applicant_sessions`. Development reviewer actions stay out of the HTTP allowlist. Applicant portal (`https://raisd-applicant-portal.vercel.app`) uses `createHttpApplicantPortalApi` when `VITE_PORTAL_API_URL` is set.
-- `CORS_ORIGIN` includes the student SPA, applicant SPA and GitHub Pages Swagger origin.
+- **Staff (Demo, 11 Oct 2026):** `POST /v1/auth/staff/login` and `POST /v1/staff/{method}` with `listPaymentQueue`, `approvePaymentAndEnrol`, `rejectPayment`. Approve verifies payment + documents, confirms eligibility, auto-releases Offer, accepts enrolment, and returns the Demo Student continuation (`first-semester-registration` / `10029841`). Sessions in `poc_staff_sessions`. Staff portal uses these when `VITE_PORTAL_API_URL` is set.
+- `CORS_ORIGIN` must include student, applicant, **staff** SPAs and GitHub Pages Swagger origin.
 - OpenAPI `0.4.2` documents Applicant routes and schemaVersion **4**.
+
+## Applicant–Student synchronization — 12 October 2026
+
+The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.

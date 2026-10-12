@@ -315,3 +315,7 @@ Mock operations: `confirmApplicationEligibility` (applicant), `verify-documents`
 ## Local source-form increment — 8 October 2026
 
 [Student workflows](student-workflows.md) adds owned registrationRequests, academicAwards, approvedLeaves and campusAddDropPolicies, structured course rows, electronic acknowledgements and department review/issuance metadata. New fields normalize to empty arrays/null; no legacy approval, payment, award or file is invented. The explorer registers the request, award, leave and embedded course-row models. Funding records retain optional borrower/coverage metadata and separate pending sponsorship from posted credits. HTTP operations remain capability-gated and planned.
+
+## Applicant–Student synchronization — 12 October 2026
+
+The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.

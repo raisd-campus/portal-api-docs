@@ -16,11 +16,11 @@ Lesotho is the first acceptance pilot. Current Malaysian/Cyberjaya sample catalo
 | Runtime and queries | `src/services/applicant-runtime.tsx` | One QueryClient; isolated adapter/resources per scenario, generation-scoped queries and invalidation |
 | File resources | `src/services/session-assets.ts` | Original File objects, opaque metadata IDs, cached image URLs and cleanup |
 | Fields | `src/services/validation-fields.tsx` | Shared error/invalid/accessibility props, repeated-section error scope, selection validation; no styling overrides |
-| Handoff | `src/services/admissions-handoff.ts` | Accepted-only version-1 exchange producer; submission alone does not enrol a student |
+| Handoff | `src/services/admissions-handoff.ts` | Accepted-only v2 exchange producer with v1 compatibility; submission alone does not enrol a student |
 
 Editor fields are local drafts. API-owned saved applications and conversations are independent of those drafts. Screens do not import record fixtures. Message drafts and prepared attachments remain portal-owned, isolated by scenario, application and sender, across navigation and scenario changes. Reading visibly displayed reviewer rows affects unread state only; an applicant reply satisfies the response requirement without approving evidence or advancing the review stage. Submission starts with an empty conversation; only explicit Admin Actions messages create reviewer updates. Read-only submitted fields have no edit/remove/replace actions.
 
-## Implemented mock methods (not HTTP endpoints)
+## Applicant contract methods (in-process mock and supported Demo RPC)
 
 | Method | Input | Result |
 | --- | --- | --- |
@@ -130,3 +130,13 @@ Both confirmation popups and Student Documents use two equal-width letter action
 ## Evidence transport v3 — 8 October 2026
 
 Accepted DEV next-login handoffs now request and deliver actual available owned academic/identity/admissions resources individually. The admission snapshot remains v2; older envelopes remain readable without fabricated files. MIME/name/length/hash and trusted origin/window/nonce/replay checks guard the exchange. Missing resources remain metadata-only/unavailable. Payment evidence stays Finance-owned. This adds no hosted method, storage or authentication behavior.
+
+## Applicant–Student synchronization — 12 October 2026
+
+The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.
+
+### Final local verification — 12 October 2026
+
+Both uninterrupted full gates passed. Applicant: 65 unit/component tests and 70 browser checks. Student: 788 unit tests, 278 Chromium checks (46 intentional skips), 41 WebKit checks (31 intentional skips), plus lint/build/production/bundle gates and seven focused byte-delivery checks. All seven DEV handoffs and five local HTTP journeys passed. Portal API: portable typecheck/build, 96 memory/disposable-Postgres checks and npm-start/smoke passed. Shared package: 13 unit and 14 consumer browser checks. Documentation/contracts/catalogue/navigation/OpenAPI validate; 14 unused OpenAPI component warnings remain. The phone/tablet main scrollWidth finding was corrected using actual clipped viewport bounds and keyboard access, without an editor redesign.
+
+The user authorized normal main commits/pushes. Deployment remains separate: Vercel Git deployment is disabled and portal CI deploys only on explicit manual deploy=true. Shared components stay 0.6.2, with no tag/package release. No hosted migration, reseed or account walkthrough; deployed/physical-device behavior remains unverified. Previously held department shortcuts and Staff/Lecturer redesigns remain On hold.

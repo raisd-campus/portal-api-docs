@@ -1,6 +1,6 @@
 # Portal Design System
 
-> Shared tokens, portal shell, and portal-neutral components live in the versioned `@raisd-campus/design-system` package. Read the [canonical component guide](../../design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue for exact APIs ([0.6.2 online](https://github.com/raisd-campus/design-system/blob/v0.6.2/docs/components.md)). This document retains student-specific composition and responsive rules.
+> Shared tokens, portal shell, and portal-neutral components live in the versioned `@raisd-campus/design-system` package. Read the [canonical component guide](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue for exact APIs ([0.6.2 online](https://github.com/raisd-campus/design-system/blob/v0.6.2/docs/components.md)). This document retains student-specific composition and responsive rules.
 
 ## Shared disclosure and avatar refinement
 
@@ -226,3 +226,11 @@ Student expandable sidebar triggers now use the existing shared PortalNavItem ti
 ## Shared Popup 0.6.2 consumer upgrade
 
 Student pins released 0.6.2. Its additive `footerAfterDismiss` slot supports a consumer-owned action after standard dismissal; existing Student popup/default navigation visuals remain unchanged. Applicant owns Save & Close through this slot. No Student contracts, admissions version or graph schema change is required.
+
+## UI consistency audit — 12 October 2026
+
+The 12 October audit keeps established layouts and shared 0.6.2. Editable Resume/sign-in labels use `type-body text-title`, Applicant scenario labels retain an 8px control gap, and Portfolio/Resume/payment-proof errors use stable descriptions and live error associations. Portfolio labels retain a stable accessible name when errors appear. Demo account choices expose their selected state; Student sign-in hover changes are immediate. Applicant desktop step labels use the semantic body typography. Authenticated continuation uses the existing sign-in panel/gutters and an accessible main/status/error region. Document actions retain native browser viewing; no custom PDF viewer or shared-package override was added.
+
+### Catalogue version provenance
+
+Use the installed package.json version and declarations to identify the supported API. The published 0.6.2 archive retains a historical 0.6.0 catalogue-heading typo; the source catalogue heading is now version-neutral. Both portals remain pinned to 0.6.2; this source documentation correction does not alter the immutable package archive or require a release.

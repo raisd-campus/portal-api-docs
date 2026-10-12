@@ -161,3 +161,7 @@ Never commit kubeconfigs, server passwords, or connection strings (see [architec
 - [ ] CORS limited to the portals deployed at that stage.
 - [ ] Smoke script green against the public hostname.
 - [ ] Status stays **Demo** until the CMS adapter meets SDD-03 §4.
+
+## Prepared Demo artifact configuration — 12 October 2026
+
+[Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) is prepared locally only. `DEMO_ADMISSIONS_RESOURCES` defaults to false and is forbidden for Live CMS mode. Explicitly apply the Demo-only artifact/chunk migration before enabling it; do not change the existing record schema/reseed policy. `ADMISSIONS_STUDENT_ORIGINS` is an exact comma-separated allowlist. Configure both portals' origins in CORS. Physical orphan cleanup in serverless hosting requires a deployment-owned schedule. No hosted migration, schedule or rollout is authorized by this increment.

@@ -1247,3 +1247,13 @@ Full Student gate: 750 unit tests, 273 Chromium passed (41 intentional skips), 3
 ## Accepted Applicant demo — 6 October 2026
 
 The development-only accepted Applicant receiver creates an isolated mock account/enrolment from the first-semester Design template, then opens Module Registration. Its one-time origin/window/nonce exchange uses no persistent storage; HTTP and production sessions exclude it. Read [admissions handoff](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md#development-browser-handoff--6-october-2026) for identity/evidence mapping, reference dates, cleanup and reset boundaries.
+
+## Applicant–Student synchronization — 12 October 2026
+
+The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.
+
+### Final local verification — 12 October 2026
+
+Both uninterrupted full gates passed. Applicant: 65 unit/component tests and 70 browser checks. Student: 788 unit tests, 278 Chromium checks (46 intentional skips), 41 WebKit checks (31 intentional skips), plus lint/build/production/bundle gates and seven focused byte-delivery checks. All seven DEV handoffs and five local HTTP journeys passed. Portal API: portable typecheck/build, 96 memory/disposable-Postgres checks and npm-start/smoke passed. Shared package: 13 unit and 14 consumer browser checks. Documentation/contracts/catalogue/navigation/OpenAPI validate; 14 unused OpenAPI component warnings remain. The phone/tablet main scrollWidth finding was corrected using actual clipped viewport bounds and keyboard access, without an editor redesign.
+
+The user authorized normal main commits/pushes. Deployment remains separate: Vercel Git deployment is disabled and portal CI deploys only on explicit manual deploy=true. Shared components stay 0.6.2, with no tag/package release. No hosted migration, reseed or account walkthrough; deployed/physical-device behavior remains unverified. Previously held department shortcuts and Staff/Lecturer redesigns remain On hold.

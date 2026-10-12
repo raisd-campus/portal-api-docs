@@ -61,3 +61,7 @@ Rizal has three canonical projects and Alya has an empty collection. Their proje
 - `src/app/routes.ts`
 - `src/mocks/portal-record-fixtures.ts`
 - `src/data-model/canonical-registry.ts`
+
+## UI consistency audit — 12 October 2026
+
+The 12 October audit keeps established layouts and shared 0.6.2. Editable Resume/sign-in labels use `type-body text-title`, Applicant scenario labels retain an 8px control gap, and Portfolio/Resume/payment-proof errors use stable descriptions and live error associations. Portfolio labels retain a stable accessible name when errors appear. Demo account choices expose their selected state; Student sign-in hover changes are immediate. Applicant desktop step labels use the semantic body typography. Authenticated continuation uses the existing sign-in panel/gutters and an accessible main/status/error region. Document actions retain native browser viewing; no custom PDF viewer or shared-package override was added.

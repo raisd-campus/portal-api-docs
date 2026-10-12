@@ -11,7 +11,7 @@ This note is a **proof-of-concept path**. It is not an ADR and must not be prese
 | Component | URL | Repo | Runtime | Deploy path |
 |---|---|---|---|---|
 | Student portal | https://raisd-student-portal.vercel.app | `student-portal` | Vite + React SPA, static prebuilt output | GitHub Actions `CI/CD` on push to `main` |
-| Applicant portal | https://applicant-portal-lemon.vercel.app | `applicant-portal` | Vite + React SPA, HTTP Portal API when `VITE_PORTAL_API_URL` is set | Manual prebuilt deploy (Actions billing may block CI); same `CI/CD` template as other portals |
+| Applicant portal | https://raisd-applicant-portal.vercel.app | `applicant-portal` | Vite + React SPA, HTTP Portal API when `VITE_PORTAL_API_URL` is set | Manual prebuilt deploy (Actions billing may block CI); same `CI/CD` template as other portals |
 | Lecturer portal | https://raisd-lecturer-portal.vercel.app | `lecturer-portal` | "Coming soon" placeholder | GitHub Actions `CI/CD` on push to `main` |
 | Staff portal | https://raisd-staff-portal.vercel.app | `staff-portal` | "Coming soon" placeholder | GitHub Actions `CI/CD` on push to `main` |
 | Portal API | https://raisd-portal-api.vercel.app | `portal-api` | Fastify in one Node 22 Vercel Function, `sin1`, 30 s max | Manual `npm run deploy:vercel` (CI runs checks only) |
@@ -31,7 +31,7 @@ flowchart TB
   team(["Raisd team"])
   subgraph vercel ["Vercel team · sin1"]
     sp["raisd-student-portal · static SPA"]
-    ap["applicant-portal-lemon · static SPA"]
+    ap["raisd-applicant-portal · static SPA"]
     api["raisd-portal-api · Node 22 function<br/>Student + Applicant Demo engines"]
     dba["raisd-db-admin · read-only"]
   end
@@ -59,14 +59,14 @@ flowchart TB
 | `portal-api` | `scripts/build-vercel.mjs` bundles `src/vercel.ts` + student-portal and applicant-portal Demo engines into `functions/index.func` | `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `PG*`/`POSTGRES_*` (integration), `CORS_ORIGIN`; student and applicant demo passwords inlined at build from gitignored credentials |
 | `db-admin` | Zero-build functions `api/*.ts` + `public/` | `DATABASE_URL` (reader), `DB_ADMIN_USER`, `DB_ADMIN_PASSWORD` |
 
-`CORS_ORIGIN` = `https://raisd-student-portal.vercel.app,https://applicant-portal-lemon.vercel.app,https://raisd-campus.github.io`. Add an origin before another portal calls the API from a browser.
+`CORS_ORIGIN` = `https://raisd-student-portal.vercel.app,https://raisd-applicant-portal.vercel.app,https://raisd-campus.github.io` (keep `https://applicant-portal-lemon.vercel.app` only if that Preview alias is still used). Add an origin before another portal calls the API from a browser.
 
 ## CI/CD pipelines
 
 | Repo · workflow | Triggers | Checks | Deploy | Configuration |
 |---|---|---|---|---|
-| Portal repos · `CI/CD` (`.github/workflows/ci-cd.yml`, canonical `control-plane/scripts/templates/portal-ci-cd.yml`) | PR, push to `main`, manual | Node from `.nvmrc` (22); `npm ci` via GitHub Packages; `lint`/`test`/`build` if present | `main` only: `build:vercel` if defined, else `build` + SPA packaging, else placeholder; `vercel@60 deploy --prebuilt --prod` | Secret `VERCEL_TOKEN`; vars `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VITE_PORTAL_API_URL`; design-system package grants Actions read |
-| `portal-api` · `CI` | PR, push to `main` | Checks out portal-api + student-portal + control-plane; `npm ci`; `docs:check`; boot with throwaway passwords + `scripts/smoke.sh` (health, meta, login, wrong password 401, portal call, logout revokes) | None — manual `npm run deploy:vercel` (needs sibling student-portal + gitignored credentials) | Secret `RAISD_READ_TOKEN` |
+| Portal repos · `CI/CD` (`.github/workflows/ci-cd.yml`, canonical `control-plane/scripts/templates/portal-ci-cd.yml`) | PR, push to `main`, manual | Node from `.nvmrc` (22); `npm ci` via GitHub Packages; `lint`/`test`/`build` if present | Explicit manual dispatch on `main` with `deploy=true` only: `build:vercel` if defined, else `build` + SPA packaging, else placeholder; `vercel@60 deploy --prebuilt --prod` | Secret `VERCEL_TOKEN`; vars `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VITE_PORTAL_API_URL`; design-system package grants Actions read |
+| `portal-api` · `CI` | PR, push to `main` | Checks out portal-api + student-portal + applicant-portal + control-plane; `npm ci`; `docs:check`; portable typecheck/admissions tests with disposable Postgres; boot with throwaway passwords + `scripts/smoke.sh` (health, meta, login, wrong password 401, portal call, logout revokes) | None — manual `npm run deploy:vercel` (needs sibling student-portal + gitignored credentials) | Secret `RAISD_READ_TOKEN` |
 | `portal-api-docs` · `Pages` | Push to `main`, manual; PR validation | Redocly lint, design-system validation | Assemble `_site`, inject site password, `deploy-pages` | Secrets `DOCS_SITE_USER`, `DOCS_SITE_PASSWORD` |
 | `control-plane` · `OpenAPI`, `Sync diagrams note` | `openapi.yaml`, `docs/**` | Contract + design-system validation | None (mirrored to portal-api-docs) | — |
 | `design-system` · `Package check and release` | PR, `main`, `v*` tags | Docs impact, build, test | `npm publish` to GitHub Packages on tags | `GITHUB_TOKEN` `packages: write` |
@@ -159,7 +159,7 @@ Valid session: `revoked_at is null and expires_at > now()`. Expired/revoked rows
 2. **Portal call:** SPA → `POST /v1/portal/{method} {args}` + bearer → lookup by token hash → read `portal_meta` revision and the student's `student_portal_state` row (one query) → reuse the instance's record cache if `seeded_at` + `revision` match, else load all record tables in one read-only snapshot → refuse with `403` if the account is disabled/locked → fresh MockPortalApi over those records for `scenario_id` → run the method → `200 {result, cms: {acknowledged: true, mode: "stub"}}`; no session → `401`; not one of the 55 `PortalApi` methods → `404`.
 3. **Write:** if the method committed, one transaction locks `portal_meta`, checks the revision it read, upserts/deletes only the changed record rows, appends matching `audit_events`, bumps `revision`, and upserts changed student state. A moved revision reloads and reruns the method (up to 3 tries, then `409`). Database errors → `503`.
 4. **Switch / sign out:** `POST /v1/auth/scenario` updates the row; `POST /v1/auth/logout` sets `revoked_at`.
-5. **Portal deploy:** push to `main` → Actions `npm ci` (design-system from GitHub Packages) → lint/test/build → `.vercel/output` with `VITE_PORTAL_API_URL` → `vercel deploy --prebuilt --prod` → `raisd-<repo>.vercel.app`.
+5. **Portal deploy:** manually dispatch CI/CD on `main` with `deploy=true` after deployment authorization → Actions `npm ci` (design-system from GitHub Packages) → lint/test/build → `.vercel/output` with `VITE_PORTAL_API_URL` → `vercel deploy --prebuilt --prod` → `raisd-<repo>.vercel.app`.
 
 Any instance accepts any token and sees the same records (both in Neon); edits persist across instances and cold starts and are shared by everyone signed in as that Demo student.
 
@@ -194,3 +194,7 @@ Vercel Postgres is discontinued; databases come from Vercel Marketplace. Neon is
 - Portal API stage-1 behaviour: [../backend/portal-api.md](../backend/portal-api.md)
 - Architecture rules: [overview.md](overview.md), [../AGENTS.md](../AGENTS.md)
 - Public OpenAPI: https://raisd-campus.github.io/portal-api-docs/openapi.html
+
+### Code publication without deployment
+
+Pushes and default manual runs perform checks only. The four portal workflow copies match the canonical template; deployment requires the explicit boolean input on main. Portal/API `vercel.json` disables automatic Git deployments. CLI deployment remains a separate authorized operation. This publication makes no Vercel deployment or hosted migration.
