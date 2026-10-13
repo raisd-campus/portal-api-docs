@@ -319,6 +319,23 @@
       "path": "diagrams/old-cms/cross-campus-fee-amounts.html"
     },
     {
+      "title": "Fee calculation simulation",
+      "summary": "Interactive JS Demo of DVD application-fee share (APP/VISA/REG + SST) \u2014 progress so far and review suggestions (14 Oct).",
+      "section": "LUCT CMS",
+      "keywords": [
+        "fee",
+        "simulation",
+        "application",
+        "visa",
+        "sst",
+        "javascript",
+        "review",
+        "dexter",
+        "dvd"
+      ],
+      "path": "diagrams/old-cms/fee-calculation-simulation.html"
+    },
+    {
       "title": "Cross-campus fee amounts (AI knowledge)",
       "summary": "Canonical Markdown for cross-campus fee amount suggestions (10 Oct 2026).",
       "section": "AI knowledge",

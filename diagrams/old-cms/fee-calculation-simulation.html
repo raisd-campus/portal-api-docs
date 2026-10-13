@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Fee calculation simulation</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 12px 0 0;
+    }
+    .status-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--surface);
+    }
+    .status-card .label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .status-card .value { margin-top: 6px; font-weight: 700; font-size: 1.05rem; }
+    .tag-ok { color: var(--ok); }
+    .tag-wip { color: var(--warn); }
+    .sim-panel {
+      display: grid;
+      grid-template-columns: minmax(240px, 320px) 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .sim-panel { grid-template-columns: 1fr; }
+    }
+    .sim-controls label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin: 0 0 4px;
+    }
+    .sim-controls .field { margin-bottom: 12px; }
+    .sim-controls select, .sim-controls input[type="number"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font: inherit;
+      background: #fff;
+    }
+    .sim-controls .hint { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+    .line-table td.num, .line-table th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .total-row td { font-weight: 700; border-top: 2px solid var(--ink); }
+    .trace {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f4f7fb;
+      border: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      white-space: pre-wrap;
+    }
+    .review-list li { margin: 0.4rem 0; }
+    .wip-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--warn-bg);
+      border: 1px solid #e0c48a;
+      color: var(--warn);
+    }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Control Plane</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="../../reports/index.html" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../distributed-cms-architecture.html">Target architecture</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="../migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="../old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="../old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="../old-cms-lesotho/campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="../old-cms-lesotho/cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="../old-cms-lesotho/dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="obsidian.html?campus=lesotho">Obsidian 3D</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Flows</a>
+              <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="../old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="../old-cms-lesotho/index.html#cap">CAP seed</a>
+              <a href="../old-cms-lesotho/index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="index.html">E2E hub</a>
+              <a href="online-registration.html">Online registration</a>
+              <a href="online-registration-gap.html">Registration FE gaps</a>
+              <a href="cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="index.html#fsd">FSD</a>
+              <a href="obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="index.html#flows">Flows</a>
+              <a href="index.html#erd">ERD</a>
+              <a href="index.html#database">Database</a>
+              <a href="index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md">PoC requirements</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+            <a href="../../poc/vercel-neon.html">Vercel + Neon PoC</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../reports/index.html" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../reports/index.html" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../../reports/index.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../../reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="../../reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="../../reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="../../reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../../reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../../reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="../../reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../../reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../../reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="../../reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="../../reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../../reports/e2e-applicant-staff-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../../reports/e2e-applicant-staff-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="../../reports/e2e-student-module-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="../../reports/e2e-student-learning-lms-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+
+<main class="wrap">
+  <p class="eyebrow">Standup 13 Oct · DVD fee share · simulation 14 Oct 2026</p>
+  <h1>Fee calculation simulation</h1>
+  <p class="lede">
+    Interactive Demo of the application-fee engine Dexter shared in Working Group
+    (<code>fee_management_v4_sst.html</code>). Progress so far, a live JavaScript simulation,
+    and review suggestions. Demo ≠ Live — sample amounts are for review only.
+  </p>
+
+  <div class="banner">
+    <strong>Source:</strong> WhatsApp Working Group · DVD, MIT · 14 Oct 2026 (application fees first;
+    semester calc not finished). Campus-scoped setup (no campus picker in admin UI).
+    Related:
+    <a href="../old-cms-lesotho/dynamic-fee-calculation.html">dynamic fee proposal</a> ·
+    <a href="cross-campus-fee-amounts.html">cross-campus amounts</a>.
+  </div>
+
+  <nav class="toc" aria-label="Sections">
+    <a href="#progress"><strong>1. Progress</strong><span>So far</span></a>
+    <a href="#simulate"><strong>2. Simulate</strong><span>Application fees + SST</span></a>
+    <a href="#config"><strong>3. Config seeds</strong><span>Item catalogue</span></a>
+    <a href="#semester"><strong>4. Semester</strong><span>WIP</span></a>
+    <a href="#review"><strong>5. Review</strong><span>Suggestions</span></a>
+  </nav>
+
+  <section class="section" id="progress">
+    <h2>1. Progress so far</h2>
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="label">Application item fees</div>
+        <div class="value tag-ok">Ready for review</div>
+        <p style="margin:8px 0 0;color:var(--muted);font-size:0.9rem">APP / VISA / REG with SST flags and country-based visa pricing.</p>
+      </div>
+      <div class="status-card">
+        <div class="label">JS fee projection</div>
+        <div class="value tag-ok">This page</div>
+        <p style="margin:8px 0 0;color:var(--muted);font-size:0.9rem">Local vs international · country visa · 6% SST prototype.</p>
+      </div>
+      <div class="status-card">
+        <div class="label">Campus scoping</div>
+        <div class="value tag-ok">Agreed in chat</div>
+        <p style="margin:8px 0 0;color:var(--muted);font-size:0.9rem">Visa table mapped per campus; host knows campus from login.</p>
+      </div>
+      <div class="status-card">
+        <div class="label">Semester fee calc</div>
+        <div class="value tag-wip">Not completed</div>
+        <p style="margin:8px 0 0;color:var(--muted);font-size:0.9rem">DVD: will instruct AI next. Standard vs modular stub only.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="simulate">
+    <h2>2. Application fee simulation</h2>
+    <p>
+      Change campus, applicant type, and country. The engine sums required active item fees,
+      looks up country visa amounts when applicable, and applies SST where the item is marked taxable.
+      SST rate used here is the Cyberjaya Demo prototype <strong>6%</strong> (confirm with Finance before Live).
+    </p>
+    <div class="card"><div class="card-body">
+      <div class="sim-panel">
+        <div class="sim-controls">
+          <div class="field">
+            <label for="campusSelect">Campus (login context)</label>
+            <select id="campusSelect"></select>
+            <div class="hint">Admin does not pick campus — system uses the campus of the session.</div>
+          </div>
+          <div class="field">
+            <label for="applicantType">Applicant type</label>
+            <select id="applicantType">
+              <option value="local">Local</option>
+              <option value="international" selected>International</option>
+            </select>
+          </div>
+          <div class="field" id="countryField">
+            <label for="countrySelect">Applicant country</label>
+            <select id="countrySelect"></select>
+            <div class="hint">Drives VISA001 when pricing is country-based.</div>
+          </div>
+          <div class="field">
+            <label for="sstRate">SST rate (%)</label>
+            <input id="sstRate" type="number" min="0" max="100" step="0.1" value="6" />
+            <div class="hint">Prototype only — not Live tax advice.</div>
+          </div>
+          <button type="button" class="btn" id="recalcBtn" style="padding:8px 14px;border-radius:8px;border:1px solid var(--ink);background:var(--ink);color:#fff;font-weight:600;cursor:pointer">Recalculate</button>
+        </div>
+        <div>
+          <div class="card" style="box-shadow:none;border:1px solid var(--line)">
+            <div class="card-body" style="overflow-x:auto;padding:0">
+              <table class="data line-table" id="resultTable">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Item</th>
+                    <th class="num">Base</th>
+                    <th class="num">SST</th>
+                    <th class="num">Line total</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                  <tr class="total-row">
+                    <td colspan="2">Application charge</td>
+                    <td class="num" id="sumBase">—</td>
+                    <td class="num" id="sumSst">—</td>
+                    <td class="num" id="sumTotal">—</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="trace" id="ruleTrace" aria-live="polite"></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="section" id="config">
+    <h2>3. Config seeds in the shared HTML</h2>
+    <p>Copied from DVD’s Application Item Fees table (Cyberjaya-flavoured sample RM). Lesotho Live app fee remains <strong>LSL 300</strong> in Applicant Demo until Finance Accepts a campus profile.</p>
+    <div class="card"><div class="card-body" style="overflow-x:auto">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Code</th><th>Item</th><th>Applies</th><th>Local</th><th>International</th><th>Required</th><th>SST</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>APP001</code></td><td>Application Fee</td><td>Local &amp; International</td>
+            <td>RM 100</td><td>RM 200</td><td>Yes</td><td>Yes</td>
+          </tr>
+          <tr>
+            <td><code>VISA001</code></td><td>Visa Processing Fee</td><td>International only</td>
+            <td>—</td><td>Country-based</td><td>Yes</td><td>Yes</td>
+          </tr>
+          <tr>
+            <td><code>REG001</code></td><td>Registration Fee</td><td>Local &amp; International</td>
+            <td>RM 150</td><td>RM 250</td><td>Yes</td><td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div></div>
+    <p style="margin-top:12px">Visa country examples in Dexter’s modal: India RM 500 · Indonesia RM 450 · China RM 600. Vara: visa cost mapped <strong>per campus</strong>.</p>
+  </section>
+
+  <section class="section" id="semester">
+    <h2>4. Semester fee calculation (WIP)</h2>
+    <div class="wip-note">
+      <strong>Not completed in the shared HTML.</strong>
+      DVD noted he will instruct the AI for semester charging next.
+      Planned shape: Program → Structure/Version → Semester → default semester fee,
+      with optional per-student Modular Fee override and additional modules on top.
+      Align with C1–C10 in
+      <a href="../old-cms-lesotho/dynamic-fee-calculation.html">dynamic fee calculation</a>
+      before treating as Accept-ready.
+    </div>
+  </section>
+
+  <section class="section" id="review">
+    <h2>5. Suggestions to review</h2>
+    <ol class="review-list">
+      <li><strong>Dexter / Vara</strong> — Confirm APP/VISA/REG item model and whether Registration Fee is application-time or post-offer.</li>
+      <li><strong>Vara / Finance</strong> — Supply per-campus visa country tables (not only India/Indonesia/China samples).</li>
+      <li><strong>Faid</strong> — Map accepted amounts into <code>campus-finance-profiles.yaml</code> (Lesotho LSL 300 app fee already Demo-seeded).</li>
+      <li><strong>Tax</strong> — Confirm SST applicability outside Cyberjaya/MYR; many campuses should not inherit 6% Malaysian SST.</li>
+      <li><strong>Iman / Faid</strong> — Review this JS projection against Applicant Fee step and Staff bursary verification (no hard-coding Live amounts in portals).</li>
+      <li><strong>Dexter</strong> — Finish semester engine next; keep Standard vs Modular override explicit and campus-configurable (C3/C4).</li>
+    </ol>
+    <p>
+      Knowledge base:
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/fee-calculation-simulation.md">fee-calculation-simulation.md</a> ·
+      <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/dynamic-fee-calculation.md">dynamic-fee-calculation.md</a>.
+    </p>
+  </section>
+</main>
+
+<script>
+(function () {
+  const campuses = {
+    cyberjaya: {
+      label: "Cyberjaya (sample RM)",
+      currency: "RM",
+      visaByCountry: { India: 500, Indonesia: 450, China: 600, Other: 550 },
+    },
+    lesotho: {
+      label: "Lesotho (pilot · LSL)",
+      currency: "LSL",
+      // Application fee uses LSL 300 Demo seed; visa samples illustrative only
+      visaByCountry: { "South Africa": 0, Other: 0 },
+      overrideItems: {
+        APP001: { local: 300, international: 300 },
+        VISA001: { enabled: false },
+        REG001: { local: 0, international: 0, note: "TBD — not in Lesotho app-fee Demo" },
+      },
+    },
+    botswana: {
+      label: "Botswana (sample)",
+      currency: "BWP",
+      visaByCountry: { Other: 0 },
+    },
+    eswatini: {
+      label: "Eswatini (sample)",
+      currency: "ZAR",
+      visaByCountry: { Other: 0 },
+    },
+    cambodia: {
+      label: "Cambodia (sample)",
+      currency: "USD",
+      visaByCountry: { Other: 0 },
+    },
+    "sierra-leone": {
+      label: "Sierra Leone (sample)",
+      currency: "SLE",
+      visaByCountry: { Other: 0 },
+    },
+    uganda: {
+      label: "Uganda (sample)",
+      currency: "UGX",
+      visaByCountry: { Other: 0 },
+    },
+    namibia: {
+      label: "Namibia (sample)",
+      currency: "NAD",
+      visaByCountry: { Other: 0 },
+    },
+  };
+
+  const baseItems = [
+    {
+      code: "APP001",
+      name: "Application Fee",
+      applies: "both",
+      local: 100,
+      international: 200,
+      required: true,
+      sst: true,
+      pricing: "fixed",
+    },
+    {
+      code: "VISA001",
+      name: "Visa Processing Fee",
+      applies: "international",
+      local: null,
+      international: null,
+      required: true,
+      sst: true,
+      pricing: "country",
+    },
+    {
+      code: "REG001",
+      name: "Registration Fee",
+      applies: "both",
+      local: 150,
+      international: 250,
+      required: true,
+      sst: false,
+      pricing: "fixed",
+    },
+  ];
+
+  const campusSelect = document.getElementById("campusSelect");
+  const applicantType = document.getElementById("applicantType");
+  const countrySelect = document.getElementById("countrySelect");
+  const countryField = document.getElementById("countryField");
+  const sstRateInput = document.getElementById("sstRate");
+  const tbody = document.querySelector("#resultTable tbody");
+  const ruleTrace = document.getElementById("ruleTrace");
+
+  Object.entries(campuses).forEach(([id, c]) => {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.textContent = c.label;
+    if (id === "cyberjaya") opt.selected = true;
+    campusSelect.appendChild(opt);
+  });
+
+  function money(amount, currency) {
+    if (amount == null || Number.isNaN(amount)) return "—";
+    return currency + " " + Number(amount).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
+  function fillCountries() {
+    const campus = campuses[campusSelect.value];
+    const prev = countrySelect.value;
+    countrySelect.innerHTML = "";
+    Object.keys(campus.visaByCountry).forEach((name) => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      countrySelect.appendChild(opt);
+    });
+    if ([...countrySelect.options].some((o) => o.value === prev)) {
+      countrySelect.value = prev;
+    }
+  }
+
+  function resolveBase(item, campus, type, country) {
+    const override = (campus.overrideItems && campus.overrideItems[item.code]) || null;
+    if (override && override.enabled === false) {
+      return { amount: null, skip: true, reason: "disabled for this campus profile seed" };
+    }
+    if (item.applies === "international" && type !== "international") {
+      return { amount: null, skip: true, reason: "international only" };
+    }
+    if (item.applies === "local" && type !== "local") {
+      return { amount: null, skip: true, reason: "local only" };
+    }
+    if (item.pricing === "country") {
+      const table = campus.visaByCountry || {};
+      const amount = table[country] != null ? table[country] : table.Other;
+      return { amount, skip: false, reason: "country " + country };
+    }
+    if (override && type === "local" && override.local != null) {
+      return { amount: override.local, skip: false, reason: "campus override" };
+    }
+    if (override && type === "international" && override.international != null) {
+      return { amount: override.international, skip: false, reason: "campus override" };
+    }
+    const amount = type === "local" ? item.local : item.international;
+    return { amount, skip: amount == null, reason: type + " fixed" };
+  }
+
+  function calculate() {
+    const campus = campuses[campusSelect.value];
+    const type = applicantType.value;
+    const country = countrySelect.value;
+    const sstRate = Math.max(0, Number(sstRateInput.value) || 0) / 100;
+    countryField.style.display = type === "international" ? "" : "none";
+
+    tbody.innerHTML = "";
+    let sumBase = 0;
+    let sumSst = 0;
+    const trace = [];
+    trace.push("campus=" + campusSelect.value + " · type=" + type + (type === "international" ? " · country=" + country : ""));
+    trace.push("sstRate=" + (sstRate * 100).toFixed(1) + "% (prototype)");
+
+    baseItems.forEach((item) => {
+      const resolved = resolveBase(item, campus, type, country);
+      if (resolved.skip || resolved.amount == null) {
+        trace.push(item.code + ": skip (" + resolved.reason + ")");
+        return;
+      }
+      const base = Number(resolved.amount) || 0;
+      const sst = item.sst ? Math.round(base * sstRate * 100) / 100 : 0;
+      const line = Math.round((base + sst) * 100) / 100;
+      sumBase += base;
+      sumSst += sst;
+      trace.push(
+        item.code + ": base=" + base + " · sst=" + sst + " · " + resolved.reason + (item.sst ? " · SST yes" : " · SST no")
+      );
+      const tr = document.createElement("tr");
+      tr.innerHTML =
+        "<td><code>" + item.code + "</code></td>" +
+        "<td>" + item.name + "</td>" +
+        '<td class="num">' + money(base, campus.currency) + "</td>" +
+        '<td class="num">' + money(sst, campus.currency) + "</td>" +
+        '<td class="num">' + money(line, campus.currency) + "</td>";
+      tbody.appendChild(tr);
+    });
+
+    if (!tbody.children.length) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = '<td colspan="5" style="color:var(--muted)">No chargeable application items for this selection.</td>';
+      tbody.appendChild(tr);
+    }
+
+    document.getElementById("sumBase").textContent = money(sumBase, campus.currency);
+    document.getElementById("sumSst").textContent = money(sumSst, campus.currency);
+    document.getElementById("sumTotal").textContent = money(
+      Math.round((sumBase + sumSst) * 100) / 100,
+      campus.currency
+    );
+    ruleTrace.textContent = trace.join("\n");
+  }
+
+  campusSelect.addEventListener("change", () => {
+    fillCountries();
+    calculate();
+  });
+  applicantType.addEventListener("change", calculate);
+  countrySelect.addEventListener("change", calculate);
+  sstRateInput.addEventListener("input", calculate);
+  document.getElementById("recalcBtn").addEventListener("click", calculate);
+
+  fillCountries();
+  calculate();
+})();
+</script>
+  <script src="../abbr-tooltips.js"></script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+</body>
+</html>

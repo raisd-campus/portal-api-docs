@@ -41,6 +41,7 @@ targets:
   luct-online-reg: diagrams/old-cms/online-registration.html
   luct-online-reg-gap: diagrams/old-cms/online-registration-gap.html
   luct-fee-amounts: diagrams/old-cms/cross-campus-fee-amounts.html
+  luct-fee-sim: diagrams/old-cms/fee-calculation-simulation.html
   luct-ls: diagrams/old-cms-lesotho/index.html
   ai-cross-campus-fees: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cross-campus-fee-amount-suggestions.md
   luct-ls-cms-applicant: diagrams/old-cms-lesotho/cms-vs-applicant.html
@@ -169,6 +170,8 @@ path_rules:
     section: luct-online-reg-gap
   - match: { prefix: diagrams/old-cms/, file: cross-campus-fee-amounts.html }
     section: luct-fee-amounts
+  - match: { prefix: diagrams/old-cms/, file: fee-calculation-simulation.html }
+    section: luct-fee-sim
   - match: { prefix: diagrams/old-cms/ }
     section: luct
   - match: { path_contains: raisd-cms, name_contains: student-portal-manual }
@@ -299,6 +302,7 @@ menu:
       - luct-online-reg
       - luct-online-reg-gap
       - luct-fee-amounts
+      - luct-fee-sim
       - luct-ls
       - luct-ls-cms-applicant
       - luct-ls-fee-sps
@@ -338,6 +342,7 @@ menu:
           - { label: Online registration, href: luct-online-reg }
           - { label: Registration FE gaps, href: luct-online-reg-gap }
           - { label: Cross-campus fee amounts, href: luct-fee-amounts }
+          - { label: Fee calculation simulation, href: luct-fee-sim }
           - { label: FSD, href: "luct#fsd" }
           - { label: Obsidian 3D, href: "luct-obsidian?campus=cyberjaya" }
           - { label: Flows, href: "luct#flows" }
@@ -618,6 +623,12 @@ search:
     section: LUCT CMS
     summary: Suggested fee amounts and calculation paths per campus from SP/DB/process evidence (LS M300 · SZ 2600/3600 · KH repeats).
     keywords: [fee, amount, currency, lesotho, eswatini, cambodia, hardcode, b_Update_Student, application-fee]
+
+  - title: Fee calculation simulation
+    href: luct-fee-sim
+    section: LUCT CMS
+    summary: Interactive JS Demo of DVD application-fee share (APP/VISA/REG + SST) — progress so far and review suggestions (14 Oct).
+    keywords: [fee, simulation, application, visa, sst, javascript, review, dexter, dvd]
 
   - title: Cross-campus fee amounts (AI knowledge)
     href: ai-cross-campus-fees
