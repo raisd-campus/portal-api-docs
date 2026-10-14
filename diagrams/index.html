@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- canonical host --><script>(function(){try{var h=location.hostname;if(h==="raisd-campus.github.io"||h==="github.io"){var p=location.pathname.replace(/^\/portal-api-docs/,"")||"/";location.replace("https://docs.raisd.co"+p+location.search+location.hash)}}catch(e){}})()</script>
   <meta charset="utf-8" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -1131,9 +1132,9 @@ flowchart LR
             </tr>
             <tr>
               <td>Demo Keychain</td>
-              <td><a href="https://raisd-keychain.vercel.app">raisd-keychain.vercel.app</a></td>
+              <td><a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
               <td>WG master password · Open filled for Demo desks</td>
-              <td>Vercel · manual / CLI deploy</td>
+              <td>UltaHost k3s · hostPath nginx</td>
             </tr>
             <tr>
               <td>Student portal</td>
@@ -1167,15 +1168,15 @@ flowchart LR
             </tr>
             <tr>
               <td>Documentation (this site)</td>
-              <td><a href="https://raisd-campus.github.io/portal-api-docs/">raisd-campus.github.io/portal-api-docs</a></td>
+              <td><a href="https://docs.raisd.co/">docs.raisd.co</a></td>
               <td>Site password (via Keychain → Control Plane)</td>
-              <td>GitHub Pages · GitHub Actions on push to <code>main</code></td>
+              <td>UltaHost k3s · hostPath nginx (mirror: GitHub Pages)</td>
             </tr>
             <tr>
               <td>Swagger UI</td>
-              <td><a href="../openapi.html">…/portal-api-docs/openapi.html</a></td>
+              <td><a href="https://docs.raisd.co/openapi.html">docs.raisd.co/openapi.html</a></td>
               <td>Site password; “Try it out” calls the Portal API</td>
-              <td>GitHub Pages</td>
+              <td>UltaHost k3s</td>
             </tr>
             <tr>
               <td>DB admin</td>

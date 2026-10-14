@@ -105,6 +105,27 @@ jobs:
           test -f _site/diagrams/site-auth.js
           test -f _site/diagrams/site-auth-config.json
           python3 scripts/assemble-site-auth.py
+          python3 <<'PY'
+          from pathlib import Path
+          snippet = (
+              "<!-- canonical host -->"
+              '<script>(function(){try{var h=location.hostname;if(h==="raisd-campus.github.io"||h==="github.io"){'
+              'var p=location.pathname.replace(/^\\/portal-api-docs/,"")||"/";'
+              'location.replace("https://docs.raisd.co"+p+location.search+location.hash)}}catch(e){}})()</script>'
+          )
+          for f in Path("_site").rglob("*.html"):
+              text = f.read_text(encoding="utf-8")
+              if "<!-- canonical host -->" in text:
+                  continue
+              low = text.lower()
+              i = low.find("<head>")
+              if i != -1:
+                  text = text[: i + 6] + "\n" + snippet + text[i + 6 :]
+              else:
+                  text = snippet + text
+              f.write_text(text, encoding="utf-8")
+          print("injected docs.raisd.co redirects into HTML")
+          PY
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

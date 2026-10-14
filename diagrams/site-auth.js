@@ -5,6 +5,20 @@
 (function () {
   'use strict';
 
+  // Canonical docs host is docs.raisd.co (UltaHost). Redirect GitHub Pages aliases.
+  try {
+    var host = window.location.hostname;
+    if (host === 'raisd-campus.github.io' || host === 'github.io') {
+      var path = window.location.pathname.replace(/^\/portal-api-docs/, '') || '/';
+      window.location.replace(
+        'https://docs.raisd.co' + path + window.location.search + window.location.hash,
+      );
+      return;
+    }
+  } catch (e) {
+    /* continue to gate */
+  }
+
   var SESSION_KEY = 'raisd-docs-auth-v1';
   var OVERLAY_ID = 'raisd-auth-overlay';
 
@@ -48,6 +62,7 @@
   var KEYCHAIN_READY_TYPE = 'raisd.keychain.ready';
   var KEYCHAIN_FILL_TYPE = 'raisd.keychain.fill';
   var KEYCHAIN_ORIGINS = [
+    'https://keychain.raisd.co',
     'https://raisd-keychain.vercel.app',
     'http://localhost:5180',
     'http://127.0.0.1:5180',
