@@ -311,29 +311,36 @@
         </thead>
         <tbody>
           <tr>
+            <td>Campus landing (Lesotho)</td>
+            <td><a href="https://raisd-campus-landing.vercel.app">raisd-campus-landing.vercel.app</a> · planned <code>lesotho.raisd.co</code></td>
+            <td><a href="https://github.com/raisd-campus/campus-landing">campus-landing</a></td>
+            <td>Static HTML chooser → Apply / Student / Staff / Teach</td>
+            <td>Manual: <code>npm run deploy</code> from a local checkout</td>
+          </tr>
+          <tr>
             <td>Student portal</td>
-            <td><a href="https://raisd-student-portal.vercel.app">raisd-student-portal.vercel.app</a></td>
+            <td><a href="https://raisd-student-portal.vercel.app">raisd-student-portal.vercel.app</a> · planned <code>student.lesotho.raisd.co</code></td>
             <td><a href="https://github.com/raisd-campus/student-portal">student-portal</a></td>
             <td>Vite + React SPA, static prebuilt output</td>
             <td>GitHub Actions <code>CI/CD</code> on push to <code>main</code></td>
           </tr>
           <tr>
             <td>Applicant portal</td>
-            <td><a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a></td>
+            <td><a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a> · planned <code>apply.lesotho.raisd.co</code></td>
             <td><a href="https://github.com/raisd-campus/applicant-portal">applicant-portal</a></td>
             <td>Vite + React SPA; HTTP Portal API when <code>VITE_PORTAL_API_URL</code> is set</td>
             <td>Manual prebuilt deploy (same <code>CI/CD</code> template; Actions billing may block CI)</td>
           </tr>
           <tr>
             <td>Lecturer portal</td>
-            <td><a href="https://raisd-lecturer-portal.vercel.app">raisd-lecturer-portal.vercel.app</a></td>
+            <td><a href="https://raisd-lecturer-portal.vercel.app">raisd-lecturer-portal.vercel.app</a> · planned <code>teach.lesotho.raisd.co</code></td>
             <td><a href="https://github.com/raisd-campus/lecturer-portal">lecturer-portal</a></td>
             <td>“Coming soon” placeholder until the repo has an app</td>
             <td>GitHub Actions <code>CI/CD</code> on push to <code>main</code></td>
           </tr>
           <tr>
             <td>Staff portal</td>
-            <td><a href="https://raisd-staff-portal.vercel.app">raisd-staff-portal.vercel.app</a></td>
+            <td><a href="https://raisd-staff-portal.vercel.app">raisd-staff-portal.vercel.app</a> · planned <code>staff.lesotho.raisd.co</code></td>
             <td><a href="https://github.com/raisd-campus/staff-portal">staff-portal</a></td>
             <td>“Coming soon” placeholder until the repo has an app</td>
             <td>GitHub Actions <code>CI/CD</code> on push to <code>main</code></td>
@@ -388,6 +395,7 @@ flowchart TB
   end
 
   subgraph vercel ["Vercel team · Singapore sin1"]
+    land["raisd-campus-landing<br/>Lesotho chooser"]
     sp["raisd-student-portal<br/>static SPA"]
     ap["raisd-applicant-portal<br/>static SPA"]
     lp["raisd-lecturer-portal<br/>placeholder"]
@@ -405,7 +413,12 @@ flowchart TB
     ulta["UltaHost Singapore + k3s<br/>ADR-2 / ADR-3 · SDD-12"]
   end
 
-  user -- HTTPS --> sp
+  user -- HTTPS --> land
+  land --> sp
+  land --> ap
+  land --> lp
+  land --> stp
+  user --> sp
   user --> ap
   user --> lp
   user --> stp
@@ -424,7 +437,7 @@ flowchart TB
   classDef poc fill:#e8f0f8,stroke:#1a4f8b,color:#152033
   classDef store fill:#eef7ee,stroke:#2f7d32,color:#152033
   classDef out fill:#f6f6f6,stroke:#9aa5b1,color:#5a6a7e,stroke-dasharray:4 3
-  class sp,ap,lp,stp,api,dba poc
+  class land,sp,ap,lp,stp,api,dba poc
   class db,pkg store
   class cms,ulta out
         </pre>
@@ -472,7 +485,7 @@ flowchart TB
         </tbody>
       </table>
     </div>
-    <p><code>CORS_ORIGIN</code> on the API is exactly <code>https://raisd-student-portal.vercel.app,https://raisd-applicant-portal.vercel.app,https://raisd-campus.github.io</code> (student SPA + applicant SPA + Swagger). Add an origin there before another portal calls the API from a browser.</p>
+    <p><code>CORS_ORIGIN</code> on the API includes the <code>*.vercel.app</code> student and applicant SPAs, the planned Lesotho campus hostnames (<code>student.lesotho.raisd.co</code>, <code>apply.lesotho.raisd.co</code>, <code>staff.lesotho.raisd.co</code>, <code>teach.lesotho.raisd.co</code>), and <code>https://raisd-campus.github.io</code> for Swagger. Working Demo path today is <code>*.vercel.app</code>; custom DNS is attached on Vercel and waiting on Cloudflare CNAMEs. Add an origin there before another portal calls the API from a browser.</p>
 
     <h2 id="cicd">CI/CD pipelines</h2>
     <div class="card">

@@ -1109,8 +1109,11 @@ flowchart LR
       <p class="lead">
         Everything below is reachable from the internet today. It is the hosted <strong>Demo</strong>
         (<a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>) — sample students, no Live CMS writes.
-        Production campus hostnames (<code>apply.raisd.co</code>, <code>api.raisd.co</code>, …) are not live yet.
-        Checked 29 Sep 2026.
+        Working Demo hostnames are <code>*.vercel.app</code>. Planned Lesotho campus names
+        (<code>lesotho.raisd.co</code> / <code>{apply,student,staff,teach}.lesotho.raisd.co</code> are
+        attached on Vercel and waiting on Cloudflare DNS. Live UltaHost hostnames
+        (<code>apply.raisd.co</code>, <code>api.raisd.co</code>, …) are not live yet.
+        Checked 14 Oct 2026.
       </p>
 
       <h3>Websites</h3>
@@ -1120,6 +1123,12 @@ flowchart LR
             <tr><th>Site</th><th>URL</th><th>Access</th><th>Hosted on · deployed by</th></tr>
           </thead>
           <tbody>
+            <tr>
+              <td>Campus landing (Lesotho)</td>
+              <td><a href="https://raisd-campus-landing.vercel.app">raisd-campus-landing.vercel.app</a></td>
+              <td>Open — chooser into Apply / Student / Staff / Teach</td>
+              <td>Vercel · manual / CLI deploy</td>
+            </tr>
             <tr>
               <td>Demo Keychain</td>
               <td><a href="https://raisd-keychain.vercel.app">raisd-keychain.vercel.app</a></td>
