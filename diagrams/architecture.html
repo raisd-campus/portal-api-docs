@@ -32,6 +32,7 @@
             <a href="lms-features.html">LMS features</a>
             <a href="migration.html">Migration</a>
             <a href="architecture.html#vps">VPS topology</a>
+            <a href="architecture.html#cicd">CI/CD pipeline</a>
           </div>
         </div>
         <div class="nav-dd">
@@ -39,6 +40,7 @@
           <div class="nav-dd-menu" role="menu">
             <a href="architecture.html">Architecture home</a>
             <a href="architecture.html#vps">VPS topology</a>
+            <a href="architecture.html#cicd">CI/CD pipeline</a>
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
               <div class="nav-sub-menu" role="menu">
@@ -177,6 +179,7 @@
           <a class="nav-dd-main" href="../design-system/index.html">Design system</a>
           <div class="nav-dd-menu" role="menu">
             <a href="../design-system/index.html">Design system hub</a>
+            <a href="../design-system/email-templates.html">Email templates</a>
             <a href="../design-system/foundations.html">Foundations</a>
             <a href="../design-system/shared-controls.html">Shared controls</a>
             <a href="../design-system/shared-patterns.html">Shared patterns</a>
@@ -196,6 +199,8 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
@@ -299,6 +304,7 @@
 
     <div class="toc">
       <a href="#vps"><strong>VPS topology</strong><span>Current Demo on UltaHost k3s</span></a>
+      <a href="#cicd"><strong>CI/CD pipeline</strong><span>Jenkins main-only → Argo CD</span></a>
       <a href="#sdd"><strong>SDD &amp; ADR catalogue</strong><span>Design docs and decisions</span></a>
       <a href="./distributed-cms-architecture.html"><strong>Distributed CMS</strong><span>Current → ideal (one page)</span></a>
       <a href="#principles"><strong>Six instructions</strong><span>Core rules for authors</span></a>
@@ -335,11 +341,13 @@ flowchart TB
     land["Campus landings<br/>{slug}.raisd.co"]
     portals["Role portals<br/>apply · student · staff · teach<br/>.{slug}.raisd.co"]
     shared["Shared static<br/>keychain · docs · db-admin<br/>.raisd.co"]
+    ops["Ops UIs<br/>jenkins · argocd<br/>.raisd.co"]
     api["Deployment portal-api<br/>api.raisd.co · api.{slug}.raisd.co"]
     pg[("StatefulSet postgres<br/>portal_api")]
     tr --> land
     tr --> portals
     tr --> shared
+    tr --> ops
     tr --> api
     api --> pg
   end
@@ -365,6 +373,7 @@ flowchart TB
             <tr><td>DNS</td><td>Cloudflare <code>raisd.co</code> — DNS-only A records → VPS</td></tr>
             <tr><td>Compute</td><td>Single UltaHost VPS, <code>38.127.216.221</code></td></tr>
             <tr><td>Runtime</td><td>k3s · namespace <code>campus</code> · Traefik ingress · cert-manager</td></tr>
+            <tr><td>CI/CD</td><td>Jenkins (<a href="https://jenkins.raisd.co">jenkins.raisd.co</a>) + Argo CD (<a href="https://argocd.raisd.co">argocd.raisd.co</a>) — see <a href="#cicd">CI/CD pipeline</a></td></tr>
             <tr><td>Database</td><td>Postgres 18 StatefulSet on the VPS (<code>portal_api</code>)</td></tr>
             <tr><td>Static sites</td><td>HostPath sync under <code>/var/www/portals/…</code></td></tr>
             <tr><td>Campus lock</td><td>Hostname → <code>campusId</code> (eight Demo campuses)</td></tr>
@@ -378,6 +387,238 @@ flowchart TB
         (<code>apply.raisd.co</code>, …) remain the acceptance growth plan. Demo today uses the
         campus-scoped pattern above. Portals never talk to Postgres or the CMS directly.
       </p>
+    </section>
+
+    <section class="section" id="cicd">
+      <h2>CI/CD pipeline (Demo)</h2>
+      <p class="lead">
+        Day-to-day deploys no longer depend on laptop SSH. A merge to
+        <strong><code>main</code></strong> triggers Jenkins; Argo CD syncs GitOps desired state on k3s.
+        Agent notes:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">cicd.md</a>
+        ·
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">argocd.md</a>
+        · pipeline
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/ci/Jenkinsfile">ci/Jenkinsfile</a>.
+        Checked 15 Oct 2026.
+      </p>
+
+      <div class="card" style="margin:18px 0">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart LR
+  dev["Merge to main<br/>raisd-campus/*"]
+  gh["GitHub push webhook"]
+  j["Jenkins<br/>jenkins.raisd.co<br/>job raisd-main-deploy<br/>filter ^refs/heads/main$"]
+  gha["GitHub Actions<br/>GHCR images<br/>where present"]
+  argo["Argo CD<br/>argocd.raisd.co<br/>gitops/apps/*"]
+  k3s["k3s · Traefik<br/>*.raisd.co"]
+
+  dev --> gh --> j
+  dev --> gha
+  j -->|"hard refresh + rollout"| argo --> k3s
+  gha -.->|"ghcr.io/raisd-campus/…:main"| k3s
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:18px">
+        <table class="attr">
+          <thead>
+            <tr><th>Stage</th><th>Owner</th><th>When</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Build / publish image</td>
+              <td>GitHub Actions → GHCR</td>
+              <td>Push/merge to <code>main</code> (service repos)</td>
+            </tr>
+            <tr>
+              <td>Deploy trigger</td>
+              <td><a href="https://jenkins.raisd.co">Jenkins</a> Generic Webhook</td>
+              <td>GitHub <code>push</code>; <strong>only</strong> <code>refs/heads/main</code> runs the job</td>
+            </tr>
+            <tr>
+              <td>Cluster sync</td>
+              <td><a href="https://argocd.raisd.co">Argo CD</a></td>
+              <td>Jenkins refreshes Applications under <code>gitops/apps/</code></td>
+            </tr>
+            <tr>
+              <td>Static portals (transitional)</td>
+              <td><code>scripts/deploy-vps.sh</code> over SSH</td>
+              <td>Until SPA images land in GitOps</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:16px">
+        Non-<code>main</code> branch pushes still reach the webhook URL but Jenkins does
+        <strong>not</strong> start a deploy. SSH remains for bootstrap and emergency recovery only
+        (<code>gitops/bootstrap/*</code>). After a successful <code>main</code> deploy, the hosts
+        below are what Traefik serves on the Demo VPS.
+      </p>
+
+      <h3 style="margin:22px 0 10px;font-size:1.05rem">Shared domains (not campus-pinned)</h3>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr><th>Host</th><th>Serves</th><th>CI/CD role</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://jenkins.raisd.co">jenkins.raisd.co</a></td>
+              <td>Jenkins CI</td>
+              <td>Deploy trigger (main only)</td>
+            </tr>
+            <tr>
+              <td><a href="https://argocd.raisd.co">argocd.raisd.co</a></td>
+              <td>Argo CD UI</td>
+              <td>GitOps sync / desired state</td>
+            </tr>
+            <tr>
+              <td><a href="https://api.raisd.co/v1/meta">api.raisd.co</a></td>
+              <td>Portal API (global)</td>
+              <td>Synced via Argo / hostPath deploy</td>
+            </tr>
+            <tr>
+              <td><a href="https://sso.raisd.co">sso.raisd.co</a></td>
+              <td>SSO identity + RBAC</td>
+              <td>GHCR image + Argo Application</td>
+            </tr>
+            <tr>
+              <td><a href="https://notify.raisd.co">notify.raisd.co</a></td>
+              <td>Notifications API</td>
+              <td>GHCR image + Argo Application</td>
+            </tr>
+            <tr>
+              <td><a href="https://admin.raisd.co">admin.raisd.co</a></td>
+              <td>Raisd Admin</td>
+              <td>Static SPA (hostPath until GitOps)</td>
+            </tr>
+            <tr>
+              <td><a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
+              <td>Demo Keychain</td>
+              <td>Static SPA (hostPath until GitOps)</td>
+            </tr>
+            <tr>
+              <td><a href="https://docs.raisd.co/">docs.raisd.co</a></td>
+              <td>Documentation + OpenAPI</td>
+              <td>Static docs (hostPath)</td>
+            </tr>
+            <tr>
+              <td><a href="https://db-admin.raisd.co">db-admin.raisd.co</a></td>
+              <td>Read-only DB admin</td>
+              <td>Node hostPath service</td>
+            </tr>
+            <tr>
+              <td><a href="https://mail.raisd.co">mail.raisd.co</a></td>
+              <td>UltaCP mail (SMTP/IMAP)</td>
+              <td>Off-cluster — not deployed by Jenkins/Argo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:22px 0 10px;font-size:1.05rem">Campus-scoped domains (eight Demo campuses)</h3>
+      <p class="lead" style="margin-bottom:12px">
+        Pattern per slug:
+        <code>{slug}.raisd.co</code>,
+        <code>apply|student|staff|teach|api.{slug}.raisd.co</code>.
+        Catalogue:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/demo-campuses.yaml">demo-campuses.yaml</a>
+        · public list
+        <a href="index.html#endpoints">endpoints</a>.
+      </p>
+      <div class="table-wrap">
+        <table class="attr">
+          <thead>
+            <tr>
+              <th>Campus</th>
+              <th>Landing</th>
+              <th>Apply</th>
+              <th>Student</th>
+              <th>Staff</th>
+              <th>Teach</th>
+              <th>API</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lesotho <span class="chip ok">pilot</span></td>
+              <td><a href="https://lesotho.raisd.co">lesotho.raisd.co</a></td>
+              <td><a href="https://apply.lesotho.raisd.co">apply.lesotho.raisd.co</a></td>
+              <td><a href="https://student.lesotho.raisd.co">student.lesotho.raisd.co</a></td>
+              <td><a href="https://staff.lesotho.raisd.co">staff.lesotho.raisd.co</a></td>
+              <td><a href="https://teach.lesotho.raisd.co">teach.lesotho.raisd.co</a></td>
+              <td><a href="https://api.lesotho.raisd.co/health">api.lesotho.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Cyberjaya</td>
+              <td><a href="https://cyberjaya.raisd.co">cyberjaya.raisd.co</a></td>
+              <td><a href="https://apply.cyberjaya.raisd.co">apply.cyberjaya.raisd.co</a></td>
+              <td><a href="https://student.cyberjaya.raisd.co">student.cyberjaya.raisd.co</a></td>
+              <td><a href="https://staff.cyberjaya.raisd.co">staff.cyberjaya.raisd.co</a></td>
+              <td><a href="https://teach.cyberjaya.raisd.co">teach.cyberjaya.raisd.co</a></td>
+              <td><a href="https://api.cyberjaya.raisd.co/health">api.cyberjaya.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Botswana</td>
+              <td><a href="https://botswana.raisd.co">botswana.raisd.co</a></td>
+              <td><a href="https://apply.botswana.raisd.co">apply.botswana.raisd.co</a></td>
+              <td><a href="https://student.botswana.raisd.co">student.botswana.raisd.co</a></td>
+              <td><a href="https://staff.botswana.raisd.co">staff.botswana.raisd.co</a></td>
+              <td><a href="https://teach.botswana.raisd.co">teach.botswana.raisd.co</a></td>
+              <td><a href="https://api.botswana.raisd.co/health">api.botswana.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Eswatini</td>
+              <td><a href="https://eswatini.raisd.co">eswatini.raisd.co</a></td>
+              <td><a href="https://apply.eswatini.raisd.co">apply.eswatini.raisd.co</a></td>
+              <td><a href="https://student.eswatini.raisd.co">student.eswatini.raisd.co</a></td>
+              <td><a href="https://staff.eswatini.raisd.co">staff.eswatini.raisd.co</a></td>
+              <td><a href="https://teach.eswatini.raisd.co">teach.eswatini.raisd.co</a></td>
+              <td><a href="https://api.eswatini.raisd.co/health">api.eswatini.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Sierra Leone</td>
+              <td><a href="https://sierra-leone.raisd.co">sierra-leone.raisd.co</a></td>
+              <td><a href="https://apply.sierra-leone.raisd.co">apply.sierra-leone.raisd.co</a></td>
+              <td><a href="https://student.sierra-leone.raisd.co">student.sierra-leone.raisd.co</a></td>
+              <td><a href="https://staff.sierra-leone.raisd.co">staff.sierra-leone.raisd.co</a></td>
+              <td><a href="https://teach.sierra-leone.raisd.co">teach.sierra-leone.raisd.co</a></td>
+              <td><a href="https://api.sierra-leone.raisd.co/health">api.sierra-leone.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Cambodia</td>
+              <td><a href="https://cambodia.raisd.co">cambodia.raisd.co</a></td>
+              <td><a href="https://apply.cambodia.raisd.co">apply.cambodia.raisd.co</a></td>
+              <td><a href="https://student.cambodia.raisd.co">student.cambodia.raisd.co</a></td>
+              <td><a href="https://staff.cambodia.raisd.co">staff.cambodia.raisd.co</a></td>
+              <td><a href="https://teach.cambodia.raisd.co">teach.cambodia.raisd.co</a></td>
+              <td><a href="https://api.cambodia.raisd.co/health">api.cambodia.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Uganda</td>
+              <td><a href="https://uganda.raisd.co">uganda.raisd.co</a></td>
+              <td><a href="https://apply.uganda.raisd.co">apply.uganda.raisd.co</a></td>
+              <td><a href="https://student.uganda.raisd.co">student.uganda.raisd.co</a></td>
+              <td><a href="https://staff.uganda.raisd.co">staff.uganda.raisd.co</a></td>
+              <td><a href="https://teach.uganda.raisd.co">teach.uganda.raisd.co</a></td>
+              <td><a href="https://api.uganda.raisd.co/health">api.uganda.raisd.co</a></td>
+            </tr>
+            <tr>
+              <td>Namibia</td>
+              <td><a href="https://namibia.raisd.co">namibia.raisd.co</a></td>
+              <td><a href="https://apply.namibia.raisd.co">apply.namibia.raisd.co</a></td>
+              <td><a href="https://student.namibia.raisd.co">student.namibia.raisd.co</a></td>
+              <td><a href="https://staff.namibia.raisd.co">staff.namibia.raisd.co</a></td>
+              <td><a href="https://teach.namibia.raisd.co">teach.namibia.raisd.co</a></td>
+              <td><a href="https://api.namibia.raisd.co/health">api.namibia.raisd.co</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="section" id="sdd">

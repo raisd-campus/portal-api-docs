@@ -2,6 +2,21 @@
   "generatedFrom": "docs/site-nav.yaml",
   "pages": [
     {
+      "title": "Email templates",
+      "summary": "Transactional email HTML for notify.raisd.co \u2014 magic link, application received, enrolment accepted, learner access, generic.",
+      "section": "Design system",
+      "keywords": [
+        "email",
+        "template",
+        "notify",
+        "smtp",
+        "magic link",
+        "noreply",
+        "transactional"
+      ],
+      "path": "design-system/email-templates.html"
+    },
+    {
       "title": "Overview",
       "summary": "Diagrams hub for Control Plane \u2014 architecture maps, public endpoints, CMS inventories, and entry points to SDD and OpenAPI.",
       "section": "Overview",
@@ -1387,6 +1402,23 @@
         "deploy"
       ],
       "path": "diagrams/architecture.html#vps"
+    },
+    {
+      "title": "CI/CD pipeline",
+      "summary": "Jenkins main-only webhook trigger and Argo CD GitOps sync for Demo deploys on UltaHost k3s.",
+      "section": "Architecture",
+      "keywords": [
+        "cicd",
+        "jenkins",
+        "argocd",
+        "gitops",
+        "webhook",
+        "main",
+        "ghcr",
+        "deploy",
+        "github"
+      ],
+      "path": "diagrams/architecture.html#cicd"
     }
   ]
 }

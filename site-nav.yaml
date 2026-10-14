@@ -69,12 +69,14 @@ targets:
   design-controls: design-system/shared-controls.html
   design-patterns: design-system/shared-patterns.html
   design-student: design-system/student-components.html
+  design-email: design-system/email-templates.html
   sdd: sdd/index.html
   sdd-15: sdd/15-nomenclature.html
   sdd-11: sdd/11-capability-catalog.html
   sdd-03: sdd/03-delivery-milestones.html
   openapi: openapi.html
   vps-topology: diagrams/architecture.html#vps
+  cicd: diagrams/architecture.html#cicd
   reports: reports/index.html
   reports-w01: reports/weekly/2026-09-19.html
   reports-w02: reports/weekly/2026-09-26.html
@@ -115,6 +117,8 @@ external:
   report-lesotho-analysis: https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md
   openapi-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml
   ai-vps-topology-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md
+  ai-cicd: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md
+  ai-argocd: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md
   keychain: https://keychain.raisd.co/
 
 # Path → active section id (first match wins; evaluated in order)
@@ -247,13 +251,15 @@ menu:
       - { label: LMS features, href: lms-features }
       - { label: Migration, href: migration }
       - { label: "VPS topology", href: vps-topology }
+      - { label: "CI/CD pipeline", href: cicd }
 
   - label: Architecture
     href: architecture
-    active: [architecture, distributed, migration, vps-topology, lms, lms-architecture, lms-features]
+    active: [architecture, distributed, migration, vps-topology, cicd, lms, lms-architecture, lms-features]
     children:
       - { label: Architecture home, href: architecture }
       - { label: "VPS topology", href: vps-topology }
+      - { label: "CI/CD pipeline", href: cicd }
       - label: Distributed CMS
         href: distributed
         children:
@@ -402,6 +408,7 @@ menu:
     active: [design-system]
     children:
       - { label: Design system hub, href: design-system }
+      - { label: Email templates, href: design-email }
       - { label: Foundations, href: design-foundations }
       - { label: Shared controls, href: design-controls }
       - { label: Shared patterns, href: design-patterns }
@@ -421,6 +428,8 @@ menu:
       - { label: Portal API plan, href: ai-portal-api-plan }
       - { label: Portal API deployment, href: ai-portal-api-deploy }
       - { label: VPS topology, href: ai-vps-topology-md }
+      - { label: CI/CD pipeline, href: ai-cicd }
+      - { label: Argo CD GitOps, href: ai-argocd }
       - { label: CMS comparison, href: ai-cms-comparison }
       - { label: LUCT online registration, href: ai-luct-online-reg }
       - { label: Registration FE gaps, href: ai-luct-online-reg-gap }
@@ -503,10 +512,17 @@ design_subnav:
   - { label: Shared controls, href: design-controls }
   - { label: Shared patterns, href: design-patterns }
   - { label: Student portal components, href: design-student }
+  - { label: Email templates, href: design-email }
 
 # Site search index (header magnifier → modal). href = target id or id#anchor.
 # Regenerate publishes diagrams/site-search-index.json for the browser.
 search:
+  - title: Email templates
+    href: design-email
+    section: Design system
+    summary: Transactional email HTML for notify.raisd.co — magic link, application received, enrolment accepted, learner access, generic.
+    keywords: [email, template, notify, smtp, magic link, noreply, transactional]
+
   - title: Overview
     href: overview
     section: Overview
@@ -1076,3 +1092,9 @@ search:
     section: Architecture
     summary: Current Demo on UltaHost k3s — Cloudflare DNS, Traefik, campus-scoped hosts, Portal API, VPS Postgres.
     keywords: [vps, ultahost, k3s, traefik, postgres, dns, cloudflare, topology, campus, deploy]
+
+  - title: CI/CD pipeline
+    href: cicd
+    section: Architecture
+    summary: Jenkins main-only webhook trigger and Argo CD GitOps sync for Demo deploys on UltaHost k3s.
+    keywords: [cicd, jenkins, argocd, gitops, webhook, main, ghcr, deploy, github]
