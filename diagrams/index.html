@@ -5,7 +5,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Control Plane — Overview</title>
-  <link rel="stylesheet" href="./styles.css?v=progress-charts-5" />
+  <link rel="stylesheet" href="./styles.css?v=keychain-float-1" />
   <script src="site-auth.js"></script>
 </head>
 <body>
@@ -285,8 +285,8 @@
         <span class="chip ok">This phase: campus CMS family = SoR</span>
         <span class="chip ok">Four portals via Portal API</span>
         <span class="chip warn">Live checklist: 0%</span>
-        <span class="chip">FE Demo depth: ~36%</span>
-        <span class="chip ok">Platform: ~72%</span>
+        <span class="chip">FE Demo depth: ~44%</span>
+        <span class="chip ok">Platform: ~84%</span>
         <span class="chip">Ideal: one CMS · country DBs</span>
       </div>
     </section>
@@ -310,7 +310,7 @@
         Snapshot for sponsor weekly % reporting. Checklist Live from
         <a href="../sdd/13-progress-timeline.html">SDD-13</a> (sheet 19 Sep 2026).
         FE Demo depth and platform readiness include engineering work through
-        <strong>7 Oct 2026</strong> (Schema v4, Applicant Demo HTTP, Lesotho inventory).
+        <strong>14 Oct 2026</strong> (staff/lecturer Demo shells, E2E packs, UltaHost multi-campus VPS).
         <strong>Live = 0%</strong> until durable CMS-backed journeys pass acceptance.
         Week-by-week narrative: <a href="../reports/index.html" target="_blank" rel="noopener noreferrer">Reports</a> (W01–W04 from 18 Sep).
       </p>
@@ -323,18 +323,18 @@
         </div>
         <div class="progress-kpi">
           <span>Frontend Demo depth</span>
-          <strong>~36%</strong>
-          <span>37 of 103 applicable (Demo/Partial/Placeholder)</span>
+          <strong>~44%</strong>
+          <span>45 of 103 applicable (Demo/Partial/Placeholder)</span>
         </div>
         <div class="progress-kpi ok">
           <span>Platform readiness</span>
-          <strong>~72%</strong>
-          <span>Schema v4 · API · docs · Demo host</span>
+          <strong>~84%</strong>
+          <span>VPS k3s · 8 campuses · Schema v4 · API</span>
         </div>
         <div class="progress-kpi">
           <span>Lesotho pilot (M4)</span>
-          <strong>~22%</strong>
-          <span>Decided · analysed · not Live</span>
+          <strong>~35%</strong>
+          <span>Hosts live · Demo locked · not Live SoR</span>
         </div>
       </div>
 
@@ -354,8 +354,8 @@ xychart-beta
   title "Milestone progress %"
   x-axis [M1, M2, M3, M4, M5]
   y-axis "%" 0 --> 100
-  bar "FE Demo depth %" [0, 50, 31, 0, 35]
-  bar "Platform readiness %" [50, 40, 45, 22, 28]
+  bar "FE Demo depth %" [0, 67, 35, 0, 35]
+  bar "Platform readiness %" [55, 55, 58, 35, 42]
               </pre>
             </div>
             <div class="series-swatches" aria-label="Bar chart colour key">
@@ -366,11 +366,11 @@ xychart-beta
             <div class="legend" aria-label="Bar chart series key">
               <div class="legend-item">
                 <strong>FE Demo depth %</strong>
-                <span>Share of applicable rows with Demo / Partial / Placeholder in the estate (sheet baseline + Applicant Demo through 7 Oct). Not Live.</span>
+                <span>Share of applicable rows with Demo / Partial / Placeholder in the estate (sheet baseline + Applicant/Staff/Lecturer Demo through 14 Oct). Not Live.</span>
               </div>
               <div class="legend-item">
                 <strong>Platform readiness %</strong>
-                <span>Estimate of schema, Portal API, docs, Demo hosting, and campus inventories ready for integration — not acceptance.</span>
+                <span>Estimate of schema, Portal API, docs, UltaHost multi-campus Demo hosting, and campus inventories ready for integration — not acceptance.</span>
               </div>
               <div class="legend-item">
                 <strong>Live checklist</strong>
@@ -391,52 +391,54 @@ xychart-beta
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m1">M1</a> Confirm rules &amp; integration</td>
                     <td><strong>0%</strong></td>
-                    <td><strong>~50%</strong></td>
+                    <td><strong>~55%</strong></td>
                     <td>
                       Almost no frontend rows on the sheet (operating / rules milestone).
-                      Platform ~50% reflects ADR-1, Schema v4 Demo, CAP-53 Partial, and architecture docs —
+                      Platform ~55% reflects ADR-1/2/3, Schema v4 Demo, CAP-53 Partial, VPS topology docs —
                       while owners, target weeks, and backend commitment remain TBC.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions launch</td>
-                    <td><strong>~50%</strong></td>
-                    <td><strong>~40%</strong></td>
+                    <td><strong>~67%</strong></td>
+                    <td><strong>~55%</strong></td>
                     <td>
-                      FE ~50% = <strong>9 of 18</strong> applicable admissions rows with Demo depth
-                      (4 student-side sheet starts + 5 Applicant Demo capabilities with hosted HTTP).
-                      Staff admissions review remains not started. Platform ~40% = Applicant Demo HTTP + schema v4;
+                      FE ~67% = <strong>12 of 18</strong> applicable admissions rows with Demo depth
+                      (4 student-side sheet starts + 5 Applicant Demo + 3 Staff Demo: Bursary / QA / Registry).
+                      Platform ~55% = hosted Applicant+Staff HTTP on VPS + schema v4;
                       real CMS-backed apply→enrol is not Live.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core student portal</td>
-                    <td><strong>31%</strong></td>
-                    <td><strong>~45%</strong></td>
+                    <td><strong>~35%</strong></td>
+                    <td><strong>~58%</strong></td>
                     <td>
-                      FE 31% = <strong>16 of 51</strong> applicable rows started — student Demo/Partial screens are deepest.
-                      Lecturer and staff paths for the same CAPs are still 0. Platform ~45% reflects student portal UI +
-                      Schema v4 academic/profile model; durable CMS writes and cross-role Live journeys are ahead.
+                      FE ~35% = <strong>18 of 51</strong> applicable rows started — student Demo/Partial deepest,
+                      plus Staff module-registration desk and Lecturer materials Demo.
+                      Platform ~58% reflects student UI + Schema v4 + VPS Demo API;
+                      durable CMS writes and cross-role Live journeys are ahead.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m4">M4</a> Lesotho pilot acceptance</td>
                     <td><strong>0%</strong></td>
-                    <td><strong>~22%</strong></td>
+                    <td><strong>~35%</strong></td>
                     <td>
                       FE 0% — acceptance / training row, not a UI feature pack on the sheet.
-                      Platform ~22% = pilot decided (3 Oct), screenshot inventory + DB gap probe published;
-                      Live SoR path undecided, old CMS dump pending, NMDS/LGCSE/Loti parity not yet Live.
+                      Platform ~35% = pilot decided, Lesotho hosts live on UltaHost
+                      (<code>*.lesotho.raisd.co</code>), inventory + DB gap published;
+                      Live SoR path and NMDS/LGCSE/Loti parity still not Live.
                     </td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m5">M5</a> Campus expansion</td>
                     <td><strong>35%</strong></td>
-                    <td><strong>~28%</strong></td>
+                    <td><strong>~42%</strong></td>
                     <td>
                       FE 35% = <strong>12 of 34</strong> applicable expansion rows started on the sheet
-                      (not a licence to pull M5 ahead of admissions). Platform ~28% = Cyberjaya / Botswana / Sierra Leone
-                      inventories and dumps analysed for later rollout; no campus Live acceptance yet.
+                      (not a licence to pull M5 ahead of admissions). Platform ~42% = eight Demo campus
+                      hostnames live on VPS plus prior CMS inventories; no campus Live acceptance yet.
                     </td>
                   </tr>
                 </tbody>
@@ -512,7 +514,21 @@ xychart-beta
                     <td><strong>~72%</strong></td>
                     <td><strong>~36%</strong></td>
                     <td><strong>0%</strong></td>
-                    <td>Current cut: Schema v4 + Applicant Demo HTTP hosted; FE Demo depth lifts on admissions; Live still 0%.</td>
+                    <td>Schema v4 + Applicant Demo HTTP hosted; FE Demo depth lifts on admissions; Live still 0%.</td>
+                  </tr>
+                  <tr>
+                    <td>10 Oct 2026</td>
+                    <td><strong>~78%</strong></td>
+                    <td><strong>~40%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Staff + Lecturer Demo shells and E2E enrol/modules/LMS packs; Live still 0%.</td>
+                  </tr>
+                  <tr>
+                    <td>14 Oct 2026</td>
+                    <td><strong>~84%</strong></td>
+                    <td><strong>~44%</strong></td>
+                    <td><strong>0%</strong></td>
+                    <td>Current cut: UltaHost multi-campus VPS (eight Demo campuses), hostname locks, Keychain/docs on raisd.co; Live still 0%.</td>
                   </tr>
                 </tbody>
               </table>
@@ -520,11 +536,11 @@ xychart-beta
             <div class="legend" aria-label="Readiness table series key" style="margin-top:12px">
               <div class="legend-item">
                 <strong>Platform readiness</strong>
-                <span>Estimate rising with architecture review, campus dumps, Schema v4, Applicant Demo HTTP, and Lesotho pilot analysis (18 Sep → 7 Oct) — not acceptance.</span>
+                <span>Estimate rising with architecture, campus dumps, Schema v4, Applicant/Staff Demo HTTP, and UltaHost multi-campus VPS (18 Sep → 14 Oct) — not acceptance.</span>
               </div>
               <div class="legend-item">
                 <strong>FE Demo depth</strong>
-                <span>Moves to <strong>~36%</strong> on 7 Oct when five Applicant Demo capabilities are counted; WG sheet export remains 19 Sep.</span>
+                <span>Moves to <strong>~44%</strong> on 14 Oct when Staff/Lecturer Demo shells are counted with Applicant; WG sheet export remains 19 Sep.</span>
               </div>
               <div class="legend-item">
                 <strong>Checklist Live</strong>
@@ -539,8 +555,8 @@ xychart-beta
             <div>
               <h3>Pie — work mix (applicable rows)</h3>
               <p>
-                Engineering Demo cut 7 Oct 2026 (sheet baseline from
-                <a href="../sdd/13-progress-timeline.html">SDD-13</a> plus Applicant Demo).
+                Engineering Demo cut 14 Oct 2026 (sheet baseline from
+                <a href="../sdd/13-progress-timeline.html">SDD-13</a> plus Applicant / Staff / Lecturer Demo).
                 Slice counts sum to <strong>103</strong> applicable frontend rows (M2+M3+M5).
                 Live = <strong>0</strong> is omitted from the pie.
               </p>
@@ -550,14 +566,16 @@ xychart-beta
             <pre class="mermaid">
 %%{init: {'pie': {'textPosition': 0.5}, 'themeVariables': {'pieOuterStrokeWidth': '2px', 'fontSize': '16px'}}}%%
 pie showData
-  title Applicable frontend rows by portal (103 total; Live 0 omitted · cut 7 Oct)
+  title Applicable frontend rows by portal (103 total; Live 0 omitted · cut 14 Oct)
   "Started — Student" : 31
   "Started — Shared (CAP-53)" : 1
   "Started — Applicant" : 5
+  "Started — Admin/staff" : 6
+  "Started — Lecturer" : 2
   "Not started — Student" : 9
   "Not started — Applicant" : 2
-  "Not started — Lecturer" : 18
-  "Not started — Admin/staff" : 37
+  "Not started — Lecturer" : 16
+  "Not started — Admin/staff" : 31
             </pre>
             <div class="legend" aria-label="Pie chart series key">
               <div class="legend-item">
@@ -577,8 +595,21 @@ pie showData
               <div class="legend-item">
                 <strong>Started — Applicant · 5</strong>
                 <span>
-                  Engineering Demo cut 7 Oct: sign-in, application, evidence, track/accept enrolment, and declarations
-                  with hosted Applicant HTTP. <strong>Not Live</strong>. WG sheet export still shows Applicant Not started.
+                  Sign-in, application, evidence, track/accept enrolment, and declarations
+                  with hosted Applicant HTTP. <strong>Not Live</strong>.
+                </span>
+              </div>
+              <div class="legend-item">
+                <strong>Started — Admin/staff · 6</strong>
+                <span>
+                  Engineering Demo cut 14 Oct: Bursary payment review, QA documents, Registry offer release,
+                  module-registration desk, plus applicant/student status trackers. <strong>Not Live</strong>.
+                </span>
+              </div>
+              <div class="legend-item">
+                <strong>Started — Lecturer · 2</strong>
+                <span>
+                  Sign-in + materials publish Demo (E2E LMS pack). Attendance / marking still ahead. <strong>Not Live</strong>.
                 </span>
               </div>
               <div class="legend-item">
@@ -590,12 +621,12 @@ pie showData
                 <span>Residual applicant applicable rows (e.g. announcements / mobile shell depth) still not started.</span>
               </div>
               <div class="legend-item">
-                <strong>Not started — Lecturer · 18</strong>
-                <span>Entire lecturer portal applicable set is untouched (0 of 18 started) — publish, attendance, marking still ahead.</span>
+                <strong>Not started — Lecturer · 16</strong>
+                <span>Remaining lecturer applicable set (attendance, marking, communication) still not started.</span>
               </div>
               <div class="legend-item">
-                <strong>Not started — Admin/staff · 37</strong>
-                <span>Entire admin/staff applicable set is untouched (0 of 37 started), including admissions staff review and M3 staff paths.</span>
+                <strong>Not started — Admin/staff · 31</strong>
+                <span>Remaining admin/staff applicable set beyond the Demo admissions/registration desks.</span>
               </div>
               <div class="legend-item">
                 <strong>Live · 0 (omitted)</strong>
@@ -604,13 +635,13 @@ pie showData
               <div class="legend-totals" role="note" aria-label="Totals check">
                 <strong>Totals check</strong>
                 <div class="legend-totals-line">
-                  <span>Started <strong>31 + 1 + 5 = 37</strong></span>
+                  <span>Started <strong>31 + 1 + 5 + 6 + 2 = 45</strong></span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
-                  <span>Not started <strong>9 + 2 + 18 + 37 = 66</strong></span>
+                  <span>Not started <strong>9 + 2 + 16 + 31 = 58</strong></span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
-                  <span><strong>37 + 66 = 103</strong> applicable</span>
+                  <span><strong>45 + 58 = 103</strong> applicable</span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
-                  <span><strong>37 ÷ 103 ≈ 36%</strong> (matches KPI and bar chart)</span>
+                  <span><strong>45 ÷ 103 ≈ 44%</strong> (matches KPI and bar chart)</span>
                   <span class="legend-totals-sep" aria-hidden="true">·</span>
                   <span>Backend Needs checking on every applicable row</span>
                 </div>
@@ -646,21 +677,21 @@ pie showData
                     <td><a href="../sdd/03-delivery-milestones.html#m2">M2</a> Admissions</td>
                     <td>23</td>
                     <td>18</td>
-                    <td><strong>9</strong></td>
-                    <td><strong>9</strong></td>
+                    <td><strong>12</strong></td>
+                    <td><strong>6</strong></td>
                     <td>0</td>
-                    <td><strong>~50%</strong> (9÷18)</td>
-                    <td>4 student-side sheet starts + 5 Applicant Demo; staff half not started</td>
+                    <td><strong>~67%</strong> (12÷18)</td>
+                    <td>4 student-side + 5 Applicant + 3 Staff Demo; residual staff/applicant depth still open</td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m3">M3</a> Core portal</td>
                     <td>51</td>
                     <td>51</td>
-                    <td><strong>16</strong></td>
-                    <td><strong>35</strong></td>
+                    <td><strong>18</strong></td>
+                    <td><strong>33</strong></td>
                     <td>0</td>
-                    <td><strong>31%</strong> (16÷51)</td>
-                    <td>Student Demo/Partial deepest; lecturer + staff paths still 0</td>
+                    <td><strong>~35%</strong> (18÷51)</td>
+                    <td>Student Demo/Partial deepest; + Staff registration desk + Lecturer materials</td>
                   </tr>
                   <tr>
                     <td><a href="../sdd/03-delivery-milestones.html#m4">M4</a> Lesotho pilot</td>
@@ -686,11 +717,11 @@ pie showData
                     <td><strong>Pie scope (M2+M3+M5)</strong></td>
                     <td>110</td>
                     <td><strong>103</strong></td>
-                    <td><strong>32</strong></td>
-                    <td><strong>71</strong></td>
+                    <td><strong>45</strong></td>
+                    <td><strong>58</strong></td>
                     <td><strong>0</strong></td>
-                    <td><strong>31%</strong> (32÷103)</td>
-                    <td>4+16+12 = 32 · 14+35+22 = 71 · 18+51+34 = 103</td>
+                    <td><strong>~44%</strong> (45÷103)</td>
+                    <td>Engineering Demo cut 14 Oct · includes Shared CAP-53 Partial · Live still 0</td>
                   </tr>
                   <tr>
                     <td>All milestones (sheet)</td>
@@ -1108,91 +1139,191 @@ flowchart LR
     <section class="section" id="endpoints">
       <h2>Public endpoints</h2>
       <p class="lead">
-        Everything below is reachable from the internet today. It is the hosted <strong>Demo</strong>
-        (<a href="../poc/vercel-neon.html">Vercel + Neon PoC</a>) — sample students, no Live CMS writes.
-        Working Demo hostnames are <code>*.vercel.app</code>. Planned Lesotho campus names
-        (<code>lesotho.raisd.co</code> / <code>{apply,student,staff,teach}.lesotho.raisd.co</code> are
-        attached on Vercel and waiting on Cloudflare DNS. Live UltaHost hostnames
-        (<code>apply.raisd.co</code>, <code>api.raisd.co</code>, …) are not live yet.
+        Demo campuses are segregated by hostname on UltaHost k3s. Each campus has its own landing and
+        <code>{apply,student,staff,teach,api}.{slug}.raisd.co</code> portals; campus/location is fixed from the hostname.
+        Shared API data lives in VPS Postgres (<code>api.raisd.co</code> and every <code>api.{slug}.raisd.co</code>).
+        Topology: <a href="architecture.html#vps">Architecture → VPS</a>.
+        Catalogue: <a href="../ai/architecture/demo-campuses.yaml"><code>demo-campuses.yaml</code></a>.
         Checked 14 Oct 2026.
       </p>
 
-      <h3>Websites</h3>
+      <h3>Shared services</h3>
+      <p>
+        Cross-campus tooling that is not pinned to one country: Keychain, global API, docs, Swagger, and DB admin.
+      </p>
       <div class="table-wrap">
         <table class="attr">
           <thead>
-            <tr><th>Site</th><th>URL</th><th>Access</th><th>Hosted on · deployed by</th></tr>
+            <tr><th>Site</th><th>URL</th><th>Access</th><th>Hosted on</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Campus landing (Lesotho)</td>
-              <td><a href="https://raisd-campus-landing.vercel.app">raisd-campus-landing.vercel.app</a></td>
-              <td>Open — chooser into Apply / Student / Staff / Teach</td>
-              <td>Vercel · manual / CLI deploy</td>
-            </tr>
             <tr>
               <td>Demo Keychain</td>
               <td><a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
               <td>WG master password · Open filled for Demo desks</td>
-              <td>UltaHost k3s · hostPath nginx</td>
+              <td>UltaHost k3s</td>
             </tr>
             <tr>
-              <td>Student portal</td>
-              <td><a href="https://raisd-student-portal.vercel.app">raisd-student-portal.vercel.app</a></td>
-              <td>Demo student number + password (via Keychain)</td>
-              <td>Vercel · GitHub Actions on push to <code>main</code></td>
+              <td>Portal API (global)</td>
+              <td><a href="https://api.raisd.co/v1/meta">api.raisd.co</a></td>
+              <td>Meta open; portal calls need bearer</td>
+              <td>UltaHost k3s · VPS Postgres</td>
             </tr>
             <tr>
-              <td>Applicant portal</td>
-              <td><a href="https://raisd-applicant-portal.vercel.app">raisd-applicant-portal.vercel.app</a></td>
-              <td>Demo scenarios (via Keychain)</td>
-              <td>Vercel · GitHub Actions on push to <code>main</code></td>
-            </tr>
-            <tr>
-              <td>Lecturer portal</td>
-              <td><a href="https://raisd-lecturer-portal.vercel.app">raisd-lecturer-portal.vercel.app</a></td>
-              <td>Demo lecturers Adam / Laura (via Keychain) · Materials publish</td>
-              <td>Vercel · CLI / Actions deploy</td>
-            </tr>
-            <tr>
-              <td>Staff portal</td>
-              <td><a href="https://raisd-staff-portal.vercel.app">raisd-staff-portal.vercel.app</a></td>
-              <td>Demo Registry / Bursary desks (via Keychain)</td>
-              <td>Vercel · CLI / Actions deploy</td>
-            </tr>
-            <tr>
-              <td>Portal API</td>
-              <td><a href="https://raisd-portal-api.vercel.app/v1/meta">raisd-portal-api.vercel.app</a></td>
-              <td>Meta routes open; portal calls need a bearer token</td>
-              <td>Vercel (Singapore) · manual deploy from a local checkout</td>
-            </tr>
-            <tr>
-              <td>Documentation (this site)</td>
+              <td>Documentation</td>
               <td><a href="https://docs.raisd.co/">docs.raisd.co</a></td>
-              <td>Site password (via Keychain → Control Plane)</td>
-              <td>UltaHost k3s · hostPath nginx (mirror: GitHub Pages)</td>
+              <td>Site password (via Keychain)</td>
+              <td>UltaHost k3s</td>
             </tr>
             <tr>
               <td>Swagger UI</td>
               <td><a href="https://docs.raisd.co/openapi.html">docs.raisd.co/openapi.html</a></td>
-              <td>Site password; “Try it out” calls the Portal API</td>
+              <td>Site password; Try it out → Portal API</td>
               <td>UltaHost k3s</td>
             </tr>
             <tr>
               <td>DB admin</td>
-              <td><a href="https://raisd-db-admin.vercel.app">raisd-db-admin.vercel.app</a></td>
-              <td>Team only — sign-in via Keychain; read-only</td>
-              <td>Vercel (Singapore) · manual deploy from a local checkout</td>
+              <td><a href="https://db-admin.raisd.co">db-admin.raisd.co</a></td>
+              <td>Team only · Keychain · read-only</td>
+              <td>UltaHost k3s</td>
             </tr>
           </tbody>
         </table>
       </div>
 
+      <h3 id="campus-lesotho">Lesotho</h3>
+      <p>
+        <strong>First pilot / M4 acceptance campus</strong> (LS · Africa/Maseru · <code>campus-lesotho</code>).
+        Sponsor Lesotho-first directive; newer CMS screenshots are the feature benchmark; NMDS / LGCSE / LSL finance.
+        Analysis: <a href="old-cms-lesotho/index.html">Lesotho CMS hub</a> ·
+        <a href="../ai/architecture/lesotho-pilot.md">pilot note</a>.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://lesotho.raisd.co">lesotho.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Lesotho only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.lesotho.raisd.co">apply.lesotho.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Lesotho</td></tr>
+        <tr><td>Student</td><td><a href="https://student.lesotho.raisd.co">student.lesotho.raisd.co</a></td><td>Enrolled student portal — registration, finance, LMS, immigration Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.lesotho.raisd.co">staff.lesotho.raisd.co</a></td><td>Registry / Bursary / QA desks — payment review and offer release Demo</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.lesotho.raisd.co">teach.lesotho.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.lesotho.raisd.co/health">api.lesotho.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service as <code>api.raisd.co</code>)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-cyberjaya">Cyberjaya</h3>
+      <p>
+        <strong>Malaysia flagship / design Demo baseline</strong> (MY · Asia/Kuala_Lumpur · <code>campus-cyberjaya</code>).
+        Historical SoR reference and default Demo graph campus; EMGS / MYR policy patterns.
+        Inventory: <a href="old-cms/index.html">Cyberjaya CMS hub</a>.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://cyberjaya.raisd.co">cyberjaya.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Cyberjaya only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.cyberjaya.raisd.co">apply.cyberjaya.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Cyberjaya</td></tr>
+        <tr><td>Student</td><td><a href="https://student.cyberjaya.raisd.co">student.cyberjaya.raisd.co</a></td><td>Enrolled student portal — primary Demo scenario fixtures</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.cyberjaya.raisd.co">staff.cyberjaya.raisd.co</a></td><td>Registry / Bursary / QA desks for Cyberjaya Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.cyberjaya.raisd.co">teach.cyberjaya.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.cyberjaya.raisd.co/health">api.cyberjaya.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-botswana">Botswana</h3>
+      <p>
+        <strong>Southern Africa campus · DTEF / TEF scholarship sync reference</strong> (BW · Africa/Gaborone · <code>campus-botswana</code>).
+        LUCT-family CMS inventory; strong table overlap with Lesotho dumps.
+        Inventory: <a href="old-cms-botswana/index.html">Botswana CMS hub</a>.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://botswana.raisd.co">botswana.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Botswana only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.botswana.raisd.co">apply.botswana.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Botswana</td></tr>
+        <tr><td>Student</td><td><a href="https://student.botswana.raisd.co">student.botswana.raisd.co</a></td><td>Enrolled student portal — Botswana-scoped Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.botswana.raisd.co">staff.botswana.raisd.co</a></td><td>Registry / Bursary / QA desks for Botswana Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.botswana.raisd.co">teach.botswana.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.botswana.raisd.co/health">api.botswana.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-eswatini">Eswatini</h3>
+      <p>
+        <strong>Near-term expansion after Lesotho</strong> (SZ · Africa/Mbabane · <code>campus-eswatini</code>).
+        Documented next-campus candidate in the pilot plan; LUCT-family CMS pack inventoried.
+        Inventory: <a href="old-cms-eswatini/index.html">Eswatini CMS hub</a>.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://eswatini.raisd.co">eswatini.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Eswatini only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.eswatini.raisd.co">apply.eswatini.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Eswatini</td></tr>
+        <tr><td>Student</td><td><a href="https://student.eswatini.raisd.co">student.eswatini.raisd.co</a></td><td>Enrolled student portal — Eswatini-scoped Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.eswatini.raisd.co">staff.eswatini.raisd.co</a></td><td>Registry / Bursary / QA desks for Eswatini Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.eswatini.raisd.co">teach.eswatini.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.eswatini.raisd.co/health">api.eswatini.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-sierra-leone">Sierra Leone</h3>
+      <p>
+        <strong>West Africa campus · ICA CMS inventory</strong> (SL · Africa/Freetown · <code>campus-sierra-leone</code>).
+        M5 expansion evidence; WASSCE-oriented admissions patterns in Demo.
+        Inventory: <a href="old-cms-sierra-leone/index.html">Sierra Leone CMS hub</a>.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://sierra-leone.raisd.co">sierra-leone.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Sierra Leone only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.sierra-leone.raisd.co">apply.sierra-leone.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Sierra Leone</td></tr>
+        <tr><td>Student</td><td><a href="https://student.sierra-leone.raisd.co">student.sierra-leone.raisd.co</a></td><td>Enrolled student portal — Sierra Leone-scoped Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.sierra-leone.raisd.co">staff.sierra-leone.raisd.co</a></td><td>Registry / Bursary / QA desks for Sierra Leone Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.sierra-leone.raisd.co">teach.sierra-leone.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.sierra-leone.raisd.co/health">api.sierra-leone.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-cambodia">Cambodia</h3>
+      <p>
+        <strong>Southeast Asia campus · certificate QR / Registry flows</strong> (KH · Asia/Phnom_Penh · <code>campus-cambodia</code>).
+        CMS inventory includes certificate verification and QR redirect patterns.
+        Inventory: <a href="old-cms-cambodia/index.html">Cambodia CMS hub</a> ·
+        <a href="old-cms-cambodia/certificate-qr.html">certificate QR</a>.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://cambodia.raisd.co">cambodia.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Cambodia only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.cambodia.raisd.co">apply.cambodia.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Cambodia</td></tr>
+        <tr><td>Student</td><td><a href="https://student.cambodia.raisd.co">student.cambodia.raisd.co</a></td><td>Enrolled student portal — Cambodia-scoped Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.cambodia.raisd.co">staff.cambodia.raisd.co</a></td><td>Registry / Bursary / QA desks for Cambodia Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.cambodia.raisd.co">teach.cambodia.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.cambodia.raisd.co/health">api.cambodia.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-uganda">Uganda</h3>
+      <p>
+        <strong>East Africa Demo catalogue campus</strong> (UG · Africa/Kampala · <code>campus-uganda</code>).
+        Present in admissions Demo campus list for multi-campus hostname segregation; CMS deep-dive not yet the pilot focus.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://uganda.raisd.co">uganda.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Uganda only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.uganda.raisd.co">apply.uganda.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Uganda</td></tr>
+        <tr><td>Student</td><td><a href="https://student.uganda.raisd.co">student.uganda.raisd.co</a></td><td>Enrolled student portal — Uganda-scoped Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.uganda.raisd.co">staff.uganda.raisd.co</a></td><td>Registry / Bursary / QA desks for Uganda Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.uganda.raisd.co">teach.uganda.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.uganda.raisd.co/health">api.uganda.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
+      <h3 id="campus-namibia">Namibia</h3>
+      <p>
+        <strong>Southern Africa Demo catalogue campus</strong> (NA · Africa/Windhoek · <code>campus-namibia</code>).
+        Present in admissions Demo campus list for multi-campus hostname segregation; CMS deep-dive not yet the pilot focus.
+        Location is fixed on these hosts — no campus picker.
+      </p>
+      <div class="table-wrap"><table class="attr"><thead><tr><th>Role</th><th>URL</th><th>Description</th></tr></thead><tbody>
+        <tr><td>Landing</td><td><a href="https://namibia.raisd.co">namibia.raisd.co</a></td><td>Campus chooser into Apply / Student / Staff / Teach for Namibia only</td></tr>
+        <tr><td>Apply</td><td><a href="https://apply.namibia.raisd.co">apply.namibia.raisd.co</a></td><td>Applicant portal — admissions Demo; campus locked to Namibia</td></tr>
+        <tr><td>Student</td><td><a href="https://student.namibia.raisd.co">student.namibia.raisd.co</a></td><td>Enrolled student portal — Namibia-scoped Demo</td></tr>
+        <tr><td>Staff</td><td><a href="https://staff.namibia.raisd.co">staff.namibia.raisd.co</a></td><td>Registry / Bursary / QA desks for Namibia Demo queues</td></tr>
+        <tr><td>Teach</td><td><a href="https://teach.namibia.raisd.co">teach.namibia.raisd.co</a></td><td>Lecturer portal — materials publish / teaching workspace Demo</td></tr>
+        <tr><td>API</td><td><a href="https://api.namibia.raisd.co/health">api.namibia.raisd.co</a></td><td>Portal API alias for this campus (same VPS Postgres service)</td></tr>
+      </tbody></table></div>
+
       <h3>Portal API routes</h3>
       <p>
-        Base URL <code>https://raisd-portal-api.vercel.app</code>. Contract:
+        Base URL <code>https://api.raisd.co</code> (per-campus aliases <code>https://api.{slug}.raisd.co</code>). Contract:
         <a href="../openapi.html">Swagger UI</a> · <code>openapi.yaml</code>.
-        Browsers may call it only from the student portal, applicant portal and this docs site (CORS allowlist).
+        Browsers may call it only from the portal origins and this docs site (CORS allowlist).
       </p>
       <div class="table-wrap">
         <table class="attr">
@@ -1242,9 +1373,9 @@ flowchart LR
         </table>
       </div>
       <div class="note" style="margin-top:16px">
-        <strong>Not public:</strong> the Neon database has no public web surface — only the Portal API
-        (and the read-only DB admin) hold connection strings. Deployment, CI/CD, schema, and request flows:
-        <a href="../poc/vercel-neon.html">Vercel frontend + Portal API + Neon PostgreSQL</a>.
+        <strong>Not public:</strong> VPS Postgres has no public web surface — only the Portal API
+        (and the read-only DB admin) hold connection strings.
+        Topology: <a href="architecture.html#vps">VPS infrastructure</a>.
       </div>
     </section>
 
