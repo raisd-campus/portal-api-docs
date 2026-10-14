@@ -125,6 +125,7 @@
       '  </label>' +
       '  <p class="raisd-auth-error" hidden></p>' +
       '  <button type="submit">Sign in</button>' +
+      '  <p class="raisd-auth-keychain">Need logins? Open <a href="https://keychain.raisd.co/" target="_blank" rel="noopener noreferrer">Demo Keychain</a></p>' +
       '</form>';
 
     function mount() {
@@ -142,17 +143,18 @@
         });
       });
 
+      // Accept Open filled from popup opener and from the top-right embed iframe.
+      window.addEventListener('message', function (event) {
+        if (KEYCHAIN_ORIGINS.indexOf(event.origin) === -1) return;
+        if (!isKeychainFillMessage(event.data)) return;
+        form.username.value = event.data.username;
+        form.password.value = event.data.password;
+        err.hidden = true;
+        if (event.data.autoSubmit) {
+          form.requestSubmit();
+        }
+      });
       if (wantsKeychain() || window.opener) {
-        window.addEventListener('message', function (event) {
-          if (KEYCHAIN_ORIGINS.indexOf(event.origin) === -1) return;
-          if (!isKeychainFillMessage(event.data)) return;
-          form.username.value = event.data.username;
-          form.password.value = event.data.password;
-          err.hidden = true;
-          if (event.data.autoSubmit) {
-            form.requestSubmit();
-          }
-        });
         announceKeychainReady();
       }
     }

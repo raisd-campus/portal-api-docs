@@ -1264,15 +1264,15 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md"
     },
     {
-      "title": "PoC requirements (Vercel + Neon)",
-      "summary": "Prerequisites, functional, non-functional and security requirements, acceptance walkthrough and exit criteria for the PoC.",
+      "title": "Demo requirements (retired PoC stub)",
+      "summary": "Retired stub \u2014 Demo acceptance now follows VPS topology.",
       "section": "AI knowledge",
       "keywords": [
-        "poc",
-        "vercel",
-        "neon",
-        "requirements",
-        "acceptance"
+        "retired",
+        "stub",
+        "demo",
+        "acceptance",
+        "vps"
       ],
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-poc-requirements.md"
     },
@@ -1333,6 +1333,21 @@
       "path": "sdd/03-delivery-milestones.html"
     },
     {
+      "title": "Demo Keychain",
+      "summary": "Working Group Demo login launcher \u2014 unlock, Open filled into portals and docs (keychain.raisd.co).",
+      "section": "Keychain",
+      "keywords": [
+        "keychain",
+        "demo",
+        "login",
+        "password",
+        "open filled",
+        "launcher",
+        "wg"
+      ],
+      "path": "https://keychain.raisd.co/"
+    },
+    {
       "title": "OpenAPI Swagger UI",
       "summary": "Interactive Portal API reference \u2014 auth, portal methods, and schemas.",
       "section": "OpenAPI",
@@ -1356,31 +1371,22 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml"
     },
     {
-      "title": "Vercel + Neon PoC",
-      "summary": "Hosted Demo on Vercel + Neon \u2014 live targets, CI/CD pipelines, target deployment, Demo record tables and session schema, and request flows (not production UltaHost).",
+      "title": "VPS topology",
+      "summary": "Current Demo on UltaHost k3s \u2014 Cloudflare DNS, Traefik, campus-scoped hosts, Portal API, VPS Postgres.",
       "section": "Architecture",
       "keywords": [
-        "vercel",
-        "neon",
+        "vps",
+        "ultahost",
+        "k3s",
+        "traefik",
         "postgres",
-        "poc",
-        "deploy",
-        "marketplace",
-        "ci",
-        "cd",
-        "github actions",
-        "pipeline",
-        "schema",
-        "poc_sessions",
-        "portal_meta",
-        "student_portal_state",
-        "record tables",
-        "seed",
-        "db reset",
-        "flows",
-        "db admin"
+        "dns",
+        "cloudflare",
+        "topology",
+        "campus",
+        "deploy"
       ],
-      "path": "poc/vercel-neon.html"
+      "path": "diagrams/architecture.html#vps"
     }
   ]
 }

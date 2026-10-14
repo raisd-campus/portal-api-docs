@@ -74,7 +74,7 @@ targets:
   sdd-11: sdd/11-capability-catalog.html
   sdd-03: sdd/03-delivery-milestones.html
   openapi: openapi.html
-  vercel-poc: poc/vercel-neon.html
+  vps-topology: diagrams/architecture.html#vps
   reports: reports/index.html
   reports-w01: reports/weekly/2026-09-19.html
   reports-w02: reports/weekly/2026-09-26.html
@@ -114,7 +114,8 @@ external:
   ai-luct-online-reg-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md
   report-lesotho-analysis: https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md
   openapi-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml
-  ai-vercel-poc-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vercel-neon-poc.md
+  ai-vps-topology-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md
+  keychain: https://keychain.raisd.co/
 
 # Path → active section id (first match wins; evaluated in order)
 path_rules:
@@ -215,7 +216,7 @@ path_rules:
   - match: { prefix: sdd/ }
     section: sdd
   - match: { prefix: poc/ }
-    section: vercel-poc
+    section: vps-topology
   - match: { prefix: reports/weekly/, file: 2026-09-19.html }
     section: reports-w01
   - match: { prefix: reports/weekly/, file: 2026-09-26.html }
@@ -238,19 +239,21 @@ menu:
       - { label: Project progress, href: "overview#progress" }
       - { label: Reports, href: reports }
       - { label: Public endpoints, href: "overview#endpoints" }
+      - { label: Demo Keychain, href: keychain }
       - { label: Distributed CMS, href: distributed }
       - { label: Architecture, href: architecture }
       - { label: LMS research, href: lms }
       - { label: LMS architecture, href: lms-architecture }
       - { label: LMS features, href: lms-features }
       - { label: Migration, href: migration }
-      - { label: "Vercel + Neon PoC", href: vercel-poc }
+      - { label: "VPS topology", href: vps-topology }
 
   - label: Architecture
     href: architecture
-    active: [architecture, distributed, migration, vercel-poc, lms, lms-architecture, lms-features]
+    active: [architecture, distributed, migration, vps-topology, lms, lms-architecture, lms-features]
     children:
       - { label: Architecture home, href: architecture }
+      - { label: "VPS topology", href: vps-topology }
       - label: Distributed CMS
         href: distributed
         children:
@@ -265,7 +268,6 @@ menu:
       - { label: "SDD & ADR catalogue", href: "architecture#sdd" }
       - { label: "SoR / ACL", href: "architecture#acl" }
       - { label: Academic model, href: "architecture#academic" }
-      - { label: "Vercel + Neon PoC", href: vercel-poc }
       - label: Migration
         href: migration
         children:
@@ -418,7 +420,7 @@ menu:
       - { label: Portal API, href: ai-portal-api }
       - { label: Portal API plan, href: ai-portal-api-plan }
       - { label: Portal API deployment, href: ai-portal-api-deploy }
-      - { label: PoC requirements, href: ai-portal-api-poc }
+      - { label: VPS topology, href: ai-vps-topology-md }
       - { label: CMS comparison, href: ai-cms-comparison }
       - { label: LUCT online registration, href: ai-luct-online-reg }
       - { label: Registration FE gaps, href: ai-luct-online-reg-gap }
@@ -432,7 +434,6 @@ menu:
       - { label: Cambodia certificate QR, href: luct-kh-qr }
       - { label: Botswana CMS inventory, href: ai-old-cms-botswana }
       - { label: Sierra Leone CMS inventory, href: ai-old-cms-sierra-leone }
-      - { label: "Vercel + Neon PoC", href: vercel-poc }
 
   - label: Reports
     href: reports
@@ -492,6 +493,8 @@ menu:
     children:
       - { label: Swagger UI, href: openapi }
       - { label: openapi.yaml, href: openapi-yaml }
+
+# Keychain is the fixed top-right embed (keychain-access.js), same as portals — not a nav chip.
 
 # In-page strip on design-system/*.html (not the header chip menu)
 design_subnav:
@@ -1014,11 +1017,11 @@ search:
     summary: k3s stage 1 shape for portal-api — environments, image, manifests, probes, env vars, CI/CD, rollback.
     keywords: [deployment, k3s, docker, image, ci, sdd-12, api.raisd.co]
 
-  - title: PoC requirements (Vercel + Neon)
+  - title: Demo requirements (retired PoC stub)
     href: ai-portal-api-poc
     section: AI knowledge
-    summary: Prerequisites, functional, non-functional and security requirements, acceptance walkthrough and exit criteria for the PoC.
-    keywords: [poc, vercel, neon, requirements, acceptance]
+    summary: Retired stub — Demo acceptance now follows VPS topology.
+    keywords: [retired, stub, demo, acceptance, vps]
 
   - title: CMS feature comparison
     href: ai-cms-comparison
@@ -1050,6 +1053,12 @@ search:
     summary: M1–M5 delivery milestones and launch sequencing.
     keywords: [milestones, admissions, launch]
 
+  - title: Demo Keychain
+    href: keychain
+    section: Keychain
+    summary: Working Group Demo login launcher — unlock, Open filled into portals and docs (keychain.raisd.co).
+    keywords: [keychain, demo, login, password, open filled, launcher, wg]
+
   - title: OpenAPI Swagger UI
     href: openapi
     section: OpenAPI
@@ -1062,8 +1071,8 @@ search:
     summary: Canonical OpenAPI 3.1 source for the Raisd Portal API.
     keywords: [yaml, contract, schema]
 
-  - title: Vercel + Neon PoC
-    href: vercel-poc
+  - title: VPS topology
+    href: vps-topology
     section: Architecture
-    summary: Hosted Demo on Vercel + Neon — live targets, CI/CD pipelines, target deployment, Demo record tables and session schema, and request flows (not production UltaHost).
-    keywords: [vercel, neon, postgres, poc, deploy, marketplace, ci, cd, github actions, pipeline, schema, poc_sessions, portal_meta, student_portal_state, record tables, seed, db reset, flows, db admin]
+    summary: Current Demo on UltaHost k3s — Cloudflare DNS, Traefik, campus-scoped hosts, Portal API, VPS Postgres.
+    keywords: [vps, ultahost, k3s, traefik, postgres, dns, cloudflare, topology, campus, deploy]

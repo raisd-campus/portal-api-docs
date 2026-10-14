@@ -746,8 +746,8 @@ abbr.raisd-abbr {
   font-weight: 500;
 }
 
-/* Docs site auth gate (GitHub Pages) */
-html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
+/* Docs site auth gate (GitHub Pages) — keep Keychain float visible like portals */
+html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay):not([data-raisd-keychain-access]) {
   visibility: hidden !important;
 }
 #raisd-auth-overlay {
@@ -815,6 +815,81 @@ html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay) {
   margin: 0;
   color: #8a1f1f;
   font-size: 0.88rem;
+}
+.raisd-auth-keychain {
+  margin: 8px 0 0;
+  text-align: center;
+  color: var(--muted, #5a6a7e);
+  font-size: 0.88rem;
+}
+.raisd-auth-keychain a {
+  color: var(--accent, #1a4f8b);
+  font-weight: 600;
+  text-decoration: none;
+}
+.raisd-auth-keychain a:hover {
+  text-decoration: underline;
+}
+
+/* Portal-style Keychain float (top-right) */
+.raisd-keychain-access {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100001;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+  visibility: visible !important;
+  font-family: var(--sans, "Segoe UI", system-ui, -apple-system, sans-serif);
+}
+.raisd-keychain-access-btn,
+.raisd-keychain-access-panel {
+  pointer-events: auto;
+}
+.raisd-keychain-access-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #d7dee8);
+  background: var(--surface, #fff);
+  color: var(--ink, #152033);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(21, 32, 51, 0.12);
+  cursor: pointer;
+}
+.raisd-keychain-access-btn:hover {
+  background: var(--accent-soft, #e8f0f8);
+}
+.raisd-keychain-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #9aa8b8;
+}
+.raisd-keychain-dot.is-unlocked {
+  background: #22c55e;
+}
+.raisd-keychain-access-panel {
+  width: min(22rem, calc(100vw - 1.5rem));
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--line, #d7dee8);
+  background: var(--surface, #fff);
+  box-shadow: 0 16px 40px rgba(21, 32, 51, 0.16);
+}
+.raisd-keychain-access-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: var(--surface, #fff);
 }
 
 /* Obsidian 3D FSD knowledge graph */
