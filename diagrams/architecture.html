@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- canonical host --><script>(function(){try{var h=location.hostname;if(h==="raisd-campus.github.io"||h==="github.io"){var p=location.pathname.replace(/^\/portal-api-docs/,"")||"/";location.replace("https://docs.raisd.co"+p+location.search+location.hash)}}catch(e){}})()</script>
   <meta charset="utf-8" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -299,6 +298,7 @@
     </section>
 
     <div class="toc">
+      <a href="#vps"><strong>VPS topology</strong><span>Current Demo on UltaHost k3s</span></a>
       <a href="#sdd"><strong>SDD &amp; ADR catalogue</strong><span>Design docs and decisions</span></a>
       <a href="./distributed-cms-architecture.html"><strong>Distributed CMS</strong><span>Current → ideal (one page)</span></a>
       <a href="#principles"><strong>Six instructions</strong><span>Core rules for authors</span></a>
@@ -309,8 +309,76 @@
       <a href="#status"><strong>Active student</strong><span>Named status queries</span></a>
       <a href="#ops"><strong>Integration ops</strong><span>Idempotency, DQ, audit</span></a>
       <a href="#priority"><strong>Doc priority</strong><span>Critical → later</span></a>
-      <a href="../poc/vercel-neon.html"><strong>Vercel + Neon PoC</strong><span>Demo host only — not ADR-2/3</span></a>
     </div>
+
+    <section class="section" id="vps">
+      <h2>Current VPS infrastructure topology</h2>
+      <p class="lead">
+        Demo runs on a single UltaHost VPS in Singapore (ADR-2 / ADR-3): Cloudflare DNS →
+        <code>38.127.216.221</code> → k3s Traefik → campus-scoped landings and portals, shared
+        Keychain / docs / db-admin, and Portal API backed by VPS Postgres.
+        Agent note: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">vps-topology.md</a>
+        · catalogue <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/demo-campuses.yaml">demo-campuses.yaml</a>
+        · public URLs <a href="index.html#endpoints">endpoints</a>.
+        Checked 14 Oct 2026.
+      </p>
+
+      <div class="card" style="margin:18px 0">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  browser(["Browser"])
+  cf["Cloudflare DNS<br/>raisd.co · A → 38.127.216.221<br/>DNS-only"]
+
+  subgraph vps ["UltaHost VPS · Singapore · k3s · namespace campus"]
+    tr["Traefik + Let's Encrypt<br/>cert-manager"]
+    land["Campus landings<br/>{slug}.raisd.co"]
+    portals["Role portals<br/>apply · student · staff · teach<br/>.{slug}.raisd.co"]
+    shared["Shared static<br/>keychain · docs · db-admin<br/>.raisd.co"]
+    api["Deployment portal-api<br/>api.raisd.co · api.{slug}.raisd.co"]
+    pg[("StatefulSet postgres<br/>portal_api")]
+    tr --> land
+    tr --> portals
+    tr --> shared
+    tr --> api
+    api --> pg
+  end
+
+  cms["Existing CMS<br/>Premium · off-cluster"]
+  mail["UltaCP mail<br/>off-cluster"]
+
+  browser --> cf --> tr
+  portals -->|"HTTPS bearer"| api
+  shared -.->|"docs Try it out"| api
+  api -.->|"Live CAP-53 later"| cms
+  api -.->|"mail later"| mail
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:18px">
+        <table class="attr">
+          <thead>
+            <tr><th>Layer</th><th>Choice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>DNS</td><td>Cloudflare <code>raisd.co</code> — DNS-only A records → VPS</td></tr>
+            <tr><td>Compute</td><td>Single UltaHost VPS, <code>38.127.216.221</code></td></tr>
+            <tr><td>Runtime</td><td>k3s · namespace <code>campus</code> · Traefik ingress · cert-manager</td></tr>
+            <tr><td>Database</td><td>Postgres 18 StatefulSet on the VPS (<code>portal_api</code>)</td></tr>
+            <tr><td>Static sites</td><td>HostPath sync under <code>/var/www/portals/…</code></td></tr>
+            <tr><td>Campus lock</td><td>Hostname → <code>campusId</code> (eight Demo campuses)</td></tr>
+            <tr><td>Pilot</td><td>Lesotho — <a href="https://lesotho.raisd.co">lesotho.raisd.co</a> and role subdomains</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:16px">
+        Live flat hostnames in <a href="../sdd/12-deployment-architecture.html">SDD-12</a>
+        (<code>apply.raisd.co</code>, …) remain the acceptance growth plan. Demo today uses the
+        campus-scoped pattern above. Portals never talk to Postgres or the CMS directly.
+      </p>
+    </section>
 
     <section class="section" id="sdd">
       <h2>Software Design Documents and ADRs</h2>
