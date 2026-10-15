@@ -94,3 +94,28 @@ attendance/session state. Integrated API source was verified on isolated 8106;
 the existing non-watch 8087 process has not been restarted for this integration.
 Only owned verification processes are stopped after checks. No Live persistence
 or continuous SSO revocation claim follows from the Demo exchange.
+
+## Confirmed source publication — 16 October 2026
+
+All eight feature commits below were pushed to main and independently matched
+against remote HEAD. Their worktrees were clean. GitHub delivered every Jenkins
+push webhook with HTTP 200. Anonymous Jenkins build-status reads returned 403;
+job completion and hosted rollout therefore remain unverified. No GitHub Actions
+runs were returned for these SHAs. The shared annotated v0.8.0 tag was pushed.
+
+| Repository | Published feature commit |
+|---|---|
+| control-plane | [00e0d9d6cc](https://github.com/raisd-campus/control-plane/commit/00e0d9d6cce91f8da7bcd4cf5e2821f3f0a57f97) |
+| design-system | [e1bd19b146](https://github.com/raisd-campus/design-system/commit/e1bd19b146e9feb35cacb20db283af66d70b467a) |
+| portal-api | [f176764174](https://github.com/raisd-campus/portal-api/commit/f176764174afad17ffcd26996160db9adeed0437) |
+| student-portal | [20b38f6276](https://github.com/raisd-campus/student-portal/commit/20b38f6276c253f65858ab59a156426b29d4921c) |
+| applicant-portal | [fee128bc1b](https://github.com/raisd-campus/applicant-portal/commit/fee128bc1bfbd1b86fbf370eb4acf511744ab4e1) |
+| lecturer-portal | [34d8f6bc5d](https://github.com/raisd-campus/lecturer-portal/commit/34d8f6bc5dd5616b87bf14bd080df479eb856c28) |
+| staff-portal | [28b7581b76](https://github.com/raisd-campus/staff-portal/commit/28b7581b76f0ea8cf270f5e691c996d82f8fc022) |
+| portal-api-docs | [e94a569590](https://github.com/raisd-campus/portal-api-docs/commit/e94a569590859504c87a4b65327c8eef16e9af48) |
+
+A documentation-only follow-up records this receipt in control-plane, Student
+and public mirrors. Existing local services remain on API 8087 / Lecturer 5173 /
+Applicant 5174 / Student 5175 with their original processes. Owned isolated API,
+SSO and four verification portal processes were stopped. Retained pre-pull
+stashes preserve the original seven dirty worktrees as recovery snapshots.
