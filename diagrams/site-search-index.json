@@ -18,7 +18,7 @@
     },
     {
       "title": "Overview",
-      "summary": "Diagrams hub for Control Plane \u2014 architecture maps, public endpoints, CMS inventories, and entry points to SDD and OpenAPI.",
+      "summary": "Diagrams hub for Raisd documentation \u2014 architecture maps, public endpoints, CMS inventories, and entry points to SDD and OpenAPI.",
       "section": "Overview",
       "keywords": [
         "home",
@@ -737,6 +737,22 @@
         "acl"
       ],
       "path": "diagrams/architecture.html"
+    },
+    {
+      "title": "Microservices",
+      "summary": "Deployable service map \u2014 Portal API, SSO, Notifications, portals, Control, Admin, platform.",
+      "section": "Architecture",
+      "keywords": [
+        "microservices",
+        "services",
+        "sso",
+        "portal-api",
+        "notifications",
+        "control",
+        "admin",
+        "keychain"
+      ],
+      "path": "diagrams/architecture.html#services"
     },
     {
       "title": "LMS research posture",

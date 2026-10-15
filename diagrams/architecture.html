@@ -13,7 +13,7 @@
     <div class="site-header-inner">
       <a class="brand" href="index.html">
         <img class="brand-logo" src="assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
-        <strong>Control Plane</strong>
+        <strong>Documentation</strong>
       </a>
       <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       <nav class="nav" aria-label="Primary">
@@ -31,6 +31,7 @@
             <a href="lms-architecture.html">LMS architecture</a>
             <a href="lms-features.html">LMS features</a>
             <a href="migration.html">Migration</a>
+            <a href="architecture.html#services">Microservices</a>
             <a href="architecture.html#vps">VPS topology</a>
             <a href="architecture.html#cicd">CI/CD pipeline</a>
           </div>
@@ -39,6 +40,7 @@
           <a class="nav-dd-main active" href="architecture.html">Architecture</a>
           <div class="nav-dd-menu" role="menu">
             <a href="architecture.html">Architecture home</a>
+            <a href="architecture.html#services">Microservices</a>
             <a href="architecture.html#vps">VPS topology</a>
             <a href="architecture.html#cicd">CI/CD pipeline</a>
             <div class="nav-sub">
@@ -412,7 +414,7 @@ flowchart TB
         · product baseline
         <a href="../sdd/12-deployment-architecture.html">SDD-12</a> /
         <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/sdd/02-architecture-and-integration.md">SDD-02</a>.
-        Checked 15 Oct 2026.
+        Checked 16 Oct 2026 (Control + Campus Admin rename).
       </p>
 
       <div class="card" style="margin:18px 0">
@@ -423,9 +425,9 @@ flowchart TB
     land["campus-landing"]
     apply["applicant-portal"]
     student["student-portal"]
-    staff["staff-portal"]
-    teach["lecturer-portal"]
     admin["admin-portal"]
+    teach["lecturer-portal"]
+    control["control-portal"]
     key["keychain"]
   end
 
@@ -442,12 +444,12 @@ flowchart TB
   land --> sso
   apply --> sso
   student --> sso
-  staff --> sso
-  teach --> sso
   admin --> sso
+  teach --> sso
+  control --> sso
   apply --> api
   student --> api
-  staff --> api
+  admin --> api
   teach --> api
   key -.-> apply
   key -.-> student
@@ -487,16 +489,16 @@ flowchart TB
               <td>GHCR + Argo <code>notifications</code></td>
             </tr>
             <tr>
-              <td>Applicant / Student / Staff / Lecturer</td>
-              <td><code>*.{slug}.raisd.co</code></td>
-              <td>Role UIs</td>
+              <td>Applicant / Student / Admin / Lecturer</td>
+              <td><code>apply|student|admin|teach.{slug}.raisd.co</code></td>
+              <td>Campus role UIs</td>
               <td>Argo per portal (hostPath → GHCR)</td>
             </tr>
             <tr>
-              <td>Admin</td>
-              <td><a href="https://admin.raisd.co">admin.raisd.co</a></td>
-              <td>SSO people admin UI</td>
-              <td>Argo <code>admin-portal</code></td>
+              <td>Control</td>
+              <td><a href="https://control.raisd.co">control.raisd.co</a></td>
+              <td>SSO people / full RBAC UI</td>
+              <td>Argo <code>control-portal</code></td>
             </tr>
             <tr>
               <td>Campus landing</td>
@@ -640,9 +642,9 @@ flowchart LR
               <td>GHCR image + Argo Application</td>
             </tr>
             <tr>
-              <td><a href="https://admin.raisd.co">admin.raisd.co</a></td>
-              <td>Raisd Admin</td>
-              <td>Argo Application (hostPath until SPA image)</td>
+              <td><a href="https://control.raisd.co">control.raisd.co</a></td>
+              <td>Control (SSO RBAC)</td>
+              <td>Argo <code>control-portal</code> (hostPath until SPA image)</td>
             </tr>
             <tr>
               <td><a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
@@ -672,7 +674,8 @@ flowchart LR
       <p class="lead" style="margin-bottom:12px">
         Pattern per slug:
         <code>{slug}.raisd.co</code>,
-        <code>apply|student|staff|teach|api.{slug}.raisd.co</code>.
+        <code>apply|student|admin|teach|api.{slug}.raisd.co</code>
+        (legacy <code>staff.{slug}</code> → 308 → <code>admin.{slug}</code>).
         Catalogue:
         <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/demo-campuses.yaml">demo-campuses.yaml</a>
         · public list
@@ -686,7 +689,7 @@ flowchart LR
               <th>Landing</th>
               <th>Apply</th>
               <th>Student</th>
-              <th>Staff</th>
+              <th>Admin</th>
               <th>Teach</th>
               <th>API</th>
             </tr>
@@ -697,7 +700,7 @@ flowchart LR
               <td><a href="https://lesotho.raisd.co">lesotho.raisd.co</a></td>
               <td><a href="https://apply.lesotho.raisd.co">apply.lesotho.raisd.co</a></td>
               <td><a href="https://student.lesotho.raisd.co">student.lesotho.raisd.co</a></td>
-              <td><a href="https://staff.lesotho.raisd.co">staff.lesotho.raisd.co</a></td>
+              <td><a href="https://admin.lesotho.raisd.co">admin.lesotho.raisd.co</a></td>
               <td><a href="https://teach.lesotho.raisd.co">teach.lesotho.raisd.co</a></td>
               <td><a href="https://api.lesotho.raisd.co/health">api.lesotho.raisd.co</a></td>
             </tr>
@@ -706,7 +709,7 @@ flowchart LR
               <td><a href="https://cyberjaya.raisd.co">cyberjaya.raisd.co</a></td>
               <td><a href="https://apply.cyberjaya.raisd.co">apply.cyberjaya.raisd.co</a></td>
               <td><a href="https://student.cyberjaya.raisd.co">student.cyberjaya.raisd.co</a></td>
-              <td><a href="https://staff.cyberjaya.raisd.co">staff.cyberjaya.raisd.co</a></td>
+              <td><a href="https://admin.cyberjaya.raisd.co">admin.cyberjaya.raisd.co</a></td>
               <td><a href="https://teach.cyberjaya.raisd.co">teach.cyberjaya.raisd.co</a></td>
               <td><a href="https://api.cyberjaya.raisd.co/health">api.cyberjaya.raisd.co</a></td>
             </tr>
@@ -715,7 +718,7 @@ flowchart LR
               <td><a href="https://botswana.raisd.co">botswana.raisd.co</a></td>
               <td><a href="https://apply.botswana.raisd.co">apply.botswana.raisd.co</a></td>
               <td><a href="https://student.botswana.raisd.co">student.botswana.raisd.co</a></td>
-              <td><a href="https://staff.botswana.raisd.co">staff.botswana.raisd.co</a></td>
+              <td><a href="https://admin.botswana.raisd.co">admin.botswana.raisd.co</a></td>
               <td><a href="https://teach.botswana.raisd.co">teach.botswana.raisd.co</a></td>
               <td><a href="https://api.botswana.raisd.co/health">api.botswana.raisd.co</a></td>
             </tr>
@@ -724,7 +727,7 @@ flowchart LR
               <td><a href="https://eswatini.raisd.co">eswatini.raisd.co</a></td>
               <td><a href="https://apply.eswatini.raisd.co">apply.eswatini.raisd.co</a></td>
               <td><a href="https://student.eswatini.raisd.co">student.eswatini.raisd.co</a></td>
-              <td><a href="https://staff.eswatini.raisd.co">staff.eswatini.raisd.co</a></td>
+              <td><a href="https://admin.eswatini.raisd.co">admin.eswatini.raisd.co</a></td>
               <td><a href="https://teach.eswatini.raisd.co">teach.eswatini.raisd.co</a></td>
               <td><a href="https://api.eswatini.raisd.co/health">api.eswatini.raisd.co</a></td>
             </tr>
@@ -733,7 +736,7 @@ flowchart LR
               <td><a href="https://sierra-leone.raisd.co">sierra-leone.raisd.co</a></td>
               <td><a href="https://apply.sierra-leone.raisd.co">apply.sierra-leone.raisd.co</a></td>
               <td><a href="https://student.sierra-leone.raisd.co">student.sierra-leone.raisd.co</a></td>
-              <td><a href="https://staff.sierra-leone.raisd.co">staff.sierra-leone.raisd.co</a></td>
+              <td><a href="https://admin.sierra-leone.raisd.co">admin.sierra-leone.raisd.co</a></td>
               <td><a href="https://teach.sierra-leone.raisd.co">teach.sierra-leone.raisd.co</a></td>
               <td><a href="https://api.sierra-leone.raisd.co/health">api.sierra-leone.raisd.co</a></td>
             </tr>
@@ -742,7 +745,7 @@ flowchart LR
               <td><a href="https://cambodia.raisd.co">cambodia.raisd.co</a></td>
               <td><a href="https://apply.cambodia.raisd.co">apply.cambodia.raisd.co</a></td>
               <td><a href="https://student.cambodia.raisd.co">student.cambodia.raisd.co</a></td>
-              <td><a href="https://staff.cambodia.raisd.co">staff.cambodia.raisd.co</a></td>
+              <td><a href="https://admin.cambodia.raisd.co">admin.cambodia.raisd.co</a></td>
               <td><a href="https://teach.cambodia.raisd.co">teach.cambodia.raisd.co</a></td>
               <td><a href="https://api.cambodia.raisd.co/health">api.cambodia.raisd.co</a></td>
             </tr>
@@ -751,7 +754,7 @@ flowchart LR
               <td><a href="https://uganda.raisd.co">uganda.raisd.co</a></td>
               <td><a href="https://apply.uganda.raisd.co">apply.uganda.raisd.co</a></td>
               <td><a href="https://student.uganda.raisd.co">student.uganda.raisd.co</a></td>
-              <td><a href="https://staff.uganda.raisd.co">staff.uganda.raisd.co</a></td>
+              <td><a href="https://admin.uganda.raisd.co">admin.uganda.raisd.co</a></td>
               <td><a href="https://teach.uganda.raisd.co">teach.uganda.raisd.co</a></td>
               <td><a href="https://api.uganda.raisd.co/health">api.uganda.raisd.co</a></td>
             </tr>
@@ -760,7 +763,7 @@ flowchart LR
               <td><a href="https://namibia.raisd.co">namibia.raisd.co</a></td>
               <td><a href="https://apply.namibia.raisd.co">apply.namibia.raisd.co</a></td>
               <td><a href="https://student.namibia.raisd.co">student.namibia.raisd.co</a></td>
-              <td><a href="https://staff.namibia.raisd.co">staff.namibia.raisd.co</a></td>
+              <td><a href="https://admin.namibia.raisd.co">admin.namibia.raisd.co</a></td>
               <td><a href="https://teach.namibia.raisd.co">teach.namibia.raisd.co</a></td>
               <td><a href="https://api.namibia.raisd.co/health">api.namibia.raisd.co</a></td>
             </tr>

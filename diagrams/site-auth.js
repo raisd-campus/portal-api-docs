@@ -52,10 +52,40 @@
     return sha256hex(userHash + ':' + passHash);
   }
 
+  function clearSession() {
+    try {
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch (e) {
+      /* ignore */
+    }
+    document.documentElement.classList.remove('raisd-auth-ok', 'raisd-auth-gate');
+  }
+
+  function mountLogout() {
+    if (document.querySelector('[data-raisd-docs-logout]')) return;
+    function place() {
+      if (!document.body || document.querySelector('[data-raisd-docs-logout]')) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('data-raisd-docs-logout', '');
+      btn.className = 'raisd-docs-logout';
+      btn.textContent = 'Sign out';
+      btn.addEventListener('click', function () {
+        clearSession();
+        window.location.reload();
+      });
+      document.body.appendChild(btn);
+    }
+    if (document.body) place();
+    else document.addEventListener('DOMContentLoaded', place);
+  }
+
   function markAuthed() {
     document.documentElement.classList.add('raisd-auth-ok');
+    document.documentElement.classList.remove('raisd-auth-gate');
     var el = document.getElementById(OVERLAY_ID);
     if (el) el.remove();
+    mountLogout();
   }
 
   var KEYCHAIN_PROTOCOL_VERSION = 1;
@@ -115,7 +145,7 @@
       '  <img class="raisd-auth-logo" src="' +
       scriptBase() +
       'assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />' +
-      '  <h1 id="raisd-auth-title">Control Plane docs</h1>' +
+      '  <h1 id="raisd-auth-title">Documentation</h1>' +
       '  <p class="raisd-auth-lead">Sign in with the shared docs credentials to continue.</p>' +
       '  <label class="raisd-auth-label">Username' +
       '    <input name="username" type="text" autocomplete="username" required autofocus />' +

@@ -746,9 +746,32 @@ abbr.raisd-abbr {
   font-weight: 500;
 }
 
-/* Docs site auth gate (GitHub Pages) — keep Keychain float visible like portals */
+/* Docs site auth gate — keep Keychain float visible while locked */
 html:not(.raisd-auth-ok) body > *:not(#raisd-auth-overlay):not([data-raisd-keychain-access]) {
   visibility: hidden !important;
+}
+
+/* Docs Sign out (top-right) after gate unlock — replaces Keychain on authenticated pages */
+.raisd-docs-logout {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100001;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #d7dee8);
+  background: #fff;
+  color: var(--ink, #152033);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(21, 32, 51, 0.12);
+  cursor: pointer;
+}
+.raisd-docs-logout:hover {
+  background: var(--accent-soft, #e8f0f8);
 }
 #raisd-auth-overlay {
   position: fixed;

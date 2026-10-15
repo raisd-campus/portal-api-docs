@@ -190,12 +190,34 @@
     announceReady();
   }
 
-  /** Only on sign-in surfaces (login path, docs gate, or username+password form). */
+  function isLoginPath(path) {
+    return path === '/login' || path.indexOf('/login/') === 0 || /\/login\/?$/.test(path);
+  }
+
+  /**
+   * Only on sign-in surfaces. After login, Keychain must unmount on Jenkins,
+   * Argo CD, and docs (docs previously kept `raisd-auth-gate` and stayed open).
+   */
   function isSignInSurface() {
+    var host = (location.hostname || '').toLowerCase();
     var path = (location.pathname || '').toLowerCase();
-    if (path === '/login' || path.indexOf('/login/') === 0 || /\/login\/?$/.test(path)) {
-      return true;
+
+    // Docs: only while the site gate is visible (not yet authenticated).
+    if (host === 'docs.raisd.co' || /\.github\.io$/.test(host)) {
+      if (document.documentElement.classList.contains('raisd-auth-ok')) return false;
+      return (
+        document.documentElement.classList.contains('raisd-auth-gate') ||
+        !!document.getElementById('raisd-auth-overlay') ||
+        !!document.querySelector('form.raisd-auth-card')
+      );
     }
+
+    // Jenkins + Argo CD: /login only (ignore password fields on other pages).
+    if (/jenkins\.raisd\.co$/i.test(host) || /argocd\.raisd\.co$/i.test(host)) {
+      return isLoginPath(path);
+    }
+
+    if (isLoginPath(path)) return true;
     if (document.documentElement.classList.contains('raisd-auth-gate')) return true;
     if (document.getElementById('raisd-auth-overlay')) return true;
     if (document.querySelector('form.raisd-auth-card')) return true;
@@ -206,6 +228,10 @@
         'input[name="j_username"], input[name="username"], input[name="email"], input[type="email"], input[autocomplete="username"], input[autocomplete="email"], #password-email, #email',
       ),
     );
+  }
+
+  function maxPanelHeight() {
+    return Math.min(800, Math.max(320, Math.floor(window.innerHeight * 0.85)));
   }
 
   function unmount() {
@@ -238,7 +264,7 @@
     var panel = null;
     var iframe = null;
     var open = false;
-    var height = 320;
+    var height = Math.min(520, maxPanelHeight());
 
     function setUnlocked(unlocked) {
       var dot = btn.querySelector('.raisd-keychain-dot');
@@ -285,7 +311,7 @@
         return;
       }
       if (data.type === EMBED_RESIZE_TYPE && typeof data.height === 'number') {
-        height = Math.min(Math.max(data.height, 200), 560);
+        height = Math.min(Math.max(data.height, 240), maxPanelHeight());
         if (iframe) iframe.style.height = height + 'px';
       }
     });

@@ -1,4 +1,4 @@
-# Raisd Control Plane / portal-api-docs — primary site navigation
+# Raisd Documentation / portal-api-docs — primary site navigation
 #
 # Single source of truth for the published HTML header menu.
 # Regenerate after editing:
@@ -8,7 +8,7 @@
 # (via scripts/build-design-system-pages.py).
 
 brand:
-  title: Control Plane
+  title: Documentation
   home: diagrams/index.html
   logo: diagrams/assets/raisd-logo.svg
   favicon: diagrams/assets/favicon.svg
@@ -77,6 +77,7 @@ targets:
   openapi: openapi.html
   vps-topology: diagrams/architecture.html#vps
   cicd: diagrams/architecture.html#cicd
+  microservices: diagrams/architecture.html#services
   reports: reports/index.html
   reports-w01: reports/weekly/2026-09-19.html
   reports-w02: reports/weekly/2026-09-26.html
@@ -250,14 +251,16 @@ menu:
       - { label: LMS architecture, href: lms-architecture }
       - { label: LMS features, href: lms-features }
       - { label: Migration, href: migration }
+      - { label: Microservices, href: microservices }
       - { label: "VPS topology", href: vps-topology }
       - { label: "CI/CD pipeline", href: cicd }
 
   - label: Architecture
     href: architecture
-    active: [architecture, distributed, migration, vps-topology, cicd, lms, lms-architecture, lms-features]
+    active: [architecture, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features]
     children:
       - { label: Architecture home, href: architecture }
+      - { label: Microservices, href: microservices }
       - { label: "VPS topology", href: vps-topology }
       - { label: "CI/CD pipeline", href: cicd }
       - label: Distributed CMS
@@ -526,7 +529,7 @@ search:
   - title: Overview
     href: overview
     section: Overview
-    summary: Diagrams hub for Control Plane — architecture maps, public endpoints, CMS inventories, and entry points to SDD and OpenAPI.
+    summary: Diagrams hub for Raisd documentation — architecture maps, public endpoints, CMS inventories, and entry points to SDD and OpenAPI.
     keywords: [home, hub, diagrams, start, endpoints, urls, routes, api, public]
 
   - title: Project progress
@@ -798,6 +801,12 @@ search:
     section: Architecture
     summary: System architecture, ADRs, SoR/ACL boundaries, and academic model overview.
     keywords: [adr, system, integration, acl]
+
+  - title: Microservices
+    href: microservices
+    section: Architecture
+    summary: Deployable service map — Portal API, SSO, Notifications, portals, Control, Admin, platform.
+    keywords: [microservices, services, sso, portal-api, notifications, control, admin, keychain]
 
   - title: LMS research posture
     href: lms
