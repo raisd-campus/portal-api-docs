@@ -12,7 +12,7 @@ Shared package 0.6.1 adds a pointer cursor to enabled accordion triggers, preser
 
 The current portal is a dark-only responsive product for student-facing browser layouts from 375px through 1440px. Semantic tokens and reusable components are the supported way to express visual decisions. Development-only `/dev/*` routes provide basic phone usability at 375px and 430px; individual demonstrations remain outside the full student-facing responsive acceptance standard.
 
-The [published design system catalogue](https://raisd-campus.github.io/portal-api-docs/design-system/) shows released shared components and student-owned patterns in static mock-data captures. Use the package catalogue and installed declarations for exact APIs. Development-only Scenario, Admin Actions and Data Model tools retain their own responsive layouts.
+The [published design system catalogue](https://docs.raisd.co/design-system/) shows released shared components and student-owned patterns in static mock-data captures. Use the package catalogue and installed declarations for exact APIs. Development-only Scenario, Admin Actions and Data Model tools retain their own responsive layouts.
 
 ## Responsive layout rules
 

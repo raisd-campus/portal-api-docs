@@ -38,10 +38,10 @@ Every list, semester, detail, Materials, Attendance, Calendar entry, and lecture
 - Learning rows use category-specific icons: assignment, quiz, and exam each retain their own pictogram. Icon wrappers use the shared `surface-elevated` tier, keeping category identification distinct from the warning/destructive deadline status surface.
 - Future weeks remain visible. The list response returns only release-safe identity, type, title, position, and `availableFrom` metadata for a locked item. Instructions, assessment identity, file metadata, rules, deadlines, and locations are withheld until release. Quiz 1 and Assignment 1 therefore appear in the current Week 2 when they become accessible; Assignment 1 can still remain due at the end of Week 4. Its canonical later deadline continues to drive Materials, the module card issue, and Calendar.
 - Learning rows distinguish lecture notes, readings, videos, links, assignments, quizzes, and exams with a label and icon. Rows do not carry progress or lock-status pills; week triggers are the single status source and display Completed, Current, or Locked. Assessment labels include their weight in brackets. A released, unsubmitted assignment uses `Due by DD/MM/YYYY`; after submission it uses the green `Submitted on DD/MM/YYYY` state. Released quiz and exam pills use `Scheduled on DD/MM/YYYY`. Locked rows hide these date pills until their API-supplied release time.
-- Every released learning row is one full-width keyboard-accessible button with the shared immediate `surface-hover` treatment. Released assignments, quizzes, and exams open their shared detail route. Lecture notes, readings, videos, and external links remain enabled no-op placeholders until their viewing or download workflows are approved. Rows no longer expose separate View or Download icon actions. Locked rows use the same structure but remain natively disabled, muted, and without hover feedback.
+- Every released learning row is one full-width keyboard-accessible button with the shared immediate `surface-hover` treatment. Released assignments, quizzes, and exams open their shared detail route. Released resources with supplied files or a web URL open their detail route. Connected Demo files use authenticated preview/download actions; browser-mock records without original bytes keep their explicit unavailable/placeholder behavior. Rows no longer expose separate View or Download icon actions. Locked rows use the same structure but remain natively disabled, muted, and without hover feedback.
 - Week attention is derived rather than stored separately. A released assignment remains attention-worthy until its student progress becomes `submitted` or `graded`, including after its due date. A released quiz or exam remains attention-worthy through its scheduled calendar date in the Portal API campus timezone and clears on the following campus date. Resources never create an alert. Multiple qualifying items still produce only one indicator on their week trigger, and the existing minute-updating machine clock refreshes the result without a page reload.
 - Exact item URLs load through `getAcademicModuleMaterialDetail()` rather than resolving content from the list payload. Before `availableFrom`, that boundary returns a typed locked result containing the same release-safe metadata, and the page keeps the module shell and Materials breadcrumb while showing a neutral `SummaryCard` with the release time. After release, assignment, quiz, and exam details use the established breadcrumb, `InnerSection`, and read-only `DetailField` patterns. Foreign, unknown, and unowned item IDs remain unavailable.
-- `AssignmentSubmissionPanel` demonstrates one-file submission without persistence or upload. It accepts one PDF or ZIP up to 50 MiB. Its submitted filename and timestamp remain on the left, while the text-only actions are right-aligned inside the same `InnerSection`; on phones the actions move below the metadata and fill the panel width. There is no redundant submission-status pill. Change submission and Delete submission use the shared secondary Button; the Popup's final Delete submission confirmation uses the shared primary Button. Deletion awaits the mutation, prevents duplicate dismissal while pending, closes only after success, and otherwise keeps the submission and dialog visible with an accessible error so the student can retry. From `availableFrom` inclusive until `dueAt` exclusive, the student may submit, replace, or confirm deletion. At the exact due time the controls lock; submitted metadata remains visible but cannot be changed or deleted.
+- `AssignmentSubmissionPanel` keeps metadata-only, session-owned submission in browser mock. Connected memory Demo uses the bounded original-file upload/download transport; it is not durable LMS storage. It accepts one PDF or ZIP up to 50 MiB. Its submitted filename and timestamp remain on the left, while the text-only actions are right-aligned inside the same `InnerSection`; on phones the actions move below the metadata and fill the panel width. There is no redundant submission-status pill. Change submission and Delete submission use the shared secondary Button; the Popup's final Delete submission confirmation uses the shared primary Button. Deletion awaits the mutation, prevents duplicate dismissal while pending, closes only after success, and otherwise keeps the submission and dialog visible with an accessible error so the student can retry. From `availableFrom` inclusive until `dueAt` exclusive, the student may submit, replace, or confirm deletion. At the exact due time the controls lock; submitted metadata remains visible but cannot be changed or deleted.
 - A successful session submission changes the Materials deadline badge to green and removes the corresponding assignment issue from dashboard and Academic Module cards after query invalidation. Deleting before the deadline restores both due badge and issue. Refresh creates a new `MockPortalApi`, so all assignment submission state returns to the fixture default.
 
 ## Semester flow
@@ -57,7 +57,7 @@ Module Lecturer read models carry the exact `moduleOfferingId` and `semesterId` 
 
 ## Data model
 
-Materials is projected from the selected student's exact registered offering and the canonical Module Week, Learning Item, Assessment and Learning Progress records. GRD301 has all 14 published weeks. Other existing Rizal offerings also have canonical weeks/resources; Alya's prepared offerings contain weeks with no published items. Only available items expose progress and submission rows. Teaching-week elapsed/current/upcoming badges remain calendar indicators, independent of learning progress.
+Materials is projected from the selected student's exact registered offering and the canonical Module Week, Learning Item, Assessment and Learning Progress records. GRD301 has all 14 published weeks. Other existing Rizal offerings also have canonical weeks/resources. Alya's Registration Week offerings start empty; Demo lecturers can publish items via Lecturer Portal (`publishModuleMaterial`) onto those weeks (see [E2E LMS learning](../../../reports/e2e-student-learning-lms-2026-10-11/)). Only available items expose progress and submission rows. Teaching-week elapsed/current/upcoming badges remain calendar indicators, independent of learning progress.
 
 Canonical assessment IDs now pass unchanged through Summary, Materials, module issues, Calendar links and developer examples. The existing release and deadline schedule is retained in the canonical assessment dates; quiz closing times use their canonical `dueAt`. Teaching-week timestamps are resolved from `startsOn` in the owning campus timezone, including daylight-saving boundaries. No second topic/progress fixture is generated inside the route adapter.
 
@@ -104,3 +104,74 @@ The campus-owned versioned questionnaire and immutable submission live in the ca
 Only an active programme enrolment's current study period and registered module permit new reviews. There are no invented opening/closing dates. Completed semesters cannot receive new submissions, but existing submissions remain viewable. Co-lecturers and repeat/module attempts are independent. Missing campus questionnaires never fall back to Cyberjaya. Submissions validate all question IDs and integer ratings, reject changed questionnaire versions and duplicate submissions, and snapshot the complete questionnaire. Later content changes do not rewrite historical answers.
 
 Drafts use the generation-scoped query cache with no browser persistence; leaving and returning retains them until submission, refresh or scenario replacement. Mutation success updates the review and invalidates Module Details; stale-session completions cannot populate another session. Backend authorization, durable storage, confidentiality policy, staff reporting and general course surveys remain separate work. CAP-28 (marks/lecturer feedback) is unaffected.
+
+
+## Reusable Materials connected memory Demo — 14 October 2026
+
+Configured HTTP Materials now consumes the capability-gated class resolution from the shared memory Demo. A reusable module plan calculates availability/deadlines from each class's configured teaching weeks, not personal semester numbers. Classes pin publication history at class start; subsequent resource corrections carry a version/author/reason notice. Assignment controls freeze at class start. Reads/downloads use exact enrolment/registration/campus and server release time; locked DTOs omit original files and instructions. Original-name image/PDF previews and downloads reuse FileUploadField and MediaPreviewLightbox. Missing sample bytes remain unavailable.
+
+Student refreshes connected Materials at its next known release, on focus and on revisit. Files/plan bindings belong to the API process and reset when it stops; progress/submission ownership stays per Student/registration and is never inherited. Existing assignment metadata submission remains one PDF/ZIP, 50 MiB. Browser mock remains independent. See [memory Materials rules](../../backend/reusable-materials.md). No Live LMS storage, activation, grading or individual extension changes are claimed.
+
+
+Owner-approved Keychain follow-up (14 October 2026): render the existing widget only on sign-in; remove it from the authenticated shell. This keeps modal Preview/Community Close controls unobstructed without new styling or shared-package changes. This instruction applies to the Student and Lecturer flows in this increment.
+
+
+## Read-only Materials with teaching-week release — 14 October 2026
+
+Materials availability now derives from the assigned configured teaching week at campus-local midnight, including calendar breaks. Student mock and HTTP projections share this rule; server-time checks, exact registration/campus ownership, locked DTO redaction and original-byte downloads remain. Faculty deadlines/weights and exam sitting times are unchanged. Lecturer can inspect but cannot author/publish; admin version setup is deferred. Existing content and class bindings/history remain the data foundation. See [read-only Materials](../../backend/reusable-materials.md).
+
+
+## Shared Classrooms integration — 15 October 2026
+
+Configured shared memory Demo attendance reads now apply Lecturer's exact-registration saved entries, refreshing on focus/revisit. Student assignment submission uses the advertised bounded original-file transport (one PDF/ZIP, 50 MiB), version-checked replacement/deletion and SHA-256-verified downloads. Material details expose published coursework feedback and history only; private drafts/teaching logs never enter Student reads. New file versions do not inherit marks. Faculty weights and official module/term results are unchanged. Seed metadata with missing bytes remains unavailable. Browser mock remains independent. Saved connected changes reset on API restart; no canonical schema-version bump or persistent table migration occurs.
+
+Local verification passed: API Classrooms scenarios, 72 Materials checks, 20 exact-offering roster checks, 46 Community checks and API local typecheck; Lecturer lint/TypeScript/build, canonical snapshot parity and 56 focused tests; Student full check:all with 808 unit/component tests, 278 Chromium cases (46 intentional skips) and 41 WebKit cases (31 intentional skips). Lecturer aggregate verification remains on hold. Paired original submission → Lecturer preview/download/mark → Student published feedback, shared attendance, private logs/drafts, revisions, conflict/reload recovery, exact bytes, authorization, browser-mock separation and HTTP failure handling passed. Responsive checks cover 375/768/1440px, Back/keyboard navigation, Community preservation and temporary URL cleanup.
+
+Current local API 8087 was restarted once after verification, and Lecturer 5173 / Student 5175 were refreshed and signed in against the shared memory Demo. API restart resets saved Demo mutations/files and sessions; local credentials and canonical sample records are retained. GRD301's sample assignment deadlines are in the past, so current submission locks remain; the complete submission/marking flow was verified using an isolated September 2026 clock. No deadline was shifted for activation. No package change/publication, migration, hosted write, commit, push or deployment. Isolated verification servers were stopped. See the canonical [Classrooms rules](../../backend/classrooms.md).
+
+## Bundled Materials Demo downloads — unverified
+
+Connected local memory Demo now supplies clearly labelled DEMO PDF attachments for
+seeded PDF lecture notes and assignment briefs. Their displayed filenames, byte sizes
+and SHA-256 descriptors describe the bundled samples, not unavailable original campus
+documents. Existing shared file previews and authenticated downloads consume them
+without a new frontend contract or component. Canonical progress, assessment weights,
+deadlines and exact programme/offering registration remain unchanged.
+
+Files are recreated from the API bundle after restart; student uploads and all other
+memory mutations still reset. Future teaching-week releases remain locked and file
+chunks remain server-authorised. Browser mock is unchanged. No tests/builds/PDF
+rendering or current API restart were run for this increment.
+
+
+## Material publication metadata — 15 October 2026, unverified
+
+Released material DTOs accept optional nullable publisher/update metadata and explicit
+per-file source (bundled-demo, uploaded, or null), matching the shared API contract.
+Unknown provenance stays null. Canonical records contain no authored instructions;
+the projection now returns “Not provided” instead of generic invented assignment,
+quiz or exam instructions. No recorded titles, weights, deadlines, quiz rules, exam
+schedule or submission limits were changed. Student layouts and exact registration/
+release checks remain; locked items still redact content, publication and files.
+See [complete metadata rules](../../backend/reusable-materials.md). All tests/builds/
+browser checks and the current API restart remain deferred at the owner's request.
+
+## Same-day Graphic Design 3 Demo — 15 October 2026, unverified
+
+The shared canonical Demo graph now adds one 14:00–16:00 occurrence on 1 September
+2026 to the existing Graphic Design 3 09:00–12:00 session that day. Exact offering
+and registration projections use its independent session ID and initially unrecorded
+attendance. This enables Lecturer's same-day selector without a new weekly schedule,
+fabricated marks, record schema changes or Student layout changes. Local memory API
+8087 restarted to load it; sessions and saved memory data reset. All testing remains
+deferred. See [Classrooms Demo fixture](../../backend/classrooms.md).
+
+## Verified Classrooms/Materials integration — 15 October 2026
+
+The resource-detail boundary now permits owned resources without an assessment ID,
+while preserving exact registration and release checks. This fixes seeded lecture-note
+details and Materials responses returned after a submission. Publisher/update fields
+are reflected in the Data Model Explorer. Mock unit/browser tests explicitly clear
+the local HTTP API URL. Full gates and paired flows passed; see the [verification
+receipt](audits/2026-10-15-classrooms-materials-verification.md). The current non-watch API was preserved and needs a future
+authorised restart to activate this projection fix.

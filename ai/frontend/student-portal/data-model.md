@@ -319,3 +319,30 @@ Mock operations: `confirmApplicationEligibility` (applicant), `verify-documents`
 ## Applicant–Student synchronization — 12 October 2026
 
 The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.
+
+
+## Reusable Materials connected memory Demo — 14 October 2026
+
+ModuleAssessment adds optional Faculty-controlled definitionKey to identify an assessment consistently across offerings of one campus/module. It does not change persisted schema 4 or trigger a reseed; older missing/ambiguous mappings are explained and block reusable briefs. ModuleLearningItem read DTOs optionally expose released files and immutable correction history/content; locked DTOs expose neither. These memory overlays never mutate canonical assessment weights or save new class bindings to the persisted graph. The registry/explorer describes the added fields. See [dedicated memory-store rules](../../backend/reusable-materials.md).
+
+
+## Read-only Materials with teaching-week release — 14 October 2026
+
+Canonical ModuleLearningItem.availableFrom remains compatible legacy metadata; the Materials read model now derives its release instant from the referenced ModuleWeek.startsOn and campus timezone. Projection never mutates seed/record graphs. Existing IDs, weights, deadlines, schema 4 and optional Faculty definition keys remain compatible. Admin version authoring is deferred; public Lecturer reads expose no private drafts. See [release and permission rules](../../backend/reusable-materials.md).
+
+
+## Shared Classrooms integration — 15 October 2026
+
+Configured shared memory Demo attendance reads now apply Lecturer's exact-registration saved entries, refreshing on focus/revisit. Student assignment submission uses the advertised bounded original-file transport (one PDF/ZIP, 50 MiB), version-checked replacement/deletion and SHA-256-verified downloads. Material details expose published coursework feedback and history only; private drafts/teaching logs never enter Student reads. New file versions do not inherit marks. Faculty weights and official module/term results are unchanged. Seed metadata with missing bytes remains unavailable. Browser mock remains independent. Saved connected changes reset on API restart; no canonical schema-version bump or persistent table migration occurs.
+
+Local verification passed: API Classrooms scenarios, 72 Materials checks, 20 exact-offering roster checks, 46 Community checks and API local typecheck; Lecturer lint/TypeScript/build, canonical snapshot parity and 56 focused tests; Student full check:all with 808 unit/component tests, 278 Chromium cases (46 intentional skips) and 41 WebKit cases (31 intentional skips). Lecturer aggregate verification remains on hold. Paired original submission → Lecturer preview/download/mark → Student published feedback, shared attendance, private logs/drafts, revisions, conflict/reload recovery, exact bytes, authorization, browser-mock separation and HTTP failure handling passed. Responsive checks cover 375/768/1440px, Back/keyboard navigation, Community preservation and temporary URL cleanup.
+
+Current local API 8087 was restarted once after verification, and Lecturer 5173 / Student 5175 were refreshed and signed in against the shared memory Demo. API restart resets saved Demo mutations/files and sessions; local credentials and canonical sample records are retained. GRD301's sample assignment deadlines are in the past, so current submission locks remain; the complete submission/marking flow was verified using an isolated September 2026 clock. No deadline was shifted for activation. No package change/publication, migration, hosted write, commit, push or deployment. Isolated verification servers were stopped. See the canonical [Classrooms rules](../../backend/classrooms.md).
+
+## Released material metadata — verified 15 October 2026
+
+The learning-item read model and explorer include optional nullable publishedBy and
+lastUpdatedAt metadata. These describe recorded publication, never inferred release
+dates. File provenance uses the shared MaterialArtifact source field. No canonical
+record schema/version or persistence change is introduced. Schema/explorer parity,
+contract mirrors and the full Student gate passed; see [verification](audits/2026-10-15-classrooms-materials-verification.md).

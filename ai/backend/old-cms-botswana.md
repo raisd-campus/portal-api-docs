@@ -1,12 +1,14 @@
-# Existing Botswana CMS — inventory
+# Existing Botswana CMS — LUCT CMS inventory
+
+**LUCT CMS subsection:** [`docs/diagrams/old-cms/index.html#botswana`](../../diagrams/old-cms/index.html#botswana) · top nav **LUCT CMS → Botswana**
 
 **Source package:** `CMS_Botswana_Source_Codes_&_DB_Structure_24_09_2026` (24 September 2026)  
 **Database:** `cmsbotswana` (structure dumps `CMS_Botswana_Tables|Procedure|Triggers|Views_24_09_2026.sql`)  
-**Product role:** Sister **LUCT CMS / PHPMaker** campus (BWA-GBE — Botswana Gaborone). **Not** the Cyberjaya launch SoR ([ADR-1](../architecture/overview.md)). Use for [M5](../../sdd/03-delivery-milestones.md#m5) campus-expansion comparison. Closer to Cyberjaya desk layout than the Sierra Leone EMS package.
-
-This file inventories what the Botswana dump contains. It does **not** change the Cyberjaya-first Portal API plan. Pair with [old-cms-cyberjaya.md](old-cms-cyberjaya.md), [old-cms-sierra-leone.md](old-cms-sierra-leone.md), and [cms-feature-comparison.md](cms-feature-comparison.md).
+**Product role:** Sister **LUCT CMS / PHPMaker** campus (BWA-GBE — Botswana Gaborone). Same product family as Cyberjaya / Lesotho / Eswatini / Cambodia. **Not** the Lesotho M4 acceptance SoR and **not** the Cyberjaya launch SoR ([ADR-1](../architecture/overview.md)). Use for [M5](../../sdd/03-delivery-milestones.md#m5) campus-expansion comparison. Closer to Cyberjaya desk layout than the Sierra Leone EMS package. Pair with [old-cms-lesotho.md](old-cms-lesotho.md), [old-cms-eswatini.md](old-cms-eswatini.md), [old-cms-cambodia.md](old-cms-cambodia.md), [old-cms-cyberjaya.md](old-cms-cyberjaya.md), [old-cms-sierra-leone.md](old-cms-sierra-leone.md).
 
 **Do not commit** the PHP tree, `botsbatch` SQL/logs, credentials, uploads, or live student files from the package. Documentation below is derived structure only.
+
+**GitHub Pages hub (E2E · FSD · Obsidian 3D · flows · DTEF · ERD · DFD · database · comparison):** [`../../diagrams/old-cms-botswana/`](../../diagrams/old-cms-botswana/)
 
 ## Package contents (high level)
 
@@ -164,9 +166,17 @@ Large reporting surface: finance statements / ageing / outstanding, attendance a
 
 ## Related
 
-- DTEF / TEF.gov.bw sync (functional + technical): [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md)
-- Cyberjaya inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md)
-- Sierra Leone inventory: [old-cms-sierra-leone.md](old-cms-sierra-leone.md)
-- CAP comparison (Cyberjaya-focused): [cms-feature-comparison.md](cms-feature-comparison.md)
-- GitHub Pages: [../../diagrams/old-cms-botswana/](../../diagrams/old-cms-botswana/) (E2E · ERD · DFD · database · [DTEF §4](../../diagrams/old-cms-botswana/index.html#dtef))
-- SDD-14: [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md)
+| Topic | Path |
+|---|---|
+| Pages E2E hub | [`../../diagrams/old-cms-botswana/`](../../diagrams/old-cms-botswana/) |
+| Obsidian 3D | [`../../diagrams/old-cms/obsidian.html?campus=botswana`](../../diagrams/old-cms/obsidian.html?campus=botswana) |
+| LUCT CMS subsection | [`../../diagrams/old-cms/index.html#botswana`](../../diagrams/old-cms/index.html#botswana) |
+| DTEF / TEF.gov.bw sync | [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md) |
+| Lesotho pilot (M4 first) | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
+| Lesotho inventory | [old-cms-lesotho.md](old-cms-lesotho.md) |
+| Eswatini inventory | [old-cms-eswatini.md](old-cms-eswatini.md) |
+| Cambodia inventory | [old-cms-cambodia.md](old-cms-cambodia.md) |
+| Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |
+| Sierra Leone inventory | [old-cms-sierra-leone.md](old-cms-sierra-leone.md) |
+| CAP comparison | [cms-feature-comparison.md](cms-feature-comparison.md) |
+| SDD-14 | [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md) |

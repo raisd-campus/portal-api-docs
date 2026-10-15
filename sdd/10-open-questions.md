@@ -12,7 +12,7 @@ Decisions required before capabilities can move from Needs checking / Demo to Li
 |---|---|---|---|
 | Q1 | What is the stack, repo, and who can grant access today? | Cannot implement [CAP-53](11-capability-catalog.md#cap-53) or review the real frontend. | TBC |
 | Q2 | Who owns the old CMS / API, and what is already callable? | [CAP-53](11-capability-catalog.md#cap-53), every Needs checking backend row. Partial answer: 23 Sep 2026 dump inventoried in SDD-14 / `docs/ai/backend/cms-feature-comparison.md` (`api_student_*` SPs, portal sync tables, desk modules). Callable HTTP surface and owner still TBC. | TBC |
-| Q3 | Login: CMS password, SSO, or both? | [CAP-01](11-capability-catalog.md#cap-01) applicant and student. | TBC |
+| Q3 | Login: CMS password, SSO, or both? | [CAP-01](11-capability-catalog.md#cap-01) applicant and student. | **Demo (15 Oct 2026):** Raisd SSO at `sso.raisd.co` with email magic link **and** email+password + RBAC; Portal API introspects SSO tokens. Keychain / stub portal logins use **email** (not user id). **Live:** CMS person link / password path still TBC (ADR-1). |
 | Q4 | Is admissions-first still the sequence, or has student v1 been promoted? | Stops building the wrong next screens. | Product owner |
 | Q5 | File store for evidence, assignments, and payment proofs? | [CAP-03](11-capability-catalog.md#cap-03), 09, 20, 46. | TBC |
 | Q6 | Named owners for Registry, Faculty, Bursary, QA, Marketing, IT? | Every next-action owner is TBC. | Working group |
@@ -109,3 +109,15 @@ Proposed until the group names people:
 | 8 Oct 2026 | Cambodia QR unblocked: Vara shared QR System + Verification Drive packs. CMS Registry → `qr.limkokwing.net/api/create_qrcode_api` → `verification.limkokwing.net/cambodia/{token}` documented. Full QR/Verification source inventory pending authenticated local download | WhatsApp Vara 8 Oct; `docs/ai/backend/cambodia-qr-system.md`; Pages `old-cms-cambodia/#integrations` |
 | 8 Oct 2026 | Cambodia QR inventory closed: CI4 QR SaaS (`qrcode` DB, ~685 `KHM-PNH_` certs); scan = PNG→`/qrcode/{slug}`→Verification→`GetStudentCertInfo`; pack AES keys diverge (ops risk). Pages `certificate-qr.html` | Local extract of Vara 8 Oct zips; published sanitized |
 | 9 Oct 2026 | Standup 8 Oct action closed: Applicant merge (`9e007f2`/`532d6f0`) analysed; QR automated + Cambodia↔Cyberjaya manual ops documented; fee/payment from CMS SPs (Lesotho/Eswatini/Cambodia currency matrix; `b_Update_Student` cases C1–C10). Configurable campus fees preferred over waiting for campus confirmation | Daily standup Read.ai 8 Oct; `docs/ai/backend/applicant-qr-fee-mechanisms.md`; Pages `fee-payment-sps.html` |
+
+
+## Reusable Materials connected memory Demo — 14 October 2026
+
+The local connected memory Demo supports reusable module plans and class-specific automatic schedules, original resource/brief bytes and server-authorised Student access. Lead publication freezes immutable versions; classes select the latest version published by class start, resources can receive versioned corrections, and class assignment requirements freeze. The class-start lock is a Demo rule pending campus policy, not confirmed institutional policy. Faculty owns assessment keys/weights. Student submissions remain existing metadata-only Demo operations.
+
+See [canonical connected Materials rules](../ai/backend/reusable-materials.md). This capability requires an isolated memory API and never writes hosted records or migrations. Independent browser mock stays separate. Production persistence, Faculty exceptions, activation and complete LMS acceptance remain pending; Lecturer aggregate verification stays on hold.
+
+
+## Read-only Materials with teaching-week release — 14 October 2026
+
+The current local Materials increment is read-only for Lecturer, with one weekly module list and automatic availability at configured teaching-week start. Admin content/version setup is deferred. Existing class version bindings/history and Faculty weights/deadlines are retained; shared API file reads enforce ownership and server release. This supersedes the earlier Lecturer plan-authoring controls. See [current rules](../ai/backend/reusable-materials.md). No shared package change, migration, hosted write or deployment. Lecturer aggregate remains held.

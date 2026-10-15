@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Raisd Notifications API
+  version: 0.2.0
+  description: |
+    Outbound email for Raisd Demo / CMS-style notifications.
+    Upstream SMTP is the CMS mailbox noreply@raisd.co on mail.raisd.co.
+    Prefer POST /v1/send/template with design-system email template IDs.
+servers:
+  - url: https://notify.raisd.co
+paths:
+  /health:
+    get:
+      summary: Liveness
+      responses:
+        "200":
+          description: OK
+  /v1/meta:
+    get:
+      summary: Public meta (no secrets)
+      responses:
+        "200":
+          description: Meta
+  /v1/ready:
+    get:
+      summary: SMTP transport verify
+      responses:
+        "200":
+          description: SMTP OK
+        "503":
+          description: SMTP unavailable
+  /v1/templates:
+    get:
+      summary: List template catalogue
+      responses:
+        "200":
+          description: Templates from design-system/email/manifest.yaml
+  /v1/templates/preview:
+    post:
+      summary: Render a template without sending
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [templateId]
+              properties:
+                templateId:
+                  type: string
+                  enum: [magic_link, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic]
+                vars:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Rendered subject/text/html
+        "400":
+          description: Unknown template or missing vars
+  /v1/send:
+    post:
+      summary: Send raw email (prefer /v1/send/template)
+      parameters:
+        - in: header
+          name: x-notify-service-token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [to, subject]
+              properties:
+                to:
+                  oneOf:
+                    - type: string
+                      format: email
+                    - type: array
+                      items:
+                        type: string
+                        format: email
+                subject:
+                  type: string
+                text:
+                  type: string
+                html:
+                  type: string
+                replyTo:
+                  type: string
+                  format: email
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Accepted by SMTP
+        "401":
+          description: Unauthorized
+        "502":
+          description: Upstream SMTP failed
+  /v1/send/template:
+    post:
+      summary: Render design-system template and send
+      parameters:
+        - in: header
+          name: x-notify-service-token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [templateId, to]
+              properties:
+                templateId:
+                  type: string
+                  enum: [magic_link, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic]
+                to:
+                  oneOf:
+                    - type: string
+                      format: email
+                    - type: array
+                      items:
+                        type: string
+                        format: email
+                vars:
+                  type: object
+                  additionalProperties: true
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Accepted by SMTP
+        "400":
+          description: Invalid template or vars
+        "401":
+          description: Unauthorized
+        "502":
+          description: Upstream SMTP failed
+  /v1/dev/last-send:
+    get:
+      summary: Last send metadata (Demo/ops)
+      parameters:
+        - in: header
+          name: x-notify-service-token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Last send

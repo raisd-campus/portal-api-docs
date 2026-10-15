@@ -1,0 +1,556 @@
+openapi: 3.1.0
+info:
+  title: Raisd SSO API
+  version: 0.1.0
+  summary: Campus identity, pluggable login channels, and RBAC
+  description: |
+    Demo SSO service at `https://sso.raisd.co`. Owns identity and RBAC.
+    Portal API validates access tokens via `/v1/introspect`.
+    Channels `email_magic_link` and `password` (email + password) are enabled in Demo.
+  contact:
+    name: Raisd working group
+    email: iman.suherman@raisd.co
+
+servers:
+  - url: https://sso.raisd.co
+    description: UltaHost k3s Demo SSO
+  - url: http://127.0.0.1:8090
+    description: Local SSO (`npm start` in raisd-campus/sso)
+
+tags:
+  - name: Health
+  - name: Auth
+  - name: Session
+  - name: Admin
+  - name: Dev
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      operationId: ssoHealth
+      summary: Liveness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok, service]
+                properties:
+                  ok: { type: boolean }
+                  service: { type: string, const: sso }
+                  store: { type: string, enum: [memory, postgres] }
+
+  /v1/meta:
+    get:
+      tags: [Health]
+      operationId: ssoMeta
+      summary: Channel catalogue and role keys
+      responses:
+        "200":
+          description: Meta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SsoMeta"
+
+  /v1/auth/channels/email/start:
+    post:
+      tags: [Auth]
+      operationId: emailMagicLinkStart
+      summary: Start email magic-link login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, returnUrl]
+              properties:
+                email: { type: string, format: email }
+                returnUrl: { type: string, format: uri }
+                campusId: { type: string }
+      responses:
+        "202":
+          description: Accepted (always, to avoid enumeration)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [accepted]
+                properties:
+                  accepted: { type: boolean, const: true }
+                  message: { type: string }
+
+  /v1/auth/channels/email/consume:
+    get:
+      tags: [Auth]
+      operationId: emailMagicLinkConsume
+      summary: Consume magic-link token (browser redirect)
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        "302":
+          description: Redirect to role picker or returnUrl with code
+        "400":
+          description: Invalid or expired token
+
+  /v1/auth/channels/password/login:
+    post:
+      tags: [Auth]
+      operationId: passwordLogin
+      summary: Sign in with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, returnUrl]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+                returnUrl: { type: string, format: uri }
+                campusId: { type: string }
+      responses:
+        "200":
+          description: Redirect URL or multi-role picker payload
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - type: object
+                    required: [redirectTo]
+                    properties:
+                      redirectTo: { type: string, format: uri }
+                  - type: object
+                    required: [sessionId, returnUrl, roles]
+                    properties:
+                      sessionId: { type: string }
+                      returnUrl: { type: string, format: uri }
+                      person: { $ref: "#/components/schemas/Person" }
+                      roles:
+                        type: array
+                        items: { $ref: "#/components/schemas/RoleAssignment" }
+        "401":
+          description: Email or password incorrect
+        "400":
+          description: Invalid body or returnUrl
+
+  /v1/oauth/token:
+    post:
+      tags: [Auth]
+      operationId: oauthToken
+      summary: Exchange authorization code or refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  required: [grant_type, code]
+                  properties:
+                    grant_type: { type: string, const: authorization_code }
+                    code: { type: string }
+                - type: object
+                  required: [grant_type, refresh_token]
+                  properties:
+                    grant_type: { type: string, const: refresh_token }
+                    refresh_token: { type: string }
+      responses:
+        "200":
+          description: Tokens
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "400":
+          description: Invalid grant
+
+  /v1/introspect:
+    post:
+      tags: [Auth]
+      operationId: introspect
+      summary: Introspect access token (Portal API / trusted callers)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token: { type: string }
+      responses:
+        "200":
+          description: Introspection result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Introspection"
+
+  /v1/me:
+    get:
+      tags: [Session]
+      operationId: me
+      summary: Current principal
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Principal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Principal"
+        "401":
+          description: Unauthorized
+
+  /v1/me/roles:
+    get:
+      tags: [Session]
+      operationId: myRoles
+      summary: Role assignments for the current person
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Roles
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [roles, activeRoleId]
+                properties:
+                  roles:
+                    type: array
+                    items: { $ref: "#/components/schemas/RoleAssignment" }
+                  activeRoleId: { type: ["string", "null"] }
+
+  /v1/session/active-role:
+    post:
+      tags: [Session]
+      operationId: setActiveRole
+      summary: Select or switch active role (issues new access token)
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [roleAssignmentId]
+              properties:
+                roleAssignmentId: { type: string }
+                campusId: { type: string }
+      responses:
+        "200":
+          description: Updated tokens
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+
+  /v1/auth/logout:
+    post:
+      tags: [Session]
+      operationId: logout
+      summary: Revoke session
+      security: [{ bearerAuth: [] }]
+      responses:
+        "204":
+          description: Logged out
+
+  /v1/admin/people:
+    get:
+      tags: [Admin]
+      operationId: adminListPeople
+      summary: List people (requires rbac.manage or sso.manage_learners)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: People
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [people]
+                properties:
+                  people:
+                    type: array
+                    items: { $ref: "#/components/schemas/PersonSummary" }
+        "403":
+          description: Forbidden
+    post:
+      tags: [Admin]
+      operationId: adminCreatePerson
+      summary: Create a person (Admin provision or learner-manager for learner roles)
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, displayName]
+              properties:
+                email: { type: string, format: email }
+                displayName: { type: string }
+                assignments:
+                  type: array
+                  items:
+                    type: object
+                    required: [roleKey, campusIds]
+                    properties:
+                      roleKey:
+                        type: string
+                        enum: [applicant, student, lecturer, staff, admin]
+                      campusIds:
+                        type: array
+                        items: { type: string }
+                      deskTags:
+                        type: array
+                        items: { type: string }
+                cmsPersonRef:
+                  type: string
+                  nullable: true
+      responses:
+        "201":
+          description: Created
+        "403":
+          description: Forbidden
+        "409":
+          description: Email already registered
+
+  /v1/internal/people/upsert:
+    post:
+      tags: [Internal]
+      operationId: internalUpsertPerson
+      summary: Service-to-service upsert by email (SSO_SERVICE_TOKEN)
+      security: []
+      parameters:
+        - name: x-sso-service-token
+          in: header
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, displayName, roleKey]
+              properties:
+                email: { type: string, format: email }
+                displayName: { type: string }
+                roleKey:
+                  type: string
+                  enum: [applicant, student, lecturer, staff, admin]
+                campusIds:
+                  type: array
+                  items: { type: string }
+                deskTags:
+                  type: array
+                  items: { type: string }
+      responses:
+        "200":
+          description: Upserted person
+        "401":
+          description: Unauthorized
+
+  /v1/admin/people/{personId}/roles:
+    put:
+      tags: [Admin]
+      operationId: adminSetRoles
+      summary: Replace role assignments for a person
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [assignments]
+              properties:
+                assignments:
+                  type: array
+                  items:
+                    type: object
+                    required: [roleKey, campusIds]
+                    properties:
+                      roleKey: { type: string }
+                      campusIds:
+                        type: array
+                        items: { type: string }
+                      deskTags:
+                        type: array
+                        items: { type: string }
+      responses:
+        "200":
+          description: Updated assignments
+        "403":
+          description: Forbidden
+
+  /v1/admin/audit:
+    get:
+      tags: [Admin]
+      operationId: adminAudit
+      summary: Recent audit events
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Events
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [events]
+                properties:
+                  events:
+                    type: array
+                    items: { $ref: "#/components/schemas/AuditEvent" }
+
+  /v1/dev/last-magic-link:
+    get:
+      tags: [Dev]
+      operationId: devLastMagicLink
+      summary: Demo-only last magic link (when SMTP unset)
+      responses:
+        "200":
+          description: Last link
+        "404":
+          description: None or disabled in production
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque
+
+  schemas:
+    SsoMeta:
+      type: object
+      required: [service, version, channels, roleKeys]
+      properties:
+        service: { type: string, const: sso }
+        version: { type: string }
+        channels:
+          type: array
+          items:
+            type: object
+            required: [id, enabled]
+            properties:
+              id: { type: string }
+              enabled: { type: boolean }
+        roleKeys:
+          type: array
+          items: { type: string }
+
+    TokenResponse:
+      type: object
+      required: [access_token, token_type, expires_in]
+      properties:
+        access_token: { type: string }
+        refresh_token: { type: string }
+        token_type: { type: string, const: Bearer }
+        expires_in: { type: integer }
+        active_role:
+          $ref: "#/components/schemas/RoleAssignment"
+
+    Introspection:
+      type: object
+      required: [active]
+      properties:
+        active: { type: boolean }
+        personId: { type: string }
+        email: { type: string }
+        displayName: { type: string }
+        roleKey: { type: string }
+        roleAssignmentId: { type: string }
+        campusIds:
+          type: array
+          items: { type: string }
+        deskTags:
+          type: array
+          items: { type: string }
+        permissions:
+          type: array
+          items: { type: string }
+        exp: { type: integer }
+
+    RoleAssignment:
+      type: object
+      required: [id, roleKey, campusIds, permissions]
+      properties:
+        id: { type: string }
+        roleKey: { type: string }
+        campusIds:
+          type: array
+          items: { type: string }
+        deskTags:
+          type: array
+          items: { type: string }
+        permissions:
+          type: array
+          items: { type: string }
+        portalHostHint: { type: string }
+
+    Principal:
+      type: object
+      required: [personId, email, displayName, roles]
+      properties:
+        personId: { type: string }
+        email: { type: string }
+        displayName: { type: string }
+        cmsPersonRef: { type: ["string", "null"] }
+        roles:
+          type: array
+          items: { $ref: "#/components/schemas/RoleAssignment" }
+        activeRoleId: { type: ["string", "null"] }
+
+    Person:
+      type: object
+      required: [personId, email, displayName, cmsPersonRef, roles]
+      properties:
+        personId: { type: string }
+        email: { type: string, format: email }
+        displayName: { type: string }
+        cmsPersonRef: { type: ["string", "null"] }
+        roles:
+          type: array
+          items: { $ref: "#/components/schemas/RoleAssignment" }
+
+    PersonSummary:
+      type: object
+      required: [personId, email, displayName, roles]
+      properties:
+        personId: { type: string }
+        email: { type: string }
+        displayName: { type: string }
+        roles:
+          type: array
+          items: { $ref: "#/components/schemas/RoleAssignment" }
+
+    AuditEvent:
+      type: object
+      required: [id, at, actorPersonId, action]
+      properties:
+        id: { type: string }
+        at: { type: string, format: date-time }
+        actorPersonId: { type: string }
+        action: { type: string }
+        detail: { type: object, additionalProperties: true }

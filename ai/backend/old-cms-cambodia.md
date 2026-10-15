@@ -182,12 +182,25 @@ Large reporting surface: population / outstanding, accommodation occupancy, acad
 5. **Thick `w_*` life/acco** may need earlier staff-portal surfaces than thin EMS campuses when Cambodia is scheduled.
 6. **Replace shell-credential `cambodiabatchnight.sh` for Live** — Portal API / approved ops path should own durable portal projection; never commit script secrets.
 7. **ACC / MoEYS (SDD-09 KH-*)** remains a separate compliance track from CMS desk inventory.
+8. **Certificate QR** — Registry calls external Limkokwing QR SaaS then Verification site. See [cambodia-qr-system.md](cambodia-qr-system.md) (standup 7–8 Oct 2026).
+
+## Certificate QR (8 Oct 2026)
+
+Vara shared **QR System** + **Verification** source packs (Drive; dump under `_local/` when downloaded — not in git). CMS already contains the call site:
+
+- `cambodia/registry/qrcode_gen.php` (and dated variants) POST to `https://qr.limkokwing.net/api/create_qrcode_api`
+- QR payload URL: `https://verification.limkokwing.net/cambodia/{encrypted StdProgramID}`
+- Short code prefix: `KHM-PNH_`
+
+Full write-up: Pages [`certificate-qr.html`](../../diagrams/old-cms-cambodia/certificate-qr.html) · [cambodia-qr-system.md](cambodia-qr-system.md).
 
 ## Related
 
 | Topic | Path |
 |---|---|
+| Certificate QR + Verification | [`certificate-qr.html`](../../diagrams/old-cms-cambodia/certificate-qr.html) · [cambodia-qr-system.md](cambodia-qr-system.md) |
 | Pages E2E hub | [`../../diagrams/old-cms-cambodia/`](../../diagrams/old-cms-cambodia/) |
+| Obsidian 3D | [`../../diagrams/old-cms/obsidian.html?campus=cambodia`](../../diagrams/old-cms/obsidian.html?campus=cambodia) |
 | LUCT CMS → Cambodia | [`../../diagrams/old-cms/index.html#cambodia`](../../diagrams/old-cms/index.html#cambodia) |
 | Lesotho pilot (M4 first) | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Lesotho inventory | [old-cms-lesotho.md](old-cms-lesotho.md) |

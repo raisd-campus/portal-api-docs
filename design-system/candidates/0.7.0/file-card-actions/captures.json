@@ -1,0 +1,44 @@
+[
+  {
+    "file": "shared-files-375.png",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "owner": "design-system",
+    "packageVersion": "0.7.0",
+    "releaseStatus": "unpublished candidate",
+    "sourceRoute": "http://127.0.0.1:4194/?files",
+    "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+    "sourceState": "uncommitted candidate and file-card action slot",
+    "sha256": "1df5b7202f3c752caa9cd40ca4e5c7b2251c9a215bfd95138bd05bba102443d8"
+  },
+  {
+    "file": "shared-files-768.png",
+    "viewport": {
+      "width": 768,
+      "height": 1000
+    },
+    "owner": "design-system",
+    "packageVersion": "0.7.0",
+    "releaseStatus": "unpublished candidate",
+    "sourceRoute": "http://127.0.0.1:4194/?files",
+    "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+    "sourceState": "uncommitted candidate and file-card action slot",
+    "sha256": "1c7738b0087339c3adfccd4d9049cd321bce365e8183546f0262b61869506c7f"
+  },
+  {
+    "file": "shared-files-1440.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "owner": "design-system",
+    "packageVersion": "0.7.0",
+    "releaseStatus": "unpublished candidate",
+    "sourceRoute": "http://127.0.0.1:4194/?files",
+    "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+    "sourceState": "uncommitted candidate and file-card action slot",
+    "sha256": "0d636a3b26e6a72276c5c5ab8255cafb49b2f9bd3fee46f3dd5f8814ca60ca68"
+  }
+]

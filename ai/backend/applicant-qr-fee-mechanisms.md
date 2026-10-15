@@ -18,8 +18,8 @@ Demo ≠ Live. Applicant Demo fees and letters are not campus CMS billing. SP bo
 | Alumni | Trimmed `previousStudentId` required when `applicantType=alumni` | Same validation on hosted |
 | Review desks | Payment Proof → **Bursary**; Document Check → **QA** | Local Admin Actions; not Staff portal |
 | Eligibility Letter | QA `verify-documents` generates DEMO PDF | Demo Portal API path present |
-| Applicant confirm | `confirmApplicationEligibility` | Hosted method live; Demo then **auto** `release-offer` |
-| Offer Letter | Registry `release-offer` (local Admin Actions) | Auto after Eligibility on Demo HTTP until Staff owns release |
+| Applicant confirm | `confirmApplicationEligibility` | Hosted method live; does **not** auto-release Offer |
+| Offer Letter | Registry Staff `releaseOffer` (+ local Admin Actions) | Staff-owned after Eligibility confirm |
 | Accept enrolment | Guarded `acceptApplicationEnrolment` after Offer | Hosted; Student handoff v2 carries campus + both letters |
 | Progress UI | Four-row Application Progress (Bursary → QA → Confirm → Offer) | Presentation only |
 | Catalogue | All campuses still clone **Design** curriculum/fees | Not Lesotho policy |
@@ -28,7 +28,7 @@ Demo ≠ Live. Applicant Demo fees and letters are not campus CMS billing. SP bo
 
 **Gaps still open after merge**
 
-1. Staff-owned Offer release (replace Demo auto-release).  
+1. ~~Staff-owned Offer release~~ **Done 13 Oct 2026** — Staff `releaseOffer`; Demo auto-release removed.
 2. Durable issued-letter bytes / signed URLs on hosted Student Documents.  
 3. Lesotho LGCSE extract + LSL/M application-fee copy (Applicant still Demo/MYR-flavoured bank wording).  
 4. Real Lesotho programmes / intakes / fee amounts (stop Design clones).  

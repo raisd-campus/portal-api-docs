@@ -5,23 +5,31 @@ Expected local root: `~/src/raisd/` (siblings). Machine list also lives in [`rep
 
 | Repository | Local path | Role | Primary SDD | AI knowledge |
 |---|---|---|---|---|
-| [`control-plane`](https://github.com/raisd-campus/control-plane) | `~/src/raisd/control-plane` | Campus config, identity design, Portal API contract (`openapi.yaml`), SDD, **AI knowledge base** | SDD-02, SDD-08, SDD-12 | [`docs/ai/`](../) |
-| [`portal-api`](https://github.com/raisd-campus/portal-api) | `~/src/raisd/portal-api` | Portal API service (Fastify, RPC), image, CI | SDD-02, SDD-08, SDD-12 | [../backend/portal-api.md](../backend/portal-api.md) |
+| [`control-plane`](https://github.com/raisd-campus/control-plane) | `~/src/raisd/control-plane` | Campus config, identity design, Portal API + SSO + Notifications contracts, SDD, **AI knowledge base**, GitOps | SDD-02, SDD-08, SDD-12 | [`docs/ai/`](../) |
+| [`portal-api`](https://github.com/raisd-campus/portal-api) | `~/src/raisd/portal-api` | Portal API microservice (Fastify, RPC) | SDD-02, SDD-08, SDD-12 | [../backend/portal-api.md](../backend/portal-api.md) |
+| [`sso`](https://github.com/raisd-campus/sso) | `~/src/raisd/sso` | SSO identity, channels, sessions, RBAC | SDD-02, CAP-01 | [../backend/sso.md](../backend/sso.md) |
+| [`notifications`](https://github.com/raisd-campus/notifications) | `~/src/raisd/notifications` | Outbound email (CMS noreply) | SDD-02 | [../backend/notifications.md](../backend/notifications.md) |
 | [`applicant-portal`](https://github.com/raisd-campus/applicant-portal) | `~/src/raisd/applicant-portal` | Apply, evidence, track, enrol | [SDD-04](../../sdd/04-applicant-portal.md) | [../frontend/applicant-portal.md](../frontend/applicant-portal.md) |
 | [`student-portal`](https://github.com/raisd-campus/student-portal) | `~/src/raisd/student-portal` | Study, register, pay, results, support | [SDD-05](../../sdd/05-student-portal.md) | [../frontend/student-portal/AGENTS.md](../frontend/student-portal/AGENTS.md) |
 | [`lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) | `~/src/raisd/lecturer-portal` | Materials, attendance, mark, communicate | [SDD-06](../../sdd/06-lecturer-portal.md) | [../frontend/lecturer-portal.md](../frontend/lecturer-portal.md) |
 | [`staff-portal`](https://github.com/raisd-campus/staff-portal) | `~/src/raisd/staff-portal` | Registry, Faculty, Bursary, QA, Marketing | [SDD-07](../../sdd/07-admin-staff-cms.md) | [../frontend/staff-portal.md](../frontend/staff-portal.md) |
-| [`design-system`](https://github.com/raisd-campus/design-system) | `~/src/raisd/design-system` | Shared tokens/components | — | [../design/design-system.md](../design/design-system.md) |
-| [`portal-api-docs`](https://github.com/raisd-campus/portal-api-docs) | `~/src/raisd/portal-api-docs` | Public OpenAPI + Swagger (GitHub Pages) | — | [../backend/portal-api.md](../backend/portal-api.md) |
-| [`db-admin`](https://github.com/raisd-campus/db-admin) | `~/src/raisd/db-admin` | Read-only Neon browser + ERD (CMS/LMS colour legend) | PoC | [vercel-neon-poc.md](vercel-neon-poc.md), [../backend/lms-schema.md](../backend/lms-schema.md) |
+| [`admin-portal`](https://github.com/raisd-campus/admin-portal) | `~/src/raisd/admin-portal` | Raisd Admin — SSO people + full RBAC | SDD-02 | [../frontend/admin-portal.md](../frontend/admin-portal.md) |
+| [`design-system`](https://github.com/raisd-campus/design-system) | `~/src/raisd/design-system` | Shared tokens/components / email templates | — | [../design/design-system.md](../design/design-system.md) |
+| [`portal-api-docs`](https://github.com/raisd-campus/portal-api-docs) | `~/src/raisd/portal-api-docs` | Public OpenAPI + Swagger (GitHub Pages mirror) | — | [../backend/portal-api.md](../backend/portal-api.md) |
+| [`db-admin`](https://github.com/raisd-campus/db-admin) | `~/src/raisd/db-admin` | Read-only DB browser + ERD (CMS/LMS colour legend) | SDD-12 | [vps-topology.md](vps-topology.md), [../backend/lms-schema.md](../backend/lms-schema.md) |
+| [`campus-landing`](https://github.com/raisd-campus/campus-landing) | `~/src/raisd/campus-landing` | Per-campus landing (hostname-pinned) | SDD-12 / pilot | [vps-topology.md](vps-topology.md), [lesotho-pilot.md](lesotho-pilot.md) |
+| [`keychain`](https://github.com/raisd-campus/keychain) | `~/src/raisd/keychain` | Demo login launcher | — | [../frontend/keychain.md](../frontend/keychain.md) |
+
+Service boundaries and call graph: [microservices.md](microservices.md).
 
 ## Ownership rules
 
-- **Control plane** owns authentication/session design, RBAC design, campus configuration, the Portal API **contract** (`openapi.yaml`), platform manifests (Postgres, evidence volume, backups), and this knowledge base.
-- **portal-api** owns the service implementation: handlers, CMS adapters, persistence code, image build, CI, and manifests for its own Deployment. It keeps generated working copies of `docs/ai/backend/portal-api*.md`; the canonical files stay here. Split out of `control-plane/portal-api/` with history on 27 September 2026.
-- **Portal repos** own their web UX, client contracts, and (until Live) mock adapters. They consume the Portal API; they do not embed CMS credentials.
+- **Control plane** owns authentication/session **design**, RBAC design, campus configuration, the Portal API / SSO / Notifications **contracts** (`openapi.yaml`, `openapi-sso.yaml`, `openapi-notifications.yaml`), GitOps (`gitops/`), platform manifests, and this knowledge base.
+- **portal-api** owns the Portal API microservice: handlers, CMS adapters, persistence, image/CI. Canonical agent docs stay here under `docs/ai/backend/portal-api*.md`.
+- **sso** owns identity runtime (channels, sessions, RBAC APIs). **notifications** owns outbound email send.
+- **Portal / admin / landing / keychain repos** own their web UX. They authenticate via SSO and call Portal API (Admin → SSO only). They do not embed CMS credentials or call Notifications.
 - **portal-api-docs** mirrors `control-plane/openapi.yaml` for public browsing. Spec source of truth remains `control-plane/openapi.yaml`.
-- **design-system** owns the versioned `@raisd-campus/design-system` React package. Portals import released components rather than copying them. See [the component library guide](../design/component-library.md).
+- **design-system** owns the versioned `@raisd-campus/design-system` React package and email templates. See [the component library guide](../design/component-library.md).
 
 ## How agents resolve paths
 
@@ -48,14 +56,35 @@ GitHub (no local sibling):
 https://github.com/raisd-campus/control-plane/tree/main/docs/ai
 ```
 
-## Public entry points (target)
+## Public entry points
+
+### Live flat names (SDD-12 target)
 
 | Hostname | Repository | Stage |
 |---|---|---|
 | `apply.raisd.co` | applicant-portal | 1 (SDD-12) |
-| `api.raisd.co` | portal-api | 1 (SDD-12) |
+| `api.raisd.co` | portal-api | 1 (SDD-12) — also served today |
+| `sso.raisd.co` | sso | Demo — identity |
+| `notify.raisd.co` | notifications | Demo — outbound email |
+| `admin.raisd.co` | admin-portal | Demo — SSO admin |
 | `staff.raisd.co` | staff-portal | 2 only if a CMS gap is verified, otherwise 3 |
 | `student.raisd.co` | student-portal | 3 |
 | `teach.raisd.co` | lecturer-portal | 3 |
 
-See [deployment.md](deployment.md) and [portal-api-deployment.md](../backend/portal-api-deployment.md).
+### Demo campus-scoped hosts (current VPS)
+
+| Hostname | Repository |
+|---|---|
+| `{slug}.raisd.co` | campus-landing |
+| `apply.{slug}.raisd.co` | applicant-portal |
+| `student.{slug}.raisd.co` | student-portal |
+| `staff.{slug}.raisd.co` | staff-portal |
+| `teach.{slug}.raisd.co` | lecturer-portal |
+| `api.{slug}.raisd.co` | portal-api (same service as `api.raisd.co`) |
+| `sso.raisd.co` / `notify.raisd.co` / `admin.raisd.co` | sso / notifications / admin-portal |
+| `keychain.raisd.co` | keychain |
+| `docs.raisd.co` | control-plane docs sync |
+| `db-admin.raisd.co` | db-admin |
+| `jenkins.raisd.co` / `argocd.raisd.co` | CI + GitOps (platform) |
+
+Slugs: `lesotho`, `cyberjaya`, `botswana`, `eswatini`, `sierra-leone`, `cambodia`, `uganda`, `namibia` — see [demo-campuses.yaml](demo-campuses.yaml). Topology: [vps-topology.md](vps-topology.md).

@@ -15,7 +15,7 @@ This analysis compares **three planes** for the **applicant / admissions** journ
 |---|---|---|
 | **[A] Newer Lesotho CMS** | Live campus Admin admissions UX | Screenshots (WhatsApp pack); no shared schema |
 | **[B] Older Lesotho CMS** | `campus2_lesotho` LUCT PHPMaker | Structure dump 5 Oct 2026 (`app_*`, online SPs) — dump outside git |
-| **[C] Raisd Applicant portal** | Demo CAP-02/03/07 surface | Prod SPA `532d6f0` on [raisd-applicant-portal.vercel.app](https://raisd-applicant-portal.vercel.app) (Faid `9e007f2` campus + letters); hosted HTTP still gates campus/letters |
+| **[C] Raisd Applicant portal** | Demo CAP-02/03/07 surface | Hosted at [apply.lesotho.raisd.co](https://apply.lesotho.raisd.co) (Faid campus + letters); hosted HTTP still gates campus/letters |
 
 Cyberjaya Process A (Academic → Documents → Personal → Submit) is a **research baseline only**; Lesotho overlays (LGCSE/Sesotho, Loti/M, NMDS later) replace Malaysia EMGS/NOC for M4.
 
@@ -87,7 +87,7 @@ What the standup implied the Applicant surface should support, vs what shipped i
 | Campus selector on apply | Campus required (8 sample campuses incl. Lesotho) on local mock and hosted Demo HTTP | Persist durable campus catalogue beyond Demo seed when Live CMS owns campuses |
 | Applicant types (new / alumni / transfer) | Enum on Study Preferences; Alumni requires trimmed Previous Student ID (local) | Document matrices per type; Transfer vs Alumni evidence rules; Registry exchange path separate |
 | Multi-step apply with documents + fee | Six-step editor + messages + immutable submit | Lesotho LGCSE extract; LSL fee copy; durable uploads on hosted |
-| Eligibility then Offer letters | Local mock + hosted Demo: QA Eligibility → applicant `confirmApplicationEligibility` → Demo auto `release-offer` → guarded `acceptApplicationEnrolment` | Confirm with Registry that Eligibility Letter is Lesotho policy (not Demo-only). Staff portal should own Offer release (replace Demo auto-release) |
+| Eligibility then Offer letters | Local mock + hosted Demo: QA Eligibility → applicant `confirmApplicationEligibility` → Staff `releaseOffer` → guarded `acceptApplicationEnrolment` | Confirm with Registry that Eligibility Letter is Lesotho policy (not Demo-only). Staff owns Offer release (auto-release removed 13 Oct 2026) |
 | Student transition after accept | Local: auto logout → Sign in → Student tab + Documents. Hosted Demo: accept + sign-out work over Portal API | No Live CMS student create yet |
 | Registration menu / enrolled Add-Drop | Not in Applicant portal (Process B = enrolled Student/Registry) | Do not put CY Add/Drop into Applicant; track under Student CAP-10 |
 | Server / API / migration | Hosted Demo RPC includes campus persist + letter confirm/accept (auto Offer release) | Live CMS exchange + Staff-owned Offer release remain backlog |
@@ -148,7 +148,7 @@ Sign-in (Demo accounts) → 6-step editor
 | 2 | Intake + Opt1/Opt2 programmes | Campus + intake + 3 preferences + applicant/student type | **Partial** | Campus selector shipped locally (standup item Done). Lesotho Live must pin real programmes/fees, not Design clones. Hosted must expose campus |
 | 3 | LGCSE extract (Sesotho, cert #, institution) | Generic qualifications + evidence metadata; no LGCSE extract model | **Gap** | Highest Lesotho credential gap — structured extract + campus document types |
 | 4 | Flat Subject1–6 × schools in old schema | Repeated qualification rows + optional English | **Partial** | Raisd shape is richer for UI; Live map must still accept LGCSE extract outputs |
-| 5 | App fee + proof → Bursary VERIFIED (M) | Fee step + bank reference/proof; Bursary verify in Admin Actions | **Partial (Demo)** | Currency must be **LSL/M**, not MYR; Live Bursary + durable file store |
+| 5 | App fee + proof → Bursary VERIFIED (M) | Fee step shows LSL 300 + Bursary-provided transfer desk (no Cyberjaya Maybank); proof upload; Staff/Admin verify | **Partial (Demo)** | Live Bursary account numbers + durable file store still open |
 | 6 | Academic → QA → Registrar recommendations | Progress rows: Bursary → QA → Applicant confirm → Registry offer | **Mismatch (roles)** | CMS staff chain ≠ Raisd’s applicant confirmation between Eligibility and Offer; confirm with Registry whether Eligibility Letter is Lesotho policy or Demo invention |
 | 7 | Rank / overall score in newer review UI | Not modelled | **Gap** | Add Schema + staff surfaces if Admissions Review parity required |
 | 8 | Offer letter (`r_stdofferletter*`) | DEMO Offer Letter PDF after Registry release (local) | **Partial (Demo)** | Official print/sign/QR path remains campus-local Live work |
@@ -188,7 +188,7 @@ Sign-in (Demo accounts) → 6-step editor
 4. **Rank/score** — confirm with Admissions whether required; Schema if yes.  
 5. **Official offer letter** — replace DEMO PDF with campus print/sign path.  
 6. **CMS write-back (CAP-53)** — online app → `app_*` or Schema SoR; Applicant never writes CMS directly.  
-7. **Staff-owned Offer release** — replace Demo Portal API auto-`release-offer` after Eligibility confirm.  
+7. ~~**Staff-owned Offer release**~~ **Done 13 Oct 2026** — Staff `releaseOffer`; no auto-release after Eligibility confirm.  
 8. **Eligibility Letter as product** — validate with Registry; may be Demo-only naming vs CMS “document verified + recommend”.  
 9. **Per-type document matrices** (New / Alumni / Transfer) and Registry **exchange-student** rules (standup open questions).  
 10. **Real Lesotho catalogue** — programmes, fees, intakes (not Design demo clones).
@@ -204,7 +204,7 @@ Ordered backlog for **Applicant** (and its Portal API contract). Staff/Registry 
 | Priority | Work | Owner hint | Notes |
 |---|---|---|---|
 | A1 | Persist `campusId` / `previousStudentId` on Applicant snapshot over HTTP | Portal API + Applicant | **Done** on Demo — campus selector + validation on hosted SPA |
-| A2 | Implement letter workflow methods on Portal API | Portal API | **Done** on Demo — `confirmApplicationEligibility` + auto Offer release + guarded `acceptApplicationEnrolment` |
+| A2 | Implement letter workflow methods on Portal API | Portal API | **Done** on Demo — `confirmApplicationEligibility` + Staff `releaseOffer` + guarded `acceptApplicationEnrolment` |
 | A3 | Durable issued-letter resources (or signed URLs) on hosted Profile/Documents | Portal API + Student | Local mock carries PDF bytes in handoff v2 only |
 | A4 | Staff portal owns Offer release (replace Demo auto-release) | Staff + Portal API | Demo shortcut remains until Staff command ships |
 

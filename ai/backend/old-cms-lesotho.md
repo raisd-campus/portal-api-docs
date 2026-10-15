@@ -6,6 +6,8 @@
 **Screenshot re-share (5 Oct 2026, 15:18):** Aslam attached 18 Lesotho UI photos — **byte-identical** to the 3 Oct Faid set (MD5 match; no new surfaces). Feature analysis unchanged; provenance only.\
 **Diagram analysis:** [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html).  
 **Database gap (proxy → dump):** [lesotho-db-gap.md](lesotho-db-gap.md) · Pages [`#db-gap`](../../diagrams/old-cms-lesotho/index.html#db-gap).  
+**CMS vs Applicant portal (8 Oct 2026):** [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) · Pages [`cms-vs-applicant.html`](../../diagrams/old-cms-lesotho/cms-vs-applicant.html).  
+
 **Old CMS dump:** **Received and inventoried (5 Oct 2026)** — Vara Drive pack  
 `CMS_Lesotho_Source_Codes_&_DB_Structure_09_10_2026.zip`  
 (`https://drive.google.com/file/d/1Kgo43-vYpEpTyAg-6B-toAA6cdu3Wtjo/view?usp=sharing`).  
@@ -119,6 +121,7 @@ Vara Drive pack (5 Oct 2026): DB **`campus2_lesotho`** — **369** tables / **35
 |---|---|
 | Lesotho pilot approach | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Database gap (proxy) | [lesotho-db-gap.md](lesotho-db-gap.md) |
+| CMS vs Applicant portal | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |
 | Diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
 | Obsidian 3D | [`docs/diagrams/old-cms/obsidian.html?campus=lesotho`](../../diagrams/old-cms/obsidian.html?campus=lesotho) |
 | Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |

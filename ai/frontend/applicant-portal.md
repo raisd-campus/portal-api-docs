@@ -6,7 +6,7 @@
 
 ## Status
 
-A validated ApplicantPortalApi is implemented with shared package 0.6.2. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). See [mock API and validation](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
+A validated ApplicantPortalApi is implemented with released shared package 0.8.0. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). See [mock API and validation](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
 
 ## Agent rules
 
@@ -35,7 +35,7 @@ Detail, SLAs (24h confirm / 2–3 day Registrar / 14-day completion), evidence m
 
 ## Submitted application UI preview — 1 October 2026
 
-The working Applicant UI pins shared package 0.6.2. Without `VITE_PORTAL_API_URL` this is session-only mock behaviour. Hosted Demo builds wire the same `ApplicantPortalApi` over HTTP to Portal API. Saved serializable snapshots/conversations and revision/read/response state belong to the API adapter; original File objects and previews belong to its browser resource adapter. Message drafts remain portal-owned across navigation; mock refresh still resets the session. Existing draft and checklist flows remain independent.
+The working Applicant UI pins released shared package 0.8.0. Without `VITE_PORTAL_API_URL` this is session-only mock behaviour. Hosted Demo builds wire the same `ApplicantPortalApi` over HTTP to Portal API. Saved serializable snapshots/conversations and revision/read/response state belong to the API adapter; original File objects and previews belong to its browser resource adapter. Message drafts remain portal-owned across navigation; mock refresh still resets the session. Existing draft and checklist flows remain independent.
 
 - `/applications/:applicationId` shows **My Applications → Application Details**. Draft cards still open `/edit`; submitted cards open the detail route. Unavailable IDs show an unavailable state and a return action; submitted records cannot reopen the editor.
 - The shared `PagePanelLayout` groups the review summary and five step accordions with its standard inset, matching Student's enclosing panel. Application Messages remains below the panel. The shared `SummaryCard` keeps its orange `warning` surface during review, including when a reviewer reply is required; **Action Required** is conveyed by its title and orange status badge; the list card uses the same warning tone. It contains reference, review stage/status, programme and dates, plus a shared application-progress `DataTable`. The table sits in `SummaryCard.footerContent`, retaining the divider above it, and contains four ordered **Application Progress** steps with **Step**, **Department**, **Status** and **Update** columns: Bursary payment proof, Quality Assurance documents/Eligibility release, applicant confirmation, and Registry Offer release. Eligibility release keeps the overall summary orange and Under review; final acceptance completes it. Operational Live routing remains an integration responsibility. The active review stage is **Under review**; the other row is **Pending review**. Payment proof shows its filename or **Not provided**; Document Check shows **Awaiting review**. Individual submitted files remain in the read-only step accordions. Phone uses the table's documented compact-card presentation.
@@ -51,6 +51,10 @@ Verification uses the full automated gate and responsive browser review. Automat
 ## Related CAP focus
 
 Admissions and identity capabilities in [SDD-11](https://github.com/raisd-campus/control-plane/blob/main/docs/sdd/11-capability-catalog.md) (see Applicant rows). CAP-53 is on the critical path for Live.
+
+## Application fee transfer desk — 13 October 2026
+
+Removed launch-blocking demo payment chrome on the admissions fee step (payment ready for Bursary verification). Lesotho no longer shows Cyberjaya Maybank details or MYR sample fees; it shows LSL 300.00 and instructs applicants to use campus Bursary transfer details. Cyberjaya retains its Maybank desk. Student Finance How to Pay no longer labels the account as fictional.
 
 ## Development Admin Actions — 5 October 2026
 
@@ -103,3 +107,56 @@ DEV next-login delivery uses bounded envelope v3, preserving admissions snapshot
 ## Applicant–Student synchronization — 12 October 2026
 
 The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.
+
+
+## Shared UI/CSS ownership — 13 October 2026
+
+Applicant now composes the local 0.7.0 WizardStepPanel/DocumentActions and uses opt-in shared SurveyLayout compact phone and DetailSectionCard stacked-header variants. Global component CSS belongs to the package; document overflow stays local. All drafts, validation, issued PDF bytes/URL cleanup, stage transitions, messages and session transport remain Applicant-owned. See [page-by-page audit](../design/2026-10-13-portal-ui-ownership-audit.md). No release/pin/deployment change.
+
+
+## Student and Applicant read-only file adoption - 14 October 2026
+
+The owner approved applying the existing shared FileUploadField read-only container refinement to Student and Applicant. Both local node_modules installations now use the same complete packed 0.7.0 candidate as Lecturer; tracked manifests and lockfiles retain released 0.6.2 pins. Read-only fields omit the outer dashed border, padding and upload minimum height; existing cards, filenames, sizes and empty text remain. Editable and temporarily disabled editable fields retain their existing frame and selection/removal controls. No portal CSS override, feature/API/schema change, package publication or deployment is introduced. A fresh npm ci still restores the released pin until candidate publication and consumer upgrades are approved.
+
+| Portal / upload surface | Existing owner | Audit result |
+| --- | --- | --- |
+| Student Online Forms (including Immigration-owned forms) | FormFields → shared FileUploadField | Drafts remain editable; submitted forms pass readOnly. Read-only file metadata/no-selection regression passed; actual seeded empty state uses the frame-free rule. Multiple-file selection, limits, accessible labels, autosave footer and draft navigation retained. |
+| Student Finance transfer proof | FinanceProofPicker → shared FileUploadField | Editable/replacement and pending-disabled states retain the frame; review summaries use ordinary metadata rows, without a duplicate upload frame. Existing proof validation and review behavior retained. |
+| Student assignment submission | AssignmentSubmissionPanel workflow | Specialized selected/submitted/closed states remain workflow-owned; no duplicated shared dashed read-only upload frame. PDF/ZIP, one file, 50 MiB, deadline and confirmation controls unchanged. |
+| Student Portfolio artwork | PortfolioArtworkPicker workflow | Image-first editable picker and read-only project preview remain distinct media presentation; no generic read-only upload frame or CSS override. Resource/preview cleanup unchanged. |
+| Student Profile identity / Documents / issued letters | FileLink / LinkedList / DocumentActions | These are document navigation/delivery patterns, not upload containers. Existing availability, original-byte delivery and placeholder boundaries unchanged. |
+| Applicant Academic Qualifications | DocumentField → shared FileUploadField | Transcripts, certificates and English evidence retain editable frames, remove/replace controls, validation and conditional records. |
+| Applicant Documents | DocumentField → shared FileUploadField | Identity, portfolio, transfer and conditional supporting evidence share the same editable field; no portal-specific container styling. |
+| Applicant Application Fee | shared FileUploadField | Transfer proof keeps editable frame and remove/replace controls; original policy and save/submission workflow retained. |
+| Applicant submitted academic, documents and fee accordions | FileField → shared FileUploadField readOnly in DetailField value | All six populated sample file rows measured border/padding 0px/0px with no selection/removal controls. Label/value alignment and metadata remain. |
+| Student / Applicant messages | Shared chat attachment presentation | Separate existing attachment tiles/composers keep their limits, preview/download behavior and session ownership. |
+
+All directly shared editable fields measured border/padding 1px/16px. Actual read-only and editable page captures at 375, 768 and 1440px show no horizontal overflow. Student synthetic draft/file retained across navigation; no manual test submission was performed. Automatic approval review rejected the attempted manual Demo submission because it would lock the draft beyond the inspection scope; existing submitted records and the already-existing read-only component regression provide the safe verification path. Applicant's full gate passed 65 unit/component tests and 70 browser cases. Student's final full-gate outcome is recorded below after completion. Shared source/artifact is unchanged from the previously verified 18-unit/32-browser candidate. Lecturer aggregate verification remains on hold.
+
+Final verification - 14 October 2026: Student completed token/assets/lint, 797 unit tests, TypeScript/build/production-exclusion/bundle gates and 278 Chromium cases with 46 intentional skips using its existing CI=true resource budget and PLAYWRIGHT_WORKERS=2. That check:all invocation exited nonzero after WebKit passed 40 cases and hit one tablet Personal Profile loading-readiness timeout before checking layout. A subsequent two-worker WebKit run passed that case but hit the existing desktop workflow Space-checkbox check (40 passed, 31 skipped). Each unchanged case passed three isolated retries. The complete unchanged one-worker WebKit rerun then passed 41 cases with 31 intentional skips. All required constituent checks passed, but no uninterrupted Student aggregate success is claimed. Applicant npm run check:all passed 65 unit/component tests and 70 browser cases. Earlier Student attempts hit a sandbox temporary-cache EPERM before tests and an Immigration journey exceeding the ordinary 5-second budget during concurrent load; no source/test changes were made for these retries. Existing Applicant chunk-size, jsdom Window.open and Vite configuration/color-environment advisories remain. Twelve actual responsive consumer captures, package artifact equality, mirror equality and scoped whitespace checks pass. No source/API/schema changes were needed for this style adoption; existing uncommitted work, released pins, publication/deployment boundaries and Lecturer aggregate hold are preserved.
+
+
+## Released shared 0.7.0 adoption - 14 October 2026
+
+The owner published @raisd-campus/design-system 0.7.0 directly to GitHub Packages after hosted Actions were blocked by billing. Fresh registry metadata matches the verified release archive from shared source commit e1ddc3738c5d5b27447e1c8ae9e45719547b13a3 and tag v0.7.0. Student, Applicant and Lecturer now pin exactly 0.7.0 in their manifests and lockfiles and install the registry release; all 260 installed package files match the tested archive. Only the shared dependency entry changes; unrelated dependency pins and existing uncommitted source work are preserved. The released package includes shared Community presentation, portal-neutral patterns and global control rules, three-tab responsive scrolling, per-file action slots and frame-free read-only file fields. Save feedback remains in PageActionBar.leading; header Add actions use a primary button with its leading icon. The previous candidate/publication-pending notes describe historical preparation, not the current installed version. The three existing portal Vite servers were restarted on 5173/5174/5175 to release Windows native-module locks and activate the installed release. API/data contracts and persistence do not change. Lecturer aggregate verification remains on hold. No portal deployment, API restart or migration is included.
+
+
+## Released-package verification - 14 October 2026
+
+Student npm run check:all passed against the registry-installed 0.7.0: token/assets/lint, 797 unit tests, TypeScript/build, production exclusion and bundle budgets, 278 Chromium cases with 46 intentional skips, and 41 WebKit cases with 31 intentional skips. The unchanged browser suites used PLAYWRIGHT_WORKERS=1 and the existing CI=true unit budget. Applicant npm run check:all passed on the complete unchanged rerun: 65 unit/component tests and 70 browser cases. The first Applicant run passed 69 browser cases but missed the phone navigation action in the save/retry case; the existing leave-application suite subsequently passed 14 cases across all seven browser/viewport projects before the clean full-gate rerun. No source or test assertions changed for retries. Lecturer lint, canonical demo:check, TypeScript/build, 54 focused Vitest cases and two Node roster-projection cases passed; its aggregate gate remains held. Browser checks at actual 375/768/1440 widths confirmed Lecturer Materials, pointer cursors on all three tabs and contained file details; Applicant read-only file presentation also remained within those bounds. The package receipt and all 260 installed files match the verified published archive in every portal. Only the root shared pin and its package entry differ from each pre-upgrade lockfile; unrelated pins and source work remain. Both local catalogue copies validate all 188 captures, preserving historical provenance and adding 18 reviewed shared captures. Canonical guidance and affected mirrors are identical. The existing Vite/colour, jsdom Window.open and Applicant/Lecturer chunk-size advisories remain. npm reported existing audit findings (Student 15, Applicant one, Lecturer six); no dependency fixes were applied outside the approved pin update. The three local Vite servers respond HTTP 200 on their original ports. Portal edits and broader pre-existing documentation work remain local and uncommitted. Release-only catalogue sources and minimal versioned guidance were published from clean isolated checkouts, preserving newer remote changes and the current docs.raisd.co site chrome. Canonical catalogue commit a646104d96469fe6ff15bb62187f12c2cb6b921f and public mirror commit 7485fa9566f526095b8dea0292b2eca39737334e are pushed. The live docs host still reports catalogue 0.6.2; its 25-file static promotion is prepared separately and has not been performed under the existing no-deployment boundary. No portal deployment, API restart or migration is claimed.
+
+## Shared package upgrade — 15 October 2026
+
+Applicant pins registry 0.8.0 with the approved shared accordion refinement.
+AuditTrail is available but no new Applicant audit workflow is introduced. All
+263 installed files match the published archive; unrelated dependency pins are
+unchanged. The post-upgrade full gate passed 65 units and 70 browser cases, plus lint,
+production build and exclusions. See the Classrooms/Materials verification receipt. Local server 5174 is preserved; no Applicant deployment.
+
+## Upstream integration verification — 16 October 2026
+
+The current Classrooms/Materials source publication integrates upstream SSO/email
+login with explicit Demo identity binding and a single StrictMode code exchange.
+See the [campus integration receipt](student-portal/audits/2026-10-16-campus-integration-publication.md)
+for per-repository gates, canonical mirrors and Jenkins/Argo delivery boundaries.
+No manual hosted rollout or local user-service reset is included.

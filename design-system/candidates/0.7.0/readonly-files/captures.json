@@ -1,0 +1,32 @@
+{
+  "package": "@raisd-campus/design-system",
+  "version": "0.7.0",
+  "releaseStatus": "unpublished candidate",
+  "owner": "design-system",
+  "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+  "sourceState": "uncommitted candidate",
+  "capturedOn": "2026-10-14",
+  "captures": [
+    {
+      "file": "shared-readonly-375.jpg",
+      "width": 375,
+      "height": 900,
+      "sha256": "d05d744e725be5c565e03c6b677a6920336b3eea963313f6452623f32303c837",
+      "sourceRoute": "http://127.0.0.1:4194/?files&readonly"
+    },
+    {
+      "file": "shared-readonly-768.jpg",
+      "width": 768,
+      "height": 1000,
+      "sha256": "329a85c88336d905f1f2ac55211141d4373524e66830dcfbdbfba04044584529",
+      "sourceRoute": "http://127.0.0.1:4194/?files&readonly"
+    },
+    {
+      "file": "shared-readonly-1440.jpg",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "df635007753ffc5b46dd403a81a9a31a0e65f42b4902789e6668c0e90e90bcae",
+      "sourceRoute": "http://127.0.0.1:4194/?files&readonly"
+    }
+  ]
+}

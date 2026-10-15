@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-12
+updated: 2026-10-15
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,26 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-15: Microservice architecture catalogue for all services (Portal API, SSO, Notifications, portals, platform) — architecture/microservices.md + architecture.html#services; SDD-02 logical diagram updated.
+  - 2026-10-15: Argo Applications for every raisd-campus deployable (portals, portal-api, db-admin, docs, design-system/portal-api-docs markers) under gitops/apps/; shared campus-multi Ingress in portal-static. Docs: architecture/argocd.md.
+  - 2026-10-15: Jenkins per-repo jobs `raisd-<repo>` + push webhooks for all raisd-campus repos (main-only filter); sync via gitops/bootstrap/sync-jenkins-jobs.sh. Docs: architecture/cicd.md.
+  - 2026-10-15: Argo CD login Keychain — ingress → argocd-keychain-proxy injects docs keychain-access.js into SPA shell; catalog Open filled for admin. Docs: frontend/keychain.md + architecture/argocd.md.
+  - 2026-10-15: Jenkins login Keychain — nginx keychain-proxy injects docs keychain-access.js on /login (simple-page); Simple Theme for authenticated pages. Docs: frontend/keychain.md + architecture/cicd.md.
+  - 2026-10-15: Jenkins builds GHCR images (Kaniko) for keychain/sso/notifications — no GitHub Actions image workflows. Docs: architecture/cicd.md.
+  - 2026-10-15: Keychain on Jenkins + Argo — GHCR `ghcr.io/raisd-campus/keychain:main`, gitops/apps/keychain, Jenkins build/refresh/rollout. Docs: frontend/keychain.md + architecture/cicd.md.
+  - 2026-10-15: CI/CD — Jenkins at jenkins.raisd.co builds images + deploys on GitHub push to main only (Generic Webhook + ci/Jenkinsfile); Argo CD syncs gitops. Docs: architecture/cicd.md + architecture/argocd.md.
+  - 2026-10-15: Argo CD GitOps (gitops/) — GHCR images for sso/notifications/keychain; SSH/rsync becomes bootstrap+fallback; recover-sshd.sh opens port 2222. Docs: architecture/argocd.md.
+  - 2026-10-15: Design-system email templates (magic_link, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic) — design-system/email + docs/design-system/email-templates.html; notifications POST /v1/send/template; SSO + Portal API callers.
+  - 2026-10-15: Notifications service at notify.raisd.co — CMS noreply@raisd.co via mail.raisd.co; docs/ai/backend/notifications.md + openapi-notifications.yaml; SSO magic links call it when NOTIFY_* set.
+  - 2026-10-15: Admin portal at admin.raisd.co — full SSO RBAC; Staff learner-access desk only; Portal API auto-provisions applicant/student on apply/enrol.
+  - 2026-10-15: SSO Demo service (email magic link + RBAC) at sso.raisd.co — docs/ai/backend/sso.md, openapi-sso.yaml, repo raisd-campus/sso. Portal API introspects SSO tokens; landing role picker.
+  - 2026-10-15: Neon Demo project muddy-frog-75049472 deleted (Vercel Neon store raisd-portal-api-poc removed; Neon/Postgres env stripped from Vercel portal-api + db-admin). Legacy *.vercel.app redirect stubs retained. Demo DB SoT remains UltaHost VPS Postgres.
+  - 2026-10-14: Multi-campus Demo on UltaHost k3s — eight campus-scoped landings/portals, VPS Postgres, Cloudflare A→VPS; architecture/vps-topology.md + architecture.html#vps. Former Vercel+Neon PoC retired.
+  - 2026-10-13: Student/Applicant page-by-page UI audit centralizes shared global CSS and neutral presentation in unpublished 0.7.0; adapters/records unchanged, Lecturer aggregate hold retained.
+  - 2026-10-13: Lecturer defaults to browser mock without an API URL; generated canonical Student/API presentation snapshot, session isolation and local Community files, same shared UI, focused checks only; hosted builds require HTTP.
+  - 2026-10-13: Lecturer getModuleDetails adds an authenticated canonical read for exact-offering timetable and avatar/student-ID/semester roster; Year omitted, schema 4 unchanged, focused verification and owner-approved local memory API restart only.
+  - 2026-10-13: Lecturer Modules first milestone uses existing shared LinkedList cards, offering overview and exact student roster; existing Community reads only, Dashboard empty, focused Lecturer verification only.
+  - 2026-10-12: Shared Community 0.7.0 candidate and paired Student-Lecturer Demo chat prepared locally; publication, release pinning, hosted migration and deployment await explicit instructions.
   - 2026-09-23: Cyberjaya old CMS dump inventoried; CAP comparison at backend/cms-feature-comparison.md (SDD-14).
   - 2026-09-25: Cyberjaya E2E hub deepened (flows, ERD, DFD, integrations, three-campus comparison); satellite pages redirect to hub anchors.
   - 2026-09-23: SDD-15 nomenclature — CAP-* and M1–M5 anchors/cross-links (../sdd/15-nomenclature.md).
@@ -20,7 +40,7 @@ notes:
   - 2026-09-24: Distributed CMS target (one product, country data planes, white-label/flags) — architecture/distributed-cms-target.md + diagrams/distributed-cms-architecture.html.
   - 2026-09-26: FSD Obsidian 3D knowledge graph (breakdown / walkthrough / click) — diagrams/old-cms/obsidian.html + fsd-knowledge.json; LUCT CMS campus submenus.
   - 2026-10-07: Obsidian 3D FSD for Eswatini + Cambodia — fsd-knowledge-eswatini.json / fsd-knowledge-cambodia.json; ?campus=eswatini|cambodia.
-  - 2026-09-27: PoC Vercel + Neon deploy path (SPA + Portal API + free Postgres) — architecture/vercel-neon-poc.md; does not replace SDD-12.
+  - 2026-09-27: Early hosted Demo path (later retired 14 Oct 2026 in favour of UltaHost k3s — see architecture/vps-topology.md).
   - 2026-09-27: Published HTML Primary nav + design-system subnav derive from docs/site-nav.yaml (build-dropdown-nav.py).
   - 2026-09-27: Portal API service split into raisd-campus/portal-api (history kept); openapi.yaml stays here. Added development plan, target deployment and PoC requirements under backend/.
   - 2026-10-01: Canonical record schema reviewed against LUCT reporting issues; proposed changes at backend/canonical-schema-luct-readiness.md. ERD generated columns now come from the Zod contract, not seed rows.
@@ -54,7 +74,9 @@ notes:
   - 2026-10-09: Follow-up — reviewable contracts/campus-finance-profiles.yaml (C1–C10 + LS/SZ/KH); CAP-53 W1 online-enrolment write path (backend/lesotho-cap53-online-enrolment-write.md + cap53-online-enrolment.html).
   - 2026-10-10: Standup 9 Oct — dynamic fee-calculation proposal (backend/dynamic-fee-calculation.md + Pages); weekly progress pack docs/reports/weekly-progress-2026-10-10/.
   - 2026-10-10: Cross-campus fee amount suggestions from SP/DB/process — backend/cross-campus-fee-amount-suggestions.md + diagrams/old-cms/cross-campus-fee-amounts.html (LS/SZ/KH hardcodes).
+  - 2026-10-14: DVD application-fee share → JS fee-calculation simulation on Pages (backend/fee-calculation-simulation.md + diagrams/old-cms/fee-calculation-simulation.html).
   - 2026-10-10: Weekly reports hub on Pages — docs/reports/index.html + weekly/W01–W04 (18 Sep–10 Oct); primary nav Weekly reports.
+  - 2026-10-12: Lecturer local UI scaffold uses shared 0.6.2 shell, empty Dashboard and empty Community panel; materials direct route retained; no deployment.
   - 2026-10-11: Staff portal Demo shell — applicant/student status + payment verification (session store); docs/ai/frontend/staff-portal.md.
   - 2026-10-11: Demo keychain launcher — Open filled postMessage into student/applicant/staff sign-in; docs/ai/frontend/keychain.md.
   - 2026-10-10: Refresh W04 / weekly-progress-2026-10-10 through morning cut — hosted Demo API enablement, cross-campus fee amounts, Weekly reports hub.
@@ -73,6 +95,7 @@ sibling_repos:
   - student-portal
   - lecturer-portal
   - staff-portal
+  - admin-portal
   - keychain
   - portal-api
   - design-system
@@ -81,7 +104,11 @@ sibling_repos:
 
 architecture:
   - path: architecture/overview.md
-    topics: [adr-1, portals, portal-api, cms, lesotho, cyberjaya]
+    topics: [adr-1, portals, portal-api, sso, notifications, cms, lesotho, cyberjaya]
+  - path: architecture/microservices.md
+    topics: [microservices, sso, notifications, portal-api, portals, gitops, boundaries, contracts]
+    pages: ../diagrams/architecture.html
+    note: Service map for every raisd-campus deployable — 15 Oct 2026.
   - path: architecture/lesotho-pilot.md
     topics: [lesotho, pilot, m4, product-priority, migration, screenshots, eswatini]
     related:
@@ -104,10 +131,37 @@ architecture:
     topics: [repo-map, local-paths, ownership]
   - path: architecture/deployment.md
     topics: [ultaHost, k3s, stages, hostnames]
-  - path: architecture/vercel-neon-poc.md
-    topics: [poc, vercel, neon, postgres, marketplace, student-portal, portal-api]
+  - path: architecture/vps-topology.md
+    topics: [vps, ultahost, k3s, traefik, postgres, dns, cloudflare, campus, topology]
+    pages: ../diagrams/architecture.html
+  - path: architecture/cicd.md
+    topics: [cicd, jenkins, webhook, main, deploy, ghcr, argocd, github]
+    code: https://github.com/raisd-campus/control-plane/blob/main/ci/Jenkinsfile
+    note: Live 15 Oct 2026 — jenkins.raisd.co; main-only Generic Webhook Trigger.
+  - path: architecture/argocd.md
+    topics: [argocd, gitops, ghcr, deploy, ssh, bootstrap, jenkins]
+    code: https://github.com/raisd-campus/control-plane/tree/main/gitops
+    note: Installed 15 Oct 2026 — argocd.raisd.co; day-to-day trigger via cicd.md.
+  - path: architecture/demo-campuses.yaml
+    topics: [campuses, dns, hostnames, cors, catalogue]
 
 backend:
+  - path: backend/sso.md
+    topics: [sso, identity, rbac, magic-link, auth, channels, cap-01]
+    openapi: ../../openapi-sso.yaml
+    code: https://github.com/raisd-campus/sso
+    local_code: ../../../sso/
+    note: Demo 15 Oct 2026 — email magic link enabled; other channels stubbed.
+  - path: backend/notifications.md
+    topics: [email, smtp, notifications, noreply, cms, deliverability]
+    openapi: ../../openapi-notifications.yaml
+    code: https://github.com/raisd-campus/notifications
+    local_code: ../../../notifications/
+    note: Demo 15 Oct 2026 — CMS noreply@raisd.co via mail.raisd.co; host notify.raisd.co.
+  - path: backend/classrooms.md
+    topics: [classrooms, lecturer, student, attendance, submissions, feedback, teaching-logs, memory-demo, local-verification, local-activation]
+  - path: backend/community-chat.md
+    topics: [community, shared-ui, lecturer, student, paired-chat, demo, attachments, membership, persistence, migration, candidate-0.7.0, desktop-resize, composer-inset]
   - path: backend/portal-api.md
     topics: [openapi, auth, mock-bridge, cms-stub, repo-layout]
     openapi: ../../openapi.yaml
@@ -118,8 +172,9 @@ backend:
   - path: backend/portal-api-deployment.md
     topics: [portal-api, deployment, k3s, image, ghcr, probes, env, ci-cd, rollback, sdd-12]
   - path: backend/portal-api-poc-requirements.md
-    topics: [portal-api, poc, vercel, neon, requirements, acceptance, sessions]
-    related: architecture/vercel-neon-poc.md
+    topics: [portal-api, retired, stub]
+    related: architecture/vps-topology.md
+    note: Retired 14 Oct 2026 — VPS Demo replaces former hosted PoC.
   - path: backend/canonical-schema-luct-readiness.md
     topics: [canonical-schema, portal-records, erd, luct, study-period, credits, identifiers, rbac, finance, reporting, active-student, cap-53, m5, confirmations]
     status: partially-implemented
@@ -203,8 +258,17 @@ backend:
       - contracts/campus-finance-profiles.yaml
       - backend/applicant-qr-fee-mechanisms.md
       - backend/cross-campus-fee-amount-suggestions.md
+      - backend/fee-calculation-simulation.md
     pages: ../diagrams/old-cms-lesotho/dynamic-fee-calculation.html
     note: Standup 9 Oct — proposed configurable fee engine; Dexter validates C1–C10 before final config.
+  - path: backend/fee-calculation-simulation.md
+    topics: [finance, fee, simulation, application, visa, sst, standup, review, multi-campus]
+    related:
+      - backend/dynamic-fee-calculation.md
+      - backend/cross-campus-fee-amount-suggestions.md
+      - contracts/campus-finance-profiles.yaml
+    pages: ../diagrams/old-cms/fee-calculation-simulation.html
+    note: Standup 13 Oct / WA 14 Oct — DVD application-fee HTML shared; JS simulation + review suggestions on Pages.
   - path: backend/cross-campus-fee-amount-suggestions.md
     topics: [finance, fee, amount, currency, lesotho, eswatini, cambodia, botswana, sierra-leone, hardcode, multi-campus]
     related:
@@ -401,9 +465,12 @@ frontend:
   applicant-portal: frontend/applicant-portal.md
   lecturer-portal: frontend/lecturer-portal.md
   staff-portal: frontend/staff-portal.md
+  admin-portal: frontend/admin-portal.md
   keychain: frontend/keychain.md
 
 design:
+  - path: design/2026-10-13-portal-ui-ownership-audit.md
+    topics: [ui-audit, shared-css, pointer, responsive, component-ownership, candidate]
   - path: design/design-system.md
     topics: [tokens, components, dark-theme, summary-card]
   - path: design/component-library.md
@@ -464,3 +531,19 @@ applicant_student_sync_audit:
     topics: [owned-evidence, chunk-upload, continuation-grant]
   - path: frontend/student-portal/audits/2026-10-12-cross-portal-sync-ui-audit.md
     topics: [ui-audit, shared-062, evidence-matrix, verification]
+
+reusable_materials_demo:
+  - path: backend/reusable-materials.md
+    topics: [materials, read-only, teaching-week-release, memory-demo, version-history, admin-deferred]
+  - path: contracts/reusable-materials.ts
+    topics: [materials-contract, relative-schedules, file-chunks, version-history]
+
+classrooms_demo:
+  - path: contracts/classrooms.ts
+    topics: [classrooms-contract, attendance, original-submissions, published-feedback, memory-demo]
+
+  - path: frontend/student-portal/audits/2026-10-15-classrooms-materials-verification.md
+    topics: [verification, classrooms, materials, audit-trail, isolated-browser, release-boundary]
+
+  - path: frontend/student-portal/audits/2026-10-16-campus-integration-publication.md
+    topics: [publication, upstream-integration, sso, classrooms, ci-review, verification]

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- canonical host --><script>(function(){try{var h=location.hostname;if(h==="raisd-campus.github.io"||h==="github.io"){var p=location.pathname.replace(/^\/portal-api-docs/,"")||"/";location.replace("https://docs.raisd.co"+p+location.search+location.hash)}}catch(e){}})()</script>
   <meta charset="utf-8" />
   <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -484,8 +483,192 @@ acceptance sign-off.</p>
 <p>Architecture: <a
 href="02-architecture-and-integration.html">SDD-02</a>. Open questions:
 <a href="10-open-questions.html">SDD-10</a>.</p>
-<section id="local-admissions-profile-increment"><h2>Local admissions/profile increment — 5 October 2026</h2><p>Applicant&#x27;s existing draft/submission/messages flow now uses a validated session-only mock Portal API. Student schema v4 aligns Personal, Academic and Documents through an explicitly accepted, versioned handoff; submission alone never enrols a student. Shared UI remains 0.6.1. Lesotho is the acceptance-pilot priority; existing Malaysian sample rules are retained without asserting Lesotho policy. Details: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md">Applicant mock API</a>, <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-handoff.md">accepted handoff and backend prerequisites</a>. Automated local gates do not establish hosted HTTP, physical-device or CMS integration. No hosted reseed is authorized by this increment.</p></section>
-  <section id="document-sync-20261012"><h2>Prepared original-document synchronization — 12 October 2026</h2><p>Original uploads and applicant-specific Student continuation are prepared and verified locally behind Demo capabilities. No hosted migration or deployment was performed. Admissions v2, DEV transport v3, Student schema 4 and shared 0.6.2 remain. The Bursary shortcut stays On hold.</p><p><a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md">Contracts, evidence mapping and deployment prerequisites</a></p></section></main>
+<h2 id="local-admissionsprofile-increment-5-october-2026">Local
+admissions/profile increment — 5 October 2026</h2>
+<p>Applicant’s existing draft/submission/messages flow now uses a
+validated session-only mock Portal API. Student schema v4 aligns
+Personal, Academic and Documents through an explicitly accepted,
+versioned handoff; submission alone never enrols a student. Shared UI
+remains 0.6.1. Lesotho is the acceptance-pilot priority; existing
+Malaysian sample rules are retained without asserting Lesotho policy.
+Details: <a
+href="../ai/frontend/applicant-portal/mock-api.html">Applicant mock
+API</a>, <a href="../ai/backend/admissions-handoff.html">accepted
+handoff and backend prerequisites</a>. Automated local gates do not
+establish hosted HTTP, physical-device or CMS integration. No hosted
+reseed is authorized by this increment.</p>
+<h2 id="hosted-applicant-demo-http-and-schema-v4-7-october-2026">Hosted
+Applicant Demo HTTP and schema v4 — 7 October 2026</h2>
+<p>Portal API Demo hosts Student schema <strong>4</strong> and Applicant
+Demo HTTP (<code>/v1/auth/applicant/login</code>,
+<code>/v1/applicant/:method</code>) with VPS Postgres-backed applicant
+state. Hosted Applicant uses <code>VITE_PORTAL_API_URL</code>; local
+Applicant without that URL remains session-only mock.
+<code>CORS_ORIGIN</code> allows campus-scoped portal origins and GitHub
+Pages. Live CMS admissions and durable evidence storage remain future
+work. Details: <a href="../ai/backend/portal-api.html">Portal API</a>,
+<a href="../ai/architecture/vps-topology.html">VPS topology</a>.</p>
+<h2 id="campus-selection-and-issued-letters-7-october-2026">Campus
+selection and issued letters — 7 October 2026</h2>
+<p>Current local mock workflow supersedes the earlier one-confirmation
+acceptance increment. Shared UI stays at 0.6.2. Hosted Applicant Demo
+HTTP authentication and supported methods remain intact; <strong>new
+campus inputs, QA/Registry letters and final enrolment acceptance are
+not supported by the hosted server yet</strong>. Final acceptance is
+gated there rather than calling the old one-stage operation. No Portal
+API service, database or deployment is changed by this increment.</p>
+<p>Step 2 requires Campus (Lesotho, Cyberjaya, Botswana, Eswatini,
+Sierra Leone, Cambodia, Uganda, Namibia). Alumni additionally requires a
+trimmed Previous Student ID. A campus change clears dependent
+preferences. Drafts remain saveable when incomplete. English Language
+Results are optional for every sample programme; populated rows must be
+valid. All eight campuses expose the existing Design curriculum as
+<strong>demo content</strong>, not verified campus offerings, fees or
+admissions policy. Selected campus metadata and frozen intake reference
+are retained through acceptance and Student bootstrap.</p>
+<p>Payment Proof is reviewed by <strong>Bursary</strong>; Document Check
+by <strong>Quality Assurance</strong>. QA Verify Documents validates the
+submitted snapshot and atomically releases a generated
+<strong>Eligibility Letter</strong> PDF. The applicant’s <strong>Confirm
+and Continue Enrolment</strong> popup shows the intake, faculty and
+programme and preview/download actions. Confirmation records intent
+without logout or Student provisioning. Registry’s <strong>Release Offer
+Letter</strong> is enabled only afterwards. The final <strong>Accept
+Enrolment</strong> popup previews/downloads that Offer Letter. Only
+successful final acceptance triggers automatic logout; the applicant
+clicks Sign in to open the existing Student tab. Cancel changes nothing.
+Saving disables confirmation and dismissal; failure retains data and
+allows retry. Logout failure can be retried independently of acceptance.
+All writes retain ownership, revision, session and request-id
+guards.</p>
+<p>Generated PDFs are prominently labelled DEMO, not official university
+letters, and contain the application reference, applicant, campus,
+intake, faculty, programme and release date. Original Unicode names
+remain canonical; the demo PDF’s standard font uses a safe ASCII
+transliteration with replacement for unsupported glyphs. QA/Registry
+letters, releases and confirmations live outside the immutable submitted
+snapshot and are distinct from applicant-uploaded eligibility evidence.
+Release creates no automatic conversation or unread messages.
+Approved/accepted conversations remain read-only. The approved scenario
+now awaits Eligibility confirmation; Registry release and final
+acceptance remain user actions.</p>
+<p>Admissions handoff and browser envelope <strong>v2</strong> include
+the selected campus and both letters/confirmations. The
+producer/consumer validate sequence and bounded PDF resources. V1
+remains readable for legacy records without fabricated letters. Local
+generated PDF bytes travel only in the one-time validated development
+postMessage exchange, never URLs or persistent browser storage. Existing
+origin/window/nonce/replay checks and session cleanup remain. Student
+Documents shows issued Offer Letter first, Eligibility Letter second,
+with working preview/download for these resources. Other legacy
+documents retain their existing delivery capabilities. Payment proof
+remains outside Profile documents.</p>
+<p>The selected-campus bootstrap clones only sample academic/campus
+configuration and remaps its IDs and local calendar windows. It creates
+an isolated identity/enrolment, inherits no prior results,
+registrations, payments or visa approvals, and preserves existing
+credit/fee/clash/international restrictions. Non-Cyberjaya fees and
+curriculum remain explicit prototype samples, not campus policy. Refresh
+disposes mock state and temporary resources. Durable evidence delivery,
+hosted two-letter methods and real CMS provisioning remain future
+work.</p>
+<p>Mock operations: <code>confirmApplicationEligibility</code>
+(applicant), <code>verify-documents</code> with Eligibility generation
+(development QA command), <code>release-offer</code> (development
+Registry command), and guarded <code>acceptApplicationEnrolment</code>
+after Offer release. No new HTTP routes are exposed. Local DTOs may
+include optional <code>issuedLetter</code> PDF resources; hosted Profile
+document responses remain metadata-only.</p>
+<h2
+id="prepared-original-document-synchronization-12-october-2026">Prepared
+original-document synchronization — 12 October 2026</h2>
+<p>The 12 October local preparation supersedes earlier statements that
+original HTTP file delivery and applicant-specific continuation are
+wholly unimplemented. <a
+href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.html">Demo
+admissions resources</a> defines the separate Demo artifact adapter,
+one-time authenticated continuation, capability gating, ownership and
+local verification. It is <strong>not deployed</strong>; Live
+storage/CMS provisioning and hosted migration remain pending. Shared UI
+remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are
+preserved. The existing Bursary shortcut remains On hold.</p>
+<p>The 12 October audit keeps established layouts and shared 0.6.2.
+Editable Resume/sign-in labels use <code>type-body text-title</code>,
+Applicant scenario labels retain an 8px control gap, and
+Portfolio/Resume/payment-proof errors use stable descriptions and live
+error associations. Portfolio labels retain a stable accessible name
+when errors appear. Demo account choices expose their selected state;
+Student sign-in hover changes are immediate. Applicant desktop step
+labels use the semantic body typography. Authenticated continuation uses
+the existing sign-in panel/gutters and an accessible main/status/error
+region. Document actions retain native browser viewing; no custom PDF
+viewer or shared-package override was added.</p>
+<h2 id="local-shared-community-candidate-12-october-2026">Local shared
+Community candidate — 12 October 2026</h2>
+<p>Student and Lecturer reuse unchanged Community presentation from a
+locally packed design-system 0.7.0 candidate. Capability-gated Demo
+Portal API transport pairs programme/exact-module/direct conversations
+with session-derived authors, membership checks, unread/read state, own
+deletion, idempotent retries and original-byte attachments. Polling is 3
+seconds for visible active threads and 10 seconds for visible summaries.
+Local Student mock/service adapters remain. Additive Demo chat/byte
+stores and an explicit non-destructive legacy import preserve record
+schema 4. This is local Demo preparation; publication, released consumer
+pinning, hosted migration and deployment remain separate approvals. See
+<a href="../ai/backend/community-chat.html">Community contract</a>.</p>
+<h2 id="ui-presentation-ownership-13-october-2026">UI presentation
+ownership — 13 October 2026</h2>
+<p>The owner-approved <a
+href="../ai/design/2026-10-13-portal-ui-ownership-audit.html">Student/Applicant
+UI audit</a> prepares neutral presentation and global CSS in the
+unpublished shared 0.7.0 candidate. Shared source owns
+cursor/state/touch/container/forced-color behavior and extracted display
+patterns; portal workflow, records and routing stay in their existing
+owners. Opt-in variants preserve specialized phone layouts. Validation
+and release boundaries are in the audit. No API/schema change,
+publication, pin upgrade or deployment is included.</p>
+<h2
+id="reusable-materials-connected-memory-demo-14-october-2026">Reusable
+Materials connected memory Demo — 14 October 2026</h2>
+<p>The local connected memory Demo supports reusable module plans and
+class-specific automatic schedules, original resource/brief bytes and
+server-authorised Student access. Lead publication freezes immutable
+versions; classes select the latest version published by class start,
+resources can receive versioned corrections, and class assignment
+requirements freeze. The class-start lock is a Demo rule pending campus
+policy, not confirmed institutional policy. Faculty owns assessment
+keys/weights. Student submissions remain existing metadata-only Demo
+operations.</p>
+<p>See <a href="../ai/backend/reusable-materials.html">canonical
+connected Materials rules</a>. This capability requires an isolated
+memory API and never writes hosted records or migrations. Independent
+browser mock stays separate. Production persistence, Faculty exceptions,
+activation and complete LMS acceptance remain pending; Lecturer
+aggregate verification stays on hold.</p>
+<h2
+id="read-only-materials-with-teaching-week-release-14-october-2026">Read-only
+Materials with teaching-week release — 14 October 2026</h2>
+<p>The current local Materials increment is read-only for Lecturer, with
+one weekly module list and automatic availability at configured
+teaching-week start. Admin content/version setup is deferred. Existing
+class version bindings/history and Faculty weights/deadlines are
+retained; shared API file reads enforce ownership and server release.
+This supersedes the earlier Lecturer plan-authoring controls. See <a
+href="../ai/backend/reusable-materials.html">current rules</a>. No
+shared package change, migration, hosted write or deployment. Lecturer
+aggregate remains held.</p>
+<h2
+id="shared-release-and-integrated-identity-verification-16-october-2026">Shared
+release and integrated identity verification — 16 October 2026</h2>
+<p>Shared AuditTrail and approved accordion treatment are released in
+package 0.8.0; Student, Applicant and Lecturer pin that exact registry
+version. The integrated Demo SSO bridge binds known people/desks,
+retains Lecturer actor identity and shares one code exchange under
+StrictMode. Unlinked identities fail closed. <a
+href="../ai/frontend/student-portal/audits/2026-10-16-campus-integration-publication.html">Verification
+and delivery limits</a> separate local gates, registry release, source
+publication and hosted readiness.</p>
+  </main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -521,7 +704,6 @@ href="02-architecture-and-integration.html">SDD-02</a>. Open questions:
       wrap.appendChild(table);
     });
   </script>
-<section><h2>Campus selection and two-stage enrolment — 7 October 2026</h2><p>Local mock only: required campus and conditional Alumni student ID, optional English results, Bursary payment verification, QA Eligibility Letter release and applicant confirmation, then Registry Offer Letter release and final acceptance. Generated demo PDFs can be previewed/downloaded; only final acceptance signs out. The next explicit Sign in transfers an isolated accepted identity into Student Module Registration.</p><p>Handoff/envelope v2 carries campus and both confirmations/letters; v1 remains readable. Student Documents places Offer Letter first and Eligibility Letter second. Hosted HTTP authentication and supported methods remain unchanged; new hosted letter operations, real CMS provisioning and durable upload delivery require future service work. Shared package remains 0.6.2.</p></section>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
   <script src="../diagrams/keychain-access.js" defer></script>

@@ -1405,11 +1405,12 @@
     },
     {
       "title": "CI/CD pipeline",
-      "summary": "Jenkins main-only webhook trigger and Argo CD GitOps sync for Demo deploys on UltaHost k3s.",
+      "summary": "Jenkins main-only webhook builds GHCR images (Kaniko) and Argo CD syncs GitOps on Demo k3s \u2014 no GitHub Actions image workflows.",
       "section": "Architecture",
       "keywords": [
         "cicd",
         "jenkins",
+        "kaniko",
         "argocd",
         "gitops",
         "webhook",

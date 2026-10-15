@@ -2,7 +2,7 @@
 
 **Status:** Proposed / research-backed logical model + Demo contract tables already in Schema v3. **Not** a Live LMS product.  
 **Human ERD:** [`docs/diagrams/erd.html#lms`](../../diagrams/erd.html#lms) (CMS / LMS / shared / proposed colour legend).  
-**Live Neon ERD:** [raisd-db-admin.vercel.app](https://raisd-db-admin.vercel.app) (ERD tab — same CMS / LMS / shared header colours + domain filter; IRREGULAR map in `db-admin/api/erd.ts`).  
+**Live ERD:** [db-admin.raisd.co](https://db-admin.raisd.co) (ERD tab — same CMS / LMS / shared header colours + domain filter; IRREGULAR map in `db-admin/api/erd.ts`).  
 **Related:** [architecture/lms.md](../architecture/lms.md), [lms-architecture.html](../../diagrams/lms-architecture.html), [lms-features.html](../../diagrams/lms-features.html), [canonical-schema-luct-readiness.md](canonical-schema-luct-readiness.md).
 
 ## Boundary (ADR-1)
@@ -66,3 +66,8 @@ Do **not** invent Portal API methods or bump `PORTAL_RECORD_SCHEMA_VERSION` for 
 - Do not present proposed tables as Demo Schema v3 collections.
 - Do not duplicate CMS operational SoR tables under LMS names (enrolment, finance, published module results stay CMS/canonical).
 - When adding a durable LMS collection, update Zod graph + published ERD colour sets + db-admin domain maps (`lib/erd-script.ts`) + IRREGULAR aliases (`api/erd.ts`) + this file in the same change.
+
+
+## Classrooms source increment — 15 October 2026
+
+The approved shared memory Classrooms implementation adds exact-offering attendance, private delivery logs, original assignment submissions and draft/published feedback. Canonical persisted records/schema version are unchanged. Materials stays read-only. The local Demo is verified and activated on API 8087 / Lecturer 5173 / Student 5175; Lecturer aggregate verification remains held. No migration, hosted write or deployment is included. See [Classrooms](classrooms.md).

@@ -1096,5 +1096,5 @@ search:
   - title: CI/CD pipeline
     href: cicd
     section: Architecture
-    summary: Jenkins main-only webhook trigger and Argo CD GitOps sync for Demo deploys on UltaHost k3s.
-    keywords: [cicd, jenkins, argocd, gitops, webhook, main, ghcr, deploy, github]
+    summary: Jenkins main-only webhook builds GHCR images (Kaniko) and Argo CD syncs GitOps on Demo k3s — no GitHub Actions image workflows.
+    keywords: [cicd, jenkins, kaniko, argocd, gitops, webhook, main, ghcr, deploy, github]

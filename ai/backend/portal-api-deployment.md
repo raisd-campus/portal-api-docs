@@ -1,8 +1,8 @@
 # Portal API — target deployment
 
-**Status:** Target design (27 September 2026). Nothing below is deployed yet; the only running form is local Demo.\
-**Canonical hosting decision:** [SDD-12](../../sdd/12-deployment-architecture.md) (ADR-2 UltaHost Singapore, ADR-3 k3s). Agent summary: [architecture/deployment.md](../architecture/deployment.md).\
-**Code:** [`raisd-campus/portal-api`](https://github.com/raisd-campus/portal-api). **Plan:** [portal-api-development-plan.md](portal-api-development-plan.md). **PoC path:** [portal-api-poc-requirements.md](portal-api-poc-requirements.md).
+**Status:** Demo running on UltaHost k3s (14 October 2026); Live stages below remain the growth plan.\
+**Canonical hosting decision:** [SDD-12](../../sdd/12-deployment-architecture.md) (ADR-2 UltaHost Singapore, ADR-3 k3s). Current topology: [architecture/vps-topology.md](../architecture/vps-topology.md). Agent summary: [architecture/deployment.md](../architecture/deployment.md).\
+**Code:** [`raisd-campus/portal-api`](https://github.com/raisd-campus/portal-api). **Plan:** [portal-api-development-plan.md](portal-api-development-plan.md).
 
 This file turns SDD-12 into the concrete build, runtime and release shape for the `portal-api` Deployment. It adds no new provider, node, or hostname. Where it proposes something SDD-12 does not state (image registry, manifest layout, resource sizes), it is marked **Proposed**.
 
@@ -34,13 +34,11 @@ SDD-08 §4 names the environments (proposed, not yet agreed). The Portal API map
 
 | Environment | Where | CMS mode | Data | Hostname | Status |
 |---|---|---|---|---|---|
-| Local | Developer machine, sibling checkouts | `stub` | In-memory / local Postgres | `http://127.0.0.1:8080` | Running (Demo) |
-| PoC | Vercel project + Neon free tier | `stub` | Neon (sessions, Demo tables) | `*.vercel.app` | Not started — [requirements](portal-api-poc-requirements.md) |
-| Integration | k3s stage 1 node, separate namespace or a second Deployment | `live` against a **non-production** CMS | Postgres (integration DB) | Internal / not public | Not started |
-| Staging | k3s, Cyberjaya-like config | `live` against staging CMS | Postgres (staging DB) | TBC with backend owner | Not started |
-| Production | k3s, namespace `campus` | `live` against Cyberjaya CMS | Postgres + evidence PVC | `api.raisd.co` | Not started; Live only after M4 |
-
-Do not publish `api.raisd.co` before the production Deployment exists (SDD-12 §5).
+| Local | Developer machine, sibling checkouts | `stub` | In-memory / local Postgres | `http://127.0.0.1:8080` | Running |
+| Demo | UltaHost VPS k3s, namespace `campus` | `stub` (CMS Live later) | VPS Postgres `portal_api` | `api.raisd.co` · `api.{slug}.raisd.co` | Running — [vps-topology.md](../architecture/vps-topology.md) |
+| Integration | k3s, separate namespace or second Deployment | `live` against a **non-production** CMS | Postgres (integration DB) | Internal / not public | Not started |
+| Staging | k3s, campus-like config | `live` against staging CMS | Postgres (staging DB) | TBC with backend owner | Not started |
+| Production (Live) | k3s, namespace `campus` | `live` against campus CMS | Postgres + evidence PVC | `api.raisd.co` (flat Live cutover per SDD-12) | After M4 acceptance |
 
 ## 3. Stage progression for this service
 

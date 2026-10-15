@@ -4,6 +4,85 @@ Read this after `AGENTS.md` when resuming the project in a new Codex chat or on 
 
 ## Current baseline
 
+### Upstream integration and source publication — 16 October 2026
+
+All eight local campus repositories were pulled before integrating the current
+Classrooms/Materials work with upstream SSO, email login and Jenkins/Argo docs.
+Identity mapping now fails closed for unknown Demo people/desks; Lecturer actor
+identity and runtime survive reload. Four sign-in effects handle StrictMode once.
+See the [integration receipt](audits/2026-10-16-campus-integration-publication.md)
+for exact gates, fixes, source-release provenance and CI/deployment limits.
+Current user API/portal services and Demo records were preserved. This publication
+is source delivery; no manual cluster rollout, migration or registry republish.
+
+### Released shared 0.8.0 and local API activation — 15 October 2026
+
+AuditTrail is now published in GitHub Packages 0.8.0 alongside the approved
+expanded-accordion divider/square lower corners. Student, Applicant and Lecturer
+pin exact registry 0.8.0. All 263 installed files match the published archive;
+unrelated lock entries are unchanged. Lecturer has no remaining AuditTrail Vite,
+TypeScript or Tailwind source-preview mapping. The clean registry npm ci consumer
+passes lint, 63 tests and production build; the earlier 0.7.0 release blocker is
+resolved. Shared gates pass 21 units and 35 consumer browser cases. Student full check:all passed 809 units, 278 Chromium and 41 WebKit cases (46/31 intentional skips), plus lint, type/build, production exclusions and bundle budgets. Applicant full check:all passed 65 units and 70 browser cases. See the verification receipt.
+
+Local API 8087 was rebuilt/restarted with the existing stub-memory configuration,
+activating the resource-detail projection fix. Health and enabled Materials/
+Classrooms capabilities passed; actual Lecturer and Student reads and exact Demo
+PDF downloads passed at 375/768/1440px with no page errors or record mutations.
+Memory sign-ins and saved Demo changes reset on restart. The three portal servers
+remain running on their original ports. Bundled PDFs and canonical sessions remain.
+
+Future manual package releases use design-system's release:publish helper and its
+securely stored GitHub CLI package-write login. The earlier one-session publisher
+was not retained. Scope and exact archive/registry integrity now pass preflight;
+temporary npm auth files are removed. See the shared README/AGENTS release section.
+No portal deployment, database migration, unrelated commit or push is included.
+
+### Classrooms/Materials verification — 15 October 2026
+
+All approved verification is complete in isolated services: Student full check:all
+passed 809 unit, 278 Chromium and 41 WebKit cases; Lecturer candidate lint/63 tests/
+build, shared 21 unit/35 consumer cases and API regression gates passed. Fixed the
+resource-detail assessment-ID regression that broke bundled-note/submission reads,
+model metadata, unique title-normalised audit avatars and local-HTTP test leakage.
+Added boundary, browser and file/restart coverage. The registry 0.7.0 clean build
+still lacks AuditTrail; release/pin upgrade remains separate. API 8087 and current
+portal processes/data were preserved, so the new projection fix activates on the
+next separately authorised API restart. Temporary verification services were stopped.
+No commit/push/publication/deployment. See [verification receipt](audits/2026-10-15-classrooms-materials-verification.md).
+
+### Same-day attendance Demo — 15 October 2026, unverified
+
+Added a single canonical Graphic Design 3 afternoon session on 1 September 2026,
+14:00–16:00 campus time, alongside the unchanged 09:00–12:00 Week 3 occurrence.
+It has its own Demo session ID and no attendance records; existing sessions/marks
+and the weekly schedule are preserved. Lecturer and Student consume the same graph.
+Local memory API 8087 restarted successfully with its existing launcher, loading
+this fixture and the previously prepared Materials metadata. Sign in again; saved
+Demo memory state reset. Portal dev servers remain running. No tests, lint,
+typechecks, separate verification builds or browser checks were run. No migration,
+commit, push, hosted write or deployment. See [Classrooms](../../backend/classrooms.md).
+
+### Materials detail metadata — 15 October 2026, unverified
+
+Owner-approved Lecturer detail composition now shows description, week/topic,
+instructions, publisher, update time and per-file source with shared components.
+Missing values show “Not provided”; the API does not infer publication from release
+dates or provenance from filenames. Additive shared/Student contracts and canonical/
+public OpenAPI are synchronized. Hard-coded unrecorded Student assessment instructions
+now say “Not provided”; Student layout and academic/submission rules are unchanged.
+All tests, lint, typechecks, builds and browser verification are deferred by the owner.
+The active non-watch API was not restarted, preserving saved attendance; updated API
+metadata waits for a separately authorised restart. No commit, push, package change,
+migration, publication or deployment. See [Materials](academic-modules.md) and the
+[API rules](../../backend/reusable-materials.md).
+
+### Shared Community local candidate — 13 October 2026
+
+Student and Lecturer now consume shared Community presentation from a locally packed design-system 0.7.0 candidate. Canonical Adam/Rizal programme/module/direct chat uses capability-gated Demo transport, membership checks, read/unread state, sender-only deletion, retry-safe sends and original-byte attachments. Student mock/service conversations, draft/scroll ownership and schema 4 remain. Lecturer keeps an empty Dashboard, one primary menu item and resizable Community dock starting at 296px.
+
+Shared checks pass (13 unit/20 browser), Lecturer lint/build passes (no unit files), API memory checks pass (46; earlier disposable Postgres suite 73), nine transport/service regression checks pass and 19 independent paired browser checks pass. Student passes 797 units, all 278 applicable Chromium cases (277 full-run plus the corrected drawer case; 46 intentional skips), and full WebKit 41 cases (31 intentional skips). Token/assets, lint, TypeScript/build, production and unchanged bundle budgets pass. Full-command timing/test-harness interruptions and their successful recovery checks are recorded in the verification report; no uninterrupted final check:all exit-zero is claimed. Candidate captures and canonical/public guidance are synchronized. Tracked package pins remain 0.6.2; no publication, commit, push, hosted migration or deployment. See [Community verification](../../backend/2026-10-13-community-candidate-verification.md). Next approval: package publication and released-version pinning. A fresh Postgres repeat is blocked by Docker startup; the earlier disposable persistence checks remain evidence.
+
 ### Main publication verification - 9 October 2026
 
 All seven campus checkouts are synchronized. Incoming finance research and proposed configuration remain separate from synthetic demo fixtures; hosted support claims are reconciled with the actual frontend gates. The final complete Student gate passes 781 unit tests, 276 Chromium and 41 WebKit checks; Applicant passes 57 unit tests and 70 browser checks; all seven handoffs pass. Both catalogues validate 158 captures. Shared UI remains 0.6.2. See [publication verification](audits/2026-10-09-campus-main-publication.md) for sync, source provenance, HTTP boundaries and external CI billing limitations. This entry supersedes the earlier partial full-run result while preserving its historical record below.
@@ -1257,3 +1336,84 @@ The 12 October local preparation supersedes earlier statements that original HTT
 Both uninterrupted full gates passed. Applicant: 65 unit/component tests and 70 browser checks. Student: 788 unit tests, 278 Chromium checks (46 intentional skips), 41 WebKit checks (31 intentional skips), plus lint/build/production/bundle gates and seven focused byte-delivery checks. All seven DEV handoffs and five local HTTP journeys passed. Portal API: portable typecheck/build, 96 memory/disposable-Postgres checks and npm-start/smoke passed. Shared package: 13 unit and 14 consumer browser checks. Documentation/contracts/catalogue/navigation/OpenAPI validate; 14 unused OpenAPI component warnings remain. The phone/tablet main scrollWidth finding was corrected using actual clipped viewport bounds and keyboard access, without an editor redesign.
 
 The user authorized normal main commits/pushes. Deployment remains separate: Vercel Git deployment is disabled and portal CI deploys only on explicit manual deploy=true. Shared components stay 0.6.2, with no tag/package release. No hosted migration, reseed or account walkthrough; deployed/physical-device behavior remains unverified. Previously held department shortcuts and Staff/Lecturer redesigns remain On hold.
+
+13 October consistency correction: Student and Lecturer use `system/community-resize` for the same desktop grip, width limits and keyboard interaction. Shared `ChatComposer communityInset` preserves Student's existing full-width footer within the 12px conversation inset; Lecturer now uses that same composition. Phone/tablet retain the shared overlay without a resize grip. No additional styling or redesign is introduced.
+
+
+### Community consistency follow-up — 13 October 2026
+
+Student and Lecturer use shared `CommunityResizeHandle`, width limits and `ChatComposer communityInset`; Lecturer now resizes like Student and its composer matches the established footer spacing. Shared checks pass 14 units/21 browser cases; Lecturer lint/TypeScript/build passes. Student passes 797 units and 277 Chromium cases in the full command, with 46 intentional skips; the one unrelated tablet checkbox case passed unchanged on retry, covering all 278 applicable cases. Full WebKit passes 41 with 31 skips. The full command did not exit zero; no uninterrupted success is claimed. Nine candidate captures and guidance are synchronized, with release pins/publication still awaiting approval.
+
+
+## Shared UI ownership audit — 13 October 2026
+
+See [page-by-page audit](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/2026-10-13-portal-ui-ownership-audit.md). Unpublished candidate extractions preserve portal-owned workflows and prior uncommitted Community/Lecturer work. Exact final validation outcomes are recorded in that audit; Student/Applicant full gates and shared consumer regressions are required, Lecturer stays focused. Publication and released pins remain the next approval checkpoint.
+
+
+13 October shared-tab follow-up: owner-approved SegmentedTabs scrolling now covers three or more tabs using the same existing minimum width, fade and keyboard reveal; two-tab behavior remains unchanged. Student full check:all passes on the final locally packed 0.7.0 candidate (797 units, 278 Chromium / 46 intentional skips, 41 WebKit / 31 intentional skips). Shared full checks pass 16 units and 29 browser cases, Applicant full checks pass 65 units and 70 browser cases, and Lecturer remains focused under its aggregate hold. No Student feature/data/API source changed in this follow-up. Candidate release pins/publication remain pending.
+
+
+## Student and Applicant read-only file adoption - 14 October 2026
+
+The owner approved applying the existing shared FileUploadField read-only container refinement to Student and Applicant. Both local node_modules installations now use the same complete packed 0.7.0 candidate as Lecturer; tracked manifests and lockfiles retain released 0.6.2 pins. Read-only fields omit the outer dashed border, padding and upload minimum height; existing cards, filenames, sizes and empty text remain. Editable and temporarily disabled editable fields retain their existing frame and selection/removal controls. No portal CSS override, feature/API/schema change, package publication or deployment is introduced. A fresh npm ci still restores the released pin until candidate publication and consumer upgrades are approved.
+
+| Portal / upload surface | Existing owner | Audit result |
+| --- | --- | --- |
+| Student Online Forms (including Immigration-owned forms) | FormFields → shared FileUploadField | Drafts remain editable; submitted forms pass readOnly. Read-only file metadata/no-selection regression passed; actual seeded empty state uses the frame-free rule. Multiple-file selection, limits, accessible labels, autosave footer and draft navigation retained. |
+| Student Finance transfer proof | FinanceProofPicker → shared FileUploadField | Editable/replacement and pending-disabled states retain the frame; review summaries use ordinary metadata rows, without a duplicate upload frame. Existing proof validation and review behavior retained. |
+| Student assignment submission | AssignmentSubmissionPanel workflow | Specialized selected/submitted/closed states remain workflow-owned; no duplicated shared dashed read-only upload frame. PDF/ZIP, one file, 50 MiB, deadline and confirmation controls unchanged. |
+| Student Portfolio artwork | PortfolioArtworkPicker workflow | Image-first editable picker and read-only project preview remain distinct media presentation; no generic read-only upload frame or CSS override. Resource/preview cleanup unchanged. |
+| Student Profile identity / Documents / issued letters | FileLink / LinkedList / DocumentActions | These are document navigation/delivery patterns, not upload containers. Existing availability, original-byte delivery and placeholder boundaries unchanged. |
+| Applicant Academic Qualifications | DocumentField → shared FileUploadField | Transcripts, certificates and English evidence retain editable frames, remove/replace controls, validation and conditional records. |
+| Applicant Documents | DocumentField → shared FileUploadField | Identity, portfolio, transfer and conditional supporting evidence share the same editable field; no portal-specific container styling. |
+| Applicant Application Fee | shared FileUploadField | Transfer proof keeps editable frame and remove/replace controls; original policy and save/submission workflow retained. |
+| Applicant submitted academic, documents and fee accordions | FileField → shared FileUploadField readOnly in DetailField value | All six populated sample file rows measured border/padding 0px/0px with no selection/removal controls. Label/value alignment and metadata remain. |
+| Student / Applicant messages | Shared chat attachment presentation | Separate existing attachment tiles/composers keep their limits, preview/download behavior and session ownership. |
+
+All directly shared editable fields measured border/padding 1px/16px. Actual read-only and editable page captures at 375, 768 and 1440px show no horizontal overflow. Student synthetic draft/file retained across navigation; no manual test submission was performed. Automatic approval review rejected the attempted manual Demo submission because it would lock the draft beyond the inspection scope; existing submitted records and the already-existing read-only component regression provide the safe verification path. Applicant's full gate passed 65 unit/component tests and 70 browser cases. Student's final full-gate outcome is recorded below after completion. Shared source/artifact is unchanged from the previously verified 18-unit/32-browser candidate. Lecturer aggregate verification remains on hold.
+
+Final verification - 14 October 2026: Student completed token/assets/lint, 797 unit tests, TypeScript/build/production-exclusion/bundle gates and 278 Chromium cases with 46 intentional skips using its existing CI=true resource budget and PLAYWRIGHT_WORKERS=2. That check:all invocation exited nonzero after WebKit passed 40 cases and hit one tablet Personal Profile loading-readiness timeout before checking layout. A subsequent two-worker WebKit run passed that case but hit the existing desktop workflow Space-checkbox check (40 passed, 31 skipped). Each unchanged case passed three isolated retries. The complete unchanged one-worker WebKit rerun then passed 41 cases with 31 intentional skips. All required constituent checks passed, but no uninterrupted Student aggregate success is claimed. Applicant npm run check:all passed 65 unit/component tests and 70 browser cases. Earlier Student attempts hit a sandbox temporary-cache EPERM before tests and an Immigration journey exceeding the ordinary 5-second budget during concurrent load; no source/test changes were made for these retries. Existing Applicant chunk-size, jsdom Window.open and Vite configuration/color-environment advisories remain. Twelve actual responsive consumer captures, package artifact equality, mirror equality and scoped whitespace checks pass. No source/API/schema changes were needed for this style adoption; existing uncommitted work, released pins, publication/deployment boundaries and Lecturer aggregate hold are preserved.
+
+
+## Released shared 0.7.0 adoption - 14 October 2026
+
+The owner published @raisd-campus/design-system 0.7.0 directly to GitHub Packages after hosted Actions were blocked by billing. Fresh registry metadata matches the verified release archive from shared source commit e1ddc3738c5d5b27447e1c8ae9e45719547b13a3 and tag v0.7.0. Student, Applicant and Lecturer now pin exactly 0.7.0 in their manifests and lockfiles and install the registry release; all 260 installed package files match the tested archive. Only the shared dependency entry changes; unrelated dependency pins and existing uncommitted source work are preserved. The released package includes shared Community presentation, portal-neutral patterns and global control rules, three-tab responsive scrolling, per-file action slots and frame-free read-only file fields. Save feedback remains in PageActionBar.leading; header Add actions use a primary button with its leading icon. The previous candidate/publication-pending notes describe historical preparation, not the current installed version. The three existing portal Vite servers were restarted on 5173/5174/5175 to release Windows native-module locks and activate the installed release. API/data contracts and persistence do not change. Lecturer aggregate verification remains on hold. No portal deployment, API restart or migration is included.
+
+
+## Released-package verification - 14 October 2026
+
+Student npm run check:all passed against the registry-installed 0.7.0: token/assets/lint, 797 unit tests, TypeScript/build, production exclusion and bundle budgets, 278 Chromium cases with 46 intentional skips, and 41 WebKit cases with 31 intentional skips. The unchanged browser suites used PLAYWRIGHT_WORKERS=1 and the existing CI=true unit budget. Applicant npm run check:all passed on the complete unchanged rerun: 65 unit/component tests and 70 browser cases. The first Applicant run passed 69 browser cases but missed the phone navigation action in the save/retry case; the existing leave-application suite subsequently passed 14 cases across all seven browser/viewport projects before the clean full-gate rerun. No source or test assertions changed for retries. Lecturer lint, canonical demo:check, TypeScript/build, 54 focused Vitest cases and two Node roster-projection cases passed; its aggregate gate remains held. Browser checks at actual 375/768/1440 widths confirmed Lecturer Materials, pointer cursors on all three tabs and contained file details; Applicant read-only file presentation also remained within those bounds. The package receipt and all 260 installed files match the verified published archive in every portal. Only the root shared pin and its package entry differ from each pre-upgrade lockfile; unrelated pins and source work remain. Both local catalogue copies validate all 188 captures, preserving historical provenance and adding 18 reviewed shared captures. Canonical guidance and affected mirrors are identical. The existing Vite/colour, jsdom Window.open and Applicant/Lecturer chunk-size advisories remain. npm reported existing audit findings (Student 15, Applicant one, Lecturer six); no dependency fixes were applied outside the approved pin update. The three local Vite servers respond HTTP 200 on their original ports. Portal edits and broader pre-existing documentation work remain local and uncommitted. Release-only catalogue sources and minimal versioned guidance were published from clean isolated checkouts, preserving newer remote changes and the current docs.raisd.co site chrome. Canonical catalogue commit a646104d96469fe6ff15bb62187f12c2cb6b921f and public mirror commit 7485fa9566f526095b8dea0292b2eca39737334e are pushed. The live docs host still reports catalogue 0.6.2; its 25-file static promotion is prepared separately and has not been performed under the existing no-deployment boundary. No portal deployment, API restart or migration is claimed.
+
+## Campus refresh and admissions policy review - 14 October 2026
+
+At the owner's request, all eight existing Raisd Campus repositories were stashed, fast-forward pulled and restored; Keychain, DB Admin and Campus Landing were fetched as clean review copies. Six overlapping files were explicitly merged, preserving upstream campus/Keychain routing and local portal work. Original and recovery stashes remain intact, all original changed files remain present, and no staged or unmerged paths remain. Lecturer's shared runtime retains local blank-URL mock mode and incoming campus-host HTTP routing; its generated snapshot refreshed source hashes only, with identical accounts, data, schema and reference date. Student/Applicant/Lecturer TypeScript builds passed; Lecturer lint, 54 focused tests and demo parity passed; Portal API local typecheck and 73 isolated admissions checks passed. Full aggregate/browser gates were not rerun and Lecturer's aggregate hold remains.
+
+Latest source removes Bursary automatic enrolment and automatic Offer release: payment verification, QA documents, applicant Eligibility confirmation, Registry Offer release and applicant acceptance are separate. Payment still precedes QA. The new APP/VISA/REG fee simulation is a review proposal, not confirmed collection/credit policy. Tuition-clearance requirements, final Immigration registration gate, medical/SSD responsibilities and exceptions, conditional/signed Offer policy, and CAF/staffing/completion rules still need department confirmation. Detailed local evidence is in Student logs/campus-refresh-2026-10-14/policy-review.md. Next step is team policy clarification; no operational policy change, API restart, migration, commit, push or deployment was performed in this refresh.
+
+
+## Reusable Lecturer Materials connected Demo — 14 October 2026
+
+Completed the approved local connected increment: reusable campus/module plans with lead publication, relative releases/deadlines from configured class weeks, class-start publication cutoffs, independent future-class inheritance, active resource corrections/history and assignment locks. Student Materials and submission operations resolve the same class records; original resource files use bounded authenticated transfer and server-time availability. Saved shared content is API-memory-only, independent browser mock remains separate, and current activation is deferred. Existing canonical assignment IDs/links and schema-4 records remain compatible; no migration or automatic reporting-column addition occurs.
+
+Student full `check:all` passed with 801 unit/component tests, 278 Chromium checks (46 intentional skips), and 41 WebKit checks (31 intentional skips). API Materials 54 checks/local typecheck and existing Community/module checks passed; Lecturer lint/build, 59 selected tests and canonical snapshot parity passed. Lecturer aggregate remains held. Paired authoring/downloads, plan permissions/concurrency, file cleanup and 375/768/1440px navigation/Community checks passed. Owner-approved Keychain is sign-in-only in Student and Lecturer. See [full rules, verification and activation boundary](../../backend/reusable-materials.md). Existing user work/package pins were preserved; no current API restart, commit, push, publication, hosted write or deployment.
+
+
+## Current Materials activation — 14 October 2026
+
+Owner-approved API restart/activation is now complete on local API 8087, Lecturer 5173 and Student 5175. Both portals use the same capability-enabled memory Demo. Newly created local-only Student credentials live in the intended ignored file; passwords were supplied separately, with no artifact extraction or hosted credential change. Actual Adam publication → Rizal exact-original download passed; a labelled verification resource remains in Week 8. See [activation receipt and reset/startup boundary](../../backend/reusable-materials.md#current-local-activation--14-october-2026). No code/package change, migration, hosted write, commit, push or deployment. Lecturer aggregate hold remains.
+
+
+## Read-only Lecturer Materials — verification/activation 15 October 2026
+
+Completed the owner-approved simplification: one module Materials list, no Lecturer plan/authoring/file-modification/publication controls in mock or HTTP mode, server-enforced write denial, private-draft redaction, normalized old routes and automatic teaching-week-start release at campus midnight. Admin setup is deferred; internal versions/bindings/history and Faculty weights/deadlines remain. Shared API mode and local Demo credentials are retained.
+
+Student full check:all passed uninterrupted (802 unit/component tests, 278 Chromium cases plus 46 intentional skips, 41 WebKit plus 31 intentional skips). API 72 Materials/46 Community/20 module checks and local typecheck passed. Lecturer lint/build, 47 focused tests and canonical snapshot parity passed; aggregate remains held. Responsive/read/download/security/Community checks passed at 375/768/1440. Current API 8087 restarted once; both current portal tabs are authenticated and showing Graphic Design 3 Materials. Isolated test servers were stopped. See [current rules and verification receipt](../../backend/reusable-materials.md). No package/shared-style change, migration, hosted write, commit, push or deployment; unrelated work preserved.
+
+
+## Shared Classrooms integration — 15 October 2026
+
+Configured shared memory Demo attendance reads now apply Lecturer's exact-registration saved entries, refreshing on focus/revisit. Student assignment submission uses the advertised bounded original-file transport (one PDF/ZIP, 50 MiB), version-checked replacement/deletion and SHA-256-verified downloads. Material details expose published coursework feedback and history only; private drafts/teaching logs never enter Student reads. New file versions do not inherit marks. Faculty weights and official module/term results are unchanged. Seed metadata with missing bytes remains unavailable. Browser mock remains independent. Saved connected changes reset on API restart; no canonical schema-version bump or persistent table migration occurs.
+
+Local verification passed: API Classrooms scenarios, 72 Materials checks, 20 exact-offering roster checks, 46 Community checks and API local typecheck; Lecturer lint/TypeScript/build, canonical snapshot parity and 56 focused tests; Student full check:all with 808 unit/component tests, 278 Chromium cases (46 intentional skips) and 41 WebKit cases (31 intentional skips). Lecturer aggregate verification remains on hold. Paired original submission → Lecturer preview/download/mark → Student published feedback, shared attendance, private logs/drafts, revisions, conflict/reload recovery, exact bytes, authorization, browser-mock separation and HTTP failure handling passed. Responsive checks cover 375/768/1440px, Back/keyboard navigation, Community preservation and temporary URL cleanup.
+
+Current local API 8087 was restarted once after verification, and Lecturer 5173 / Student 5175 were refreshed and signed in against the shared memory Demo. API restart resets saved Demo mutations/files and sessions; local credentials and canonical sample records are retained. GRD301's sample assignment deadlines are in the past, so current submission locks remain; the complete submission/marking flow was verified using an isolated September 2026 clock. No deadline was shifted for activation. No package change/publication, migration, hosted write, commit, push or deployment. Isolated verification servers were stopped. See the canonical [Classrooms rules](../../backend/classrooms.md).

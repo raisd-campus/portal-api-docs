@@ -32,7 +32,7 @@ Editor fields are local drafts. API-owned saved applications and conversations a
 | `getConversation` | application ID | Owned messages |
 | `sendApplicationMessage` | ID, expected revision, request ID, text, evidence metadata | Text, attachment-only or combined reply; new revision |
 | `markApplicationRead` | ID, displayed reviewer sequence | Unread watermark; response requirement unchanged |
-| `confirmApplicationEligibility` | ID, expected revision, request ID | Applicant confirms Eligibility Letter; Demo Portal API then auto-releases Offer Letter until Staff owns release |
+| `confirmApplicationEligibility` | ID, expected revision, request ID | Applicant confirms Eligibility Letter; Registry then releases Offer via Staff `releaseOffer` |
 | `acceptApplicationEnrolment` | ID, expected revision, request ID | Approved, verified application becomes accepted; stable acceptance context outside its immutable snapshot |
 
 Every private read/write verifies the owning applicant and person. Writes prepare and validate a candidate before the asynchronous commit, then reject changed revisions/sessions. Repeated identical request IDs return their original result; a different payload reusing a request ID is rejected. Submitted records cannot return to draft or submit again. Failed writes retain records and UI drafts for retry. Ownership checks in this mock are behavioural tests, not server authentication or a security boundary.

@@ -6,7 +6,8 @@
 **Reviewable config (SoT for seeds):** [`../contracts/campus-finance-profiles.yaml`](../contracts/campus-finance-profiles.yaml).  
 **This page (human review):** [`campus-finance-profile.html`](../../diagrams/old-cms-lesotho/campus-finance-profile.html).  
 **CAP-53 online-enrolment writes:** [lesotho-cap53-online-enrolment-write.md](lesotho-cap53-online-enrolment-write.md).  
-**Status:** **Proposed config** — Demo seeds / Schema policy candidates. Not Live CMS amounts. Not implemented in Portal API yet.
+**Dynamic fee approach (9 Oct):** [dynamic-fee-calculation.md](dynamic-fee-calculation.md).  
+**Status:** **Proposed config** — Demo seeds / Schema policy candidates. Not Live CMS amounts. Not implemented in Portal API yet. Dexter validating C1–C10 (standup 9 Oct).
 
 Demo ≠ Live. Values below are inferred from CMS SP/table evidence and Lesotho UI screenshots (e.g. M300 VERIFIED). Faid / Registry / Finance must tick Accept / Change / Defer per row.
 

@@ -194,6 +194,7 @@ Pages: [`old-cms-eswatini/index.html`](../../diagrams/old-cms-eswatini/index.htm
 | Topic | Path |
 |---|---|
 | Pages E2E hub | [`../../diagrams/old-cms-eswatini/`](../../diagrams/old-cms-eswatini/) |
+| Obsidian 3D | [`../../diagrams/old-cms/obsidian.html?campus=eswatini`](../../diagrams/old-cms/obsidian.html?campus=eswatini) |
 | LUCT CMS subsection | [`../../diagrams/old-cms/index.html#eswatini`](../../diagrams/old-cms/index.html#eswatini) |
 | Lesotho pilot (M4 first) | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Lesotho inventory | [old-cms-lesotho.md](old-cms-lesotho.md) |

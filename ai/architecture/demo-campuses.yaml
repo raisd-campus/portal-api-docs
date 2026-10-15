@@ -1,0 +1,63 @@
+# Demo campus catalogue — single source for DNS, ingress, docs, CORS, and portals.
+# campusId matches docs/ai/contracts/demo-admissions.ts demoCampuses[].value
+# slug is the raisd.co hostname segment: {slug}.raisd.co, apply.{slug}.raisd.co, …
+
+version: 1
+domain: raisd.co
+vps_ipv4: "38.127.216.221"
+
+roles:
+  - id: landing
+    host: "{slug}.{domain}"
+  - id: applicant
+    host: "apply.{slug}.{domain}"
+  - id: student
+    host: "student.{slug}.{domain}"
+  - id: staff
+    host: "staff.{slug}.{domain}"
+  - id: lecturer
+    host: "teach.{slug}.{domain}"
+  - id: api
+    host: "api.{slug}.{domain}"
+
+campuses:
+  - slug: lesotho
+    label: Lesotho
+    campusId: campus-lesotho
+    countryCode: LS
+    timeZone: Africa/Maseru
+  - slug: cyberjaya
+    label: Cyberjaya
+    campusId: campus-cyberjaya
+    countryCode: MY
+    timeZone: Asia/Kuala_Lumpur
+  - slug: botswana
+    label: Botswana
+    campusId: campus-botswana
+    countryCode: BW
+    timeZone: Africa/Gaborone
+  - slug: eswatini
+    label: Eswatini
+    campusId: campus-eswatini
+    countryCode: SZ
+    timeZone: Africa/Mbabane
+  - slug: sierra-leone
+    label: Sierra Leone
+    campusId: campus-sierra-leone
+    countryCode: SL
+    timeZone: Africa/Freetown
+  - slug: cambodia
+    label: Cambodia
+    campusId: campus-cambodia
+    countryCode: KH
+    timeZone: Asia/Phnom_Penh
+  - slug: uganda
+    label: Uganda
+    campusId: campus-uganda
+    countryCode: UG
+    timeZone: Africa/Kampala
+  - slug: namibia
+    label: Namibia
+    campusId: campus-namibia
+    countryCode: NA
+    timeZone: Africa/Windhoek

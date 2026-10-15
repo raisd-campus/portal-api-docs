@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- canonical host --><script>(function(){try{var h=location.hostname;if(h==="raisd-campus.github.io"||h==="github.io"){var p=location.pathname.replace(/^\/portal-api-docs/,"")||"/";location.replace("https://docs.raisd.co"+p+location.search+location.hash)}}catch(e){}})()</script>
   <meta charset="utf-8" />
   <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -381,7 +380,12 @@ Callable HTTP surface and owner still TBC.</td>
 <td>Login: CMS password, SSO, or both?</td>
 <td><a href="11-capability-catalog.html#cap-01">CAP-01</a> applicant and
 student.</td>
-<td>TBC</td>
+<td><strong>Demo (15 Oct 2026):</strong> Raisd SSO at
+<code>sso.raisd.co</code> with email magic link <strong>and</strong>
+email+password + RBAC; Portal API introspects SSO tokens. Keychain /
+stub portal logins use <strong>email</strong> (not user id).
+<strong>Live:</strong> CMS person link / password path still TBC
+(ADR-1).</td>
 </tr>
 <tr>
 <td>Q4</td>
@@ -591,7 +595,7 @@ Explorer, published ERD, <code>/v1/meta.schemaVersion</code>. Per-campus
 Live confirmation of CS-01–CS-11 remains open. Full table: <a
 href="../diagrams/canonical-schema-confirmations.html">canonical-schema-confirmations.html</a>.
 Knowledge source: <a
-href="../ai/backend/canonical-schema-luct-readiness.md">canonical-schema-luct-readiness.md</a>
+href="../ai/backend/canonical-schema-luct-readiness.html">canonical-schema-luct-readiness.md</a>
 §0 / §6 / §7.</p>
 <table>
 <colgroup>
@@ -847,8 +851,81 @@ reporting. Applicant portal: mock APIs first, then Portal API</td>
 family-tree note; recorded in
 <code>docs/ai/architecture/lesotho-pilot.md</code></td>
 </tr>
+<tr>
+<td>7 Oct 2026</td>
+<td>Applicant Demo must support campus selector, New/Alumni/Transfer,
+and Eligibility→Offer letter workflow (local mock shipped 8 Oct). Hosted
+campus/letters/accept still open on Portal API. Lesotho CMS vs Applicant
+comparison published. Exchange students → Registry consult (Dexter/MIT).
+Cambodia QR docs blocked on Vara code share</td>
+<td>Daily standup Read.ai 7 Oct; analysis
+<code>docs/ai/backend/lesotho-cms-vs-applicant-portal.md</code></td>
+</tr>
+<tr>
+<td>8 Oct 2026</td>
+<td>Cambodia QR unblocked: Vara shared QR System + Verification Drive
+packs. CMS Registry →
+<code>qr.limkokwing.net/api/create_qrcode_api</code> →
+<code>verification.limkokwing.net/cambodia/{token}</code> documented.
+Full QR/Verification source inventory pending authenticated local
+download</td>
+<td>WhatsApp Vara 8 Oct;
+<code>docs/ai/backend/cambodia-qr-system.md</code>; Pages
+<code>old-cms-cambodia/#integrations</code></td>
+</tr>
+<tr>
+<td>8 Oct 2026</td>
+<td>Cambodia QR inventory closed: CI4 QR SaaS (<code>qrcode</code> DB,
+~685 <code>KHM-PNH_</code> certs); scan =
+PNG→<code>/qrcode/{slug}</code>→Verification→<code>GetStudentCertInfo</code>;
+pack AES keys diverge (ops risk). Pages
+<code>certificate-qr.html</code></td>
+<td>Local extract of Vara 8 Oct zips; published sanitized</td>
+</tr>
+<tr>
+<td>9 Oct 2026</td>
+<td>Standup 8 Oct action closed: Applicant merge
+(<code>9e007f2</code>/<code>532d6f0</code>) analysed; QR automated +
+Cambodia↔︎Cyberjaya manual ops documented; fee/payment from CMS SPs
+(Lesotho/Eswatini/Cambodia currency matrix;
+<code>b_Update_Student</code> cases C1–C10). Configurable campus fees
+preferred over waiting for campus confirmation</td>
+<td>Daily standup Read.ai 8 Oct;
+<code>docs/ai/backend/applicant-qr-fee-mechanisms.md</code>; Pages
+<code>fee-payment-sps.html</code></td>
+</tr>
 </tbody>
 </table>
+<h2
+id="reusable-materials-connected-memory-demo-14-october-2026">Reusable
+Materials connected memory Demo — 14 October 2026</h2>
+<p>The local connected memory Demo supports reusable module plans and
+class-specific automatic schedules, original resource/brief bytes and
+server-authorised Student access. Lead publication freezes immutable
+versions; classes select the latest version published by class start,
+resources can receive versioned corrections, and class assignment
+requirements freeze. The class-start lock is a Demo rule pending campus
+policy, not confirmed institutional policy. Faculty owns assessment
+keys/weights. Student submissions remain existing metadata-only Demo
+operations.</p>
+<p>See <a href="../ai/backend/reusable-materials.html">canonical
+connected Materials rules</a>. This capability requires an isolated
+memory API and never writes hosted records or migrations. Independent
+browser mock stays separate. Production persistence, Faculty exceptions,
+activation and complete LMS acceptance remain pending; Lecturer
+aggregate verification stays on hold.</p>
+<h2
+id="read-only-materials-with-teaching-week-release-14-october-2026">Read-only
+Materials with teaching-week release — 14 October 2026</h2>
+<p>The current local Materials increment is read-only for Lecturer, with
+one weekly module list and automatic availability at configured
+teaching-week start. Admin content/version setup is deferred. Existing
+class version bindings/history and Faculty weights/deadlines are
+retained; shared API file reads enforce ownership and server release.
+This supersedes the earlier Lecturer plan-authoring controls. See <a
+href="../ai/backend/reusable-materials.html">current rules</a>. No
+shared package change, migration, hosted write or deployment. Lecturer
+aggregate remains held.</p>
   </main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">

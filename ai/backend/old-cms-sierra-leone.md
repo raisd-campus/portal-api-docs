@@ -1,15 +1,15 @@
-# Existing Sierra Leone CMS — inventory
+# Existing Sierra Leone CMS — LUCT CMS inventory
+
+**LUCT CMS subsection:** [`docs/diagrams/old-cms/index.html#sierra-leone`](../../diagrams/old-cms/index.html#sierra-leone) · top nav **LUCT CMS → Sierra Leone**
 
 **Source package:** `ICA_SierraLeone_Codes_&_DB_Structure_23_09_2026` (23 September 2026)  
 **Database:** `ems_sierraleone` (structure dump `ems_sierraleone-202609231521-CMS-SierraLeone-Structure-backup.sql`)  
 **Product branding in UI:** CMS-ICA V 1.0 (`header.php`)  
-**Product role:** Sister **EMS / PHPMaker** campus CMS (Limkokwing ICA Sierra Leone). **Not** the Cyberjaya launch SoR ([ADR-1](../architecture/overview.md)). Use for [M5](../../sdd/03-delivery-milestones.md#m5) campus-expansion comparison and shared EMS pattern recognition.
-
-This file inventories what the Sierra Leone dump contains. It does **not** change the Cyberjaya-first Portal API plan. Pair with [old-cms-cyberjaya.md](old-cms-cyberjaya.md), [old-cms-botswana.md](old-cms-botswana.md), and [cms-feature-comparison.md](cms-feature-comparison.md).
+**Product role:** Sister **EMS / PHPMaker** campus CMS (Limkokwing ICA Sierra Leone) under the LUCT CMS Pages hub. **Not** the Lesotho M4 acceptance SoR and **not** the Cyberjaya launch SoR ([ADR-1](../architecture/overview.md)). Use for [M5](../../sdd/03-delivery-milestones.md#m5) campus-expansion comparison and shared EMS pattern recognition. Pair with [old-cms-lesotho.md](old-cms-lesotho.md), [old-cms-eswatini.md](old-cms-eswatini.md), [old-cms-cambodia.md](old-cms-cambodia.md), [old-cms-botswana.md](old-cms-botswana.md), [old-cms-cyberjaya.md](old-cms-cyberjaya.md).
 
 **Do not commit** the PHP tree, `.gz` data dumps, credentials, or live student files from the package. Documentation below is derived structure only.
 
-**GitHub Pages hub (E2E · FSD · flows · ERD · DFD · database · comparison):** [`../../diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/)
+**GitHub Pages hub (E2E · FSD · Obsidian 3D · flows · integrations · ERD · DFD · database · comparison):** [`../../diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/)
 
 ## Package contents (high level)
 
@@ -174,9 +174,17 @@ Heavy on finance (`b_invoice*`, `b_payment*`, `b_assist*`) and academic assessme
 
 ## Related
 
-- Cyberjaya inventory: [old-cms-cyberjaya.md](old-cms-cyberjaya.md)
-- Botswana inventory: [old-cms-botswana.md](old-cms-botswana.md)
-- Botswana DTEF sync: [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md)
-- CAP comparison (Cyberjaya-focused): [cms-feature-comparison.md](cms-feature-comparison.md)
-- GitHub Pages: [../../diagrams/old-cms-sierra-leone/](../../diagrams/old-cms-sierra-leone/)
-- SDD-14: [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md)
+| Topic | Path |
+|---|---|
+| Pages E2E hub | [`../../diagrams/old-cms-sierra-leone/`](../../diagrams/old-cms-sierra-leone/) |
+| Obsidian 3D | [`../../diagrams/old-cms/obsidian.html?campus=sierra-leone`](../../diagrams/old-cms/obsidian.html?campus=sierra-leone) |
+| LUCT CMS subsection | [`../../diagrams/old-cms/index.html#sierra-leone`](../../diagrams/old-cms/index.html#sierra-leone) |
+| Lesotho pilot (M4 first) | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
+| Lesotho inventory | [old-cms-lesotho.md](old-cms-lesotho.md) |
+| Eswatini inventory | [old-cms-eswatini.md](old-cms-eswatini.md) |
+| Cambodia inventory | [old-cms-cambodia.md](old-cms-cambodia.md) |
+| Botswana inventory | [old-cms-botswana.md](old-cms-botswana.md) |
+| Botswana DTEF (≠ Sierra Leone) | [botswana-dtef-scholarship-sync.md](botswana-dtef-scholarship-sync.md) |
+| Cyberjaya inventory | [old-cms-cyberjaya.md](old-cms-cyberjaya.md) |
+| CAP comparison | [cms-feature-comparison.md](cms-feature-comparison.md) |
+| SDD-14 | [../../sdd/14-cms-feature-comparison.md](../../sdd/14-cms-feature-comparison.md) |

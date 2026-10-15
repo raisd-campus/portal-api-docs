@@ -68,7 +68,7 @@ Applicant's existing draft/submission/messages flow now uses a validated session
 
 ## Hosted Applicant Demo HTTP and schema v4 — 7 October 2026
 
-Portal API Demo hosts Student schema **4** and Applicant Demo HTTP (`/v1/auth/applicant/login`, `/v1/applicant/:method`) with Neon-backed applicant state. Hosted Applicant uses `VITE_PORTAL_API_URL`; local Applicant without that URL remains session-only mock. `CORS_ORIGIN` allows the student SPA, applicant SPA and GitHub Pages. Live CMS admissions and durable evidence storage remain future work. Details: [Portal API](../ai/backend/portal-api.md), [PoC note](../ai/architecture/vercel-neon-poc.md).
+Portal API Demo hosts Student schema **4** and Applicant Demo HTTP (`/v1/auth/applicant/login`, `/v1/applicant/:method`) with VPS Postgres-backed applicant state. Hosted Applicant uses `VITE_PORTAL_API_URL`; local Applicant without that URL remains session-only mock. `CORS_ORIGIN` allows campus-scoped portal origins and GitHub Pages. Live CMS admissions and durable evidence storage remain future work. Details: [Portal API](../ai/backend/portal-api.md), [VPS topology](../ai/architecture/vps-topology.md).
 
 ## Campus selection and issued letters — 7 October 2026
 
@@ -91,3 +91,32 @@ Mock operations: `confirmApplicationEligibility` (applicant), `verify-documents`
 The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.
 
 The 12 October audit keeps established layouts and shared 0.6.2. Editable Resume/sign-in labels use `type-body text-title`, Applicant scenario labels retain an 8px control gap, and Portfolio/Resume/payment-proof errors use stable descriptions and live error associations. Portfolio labels retain a stable accessible name when errors appear. Demo account choices expose their selected state; Student sign-in hover changes are immediate. Applicant desktop step labels use the semantic body typography. Authenticated continuation uses the existing sign-in panel/gutters and an accessible main/status/error region. Document actions retain native browser viewing; no custom PDF viewer or shared-package override was added.
+
+## Local shared Community candidate — 12 October 2026
+
+Student and Lecturer reuse unchanged Community presentation from a locally packed design-system 0.7.0 candidate. Capability-gated Demo Portal API transport pairs programme/exact-module/direct conversations with session-derived authors, membership checks, unread/read state, own deletion, idempotent retries and original-byte attachments. Polling is 3 seconds for visible active threads and 10 seconds for visible summaries. Local Student mock/service adapters remain. Additive Demo chat/byte stores and an explicit non-destructive legacy import preserve record schema 4. This is local Demo preparation; publication, released consumer pinning, hosted migration and deployment remain separate approvals. See [Community contract](../ai/backend/community-chat.md).
+
+## UI presentation ownership — 13 October 2026
+
+The owner-approved [Student/Applicant UI audit](../ai/design/2026-10-13-portal-ui-ownership-audit.md) prepares neutral presentation and global CSS in the unpublished shared 0.7.0 candidate. Shared source owns cursor/state/touch/container/forced-color behavior and extracted display patterns; portal workflow, records and routing stay in their existing owners. Opt-in variants preserve specialized phone layouts. Validation and release boundaries are in the audit. No API/schema change, publication, pin upgrade or deployment is included.
+
+
+## Reusable Materials connected memory Demo — 14 October 2026
+
+The local connected memory Demo supports reusable module plans and class-specific automatic schedules, original resource/brief bytes and server-authorised Student access. Lead publication freezes immutable versions; classes select the latest version published by class start, resources can receive versioned corrections, and class assignment requirements freeze. The class-start lock is a Demo rule pending campus policy, not confirmed institutional policy. Faculty owns assessment keys/weights. Student submissions remain existing metadata-only Demo operations.
+
+See [canonical connected Materials rules](../ai/backend/reusable-materials.md). This capability requires an isolated memory API and never writes hosted records or migrations. Independent browser mock stays separate. Production persistence, Faculty exceptions, activation and complete LMS acceptance remain pending; Lecturer aggregate verification stays on hold.
+
+
+## Read-only Materials with teaching-week release — 14 October 2026
+
+The current local Materials increment is read-only for Lecturer, with one weekly module list and automatic availability at configured teaching-week start. Admin content/version setup is deferred. Existing class version bindings/history and Faculty weights/deadlines are retained; shared API file reads enforce ownership and server release. This supersedes the earlier Lecturer plan-authoring controls. See [current rules](../ai/backend/reusable-materials.md). No shared package change, migration, hosted write or deployment. Lecturer aggregate remains held.
+
+## Shared release and integrated identity verification — 16 October 2026
+
+Shared AuditTrail and approved accordion treatment are released in package 0.8.0;
+Student, Applicant and Lecturer pin that exact registry version. The integrated
+Demo SSO bridge binds known people/desks, retains Lecturer actor identity and
+shares one code exchange under StrictMode. Unlinked identities fail closed.
+[Verification and delivery limits](../ai/frontend/student-portal/audits/2026-10-16-campus-integration-publication.md)
+separate local gates, registry release, source publication and hosted readiness.

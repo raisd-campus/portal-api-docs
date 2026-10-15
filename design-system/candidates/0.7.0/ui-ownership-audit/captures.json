@@ -1,0 +1,98 @@
+{
+  "capturedAt": "2026-10-13",
+  "mockData": true,
+  "captures": [
+    {
+      "file": "ui-375.png",
+      "owner": "design-system",
+      "viewport": {
+        "width": 375,
+        "height": 900
+      },
+      "fullPage": true,
+      "sourceRoute": "http://127.0.0.1:4194/?audit",
+      "packageVersion": "0.7.0",
+      "releaseStatus": "unpublished candidate",
+      "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+      "sourceState": "uncommitted audit and earlier Community candidate work",
+      "sha256": "c73ba8901cbd2072bdb9ccb7c8923c74e4a5d0e4e2eda6bdb5dfc8a502bbfe47"
+    },
+    {
+      "file": "ui-768.png",
+      "owner": "design-system",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "fullPage": true,
+      "sourceRoute": "http://127.0.0.1:4194/?audit",
+      "packageVersion": "0.7.0",
+      "releaseStatus": "unpublished candidate",
+      "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+      "sourceState": "uncommitted audit and earlier Community candidate work",
+      "sha256": "1f80b013768e66fe4842414ed2ed420f9fdde944ffb766449a927aa180738acb"
+    },
+    {
+      "file": "ui-1440.png",
+      "owner": "design-system",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fullPage": true,
+      "sourceRoute": "http://127.0.0.1:4194/?audit",
+      "packageVersion": "0.7.0",
+      "releaseStatus": "unpublished candidate",
+      "sourceCommit": "3a1042b65cfb6cebc7779b3efcc6fb604db2c0ae",
+      "sourceState": "uncommitted audit and earlier Community candidate work",
+      "sha256": "b077a7e46b5b3af0c609f053b81e8f4cb5ca2bf957286902bf75e51fcf8d2bea"
+    }
+  ],
+  "computedStyleChecks": [
+    {
+      "actions": "grid",
+      "scrollWidth": 365,
+      "tabs": [
+        {
+          "cursor": "pointer",
+          "label": "Overview"
+        },
+        {
+          "cursor": "pointer",
+          "label": "Students"
+        }
+      ],
+      "width": 365
+    },
+    {
+      "actions": "flex",
+      "scrollWidth": 758,
+      "tabs": [
+        {
+          "cursor": "pointer",
+          "label": "Overview"
+        },
+        {
+          "cursor": "pointer",
+          "label": "Students"
+        }
+      ],
+      "width": 758
+    },
+    {
+      "actions": "flex",
+      "scrollWidth": 1430,
+      "tabs": [
+        {
+          "cursor": "pointer",
+          "label": "Overview"
+        },
+        {
+          "cursor": "pointer",
+          "label": "Students"
+        }
+      ],
+      "width": 1430
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-10-13",
+  "packageVersion": "0.7.0",
+  "releaseStatus": "unpublished local candidate",
+  "mode": "browser mock; canonical Adam/Rizal sample records",
+  "sourceState": "uncommitted Lecturer module adjustments and owner-approved shared three-tab minimum-width correction",
+  "captures": [
+    {
+      "file": "modules-filter-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 884
+      },
+      "sourceRoute": "http://localhost:5173/modules",
+      "sha256": "fdbdc5b5a70fe1b897a6fe7a0c970f453b3e438708f58467ef18aa5bc365415d"
+    },
+    {
+      "file": "modules-filter-768.png",
+      "viewport": {
+        "width": 768,
+        "height": 884
+      },
+      "sourceRoute": "http://localhost:5173/modules",
+      "sha256": "831d7d15d062432b5b2ea4cc63029e36ce796d65eaacfc752c00fcebc4bd8f00"
+    },
+    {
+      "file": "modules-filter-1440.png",
+      "viewport": {
+        "width": 1440,
+        "height": 884
+      },
+      "sourceRoute": "http://localhost:5173/modules",
+      "sha256": "dd0b5f34d647f0d89f7bf61b4307147214f645654abb1f0de96186e8d4824dfc"
+    },
+    {
+      "file": "module-details-adjusted.png",
+      "viewport": {
+        "width": 1543,
+        "height": 884
+      },
+      "sourceRoute": "http://localhost:5173/modules/offering-semester-2026-aug-grd301",
+      "sha256": "c6760cd56ea68c4414dcf31c86db367580d6fa0e79a959002d8cc689f2cfd30a"
+    }
+  ]
+}

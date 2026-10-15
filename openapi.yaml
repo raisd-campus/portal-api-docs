@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Raisd Portal API
-  version: 0.4.2
+  version: 0.4.6
   summary: Stage-1 HTTP face of the campus Portal API
   description: |
     Bearer-authenticated RPC over the student-portal `PortalApi` surface.
@@ -23,14 +23,21 @@ info:
     session-bound one-time grants and capability-gated delivery do not replace Live storage.
     getPortalRecordGraph is local mock tooling only and is not advertised over HTTP.
 
+    **12 October local paired Community preparation (not deployed)**
+    Shared programme/module/DM chat and actual file bytes require DEMO_COMMUNITY_CHAT,
+    default false, explicit additive SQL and pre-activation legacy import.
+    Schema 4 and old per-student/service stores remain unchanged.
+    GET /v1/meta/community advertises version 1 and bounded one MiB chunks.
+
     **Stage 1 behaviour**
     - Each call runs the student-portal `MockPortalApi` engine over Demo records.
-      On the Vercel Demo, sessions and records live in Neon Postgres (one table
-      per record collection), so edits persist across instances and cold starts;
-      locally without `DATABASE_URL` both stay in memory. `sessions` and `data` in
-      `/health` and `/v1/meta` say which. Any `POST /v1/portal/{method}` can
-      also return `409` (records changed concurrently and retries ran out) or
+      On the UltaHost k3s Demo (`api.raisd.co`), sessions and records live in
+      VPS Postgres (one table per record collection), so edits persist across
+      pods; locally without `DATABASE_URL` both stay in memory. `sessions` and
+      `data` in `/health` and `/v1/meta` say which. Any `POST /v1/portal/{method}`
+      can also return `409` (records changed concurrently and retries ran out) or
       `503` (records database unavailable), both with `ErrorBody`.
+      Legacy `*.vercel.app` hosts are redirect-only (Neon Demo project deleted).
     - Mutating calls return `cms.acknowledged: true` with `cms.mode: stub`.
     - CAP-53 will replace the stub with a live CMS adapter.
 
@@ -137,6 +144,7 @@ info:
 
     File arguments use `PortalFile` (`__portalFile: true`, `name`, `type`, `size`,
     optional `contentBase64`) instead of a browser `File`.
+
   contact:
     name: Raisd working group
     email: iman.suherman@raisd.co
@@ -144,12 +152,14 @@ info:
     name: Proprietary
 
 servers:
+  - url: https://api.raisd.co
+    description: UltaHost k3s Demo (VPS Postgres; stub CMS). Per-campus aliases api.{slug}.raisd.co share this service.
+  - url: https://api.lesotho.raisd.co
+    description: Lesotho campus alias (same portal-api)
   - url: https://raisd-portal-api.vercel.app
-    description: Demo PoC on Vercel + Neon (stub CMS, Demo scenarios only; data may be wiped)
+    description: Legacy Vercel alias — permanent redirect to api.raisd.co
   - url: http://127.0.0.1:8080
     description: Local portal-api (`npm start` in the raisd-campus/portal-api checkout)
-  - url: https://api.raisd.co
-    description: Planned public name (not provisioned yet)
 
 tags:
   - name: Health
@@ -219,6 +229,122 @@ x-applicant-operations:
   handoff: ai/backend/admissions-handoff.md
 
 paths:
+  /v1/meta/classrooms: {"get":{"operationId":"classroomsCapability","tags":["Classrooms","Meta"],"summary":"Advertise the shared memory Classrooms Demo","security":[],"responses":{"200":{"description":"Enabled only alongside the isolated memory Materials service.","content":{"application/json":{"schema":{"type":"object","required":["enabled","version","persistence","chunkBytes","maxFileBytes"],"properties":{"enabled":{"type":"boolean"},"version":{"const":1},"persistence":{"const":"memory"},"chunkBytes":{"const":1048576},"maxFileBytes":{"const":52428800}}}}}}}}}
+  /v1/classrooms/workspace: {"post":{"operationId":"classroomsWorkspace","tags":["Classrooms"],"summary":"Assigned Lecturer classroom/session/roster/assessment workspace; body is empty","description":"Assigned Lecturer classroom/session/roster/assessment workspace; body is empty. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","additionalProperties":false}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"$ref":"#/components/schemas/ClassroomsWorkspace"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/saveAttendance: {"post":{"operationId":"classroomsSaveAttendance","tags":["Classrooms"],"summary":"Save explicit Present/Absent entries; corrections require reasons","description":"Save explicit Present/Absent entries; corrections require reasons. Never turns unrecorded into absent. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SaveClassroomAttendance"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/saveLog: {"post":{"operationId":"classroomsSaveLog","tags":["Classrooms"],"summary":"Save private, revision-checked teaching session delivery notes","description":"Save private, revision-checked teaching session delivery notes. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SaveClassroomLog"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/saveFeedback: {"post":{"operationId":"classroomsSaveFeedback","tags":["Classrooms"],"summary":"Save private draft percentage marks and feedback against the current submission version","description":"Save private draft percentage marks and feedback against the current submission version. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SaveClassroomFeedback"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/publishFeedback: {"post":{"operationId":"classroomsPublishFeedback","tags":["Classrooms"],"summary":"Atomically publish selected current-submission feedback drafts; retain published history","description":"Atomically publish selected current-submission feedback drafts; retain published history. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PublishClassroomFeedback"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/studentState: {"post":{"operationId":"classroomsStudentState","tags":["Classrooms"],"summary":"Read published feedback for the exact owning Student registration","description":"Read published feedback for the exact owning Student registration. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","required":["moduleId","semesterId"],"additionalProperties":false,"properties":{"moduleId":{"type":"string","minLength":1},"semesterId":{"type":"string","minLength":1},"programmeEnrolmentId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]}}}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"$ref":"#/components/schemas/ClassroomStudentState"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/beginSubmission: {"post":{"operationId":"classroomsBeginSubmission","tags":["Classrooms"],"summary":"Reserve an owning Student upload: one PDF/ZIP, 50 MiB; two pending uploads per Student, 15-minute expiry, 512 MiB process budget","description":"Reserve an owning Student upload: one PDF/ZIP, 50 MiB; two pending uploads per Student, 15-minute expiry, 512 MiB process budget. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ClassroomBeginSubmission"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/submissionChunk: {"post":{"operationId":"classroomsSubmissionChunk","tags":["Classrooms"],"summary":"Upload a one MiB aligned chunk","description":"Upload a one MiB aligned chunk. Offset and contentBase64 are required for this operation. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ClassroomUploadOperation"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/finishSubmission: {"post":{"operationId":"classroomsFinishSubmission","tags":["Classrooms"],"summary":"Require a request UUID; verify signature, length and SHA-256, then commit under existing release/deadline rules","description":"Require a request UUID; verify signature, length and SHA-256, then commit under existing release/deadline rules. Return the existing academic Materials response. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ClassroomUploadOperation"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/discardSubmission: {"post":{"operationId":"classroomsDiscardSubmission","tags":["Classrooms"],"summary":"Discard an incomplete upload owned by the Student","description":"Discard an incomplete upload owned by the Student. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ClassroomUploadOperation"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/deleteSubmission: {"post":{"operationId":"classroomsDeleteSubmission","tags":["Classrooms"],"summary":"Delete only the matching current submission under the existing deadline/registration policy","description":"Delete only the matching current submission under the existing deadline/registration policy. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ClassroomDeleteSubmission"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/classrooms/submissionFile: {"post":{"operationId":"classroomsSubmissionFile","tags":["Classrooms"],"summary":"Read exact original bytes: owning Student or campus/teaching-assigned Lecturer; file/submission/registration must match","description":"Read exact original bytes: owning Student or campus/teaching-assigned Lecturer; file/submission/registration must match. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ClassroomSubmissionRead"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"$ref":"#/components/schemas/ClassroomFileChunk"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
+  /v1/meta/materials:
+    get:
+      tags:
+      - Meta
+      - Materials
+      operationId: reusableMaterialsCapability
+      summary: Advertise read-only shared memory Materials
+      security: []
+      responses:
+        '200':
+          description: Capability metadata; disabled is never permission to silently
+            fall back
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - enabled
+                - version
+                - chunkBytes
+                - persistence
+                - lecturerReadOnly
+                - releasePolicy
+                properties:
+                  enabled:
+                    type: boolean
+                  version:
+                    type: integer
+                    const: 1
+                  chunkBytes:
+                    type: integer
+                    const: 1048576
+                  persistence:
+                    type: string
+                    const: memory
+                  lecturerReadOnly:
+                    type: boolean
+                    const: true
+                  releasePolicy:
+                    type: string
+                    const: teaching-week-start
+  /v1/materials/{method}:
+    post:
+      tags:
+      - LMS
+      - Materials
+      operationId: reusableMaterialsOperation
+      summary: Read assigned Materials or original file chunks
+      description: 'Memory Demo only. Lecturer Materials is read-only: draft, publication,
+        upload and deletion attempts return 403, including legacy publication. Reads
+        exclude private drafts and unpublished plan content. Availability uses configured
+        teaching-week starts at campus-local midnight. Lecturer can inspect scheduled
+        assigned content; Student file chunks require exact registration/campus and
+        server-time release. Canonical PDF attachment samples have clearly labelled
+        DEMO filenames, actual byte sizes and SHA-256 descriptors backed by bundled
+        sample bytes rehydrated after memory API restarts; user uploads still reset.
+        No admin write API is available.'
+      security:
+      - bearerAuth: []
+      parameters:
+      - in: path
+        name: method
+        required: true
+        schema:
+          type: string
+          enum:
+          - getMaterials
+          - fileChunk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/MaterialsReadInput'
+              - $ref: '#/components/schemas/MaterialsFileRead'
+      responses:
+        '200':
+          description: Resolved read-only bundle or verified original file chunk
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - result
+                properties:
+                  result:
+                    oneOf:
+                    - $ref: '#/components/schemas/ReusableMaterialsBundle'
+                    - $ref: '#/components/schemas/MaterialFileChunk'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Forbidden Lecturer write/private draft/plan access, unassigned
+            class or unreleased Student download
+        '404':
+          description: Capability, method, class or original file unavailable
+        '409':
+          description: Class setup or stale content conflict
+        '413':
+          description: Request or memory file capacity exceeded
   /health:
     get:
       tags: [Health]
@@ -256,7 +382,7 @@ paths:
               schema:
                 type: string
         "302":
-          description: Redirect to https://raisd-campus.github.io/portal-api-docs/openapi.yaml
+          description: Redirect to https://docs.raisd.co/openapi.yaml
 
   /docs:
     get:
@@ -273,7 +399,7 @@ paths:
               schema:
                 type: string
         "302":
-          description: Redirect to https://raisd-campus.github.io/portal-api-docs/openapi.html
+          description: Redirect to https://docs.raisd.co/openapi.html
 
   /v1/meta:
     get:
@@ -354,7 +480,7 @@ paths:
       summary: Catalogue the Demo LMS PortalApi surface and deferred CAP gaps
       description: |
         Lists callable student LMS methods (Materials, assignment metadata,
-        lecturer review), the Neon Demo collections they touch, CAP IDs, and
+        lecturer review), the Demo Postgres collections they touch, CAP IDs, and
         deferred quiz / live-class / forum / feedback method names for M5.
         Does **not** claim a Live LMS product (BASE-44). Assignment file bytes
         remain metadata-only until the evidence store (SDD-10 Q5 / phase 7.3).
@@ -436,6 +562,95 @@ paths:
                 error: Student and password do not match.
         "503":
           description: Demo student credentials are not configured on the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
+  /v1/auth/sso/exchange:
+    post:
+      tags: [Auth]
+      operationId: exchangeSsoAccessToken
+      summary: Exchange a Raisd SSO access token for a Portal API session
+      description: |
+        Introspects the bearer access token against Raisd SSO (`SSO_BASE_URL`,
+        default `https://sso.raisd.co`) and issues a normal Portal API session
+        for the active SSO role (`student` / `applicant` / `staff` / `lecturer`).
+        Demo exchange requires an explicit known email/account or supported staff desk;
+        unknown identities return 403 rather than another person's scenario. Lecturer
+        sessions include the linked staffMemberId and academicTitle.
+        Stub scenario password logins remain available when `CMS_MODE=stub`.
+        See `docs/ai/backend/sso.md`.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [accessToken]
+              properties:
+                accessToken:
+                  type: string
+                  description: Opaque SSO access token from `POST https://sso.raisd.co/v1/oauth/token`
+            example:
+              accessToken: "<sso access token>"
+      responses:
+        "200":
+          description: Portal API session created for the SSO active role
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [accessToken, tokenType, expiresIn, portal]
+                properties:
+                  accessToken:
+                    type: string
+                  tokenType:
+                    type: string
+                    const: Bearer
+                  expiresIn:
+                    type: integer
+                  portal:
+                    type: string
+                    enum: [student, applicant, staff, lecturer, admin]
+                  scenarioId:
+                    type: string
+                  supportedMethods:
+                    type: array
+                    items:
+                      type: string
+                  role:
+                    type: string
+                  displayName:
+                    type: string
+                  username:
+                    type: string
+                  staffMemberId:
+                    type: string
+                    description: Linked Lecturer actor ID; present for lecturer sessions
+                  academicTitle:
+                    type: string
+                    description: Recorded Lecturer title; may be empty
+                  sso:
+                    type: object
+                    additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          description: SSO token inactive or missing role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "403":
+          description: Active identity has no linked Demo account, supported staff desk, or enabled account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "503":
+          description: SSO introspect unavailable
           content:
             application/json:
               schema:
@@ -2957,13 +3172,1181 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
 
+  /v1/meta/community:
+    get:
+      tags:
+      - Meta
+      operationId: meta_community
+      summary: Advertise paired Demo Community capability
+      security: []
+      responses:
+        '200':
+          description: Disabled by default. Consumers verify enabled, version and chunk size.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    const: demo
+                  enabled:
+                    type: boolean
+                  version:
+                    const: 1
+                  chunkBytes:
+                    const: 1048576
+                  methods:
+                    type: array
+                    items:
+                      type: string
+                  note:
+                    type: string
+                required:
+                - status
+                - enabled
+                - version
+                - chunkBytes
+                - methods
+                - note
+  /v1/community/getCommunity:
+    post:
+      tags:
+      - Chat
+      operationId: community_getCommunity
+      summary: Read canonical multi-programme directory and exact-offering membership
+      description: Read canonical multi-programme directory and exact-offering membership. Selected Student enrolment
+        must be owned. Requires advertised Community version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                programmeEnrolmentId:
+                  type:
+                  - string
+                  - 'null'
+                lastSeenMessageId:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityDirectory'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/getProfile:
+    post:
+      tags:
+      - Chat
+      operationId: community_getProfile
+      summary: Read session-derived canonical profile
+      description: Read session-derived canonical profile. Adam uses staff-adam-watson, Prof. Adam Watson, L00032
+        and canonical email/avatar. Requires advertised Community version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                programmeEnrolmentId:
+                  type:
+                  - string
+                  - 'null'
+                lastSeenMessageId:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    oneOf:
+                    - $ref: '#/components/schemas/CommunityLecturerProfile'
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                        displayName:
+                          type: string
+                          minLength: 1
+                        studentNumber:
+                          type: string
+                          minLength: 1
+                      required:
+                      - id
+                      - displayName
+                      - studentNumber
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/getChatConversations:
+    post:
+      tags:
+      - Chat
+      operationId: community_getChatConversations
+      summary: List accessible shared conversations and unread counts
+      description: List accessible shared conversations and unread counts. Requires advertised Community version 1.
+        Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  prefixItems:
+                  - type: object
+                    properties:
+                      programmeEnrolmentId:
+                        type:
+                        - string
+                        - 'null'
+                      lastSeenMessageId:
+                        type: string
+                        minLength: 1
+                  items: false
+                  minItems: 0
+                  maxItems: 1
+              required:
+              - args
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityConversationList'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/getChatConversation:
+    post:
+      tags:
+      - Chat
+      operationId: community_getChatConversation
+      summary: Read shared messages and direct-message receipts
+      description: Read shared messages and direct-message receipts. Requires advertised Community version 1. Accepts
+        Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  prefixItems:
+                  - type: string
+                    minLength: 1
+                  - type: object
+                    properties:
+                      programmeEnrolmentId:
+                        type:
+                        - string
+                        - 'null'
+                      lastSeenMessageId:
+                        type: string
+                        minLength: 1
+                  items: false
+                  minItems: 1
+                  maxItems: 2
+              required:
+              - args
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityConversationDetail'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/markChatConversationRead:
+    post:
+      tags:
+      - Chat
+      operationId: community_markChatConversationRead
+      summary: Acknowledge displayed lastSeenMessageId
+      description: Acknowledge displayed lastSeenMessageId. Omitted cursor marks latest for compatibility. Requires
+        advertised Community version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  prefixItems:
+                  - type: string
+                    minLength: 1
+                  - type: object
+                    properties:
+                      programmeEnrolmentId:
+                        type:
+                        - string
+                        - 'null'
+                      lastSeenMessageId:
+                        type: string
+                        minLength: 1
+                  items: false
+                  minItems: 1
+                  maxItems: 2
+              required:
+              - args
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityConversationSummary'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/sendChatMessage:
+    post:
+      tags:
+      - Chat
+      operationId: community_sendChatMessage
+      summary: Send session-authored text or completed artifact resources
+      description: Send session-authored text or completed artifact resources. Requires advertised Community version
+        1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  prefixItems:
+                  - $ref: '#/components/schemas/CommunitySendInput'
+                  items: false
+                  minItems: 1
+                  maxItems: 1
+              required:
+              - args
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityMutationResult'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/deleteChatMessage:
+    post:
+      tags:
+      - Chat
+      operationId: community_deleteChatMessage
+      summary: Delete only a message authored by the current identity
+      description: Delete only a message authored by the current identity. Requires advertised Community version 1.
+        Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  prefixItems:
+                  - type: string
+                    minLength: 1
+                  - type: string
+                    minLength: 1
+                  - type: object
+                    properties:
+                      programmeEnrolmentId:
+                        type:
+                        - string
+                        - 'null'
+                      lastSeenMessageId:
+                        type: string
+                        minLength: 1
+                  items: false
+                  minItems: 2
+                  maxItems: 3
+              required:
+              - args
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityMutationResult'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/files/begin:
+    post:
+      tags:
+      - Chat
+      operationId: community_files_begin
+      summary: Begin owner-bound upload with one-hour unattached expiry
+      description: Begin owner-bound upload with one-hour unattached expiry. Requires advertised Community version
+        1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 240
+                mimeType:
+                  type: string
+                  minLength: 1
+                  maxLength: 120
+                sizeBytes:
+                  type: integer
+                  minimum: 0
+                  maximum: 26214400
+                sha256:
+                  type: string
+                  pattern: ^[a-f0-9]{64}$
+                programmeEnrolmentId:
+                  type:
+                  - string
+                  - 'null'
+              required:
+              - name
+              - mimeType
+              - sizeBytes
+              - sha256
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      chunkBytes:
+                        const: 1048576
+                    required:
+                    - id
+                    - chunkBytes
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/files/chunk:
+    post:
+      tags:
+      - Chat
+      operationId: community_files_chunk
+      summary: Upload one bounded MiB chunk
+      description: Upload one bounded MiB chunk. Exact duplicate chunks are accepted; conflicting bytes rejected.
+        Requires advertised Community version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                programmeEnrolmentId:
+                  type:
+                  - string
+                  - 'null'
+                offset:
+                  type: integer
+                  minimum: 0
+                  multipleOf: 1048576
+                contentBase64:
+                  type: string
+                  maxLength: 1400000
+              required:
+              - id
+              - offset
+              - contentBase64
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      offset:
+                        type: integer
+                    required:
+                    - id
+                    - offset
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/files/finish:
+    post:
+      tags:
+      - Chat
+      operationId: community_files_finish
+      summary: Finish after exact length, SHA-256 and safe-image signature checks
+      description: Finish after exact length, SHA-256 and safe-image signature checks. Requires advertised Community
+        version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                programmeEnrolmentId:
+                  type:
+                  - string
+                  - 'null'
+              required:
+              - id
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/files/read:
+    post:
+      tags:
+      - Chat
+      operationId: community_files_read
+      summary: Read original filename, MIME, digest and bytes only through current conversation membership
+      description: Read original filename, MIME, digest and bytes only through current conversation membership. Requires
+        advertised Community version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                programmeEnrolmentId:
+                  type:
+                  - string
+                  - 'null'
+                offset:
+                  type: integer
+                  minimum: 0
+                  multipleOf: 1048576
+              required:
+              - id
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityFileChunk'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID or chunk.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '413':
+          description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+
+  /v1/lecturer/getModuleDetails:
+    post:
+      tags: [LMS]
+      operationId: lecturer_getModuleDetails
+      summary: Read an assigned offering timetable and student roster
+      description: |
+        Read-only Demo projection from canonical records. A Lecturer bearer session,
+        active role, campus scope and exact teaching assignment are required.
+        Students follow Community's registered/active-enrolment membership rules.
+        Student semesters come from each exact module registration's Study Period,
+        not the current semester. No Year field or schema change is introduced.
+        GET /v1/meta advertises capabilities.lecturerModuleDetailsVersion = 1;
+        Lecturer login includes getModuleDetails in supportedMethods.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [moduleOfferingId]
+              properties:
+                moduleOfferingId: {type: string, minLength: 1}
+      responses:
+        '200':
+          description: Canonical read-only Demo module details; no CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result, cms]
+                properties:
+                  result:
+                    $ref: '#/components/schemas/LecturerModuleDetails'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged: {const: true}
+                      mode: {const: stub}
+                      note: {type: string}
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Lecturer role or account is unavailable.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ErrorBody'}
+        '404':
+          description: Unknown, unassigned or out-of-campus offering.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ErrorBody'}
+        '503':
+          description: Canonical records are unavailable.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ErrorBody'}
+  /v1/auth/lecturer/login:
+    post:
+      tags:
+      - Auth
+      operationId: lecturerDemoLogin
+      summary: Create an existing Demo lecturer session
+      description: Existing username/password sign-in; no authentication flow change. The bearer session also accesses
+        Community when GET /v1/meta/community advertises support. supportedMethods retains the existing Lecturer RPC
+        catalogue; shared Community methods are advertised separately.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - username
+              - password
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Demo lecturer bearer session
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - accessToken
+                - tokenType
+                - expiresIn
+                - staffMemberId
+                - displayName
+                - username
+                - academicTitle
+                - supportedMethods
+                properties:
+                  accessToken:
+                    type: string
+                  tokenType:
+                    type: string
+                    const: Bearer
+                  expiresIn:
+                    type: integer
+                    minimum: 0
+                  staffMemberId:
+                    type: string
+                  displayName:
+                    type: string
+                  username:
+                    type: string
+                  academicTitle:
+                    type: string
+                  supportedMethods:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Invalid login body
+          content:
+            application/json:
+              schema: &id001
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: Username or password is incorrect
+          content:
+            application/json:
+              schema: *id001
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: UUID
-      description: Token from `POST /v1/auth/login`
+      bearerFormat: opaque
+      description: Token from `POST /v1/auth/login` or `POST /v1/auth/lecturer/login`; Community accepts both audiences.
 
   responses:
     BadRequest:
@@ -3214,6 +4597,12 @@ components:
       type: object
       required: [password]
       properties:
+        email:
+          type: string
+          format: email
+          description: |
+            Preferred Demo login identity (maps to a scenario). Legacy `scenarioId`
+            remains accepted during the transition.
         scenarioId:
           $ref: "#/components/schemas/ScenarioId"
         password:
@@ -3221,7 +4610,7 @@ components:
           minLength: 1
           description: |
             Demo password for the scenario's student (defaults to
-            `first-semester-registration` when `scenarioId` is omitted).
+            `first-semester-registration` when `scenarioId` and `email` are omitted).
             Passwords are not published; they are held in the gitignored
             `control-plane/.credentials/demo-students.json`.
 
@@ -3333,6 +4722,39 @@ components:
         programmeEnrolmentId:
           type: ["string", "null"]
 
+    LecturerModuleDetails:
+      type: object
+      required: [currentPersonId, moduleOfferingId, timeZone, deliveryMode, students, timetable]
+      properties:
+        currentPersonId: {type: string, minLength: 1}
+        moduleOfferingId: {type: string, minLength: 1}
+        timeZone: {type: string, minLength: 1}
+        deliveryMode: {type: string, enum: [online, physical, hybrid]}
+        students:
+          type: array
+          items:
+            type: object
+            required: [registrationId, studentProfileId, studentNumber, displayName, avatarUrl, semesterNumber]
+            properties:
+              registrationId: {type: string, minLength: 1}
+              studentProfileId: {type: string, minLength: 1}
+              studentNumber: {type: string, minLength: 1}
+              displayName: {type: string, minLength: 1}
+              avatarUrl: {type: [string, 'null'], format: uri}
+              semesterNumber: {type: integer, minimum: 1}
+        timetable:
+          type: array
+          items:
+            type: object
+            required: [id, dayOfWeek, startsAtLocal, endsAtLocal, location, effectiveFrom, effectiveTo]
+            properties:
+              id: {type: string, minLength: 1}
+              dayOfWeek: {type: integer, minimum: 1, maximum: 7}
+              startsAtLocal: {type: string, pattern: '^([01]\d|2[0-3]):[0-5]\d$'}
+              endsAtLocal: {type: string, pattern: '^([01]\d|2[0-3]):[0-5]\d$'}
+              location: {type: [string, 'null']}
+              effectiveFrom: {type: string, format: date}
+              effectiveTo: {type: string, format: date}
     LecturerReviewInput:
       type: object
       required: [moduleId, semesterId, lecturerId]
@@ -5360,7 +6782,7 @@ components:
       type: object
       description: |
         Demo LMS role surface on Portal API — callable Materials / assignment /
-        lecturer-review methods, Neon collections they touch, and deferred CAP
+        lecturer-review methods, Demo Postgres collections they touch, and deferred CAP
         gaps (quiz, live class, forum, feedback). Not a Live LMS product (BASE-44).
       required: [status, note, methods, deferredMethods, collections]
       properties:
@@ -5408,7 +6830,7 @@ components:
           type: array
           items:
             type: string
-          description: Neon Demo collection / logical table names
+          description: Demo Postgres collection / logical table names
         domain:
           type: string
           enum: [lms, shared]
@@ -9900,7 +11322,7 @@ components:
             - {type: 'null'}
     LocalApplicantCampusFields:
       type: object
-      x-implementation: Shared with ApplicantSnapshot.studyPreferences; hosted Neon Demo may still omit until server migration.
+      x-implementation: Shared with ApplicantSnapshot.studyPreferences; hosted Demo may still omit until server migration.
       required: [campusId, previousStudentId]
       properties:
         campusId:
@@ -10375,3 +11797,788 @@ components:
               sha256:
                 type: string
                 pattern: ^[a-f0-9]{64}$
+
+    CommunityDirectory:
+      type: object
+      properties:
+        currentPersonId:
+          type: string
+          minLength: 1
+        profile:
+          oneOf:
+          - $ref: '#/components/schemas/CommunityLecturerProfile'
+          - type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              displayName:
+                type: string
+                minLength: 1
+              studentNumber:
+                type: string
+                minLength: 1
+            required:
+            - id
+            - displayName
+            - studentNumber
+        programmes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              title:
+                type: string
+                minLength: 1
+              facultyName:
+                type: string
+              campusId:
+                type: string
+                minLength: 1
+            required:
+            - id
+            - title
+            - facultyName
+            - campusId
+            additionalProperties: false
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              kind:
+                type: string
+                enum:
+                - programme
+                - module
+              programmeId:
+                type: string
+                minLength: 1
+              moduleId:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              moduleOfferingId:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              semesterId:
+                anyOf:
+                - type: string
+                  minLength: 1
+                - type: 'null'
+              label:
+                type: string
+                minLength: 1
+              code:
+                type: string
+              campusId:
+                type: string
+                minLength: 1
+            required:
+            - id
+            - kind
+            - programmeId
+            - moduleId
+            - moduleOfferingId
+            - semesterId
+            - label
+            - campusId
+            additionalProperties: false
+        people:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              displayName:
+                type: string
+                minLength: 1
+              personType:
+                type: string
+                enum:
+                - student
+                - lecturer
+              avatarUrl:
+                anyOf:
+                - type: string
+                  format: uri
+                - type: 'null'
+            required:
+            - id
+            - displayName
+            - personType
+            - avatarUrl
+            additionalProperties: false
+        memberships:
+          type: array
+          items:
+            type: object
+            properties:
+              groupId:
+                type: string
+                minLength: 1
+              personId:
+                type: string
+                minLength: 1
+            required:
+            - groupId
+            - personId
+            additionalProperties: false
+        timeZone:
+          type: string
+          minLength: 1
+        canWrite:
+          type: boolean
+      required:
+      - currentPersonId
+      - profile
+      - programmes
+      - groups
+      - people
+      - memberships
+      - timeZone
+      - canWrite
+      additionalProperties: false
+    CommunityLecturerProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        displayName:
+          type: string
+          minLength: 1
+        academicTitle:
+          type: string
+          minLength: 1
+        staffNumber:
+          type: string
+          minLength: 1
+        emailAddress:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        avatarUrl:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+      required:
+      - id
+      - displayName
+      - academicTitle
+      - staffNumber
+      - emailAddress
+      - avatarUrl
+      additionalProperties: false
+    CommunityConversationDetail:
+      type: object
+      properties:
+        conversation:
+          type: object
+          properties:
+            id:
+              type: string
+              minLength: 1
+            context:
+              oneOf:
+              - type: object
+                properties:
+                  kind:
+                    type: string
+                    const: programme
+                  label:
+                    type: string
+                    minLength: 1
+                  programmeId:
+                    type: string
+                    minLength: 1
+                  communityGroupId:
+                    type: string
+                    minLength: 1
+                required:
+                - kind
+                - label
+                - programmeId
+                - communityGroupId
+                additionalProperties: false
+              - type: object
+                properties:
+                  kind:
+                    type: string
+                    const: module
+                  label:
+                    type: string
+                    minLength: 1
+                  moduleId:
+                    type: string
+                    minLength: 1
+                  moduleOfferingId:
+                    type: string
+                    minLength: 1
+                  semesterId:
+                    type: string
+                    minLength: 1
+                  communityGroupId:
+                    type: string
+                    minLength: 1
+                required:
+                - kind
+                - label
+                - moduleId
+                - moduleOfferingId
+                - semesterId
+                - communityGroupId
+                additionalProperties: false
+              - type: object
+                properties:
+                  kind:
+                    type: string
+                    const: personal
+                  label:
+                    type: string
+                    const: personal message
+                  personId:
+                    type: string
+                    minLength: 1
+                required:
+                - kind
+                - label
+                - personId
+                additionalProperties: false
+              - type: object
+                properties:
+                  kind:
+                    type: string
+                    const: service
+                  label:
+                    type: string
+                    minLength: 1
+                  serviceId:
+                    type: string
+                    minLength: 1
+                required:
+                - kind
+                - label
+                - serviceId
+                additionalProperties: false
+            title:
+              type: string
+              minLength: 1
+            avatarUrl:
+              anyOf:
+              - type: string
+                format: uri
+              - type: 'null'
+            createdAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+            updatedAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          required:
+          - id
+          - context
+          - title
+          - avatarUrl
+          - createdAt
+          - updatedAt
+          additionalProperties: false
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              personType:
+                type: string
+                enum:
+                - student
+                - lecturer
+              displayName:
+                type: string
+                minLength: 1
+              avatarUrl:
+                anyOf:
+                - type: string
+                  format: uri
+                - type: 'null'
+            required:
+            - id
+            - personType
+            - displayName
+            - avatarUrl
+            additionalProperties: false
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              conversationId:
+                type: string
+                minLength: 1
+              senderId:
+                type: string
+                minLength: 1
+              body:
+                type: string
+              sentAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+              receiptStatus:
+                anyOf:
+                - type: string
+                  enum:
+                  - sent
+                  - read
+                - type: 'null'
+              attachments:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    messageId:
+                      anyOf:
+                      - type: string
+                        minLength: 1
+                      - type: 'null'
+                    resourceId:
+                      type: string
+                      minLength: 1
+                    kind:
+                      type: string
+                      enum:
+                      - image
+                      - file
+                    name:
+                      type: string
+                      minLength: 1
+                    mimeType:
+                      type: string
+                    sizeBytes:
+                      type: integer
+                      minimum: 0
+                      maximum: 9007199254740991
+                    previewUrl:
+                      type:
+                      - string
+                      - 'null'
+                  required:
+                  - id
+                  - messageId
+                  - kind
+                  - name
+                  - mimeType
+                  - sizeBytes
+                  - previewUrl
+                  additionalProperties: false
+            required:
+            - id
+            - conversationId
+            - senderId
+            - body
+            - sentAt
+            - receiptStatus
+            - attachments
+            additionalProperties: false
+      required:
+      - conversation
+      - participants
+      - messages
+      additionalProperties: false
+    CommunityConversationList:
+      type: object
+      properties:
+        conversations:
+          type: array
+          items:
+            type: object
+            properties:
+              conversationId:
+                type: string
+                minLength: 1
+              context:
+                oneOf:
+                - type: object
+                  properties:
+                    kind:
+                      type: string
+                      const: programme
+                    label:
+                      type: string
+                      minLength: 1
+                    programmeId:
+                      type: string
+                      minLength: 1
+                    communityGroupId:
+                      type: string
+                      minLength: 1
+                  required:
+                  - kind
+                  - label
+                  - programmeId
+                  - communityGroupId
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    kind:
+                      type: string
+                      const: module
+                    label:
+                      type: string
+                      minLength: 1
+                    moduleId:
+                      type: string
+                      minLength: 1
+                    moduleOfferingId:
+                      type: string
+                      minLength: 1
+                    semesterId:
+                      type: string
+                      minLength: 1
+                    communityGroupId:
+                      type: string
+                      minLength: 1
+                  required:
+                  - kind
+                  - label
+                  - moduleId
+                  - moduleOfferingId
+                  - semesterId
+                  - communityGroupId
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    kind:
+                      type: string
+                      const: personal
+                    label:
+                      type: string
+                      const: personal message
+                    personId:
+                      type: string
+                      minLength: 1
+                  required:
+                  - kind
+                  - label
+                  - personId
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    kind:
+                      type: string
+                      const: service
+                    label:
+                      type: string
+                      minLength: 1
+                    serviceId:
+                      type: string
+                      minLength: 1
+                  required:
+                  - kind
+                  - label
+                  - serviceId
+                  additionalProperties: false
+              title:
+                type: string
+                minLength: 1
+              avatarUrl:
+                anyOf:
+                - type: string
+                  format: uri
+                - type: 'null'
+              unreadCount:
+                type: integer
+                minimum: 0
+                maximum: 9007199254740991
+              lastMessageAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+            required:
+            - conversationId
+            - context
+            - title
+            - avatarUrl
+            - unreadCount
+            - lastMessageAt
+            additionalProperties: false
+      required:
+      - conversations
+      additionalProperties: false
+    CommunityConversationSummary:
+      type: object
+      properties:
+        conversationId:
+          type: string
+          minLength: 1
+        context:
+          oneOf:
+          - type: object
+            properties:
+              kind:
+                type: string
+                const: programme
+              label:
+                type: string
+                minLength: 1
+              programmeId:
+                type: string
+                minLength: 1
+              communityGroupId:
+                type: string
+                minLength: 1
+            required:
+            - kind
+            - label
+            - programmeId
+            - communityGroupId
+            additionalProperties: false
+          - type: object
+            properties:
+              kind:
+                type: string
+                const: module
+              label:
+                type: string
+                minLength: 1
+              moduleId:
+                type: string
+                minLength: 1
+              moduleOfferingId:
+                type: string
+                minLength: 1
+              semesterId:
+                type: string
+                minLength: 1
+              communityGroupId:
+                type: string
+                minLength: 1
+            required:
+            - kind
+            - label
+            - moduleId
+            - moduleOfferingId
+            - semesterId
+            - communityGroupId
+            additionalProperties: false
+          - type: object
+            properties:
+              kind:
+                type: string
+                const: personal
+              label:
+                type: string
+                const: personal message
+              personId:
+                type: string
+                minLength: 1
+            required:
+            - kind
+            - label
+            - personId
+            additionalProperties: false
+          - type: object
+            properties:
+              kind:
+                type: string
+                const: service
+              label:
+                type: string
+                minLength: 1
+              serviceId:
+                type: string
+                minLength: 1
+            required:
+            - kind
+            - label
+            - serviceId
+            additionalProperties: false
+        title:
+          type: string
+          minLength: 1
+        avatarUrl:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        unreadCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        lastMessageAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - conversationId
+      - context
+      - title
+      - avatarUrl
+      - unreadCount
+      - lastMessageAt
+      additionalProperties: false
+    CommunityMutationResult:
+      type: object
+      properties:
+        conversation:
+          $ref: '#/components/schemas/CommunityConversationDetail'
+        conversations:
+          $ref: '#/components/schemas/CommunityConversationList'
+      required:
+      - conversation
+      - conversations
+    CommunitySendInput:
+      type: object
+      properties:
+        target:
+          oneOf:
+          - type: object
+            properties:
+              kind:
+                const: personal
+              personId:
+                type: string
+                minLength: 1
+            required:
+            - kind
+            - personId
+          - type: object
+            properties:
+              kind:
+                const: group
+              context:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    enum:
+                    - programme
+                    - module
+                  communityGroupId:
+                    type: string
+                    minLength: 1
+                required:
+                - kind
+                - communityGroupId
+            required:
+            - kind
+            - context
+        text:
+          type: string
+          maxLength: 20000
+        attachments:
+          type: array
+          maxItems: 5
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                minLength: 1
+            required:
+            - resourceId
+        requestId:
+          type: string
+          format: uuid
+        programmeEnrolmentId:
+          type:
+          - string
+          - 'null'
+      required:
+      - target
+      - text
+      - attachments
+      - requestId
+      description: Text or attachment required. Five resources, 25 MiB each, 75 MiB total. Session-derived author and
+        canonical context. Exact request-ID retries are idempotent; differing content returns 409.
+    CommunityFileChunk:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        mimeType:
+          type: string
+          minLength: 1
+        sizeBytes:
+          type: integer
+          minimum: 0
+          maximum: 26214400
+        sha256:
+          type: string
+          pattern: ^[a-f0-9]{64}$
+        offset:
+          type: integer
+          minimum: 0
+          multipleOf: 1048576
+        contentBase64:
+          type: string
+          maxLength: 1400000
+      required:
+      - id
+      - name
+      - mimeType
+      - sizeBytes
+      - sha256
+      - offset
+      - contentBase64
+
+    MaterialSchedule: {"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false}
+    MaterialArtifact: {"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}
+    ReusableMaterial: {"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false}
+    MaterialRevision: {"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"publishedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"authorId":{"type":"string","minLength":1,"maxLength":300},"authorName":{"type":"string","minLength":1,"maxLength":300},"reason":{"type":"string","minLength":1,"maxLength":2000},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}},"content":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false}},"required":["version","publishedAt","authorId","authorName","reason","files"],"additionalProperties":false}
+    ReusableMaterialsBundle: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1,"maxLength":300},"moduleId":{"type":"string","minLength":1,"maxLength":300},"campusId":{"type":"string","minLength":1,"maxLength":300},"timeZone":{"type":"string","minLength":1,"maxLength":300},"now":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"startsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"endsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"state":{"type":"string","enum":["upcoming","active","completed"]},"canPublishPlan":{"type":"boolean","const":false},"weeks":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"weekNumber":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"title":{"type":"string","minLength":1,"maxLength":300},"startsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"}},"required":["id","weekNumber","title","startsOn"],"additionalProperties":false}},"assessments":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"key":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"title":{"type":"string","minLength":1,"maxLength":300},"weightPercent":{"type":"number"},"kind":{"type":"string","minLength":1,"maxLength":300}},"required":["id","key","title","weightPercent","kind"],"additionalProperties":false}},"plan":{"type":"object","properties":{"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"publishedVersion":{"type":"integer","minimum":0,"maximum":9007199254740991},"draft":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false},"maxItems":0},"published":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false},"maxItems":0},"bindingVersion":{"anyOf":[{"type":"integer","minimum":0,"maximum":9007199254740991},{"type":"null"}]}},"required":["revision","publishedVersion","draft","published","bindingVersion"],"additionalProperties":false},"items":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6,"const":0},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$","const":"00:00"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}},"availableFrom":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"dueAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"weekId":{"type":"string","minLength":1,"maxLength":300},"assessmentId":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"blockedReason":{"anyOf":[{"type":"string"},{"type":"null"}]},"history":{"type":"array","items":{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"publishedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"authorId":{"type":"string","minLength":1,"maxLength":300},"authorName":{"type":"string","minLength":1,"maxLength":300},"reason":{"type":"string","minLength":1,"maxLength":2000},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}},"content":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false}},"required":["version","publishedAt","authorId","authorName","reason","files"],"additionalProperties":false}},"seed":{"type":"boolean"},"publishedBy":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"lastUpdatedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files","availableFrom","dueAt","weekId","assessmentId","blockedReason","history","seed"],"additionalProperties":false}},"classDrafts":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false},"maxItems":0},"classRevision":{"type":"integer","minimum":0,"maximum":9007199254740991},"readOnlyItems":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"weekNumber":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"kind":{"type":"string","enum":["quiz","exam"]},"title":{"type":"string","minLength":1,"maxLength":300},"availableFrom":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"assessmentId":{"type":"string","minLength":1,"maxLength":300},"description":{"anyOf":[{"type":"string","maxLength":20000},{"type":"null"}]},"instructions":{"anyOf":[{"type":"string","maxLength":20000},{"type":"null"}]},"publishedBy":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"lastUpdatedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]}},"required":["id","weekNumber","kind","title","availableFrom","assessmentId"],"additionalProperties":false}}},"required":["moduleOfferingId","moduleId","campusId","timeZone","now","startsAt","endsAt","state","canPublishPlan","weeks","assessments","plan","items","classDrafts","classRevision"],"additionalProperties":false}
+    MaterialsReadInput: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1}},"required":["moduleOfferingId"],"additionalProperties":false}
+    MaterialsSaveInput: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1,"maxLength":300},"scope":{"type":"string","enum":["plan","class"]},"expectedRevision":{"type":"integer","minimum":0,"maximum":9007199254740991},"requestId":{"type":"string","minLength":1,"maxLength":300},"items":{"maxItems":200,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"kind":{"type":"string","enum":["lectureNote","reading","video","link","assignment"]},"title":{"type":"string","maxLength":300},"description":{"type":"string","maxLength":20000},"instructions":{"type":"string","maxLength":20000},"release":{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},"deadline":{"anyOf":[{"type":"object","properties":{"week":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"day":{"type":"integer","minimum":0,"maximum":6},"time":{"type":"string","pattern":"^([01]\\d|2[0-3]):[0-5]\\d$"}},"required":["week","day","time"],"additionalProperties":false},{"type":"null"}]},"assessmentKey":{"anyOf":[{"type":"string","minLength":1,"maxLength":300},{"type":"null"}]},"acceptedFormats":{"maxItems":2,"type":"array","items":{"type":"string","enum":["pdf","zip"]}},"url":{"anyOf":[{"type":"string","maxLength":4000},{"type":"null"}]},"files":{"maxItems":5,"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false}}},"required":["id","kind","title","description","instructions","release","deadline","assessmentKey","acceptedFormats","url","files"],"additionalProperties":false}}},"required":["moduleOfferingId","scope","expectedRevision","requestId","items"],"additionalProperties":false}
+    MaterialsPublishInput: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1,"maxLength":300},"scope":{"type":"string","enum":["plan","class"]},"expectedRevision":{"type":"integer","minimum":0,"maximum":9007199254740991},"requestId":{"type":"string","minLength":1,"maxLength":300},"reason":{"type":"string","minLength":1,"maxLength":2000},"itemId":{"type":"string","minLength":1,"maxLength":300}},"required":["moduleOfferingId","scope","expectedRevision","requestId","reason"],"additionalProperties":false}
+    MaterialsUploadBegin: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["moduleOfferingId","name","mimeType","sizeBytes","sha256"],"additionalProperties":false}
+    MaterialsUploadOperation: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"fileId":{"type":"string"},"offset":{"type":"integer","minimum":0,"maximum":9007199254740991},"contentBase64":{"type":"string"}},"required":["moduleOfferingId","fileId"],"additionalProperties":false}
+    MaterialsFileRead: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"scope":{"default":"class","type":"string","enum":["plan","class"]},"itemId":{"type":"string"},"fileId":{"type":"string"},"offset":{"default":0,"type":"integer","minimum":0,"maximum":9007199254740991,"multipleOf":1048576}},"required":["moduleOfferingId","scope","itemId","fileId","offset"],"additionalProperties":false}
+    MaterialFileChunk: {"type":"object","properties":{"metadata":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":300},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","minLength":1,"maxLength":120},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"source":{"anyOf":[{"type":"string","enum":["bundled-demo","uploaded"]},{"type":"null"}]}},"required":["id","name","mimeType","sizeBytes"],"additionalProperties":false},"offset":{"type":"integer","minimum":0,"maximum":9007199254740991,"multipleOf":1048576},"contentBase64":{"type":"string"}},"required":["metadata","offset","contentBase64"],"additionalProperties":false}
+
+    ClassroomAssignmentRow: {"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"studentId":{"type":"string","minLength":1},"studentNumber":{"type":"string","minLength":1},"displayName":{"type":"string","minLength":1},"submission":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"fileName":{"type":"string","minLength":1},"mimeType":{"type":"string","minLength":1},"sizeBytes":{"type":"integer","minimum":0,"maximum":9007199254740991},"submittedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"file":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false},{"type":"null"}]}},"required":["id","fileName","mimeType","sizeBytes","submittedAt","file"],"additionalProperties":false},{"type":"null"}]},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"draft":{"anyOf":[{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},{"type":"null"}]},"published":{"anyOf":[{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},{"type":"null"}]},"history":{"type":"array","items":{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false}}},"required":["registrationId","studentId","studentNumber","displayName","submission","revision","draft","published","history"],"additionalProperties":false}
+    ClassroomAssignmentTarget: {"type":"object","properties":{"moduleId":{"type":"string","minLength":1},"semesterId":{"type":"string","minLength":1},"programmeEnrolmentId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]},"moduleLearningItemId":{"type":"string","minLength":1}},"required":["moduleId","semesterId","moduleLearningItemId"],"additionalProperties":false}
+    ClassroomBeginSubmission: {"type":"object","properties":{"target":{"type":"object","properties":{"moduleId":{"type":"string","minLength":1},"semesterId":{"type":"string","minLength":1},"programmeEnrolmentId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]},"moduleLearningItemId":{"type":"string","minLength":1}},"required":["moduleId","semesterId","moduleLearningItemId"],"additionalProperties":false},"file":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["name","mimeType","sizeBytes","sha256"],"additionalProperties":false},"previousSubmissionId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]}},"required":["target","file","previousSubmissionId"],"additionalProperties":false}
+    ClassroomDeleteSubmission: {"type":"object","properties":{"target":{"type":"object","properties":{"moduleId":{"type":"string","minLength":1},"semesterId":{"type":"string","minLength":1},"programmeEnrolmentId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]},"moduleLearningItemId":{"type":"string","minLength":1}},"required":["moduleId","semesterId","moduleLearningItemId"],"additionalProperties":false},"previousSubmissionId":{"type":"string","minLength":1},"requestId":{"type":"string","format":"uuid","pattern":"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"}},"required":["target","previousSubmissionId","requestId"],"additionalProperties":false}
+    ClassroomFeedback: {"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false}
+    ClassroomFileChunk: {"type":"object","properties":{"metadata":{"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false},"offset":{"type":"integer","minimum":0,"maximum":9007199254740991,"multipleOf":1048576},"contentBase64":{"type":"string","maxLength":1400000}},"required":["metadata","offset","contentBase64"],"additionalProperties":false}
+    ClassroomFile: {"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false}
+    Classroom: {"type":"object","properties":{"id":{"type":"string","minLength":1},"moduleId":{"type":"string","minLength":1},"code":{"type":"string","minLength":1},"title":{"type":"string","minLength":1},"programme":{"type":"string","minLength":1},"term":{"type":"string","minLength":1},"section":{"type":"string","minLength":1},"startsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"},"endsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"},"timeZone":{"type":"string","minLength":1},"completed":{"type":"boolean"},"setupIssues":{"type":"array","items":{"type":"string"}},"students":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"studentId":{"type":"string","minLength":1},"studentNumber":{"type":"string","minLength":1},"displayName":{"type":"string","minLength":1},"avatarUrl":{"anyOf":[{"type":"string"},{"type":"null"}]},"semesterNumber":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"nationality":{"anyOf":[{"type":"string"},{"type":"null"}]}},"required":["registrationId","studentId","studentNumber","displayName","avatarUrl","semesterNumber","nationality"],"additionalProperties":false}},"sessions":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"startsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"endsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"status":{"type":"string","enum":["scheduled","completed","cancelled"]},"location":{"anyOf":[{"type":"string"},{"type":"null"}]},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"attendance":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"status":{"anyOf":[{"type":"string","enum":["present","absent"]},{"type":"null"}]}},"required":["registrationId","status"],"additionalProperties":false}},"history":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"before":{"anyOf":[{"type":"string","enum":["present","absent"]},{"type":"null"}]},"after":{"type":"string","enum":["present","absent"]},"reason":{"type":"string"},"authorName":{"type":"string","minLength":1},"at":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"}},"required":["registrationId","before","after","reason","authorName","at"],"additionalProperties":false}},"log":{"anyOf":[{"type":"object","properties":{"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"covered":{"type":"string"},"unfinished":{"type":"string"},"followUp":{"type":"string"},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"}},"required":["revision","covered","unfinished","followUp","authorName","savedAt"],"additionalProperties":false},{"type":"null"}]}},"required":["id","startsAt","endsAt","status","location","revision","attendance","history","log"],"additionalProperties":false}},"weeks":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"weekNumber":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"startsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"},"title":{"type":"string","minLength":1},"outcomes":{"type":"array","items":{"type":"string"}},"plan":{"anyOf":[{"type":"string"},{"type":"null"}]},"materials":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"title":{"type":"string","minLength":1}},"required":["id","title"],"additionalProperties":false}}},"required":["id","weekNumber","startsOn","title","outcomes","plan","materials"],"additionalProperties":false}},"assignments":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"learningItemId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]},"title":{"type":"string","minLength":1},"weightPercent":{"type":"number","exclusiveMinimum":0,"maximum":100},"dueAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"setupIssue":{"anyOf":[{"type":"string"},{"type":"null"}]},"rows":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"studentId":{"type":"string","minLength":1},"studentNumber":{"type":"string","minLength":1},"displayName":{"type":"string","minLength":1},"submission":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"fileName":{"type":"string","minLength":1},"mimeType":{"type":"string","minLength":1},"sizeBytes":{"type":"integer","minimum":0,"maximum":9007199254740991},"submittedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"file":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false},{"type":"null"}]}},"required":["id","fileName","mimeType","sizeBytes","submittedAt","file"],"additionalProperties":false},{"type":"null"}]},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"draft":{"anyOf":[{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},{"type":"null"}]},"published":{"anyOf":[{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},{"type":"null"}]},"history":{"type":"array","items":{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false}}},"required":["registrationId","studentId","studentNumber","displayName","submission","revision","draft","published","history"],"additionalProperties":false}}},"required":["id","learningItemId","title","weightPercent","dueAt","setupIssue","rows"],"additionalProperties":false}}},"required":["id","moduleId","code","title","programme","term","section","startsOn","endsOn","timeZone","completed","setupIssues","students","sessions","weeks","assignments"],"additionalProperties":false}
+    ClassroomSession: {"type":"object","properties":{"id":{"type":"string","minLength":1},"startsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"endsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"status":{"type":"string","enum":["scheduled","completed","cancelled"]},"location":{"anyOf":[{"type":"string"},{"type":"null"}]},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"attendance":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"status":{"anyOf":[{"type":"string","enum":["present","absent"]},{"type":"null"}]}},"required":["registrationId","status"],"additionalProperties":false}},"history":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"before":{"anyOf":[{"type":"string","enum":["present","absent"]},{"type":"null"}]},"after":{"type":"string","enum":["present","absent"]},"reason":{"type":"string"},"authorName":{"type":"string","minLength":1},"at":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"}},"required":["registrationId","before","after","reason","authorName","at"],"additionalProperties":false}},"log":{"anyOf":[{"type":"object","properties":{"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"covered":{"type":"string"},"unfinished":{"type":"string"},"followUp":{"type":"string"},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"}},"required":["revision","covered","unfinished","followUp","authorName","savedAt"],"additionalProperties":false},{"type":"null"}]}},"required":["id","startsAt","endsAt","status","location","revision","attendance","history","log"],"additionalProperties":false}
+    ClassroomStudentState: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"registrationId":{"type":"string","minLength":1},"feedback":{"type":"array","items":{"type":"object","properties":{"learningItemId":{"type":"string","minLength":1},"published":{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},"history":{"type":"array","items":{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false}}},"required":["learningItemId","published","history"],"additionalProperties":false}}},"required":["moduleOfferingId","registrationId","feedback"],"additionalProperties":false}
+    ClassroomSubmissionRead: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"registrationId":{"type":"string","minLength":1},"submissionId":{"type":"string","minLength":1},"fileId":{"type":"string","minLength":1},"offset":{"type":"integer","minimum":0,"maximum":9007199254740991,"multipleOf":1048576}},"required":["moduleOfferingId","registrationId","submissionId","fileId","offset"],"additionalProperties":false}
+    ClassroomSubmission: {"type":"object","properties":{"id":{"type":"string","minLength":1},"fileName":{"type":"string","minLength":1},"mimeType":{"type":"string","minLength":1},"sizeBytes":{"type":"integer","minimum":0,"maximum":9007199254740991},"submittedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"file":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false},{"type":"null"}]}},"required":["id","fileName","mimeType","sizeBytes","submittedAt","file"],"additionalProperties":false}
+    ClassroomTarget: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1}},"required":["moduleOfferingId"],"additionalProperties":false}
+    ClassroomUploadOperation: {"type":"object","properties":{"uploadId":{"type":"string","minLength":1},"offset":{"type":"integer","minimum":0,"maximum":9007199254740991,"multipleOf":1048576},"contentBase64":{"type":"string","maxLength":1400000},"requestId":{"type":"string","format":"uuid","pattern":"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"}},"required":["uploadId"],"additionalProperties":false}
+    ClassroomsWorkspace: {"type":"object","properties":{"currentPersonId":{"type":"string","minLength":1},"serverNow":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"classrooms":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"moduleId":{"type":"string","minLength":1},"code":{"type":"string","minLength":1},"title":{"type":"string","minLength":1},"programme":{"type":"string","minLength":1},"term":{"type":"string","minLength":1},"section":{"type":"string","minLength":1},"startsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"},"endsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"},"timeZone":{"type":"string","minLength":1},"completed":{"type":"boolean"},"setupIssues":{"type":"array","items":{"type":"string"}},"students":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"studentId":{"type":"string","minLength":1},"studentNumber":{"type":"string","minLength":1},"displayName":{"type":"string","minLength":1},"avatarUrl":{"anyOf":[{"type":"string"},{"type":"null"}]},"semesterNumber":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"nationality":{"anyOf":[{"type":"string"},{"type":"null"}]}},"required":["registrationId","studentId","studentNumber","displayName","avatarUrl","semesterNumber","nationality"],"additionalProperties":false}},"sessions":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"startsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"endsAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"status":{"type":"string","enum":["scheduled","completed","cancelled"]},"location":{"anyOf":[{"type":"string"},{"type":"null"}]},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"attendance":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"status":{"anyOf":[{"type":"string","enum":["present","absent"]},{"type":"null"}]}},"required":["registrationId","status"],"additionalProperties":false}},"history":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"before":{"anyOf":[{"type":"string","enum":["present","absent"]},{"type":"null"}]},"after":{"type":"string","enum":["present","absent"]},"reason":{"type":"string"},"authorName":{"type":"string","minLength":1},"at":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"}},"required":["registrationId","before","after","reason","authorName","at"],"additionalProperties":false}},"log":{"anyOf":[{"type":"object","properties":{"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"covered":{"type":"string"},"unfinished":{"type":"string"},"followUp":{"type":"string"},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"}},"required":["revision","covered","unfinished","followUp","authorName","savedAt"],"additionalProperties":false},{"type":"null"}]}},"required":["id","startsAt","endsAt","status","location","revision","attendance","history","log"],"additionalProperties":false}},"weeks":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"weekNumber":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"startsOn":{"type":"string","format":"date","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"},"title":{"type":"string","minLength":1},"outcomes":{"type":"array","items":{"type":"string"}},"plan":{"anyOf":[{"type":"string"},{"type":"null"}]},"materials":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"title":{"type":"string","minLength":1}},"required":["id","title"],"additionalProperties":false}}},"required":["id","weekNumber","startsOn","title","outcomes","plan","materials"],"additionalProperties":false}},"assignments":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"learningItemId":{"anyOf":[{"type":"string","minLength":1},{"type":"null"}]},"title":{"type":"string","minLength":1},"weightPercent":{"type":"number","exclusiveMinimum":0,"maximum":100},"dueAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"setupIssue":{"anyOf":[{"type":"string"},{"type":"null"}]},"rows":{"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"studentId":{"type":"string","minLength":1},"studentNumber":{"type":"string","minLength":1},"displayName":{"type":"string","minLength":1},"submission":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"fileName":{"type":"string","minLength":1},"mimeType":{"type":"string","minLength":1},"sizeBytes":{"type":"integer","minimum":0,"maximum":9007199254740991},"submittedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"file":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false},{"type":"null"}]}},"required":["id","fileName","mimeType","sizeBytes","submittedAt","file"],"additionalProperties":false},{"type":"null"}]},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"draft":{"anyOf":[{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},{"type":"null"}]},"published":{"anyOf":[{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false},{"type":"null"}]},"history":{"type":"array","items":{"type":"object","properties":{"version":{"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"weightedScore":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"authorName":{"type":"string","minLength":1},"savedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"publishedAt":{"anyOf":[{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},{"type":"null"}]},"reason":{"type":"string","maxLength":2000}},"required":["version","submissionId","scorePercent","weightedScore","feedback","authorName","savedAt","publishedAt","reason"],"additionalProperties":false}}},"required":["registrationId","studentId","studentNumber","displayName","submission","revision","draft","published","history"],"additionalProperties":false}}},"required":["id","learningItemId","title","weightPercent","dueAt","setupIssue","rows"],"additionalProperties":false}}},"required":["id","moduleId","code","title","programme","term","section","startsOn","endsOn","timeZone","completed","setupIssues","students","sessions","weeks","assignments"],"additionalProperties":false}}},"required":["currentPersonId","serverNow","classrooms"],"additionalProperties":false}
+    PublishClassroomFeedback: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"assessmentId":{"type":"string","minLength":1},"requestId":{"type":"string","format":"uuid","pattern":"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"},"rows":{"minItems":1,"maxItems":1000,"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"submissionId":{"type":"string","minLength":1}},"required":["registrationId","revision","submissionId"],"additionalProperties":false}}},"required":["moduleOfferingId","assessmentId","requestId","rows"],"additionalProperties":false}
+    SaveClassroomAttendance: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"requestId":{"type":"string","format":"uuid","pattern":"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"},"sessionId":{"type":"string","minLength":1},"reason":{"type":"string","maxLength":2000},"rows":{"minItems":1,"maxItems":1000,"type":"array","items":{"type":"object","properties":{"registrationId":{"type":"string","minLength":1},"status":{"type":"string","enum":["present","absent"]}},"required":["registrationId","status"],"additionalProperties":false}}},"required":["moduleOfferingId","revision","requestId","sessionId","reason","rows"],"additionalProperties":false}
+    SaveClassroomFeedback: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"requestId":{"type":"string","format":"uuid","pattern":"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"},"assessmentId":{"type":"string","minLength":1},"registrationId":{"type":"string","minLength":1},"submissionId":{"type":"string","minLength":1},"scorePercent":{"type":"number","minimum":0,"maximum":100},"feedback":{"type":"string","maxLength":10000},"reason":{"type":"string","maxLength":2000}},"required":["moduleOfferingId","revision","requestId","assessmentId","registrationId","submissionId","scorePercent","feedback","reason"],"additionalProperties":false}
+    SaveClassroomLog: {"type":"object","properties":{"moduleOfferingId":{"type":"string","minLength":1},"revision":{"type":"integer","minimum":0,"maximum":9007199254740991},"requestId":{"type":"string","format":"uuid","pattern":"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"},"sessionId":{"type":"string","minLength":1},"covered":{"type":"string","maxLength":10000},"unfinished":{"type":"string","maxLength":10000},"followUp":{"type":"string","maxLength":10000}},"required":["moduleOfferingId","revision","requestId","sessionId","covered","unfinished","followUp"],"additionalProperties":false}
+    ClassroomStudentMaterialExtras: {"type":"object","description":"Optional additions to available Student assignment detail. Submission metadata may include registrationId and original file descriptor; only published feedback/history are exposed.","properties":{"publishedFeedback":{"anyOf":[{"$ref":"#/components/schemas/ClassroomFeedback"},{"type":"null"}]},"feedbackHistory":{"type":"array","items":{"$ref":"#/components/schemas/ClassroomFeedback"}},"submission":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"fileName":{"type":"string","minLength":1},"mimeType":{"type":"string","minLength":1},"sizeBytes":{"type":"integer","minimum":0,"maximum":9007199254740991},"submittedAt":{"type":"string","format":"date-time","pattern":"^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"},"file":{"anyOf":[{"type":"object","properties":{"id":{"type":"string","minLength":1},"name":{"type":"string","minLength":1,"maxLength":240},"mimeType":{"type":"string","enum":["application/pdf","application/zip"]},"sizeBytes":{"type":"integer","exclusiveMinimum":0,"maximum":52428800},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","name","mimeType","sizeBytes","sha256"],"additionalProperties":false},{"type":"null"}]},"registrationId":{"type":"string"},"studentId":{"type":"string"},"moduleLearningItemId":{"type":"string"}},"required":["id","fileName","mimeType","sizeBytes","submittedAt","file"],"additionalProperties":false},{"type":"null"}]}}}

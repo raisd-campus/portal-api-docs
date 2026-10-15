@@ -9,23 +9,29 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 ## 1. Read order (any task)
 
 1. This file.
-2. [architecture/overview.md](architecture/overview.md) and [architecture/repositories.md](architecture/repositories.md).
+2. [architecture/overview.md](architecture/overview.md), [architecture/microservices.md](architecture/microservices.md), and [architecture/repositories.md](architecture/repositories.md).
 3. The portal or service file that owns the change:
    - Student UI → [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md)
    - Applicant UI → [frontend/applicant-portal.md](frontend/applicant-portal.md); LUCT Cyberjaya online-registration procedure capture → [backend/luct-online-registration.md](backend/luct-online-registration.md); FE gaps vs that pack → [backend/luct-online-registration-fe-gap.md](backend/luct-online-registration-fe-gap.md)
    - Lecturer UI → [frontend/lecturer-portal.md](frontend/lecturer-portal.md)
    - Staff UI → [frontend/staff-portal.md](frontend/staff-portal.md)
-   - Portal API / identity / campus config → [backend/portal-api.md](backend/portal-api.md), then [development plan](backend/portal-api-development-plan.md), [target deployment](backend/portal-api-deployment.md), [PoC requirements](backend/portal-api-poc-requirements.md)
+   - Admin UI (SSO RBAC) → [frontend/admin-portal.md](frontend/admin-portal.md)
+   - Demo keychain → [frontend/keychain.md](frontend/keychain.md)
+   - Portal API / campus config → [backend/portal-api.md](backend/portal-api.md), then [development plan](backend/portal-api-development-plan.md), [target deployment](backend/portal-api-deployment.md), [current VPS topology](architecture/vps-topology.md)
+   - SSO / identity / RBAC → [backend/sso.md](backend/sso.md), contract [`openapi-sso.yaml`](../../openapi-sso.yaml), host `sso.raisd.co`
+   - Notifications (outbound email) → [backend/notifications.md](backend/notifications.md), contract [`openapi-notifications.yaml`](../../openapi-notifications.yaml), host `notify.raisd.co`
+   - CI/CD (Jenkins main-only trigger + Argo GitOps) → [architecture/cicd.md](architecture/cicd.md), [architecture/argocd.md](architecture/argocd.md), tree [`gitops/`](../../gitops/), [`ci/Jenkinsfile`](../../ci/Jenkinsfile)
    - Canonical record schema / ERD (LUCT readiness — Schema v3 campus policy Demo done; see §7) → [backend/canonical-schema-luct-readiness.md](backend/canonical-schema-luct-readiness.md)
    - Pending schema confirmations (CS-01–CS-13: Schema v3 policy Demo done; campus Live readiness) → [../diagrams/canonical-schema-confirmations.html](../diagrams/canonical-schema-confirmations.html)
    - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html)
    - LMS logical schema / ERD colours (CMS vs LMS) → [backend/lms-schema.md](backend/lms-schema.md), [../diagrams/erd.html#lms](../diagrams/erd.html#lms)
-   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md) (structure · CAP-53 R1 reads · M4 gap)
+   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md), [backend/lesotho-cap53-online-enrolment-write.md](backend/lesotho-cap53-online-enrolment-write.md), [backend/lesotho-cms-vs-applicant-portal.md](backend/lesotho-cms-vs-applicant-portal.md), [backend/applicant-qr-fee-mechanisms.md](backend/applicant-qr-fee-mechanisms.md), [backend/campus-finance-profile.md](backend/campus-finance-profile.md), [backend/dynamic-fee-calculation.md](backend/dynamic-fee-calculation.md), [backend/cross-campus-fee-amount-suggestions.md](backend/cross-campus-fee-amount-suggestions.md), [contracts/campus-finance-profiles.yaml](contracts/campus-finance-profiles.yaml) (structure · CAP-53 R1/W1 · M4 gap · CMS vs Applicant · fee/payment · finance profile · dynamic fees · cross-campus amounts)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)
    - Eswatini LUCT CMS E2E (M5; LUCT CMS → Eswatini) → [backend/old-cms-eswatini.md](backend/old-cms-eswatini.md), Pages [`../diagrams/old-cms-eswatini/`](../diagrams/old-cms-eswatini/) · [`#eswatini`](../diagrams/old-cms/index.html#eswatini)
    - Cambodia LUCT CMS E2E (M5; LUCT CMS → Cambodia) → [backend/old-cms-cambodia.md](backend/old-cms-cambodia.md), Pages [`../diagrams/old-cms-cambodia/`](../diagrams/old-cms-cambodia/) · [`#cambodia`](../diagrams/old-cms/index.html#cambodia)
+   - Cambodia certificate QR + Verification (CMS → qr.limkokwing.net) → Pages [`../diagrams/old-cms-cambodia/certificate-qr.html`](../diagrams/old-cms-cambodia/certificate-qr.html), [backend/cambodia-qr-system.md](backend/cambodia-qr-system.md)
    - Botswana DTEF / TEF.gov.bw scholarship sync → [backend/botswana-dtef-scholarship-sync.md](backend/botswana-dtef-scholarship-sync.md)
 4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
@@ -46,15 +52,20 @@ For any portal UI task, also read [design/component-library.md](design/component
 
 | Repository | Owns | Agent entry |
 |---|---|---|
-| `control-plane` | Campus config, identity design, Portal API contract (`openapi.yaml`), SDD, **this knowledge base** | this file |
+| `control-plane` | Campus config, identity design, Portal API + SSO contracts (`openapi.yaml`, `openapi-sso.yaml`), SDD, **this knowledge base** | this file |
+| `sso` | SSO identity, login channels, sessions, RBAC | [backend/sso.md](backend/sso.md) |
+| `notifications` | Outbound email via CMS `noreply@raisd.co` | [backend/notifications.md](backend/notifications.md) |
 | `portal-api` | Portal API service code, image, CI, its own deploy manifests | [backend/portal-api.md](backend/portal-api.md) |
 | `student-portal` | Enrolled-student web (current deepest Demo UI) | [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md) |
 | `applicant-portal` | Online registration (Admissions launch) | [frontend/applicant-portal.md](frontend/applicant-portal.md) |
 | `lecturer-portal` | Lecturer web | [frontend/lecturer-portal.md](frontend/lecturer-portal.md) |
 | `staff-portal` | Registry / Faculty / Bursary / QA / Marketing | [frontend/staff-portal.md](frontend/staff-portal.md) |
+| `admin-portal` | Raisd Admin — SSO people + full RBAC | [frontend/admin-portal.md](frontend/admin-portal.md) |
+| `keychain` | Demo login launcher (Open filled → portals) | [frontend/keychain.md](frontend/keychain.md) |
 | `design-system` | Versioned shared tokens/components | [design/component-library.md](design/component-library.md), [design/design-system.md](design/design-system.md) |
-| `portal-api-docs` | Public OpenAPI + Swagger (GitHub Pages) | [backend/portal-api.md](backend/portal-api.md) |
-| `db-admin` | Read-only Neon browser + ERD (CMS/LMS colours) | [architecture/vercel-neon-poc.md](architecture/vercel-neon-poc.md), [backend/lms-schema.md](backend/lms-schema.md) |
+| `portal-api-docs` | Public OpenAPI + Swagger + diagram/report Pages | [backend/portal-api.md](backend/portal-api.md); weekly reports [`../reports/`](../reports/) |
+| `db-admin` | Read-only DB browser + ERD (CMS/LMS colours) | [architecture/vps-topology.md](architecture/vps-topology.md), [backend/lms-schema.md](backend/lms-schema.md) |
+| `campus-landing` | Per-campus landing (hostname-pinned; Lesotho apex `lesotho.raisd.co`) | [architecture/vps-topology.md](architecture/vps-topology.md), [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md) |
 
 Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositories.md](architecture/repositories.md).
 
@@ -63,7 +74,7 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 - Portal API write success only after the CMS acknowledges the write (when Live/CMS-connected).
 - Authorisation is server-enforced. Client-side role hiding is not security.
 - Evidence, assignments, and payment proofs need a durable file store for Live; metadata-only demos are not Live.
-- Hosting: existing UltaHost VDS / staged k3s plan in [architecture/deployment.md](architecture/deployment.md) and [SDD-12](../sdd/12-deployment-architecture.md). Do not invent a greenfield cloud topology without an ADR update. A documented **PoC-only** Vercel + Neon path lives in [architecture/vercel-neon-poc.md](architecture/vercel-neon-poc.md); it must not be treated as Live or as replacing ADR-2/ADR-3.
+- Hosting: UltaHost VPS + k3s (ADR-2 / ADR-3). Current Demo topology: [architecture/vps-topology.md](architecture/vps-topology.md). Staged Live growth: [architecture/deployment.md](architecture/deployment.md) and [SDD-12](../sdd/12-deployment-architecture.md). Do not invent a greenfield cloud topology without an ADR update.
 - CAP IDs are shared across portals: the same CAP on two portals is one capability, two role surfaces ([SDD-11](../sdd/11-capability-catalog.md)). Quick links: [SDD-15](../sdd/15-nomenclature.md).
 
 ## 5. Documentation duties

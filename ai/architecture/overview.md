@@ -52,24 +52,33 @@ Milestone framing: [M1](../../sdd/03-delivery-milestones.md#m1)–[M4](../../sdd
 ## Logical shape
 
 ```text
-Applicant / Student / Lecturer / Staff web
+Applicant / Student / Lecturer / Staff / Admin web
                  │
+        ┌────────┴────────┐
+        ▼                 ▼
+       SSO            Portal API
+  (identity·RBAC)   (campus data RPC)
+        │                 │
+        └────────┬────────┘
                  ▼
-        Auth · RBAC · responsive shell
+          Notifications ──SMTP──► mail.raisd.co
                  │
-                 ▼
-             Portal API
          ┌───────┼────────┐
          ▼       ▼        ▼
-   Existing CMS   Files   Monitoring / backups
+   Postgres   Existing CMS   Files / monitoring
+  (portal_api   (Live CAP-53)
+   + sso)
 ```
+
+Full service catalogue (every deployable, contracts, Argo apps): [microservices.md](microservices.md) · diagram [`architecture.html#services`](../../diagrams/architecture.html#services).
 
 Rules:
 
-1. A portal never talks directly to Postgres or the CMS.
-2. An API write is successful only after the CMS acknowledges it (Live path).
-3. Authorisation is server-enforced.
-4. Evidence files land in a durable store staff workflows can open.
+1. A portal never talks directly to Postgres or the CMS — only SSO and Portal API.
+2. Portals never call Notifications; SSO and Portal API do (service token).
+3. An API write is successful only after the CMS acknowledges it (Live path).
+4. Authorisation is server-enforced.
+5. Evidence files land in a durable store staff workflows can open.
 
 ## Product decisions (7 September 2026 + 23 September 2026 + 3 October 2026)
 
@@ -93,8 +102,10 @@ The deepest UI is the **student-portal** Demo frontend (milestone 3 depth). Prod
 | Lesotho diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
 | Integration contract, auth, files, mobile | [SDD-02](../../sdd/02-architecture-and-integration.md) |
 | Hosts, DNS, k3s stages | [deployment.md](deployment.md), [SDD-12](../../sdd/12-deployment-architecture.md) |
-| PoC Vercel + Neon (not production) | [vercel-neon-poc.md](vercel-neon-poc.md) |
+| CI/CD (Jenkins + Argo) | [cicd.md](cicd.md), [argocd.md](argocd.md) |
+| Current VPS Demo topology | [vps-topology.md](vps-topology.md), [`architecture.html#vps`](../../diagrams/architecture.html#vps) |
+| Microservice map (all services) | [microservices.md](microservices.md), [`architecture.html#services`](../../diagrams/architecture.html#services) |
 | Repo ownership | [repositories.md](repositories.md) |
-| Portal API stage 1 | [../backend/portal-api.md](../backend/portal-api.md) |
+| Portal API / SSO / Notifications | [../backend/portal-api.md](../backend/portal-api.md), [../backend/sso.md](../backend/sso.md), [../backend/notifications.md](../backend/notifications.md) |
 | Capability catalogue | [SDD-11](../../sdd/11-capability-catalog.md) |
 | Open questions | [SDD-10](../../sdd/10-open-questions.md) |
