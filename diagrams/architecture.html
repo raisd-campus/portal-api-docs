@@ -24,7 +24,7 @@
             <a href="index.html#progress">Project progress</a>
             <a href="../reports/index.html" target="_blank" rel="noopener noreferrer">Reports</a>
             <a href="index.html#endpoints">Public endpoints</a>
-            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="https://keychain.raisd.co/">Keychain</a>
             <a href="distributed-cms-architecture.html">Distributed CMS</a>
             <a href="architecture.html">Architecture</a>
             <a href="lms.html">LMS research</a>
@@ -32,6 +32,7 @@
             <a href="lms-features.html">LMS features</a>
             <a href="migration.html">Migration</a>
             <a href="architecture.html#vps">VPS topology</a>
+            <a href="architecture.html#services">Microservices</a>
             <a href="architecture.html#cicd">CI/CD pipeline</a>
           </div>
         </div>
@@ -40,6 +41,7 @@
           <div class="nav-dd-menu" role="menu">
             <a href="architecture.html">Architecture home</a>
             <a href="architecture.html#vps">VPS topology</a>
+            <a href="architecture.html#services">Microservices</a>
             <a href="architecture.html#cicd">CI/CD pipeline</a>
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
@@ -245,11 +247,11 @@
               </div>
             </div>
             <div class="nav-sub">
-              <a class="nav-sub-trigger" href="../reports/e2e-applicant-staff-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <a class="nav-sub-trigger" href="../reports/e2e-applicant-staff-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End</a>
               <div class="nav-sub-menu" role="menu">
-              <a href="../reports/e2e-applicant-staff-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
-              <a href="../reports/e2e-student-module-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
-              <a href="../reports/e2e-student-learning-lms-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="../reports/e2e-applicant-staff-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E enrol · 11 Oct</a>
+              <a href="../reports/e2e-student-module-enrol-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E modules · 11 Oct</a>
+              <a href="../reports/e2e-student-learning-lms-2026-10-11/index.html" target="_blank" rel="noopener noreferrer">E2E LMS learning · 11 Oct</a>
               </div>
             </div>
           </div>
@@ -303,8 +305,9 @@
     </section>
 
     <div class="toc">
-      <a href="#vps"><strong>VPS topology</strong><span>Current Demo on UltaHost k3s</span></a>
-      <a href="#cicd"><strong>CI/CD pipeline</strong><span>Jenkins main-only → Argo CD</span></a>
+      <a href="#vps"><strong>VPS topology</strong><span>Current on UltaHost k3s</span></a>
+      <a href="#services"><strong>Microservices</strong><span>All deployable services</span></a>
+      <a href="#cicd"><strong>CI/CD pipeline</strong><span>Jenkins Kaniko → GHCR → Argo</span></a>
       <a href="#sdd"><strong>SDD &amp; ADR catalogue</strong><span>Design docs and decisions</span></a>
       <a href="./distributed-cms-architecture.html"><strong>Distributed CMS</strong><span>Current → ideal (one page)</span></a>
       <a href="#principles"><strong>Six instructions</strong><span>Core rules for authors</span></a>
@@ -320,13 +323,15 @@
     <section class="section" id="vps">
       <h2>Current VPS infrastructure topology</h2>
       <p class="lead">
-        Demo runs on a single UltaHost VPS in Singapore (ADR-2 / ADR-3): Cloudflare DNS →
-        <code>38.127.216.221</code> → k3s Traefik → campus-scoped landings and portals, shared
-        Keychain / docs / db-admin, and Portal API backed by VPS Postgres.
+        Raisd runs on a single UltaHost VPS in Singapore (ADR-2 / ADR-3): Cloudflare DNS →
+        <code>38.127.216.221</code> → k3s Traefik → campus-scoped landings and portals,
+        SSO / Notifications / Portal API microservices, shared Keychain / docs / db-admin,
+        and VPS Postgres.
         Agent note: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">vps-topology.md</a>
+        · services <a href="#services">microservices</a>
         · catalogue <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/demo-campuses.yaml">demo-campuses.yaml</a>
         · public URLs <a href="index.html#endpoints">endpoints</a>.
-        Checked 14 Oct 2026.
+        Checked 15 Oct 2026.
       </p>
 
       <div class="card" style="margin:18px 0">
@@ -339,27 +344,36 @@ flowchart TB
   subgraph vps ["UltaHost VPS · Singapore · k3s · namespace campus"]
     tr["Traefik + Let's Encrypt<br/>cert-manager"]
     land["Campus landings<br/>{slug}.raisd.co"]
-    portals["Role portals<br/>apply · student · staff · teach<br/>.{slug}.raisd.co"]
-    shared["Shared static<br/>keychain · docs · db-admin<br/>.raisd.co"]
-    ops["Ops UIs<br/>jenkins · argocd<br/>.raisd.co"]
-    api["Deployment portal-api<br/>api.raisd.co · api.{slug}.raisd.co"]
-    pg[("StatefulSet postgres<br/>portal_api")]
+    portals["Role portals + admin<br/>apply · student · staff · teach · admin"]
+    shared["Shared<br/>keychain · docs · db-admin"]
+    ops["Ops UIs<br/>jenkins · argocd"]
+    api["portal-api<br/>api.raisd.co"]
+    sso["sso<br/>sso.raisd.co"]
+    notify["notifications<br/>notify.raisd.co"]
+    pg[("Postgres<br/>portal_api + sso")]
     tr --> land
     tr --> portals
     tr --> shared
     tr --> ops
     tr --> api
+    tr --> sso
+    tr --> notify
     api --> pg
+    sso --> pg
   end
 
   cms["Existing CMS<br/>Premium · off-cluster"]
   mail["UltaCP mail<br/>off-cluster"]
 
   browser --> cf --> tr
-  portals -->|"HTTPS bearer"| api
+  portals -->|"Bearer"| api
+  portals -->|"login"| sso
+  api -->|"introspect"| sso
+  api -->|"send"| notify
+  sso -->|"send"| notify
+  notify -->|"SMTP"| mail
   shared -.->|"docs Try it out"| api
   api -.->|"Live CAP-53 later"| cms
-  api -.->|"mail later"| mail
           </pre>
         </div>
       </div>
@@ -376,7 +390,7 @@ flowchart TB
             <tr><td>CI/CD</td><td>Jenkins (<a href="https://jenkins.raisd.co">jenkins.raisd.co</a>) + Argo CD (<a href="https://argocd.raisd.co">argocd.raisd.co</a>) — see <a href="#cicd">CI/CD pipeline</a></td></tr>
             <tr><td>Database</td><td>Postgres 18 StatefulSet on the VPS (<code>portal_api</code>)</td></tr>
             <tr><td>Static sites</td><td>HostPath sync under <code>/var/www/portals/…</code></td></tr>
-            <tr><td>Campus lock</td><td>Hostname → <code>campusId</code> (eight Demo campuses)</td></tr>
+            <tr><td>Campus lock</td><td>Hostname → <code>campusId</code> (eight campuses)</td></tr>
             <tr><td>Pilot</td><td>Lesotho — <a href="https://lesotho.raisd.co">lesotho.raisd.co</a> and role subdomains</td></tr>
           </tbody>
         </table>
@@ -384,16 +398,153 @@ flowchart TB
 
       <p style="margin-top:16px">
         Live flat hostnames in <a href="../sdd/12-deployment-architecture.html">SDD-12</a>
-        (<code>apply.raisd.co</code>, …) remain the acceptance growth plan. Demo today uses the
+        (<code>apply.raisd.co</code>, …) remain the acceptance growth plan. Today the VPS uses the
         campus-scoped pattern above. Portals never talk to Postgres or the CMS directly.
       </p>
     </section>
 
-    <section class="section" id="cicd">
-      <h2>CI/CD pipeline (Demo)</h2>
+    <section class="section" id="services">
+      <h2>Microservice architecture</h2>
       <p class="lead">
-        Day-to-day deploys no longer depend on laptop SSH. A merge to
-        <strong><code>main</code></strong> triggers Jenkins; Argo CD syncs GitOps desired state on k3s.
+        Every raisd-campus deployable is a bounded service (or SPA) with its own Argo Application.
+        Backends are <strong>Portal API</strong>, <strong>SSO</strong>, and <strong>Notifications</strong>;
+        portals authenticate via SSO and call Portal API only.
+        Agent catalogue:
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/microservices.md">microservices.md</a>
+        · product baseline
+        <a href="../sdd/12-deployment-architecture.html">SDD-12</a> /
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/sdd/02-architecture-and-integration.md">SDD-02</a>.
+        Checked 15 Oct 2026.
+      </p>
+
+      <div class="card" style="margin:18px 0">
+        <div class="card-body">
+          <pre class="mermaid">
+flowchart TB
+  subgraph clients ["Browser clients"]
+    land["campus-landing"]
+    apply["applicant-portal"]
+    student["student-portal"]
+    staff["staff-portal"]
+    teach["lecturer-portal"]
+    admin["admin-portal"]
+    key["keychain"]
+  end
+
+  subgraph backends ["Backend microservices"]
+    sso["SSO<br/>sso.raisd.co"]
+    api["Portal API<br/>api.raisd.co"]
+    notify["Notifications<br/>notify.raisd.co"]
+  end
+
+  pg[("Postgres<br/>portal_api · sso")]
+  mail["mail.raisd.co"]
+  cms["Existing CMS<br/>Live CAP-53"]
+
+  land --> sso
+  apply --> sso
+  student --> sso
+  staff --> sso
+  teach --> sso
+  admin --> sso
+  apply --> api
+  student --> api
+  staff --> api
+  teach --> api
+  key -.-> apply
+  key -.-> student
+  api -->|"introspect"| sso
+  sso --> notify
+  api --> notify
+  notify -->|"SMTP"| mail
+  api --> pg
+  sso --> pg
+  api -.-> cms
+          </pre>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:18px">
+        <table class="attr">
+          <thead>
+            <tr><th>Service</th><th>Host</th><th>Owns</th><th>Deploy</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Portal API</td>
+              <td><a href="https://api.raisd.co/v1/meta">api.raisd.co</a></td>
+              <td>Campus data RPC · CMS ACL</td>
+              <td>Argo <code>portal-api</code></td>
+            </tr>
+            <tr>
+              <td>SSO</td>
+              <td><a href="https://sso.raisd.co">sso.raisd.co</a></td>
+              <td>Identity · sessions · RBAC</td>
+              <td>GHCR + Argo <code>sso</code></td>
+            </tr>
+            <tr>
+              <td>Notifications</td>
+              <td><a href="https://notify.raisd.co">notify.raisd.co</a></td>
+              <td>Outbound email templates</td>
+              <td>GHCR + Argo <code>notifications</code></td>
+            </tr>
+            <tr>
+              <td>Applicant / Student / Staff / Lecturer</td>
+              <td><code>*.{slug}.raisd.co</code></td>
+              <td>Role UIs</td>
+              <td>Argo per portal (hostPath → GHCR)</td>
+            </tr>
+            <tr>
+              <td>Admin</td>
+              <td><a href="https://admin.raisd.co">admin.raisd.co</a></td>
+              <td>SSO people admin UI</td>
+              <td>Argo <code>admin-portal</code></td>
+            </tr>
+            <tr>
+              <td>Campus landing</td>
+              <td><code>{slug}.raisd.co</code></td>
+              <td>Campus entry / role picker</td>
+              <td>Argo <code>campus-landing</code></td>
+            </tr>
+            <tr>
+              <td>Keychain</td>
+              <td><a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
+              <td>Demo Open filled launcher</td>
+              <td>GHCR + Argo <code>keychain</code></td>
+            </tr>
+            <tr>
+              <td>Docs / DB admin</td>
+              <td>docs · db-admin</td>
+              <td>Docs site · read-only DB</td>
+              <td>Argo <code>docs</code> / <code>db-admin</code></td>
+            </tr>
+            <tr>
+              <td>Design system / API docs</td>
+              <td>npm / GitHub Pages</td>
+              <td>Shared UI package · OpenAPI mirror</td>
+              <td>Argo markers (no k3s workload)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:16px">
+        <strong>Boundaries:</strong> portals never call Postgres, CMS, or Notifications.
+        Portal API validates Bearer tokens via SSO introspect; SSO and Portal API send mail
+        through Notifications with a service token. Full rules in
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/microservices.md">microservices.md</a>.
+        Cluster tiles:
+        <a href="https://argocd.raisd.co/applications?view=tiles">Argo Applications</a>.
+      </p>
+    </section>
+
+    <section class="section" id="cicd">
+      <h2>CI/CD pipeline</h2>
+      <p class="lead">
+        Day-to-day deploys no longer depend on laptop SSH or GitHub Actions.
+        A merge to <strong><code>main</code></strong> triggers Jenkins, which builds
+        GHCR images (Kaniko) for <code>keychain</code> / <code>sso</code> / <code>notifications</code>,
+        then refreshes Argo CD so k3s pulls <code>:main</code>.
         Agent notes:
         <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">cicd.md</a>
         ·
@@ -409,15 +560,14 @@ flowchart TB
 flowchart LR
   dev["Merge to main<br/>raisd-campus/*"]
   gh["GitHub push webhook"]
-  j["Jenkins<br/>jenkins.raisd.co<br/>job raisd-main-deploy<br/>filter ^refs/heads/main$"]
-  gha["GitHub Actions<br/>GHCR images<br/>where present"]
+  j["Jenkins<br/>jenkins.raisd.co<br/>Kaniko → GHCR<br/>+ Argo refresh<br/>filter ^refs/heads/main$"]
   argo["Argo CD<br/>argocd.raisd.co<br/>gitops/apps/*"]
   k3s["k3s · Traefik<br/>*.raisd.co"]
 
   dev --> gh --> j
-  dev --> gha
+  j -->|"push :main"| ghcr["ghcr.io/raisd-campus/…"]
   j -->|"hard refresh + rollout"| argo --> k3s
-  gha -.->|"ghcr.io/raisd-campus/…:main"| k3s
+  ghcr -.-> k3s
           </pre>
         </div>
       </div>
@@ -430,8 +580,8 @@ flowchart LR
           <tbody>
             <tr>
               <td>Build / publish image</td>
-              <td>GitHub Actions → GHCR</td>
-              <td>Push/merge to <code>main</code> (service repos)</td>
+              <td>Jenkins Kaniko → GHCR</td>
+              <td>Push/merge to <code>main</code> for <code>keychain</code> / <code>sso</code> / <code>notifications</code></td>
             </tr>
             <tr>
               <td>Deploy trigger</td>
@@ -456,7 +606,7 @@ flowchart LR
         Non-<code>main</code> branch pushes still reach the webhook URL but Jenkins does
         <strong>not</strong> start a deploy. SSH remains for bootstrap and emergency recovery only
         (<code>gitops/bootstrap/*</code>). After a successful <code>main</code> deploy, the hosts
-        below are what Traefik serves on the Demo VPS.
+        below are what Traefik serves on the VPS.
       </p>
 
       <h3 style="margin:22px 0 10px;font-size:1.05rem">Shared domains (not campus-pinned)</h3>
@@ -469,7 +619,7 @@ flowchart LR
             <tr>
               <td><a href="https://jenkins.raisd.co">jenkins.raisd.co</a></td>
               <td>Jenkins CI</td>
-              <td>Deploy trigger (main only)</td>
+              <td>Kaniko → GHCR + deploy trigger (main only)</td>
             </tr>
             <tr>
               <td><a href="https://argocd.raisd.co">argocd.raisd.co</a></td>
@@ -494,12 +644,12 @@ flowchart LR
             <tr>
               <td><a href="https://admin.raisd.co">admin.raisd.co</a></td>
               <td>Raisd Admin</td>
-              <td>Static SPA (hostPath until GitOps)</td>
+              <td>Argo Application (hostPath until SPA image)</td>
             </tr>
             <tr>
               <td><a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
-              <td>Demo Keychain</td>
-              <td>Static SPA (hostPath until GitOps)</td>
+              <td>Keychain</td>
+              <td>GHCR image + Argo Application</td>
             </tr>
             <tr>
               <td><a href="https://docs.raisd.co/">docs.raisd.co</a></td>
@@ -520,7 +670,7 @@ flowchart LR
         </table>
       </div>
 
-      <h3 style="margin:22px 0 10px;font-size:1.05rem">Campus-scoped domains (eight Demo campuses)</h3>
+      <h3 style="margin:22px 0 10px;font-size:1.05rem">Campus-scoped domains (eight campuses)</h3>
       <p class="lead" style="margin-bottom:12px">
         Pattern per slug:
         <code>{slug}.raisd.co</code>,
@@ -788,8 +938,8 @@ flowchart LR
       <div class="card">
         <div class="card-head">
           <div>
-            <h3>Portals → Portal API → domains → ACL → CMS</h3>
-            <p>Staff keep using existing CMS UI where it works; new staff screens fill verified gaps only.</p>
+            <h3>Portals → SSO + Portal API → domains → ACL → CMS</h3>
+            <p>Staff keep using existing CMS UI where it works; new staff screens fill verified gaps only. Runtime services: see <a href="#services">Microservices</a>.</p>
           </div>
         </div>
         <div class="card-body">
@@ -800,9 +950,12 @@ flowchart TB
     LE[Lecturer]
     SF[Staff]
     AP[Applicant]
+    ADM[Admin]
   end
 
+  SSO[SSO]
   API[Portal API]
+  NOTIFY[Notifications]
 
   subgraph Domains
     AC[Academic domain]
@@ -821,10 +974,18 @@ flowchart TB
 
   CMS[(Existing CMS SoR)]
 
+  ST --> SSO
+  LE --> SSO
+  SF --> SSO
+  AP --> SSO
+  ADM --> SSO
   ST --> API
   LE --> API
   SF --> API
   AP --> API
+  API --> SSO
+  SSO --> NOTIFY
+  API --> NOTIFY
   API --> AC
   API --> FI
   API --> AD
@@ -839,7 +1000,7 @@ flowchart TB
           </pre>
         </div>
         <div class="note" style="margin:0 18px 18px">
-          Cross-cutting: Identity &amp; Authorization · Audit · Idempotency ·
+          Cross-cutting: SSO Identity &amp; Authorization · Notifications · Audit · Idempotency ·
           Reconciliation · Data Quality · Monitoring · Files.
           Migration grows new domains beside the legacy CMS rather than replacing it in one cutover.
         </div>
@@ -1069,9 +1230,9 @@ flowchart LR
             <code>hasCurrentStudyPeriod()</code>, <code>isRegisteredForModules()</code>,
             <code>hasActiveImmigrationStatus()</code>, <code>isEligibleForStudentPortal()</code>.
             Every report must state which definition it uses.
-            Demo draft of the cohort definition and open Registry questions:
+            Draft of the cohort definition and open Registry questions:
             <a href="./canonical-schema-confirmations.html#registry">canonical schema confirmations</a>
-            (<code>CS-01</code>–<code>CS-03</code>; Schema v3 policy Demo seeded).
+            (<code>CS-01</code>–<code>CS-03</code>; Schema v3 policy seeded).
           </p>
         </div>
       </div>
@@ -1122,7 +1283,7 @@ flowchart LR
       </div>
 
       <div class="card">
-        <div class="card-head"><div><h3>Campus differences = configuration</h3><p>Effective-dated campus policy tables (Schema v3 Demo: status mapping, academic-status, credit, CGPA, document numbering, adjustments) plus <code>CampusCmsAdapter</code>. Canonical model stays consistent; no <code>if (campus === "botswana")</code> scattered in domain services.</p></div></div>
+        <div class="card-head"><div><h3>Campus differences = configuration</h3><p>Effective-dated campus policy tables (Schema v3: status mapping, academic-status, credit, CGPA, document numbering, adjustments) plus <code>CampusCmsAdapter</code>. Canonical model stays consistent; no <code>if (campus === "botswana")</code> scattered in domain services.</p></div></div>
       </div>
 
       <div class="card">
