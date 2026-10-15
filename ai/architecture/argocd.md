@@ -39,7 +39,7 @@ SSH is only needed for **one-time bootstrap** and emergency node recovery — no
 |---|---|
 | `notifications` / `sso` / `keychain` code | Merge to `main` → Jenkins Kaniko pushes GHCR → Argo refresh + rollout |
 | GitOps manifests | Merge to `control-plane` `gitops/apps/**` on `main` → Jenkins → Argo sync |
-| Static portal **content** (until imaged) | Still `bash scripts/deploy-vps.sh student` over SSH when needed; Argo owns the Deployment/Service/Ingress objects |
+| Static portal/API/docs **content** (until imaged) | Approved Jenkins hostPath build/publish jobs; Argo owns Deployment/Service/Ingress objects. SSH deploy script remains emergency fallback. |
 
 ## Layout
 
@@ -64,3 +64,5 @@ ci/Jenkinsfile                     # main-only build + deploy job body
 - [vps-topology.md](vps-topology.md) — hosts and Demo topology  
 - [portal-api-deployment.md](../backend/portal-api-deployment.md) — GHCR target for Portal API  
 - [SDD-12](../../sdd/12-deployment-architecture.md) — ADR-2 / ADR-3  
+
+The 16 October [bounded hostPath repair](cicd.md#approved-hostpath-delivery-repair--16-october-2026) builds and publishes exact source commits before rollout. Argo revision alone still identifies manifest state, not the served source revision. Verify release manifests and API capability metadata separately.

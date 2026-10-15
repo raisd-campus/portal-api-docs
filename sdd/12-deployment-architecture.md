@@ -9,9 +9,14 @@ Logical design stays in SDD-02. This document says which repository builds which
 
 ## 1. Hosting decision
 
+<a id="hosting-decision"></a>
+<a id="adr-2"></a>
+
 **ADR-2 — Singapore, on UltaHost. Size follows the stage, not the largest machine already owned.**
 
 On 19 September 2026 Aslam said the current estate is UltaHost **VDS POWER Plus × 1** and **VDS POWER Premium × 2**, and pointed at the VPS page. Region stays Singapore, the same location as the mailbox host `cp8.sgp1.ultacp.com`. The cluster does not start on a Premium. Section 2.1 is the size to provision at each stage. A larger machine already paid for may be used, but it is not the requirement.
+
+<a id="adr-3"></a>
 
 **ADR-3 — Kubernetes, starting at the minimum.**
 
@@ -67,7 +72,7 @@ Stage 1 is the spec to install. Stages 2–5 are the launch sequence. Do not dep
 
 ## 3. Repository to service
 
-Five GitHub repositories in `raisd-campus`. The existing CMS and mail have no repository here. The control plane is one repository. Its processes are separate Kubernetes objects on the data node, not separate repositories.
+Six deployable GitHub repositories in `raisd-campus`. The existing CMS and mail have no repository here. The Portal API service was split from the control plane into its own repository on 27 September 2026; the contract (`openapi.yaml`) and platform objects (Postgres, evidence volume) stay with the control plane. Build, image, probes and release flow for the API: [`docs/ai/backend/portal-api-deployment.md`](../ai/backend/portal-api-deployment.md).
 
 | Repository | Kubernetes object | Replicas at stage 1 | Node |
 |---|---|---|---|
@@ -75,7 +80,7 @@ Five GitHub repositories in `raisd-campus`. The existing CMS and mail have no re
 | [`student-portal`](https://github.com/raisd-campus/student-portal) | Deployment `student-portal` | Not deployed | Edge node, stage 3 |
 | [`lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) | Deployment `lecturer-portal` | Not deployed | Edge node, stage 3 |
 | [`staff-portal`](https://github.com/raisd-campus/staff-portal) | Deployment `staff-portal` | Not deployed | Edge node, stage 2 only if a CMS gap is verified, otherwise stage 3 |
-| [`control-plane`](https://github.com/raisd-campus/control-plane) | Deployment `portal-api` | 1 | Data node |
+| [`portal-api`](https://github.com/raisd-campus/portal-api) | Deployment `portal-api` | 1 | Data node |
 | [`control-plane`](https://github.com/raisd-campus/control-plane) | StatefulSet `postgres` | 1 | Data node |
 | [`control-plane`](https://github.com/raisd-campus/control-plane) | PersistentVolumeClaim `evidence` | 1 volume | Data node |
 
@@ -126,12 +131,14 @@ Stage 1 and 2: public DNS points at the **single data node**. Stage 3 onward: pu
 | Public name | Repository | First served | Who |
 |---|---|---|---|
 | `apply.raisd.co` | `applicant-portal` | Stage 1 | Applicants |
-| `api.raisd.co` | `control-plane` | Stage 1 | Portal browsers, with a bearer token |
+| `api.raisd.co` | `portal-api` | Stage 1 | Portal browsers, with a bearer token |
 | `staff.raisd.co` | `staff-portal` | Stage 2 if a gap is verified, otherwise not until stage 3 | Registry, Faculty, Bursary, QA, Marketing |
 | `student.raisd.co` | `student-portal` | Stage 3 | Students |
 | `teach.raisd.co` | `lecturer-portal` | Stage 3 | Lecturers |
 
 `raisd.co` comes from the mailbox domain. These names are not a DNS change that has already been made. Do not publish a name before its Deployment exists.
+
+**Current Demo topology (14 October 2026):** UltaHost k3s on `38.127.216.221` serves campus-scoped hostnames for every Demo catalogue campus — apex `{slug}.raisd.co` (landing) and `{apply,student,staff,teach,api}.{slug}.raisd.co`, plus shared `api` / `keychain` / `docs` / `db-admin`.raisd.co. Campus/location is fixed from the hostname. Catalogue: [`demo-campuses.yaml`](../ai/architecture/demo-campuses.yaml). Agent diagram: [`vps-topology.md`](../ai/architecture/vps-topology.md) · [`architecture.html#vps`](../diagrams/architecture.html#vps). This does **not** replace the Live flat hostname table above until an ADR cutover.
 
 Separate hostnames are deliberate. The API issues a bearer token. Do not set a cookie on `Domain=.raisd.co`.
 
@@ -185,3 +192,19 @@ No Helm catalogue beyond what k3s ships. No Prometheus, no cert-manager add-on u
 - Milestone order these stages follow: [SDD-03](03-delivery-milestones.md)
 - Staff screens only for verified CMS gaps: [SDD-07](07-admin-staff-cms.md)
 - Environments and security baseline: [SDD-08](08-shared-platform.md)
+
+## Demo delivery repair — 16 October 2026
+
+The owner approved Jenkins build/publish Jobs for the existing Student, Applicant,
+Lecturer, Staff, Portal API and docs hostPath workloads. Exact source checkouts,
+production builds, retained release directories and affected-workload readiness
+checks replace refresh-only delivery. Existing database configuration, secrets,
+RBAC and memory-Demo capability policy remain unchanged. See the
+[canonical CI/CD guide](../ai/architecture/cicd.md#approved-hostpath-delivery-repair--16-october-2026)
+for the six-target boundary and verification requirements. This does not change
+ADR-2/ADR-3 or claim completed GHCR migration for those workloads.
+
+The Demo node requires a capacity check before heavy Student builds; insufficient
+capacity must preserve the active release. Hosted delivery and capability activation
+remain separate. See the [delivery evidence and operational handoff](../ai/architecture/audits/2026-10-16-jenkins-delivery-verification.md)
+for build results, recovery provenance and retained boundaries.

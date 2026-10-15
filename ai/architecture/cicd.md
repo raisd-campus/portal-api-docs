@@ -31,7 +31,7 @@ Jenkins Kaniko Job                     Jenkins deploy stage
 | **Build / publish image** | **Jenkins** Kaniko Job (`ci/build-ghcr-image.sh` → `/ci/build-ghcr-image.sh` in the controller) | Push/merge to `main` for `keychain`, `sso`, `notifications` |
 | **Deploy trigger** | **Jenkins** Generic Webhook Trigger | GitHub `push` event; **only** `refs/heads/main` runs the pipeline |
 | **Cluster sync** | **Argo CD** Applications under [`gitops/apps/`](../../../gitops/) | Jenkins annotates refresh; Argo auto-syncs `main` |
-| **Static portals (transitional)** | `scripts/deploy-vps.sh` over SSH | Until SPA images land in GitOps |
+| **Static portals/API/docs (transitional)** | Jenkins bounded hostPath build jobs | Exact source checkout, build, retained release directories and affected-workload rollout |
 
 There are **no GitHub Actions image workflows** for Demo services. GHA billing is not part of the Demo path.
 
@@ -103,3 +103,44 @@ build gates. Those gates must be recorded separately before publication.
 No cluster bootstrap, job reconfiguration, hosted mutation or manual rollout is
 authorized by the source publication receipt. Keep local gates, registry release,
 Git publication, webhook/job delivery and hosted readiness as separate evidence.
+
+## Approved hostPath delivery repair — 16 October 2026
+
+The owner explicitly approved persistent Jenkins delivery jobs for Student,
+Applicant, Lecturer, Staff, Portal API and Control Plane docs. This supersedes the
+previous refresh-only/static-SSH limitation for those six targets. The existing
+hostPath topology stays in place; no new database, credential or RBAC grants.
+
+`gitops/apps/jenkins/scripts/deploy-hostpath.sh` creates a bounded build Job using
+`build-hostpath.mjs`. It reads existing github-build/build-npm-token secret files,
+checks the full requested commit, runs npm ci/production builds, records dependency
+SHAs and package versions, and publishes to retained release directories. The
+worker has no Kubernetes service-account token. Existing code directories switch
+to the prepared release; previous code is retained for recovery. Only the affected
+workload restarts, and readiness/build failures now fail Jenkins. The deployment worker
+regressions run in the Linux Job before publication. Image checkout failures also
+fail closed. Shell tracing is disabled before credential handling.
+
+Only the six hard-coded targets may write the existing portal/API hostPath roots.
+API runtime configuration and Postgres records are preserved; no migrations,
+resets or changes to Materials/Classrooms activation policy occur. Source delivery
+does not enable the memory-only Materials capability on the Postgres service.
+Local full quality gates remain separate from these build/delivery checks.
+
+The Jenkinsfile is still embedded in job definitions. After a source update, sync
+the existing job definitions without deleting jobs or their histories; the mounted
+jenkins-ci-scripts ConfigMap must contain the matching worker/helpers before
+running them. Record actual Job results, workload readiness and served release
+manifests, rather than treating an Argo refresh as proof of content delivery.
+
+Public portal-api-docs Pages was separately restored to main/root branch publishing
+(`build_type=legacy`) with `.nojekyll`: custom-workflow mode had no workflow and
+served a stale site. The GitHub-managed Pages build/deploy passed at 7fb7dac and
+served 0.8.0 / 197 captures; 11 deployed contract/receipt/image checks matched Git
+bytes. This does not use GitHub Actions to build Demo service images.
+
+The worker resolves its real entry-point path so ConfigMap symlinks execute the build. Delivery requires a PUBLISHED receipt for the exact repository/revision before rollout; a successful process with no publication is a failure. Argo refresh uses resource names rather than a Groovy-escaped JSONPath newline.
+
+Delivery requests now have bounded Kubernetes retries and wait for unfinished hostPath workers before creating another. A temporary control-plane timeout cannot start overlapping workers or count as delivery success. The 4 GB Demo node has no swap; worker CPU is capped at 500m with one Rust build thread, Node old-space at 768 MiB and a 1536 MiB container ceiling. These limits bound resource use; they did not establish sufficient capacity for Student on this node. Capacity errors remain failures. A controller restart and Student exit 137 were observed during the first run; the precise termination cause is unconfirmed because existing Jenkins RBAC cannot read node/events/metrics, and no access grants were added.
+
+Student now requires at least 1536 MiB MemAvailable before checkout/build and fails without changing a release when capacity is missing or unreadable. Argo installed this guard from c578fd593ebd5c2f82650f8f369fbf1bcc9842af; Jenkins is Synced/Healthy and all seven installed Linux worker regressions passed with zero skips. Verify the ConfigMap/source hash before future delivery. The compiler failed locally at 384/512 MiB heap and passed at 768 MiB. A fresh externally built Student artifact passed production exclusions and bundle budgets. It was retained privately but was not used: the native Student worker finished during recovery, and the audited recovery job verified that output and completed its rollout. See [delivery evidence and operational limits](audits/2026-10-16-jenkins-delivery-verification.md).

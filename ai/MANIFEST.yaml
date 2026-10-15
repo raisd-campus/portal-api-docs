@@ -547,3 +547,7 @@ classrooms_demo:
 
   - path: frontend/student-portal/audits/2026-10-16-campus-integration-publication.md
     topics: [publication, upstream-integration, sso, classrooms, ci-review, verification]
+
+jenkins_delivery_verification:
+  - path: architecture/audits/2026-10-16-jenkins-delivery-verification.md
+    topics: [jenkins, hostpath, delivery, exact-revision, capacity, verification, gitops]

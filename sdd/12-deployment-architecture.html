@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- canonical host --><script>(function(){try{var h=location.hostname;if(h==="raisd-campus.github.io"||h==="github.io"){var p=location.pathname.replace(/^\/portal-api-docs/,"")||"/";location.replace("https://docs.raisd.co"+p+location.search+location.hash)}}catch(e){}})()</script>
   <meta charset="utf-8" />
   <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -565,7 +564,7 @@ was split from the control plane into its own repository on 27 September
 2026; the contract (<code>openapi.yaml</code>) and platform objects
 (Postgres, evidence volume) stay with the control plane. Build, image,
 probes and release flow for the API: <a
-href="../ai/backend/portal-api-deployment.md"><code>docs/ai/backend/portal-api-deployment.md</code></a>.</p>
+href="../ai/backend/portal-api-deployment.html"><code>docs/ai/backend/portal-api-deployment.md</code></a>.</p>
 <table>
 <colgroup>
 <col style="width: 25%" />
@@ -732,6 +731,21 @@ internet.</p>
 <p><code>raisd.co</code> comes from the mailbox domain. These names are
 not a DNS change that has already been made. Do not publish a name
 before its Deployment exists.</p>
+<p><strong>Current Demo topology (14 October 2026):</strong> UltaHost
+k3s on <code>38.127.216.221</code> serves campus-scoped hostnames for
+every Demo catalogue campus — apex <code>{slug}.raisd.co</code>
+(landing) and
+<code>{apply,student,staff,teach,api}.{slug}.raisd.co</code>, plus
+shared <code>api</code> / <code>keychain</code> / <code>docs</code> /
+<code>db-admin</code>.raisd.co. Campus/location is fixed from the
+hostname. Catalogue: <a
+href="../ai/architecture/demo-campuses.yaml"><code>demo-campuses.yaml</code></a>.
+Agent diagram: <a
+href="../ai/architecture/vps-topology.html"><code>vps-topology.md</code></a>
+· <a
+href="../diagrams/architecture.html#vps"><code>architecture.html#vps</code></a>.
+This does <strong>not</strong> replace the Live flat hostname table
+above until an ADR cutover.</p>
 <p>Separate hostnames are deliberate. The API issues a bearer token. Do
 not set a cookie on <code>Domain=.raisd.co</code>.</p>
 <p>The existing CMS keeps its current URL. It is not an Ingress rule.
@@ -829,6 +843,24 @@ href="07-admin-staff-cms.html">SDD-07</a></li>
 <li>Environments and security baseline: <a
 href="08-shared-platform.html">SDD-08</a></li>
 </ul>
+<h2 id="demo-delivery-repair-16-october-2026">Demo delivery repair — 16
+October 2026</h2>
+<p>The owner approved Jenkins build/publish Jobs for the existing
+Student, Applicant, Lecturer, Staff, Portal API and docs hostPath
+workloads. Exact source checkouts, production builds, retained release
+directories and affected-workload readiness checks replace refresh-only
+delivery. Existing database configuration, secrets, RBAC and memory-Demo
+capability policy remain unchanged. See the <a
+href="../ai/architecture/cicd.html#approved-hostpath-delivery-repair--16-october-2026">canonical
+CI/CD guide</a> for the six-target boundary and verification
+requirements. This does not change ADR-2/ADR-3 or claim completed GHCR
+migration for those workloads.</p>
+<p>The Demo node requires a capacity check before heavy Student builds;
+insufficient capacity must preserve the active release. Hosted delivery
+and capability activation remain separate. See the <a
+href="../ai/architecture/audits/2026-10-16-jenkins-delivery-verification.html">delivery
+evidence and operational handoff</a> for build results, recovery
+provenance and retained boundaries.</p>
   </main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
