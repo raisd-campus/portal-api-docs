@@ -91,6 +91,7 @@ targets:
   report-e2e-enrol-2026-10-11: reports/e2e-applicant-staff-enrol-2026-10-11/index.html
   report-e2e-module-enrol-2026-10-11: reports/e2e-student-module-enrol-2026-10-11/index.html
   report-e2e-learning-lms-2026-10-11: reports/e2e-student-learning-lms-2026-10-11/index.html
+  report-e2e-access-control-2026-10-20: reports/e2e-access-control-2026-10-20/index.html
 
 # External (absolute) link ids used in the menu
 external:
@@ -489,6 +490,7 @@ menu:
           - { label: "E2E Demo enrol · 11 Oct", href: report-e2e-enrol-2026-10-11 }
           - { label: "E2E Demo modules · 11 Oct", href: report-e2e-module-enrol-2026-10-11 }
           - { label: "E2E Demo LMS learning · 11 Oct", href: report-e2e-learning-lms-2026-10-11 }
+          - { label: "E2E access control · 20 Oct", href: report-e2e-access-control-2026-10-20 }
 
   - label: SDD
     href: sdd
@@ -579,6 +581,12 @@ search:
     section: End to End Demo
     summary: Hosted Demo walkthrough — Student module registration, Bursary clearance, Faculty enrol units, Student Modules with lecturers.
     keywords: [e2e, end-to-end, student, modules, registration, bursary, faculty, registry, lecturer, screenshot, demo]
+
+  - title: E2E access control · 20 Oct 2026
+    href: report-e2e-access-control-2026-10-20
+    section: End to End Demo
+    summary: Control creates a campus Admin. The Admin grants and revokes student, staff, and lecturer access, with sign-in before and after revoke.
+    keywords: [e2e, access, control, admin, student, staff, lecturer, revoke, sso, rbac]
 
   - title: E2E Demo LMS learning · 11 Oct 2026
     href: report-e2e-learning-lms-2026-10-11

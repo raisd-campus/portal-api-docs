@@ -1,0 +1,192 @@
+{
+  "title": "E2E access control",
+  "startedAt": "2026-10-19T18:54:13.363Z",
+  "finishedAt": "2026-10-19T18:54:31.912Z",
+  "sso": "https://sso.raisd.co",
+  "api": "https://api.raisd.co",
+  "campusId": "campus-lesotho",
+  "password": "raisd2026",
+  "accounts": {
+    "control": "iman.suherman@raisd.co",
+    "admin": "e2e.access.admin@raisd.demo",
+    "student": "e2e.access.student@raisd.demo",
+    "staff": "e2e.access.staff@raisd.demo",
+    "lecturer": "e2e.access.lecturer@raisd.demo"
+  },
+  "steps": [
+    {
+      "id": "01",
+      "title": "SSO is up",
+      "ok": true,
+      "detail": "GET /health 200"
+    },
+    {
+      "id": "02",
+      "title": "Control signs in",
+      "ok": true,
+      "detail": "iman.suherman@raisd.co active role control",
+      "actor": "iman.suherman@raisd.co"
+    },
+    {
+      "id": "03",
+      "title": "Control cannot create a student",
+      "ok": true,
+      "detail": "Control can only grant admin access.",
+      "actor": "iman.suherman@raisd.co"
+    },
+    {
+      "id": "04",
+      "title": "Control creates or refreshes the campus Admin",
+      "ok": true,
+      "detail": "updated e2e.access.admin@raisd.demo on campus-lesotho",
+      "actor": "iman.suherman@raisd.co"
+    },
+    {
+      "id": "05",
+      "title": "Campus Admin signs in",
+      "ok": true,
+      "detail": "active role admin, manage learners true",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "06",
+      "title": "Campus Admin account has only the Admin role",
+      "ok": true,
+      "detail": "No learner role to remove, so the current Admin token stays valid.",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "grant-student",
+      "title": "Campus Admin grants Student",
+      "ok": true,
+      "detail": "updated e2e.access.student@raisd.demo · student · portal.student, student.study, student.register, student.pay, student.results, student.support",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "login-student",
+      "title": "Student signs in",
+      "ok": true,
+      "detail": "e2e.access.student@raisd.demo active role student",
+      "actor": "e2e.access.student@raisd.demo"
+    },
+    {
+      "id": "portal-student",
+      "title": "Student portal exchange stays on the access boundary",
+      "ok": true,
+      "detail": "SSO student identity is not linked to a Demo student record.",
+      "actor": "e2e.access.student@raisd.demo"
+    },
+    {
+      "id": "deny-student",
+      "title": "Student cannot manage access",
+      "ok": true,
+      "detail": "Forbidden",
+      "actor": "e2e.access.student@raisd.demo"
+    },
+    {
+      "id": "grant-staff",
+      "title": "Campus Admin grants Staff",
+      "ok": true,
+      "detail": "updated e2e.access.staff@raisd.demo · lecturer · portal.lecturer, staff.dashboard, staff.directory, staff.community",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "login-staff",
+      "title": "Staff signs in",
+      "ok": true,
+      "detail": "e2e.access.staff@raisd.demo active role lecturer",
+      "actor": "e2e.access.staff@raisd.demo"
+    },
+    {
+      "id": "portal-staff",
+      "title": "Staff portal exchange stays on the access boundary",
+      "ok": true,
+      "detail": "SSO lecturer identity is not linked to a Demo teaching record.",
+      "actor": "e2e.access.staff@raisd.demo"
+    },
+    {
+      "id": "deny-staff",
+      "title": "Staff cannot manage access",
+      "ok": true,
+      "detail": "Forbidden",
+      "actor": "e2e.access.staff@raisd.demo"
+    },
+    {
+      "id": "grant-lecturer",
+      "title": "Campus Admin grants Lecturer",
+      "ok": true,
+      "detail": "updated e2e.access.lecturer@raisd.demo · lecturer · portal.lecturer, lecturer.classrooms, lecturer.materials, lecturer.attendance, lecturer.marking",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "login-lecturer",
+      "title": "Lecturer signs in",
+      "ok": true,
+      "detail": "e2e.access.lecturer@raisd.demo active role lecturer",
+      "actor": "e2e.access.lecturer@raisd.demo"
+    },
+    {
+      "id": "portal-lecturer",
+      "title": "Lecturer portal exchange stays on the access boundary",
+      "ok": true,
+      "detail": "SSO lecturer identity is not linked to a Demo teaching record.",
+      "actor": "e2e.access.lecturer@raisd.demo"
+    },
+    {
+      "id": "deny-lecturer",
+      "title": "Lecturer cannot manage access",
+      "ok": true,
+      "detail": "Forbidden",
+      "actor": "e2e.access.lecturer@raisd.demo"
+    },
+    {
+      "id": "07",
+      "title": "Campus Admin exchanges into the staff Admin session",
+      "ok": true,
+      "detail": "portal admin, desk registry",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "revoke-student",
+      "title": "Campus Admin revokes Student",
+      "ok": true,
+      "detail": "e2e.access.student@raisd.demo roles left: 0",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "revoked-login-student",
+      "title": "Student sign-in stops after revoke",
+      "ok": true,
+      "detail": "Email or password is incorrect.",
+      "actor": "e2e.access.student@raisd.demo"
+    },
+    {
+      "id": "revoke-staff",
+      "title": "Campus Admin revokes Staff",
+      "ok": true,
+      "detail": "e2e.access.staff@raisd.demo roles left: 0",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "revoked-login-staff",
+      "title": "Staff sign-in stops after revoke",
+      "ok": true,
+      "detail": "Email or password is incorrect.",
+      "actor": "e2e.access.staff@raisd.demo"
+    },
+    {
+      "id": "revoke-lecturer",
+      "title": "Campus Admin revokes Lecturer",
+      "ok": true,
+      "detail": "e2e.access.lecturer@raisd.demo roles left: 0",
+      "actor": "e2e.access.admin@raisd.demo"
+    },
+    {
+      "id": "revoked-login-lecturer",
+      "title": "Lecturer sign-in stops after revoke",
+      "ok": true,
+      "detail": "Email or password is incorrect.",
+      "actor": "e2e.access.lecturer@raisd.demo"
+    }
+  ]
+}
