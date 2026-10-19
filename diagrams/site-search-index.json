@@ -66,7 +66,7 @@
         "status",
         "e2e"
       ],
-      "path": "reports/index.html"
+      "path": "https://docs.raisd.co/reports/"
     },
     {
       "title": "Week 1 \u00b7 18\u201319 Sep 2026",
@@ -78,7 +78,7 @@
         "kickoff",
         "september"
       ],
-      "path": "reports/weekly/2026-09-19.html"
+      "path": "https://docs.raisd.co/reports/weekly/2026-09-19.html"
     },
     {
       "title": "Week 2 \u00b7 20\u201326 Sep 2026",
@@ -90,7 +90,7 @@
         "design-system",
         "portal-api"
       ],
-      "path": "reports/weekly/2026-09-26.html"
+      "path": "https://docs.raisd.co/reports/weekly/2026-09-26.html"
     },
     {
       "title": "Week 3 \u00b7 27 Sep\u20133 Oct 2026",
@@ -103,7 +103,7 @@
         "pilot",
         "baseline"
       ],
-      "path": "reports/weekly/2026-10-03.html"
+      "path": "https://docs.raisd.co/reports/weekly/2026-10-03.html"
     },
     {
       "title": "Week 4 \u00b7 4\u201310 Oct 2026",
@@ -117,7 +117,7 @@
         "cap-53",
         "faid"
       ],
-      "path": "reports/weekly/2026-10-10.html"
+      "path": "https://docs.raisd.co/reports/weekly/2026-10-10.html"
     },
     {
       "title": "E2E Demo enrol \u00b7 11 Oct 2026",
@@ -135,7 +135,7 @@
         "keychain",
         "demo"
       ],
-      "path": "reports/e2e-applicant-staff-enrol-2026-10-11/index.html"
+      "path": "https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/"
     },
     {
       "title": "E2E Demo modules \u00b7 11 Oct 2026",
@@ -154,7 +154,7 @@
         "screenshot",
         "demo"
       ],
-      "path": "reports/e2e-student-module-enrol-2026-10-11/index.html"
+      "path": "https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/"
     },
     {
       "title": "E2E access control \u00b7 20 Oct 2026",
@@ -172,7 +172,7 @@
         "sso",
         "rbac"
       ],
-      "path": "reports/e2e-access-control-2026-10-20/index.html"
+      "path": "https://docs.raisd.co/reports/e2e-access-control-2026-10-20/"
     },
     {
       "title": "E2E Demo LMS learning \u00b7 11 Oct 2026",
@@ -189,7 +189,7 @@
         "screenshot",
         "demo"
       ],
-      "path": "reports/e2e-student-learning-lms-2026-10-11/index.html"
+      "path": "https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/"
     },
     {
       "title": "Distributed CMS target",
