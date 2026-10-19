@@ -163,3 +163,18 @@ return successfully from the non-root image. CI generates files under umask 077;
 image assembly grants read/traverse access to compiled public `web-dist` only.
 Readiness checks `/login`; liveness remains `/health`. This prevents backend
 health from masking an unreadable UI.
+
+### Auth composition refinements — 19 October 2026
+
+Login omits the introductory campus sentence, passkey setup helper paragraph and
+passkey sign-in icon. The create-passkey action retains its existing validation
+and prompt flow. The common auth footer reads `© {current year} Raisd AI Sdn. Bhd.
+All rights reserved.` on login and password recovery. Authentication notices use
+Popup content with shared DialogDescription so the visible message remains the
+accessible dialog description; the header contains only its title. Shared package
+0.9.0 and shared component sources are unchanged.
+
+The composition update passed SSO build/typecheck and all isolated auth acceptance
+checks: 47 passed, one Chromium-only virtual-authenticator case skipped on WebKit.
+Coverage includes 375/768/1440px pages, dialog-body description/axe checks, focus
+restoration, password/reset and passkey flows.

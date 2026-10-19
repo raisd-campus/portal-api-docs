@@ -128,3 +128,8 @@ released controls and existing tokens/type. Identity, password/reset/passkey and
 redirect policy stay in SSO. Local acceptance is documented in the
 [shared auth receipt](../ai/architecture/audits/2026-10-19-shared-auth-ui.md).
 The package is published and SSO pins it exactly; hosted deployment is verified separately. This is not a Live status change.
+
+SSO consumer content omits login introductory/passkey helper copy and the passkey
+action icon, uses the current-year Raisd AI Sdn. Bhd. copyright footer, and places
+notice descriptions in the shared Popup body. These are consumer compositions of
+0.9.0; shared components and authentication policy are unchanged.
