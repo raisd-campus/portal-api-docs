@@ -187,3 +187,7 @@ selection only filters Demo account records and never changes the SSO return URL
 role assignment or login payload. The host measures trigger position plus panel
 margins/borders to keep the iframe inside short viewports. See the
 [Keychain picker guide](../frontend/keychain.md#embedded-account-picker--19-october-2026).
+
+### Logo placement - 19 October 2026
+
+SSO opts into shared AuthLayout `brandingPlacement="above"` from 0.9.1: the university logo is centred outside and above the card on login, forgot password and reset password. Branding remains in a page header landmark; forms, status popups, passkeys, redirects and Keychain retain their existing behavior. No local CSS override is used.

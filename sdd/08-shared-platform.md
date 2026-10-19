@@ -139,3 +139,5 @@ using recorded Demo scopes, with single-region scrolling on short screens. SSO
 supplies context hints and viewport bounds; filtering does not change authentication
 or role grants. [Picker behavior](../ai/frontend/keychain.md#embedded-account-picker--19-october-2026)
 is owned by Keychain and uses released shared 0.9.0 components.
+
+SSO uses AuthLayout 0.9.1 with brandingPlacement="above" for login and password recovery: the logo is centred outside and above the card. The default shared placement remains inside; authentication policy and workflows are unchanged.

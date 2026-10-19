@@ -316,3 +316,7 @@ explicit field labels, validation, focus/error/busy handling and auth workflows.
 
 SSO consumes the released 0.9.0 package. Existing shared controls and tokens remain unchanged; other portal pins remain at 0.8.0. The released HTML catalogue and public mirror include the shared auth fixture at phone, tablet and desktop widths. Acceptance is recorded in
 [the auth migration receipt](../architecture/audits/2026-10-19-shared-auth-ui.md).
+
+## Authentication branding placement - 0.9.1
+
+The owner requested moving SSO branding above the auth card and was informed before changing the shared component. AuthLayout adds optional `brandingPlacement: "inside" | "above"`; the default remains `"inside"`. The `"above"` variant renders the same branding slot in a page header outside the main card, within the existing viewport scroller and with the existing spacing tokens. SSO opts in for login and password recovery. Other consumers retain their placement and package pins.
