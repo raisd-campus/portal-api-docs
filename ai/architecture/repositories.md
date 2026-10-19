@@ -11,9 +11,8 @@ Expected local root: `~/src/raisd/` (siblings). Machine list also lives in [`rep
 | [`notifications`](https://github.com/raisd-campus/notifications) | `~/src/raisd/notifications` | Outbound email (CMS noreply) | SDD-02 | [../backend/notifications.md](../backend/notifications.md) |
 | [`applicant-portal`](https://github.com/raisd-campus/applicant-portal) | `~/src/raisd/applicant-portal` | Apply, evidence, track, enrol | [SDD-04](../../sdd/04-applicant-portal.md) | [../frontend/applicant-portal.md](../frontend/applicant-portal.md) |
 | [`student-portal`](https://github.com/raisd-campus/student-portal) | `~/src/raisd/student-portal` | Study, register, pay, results, support | [SDD-05](../../sdd/05-student-portal.md) | [../frontend/student-portal/AGENTS.md](../frontend/student-portal/AGENTS.md) |
-| [`lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) | `~/src/raisd/lecturer-portal` | Materials, attendance, mark, communicate | [SDD-06](../../sdd/06-lecturer-portal.md) | [../frontend/lecturer-portal.md](../frontend/lecturer-portal.md) |
-| [`staff-portal`](https://github.com/raisd-campus/staff-portal) | `~/src/raisd/staff-portal` | Registry, Faculty, Bursary, QA, Marketing | [SDD-07](../../sdd/07-admin-staff-cms.md) | [../frontend/staff-portal.md](../frontend/staff-portal.md) |
-| [`admin-portal`](https://github.com/raisd-campus/admin-portal) | `~/src/raisd/admin-portal` | Raisd Admin — SSO people + full RBAC | SDD-02 | [../frontend/admin-portal.md](../frontend/admin-portal.md) |
+| [`lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) | `~/src/raisd/lecturer-portal` | Staff portal — teaching menus for `lecturer`, Admin menus at `/admin` for `admin` (`staff.{slug}.raisd.co`) | [SDD-06](../../sdd/06-lecturer-portal.md), [SDD-07](../../sdd/07-admin-staff-cms.md) | [../frontend/lecturer-portal.md](../frontend/lecturer-portal.md) |
+| [`control-portal`](https://github.com/raisd-campus/control-portal) | `~/src/raisd/control-portal` | Control — SSO people + full RBAC (`control.raisd.co`) | SDD-02 | [../frontend/control-portal.md](../frontend/control-portal.md) |
 | [`design-system`](https://github.com/raisd-campus/design-system) | `~/src/raisd/design-system` | Shared tokens/components / email templates | — | [../design/design-system.md](../design/design-system.md) |
 | [`portal-api-docs`](https://github.com/raisd-campus/portal-api-docs) | `~/src/raisd/portal-api-docs` | Public OpenAPI + Swagger (GitHub Pages mirror) | — | [../backend/portal-api.md](../backend/portal-api.md) |
 | [`db-admin`](https://github.com/raisd-campus/db-admin) | `~/src/raisd/db-admin` | Read-only DB browser + ERD (CMS/LMS colour legend) | SDD-12 | [vps-topology.md](vps-topology.md), [../backend/lms-schema.md](../backend/lms-schema.md) |
@@ -66,10 +65,10 @@ https://github.com/raisd-campus/control-plane/tree/main/docs/ai
 | `api.raisd.co` | portal-api | 1 (SDD-12) — also served today |
 | `sso.raisd.co` | sso | Demo — identity |
 | `notify.raisd.co` | notifications | Demo — outbound email |
-| `admin.raisd.co` | admin-portal | Demo — SSO admin |
-| `staff.raisd.co` | staff-portal | 2 only if a CMS gap is verified, otherwise 3 |
+| `control.raisd.co` | control-portal | Demo — Control (SSO RBAC) |
+| `admin.raisd.co` | *(308 → control)* | Legacy global alias |
 | `student.raisd.co` | student-portal | 3 |
-| `teach.raisd.co` | lecturer-portal | 3 |
+| `staff.raisd.co` | lecturer-portal | 3 |
 
 ### Demo campus-scoped hosts (current VPS)
 
@@ -78,10 +77,10 @@ https://github.com/raisd-campus/control-plane/tree/main/docs/ai
 | `{slug}.raisd.co` | campus-landing |
 | `apply.{slug}.raisd.co` | applicant-portal |
 | `student.{slug}.raisd.co` | student-portal |
-| `staff.{slug}.raisd.co` | staff-portal |
-| `teach.{slug}.raisd.co` | lecturer-portal |
+| `staff.{slug}.raisd.co` | lecturer-portal (teaching menus, or Admin menus at `/admin` for `roleKey` `admin`) |
+| `admin.{slug}.raisd.co` | *(308 → staff.{slug}.raisd.co/admin)* |
 | `api.{slug}.raisd.co` | portal-api (same service as `api.raisd.co`) |
-| `sso.raisd.co` / `notify.raisd.co` / `admin.raisd.co` | sso / notifications / admin-portal |
+| `sso.raisd.co` / `notify.raisd.co` / `control.raisd.co` | sso / notifications / control-portal |
 | `keychain.raisd.co` | keychain |
 | `docs.raisd.co` | control-plane docs sync |
 | `db-admin.raisd.co` | db-admin |

@@ -1,6 +1,21 @@
-# Lecturer portal — current agent knowledge
+# Staff portal — current agent knowledge
 
 **Repository:** raisd-campus/lecturer-portal. **Baseline:** [SDD-06](../../sdd/06-lecturer-portal.md). Read [campus instructions](../AGENTS.md) and [shared components](../design/component-library.md).
+
+**Demo host:** `https://staff.{slug}.raisd.co` (Lesotho: https://staff.lesotho.raisd.co). The product title is **Staff Portal**. `teach.{slug}.raisd.co` 308-redirects here. Role key stays `lecturer`.
+
+## Menus by active role — 17 October 2026
+
+The shell shows one group for the role chosen at sign-in. See [SSO roles and menus](../backend/sso.md#staff-portal-menus).
+
+| Sign-in | Navigation | Community |
+|---|---|---|
+| Staff or Lecturer (`roleKey` `lecturer`) | **Staff Portal:** Dashboard, Classrooms | Docked on desktop, overlay on smaller screens |
+| Campus Admin (`roleKey` `admin`) | **Admin:** Overview, Applicants, Students, Payments, Registrations, Access | Not shown. A direct teaching URL redirects to `/admin` |
+
+A Staff or Lecturer sign-in that opens `/admin` is sent back to Dashboard. Access is only on the Admin sign-in and uses that Admin SSO token. Register copy follows the preset: Register student, Register staff, or Register lecturer. Detail: [admin desks](admin-portal.md).
+
+Classrooms, attendance, and materials behaviour below remains the teaching contract for a lecturer sign-in. Historical notes that say “Lecturer portal” describe the same repo.
 
 ## Released shared 0.8.0 and local API activation — 15 October 2026
 
@@ -162,15 +177,15 @@ Saved connected attendance/logs/feedback/files belong to API memory and survive 
 **Repository:** [`raisd-campus/lecturer-portal`](https://github.com/raisd-campus/lecturer-portal)  
 **SDD:** [SDD-06](../../sdd/06-lecturer-portal.md)  
 **Campus agents:** [../AGENTS.md](../AGENTS.md)
-**Demo host:** https://teach.lesotho.raisd.co (other campuses: `teach.{slug}.raisd.co`)
+**Demo host:** https://staff.lesotho.raisd.co (other campuses: `staff.{slug}.raisd.co`). Admin desks are the Admin menu at `/admin`.
 
 ## Status
 
-**Demo shell started 11 Oct 2026; local UI scaffold and Modules milestone updated 13 Oct 2026.** The local post-login layout uses released design-system 0.6.2 shell components, following Student and Applicant composition. Hosted Demo signs in via `POST /v1/auth/lecturer/login` and publishes LMS materials through Portal API (`listTeachingModules`, `listModuleMaterials`, `publishModuleMaterial`).
+**Demo shell started 11 Oct 2026; local UI scaffold and Modules milestone updated 13 Oct 2026.** The local post-login layout uses released design-system 0.6.2 shell components, following Student and Applicant composition. **Sign-in is Raisd SSO only** (`sso.raisd.co`) — no portal password form (redirect with campus landing `returnUrl`). Hosted Demo publishes LMS materials through Portal API (`listTeachingModules`, `listModuleMaterials`, `publishModuleMaterial`).
 
 | Route | Purpose |
 |---|---|
-| `/sign-in` | SSO sign-in; explicitly enabled Demo email/password desks retain legacy username aliases |
+| `/sign-in` | SSO handoff only (auto-redirect to `sso.raisd.co/login` with campus landing `returnUrl`) |
 | `/` | Empty Dashboard inside the shared shell |
 | `/modules` | Assigned module offerings grouped by programme, using shared clickable `LinkedList` cards |
 | `/modules/:moduleOfferingId` | Offering Overview, Students (N) and browser Demo Materials tabs |
@@ -200,7 +215,7 @@ Demo ≠ Live. Materials alone is not a complete LMS ([BASE-44](../../sdd/09-req
 
 ## Pairing
 
-Student learning surfaces: [student-portal/AGENTS.md](student-portal/AGENTS.md). LMS posture: [../architecture/lms.md](../architecture/lms.md). Staff/QA: [staff-portal.md](staff-portal.md).
+Student learning surfaces: [student-portal/AGENTS.md](student-portal/AGENTS.md). LMS posture: [../architecture/lms.md](../architecture/lms.md). Campus Admin / QA desks: [admin-portal.md](admin-portal.md).
 
 ## Field standard
 

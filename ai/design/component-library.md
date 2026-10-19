@@ -10,7 +10,7 @@ Before building a UI element, look in the package catalogue and the [published v
 | --- | --- | --- |
 | Tokens, type, primitives | `design-system` | Colours, spacing, `Button`, `Badge`, `Input`, `Dialog` |
 | Portal-neutral patterns | `design-system` | `PortalShell`, `PortalSidebar`, `PortalHeader`, `PortalAccount`, `SummaryCard`, `RecordSummaryCard`, `DataTable`, `PagePanelLayout` |
-| Transactional email | `design-system/email/` + `notifications` | `magic_link`, `applicant_submitted`, `enrolment_accepted`, `learner_access_granted` — send via `notify.raisd.co` |
+| Transactional email | `design-system/email/` + `notifications` | `password_reset`, `magic_link`, `applicant_submitted`, `enrolment_accepted`, `learner_access_granted` — send via `notify.raisd.co` |
 | Portal-specific composition | Each portal | Student enrolment context, student profile issues, route selection, Community draft and attachment policy |
 | Campus data and rules | `control-plane` / Portal API | Identity, records, authorisation, CMS integration |
 

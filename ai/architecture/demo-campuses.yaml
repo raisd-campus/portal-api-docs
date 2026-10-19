@@ -13,10 +13,11 @@ roles:
     host: "apply.{slug}.{domain}"
   - id: student
     host: "student.{slug}.{domain}"
-  - id: staff
+  - id: admin
     host: "staff.{slug}.{domain}"
+    path: "/admin"
   - id: lecturer
-    host: "teach.{slug}.{domain}"
+    host: "staff.{slug}.{domain}"
   - id: api
     host: "api.{slug}.{domain}"
 

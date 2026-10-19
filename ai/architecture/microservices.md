@@ -1,6 +1,6 @@
 # Microservice architecture (Demo / this phase)
 
-**Status:** As deployed — 15 October 2026.  
+**Status:** As deployed — 16 October 2026 (Control + Campus Admin rename).  
 **Published diagram:** [`docs/diagrams/architecture.html#services`](../../diagrams/architecture.html#services).  
 **Product baseline:** [SDD-02](../../sdd/02-architecture-and-integration.md) · [overview.md](overview.md).  
 **Runtime:** [vps-topology.md](vps-topology.md) · GitOps [argocd.md](argocd.md).
@@ -16,9 +16,8 @@ Raisd runs as **small, independently deployable services** on one UltaHost k3s n
 | **Notifications** | `notifications` | `notify.raisd.co` | Outbound email templates + SMTP send | UltaCP `mail.raisd.co` (off-cluster) | `notifications` |
 | **Applicant portal** | `applicant-portal` | `apply.{slug}.raisd.co` | Apply / evidence / track / enrol UI | SSO, Portal API | `applicant-portal` |
 | **Student portal** | `student-portal` | `student.{slug}.raisd.co` | Enrolled-student UI | SSO, Portal API | `student-portal` |
-| **Lecturer portal** | `lecturer-portal` | `teach.{slug}.raisd.co` | Teaching UI | SSO, Portal API | `lecturer-portal` |
-| **Staff portal** | `staff-portal` | `staff.{slug}.raisd.co` | Registry / Faculty / Bursary / QA / Marketing UI | SSO, Portal API | `staff-portal` |
-| **Admin portal** | `admin-portal` | `admin.raisd.co` | Raisd Admin — SSO people + full RBAC UI | SSO | `admin-portal` |
+| **Staff portal** | `lecturer-portal` | `staff.{slug}.raisd.co` | Teaching menus for `lecturer`; Admin menus at `/admin` for `admin`. Community only on the teaching sign-in | SSO, Portal API | `lecturer-portal` |
+| **Control** | `control-portal` | `control.raisd.co` | Super-admin — grants campus Admin access only (`roleKey` `control`) | SSO | `control-portal` |
 | **Campus landing** | `campus-landing` | `{slug}.raisd.co` | Login-only entry; RBAC portal picker or redirect | SSO | `campus-landing` |
 | **Keychain** | `keychain` | `keychain.raisd.co` | Demo login launcher (Open filled) | Browser → portals / SSO | `keychain` |
 | **Docs** | `control-plane` (+ Pages) | `docs.raisd.co` | Architecture / OpenAPI / design HTML | — (static) | `docs` |
@@ -35,7 +34,7 @@ Raisd runs as **small, independently deployable services** on one UltaHost k3s n
      │
      ├─► Campus landing / Keychain / Docs / DB admin
      │
-     ├─► Role portals (Applicant · Student · Lecturer · Staff · Admin)
+     ├─► Role portals (Applicant · Student · Lecturer · Admin) + Control
      │         │  Bearer access token
      │         ▼
      │    ┌────────────┐     introspect      ┌─────────┐
@@ -86,7 +85,7 @@ Service-to-service: Portal API → SSO `POST /v1/introspect`; Portal API / SSO �
 |---|---|---|
 | `sso`, `notifications`, `keychain` | GHCR image + Argo Application | Same |
 | `portal-api`, `db-admin` | Argo Application; hostPath Node runtime | GHCR image |
-| Role portals, `admin-portal`, `campus-landing`, `docs` | Argo Application; hostPath nginx / ConfigMap | GHCR SPA images |
+| Role portals, `admin-portal`, `control-portal`, `campus-landing`, `docs` | Argo Application; hostPath nginx / ConfigMap | GHCR SPA images |
 | `design-system`, `portal-api-docs` | Marker Applications (no k3s workload) | Same |
 
 Every raisd-campus deployable has an Application under [`gitops/apps/`](../../../gitops/apps/) — see [argocd.md](argocd.md).

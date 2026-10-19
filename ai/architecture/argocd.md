@@ -51,7 +51,7 @@ gitops/
   argocd/ingress.yaml              # argocd.raisd.co
   apps/root/applications.yaml      # one Application CR per raisd-campus deployable
   apps/notifications/ sso/ keychain/ jenkins/
-  apps/student-portal/ applicant-portal/ staff-portal/ lecturer-portal/ admin-portal/
+  apps/student-portal/ applicant-portal/ admin-portal/ lecturer-portal/ admin-portal/
   apps/campus-landing/ portal-api/ db-admin/ docs/
   apps/design-system/ portal-api-docs/   # markers (no cluster workload)
   apps/portal-static/                    # shared nginx CM + campus-multi Ingress

@@ -1,6 +1,6 @@
 # VPS infrastructure topology (current Demo)
 
-**Status:** As deployed — 15 October 2026.  
+**Status:** As deployed — 16 October 2026 (Control + Campus Admin rename).  
 **Canonical product stages:** [SDD-12](../../sdd/12-deployment-architecture.md) (ADR-2 UltaHost Singapore, ADR-3 k3s).  
 **Published diagram:** [`docs/diagrams/architecture.html#vps`](../../diagrams/architecture.html#vps) · services [`#services`](../../diagrams/architecture.html#services).  
 **Service catalogue:** [microservices.md](microservices.md).  
@@ -21,10 +21,13 @@ UltaHost VPS · Singapore · 38.127.216.221 · k3s
    │
    ├── Traefik · Let's Encrypt (cert-manager)
    │     ├── {slug}.raisd.co → campus-landing
-   │     ├── apply|student|staff|teach.{slug}.raisd.co → role portals
+   │     ├── apply|student|staff.{slug}.raisd.co → role portals
+   │     ├── teach.{slug}.raisd.co → 308 → staff.{slug}.raisd.co (legacy)
+   │     ├── admin.{slug}.raisd.co → 308 → staff.{slug}.raisd.co/admin (legacy)
    │     ├── api.raisd.co · api.{slug}.raisd.co → portal-api
    │     ├── sso.raisd.co → sso · notify.raisd.co → notifications
-   │     ├── admin.raisd.co · keychain.raisd.co · docs.raisd.co · db-admin.raisd.co
+   │     ├── control.raisd.co · keychain.raisd.co · docs.raisd.co · db-admin.raisd.co
+   │     ├── admin.raisd.co → 308 → control.raisd.co (legacy global)
    │     └── jenkins.raisd.co · argocd.raisd.co
    │
    ├── Microservices: portal-api · sso · notifications  (+ SPA Deployments)
@@ -41,7 +44,7 @@ UltaHost VPS · Singapore · 38.127.216.221 · k3s
 | Ingress | Traefik (k3s) + cert-manager `letsencrypt-prod` |
 | DNS | Cloudflare zone `raisd.co`, **DNS-only** A records → VPS |
 | Database | Postgres 18 StatefulSet on the VPS (`portal_api`) |
-| Static portals | Nginx / hostPath sync under `/var/www/portals/{applicant,student,staff,teach,admin,keychain,docs,…}` |
+| Static portals | Nginx / hostPath sync under `/var/www/portals/{applicant,student,admin,teach,control,keychain,docs,…}` |
 | Identity of campus | Hostname → `campusId` lock (no cross-campus picker on scoped hosts) |
 
 ## 2. Request path
@@ -94,12 +97,13 @@ Rules (unchanged from SDD-02 / SDD-12; detail in [microservices.md](microservice
 |---|---|
 | `api.raisd.co` | Portal API (global) |
 | `sso.raisd.co` | SSO identity + RBAC (login UI + `/v1/*`) |
-| `admin.raisd.co` | Raisd Admin (SSO people / full RBAC) |
+| `control.raisd.co` | Control — super-admin SSO people / full RBAC |
+| `admin.raisd.co` | Legacy alias — **308 →** `control.raisd.co` |
 | `notify.raisd.co` | Notifications API (outbound email via `mail.raisd.co`) |
 | `argocd.raisd.co` | Argo CD UI (GitOps sync) |
 | `jenkins.raisd.co` | Jenkins CI — deploy trigger on push to **main** only ([cicd.md](cicd.md)) |
 | `keychain.raisd.co` | Demo Keychain |
-| `docs.raisd.co` | Documentation + OpenAPI UI |
+| `docs.raisd.co` | Documentation + OpenAPI UI (site gate + Sign out) |
 | `db-admin.raisd.co` | Read-only DB admin (team) |
 | `mail.raisd.co` | UltaCP mail (SMTP/IMAP) — **not** on the VPS; DNS-only A → mail host |
 
@@ -112,9 +116,10 @@ For each slug in [demo-campuses.yaml](demo-campuses.yaml) (`lesotho`, `cyberjaya
 | Landing | `{slug}.raisd.co` |
 | Applicant | `apply.{slug}.raisd.co` |
 | Student | `student.{slug}.raisd.co` |
-| Staff | `staff.{slug}.raisd.co` |
-| Lecturer | `teach.{slug}.raisd.co` |
+| Staff portal | `staff.{slug}.raisd.co` — Staff/Lecturer menus, or Admin menus at `/admin` when the active role is `admin` |
 | API alias | `api.{slug}.raisd.co` |
+| Teach (legacy) | `teach.{slug}.raisd.co` → **308 →** `staff.{slug}.raisd.co` |
+| Admin (legacy) | `admin.{slug}.raisd.co` → **308 →** `staff.{slug}.raisd.co/admin` |
 
 **Lesotho** is the pilot / M4 acceptance campus. Public endpoint catalogue: [`diagrams/index.html#endpoints`](../../diagrams/index.html#endpoints).
 

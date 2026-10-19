@@ -1,22 +1,24 @@
-# Staff portal — agent knowledge
+# Admin desks — agent knowledge
 
-**Repository:** [`raisd-campus/staff-portal`](https://github.com/raisd-campus/staff-portal)  
-**SDD:** [SDD-07](../../sdd/07-admin-staff-cms.md)  
+**Repository:** [`raisd-campus/lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) (`src/staff-admin`)
+**SDD:** [SDD-07](../../sdd/07-admin-staff-cms.md)
 **Campus agents:** [../AGENTS.md](../AGENTS.md)
-**Demo host:** https://staff.lesotho.raisd.co (other campuses: `staff.{slug}.raisd.co`)
+**Demo host:** https://staff.lesotho.raisd.co/admin (other campuses: `staff.{slug}.raisd.co/admin`). `admin.{slug}.raisd.co` 308-redirects here.
 
 ## Status
 
-**Demo shell started 11 Oct 2026** (Working Group weekly 10 Oct action). Limkokwing logo + design-system theme. Hosted Demo signs in via `POST /v1/auth/staff/login` and loads the applicant payment queue from Portal API.
+Admin (Registry, Faculty, Bursary, QA) is the **Admin** menu inside the staff portal. It renders only when the active SSO role is `admin`. A Staff or Lecturer sign-in does not show these items and is redirected to `/`. Sign-in is Raisd SSO. An `admin` role lands on `/admin`.
 
-| Route | Purpose |
-|---|---|
-| `/sign-in` | Email/password Demo login (`registry@raisd.demo` / `registry2026`, `bursary@raisd.demo` / `bursary2026`) |
-| `/` | Overview KPIs (local seed KPIs when offline) |
-| `/applicants` | Applicant status tracker (local seed) |
-| `/students` | Student status tracker (local seed) |
-| `/payments` | **Hosted:** Admissions desk — Bursary **Approve payment** → QA **Verify documents** → (applicant confirms) → Registry **Release Offer**; Reject proof. Does **not** auto-enrol. **Offline:** session seed desk |
-| `/registrations` | **Hosted:** Portal API module-registration queue — Bursary clearance → Registry (Faculty stand-in) enrols units |
+| Route | Purpose | Who sees it |
+|---|---|---|
+| `/admin` | Overview KPIs | Campus Admin |
+| `/admin/applicants` | Applicant tracker | Campus Admin |
+| `/admin/students` | Student tracker | Campus Admin |
+| `/admin/payments` | Payment verification | Campus Admin |
+| `/admin/registrations` | Registrations | Campus Admin |
+| `/admin/access` | Student, staff, and lecturer access | Campus Admin (`sso.manage_learners`) |
+
+Access presets are Student, Staff, and Lecturer. The register heading is **Register student**, **Register staff**, or **Register lecturer** for the preset in use. Staff and Lecturer both store `roleKey` `lecturer`; Staff adds dashboard, directory, and community permissions, and may add bursary, registry, qa, or faculty desks. Role grants use the hosted campus (`campus-{slug}` from `staff.{slug}.raisd.co`), not a hard-coded Lesotho id. Payments and registrations call Portal API with the Admin staff session only. Control still grants Admin only. Rules: [sso.md](../backend/sso.md).
 
 **Hosted walkthroughs:**
 
@@ -28,7 +30,7 @@ Demo ≠ Live. Offline fallback still uses `sessionStorage`. Does not write CMS.
 ## Agent rules
 
 1. Implement against SDD-07 and campus [AGENTS.md](../AGENTS.md).
-2. **Build only verified gaps** — if the existing CMS already runs the workflow, do not duplicate it in staff-portal without an explicit decision.
+2. **Build only verified gaps** — if the existing CMS already runs the workflow, do not duplicate it in admin-portal without an explicit decision.
 3. Talk only to the Portal API when Live endpoints exist. Staff tokens must not work inside student shells.
 4. Student-portal “Admin Actions” are **development-only mock commands**, not production staff UI.
 5. Install a released `@raisd-campus/design-system` version (currently **0.6.2**). Follow [component ownership and setup](../design/component-library.md) instead of copying student portal UI.
@@ -41,7 +43,7 @@ Use released shared `Input`, `DropdownSelect` and `DatePicker` controls at 36px 
 ## Local
 
 ```sh
-cd ~/src/raisd/staff-portal
+cd ~/src/raisd/admin-portal
 npm install   # needs GitHub Packages token for @raisd-campus/design-system
 npm run dev
 npm run check

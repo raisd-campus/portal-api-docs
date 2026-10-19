@@ -56,12 +56,12 @@ Cyberjaya inventories ([old-cms-cyberjaya.md](../backend/old-cms-cyberjaya.md), 
 
 ## Campus landing (14 October 2026)
 
-Aslam asked what users see at `lesotho.raisd.co` versus `apply.lesotho.raisd.co`, `student.lesotho.raisd.co`, `staff.lesotho.raisd.co`, and `teach.lesotho.raisd.co`. **Updated 15 Oct 2026:** every Demo campus apex (`{slug}.raisd.co` for all eight campuses) is **login-only** (Raisd SSO). After sign-in, SSO RBAC either redirects to the single allowed portal on **that** campus or shows a portal picker on the landing. Role subdomains still open the matching portal directly.
+Aslam asked what users see at `lesotho.raisd.co` versus `apply.lesotho.raisd.co`, `student.lesotho.raisd.co`, `admin.lesotho.raisd.co`, and `staff.lesotho.raisd.co`. **Updated 17 Oct 2026:** every Demo campus apex (`{slug}.raisd.co` for all eight campuses) is **login-only** (Raisd SSO). After sign-in, SSO RBAC either redirects to the single allowed portal on **that** campus or shows a portal picker on the landing (Control / Admin / Student / Staff). The Staff label is `roleKey` `lecturer`. Admin opens `staff.{slug}.raisd.co/admin` and shows only the Admin menus. Staff or Lecturer shows Dashboard, Classrooms, and Community. Role subdomains still open the matching portal directly. `staff.{slug}.raisd.co` is the Staff portal. Legacy `teach.{slug}.raisd.co` **308-redirects** there, and `admin.{slug}.raisd.co` redirects to `/admin` on that host.
 
 | Surface | URL |
 |---|---|
 | Campus landing | https://lesotho.raisd.co |
-| Applicant / Student / Staff / Lecturer | `apply` · `student` · `staff` · `teach`.lesotho.raisd.co |
+| Applicant / Student / Staff portal | `apply` · `student` · `staff`.lesotho.raisd.co (`teach` redirects to `staff`) |
 | Repo | [`raisd-campus/campus-landing`](https://github.com/raisd-campus/campus-landing) |
 | DNS | Cloudflare A → VPS (`38.127.216.221`), DNS-only |
 | Topology | [vps-topology.md](vps-topology.md) · [SDD-12](../../sdd/12-deployment-architecture.md) |

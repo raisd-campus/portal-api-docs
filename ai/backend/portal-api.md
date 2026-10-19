@@ -26,7 +26,8 @@ Knowledge changes land here first, then mirror into `portal-api/docs/` (see that
 - Scenario switches over HTTP use `POST /v1/auth/scenario`; logout uses `POST /v1/auth/logout`.
 - Staff milestone simulation stays on student-portal `/dev/admin-actions` (`runDevelopmentAction` is HTTP-blocked). Reserved Live staff method names are catalogued at `GET /v1/meta/staff-progression`.
 - **LMS (Demo):** Materials, assignment metadata, and lecturer review are tagged `LMS` in OpenAPI. Catalogue of callable methods, Demo tables, CAP IDs, and deferred quiz/live-class/forum gaps: `GET /v1/meta/lms`. Not a Live LMS ([BASE-44](../../sdd/09-requirements-traceability.md)). Logical tables: [lms-schema.md](lms-schema.md).
-- **SSO dual auth (Demo):** Portals may send a Raisd SSO access token to `POST /v1/auth/sso/exchange`. Portal API introspects against `SSO_BASE_URL` (default `https://sso.raisd.co`) and issues a normal Portal API session for the active role (`student` / `applicant` / `staff` / `lecturer`). Role `admin` returns the SSO token for [Admin portal](../frontend/admin-portal.md). Stub email/password scenario logins remain when `CMS_MODE=stub` (login identity is email; legacy scenarioId / short usernames still resolve).
+- **SSO dual auth (Demo):** Portals may send a Raisd SSO access token to `POST /v1/auth/sso/exchange`. Portal API introspects against `SSO_BASE_URL` (default `https://sso.raisd.co`) and issues a Portal API session for the active role (`student`, `applicant`, `lecturer`, or `admin`). `admin` becomes a staff session: Bursary when that desk tag is present, otherwise Registry, including a campus Admin with no desk tags. `control` keeps the SSO token for [Control](../frontend/control-portal.md). Stub email/password scenario logins remain when `CMS_MODE=stub` (login identity is email; legacy scenarioId / short usernames still resolve).
+- **Staff RPC authz:** `POST /v1/staff/:method` accepts only a staff session from an Admin exchange. A lecturer teaching session does not map to Registry and cannot list or act on payment or registration queues.
 - **SSO auto-provision:** after successful `submitApplication` / `acceptApplicationEnrolment`, Portal API upserts the applicant email into SSO (`SSO_SERVICE_TOKEN` → `/v1/internal/people/upsert`) with `applicant` or `student`. Full RBAC: [admin-portal.md](../frontend/admin-portal.md); learner desk: Staff Registry.
 
 ```bash
@@ -44,7 +45,7 @@ VITE_PORTAL_API_URL=http://127.0.0.1:8080 npm run dev
 
 ## Paired Community — local Demo candidate
 
-[Shared Demo Community](community-chat.md) adds capability-gated Student/Lecturer directory/profile reads, paired chat and chunked artifact bytes. The additive store uses memory or Postgres without changing Student schema 4 or replacing service/per-student legacy stores. `DEMO_COMMUNITY_CHAT` defaults false; explicit SQL/import are development-tested only against disposable local data. No hosted enablement, migration or deployment is implied.
+[Shared Demo Community](community-chat.md) adds capability-gated Student/Lecturer directory/profile reads, paired chat and chunked artifact bytes. The additive store uses memory or Postgres without changing Student schema 4 or replacing service/per-student legacy stores. `DEMO_COMMUNITY_CHAT` defaults false. The Raisd demo API enables it after the `demo_community_chat` tables exist, and still rejects Live CMS mode.
 
 ## Rules for backend agents
 

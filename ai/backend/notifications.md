@@ -7,7 +7,7 @@
 
 ## Role
 
-Central send API for Raisd services (SSO magic links, future Portal API / CMS hooks). Portals do not call it directly; services use a shared `NOTIFY_SERVICE_TOKEN`.
+Central send API for Raisd services (SSO password reset, Portal API apply/enrol, future CMS hooks). Portals do not call it directly; services use a shared `NOTIFY_SERVICE_TOKEN`.
 
 ```text
 SSO / Portal API / CMS tooling
@@ -30,10 +30,10 @@ SSO / Portal API / CMS tooling
 | `POST` | `/v1/send` | token | Raw `{ to, subject, text?, html? }` escape hatch |
 | `GET` | `/v1/dev/last-send` | token | Last send metadata (no bodies) |
 
-Templates (SoT `design-system/email/`): `magic_link`, `applicant_submitted`, `enrolment_accepted`, `learner_access_granted`, `transactional_generic`.  
+Templates (SoT `design-system/email/`): `password_reset`, `magic_link` (disabled on Demo SSO UI), `applicant_submitted`, `enrolment_accepted`, `learner_access_granted`, `transactional_generic`.  
 Catalogue: [email-templates.md](https://github.com/raisd-campus/design-system/blob/main/docs/email-templates.md) · published [design-system/email-templates.html](../../design-system/email-templates.html).
 
-Callers: SSO magic link + learner create; Portal API submit/enrol. Contract: [`openapi-notifications.yaml`](../../../openapi-notifications.yaml).
+Callers: SSO password reset + learner create; Portal API submit/enrol. Contract: [`openapi-notifications.yaml`](../../../openapi-notifications.yaml).
 
 ## Credentials (never commit)
 
@@ -75,6 +75,6 @@ bash ../notifications/scripts/smoke.sh
 
 ## Related
 
-- [sso.md](sso.md) — magic links call notifications when `NOTIFY_BASE_URL` is set  
+- [sso.md](sso.md) — password-reset emails call notifications when `NOTIFY_BASE_URL` is set  
 - [vps-topology.md](../architecture/vps-topology.md) — `notify.raisd.co`  
 - CMS historical email path: Lesotho `OnlineAppEmailNotification` (gap vs Applicant Demo)

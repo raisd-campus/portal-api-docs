@@ -14,8 +14,8 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Student UI → [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md)
    - Applicant UI → [frontend/applicant-portal.md](frontend/applicant-portal.md); LUCT Cyberjaya online-registration procedure capture → [backend/luct-online-registration.md](backend/luct-online-registration.md); FE gaps vs that pack → [backend/luct-online-registration-fe-gap.md](backend/luct-online-registration-fe-gap.md)
    - Lecturer UI → [frontend/lecturer-portal.md](frontend/lecturer-portal.md)
-   - Staff UI → [frontend/staff-portal.md](frontend/staff-portal.md)
-   - Admin UI (SSO RBAC) → [frontend/admin-portal.md](frontend/admin-portal.md)
+   - Admin UI (campus desks) → [frontend/admin-portal.md](frontend/admin-portal.md)
+   - Control UI (SSO RBAC) → [frontend/control-portal.md](frontend/control-portal.md)
    - Demo keychain → [frontend/keychain.md](frontend/keychain.md)
    - Portal API / campus config → [backend/portal-api.md](backend/portal-api.md), then [development plan](backend/portal-api-development-plan.md), [target deployment](backend/portal-api-deployment.md), [current VPS topology](architecture/vps-topology.md)
    - SSO / identity / RBAC → [backend/sso.md](backend/sso.md), contract [`openapi-sso.yaml`](../../openapi-sso.yaml), host `sso.raisd.co`
@@ -40,7 +40,7 @@ For any portal UI task, also read [design/component-library.md](design/component
 
 ## 2. Product boundaries (campus-wide)
 
-- **Four portals, one existing CMS family.** Applicant, Student, Lecturer, and Staff are separate webs. They talk only to the **Portal API**. They never write directly to Postgres or the existing CMS.
+- **Campus portals + Control.** Applicant, Student, and the **Staff portal** talk only to the **Portal API**. The Staff portal (`staff.{slug}.raisd.co`, repo `lecturer-portal`) shows teaching menus for `roleKey` `lecturer` and Admin menus at `/admin` for `roleKey` `admin`. **Control** (`control.raisd.co`) is the global SSO RBAC console (not campus-scoped) and grants campus Admin only. Portals never write directly to Postgres or the existing CMS. Menu hiding follows the active role; SSO and Portal API still enforce the permission.
 - **Lesotho first (pilot) — confirmed Working Group 3 Oct 2026.** Supersedes “Cyberjaya first” as the acceptance-campus priority. Admissions before semester registration. Core mobile at launch means phone-friendly agreed journeys, not a verified native-app mandate. Detail: [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md).
 - **This phase — ADR-1 (confirmed Aslam, 23 Sep 2026; pilot campus updated 3 Oct 2026):** keep the existing campus CMS family as system of record; build modern portal experiences via the Portal API; **do not duplicate** operational functions. Lesotho’s newer CMS is the **feature benchmark** (screenshots); migration SoT is Raisd Schema + Lesotho CMS materials (old CMS `campus2_lesotho` structure inventoried 5 Oct 2026 — dump outside git). Inventories: [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md).
 - **Longer term:** progressive **unified one-stop CMS**, only on verified gaps with an explicit migration strategy ([M5](../sdd/03-delivery-milestones.md#m5)+ backlog — not launch rewrite). Target vision (proposed): one product with **distributed country data planes**, white-label, and feature flags — [architecture/distributed-cms-target.md](architecture/distributed-cms-target.md), diagram [`docs/diagrams/distributed-cms-architecture.html`](../diagrams/distributed-cms-architecture.html). See [architecture/overview.md](architecture/overview.md) and [SDD-03](../sdd/03-delivery-milestones.md).
@@ -59,8 +59,8 @@ For any portal UI task, also read [design/component-library.md](design/component
 | `student-portal` | Enrolled-student web (current deepest Demo UI) | [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md) |
 | `applicant-portal` | Online registration (Admissions launch) | [frontend/applicant-portal.md](frontend/applicant-portal.md) |
 | `lecturer-portal` | Lecturer web | [frontend/lecturer-portal.md](frontend/lecturer-portal.md) |
-| `staff-portal` | Registry / Faculty / Bursary / QA / Marketing | [frontend/staff-portal.md](frontend/staff-portal.md) |
-| `admin-portal` | Raisd Admin — SSO people + full RBAC | [frontend/admin-portal.md](frontend/admin-portal.md) |
+| `admin-portal` | Campus Admin — Registry / Faculty / Bursary / QA | [frontend/admin-portal.md](frontend/admin-portal.md) |
+| `control-portal` | Control — super-admin SSO people + RBAC (campus Admins) | [frontend/control-portal.md](frontend/control-portal.md) |
 | `keychain` | Demo login launcher (Open filled → portals) | [frontend/keychain.md](frontend/keychain.md) |
 | `design-system` | Versioned shared tokens/components | [design/component-library.md](design/component-library.md), [design/design-system.md](design/design-system.md) |
 | `portal-api-docs` | Public OpenAPI + Swagger + diagram/report Pages | [backend/portal-api.md](backend/portal-api.md); weekly reports [`../reports/`](../reports/) |
@@ -95,7 +95,7 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 
 ### Component-change guardrail (all portals)
 
-This rule protects shared components and established portal-owned components and layouts across Applicant, Student, Lecturer and Staff portals.
+This rule protects shared components and established portal-owned components and layouts across Applicant, Student, Lecturer, Admin, and Control portals.
 
 - Use existing components and documented variants by default. Do not change established component source, styling, sizing, spacing, typography, layout, responsive behaviour or interactions—including through local CSS, class overrides or wrappers—unless the user explicitly instructs that change or approves the specific proposed change.
 - A request to build a feature authorizes the necessary composition, content, data and workflow work; it does not authorize incidental component redesigns.

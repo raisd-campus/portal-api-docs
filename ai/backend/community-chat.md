@@ -8,7 +8,7 @@ Design-system **0.7.0 candidate** owns directory/group lists, members, avatar st
 
 Portal adapters own membership projections, navigation layers, drafts, scroll positions, attachment policy, services and meetups. Student keeps local mock mode and its original per-student service conversations. Lecturer keeps a resizable desktop Community dock starting at 296px, full-screen phone/tablet overlay, one Dashboard menu item and an empty Dashboard body. Existing Materials is direct-route only.
 
-`DEMO_COMMUNITY_CHAT=true` enables the transport in Portal API. It defaults off and rejects Live CMS mode. Consumers require `GET /v1/meta/community` to advertise `enabled: true`, `version: 1` and `chunkBytes: 1048576`. Missing support retains Student's existing adapter; Lecturer shows an unavailable state. Unsupported transport never invents success.
+`DEMO_COMMUNITY_CHAT=true` enables the transport in Portal API. It defaults off and rejects Live CMS mode. The Raisd demo API sets that flag, and `GET /v1/meta/community` then advertises `enabled: true`, `version: 1` and `chunkBytes: 1048576`. Missing support retains Student's existing adapter. The staff portal mounts Community only for a Staff or Lecturer sign-in. A campus Admin sign-in does not show the panel. The community route accepts a lecturer session, and a staff session when that email is linked to a teaching record. An empty academic title is valid. Unsupported transport never invents success.
 
 ## Sessions, identity and membership
 

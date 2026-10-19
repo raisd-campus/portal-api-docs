@@ -6,7 +6,7 @@
 
 ## Status
 
-A validated ApplicantPortalApi is implemented with released shared package 0.8.0. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/auth/applicant/login`, `POST /v1/applicant/:method`). See [mock API and validation](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
+A validated ApplicantPortalApi is implemented with released shared package 0.8.0. Locally (no `VITE_PORTAL_API_URL`) it remains a session-only in-process mock. Hosted Demo builds call Portal API over HTTP (`POST /v1/applicant/:method`) after **Raisd SSO** sign-in — the Applicant portal does **not** host email/password forms (redirect to `sso.raisd.co/login` with campus landing `returnUrl`). See [mock API and validation](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/frontend/applicant-portal/mock-api.md) and [SSO](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/sso.md). This portal is the **Admissions launch** surface (milestone 2): account, application, evidence, declarations, track status, offer, accept enrolment. Registry remains the decision owner.
 
 ## Agent rules
 

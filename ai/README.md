@@ -40,12 +40,15 @@ Agents running in a portal repo should resolve the knowledge base as a **sibling
 ├── control-plane/     ← this repository; docs/ai is canonical
 ├── student-portal/
 ├── applicant-portal/
-├── lecturer-portal/
-├── staff-portal/
+├── lecturer-portal/   ← Staff portal (staff.{slug}.raisd.co); teaching menus or Admin menus by active role
+├── control-portal/    ← Control (control.raisd.co)
 ├── keychain/          ← Demo login launcher (Open filled)
-├── campus-landing/    ← Per-campus apex chooser (Lesotho)
+├── campus-landing/    ← Per-campus apex chooser (SSO picker)
+├── sso/
+├── notifications/
 ├── portal-api/        ← Portal API service (docs/ are generated working copies)
 ├── design-system/
+├── db-admin/
 └── portal-api-docs/
 ```
 

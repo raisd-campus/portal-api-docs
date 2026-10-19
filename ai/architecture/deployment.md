@@ -18,8 +18,8 @@ Running on a **single UltaHost VPS** (`38.127.216.221`):
 
 - Cloudflare DNS-only A records for `raisd.co` → VPS
 - Namespace `campus`: Traefik + cert-manager TLS, `portal-api`, Postgres StatefulSet
-- Eight campus-scoped landings and portals: `{slug}.raisd.co` and `{apply,student,staff,teach,api}.{slug}.raisd.co`
-- Shared: `keychain.raisd.co`, `docs.raisd.co`, `db-admin.raisd.co`, `api.raisd.co`
+- Eight campus-scoped landings and portals: `{slug}.raisd.co` and `{apply,student,admin,staff,api}.{slug}.raisd.co` (`teach.{slug}` 308-redirects to `staff.{slug}`)
+- Shared: `control.raisd.co`, `keychain.raisd.co`, `docs.raisd.co`, `db-admin.raisd.co`, `api.raisd.co`, `sso.raisd.co`, `notify.raisd.co`
 
 Full diagram and host table: [vps-topology.md](vps-topology.md). Catalogue: [demo-campuses.yaml](demo-campuses.yaml).
 

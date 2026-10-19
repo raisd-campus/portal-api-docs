@@ -56,8 +56,9 @@ bash gitops/bootstrap/install-jenkins.sh
 
 DNS: `jenkins.raisd.co` A → `38.127.216.221` (DNS-only).  
 UI: https://jenkins.raisd.co — change the admin password after first login.  
-Keychain (top-right): Simple Theme on authenticated pages; nginx `keychain-proxy` injects the same docs JS on `/login` (simple-page skips PageDecorators).  
-Argo CD (https://argocd.raisd.co): ingress → `argocd-keychain-proxy` injects the same docs JS into the SPA shell.
+Keychain (top-right): mounts on **`/login` only** (Jenkins `keychain-proxy` on simple-page; Simple Theme may still load the script on authenticated pages but the widget unmounts off `/login`).
+Argo CD (https://argocd.raisd.co): ingress → `argocd-keychain-proxy` injects the same docs JS; widget mounts on `/login` only.
+Docs (`docs.raisd.co`): Keychain while the site gate is visible; after unlock a **Sign out** control clears the docs session (`site-auth.js`).
 
 GitHub: each deployable `raisd-campus/*` repo has a **push** webhook →  
 `https://jenkins.raisd.co/generic-webhook-trigger/invoke?token=<secret>`  
@@ -65,7 +66,7 @@ GitHub: each deployable `raisd-campus/*` repo has a **push** webhook →
 
 ## Job behaviour (`raisd-<repo>`)
 
-Bootstrap: [`gitops/bootstrap/sync-jenkins-jobs.sh`](../../../gitops/bootstrap/sync-jenkins-jobs.sh) (also called from `install-jenkins.sh`).
+Bootstrap: [`gitops/bootstrap/sync-jenkins-jobs.sh`](../../../gitops/bootstrap/sync-jenkins-jobs.sh) (also called from `install-jenkins.sh`). Sync creates or refreshes `raisd-<repo>` jobs only. It does **not** delete retired jobs (for example `raisd-student-delivery-recovery`), so build history stays available.
 
 1. **Gate** — require `GHL_REF == refs/heads/main` and `GHL_REPO` under `raisd-campus/`.
 2. **Build + push GHCR** — when `GHL_REPO` is `raisd-campus/{keychain,sso,notifications}`, run Kaniko (`/ci/build-ghcr-image.sh`) to publish `:main` and `:<sha>`.
@@ -107,9 +108,11 @@ Git publication, webhook/job delivery and hosted readiness as separate evidence.
 ## Approved hostPath delivery repair — 16 October 2026
 
 The owner explicitly approved persistent Jenkins delivery jobs for Student,
-Applicant, Lecturer, Staff, Portal API and Control Plane docs. This supersedes the
-previous refresh-only/static-SSH limitation for those six targets. The existing
-hostPath topology stays in place; no new database, credential or RBAC grants.
+Applicant, Lecturer, Admin (campus), Control (global), Portal API and Control Plane
+docs. Staff portal was renamed to Admin; Raisd Admin was renamed to Control. This
+supersedes the previous refresh-only/static-SSH limitation for those hostPath
+targets. The existing hostPath topology stays in place; no new database, credential
+or RBAC grants.
 
 `gitops/apps/jenkins/scripts/deploy-hostpath.sh` creates a bounded build Job using
 `build-hostpath.mjs`. It reads existing github-build/build-npm-token secret files,
@@ -121,7 +124,8 @@ workload restarts, and readiness/build failures now fail Jenkins. The deployment
 regressions run in the Linux Job before publication. Image checkout failures also
 fail closed. Shell tracing is disabled before credential handling.
 
-Only the six hard-coded targets may write the existing portal/API hostPath roots.
+Only the hard-coded targets in `build-hostpath.mjs` may write the existing portal/API
+hostPath roots (student, applicant, lecturer/`teach`, admin, control, docs, portal-api).
 API runtime configuration and Postgres records are preserved; no migrations,
 resets or changes to Materials/Classrooms activation policy occur. Source delivery
 does not enable the memory-only Materials capability on the Postgres service.

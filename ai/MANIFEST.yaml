@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-15
+updated: 2026-10-17
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,18 +9,27 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-19: Faid review fixes — staff RPC requires Admin staff session (no lecturer→Registry elevation); Access grants the hosted campus; SSO smoke uses admin not retired staff roleKey; Jenkins sync no longer deletes retired jobs; portal-api-docs AI mirror synced including control-portal.md.
+  - 2026-10-17: Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html.
+  - 2026-10-17: Staff portal menus follow the active role. Lecturer sees Dashboard, Classrooms, and Community. Admin sees Overview, Applicants, Students, Payments, Registrations, and Access. Register copy is Register student, Register staff, or Register lecturer. Docs: backend/sso.md, frontend/lecturer-portal.md, frontend/admin-portal.md.
+  - 2026-10-17: Campus Admin desks moved into the staff portal (`staff.{slug}.raisd.co/admin`, repo `lecturer-portal`). `admin.{slug}.raisd.co` 308-redirects there. `admin-portal` is no longer deployed.
+  - 2026-10-16: Portal rename cutover — Raisd Admin → Control (`control.raisd.co`, `roleKey` `control`, repo `control-portal`); Staff → Campus Admin (`admin.{slug}.raisd.co`, `roleKey` `admin`, repo `admin-portal`). Legacy `admin.raisd.co` and `staff.{slug}.raisd.co` 308-redirect. Docs: microservices/vps-topology/repositories/sso + diagrams endpoints.
+  - 2026-10-16: Jenkins hostPath jobs synced for lecturer/admin/control; legacy `raisd-staff-portal` deleted; raisd-root Argo drift cleared. Docs: architecture/cicd.md + audits/2026-10-16-jenkins-delivery-verification.md.
+  - 2026-10-16: Keychain embed taller (≤85vh/800px); mounts on sign-in only (Jenkins/Argo `/login`, docs gate); docs **Sign out** after unlock. Docs: frontend/keychain.md + cicd.md.
+  - 2026-10-16: SSO password-only login + forgot-password (`password_reset` email template); magic-link channel disabled. Docs: backend/sso.md + notifications.md + design-system email catalogue.
+  - 2026-10-16: SSO is the single login UI; portals redirect to sso.raisd.co; multi-role picker stays on campus landing. Docs: backend/sso.md + frontend portal/keychain notes.
   - 2026-10-15: Microservice architecture catalogue for all services (Portal API, SSO, Notifications, portals, platform) — architecture/microservices.md + architecture.html#services; SDD-02 logical diagram updated.
   - 2026-10-15: Argo Applications for every raisd-campus deployable (portals, portal-api, db-admin, docs, design-system/portal-api-docs markers) under gitops/apps/; shared campus-multi Ingress in portal-static. Docs: architecture/argocd.md.
   - 2026-10-15: Jenkins per-repo jobs `raisd-<repo>` + push webhooks for all raisd-campus repos (main-only filter); sync via gitops/bootstrap/sync-jenkins-jobs.sh. Docs: architecture/cicd.md.
-  - 2026-10-15: Argo CD login Keychain — ingress → argocd-keychain-proxy injects docs keychain-access.js into SPA shell; catalog Open filled for admin. Docs: frontend/keychain.md + architecture/argocd.md.
-  - 2026-10-15: Jenkins login Keychain — nginx keychain-proxy injects docs keychain-access.js on /login (simple-page); Simple Theme for authenticated pages. Docs: frontend/keychain.md + architecture/cicd.md.
+  - 2026-10-15: Argo CD login Keychain — ingress → argocd-keychain-proxy injects docs keychain-access.js into SPA shell; catalog Open filled for Control/Admin. Docs: frontend/keychain.md + architecture/argocd.md.
+  - 2026-10-15: Jenkins login Keychain — nginx keychain-proxy injects docs keychain-access.js on /login (simple-page). Docs: frontend/keychain.md + architecture/cicd.md.
   - 2026-10-15: Jenkins builds GHCR images (Kaniko) for keychain/sso/notifications — no GitHub Actions image workflows. Docs: architecture/cicd.md.
   - 2026-10-15: Keychain on Jenkins + Argo — GHCR `ghcr.io/raisd-campus/keychain:main`, gitops/apps/keychain, Jenkins build/refresh/rollout. Docs: frontend/keychain.md + architecture/cicd.md.
   - 2026-10-15: CI/CD — Jenkins at jenkins.raisd.co builds images + deploys on GitHub push to main only (Generic Webhook + ci/Jenkinsfile); Argo CD syncs gitops. Docs: architecture/cicd.md + architecture/argocd.md.
   - 2026-10-15: Argo CD GitOps (gitops/) — GHCR images for sso/notifications/keychain; SSH/rsync becomes bootstrap+fallback; recover-sshd.sh opens port 2222. Docs: architecture/argocd.md.
   - 2026-10-15: Design-system email templates (magic_link, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic) — design-system/email + docs/design-system/email-templates.html; notifications POST /v1/send/template; SSO + Portal API callers.
   - 2026-10-15: Notifications service at notify.raisd.co — CMS noreply@raisd.co via mail.raisd.co; docs/ai/backend/notifications.md + openapi-notifications.yaml; SSO magic links call it when NOTIFY_* set.
-  - 2026-10-15: Admin portal at admin.raisd.co — full SSO RBAC; Staff learner-access desk only; Portal API auto-provisions applicant/student on apply/enrol.
+  - 2026-10-15: Control at control.raisd.co — full SSO RBAC; Campus Admin learner-access desk only; Portal API auto-provisions applicant/student on apply/enrol. (Hosts renamed 16 Oct — see note above.)
   - 2026-10-15: SSO Demo service (email magic link + RBAC) at sso.raisd.co — docs/ai/backend/sso.md, openapi-sso.yaml, repo raisd-campus/sso. Portal API introspects SSO tokens; landing role picker.
   - 2026-10-15: Neon Demo project muddy-frog-75049472 deleted (Vercel Neon store raisd-portal-api-poc removed; Neon/Postgres env stripped from Vercel portal-api + db-admin). Legacy *.vercel.app redirect stubs retained. Demo DB SoT remains UltaHost VPS Postgres.
   - 2026-10-14: Multi-campus Demo on UltaHost k3s — eight campus-scoped landings/portals, VPS Postgres, Cloudflare A→VPS; architecture/vps-topology.md + architecture.html#vps. Former Vercel+Neon PoC retired.
@@ -77,7 +86,7 @@ notes:
   - 2026-10-14: DVD application-fee share → JS fee-calculation simulation on Pages (backend/fee-calculation-simulation.md + diagrams/old-cms/fee-calculation-simulation.html).
   - 2026-10-10: Weekly reports hub on Pages — docs/reports/index.html + weekly/W01–W04 (18 Sep–10 Oct); primary nav Weekly reports.
   - 2026-10-12: Lecturer local UI scaffold uses shared 0.6.2 shell, empty Dashboard and empty Community panel; materials direct route retained; no deployment.
-  - 2026-10-11: Staff portal Demo shell — applicant/student status + payment verification (session store); docs/ai/frontend/staff-portal.md.
+  - 2026-10-11: Staff portal Demo shell — applicant/student status + payment verification (session store); docs/ai/frontend/admin-portal.md.
   - 2026-10-11: Demo keychain launcher — Open filled postMessage into student/applicant/staff sign-in; docs/ai/frontend/keychain.md.
   - 2026-10-10: Refresh W04 / weekly-progress-2026-10-10 through morning cut — hosted Demo API enablement, cross-campus fee amounts, Weekly reports hub.
 
@@ -94,8 +103,7 @@ sibling_repos:
   - applicant-portal
   - student-portal
   - lecturer-portal
-  - staff-portal
-  - admin-portal
+  - control-portal
   - keychain
   - portal-api
   - design-system
@@ -464,8 +472,8 @@ frontend:
     skill: skills/cms-student-portal-page/SKILL.md
   applicant-portal: frontend/applicant-portal.md
   lecturer-portal: frontend/lecturer-portal.md
-  staff-portal: frontend/staff-portal.md
   admin-portal: frontend/admin-portal.md
+  control-portal: frontend/control-portal.md
   keychain: frontend/keychain.md
 
 design:
