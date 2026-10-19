@@ -80,3 +80,41 @@ npm run dev    # http://localhost:5180
 npm run check
 npm run build:vercel
 ```
+
+## Embedded account picker — 19 October 2026
+
+Keychain pins released shared library 0.9.0. Its embed composes ContentSection,
+DetailSectionCard, DropdownSelect, Button, Input and Badge with semantic tokens
+and Rubik/type utilities. The standalone campus control also uses DropdownSelect.
+No shared component source is changed.
+
+The SSO account picker has labelled Campus and Role selectors beside each other,
+plus case-insensitive search and an announced result count. All campuses/All roles
+are available; empty results offer Clear filters. Campus context comes from a
+campus-scoped trusted parent or a validated SSO hint; global/local SSO defaults
+to All campuses. Role and campus must match the same recorded Demo assignment.
+Campus Admins are campus-only; multi-role accounts retain each matching role.
+Iman's Gmail account has global Control plus Lesotho Student/Lecturer scopes:
+its global role must not make it a Botswana Student or Admin. Unknown metadata
+is never inferred from display labels. The adapter mirrors existing SSO seed
+records and is only a discovery filter, not an authorization decision.
+
+Selecting a filter does not change the caller's return URL, grant a campus/role,
+or replace the existing SSO role picker. Fill and Fill & submit keep protocol
+version 1, the exact parent-origin target and their respective autoSubmit values.
+Locked and unavailable-account behavior is retained. Infrastructure embeds keep
+their existing portal-specific account list without irrelevant role controls.
+
+The embed owns one viewport-height scroll region so filters and account actions
+remain reachable at short heights. SSO fits the iframe below its trigger using
+actual margins/borders and passes only a campus-filter hint from campusId or the
+return URL hostname. Host origins, password injection and real auth state remain
+with their existing owners. Browser verification uses isolated loopback parent
+and child servers with no generated infrastructure credentials; it does not run
+reset-password or outbound-email operations on hosted accounts.
+
+Acceptance: Keychain lint, 16 units, production build and 14 Chromium/WebKit
+iframe checks passed, including actual 343px phone/384px desktop picker widths.
+SSO build and complete auth gate passed 49 checks with one WebKit virtual-device
+skip. Scope matching, empty/reset filters, Fill/Fill & submit, lock, keyboard, axe
+and short-frame reachability are covered. Generated credentials remain ignored.

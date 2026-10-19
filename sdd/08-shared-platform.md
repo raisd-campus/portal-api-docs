@@ -133,3 +133,9 @@ SSO consumer content omits login introductory/passkey helper copy and the passke
 action icon, uses the current-year Raisd AI Sdn. Bhd. copyright footer, and places
 notice descriptions in the shared Popup body. These are consumer compositions of
 0.9.0; shared components and authentication policy are unchanged.
+
+Keychain's shared-library account embed adds Campus/Role/search discovery filters
+using recorded Demo scopes, with single-region scrolling on short screens. SSO
+supplies context hints and viewport bounds; filtering does not change authentication
+or role grants. [Picker behavior](../ai/frontend/keychain.md#embedded-account-picker--19-october-2026)
+is owned by Keychain and uses released shared 0.9.0 components.

@@ -178,3 +178,12 @@ The composition update passed SSO build/typecheck and all isolated auth acceptan
 checks: 47 passed, one Chromium-only virtual-authenticator case skipped on WebKit.
 Coverage includes 375/768/1440px pages, dialog-body description/axe checks, focus
 restoration, password/reset and passkey flows.
+
+### Keychain picker context and fit
+
+The Keychain iframe receives an optional campus-filter hint from the existing
+campusId or return URL hostname. Keychain validates it against its campus list;
+selection only filters Demo account records and never changes the SSO return URL,
+role assignment or login payload. The host measures trigger position plus panel
+margins/borders to keep the iframe inside short viewports. See the
+[Keychain picker guide](../frontend/keychain.md#embedded-account-picker--19-october-2026).
