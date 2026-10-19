@@ -63,7 +63,7 @@ For any portal UI task, also read [design/component-library.md](design/component
 | `control-portal` | Control — super-admin SSO people + RBAC (campus Admins) | [frontend/control-portal.md](frontend/control-portal.md) |
 | `keychain` | Demo login launcher (Open filled → portals) | [frontend/keychain.md](frontend/keychain.md) |
 | `design-system` | Versioned shared tokens/components | [design/component-library.md](design/component-library.md), [design/design-system.md](design/design-system.md) |
-| `portal-api-docs` | Public OpenAPI + Swagger + diagram/report Pages | [backend/portal-api.md](backend/portal-api.md); weekly reports [`../reports/`](../reports/) |
+| `portal-api-docs` | Public OpenAPI + Swagger + diagram Pages | [backend/portal-api.md](backend/portal-api.md). Reports stay on [docs.raisd.co/reports](https://docs.raisd.co/reports/) |
 | `db-admin` | Read-only DB browser + ERD (CMS/LMS colours) | [architecture/vps-topology.md](architecture/vps-topology.md), [backend/lms-schema.md](backend/lms-schema.md) |
 | `campus-landing` | Per-campus landing (hostname-pinned; Lesotho apex `lesotho.raisd.co`) | [architecture/vps-topology.md](architecture/vps-topology.md), [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md) |
 

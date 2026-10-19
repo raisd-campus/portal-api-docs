@@ -16,8 +16,8 @@ Public OpenAPI description, Swagger UI, and architecture diagrams for the Raisd 
 **Eswatini CMS inventory:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms-eswatini/  
 **LUCT online registration (Cyberjaya):** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/online-registration.html  
 **Online registration FE gaps:** https://raisd-campus.github.io/portal-api-docs/diagrams/old-cms/online-registration-gap.html  
-**Lesotho analysis briefing (5 Oct 2026):** https://raisd-campus.github.io/portal-api-docs/reports/lesotho-cms-analysis-2026-10-05/  
-**Executive progress summary (7 Oct 2026):** https://raisd-campus.github.io/portal-api-docs/reports/executive-progress-review-2026-10-07/  
+**Lesotho analysis briefing (5 Oct 2026):** https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/  
+**Executive progress summary (7 Oct 2026):** https://docs.raisd.co/reports/executive-progress-review-2026-10-07/  
 **SDD / nomenclature:** https://raisd-campus.github.io/portal-api-docs/sdd/
 **Nomenclature HTML:** https://raisd-campus.github.io/portal-api-docs/sdd/15-nomenclature.html (CAP/M hover tooltips on all Pages)
 
