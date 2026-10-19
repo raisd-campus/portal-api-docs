@@ -165,3 +165,10 @@ React and the shared package are build-only dependencies. Keychain/Notifications
 image paths are unchanged. Three offline manifest/failure tests cover the helper.
 No hosted Job or ConfigMap was manually reconfigured by the release task. Shared package 0.9.0 and SSO’s exact registry pin are verified; normal source delivery must install the matching helper before building SSO. Local Docker execution is pending
 because this machine's Docker daemon is not running.
+
+The first hosted shared-auth image exposed an asset-permission defect: the
+credential-protecting init-container umask also made generated `web-dist` private
+to root. SSO normalizes only that public tree with `chmod -R a+rX` during image
+assembly, then runs as `node`. The SSO readiness probe uses `/login`; liveness
+continues to use `/health`. A successful image push or API health response alone
+is not authentication-page acceptance.

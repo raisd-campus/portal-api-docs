@@ -157,3 +157,9 @@ dialog focus trapping/restoration. Forms prevent native GET submission while
 flow scripts load or fail. Pinch zoom is retained. See
 [implementation and acceptance](../architecture/audits/2026-10-19-shared-auth-ui.md).
 SSO pins the integrity-verified 0.9.0 GitHub Packages release with no sibling archive or source alias. Package publication and source delivery do not establish hosted SSO deployment; verify the delivered image and page separately.
+
+Hosted auth acceptance requires `/login`, `/forgot`, `/reset` and their assets to
+return successfully from the non-root image. CI generates files under umask 077;
+image assembly grants read/traverse access to compiled public `web-dist` only.
+Readiness checks `/login`; liveness remains `/health`. This prevents backend
+health from masking an unreadable UI.

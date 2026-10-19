@@ -572,3 +572,7 @@ shared_auth_ui:
 shared_auth_release:
   - path: architecture/audits/2026-10-19-auth-090-release.md
     topics: [sso, auth-layout, 0.9.0, registry, source-release, verification]
+
+shared_auth_hosted_delivery:
+  - path: architecture/audits/2026-10-19-sso-auth-delivery.md
+    topics: [sso, jenkins, argocd, image-permissions, readiness, hosted-verification]
