@@ -66,7 +66,7 @@ https://github.com/raisd-campus/control-plane/tree/main/docs/ai
 | `sso.raisd.co` | sso | Demo — identity |
 | `notify.raisd.co` | notifications | Demo — outbound email |
 | `control.raisd.co` | control-portal | Demo — Control (SSO RBAC) |
-| `admin.raisd.co` | *(308 → control)* | Legacy global alias |
+| `admin.raisd.co` | *(301 → control)* | Legacy global alias |
 | `student.raisd.co` | student-portal | 3 |
 | `staff.raisd.co` | lecturer-portal | 3 |
 
@@ -78,7 +78,7 @@ https://github.com/raisd-campus/control-plane/tree/main/docs/ai
 | `apply.{slug}.raisd.co` | applicant-portal |
 | `student.{slug}.raisd.co` | student-portal |
 | `staff.{slug}.raisd.co` | lecturer-portal (teaching menus, or Admin menus at `/admin` for `roleKey` `admin`) |
-| `admin.{slug}.raisd.co` | *(308 → staff.{slug}.raisd.co/admin)* |
+| `admin.{slug}.raisd.co` | *(301 → staff.{slug}.raisd.co/admin)* |
 | `api.{slug}.raisd.co` | portal-api (same service as `api.raisd.co`) |
 | `sso.raisd.co` / `notify.raisd.co` / `control.raisd.co` | sso / notifications / control-portal |
 | `keychain.raisd.co` | keychain |

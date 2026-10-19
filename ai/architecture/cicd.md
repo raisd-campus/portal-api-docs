@@ -66,7 +66,7 @@ GitHub: each deployable `raisd-campus/*` repo has a **push** webhook →
 
 ## Job behaviour (`raisd-<repo>`)
 
-Bootstrap: [`gitops/bootstrap/sync-jenkins-jobs.sh`](../../../gitops/bootstrap/sync-jenkins-jobs.sh) (also called from `install-jenkins.sh`). Sync creates or refreshes `raisd-<repo>` jobs only. It does **not** delete retired jobs (for example `raisd-student-delivery-recovery`), so build history stays available.
+Bootstrap: [`gitops/bootstrap/sync-jenkins-jobs.sh`](../../../gitops/bootstrap/sync-jenkins-jobs.sh) (also called from `install-jenkins.sh`). Sync creates missing `raisd-<repo>` jobs and updates existing jobs through `POST /job/{name}/config.xml`, preserving build history and job identity. Only a 404 lookup permits creation; lookup and write failures stop the sync. It does **not** delete retired jobs (for example `raisd-student-delivery-recovery`), so build history stays available.
 
 1. **Gate** — require `GHL_REF == refs/heads/main` and `GHL_REPO` under `raisd-campus/`.
 2. **Build + push GHCR** — when `GHL_REPO` is `raisd-campus/{keychain,sso,notifications}`, run Kaniko (`/ci/build-ghcr-image.sh`) to publish `:main` and `:<sha>`.
@@ -148,3 +148,20 @@ The worker resolves its real entry-point path so ConfigMap symlinks execute the 
 Delivery requests now have bounded Kubernetes retries and wait for unfinished hostPath workers before creating another. A temporary control-plane timeout cannot start overlapping workers or count as delivery success. The 4 GB Demo node has no swap; worker CPU is capped at 500m with one Rust build thread, Node old-space at 768 MiB and a 1536 MiB container ceiling. These limits bound resource use; they did not establish sufficient capacity for Student on this node. Capacity errors remain failures. A controller restart and Student exit 137 were observed during the first run; the precise termination cause is unconfirmed because existing Jenkins RBAC cannot read node/events/metrics, and no access grants were added.
 
 Student now requires at least 1536 MiB MemAvailable before checkout/build and fails without changing a release when capacity is missing or unreadable. Argo installed this guard from c578fd593ebd5c2f82650f8f369fbf1bcc9842af; Jenkins is Synced/Healthy and all seven installed Linux worker regressions passed with zero skips. Verify the ConfigMap/source hash before future delivery. The compiler failed locally at 384/512 MiB heap and passed at 768 MiB. A fresh externally built Student artifact passed production exclusions and bundle budgets. It was retained privately but was not used: the native Student worker finished during recovery, and the audited recovery job verified that output and completed its rollout. See [delivery evidence and operational limits](audits/2026-10-16-jenkins-delivery-verification.md).
+
+Local job-update regression: `python scripts/test-jenkins-job-sync.py` mocks curl
+and executes the exact shell function used by the sync script, without contacting
+Jenkins. Six tests cover update/create, failed lookups, transport and write errors,
+and absence of delete/disable calls. [Verification receipt](audits/2026-10-19-upstream-fixes.md).
+
+## SSO frontend build preparation — 19 October 2026
+
+SSO's shared auth UI introduces a frontend build. The image helper adds an SSO-only
+Node `ui-build` init container before Kaniko, using the existing read-only
+`build-npm-token` mount. Its npm config stays in that container's `/tmp`, is removed
+on exit, and is never mounted in Kaniko or copied to the image. SSO's Dockerfile
+copies the compiled `web-dist` assets and installs backend production dependencies;
+React and the shared package are build-only dependencies. Keychain/Notifications
+image paths are unchanged. Three offline manifest/failure tests cover the helper.
+No hosted Job or ConfigMap was manually reconfigured by the release task. Shared package 0.9.0 and SSO’s exact registry pin are verified; normal source delivery must install the matching helper before building SSO. Local Docker execution is pending
+because this machine's Docker daemon is not running.

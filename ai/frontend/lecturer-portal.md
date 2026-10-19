@@ -2,7 +2,7 @@
 
 **Repository:** raisd-campus/lecturer-portal. **Baseline:** [SDD-06](../../sdd/06-lecturer-portal.md). Read [campus instructions](../AGENTS.md) and [shared components](../design/component-library.md).
 
-**Demo host:** `https://staff.{slug}.raisd.co` (Lesotho: https://staff.lesotho.raisd.co). The product title is **Staff Portal**. `teach.{slug}.raisd.co` 308-redirects here. Role key stays `lecturer`.
+**Demo host:** `https://staff.{slug}.raisd.co` (Lesotho: https://staff.lesotho.raisd.co). The product title is **Staff Portal**. `teach.{slug}.raisd.co` 301-redirects here. Role key stays `lecturer`.
 
 ## Menus by active role — 17 October 2026
 

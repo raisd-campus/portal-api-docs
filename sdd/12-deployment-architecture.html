@@ -448,9 +448,9 @@ Postgres, evidence volume. One replica each</td>
 <td>Milestone 2</td>
 <td>Same node, resized</td>
 <td>Stage 1, wired to the real CMS. Backup CronJob.
-<code>staff-portal</code> only if SDD-07 has verified a gap</td>
-<td>Same, plus <code>staff.raisd.co</code> only if that deployment
-exists</td>
+<code>admin-portal</code> only if SDD-07 has verified a gap</td>
+<td>Same, plus campus <code>admin.{slug}.raisd.co</code> only if that
+deployment exists</td>
 </tr>
 <tr>
 <td>3. Core student</td>
@@ -458,7 +458,7 @@ exists</td>
 <td>Add the edge node. Data node steps up</td>
 <td>Add <code>student-portal</code> and <code>lecturer-portal</code>.
 Ingress moves to the edge node</td>
-<td><code>student.raisd.co</code>, <code>teach.raisd.co</code>. DNS
+<td><code>student.raisd.co</code>, <code>staff.raisd.co</code>. DNS
 moves to the edge node</td>
 </tr>
 <tr>
@@ -557,8 +557,8 @@ CMS. It is not the stage 1 node.</li>
 4 GB. It is not the requirement. Prefer the Professional VPS so the Plus
 box is free for stage 3.</p>
 <p>Stage 1 is the spec to install. Stages 2–5 are the launch sequence.
-Do not deploy the student, lecturer, or staff images until the stage
-that names them.</p>
+Do not deploy the student, lecturer, or admin portal images until the
+stage that names them.</p>
 <h2 id="repository-to-service">3. Repository to service</h2>
 <p>Six deployable GitHub repositories in <code>raisd-campus</code>. The
 existing CMS and mail have no repository here. The Portal API service
@@ -606,11 +606,18 @@ href="https://github.com/raisd-campus/lecturer-portal"><code>lecturer-portal</co
 </tr>
 <tr>
 <td><a
-href="https://github.com/raisd-campus/staff-portal"><code>staff-portal</code></a></td>
-<td>Deployment <code>staff-portal</code></td>
+href="https://github.com/raisd-campus/admin-portal"><code>admin-portal</code></a></td>
+<td>Deployment <code>admin-portal</code></td>
 <td>Not deployed</td>
 <td>Edge node, stage 2 only if a CMS gap is verified, otherwise stage
 3</td>
+</tr>
+<tr>
+<td><a
+href="https://github.com/raisd-campus/control-portal"><code>control-portal</code></a></td>
+<td>Deployment <code>control-portal</code></td>
+<td>Not deployed</td>
+<td>Identity portal, <code>control.raisd.co</code></td>
 </tr>
 <tr>
 <td><a
@@ -711,10 +718,17 @@ internet.</p>
 <td>Portal browsers, with a bearer token</td>
 </tr>
 <tr>
-<td><code>staff.raisd.co</code></td>
-<td><code>staff-portal</code></td>
-<td>Stage 2 if a gap is verified, otherwise not until stage 3</td>
-<td>Registry, Faculty, Bursary, QA, Marketing</td>
+<td><code>staff.{slug}.raisd.co</code></td>
+<td><code>lecturer-portal</code></td>
+<td>Demo now</td>
+<td>Teaching, plus Admin desks at <code>/admin</code>.
+<code>admin.{slug}.raisd.co</code> redirects here</td>
+</tr>
+<tr>
+<td><code>control.raisd.co</code></td>
+<td><code>control-portal</code></td>
+<td>Demo</td>
+<td>Control — SSO people / full RBAC</td>
 </tr>
 <tr>
 <td><code>student.raisd.co</code></td>
@@ -723,7 +737,7 @@ internet.</p>
 <td>Students</td>
 </tr>
 <tr>
-<td><code>teach.raisd.co</code></td>
+<td><code>staff.raisd.co</code></td>
 <td><code>lecturer-portal</code></td>
 <td>Stage 3</td>
 <td>Lecturers</td>
@@ -732,14 +746,19 @@ internet.</p>
 </table>
 <p><code>raisd.co</code> comes from the mailbox domain. These names are
 not a DNS change that has already been made. Do not publish a name
-before its Deployment exists.</p>
-<p><strong>Current Demo topology (14 October 2026):</strong> UltaHost
+before its Deployment exists. Global <code>admin.raisd.co</code> is
+reserved as a <strong>301 → Control</strong> alias (campus Admin stays
+slug-scoped).</p>
+<p><strong>Current Demo topology (17 October 2026):</strong> UltaHost
 k3s on <code>38.127.216.221</code> serves campus-scoped hostnames for
 every Demo catalogue campus — apex <code>{slug}.raisd.co</code>
 (landing) and
-<code>{apply,student,staff,teach,api}.{slug}.raisd.co</code>, plus
-shared <code>api</code> / <code>keychain</code> / <code>docs</code> /
-<code>db-admin</code>.raisd.co. Campus/location is fixed from the
+<code>{apply,student,admin,staff,api}.{slug}.raisd.co</code>, plus
+shared <code>api</code> / <code>sso</code> / <code>control</code> /
+<code>keychain</code> / <code>docs</code> /
+<code>db-admin</code>.raisd.co. Legacy
+<code>teach.{slug}.raisd.co</code> redirects to
+<code>staff.{slug}.raisd.co</code>. Campus/location is fixed from the
 hostname. Catalogue: <a
 href="../ai/architecture/demo-campuses.yaml"><code>demo-campuses.yaml</code></a>.
 Agent diagram: <a
@@ -804,8 +823,8 @@ browser never sees a pod address.</li>
 the evidence volume, and writes the application to the CMS on Premium
 2.</li>
 <li>If the CMS does not acknowledge, the API returns a failed save.</li>
-<li>Registry reviews in the existing CMS. <code>staff.raisd.co</code> is
-not part of stage 1.</li>
+<li>Registry reviews in the existing CMS. Campus Admin
+(<code>admin.{slug}.raisd.co</code>) is not part of stage 1.</li>
 </ol>
 <h2 id="what-is-installed-on-the-first-node">7. What is installed on the
 first node</h2>

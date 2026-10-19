@@ -29,4 +29,4 @@ Magic-link allowlist (team):
 npm run deploy:vps -- control
 ```
 
-Legacy host `admin.raisd.co` **308-redirects** to Control.
+Legacy host `admin.raisd.co` **301-redirects** to Control.

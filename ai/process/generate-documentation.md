@@ -47,6 +47,16 @@ For shared sidebar or header changes, capture `system/portal-shell` at phone, ta
 | Architecture PDF | Built from SDD catalogue / capability rows (see prior `Raisd-Campus-Architecture.pdf`) |
 | Meeting briefing | `proposals/CMS_Working_Group_Meeting_Briefing.html` from checklist + SDD |
 
+## Syncing the public AI mirror
+
+From control-plane, run `python scripts/sync-public-ai.py`, then
+`python scripts/sync-public-ai.py --check`. The sibling `portal-api-docs/ai`
+tree mirrors every canonical file and removes retired copies, including accidental
+nested AGENTS/MANIFEST copies. The check rejects changed, missing and extra files.
+Portal working-copy generators remain separate; run Portal API `npm run docs:sync`
+and `npm run docs:check` after canonical backend changes. Preserve pending policy
+notes when synchronizing the Applicant guide.
+
 ## Syncing student-portal working copies
 
 Canonical agent-readable copies live under `docs/ai/frontend/student-portal/`. The `student-portal` repository may keep local `docs/` working copies for day-to-day frontend work. When behaviour changes:

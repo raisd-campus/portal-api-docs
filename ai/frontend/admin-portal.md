@@ -3,7 +3,7 @@
 **Repository:** [`raisd-campus/lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) (`src/staff-admin`)
 **SDD:** [SDD-07](../../sdd/07-admin-staff-cms.md)
 **Campus agents:** [../AGENTS.md](../AGENTS.md)
-**Demo host:** https://staff.lesotho.raisd.co/admin (other campuses: `staff.{slug}.raisd.co/admin`). `admin.{slug}.raisd.co` 308-redirects here.
+**Demo host:** https://staff.lesotho.raisd.co/admin (other campuses: `staff.{slug}.raisd.co/admin`). `admin.{slug}.raisd.co` 301-redirects here.
 
 ## Status
 

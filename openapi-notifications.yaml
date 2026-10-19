@@ -48,7 +48,7 @@ paths:
               properties:
                 templateId:
                   type: string
-                  enum: [magic_link, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic]
+                  enum: [magic_link, password_reset, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic]
                 vars:
                   type: object
                   additionalProperties: true
@@ -121,7 +121,7 @@ paths:
               properties:
                 templateId:
                   type: string
-                  enum: [magic_link, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic]
+                  enum: [magic_link, password_reset, applicant_submitted, enrolment_accepted, learner_access_granted, transactional_generic]
                 to:
                   oneOf:
                     - type: string

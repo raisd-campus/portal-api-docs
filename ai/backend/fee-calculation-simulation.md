@@ -27,6 +27,12 @@ Demo ≠ Live. Sample RM catalogue and 6% SST are Cyberjaya-flavoured prototypes
 
 ---
 
+### Confirmed fee identity for the planned overhaul — 19 October 2026
+
+The owner relayed the team's confirmation: **Application Fee and Registration Fee are the same charge per programme applied**. The enrolment-flow screenshot calls it **Registration Fee**; use that term in the application-flow overhaul. The APP001 and REG001 rows below preserve the earlier shared-HTML proposal, not two separately approved admissions charges. Reconcile their mapping during implementation and prevent duplicate charging while preserving historical fee/payment references.
+
+Semester/resource fees remain per semester enrolment. Collection timing and credits towards those charges are still unconfirmed. This planning update changes no fee amount, tax treatment, identifier, ledger record or running application. See the [overhaul checklist](../frontend/applicant-portal.md#planned-application-flow-overhaul--fee-decision-19-october-2026).
+
 ## 2. Application fee model (from shared HTML)
 
 | Code | Item | Applies | Pricing | SST (sample) |

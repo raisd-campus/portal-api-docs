@@ -120,3 +120,11 @@ Demo SSO bridge binds known people/desks, retains Lecturer actor identity and
 shares one code exchange under StrictMode. Unlinked identities fail closed.
 [Verification and delivery limits](../ai/frontend/student-portal/audits/2026-10-16-campus-integration-publication.md)
 separate local gates, registry release, source publication and hosted readiness.
+
+### Authentication presentation — shared release 0.9.0
+
+SSO composes login and password recovery from the shared AuthLayout 0.9.0 release,
+released controls and existing tokens/type. Identity, password/reset/passkey and
+redirect policy stay in SSO. Local acceptance is documented in the
+[shared auth receipt](../ai/architecture/audits/2026-10-19-shared-auth-ui.md).
+The package is published and SSO pins it exactly; hosted deployment is verified separately. This is not a Live status change.

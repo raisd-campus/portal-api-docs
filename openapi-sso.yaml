@@ -6,7 +6,8 @@ info:
   description: |
     Demo SSO service at `https://sso.raisd.co`. Owns identity and RBAC.
     Portal API validates access tokens via `/v1/introspect`.
-    Channels `email_magic_link` and `password` (email + password) are enabled in Demo.
+    Channel `password` (email + password + forgot-password) is enabled in Demo.
+    `email_magic_link` is disabled on Demo (410).
   contact:
     name: Raisd working group
     email: iman.suherman@raisd.co
@@ -60,7 +61,8 @@ paths:
     post:
       tags: [Auth]
       operationId: emailMagicLinkStart
-      summary: Start email magic-link login
+      summary: Start email magic-link login (disabled on Demo — returns 410)
+      deprecated: true
       requestBody:
         required: true
         content:
@@ -73,8 +75,10 @@ paths:
                 returnUrl: { type: string, format: uri }
                 campusId: { type: string }
       responses:
+        "410":
+          description: Magic-link channel disabled (use password + forgot-password)
         "202":
-          description: Accepted (always, to avoid enumeration)
+          description: Accepted (always, to avoid enumeration) when channel enabled
           content:
             application/json:
               schema:
@@ -88,13 +92,16 @@ paths:
     get:
       tags: [Auth]
       operationId: emailMagicLinkConsume
-      summary: Consume magic-link token (browser redirect)
+      summary: Consume magic-link token (disabled on Demo — returns 410)
+      deprecated: true
       parameters:
         - name: token
           in: query
           required: true
           schema: { type: string }
       responses:
+        "410":
+          description: Magic-link channel disabled
         "302":
           description: Redirect to role picker or returnUrl with code
         "400":
@@ -119,28 +126,141 @@ paths:
                 campusId: { type: string }
       responses:
         "200":
-          description: Redirect URL or multi-role picker payload
+          description: >
+            Always includes redirectTo. Single-role continues with returnUrl?code=.
+            Multi-role redirects to the campus landing portal picker
+            (returnUrl?step=roles&session=…). Optional sessionId/roles fields may
+            also be present for multi-role but clients must follow redirectTo.
           content:
             application/json:
               schema:
-                anyOf:
-                  - type: object
-                    required: [redirectTo]
-                    properties:
-                      redirectTo: { type: string, format: uri }
-                  - type: object
-                    required: [sessionId, returnUrl, roles]
-                    properties:
-                      sessionId: { type: string }
-                      returnUrl: { type: string, format: uri }
-                      person: { $ref: "#/components/schemas/Person" }
-                      roles:
-                        type: array
-                        items: { $ref: "#/components/schemas/RoleAssignment" }
+                type: object
+                required: [redirectTo]
+                properties:
+                  redirectTo: { type: string, format: uri }
+                  sessionId: { type: string }
+                  returnUrl: { type: string, format: uri }
+                  person: { $ref: "#/components/schemas/Person" }
+                  roles:
+                    type: array
+                    items: { $ref: "#/components/schemas/RoleAssignment" }
         "401":
           description: Email or password incorrect
         "400":
           description: Invalid body or returnUrl
+
+  /v1/auth/channels/passkey/register/options:
+    post:
+      tags: [Auth]
+      operationId: passkeyRegisterOptions
+      summary: Start passkey registration after email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, returnUrl]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+                returnUrl: { type: string, format: uri }
+      responses:
+        "200":
+          description: WebAuthn creation options
+        "401":
+          description: Email or password incorrect
+        "400":
+          description: Invalid body or returnUrl
+
+  /v1/auth/channels/passkey/register/verify:
+    post:
+      tags: [Auth]
+      operationId: passkeyRegisterVerify
+      summary: Save a passkey and continue like password login
+      responses:
+        "200":
+          description: redirectTo, same as password login
+        "401":
+          description: Passkey could not be verified
+
+  /v1/auth/channels/passkey/login/options:
+    post:
+      tags: [Auth]
+      operationId: passkeyLoginOptions
+      summary: Start discoverable passkey sign-in
+      responses:
+        "200":
+          description: WebAuthn request options
+
+  /v1/auth/channels/passkey/login/verify:
+    post:
+      tags: [Auth]
+      operationId: passkeyLoginVerify
+      summary: Verify a passkey and continue like password login
+      responses:
+        "200":
+          description: redirectTo, same as password login
+        "401":
+          description: Passkey is not registered or could not be verified
+
+  /v1/auth/channels/password/forgot:
+    post:
+      tags: [Auth]
+      operationId: passwordForgot
+      summary: Request a password-reset email (no enumeration)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email }
+                returnUrl:
+                  type: string
+                  format: uri
+                  description: Optional post-reset redirect (allowlisted campus or SSO login)
+      responses:
+        "200":
+          description: Reset email sent when Notifications is configured
+        "202":
+          description: Accepted without revealing whether the email is registered
+        "400":
+          description: Invalid body
+        "502":
+          description: Email send failed
+
+  /v1/auth/channels/password/reset:
+    post:
+      tags: [Auth]
+      operationId: passwordReset
+      summary: Consume password-reset token and set a new password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, password]
+              properties:
+                token: { type: string }
+                password: { type: string, minLength: 8 }
+      responses:
+        "200":
+          description: Password updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok]
+                properties:
+                  ok: { type: boolean }
+                  returnUrl: { type: string, format: uri }
+                  message: { type: string }
+        "400":
+          description: Invalid body or expired token
 
   /v1/oauth/token:
     post:
@@ -265,7 +385,7 @@ paths:
         "204":
           description: Logged out
 
-  /v1/admin/people:
+  /v1/control/people:
     get:
       tags: [Admin]
       operationId: adminListPeople
@@ -312,7 +432,7 @@ paths:
                     properties:
                       roleKey:
                         type: string
-                        enum: [applicant, student, lecturer, staff, admin]
+                        enum: [applicant, student, lecturer, admin, control]
                       campusIds:
                         type: array
                         items: { type: string }
@@ -353,7 +473,7 @@ paths:
                 displayName: { type: string }
                 roleKey:
                   type: string
-                  enum: [applicant, student, lecturer, staff, admin]
+                  enum: [applicant, student, lecturer, admin, control]
                 campusIds:
                   type: array
                   items: { type: string }
@@ -366,7 +486,7 @@ paths:
         "401":
           description: Unauthorized
 
-  /v1/admin/people/{personId}/roles:
+  /v1/control/people/{personId}/roles:
     put:
       tags: [Admin]
       operationId: adminSetRoles
@@ -404,7 +524,7 @@ paths:
         "403":
           description: Forbidden
 
-  /v1/admin/audit:
+  /v1/control/audit:
     get:
       tags: [Admin]
       operationId: adminAudit
@@ -428,9 +548,21 @@ paths:
       tags: [Dev]
       operationId: devLastMagicLink
       summary: Demo-only last magic link (when SMTP unset)
+      deprecated: true
       responses:
         "200":
           description: Last link
+        "404":
+          description: None or disabled in production
+
+  /v1/dev/last-password-reset:
+    get:
+      tags: [Dev]
+      operationId: devLastPasswordReset
+      summary: Demo-only last password-reset link (when SMTP unset)
+      responses:
+        "200":
+          description: Last reset link
         "404":
           description: None or disabled in production
 

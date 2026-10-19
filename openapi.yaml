@@ -613,7 +613,7 @@ paths:
                     type: integer
                   portal:
                     type: string
-                    enum: [student, applicant, staff, lecturer, admin]
+                    enum: [student, applicant, admin, lecturer, control]
                   scenarioId:
                     type: string
                   supportedMethods:

@@ -264,7 +264,7 @@
     var panel = null;
     var iframe = null;
     var open = false;
-    var height = Math.min(520, maxPanelHeight());
+    var height = maxPanelHeight();
 
     function setUnlocked(unlocked) {
       var dot = btn.querySelector('.raisd-keychain-dot');

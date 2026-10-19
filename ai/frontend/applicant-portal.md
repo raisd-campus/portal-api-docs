@@ -16,6 +16,18 @@ A validated ApplicantPortalApi is implemented with released shared package 0.8.0
 4. Lesotho is the first acceptance pilot. Preserve current Malaysian sample content and use the captured [LUCT procedure](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md) as a Cyberjaya research reference. Campus-specific Lesotho NMDS/LGCSE rules remain to be confirmed; Malaysia EMGS/NOC is not its default overlay.
 5. When UI or API contracts appear, add feature docs under `docs/ai/frontend/applicant-portal/` and register them in [../MANIFEST.yaml](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/MANIFEST.yaml).
 
+## Planned application-flow overhaul — fee decision, 19 October 2026
+
+Planning record only; the current application, API, ledger and deployed workflow are unchanged. The owner confirmed with the team that Application Fee and Registration Fee are the same admissions charge, charged per programme applied. Use **Registration Fee**, matching the supplied enrolment-flow screenshot, for both online and walk-in application work.
+
+Add these items to the overhaul checklist:
+
+- Rename the current Applicant **Application Fee** presentation to **Registration Fee** across the application step, submitted details, payment instructions, progress, and relevant Eligibility/Offer payables and staff/API display labels.
+- Treat both names as one admissions charge per programme application. Reconcile the proposed APP001/REG001 distinction without creating a second charge or losing existing fee, invoice, payment, allocation or handoff references. Internal identifier migration requires an explicit compatibility plan.
+- Keep semester/resource fees scoped to semester enrolment. The fee identity and display term are resolved; exact collection timing and any credit towards semester/resource charges remain pending. This decision does not change amounts, tax treatment or payment gates.
+
+The earlier eligibility-first direction remains part of the planned overhaul. Implementing the overhaul is separate from recording this decision. The other pending tuition, SSD/immigration, medical, Offer/English and CAF policy questions remain open.
+
 ## LUCT online registration baseline — 6 October 2026
 
 Two campus procedures are captured for Applicant / Online Registration (and enrolled Add/Drop):

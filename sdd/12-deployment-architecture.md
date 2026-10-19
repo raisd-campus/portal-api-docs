@@ -41,8 +41,8 @@ Each stage adds workloads. It does not replace the cluster. Replicas stay at 1 u
 | Stage | When | Cluster | What is running | Public names |
 |---|---|---|---|---|
 | 1. Minimum | Before admissions | One k3s node at the stage 1 size below | Ingress, `applicant-portal`, `portal-api`, Postgres, evidence volume. One replica each | `apply.raisd.co`, `api.raisd.co` |
-| 2. Admissions launch | Milestone 2 | Same node, resized | Stage 1, wired to the real CMS. Backup CronJob. `staff-portal` only if SDD-07 has verified a gap | Same, plus `staff.raisd.co` only if that deployment exists |
-| 3. Core student | Milestone 3 | Add the edge node. Data node steps up | Add `student-portal` and `lecturer-portal`. Ingress moves to the edge node | `student.raisd.co`, `teach.raisd.co`. DNS moves to the edge node |
+| 2. Admissions launch | Milestone 2 | Same node, resized | Stage 1, wired to the real CMS. Backup CronJob. `admin-portal` only if SDD-07 has verified a gap | Same, plus campus `admin.{slug}.raisd.co` only if that deployment exists |
+| 3. Core student | Milestone 3 | Add the edge node. Data node steps up | Add `student-portal` and `lecturer-portal`. Ingress moves to the edge node | `student.raisd.co`, `staff.raisd.co`. DNS moves to the edge node |
 | 4. Pilot acceptance | Milestone 4 | Same two nodes. No resize | Restore drill from the backup job. No new product in the cluster | Unchanged |
 | 5. Campus expansion | Milestone 5 | Grow the data node only when it is full | Remaining portal features. Not a second control plane | Unchanged until a campus outside Southeast Asia launches |
 
@@ -68,7 +68,7 @@ What is already owned, and when to use it:
 
 Running stage 1 on the Plus box is allowed, because 8 GB is more than 4 GB. It is not the requirement. Prefer the Professional VPS so the Plus box is free for stage 3.
 
-Stage 1 is the spec to install. Stages 2–5 are the launch sequence. Do not deploy the student, lecturer, or staff images until the stage that names them.
+Stage 1 is the spec to install. Stages 2–5 are the launch sequence. Do not deploy the student, lecturer, or admin portal images until the stage that names them.
 
 ## 3. Repository to service
 
@@ -79,7 +79,8 @@ Six deployable GitHub repositories in `raisd-campus`. The existing CMS and mail 
 | [`applicant-portal`](https://github.com/raisd-campus/applicant-portal) | Deployment `applicant-portal` | 1 | Data node at stage 1. Edge node from stage 3 |
 | [`student-portal`](https://github.com/raisd-campus/student-portal) | Deployment `student-portal` | Not deployed | Edge node, stage 3 |
 | [`lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) | Deployment `lecturer-portal` | Not deployed | Edge node, stage 3 |
-| [`staff-portal`](https://github.com/raisd-campus/staff-portal) | Deployment `staff-portal` | Not deployed | Edge node, stage 2 only if a CMS gap is verified, otherwise stage 3 |
+| [`admin-portal`](https://github.com/raisd-campus/admin-portal) | Deployment `admin-portal` | Not deployed | Edge node, stage 2 only if a CMS gap is verified, otherwise stage 3 |
+| [`control-portal`](https://github.com/raisd-campus/control-portal) | Deployment `control-portal` | Not deployed | Identity portal, `control.raisd.co` |
 | [`portal-api`](https://github.com/raisd-campus/portal-api) | Deployment `portal-api` | 1 | Data node |
 | [`control-plane`](https://github.com/raisd-campus/control-plane) | StatefulSet `postgres` | 1 | Data node |
 | [`control-plane`](https://github.com/raisd-campus/control-plane) | PersistentVolumeClaim `evidence` | 1 volume | Data node |
@@ -132,13 +133,14 @@ Stage 1 and 2: public DNS points at the **single data node**. Stage 3 onward: pu
 |---|---|---|---|
 | `apply.raisd.co` | `applicant-portal` | Stage 1 | Applicants |
 | `api.raisd.co` | `portal-api` | Stage 1 | Portal browsers, with a bearer token |
-| `staff.raisd.co` | `staff-portal` | Stage 2 if a gap is verified, otherwise not until stage 3 | Registry, Faculty, Bursary, QA, Marketing |
+| `staff.{slug}.raisd.co` | `lecturer-portal` | Demo now | Teaching, plus Admin desks at `/admin`. `admin.{slug}.raisd.co` redirects here |
+| `control.raisd.co` | `control-portal` | Demo | Control — SSO people / full RBAC |
 | `student.raisd.co` | `student-portal` | Stage 3 | Students |
-| `teach.raisd.co` | `lecturer-portal` | Stage 3 | Lecturers |
+| `staff.raisd.co` | `lecturer-portal` | Stage 3 | Lecturers |
 
-`raisd.co` comes from the mailbox domain. These names are not a DNS change that has already been made. Do not publish a name before its Deployment exists.
+`raisd.co` comes from the mailbox domain. These names are not a DNS change that has already been made. Do not publish a name before its Deployment exists. Global `admin.raisd.co` is reserved as a **301 → Control** alias (campus Admin stays slug-scoped).
 
-**Current Demo topology (14 October 2026):** UltaHost k3s on `38.127.216.221` serves campus-scoped hostnames for every Demo catalogue campus — apex `{slug}.raisd.co` (landing) and `{apply,student,staff,teach,api}.{slug}.raisd.co`, plus shared `api` / `keychain` / `docs` / `db-admin`.raisd.co. Campus/location is fixed from the hostname. Catalogue: [`demo-campuses.yaml`](../ai/architecture/demo-campuses.yaml). Agent diagram: [`vps-topology.md`](../ai/architecture/vps-topology.md) · [`architecture.html#vps`](../diagrams/architecture.html#vps). This does **not** replace the Live flat hostname table above until an ADR cutover.
+**Current Demo topology (17 October 2026):** UltaHost k3s on `38.127.216.221` serves campus-scoped hostnames for every Demo catalogue campus — apex `{slug}.raisd.co` (landing) and `{apply,student,admin,staff,api}.{slug}.raisd.co`, plus shared `api` / `sso` / `control` / `keychain` / `docs` / `db-admin`.raisd.co. Legacy `teach.{slug}.raisd.co` redirects to `staff.{slug}.raisd.co`. Campus/location is fixed from the hostname. Catalogue: [`demo-campuses.yaml`](../ai/architecture/demo-campuses.yaml). Agent diagram: [`vps-topology.md`](../ai/architecture/vps-topology.md) · [`architecture.html#vps`](../diagrams/architecture.html#vps). This does **not** replace the Live flat hostname table above until an ADR cutover.
 
 Separate hostnames are deliberate. The API issues a bearer token. Do not set a cookie on `Domain=.raisd.co`.
 
@@ -163,7 +165,7 @@ This is the stage 1 path. The hostname does not change in later stages. Only the
 2. The browser calls `https://api.raisd.co` with the applicant token. Traefik sends it to `portal-api`. The browser never sees a pod address.
 3. `portal-api` checks role and campus, writes the file to the evidence volume, and writes the application to the CMS on Premium 2.
 4. If the CMS does not acknowledge, the API returns a failed save.
-5. Registry reviews in the existing CMS. `staff.raisd.co` is not part of stage 1.
+5. Registry reviews in the existing CMS. Campus Admin (`admin.{slug}.raisd.co`) is not part of stage 1.
 
 ## 7. What is installed on the first node
 

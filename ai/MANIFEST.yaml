@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-17
+updated: 2026-10-19
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,11 +9,12 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
-  - 2026-10-19: Faid review fixes — staff RPC requires Admin staff session (no lecturer→Registry elevation); Access grants the hosted campus; SSO smoke uses admin not retired staff roleKey; Jenkins sync no longer deletes retired jobs; portal-api-docs AI mirror synced including control-portal.md.
+  - 2026-10-19: Shared AuthLayout released in design-system 0.9.0; SSO pins the exact registry archive. Responsive auth, accessibility and passkeys verified locally; hosted delivery is a separate claim.
+  - 2026-10-19: Faid review fixes — staff RPC requires Admin staff session (no lecturer→Registry elevation); Access grants the hosted campus; SSO smoke uses admin not retired staff roleKey; Jenkins sync updates existing jobs in place and preserves active/retired history; portal-api-docs AI mirror synced including control-portal.md.
   - 2026-10-17: Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html.
   - 2026-10-17: Staff portal menus follow the active role. Lecturer sees Dashboard, Classrooms, and Community. Admin sees Overview, Applicants, Students, Payments, Registrations, and Access. Register copy is Register student, Register staff, or Register lecturer. Docs: backend/sso.md, frontend/lecturer-portal.md, frontend/admin-portal.md.
-  - 2026-10-17: Campus Admin desks moved into the staff portal (`staff.{slug}.raisd.co/admin`, repo `lecturer-portal`). `admin.{slug}.raisd.co` 308-redirects there. `admin-portal` is no longer deployed.
-  - 2026-10-16: Portal rename cutover — Raisd Admin → Control (`control.raisd.co`, `roleKey` `control`, repo `control-portal`); Staff → Campus Admin (`admin.{slug}.raisd.co`, `roleKey` `admin`, repo `admin-portal`). Legacy `admin.raisd.co` and `staff.{slug}.raisd.co` 308-redirect. Docs: microservices/vps-topology/repositories/sso + diagrams endpoints.
+  - 2026-10-17: Campus Admin desks moved into the staff portal (`staff.{slug}.raisd.co/admin`, repo `lecturer-portal`). `admin.{slug}.raisd.co` 301-redirects there. `admin-portal` is no longer deployed.
+  - 2026-10-16: Portal rename cutover — Raisd Admin → Control (`control.raisd.co`, `roleKey` `control`, repo `control-portal`); Staff → Campus Admin (`admin.{slug}.raisd.co`, `roleKey` `admin`, repo `admin-portal`). Legacy `admin.raisd.co` and `staff.{slug}.raisd.co` 301-redirect. Docs: microservices/vps-topology/repositories/sso + diagrams endpoints.
   - 2026-10-16: Jenkins hostPath jobs synced for lecturer/admin/control; legacy `raisd-staff-portal` deleted; raisd-root Argo drift cleared. Docs: architecture/cicd.md + audits/2026-10-16-jenkins-delivery-verification.md.
   - 2026-10-16: Keychain embed taller (≤85vh/800px); mounts on sign-in only (Jenkins/Argo `/login`, docs gate); docs **Sign out** after unlock. Docs: frontend/keychain.md + cicd.md.
   - 2026-10-16: SSO password-only login + forgot-password (`password_reset` email template); magic-link channel disabled. Docs: backend/sso.md + notifications.md + design-system email catalogue.
@@ -559,3 +560,15 @@ classrooms_demo:
 jenkins_delivery_verification:
   - path: architecture/audits/2026-10-16-jenkins-delivery-verification.md
     topics: [jenkins, hostpath, delivery, exact-revision, capacity, verification, gitops]
+
+upstream_review_fixes:
+  - path: architecture/audits/2026-10-19-upstream-fixes.md
+    topics: [sso, authorization, jenkins-history, mirrors, local-verification]
+
+shared_auth_ui:
+  - path: architecture/audits/2026-10-19-shared-auth-ui.md
+    topics: [sso, auth-layout, shared-ui, passkey, accessibility, responsive, release]
+
+shared_auth_release:
+  - path: architecture/audits/2026-10-19-auth-090-release.md
+    topics: [sso, auth-layout, 0.9.0, registry, source-release, verification]

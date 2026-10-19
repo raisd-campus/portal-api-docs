@@ -84,7 +84,7 @@ steps:
 ```
 
 ```powershell
-npm install --save-exact @raisd-campus/design-system@0.8.0
+npm install --save-exact @raisd-campus/design-system@0.9.0
 ```
 
 Import the stylesheet once in the portal's entry CSS. Tailwind v4 ignores `node_modules` by default, so register the installed package as a source. For a portal stylesheet under `src/`, the setup is:
@@ -100,7 +100,7 @@ import { Button } from "@raisd-campus/design-system/ui/button"
 import { SummaryCard } from "@raisd-campus/design-system/system/summary-card"
 ```
 
-Import individual `ui/<component>` or `system/<component>` subpaths to keep unused components out of the portal's eager bundle. Do not import `dist` internals or use the root barrel for application code. A consumer should read `node_modules/@raisd-campus/design-system/docs/components.md` and the emitted declarations from its **pinned version** for exact props, states, and examples. The [0.8.0 catalogue](https://github.com/raisd-campus/design-system/blob/v0.8.0/docs/components.md) is the stable online reference; `main` may have newer APIs. The [portal design rules](design-system.md) define token meaning and responsive behaviour. Keep dark-only styling until a cross-portal theming decision is approved. Phone, tablet, and desktop layouts must remain usable.
+Import individual `ui/<component>` or `system/<component>` subpaths to keep unused components out of the portal's eager bundle. Do not import `dist` internals or use the root barrel for application code. A consumer should read `node_modules/@raisd-campus/design-system/docs/components.md` and the emitted declarations from its **pinned version** for exact props, states, and examples. The [0.9.0 catalogue](https://github.com/raisd-campus/design-system/blob/v0.9.0/docs/components.md) is the stable online reference; `main` may have newer APIs. The [portal design rules](design-system.md) define token meaning and responsive behaviour. Keep dark-only styling until a cross-portal theming decision is approved. Phone, tablet, and desktop layouts must remain usable.
 
 `RecordSummaryCard` presents the reference as a labelled row before the other values, followed by an edge-to-edge status footer. `referenceLabel` defaults to "Reference" and can be tailored by the portal. The portal supplies values, status text and tone, and an optional selection action; it owns reference issuance, dates and record workflow.
 
@@ -304,3 +304,15 @@ Local API 8087 was rebuilt/restarted with its existing stub/memory flags; health
 Classrooms and Materials capabilities passed. This activates the verified resource
 projection fix. Memory sign-ins and saved Demo mutations reset; bundled PDF bytes
 and canonical sessions remain. Portal servers on 5173/5174/5175 were preserved.
+
+## Shared authentication frame — released 0.9.0
+
+`system/auth-layout` adds presentation-only `AuthLayout`/`AuthLayoutProps` for
+login and password recovery. Required: `title`, `children`. Optional: description,
+branding, tools, footer and stable title/description IDs. It uses the existing
+token/type system, constrains content width and owns a viewport-height scroller
+that remains usable on short phones. Consumers supply existing shared controls,
+explicit field labels, validation, focus/error/busy handling and auth workflows.
+
+SSO consumes the released 0.9.0 package. Existing shared controls and tokens remain unchanged; other portal pins remain at 0.8.0. The released HTML catalogue and public mirror include the shared auth fixture at phone, tablet and desktop widths. Acceptance is recorded in
+[the auth migration receipt](../architecture/audits/2026-10-19-shared-auth-ui.md).

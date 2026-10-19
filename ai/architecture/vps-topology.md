@@ -22,12 +22,12 @@ UltaHost VPS · Singapore · 38.127.216.221 · k3s
    ├── Traefik · Let's Encrypt (cert-manager)
    │     ├── {slug}.raisd.co → campus-landing
    │     ├── apply|student|staff.{slug}.raisd.co → role portals
-   │     ├── teach.{slug}.raisd.co → 308 → staff.{slug}.raisd.co (legacy)
-   │     ├── admin.{slug}.raisd.co → 308 → staff.{slug}.raisd.co/admin (legacy)
+   │     ├── teach.{slug}.raisd.co → 301 → staff.{slug}.raisd.co (legacy)
+   │     ├── admin.{slug}.raisd.co → 301 → staff.{slug}.raisd.co/admin (legacy)
    │     ├── api.raisd.co · api.{slug}.raisd.co → portal-api
    │     ├── sso.raisd.co → sso · notify.raisd.co → notifications
    │     ├── control.raisd.co · keychain.raisd.co · docs.raisd.co · db-admin.raisd.co
-   │     ├── admin.raisd.co → 308 → control.raisd.co (legacy global)
+   │     ├── admin.raisd.co → 301 → control.raisd.co (legacy global)
    │     └── jenkins.raisd.co · argocd.raisd.co
    │
    ├── Microservices: portal-api · sso · notifications  (+ SPA Deployments)
@@ -98,7 +98,7 @@ Rules (unchanged from SDD-02 / SDD-12; detail in [microservices.md](microservice
 | `api.raisd.co` | Portal API (global) |
 | `sso.raisd.co` | SSO identity + RBAC (login UI + `/v1/*`) |
 | `control.raisd.co` | Control — super-admin SSO people / full RBAC |
-| `admin.raisd.co` | Legacy alias — **308 →** `control.raisd.co` |
+| `admin.raisd.co` | Legacy alias — **301 →** `control.raisd.co` |
 | `notify.raisd.co` | Notifications API (outbound email via `mail.raisd.co`) |
 | `argocd.raisd.co` | Argo CD UI (GitOps sync) |
 | `jenkins.raisd.co` | Jenkins CI — deploy trigger on push to **main** only ([cicd.md](cicd.md)) |
@@ -118,8 +118,8 @@ For each slug in [demo-campuses.yaml](demo-campuses.yaml) (`lesotho`, `cyberjaya
 | Student | `student.{slug}.raisd.co` |
 | Staff portal | `staff.{slug}.raisd.co` — Staff/Lecturer menus, or Admin menus at `/admin` when the active role is `admin` |
 | API alias | `api.{slug}.raisd.co` |
-| Teach (legacy) | `teach.{slug}.raisd.co` → **308 →** `staff.{slug}.raisd.co` |
-| Admin (legacy) | `admin.{slug}.raisd.co` → **308 →** `staff.{slug}.raisd.co/admin` |
+| Teach (legacy) | `teach.{slug}.raisd.co` → **301 →** `staff.{slug}.raisd.co` |
+| Admin (legacy) | `admin.{slug}.raisd.co` → **301 →** `staff.{slug}.raisd.co/admin` |
 
 **Lesotho** is the pilot / M4 acceptance campus. Public endpoint catalogue: [`diagrams/index.html#endpoints`](../../diagrams/index.html#endpoints).
 

@@ -99,7 +99,7 @@ A person may hold **multiple** role assignments (campus-scoped). After login:
 - **One role** → auto-select and continue to `returnUrl?code=`  
 - **Many roles** → **campus landing** portal picker (`{slug}.raisd.co/?step=roles&session=…`). Labels: Applicant, Student, Staff (`lecturer`), Admin (`admin`), Control. Handoff is `apply|student|staff.{slug}.raisd.co` (Admin opens `staff.{slug}.raisd.co/admin`) or `control.raisd.co`  
 - Portals may still offer **Switch role** in-shell after an active session  
-- Control UI: `https://control.raisd.co` (legacy `admin.raisd.co` → 308)
+- Control UI: `https://control.raisd.co` (legacy `admin.raisd.co` → 301)
 
 ## Admin
 
@@ -134,3 +134,26 @@ only when scenario login is explicitly enabled on those desks. Isolated API
 coverage includes 48 assertions; browser verification uses a local SSO fixture.
 This bridge remains Demo: its API bearer lifetime is independent after exchange;
 continuous SSO revocation and durable Live person binding are not claimed here.
+
+## Local role-boundary regression — 19 October 2026
+
+The isolated SSO/Classrooms suite passes 82 assertions using current `admin`,
+`lecturer` and `control` role keys. It rejects retired `staff` identities and
+teaching tokens on all privileged staff methods while retaining classroom access.
+See [upstream fix verification](../architecture/audits/2026-10-19-upstream-fixes.md).
+
+## Shared authentication presentation — released 0.9.0
+
+SSO's login, forgot-password and reset-password are composed from shared
+`AuthLayout` (released 0.9.0), existing Button/Input/Separator/Popup,
+semantic surfaces/status colours and package Rubik/type utilities. The SSO app
+owns form validation, pending/error states, Keychain, passkeys, return URLs and
+password/reset policies. No existing shared control or token is changed.
+
+The responsive auth frame has one viewport scroll region, labelled main/heading
+and description, consumer branding/tools/footer slots and wrapping long content.
+SSO adds explicit input labels, native disabled states, live progress and shared
+dialog focus trapping/restoration. Forms prevent native GET submission while
+flow scripts load or fail. Pinch zoom is retained. See
+[implementation and acceptance](../architecture/audits/2026-10-19-shared-auth-ui.md).
+SSO pins the integrity-verified 0.9.0 GitHub Packages release with no sibling archive or source alias. Package publication and source delivery do not establish hosted SSO deployment; verify the delivered image and page separately.
