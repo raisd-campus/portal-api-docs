@@ -115,6 +115,12 @@ reset-password or outbound-email operations on hosted accounts.
 
 Acceptance: Keychain lint, 16 units, production build and 14 Chromium/WebKit
 iframe checks passed, including actual 343px phone/384px desktop picker widths.
-SSO build and complete auth gate passed 49 checks with one WebKit virtual-device
+SSO build and complete auth gate passed 51 checks with one WebKit virtual-device
 skip. Scope matching, empty/reset filters, Fill/Fill & submit, lock, keyboard, axe
 and short-frame reachability are covered. Generated credentials remain ignored.
+
+HTML entry points use `Cache-Control: no-cache` through nginx `expires -1` so
+normal iframe navigations revalidate and discover changed bundle filenames.
+Existing static-asset caching and frame-ancestors policy remain in place. SSO sends
+explicit `campus=all` for its global/local-return case; this also moves existing
+clients off the older unversioned embed URL during the filter rollout.
