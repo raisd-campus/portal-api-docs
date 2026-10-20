@@ -1,5 +1,10 @@
 # Staff portal — current agent knowledge
 
+## Staff Admissions - 20 October 2026
+
+The Admin Applicants page and overview now read the Portal API campus admissions queue using stable application/person IDs. Payments and Registrations expose the same new-policy case reviews; old independent Applicant tracker data is no longer the admissions source. The active Admin role, assigned campus and explicit review desk govern every read/write. Teaching menus/permission hierarchy and the fixed Applicant Access preset remain. IO/SSD desk capabilities are available without automatic assignment. Shared 0.8.0 compositions include evidence delivery, messages, protected review drafts and audit. See [University Flows](../backend/university-flows.md).
+
+
 **Repository:** raisd-campus/lecturer-portal. **Baseline:** [SDD-06](../../sdd/06-lecturer-portal.md). Read [campus instructions](../AGENTS.md) and [shared components](../design/component-library.md).
 
 **Demo host:** `https://staff.{slug}.raisd.co` (Lesotho: https://staff.lesotho.raisd.co). The product title is **Staff Portal**. `teach.{slug}.raisd.co` 301-redirects here. Role key stays `lecturer`.

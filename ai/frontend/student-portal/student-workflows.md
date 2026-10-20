@@ -1,5 +1,10 @@
 # Student source forms, registration review and document delivery
 
+## Configured Admissions continuation - 20 October 2026
+
+New-policy students carry an immutable policy reference plus a separate fresh API clearance projection. They can prepare/submit owned modules, but only scoped Bursary then Faculty review completes registration after admissions clearance. A client-ready flag or the legacy direct-confirm route cannot bypass this check. A completed owned request produces a clearly labelled Demo CAF PDF listing its registered modules in Documents. Approved Registration Fee allocations use the existing Finance adjustment ledger with source/policy metadata and matching balances/currency. Existing students without a new case keep legacy behavior. See [University Flows](../../backend/university-flows.md).
+
+
 Local implementation baseline: 8 October 2026. Shared components remain 0.6.2. This specification describes session-only Mock Portal API behavior; new server operations remain pending advertised capability support. No staff production screens, database changes, deployments or live admissions rules are introduced.
 
 ## Source provenance and boundaries

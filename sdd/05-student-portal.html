@@ -97,6 +97,8 @@
           <a class="nav-dd-main" href="../diagrams/architecture.html">Architecture</a>
           <div class="nav-dd-menu" role="menu">
             <a href="../diagrams/architecture.html">Architecture home</a>
+            <a href="../diagrams/access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../diagrams/campus-configurability.html">Campus configurability help</a>
             <a href="../diagrams/architecture.html#services">Microservices</a>
             <a href="../diagrams/architecture.html#vps">VPS topology</a>
             <a href="../diagrams/architecture.html#cicd">CI/CD pipeline</a>
@@ -310,6 +312,9 @@
               <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
               <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
               <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access control · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
               </div>
             </div>
           </div>
@@ -335,6 +340,10 @@
   </header>
   <main class="sdd-doc">
 <h1 id="student-portal">Student portal</h1>
+<h2 id="admissions-clearance-and-caf-20-october-2026">Admissions clearance and CAF - 20 October 2026</h2>
+<p>A configured admissions case carries its pinned policy into the immutable accepted handoff. Portal API separately refreshes current clearance and the current issued Offer from the owned case. Preparation/submission of modules is allowed; final Faculty completion requires admissions clearance after Bursary review. The legacy direct-confirm route cannot bypass the new case gate. A completed owned registration request exposes a clearly labelled Demo CAF PDF listing registered modules. Approved Registration Fee credits use the existing financial adjustment ledger with matching currency, source funds and remaining invoice balance. Existing students without a new case retain legacy behavior; schema epoch 4 and scheduling/grading rules are unchanged.</p>
+<p>See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a>. Policy persistence is separate from existing Student/evidence storage; local source verification does not establish hosted or Live readiness.</p>
+
 <p><strong>Document:</strong> SDD-05<br />
 <strong>Status:</strong> Working draft<br />
 <strong>Date:</strong> 18 September 2026<br />

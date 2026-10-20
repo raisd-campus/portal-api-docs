@@ -1,0 +1,173 @@
+# Access menu module hierarchy — Demo source of truth for Campus Admin presets
+# and Control custom roles (Contentful-style).
+# Permissions follow portal menus (not CRUD). Parent modules may own sub-modules.
+# Working Group review 20 Oct 2026 (Faid): Classrooms children, Community on Lecturer,
+# lean Student (no Access sub-modules), Dashboard off the grantable list.
+# 20 Oct 2026: Control campus-first custom roles; Admin modules become grantable.
+# Hosted diagram: docs/diagrams/access-module-hierarchy.html
+
+version: 3
+updated: 2026-10-20
+status: Demo
+
+boundaries:
+  control: "Owns campus-scoped custom roles (named permission sets) and campus memberships. Creates built-in Campus Admin and arbitrary custom roles with entryRoleKey admin|lecturer|student."
+  campus_admin: "Assigns Applicant / Student / Staff / Lecturer presets and may enable or disable permissions already in those roles. Cannot create custom roles or expand beyond the grantable catalog."
+  applicant: "Fixed admissions flow — Access preset with portal.applicant only; no module checkboxes."
+  student_policy: "Student portal process is Uni Policy, not Staff-granted sub-modules. Access configures top-level Student modules only."
+
+role_model:
+  - preset: Applicant
+    roleKey: applicant
+    portal: apply.{slug}.raisd.co
+    note: "Fixed. Also auto-provisioned on apply via Portal API. Not a custom-role surface."
+  - preset: Student
+    roleKey: student
+    portal: student.{slug}.raisd.co
+    note: "Lean Access tree — no Student sub-module toggles. Custom roles may use entryRoleKey student."
+  - preset: Staff
+    roleKey: lecturer
+    portal: staff.{slug}.raisd.co
+    note: "Landing label Staff. Temporary module list; Community is not on Staff. Same roleKey as Lecturer."
+  - preset: Lecturer
+    roleKey: lecturer
+    portal: staff.{slug}.raisd.co
+    note: "Owns Classrooms sub-modules and Community."
+  - preset: Admin
+    roleKey: admin
+    portal: staff.{slug}.raisd.co/admin
+    note: "Granted by Control only (built-in Campus Admin or custom role). Not a learner Access preset."
+
+presets:
+  applicant:
+    label: Applicant
+    fixed: true
+    modules:
+      - id: portal.applicant
+        label: Applicant portal (fixed admissions flow)
+        menu: apply.{slug}.raisd.co
+  student:
+    label: Student
+    note: "Top-level only. Sub-menus follow Uni Policy later — not Access-configurable."
+    modules:
+      - id: portal.student
+        label: Student portal
+        menu: shell
+        children:
+          - id: student.study
+            label: Academic
+            menu: Academic
+          - id: student.pay
+            label: Fees and payments
+            menu: Finance
+          - id: student.support
+            label: Support
+            menu: Online Forms / Services
+
+  staff:
+    label: Staff
+    note: "Temporary Staff modules. Overhaul later. No Community, no Dashboard grant."
+    modules:
+      - id: portal.lecturer
+        label: Staff portal
+        children:
+          - id: staff.directory
+            label: Directory
+            menu: planned
+      - id: desks
+        label: Admin desks (optional tags)
+        note: "Desk tags, not menu permissions. registry also grants sso.manage_learners."
+        children:
+          - id: bursary
+            label: bursary
+          - id: registry
+            label: registry
+          - id: qa
+            label: qa
+          - id: faculty
+            label: faculty
+
+  lecturer:
+    label: Lecturer
+    modules:
+      - id: portal.lecturer
+        label: Staff portal
+        children:
+          - id: lecturer.classrooms
+            label: Classrooms
+            menu: Staff Portal > Classrooms
+            children:
+              - id: lecturer.overview
+                label: Overview
+                menu: Classrooms workspace > Overview
+              - id: lecturer.attendance
+                label: Attendance
+                menu: Classrooms workspace > Attendance
+              - id: lecturer.assessments
+                label: Assessments
+                menu: Classrooms workspace > Assessments
+              - id: lecturer.materials
+                label: Materials
+                menu: Classrooms workspace > Materials
+          - id: lecturer.community
+            label: Community
+            menu: Community panel
+
+  admin:
+    label: Admin
+    note: "Control grants via built-in Campus Admin or custom roles. Campus Admin Access page does not create Admin."
+    modules:
+      - id: portal.admin
+        label: Admin
+        children:
+          - id: admin.overview
+            label: Overview
+            menu: Admin > Overview
+          - id: admin.applicants
+            label: Applicants
+            menu: Admin > Applicants
+          - id: admin.students
+            label: Students
+            menu: Admin > Students
+          - id: admin.payments
+            label: Payments
+            menu: Admin > Payments
+          - id: admin.registrations
+            label: Registrations
+            menu: Admin > Registrations
+          - id: admin.access
+            label: Access
+            menu: Admin > Access
+            permission: sso.manage_learners
+            note: "Selecting Access also requires sso.manage_learners on the resolved permission set."
+
+notes:
+  dashboard: "Dashboard is not on the Access grantable list. It will show stats from the user's other module access."
+  staff_modules: "Staff module list is temporary and will be overhauled."
+  legacy_ids: "SSO still accepts staff.dashboard, staff.community, lecturer.marking, student.register, student.results on existing people."
+  custom_roles: "Control defines campus-scoped named roles (Contentful-style). Each role has entryRoleKey + permissions[]. Memberships reference customRoleId; permissions resolve live from the role definition."
+
+grantable_now:
+  student:
+    - portal.student
+    - student.study
+    - student.pay
+    - student.support
+  lecturer:
+    - portal.lecturer
+    - staff.directory
+    - lecturer.classrooms
+    - lecturer.overview
+    - lecturer.attendance
+    - lecturer.assessments
+    - lecturer.materials
+    - lecturer.community
+  admin:
+    - portal.admin
+    - admin.overview
+    - admin.applicants
+    - admin.students
+    - admin.payments
+    - admin.registrations
+    - admin.access
+    - sso.manage_learners

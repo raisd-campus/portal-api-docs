@@ -1,5 +1,10 @@
 # Demo admissions resources and accepted Student continuation
 
+## Policy task evidence - 20 October 2026
+
+Post-eligibility receipts, signed copies of the current Offer, English evidence and requested corrections use the existing owned original-file upload/chunk/pin service. Staff evidence reads require the active Admin role, the case campus and an exact evidence reference in that owned case; client filename/size/MIME/SHA-256 checks retain integrity. Conditional and Full Offers/signatures have distinct versions. Current Student Offer/clearance projections do not rewrite the accepted handoff. Storage modes for policies, application records and evidence remain separate. See [University Flows](university-flows.md).
+
+
 ## Current status — 12 October 2026
 
 Prepared locally in portal-api, Applicant and Student; **not deployed**. No hosted migration, reseed, account walkthrough or CMS write was performed. Shared UI stays pinned to 0.6.2. Admissions snapshot v2, DEV transport v3 and v1/v2 compatibility remain unchanged. Student record schema remains 4.

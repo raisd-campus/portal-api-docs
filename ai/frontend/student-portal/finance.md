@@ -1,5 +1,10 @@
 # Student Finance
 
+## Admissions credits and clearance - 20 October 2026
+
+Configured admissions cases preserve one Registration Fee charge per application. An authorised Bursary allocation to an owned tuition/resource invoice posts one existing finance adjustment with source charge, policy, currency and actor metadata. Available source funds and invoice balance bound the allocation; retry identifiers prevent duplicates. No automatic exchange, tax, refund or debt waiver is introduced. Policy minimum tuition clearance and semester invoice clearance are separate checks. Missing quotes stay Not provided/manual review. See [University Flows](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md).
+
+
 Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
 
 ## Scope

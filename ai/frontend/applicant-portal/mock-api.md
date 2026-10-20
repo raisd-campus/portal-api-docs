@@ -1,5 +1,10 @@
 # Applicant mock Portal API
 
+## Policy-aware mock and HTTP parity - 20 October 2026
+
+The new-case mock uses the same policy contract/evaluator as Portal API. Historical golden/browser fixtures explicitly select a legacy resolver; production does not expose that fixture switch. New-policy browser tests run separately against the five-step eligibility-first flow. getAdmissionsPolicy, submitRegistrationFee, submitSignedOffer and submitAdmissionsEvidence are advertised HTTP methods; unsupported methods fail instead of silently falling back. Existing revision, ownership, retry and acceptance guards remain. See [University Flows](../../backend/university-flows.md).
+
+
 ## Status and boundaries
 
 The existing application and reviewer-message journeys use a validated `ApplicantPortalApi`. Shared UI remains pinned to **0.6.2**. Without `VITE_PORTAL_API_URL` the portal keeps a session-only in-process mock (refresh resets the session). With the Portal API URL, Demo builds use `createHttpApplicantPortalApi` against `POST /v1/auth/applicant/login` and `POST /v1/applicant/:method` (Postgres-backed applicant records on the Vercel Demo). Offers, production reviewer controls, durable evidence bytes and Live CMS admissions remain future work. Development reviewer actions stay mock-only and are not HTTP methods.

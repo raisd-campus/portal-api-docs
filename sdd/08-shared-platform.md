@@ -1,5 +1,12 @@
 # Shared platform
 
+## Control University Flows - 20 October 2026
+
+Control adds an extensible University Flows registry and campus Admissions editor using released design-system 0.9.1. Existing portals keep sufficient 0.8.0 pins; shared sources are unchanged. Save draft, validate/preview and publish produce immutable effective policy versions for new applications. Reversion publishes a copy as a new version. Active Control plus flows.configure is required; policy settings never grant access. Existing identities/passkeys/grants remain intact, and review desk assignment stays a separate People operation.
+
+Portal API validates inputs/outputs and owns one policy evaluator across affected mutations. Additive PostgreSQL state persists versions/drafts/audit/retries; local memory Demo uses a private atomic policy file with cross-process locking. Existing application/Student/evidence persistence and schema epoch remain unchanged. See [University Flows](../ai/backend/university-flows.md) and canonical OpenAPI. Hosted deployment/publication/production migrations are outside this delivery.
+
+
 **Document:** SDD-08  
 **Status:** Working draft  
 **Date:** 18 September 2026

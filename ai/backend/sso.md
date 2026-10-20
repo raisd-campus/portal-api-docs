@@ -1,5 +1,10 @@
 # Raisd SSO — identity, channels, and RBAC
 
+## University Flows permissions - 20 October 2026
+
+Control roles receive the targeted flows.configure capability upgrade; persisted identities, passkeys and unrelated grants are retained. IO and SSD add desk.international_office and desk.student_services capabilities without assigning them to existing people. An active Control role is required to configure policies; active campus Admin review roles remain separate. The fixed Applicant role and upstream permission ceilings/hierarchy are unchanged. Isolated tests verify the upgrade, custom-role definition/membership retention and passkey persistence. Node HTTP/persistence suites run under npm run test:api; Playwright collects auth.e2e.ts only. npm run check runs both suites after the build. See [University Flows](university-flows.md).
+
+
 **Status:** Demo — 17 October 2026.  
 **Host:** `https://sso.raisd.co`  
 **Service repo:** [`raisd-campus/sso`](https://github.com/raisd-campus/sso) (sibling `~/src/raisd/sso`)  
@@ -14,7 +19,7 @@ SSO owns **identity + RBAC**. Portal API owns campus Demo/Live data. Portals nev
 |---|---|
 | Login channels, sessions, role assignments | SSO |
 | Portal records, CMS adapter, Demo scenarios | Portal API |
-| Full RBAC admin UI | [Control](../frontend/control-portal.md) → SSO `/v1/control/*` APIs |
+| Full RBAC admin UI | [Control](../frontend/control-portal.md) → SSO `/v1/control/*` APIs (campuses, custom roles, members) |
 | Student, staff, and lecturer access | Campus Admin (`sso.manage_learners`) at `staff.{slug}.raisd.co/admin/access` |
 | Auto-provision on apply / enrol | Portal API → `POST /v1/internal/people/upsert` |
 
@@ -27,7 +32,7 @@ Pluggable `AuthChannel` registry. **Enabled in Demo:** `password` and `passkey`.
 | Channel id | Demo | Notes |
 |---|---|---|
 | `password` | On | Email + password; scrypt hashes (`scrypt$salt$hash`) in seed; forgot-password reset |
-| `passkey` | On | WebAuthn on `https://sso.raisd.co/login`. Create a passkey with email + password, then sign in with the passkey alone. Credentials stay in the SSO process memory and reset when the pod restarts. |
+| `passkey` | On | WebAuthn on `https://sso.raisd.co/login`. Create a passkey with email + password, then sign in with the passkey alone. People, passwords, roles, and passkeys are written to `SSO_STATE_FILE` (`/var/lib/sso/state.json` on the node path `/var/lib/raisd-sso`) and survive a pod restart. Sign-in challenges stay in memory for their short lifetime. |
 | `email_magic_link` | **Off** | API returns `410`; UI removed. Template retained for Live reopen |
 | `google` | Off | Stub — needs GCP OAuth client (WG action) |
 | `facebook` | Off | Stub |
@@ -41,6 +46,8 @@ Login identity is **email** (not a separate user id). Password login returns `40
 Password login: `POST /v1/auth/channels/password/login` `{ email, password, returnUrl }` → always `{ redirectTo }`. Single-role continues with `?code=`; multi-role returns to the **campus landing** with `?step=roles&session=…`.
 
 Passkey login uses the same redirect. `POST /v1/auth/channels/passkey/login/options` then `…/login/verify`. Registration is `…/register/options` (email + password) then `…/register/verify`. Relying party id is the `SSO_PUBLIC_URL` hostname (`sso.raisd.co`).
+
+The SSO image runs as uid 1000. Before the process starts, an init container chowns `/var/lib/sso` to that user so passkey writes succeed on the hostPath volume.
 
 ## Forgot password
 
@@ -59,26 +66,29 @@ Channel `email_magic_link` is **disabled** on Demo (`410` on start/consume). Kee
 ## Roles and RBAC
 
 Portal roles: `applicant` · `student` · `lecturer` · `admin` · `control`  
-Campus Admin desk tags: `bursary` · `registry` · `qa` · `faculty` · `sso_admin`  
+Campus Admin desk tags: `bursary` · `registry` · `qa` · `faculty` · `sso_admin` · `international_office` · `student_services`
 
 | Permission | Who | Can |
 |---|---|---|
-| `portal.control` + `rbac.manage` + `sso.provision` | `control` role | Grant or revoke **campus Admin** only |
-| `portal.admin` + `sso.manage_learners` | `admin` role | Campus Admin. Opens the Admin menus on the staff portal |
-| `sso.manage_learners` | Admin, and a Registry desk tag | Create and assign **student, staff, and lecturer** presets. Extra permissions outside the preset list are dropped |
+| `portal.control` + `rbac.manage` + `sso.provision` | `control` role | Campus-first custom roles + memberships; grant/revoke Admin via built-in or custom roles |
+| `portal.admin` (+ module permissions) | `admin` role | Campus Admin. Staff Admin menus follow `admin.*` permissions; Access needs `admin.access` + `sso.manage_learners` |
+| `sso.manage_learners` | Admin (with Access), and a Registry desk tag | Create and assign **student, staff, and lecturer** presets. Extra permissions outside the preset list are dropped |
 | `portal.lecturer` plus staff or lecturer extras | `lecturer` role | Staff portal teaching menus. There is no separate `staff` role key |
 
 There is no `staff` role key. **Staff** and **Lecturer** are both `roleKey` `lecturer`. The landing picker labels that role **Staff** (hint: Staff portal). **Admin** stays **Admin** (hint: Staff portal · Registry, Faculty, Bursary).
 
 | Preset | Stored role | Permissions |
 |---|---|---|
-| Student | `student` | `portal.student`, `student.study`, `student.register`, `student.pay`, `student.results`, `student.support` |
-| Staff | `lecturer` | `portal.lecturer`, `staff.dashboard`, `staff.directory`, `staff.community`. Optional desks: `bursary`, `registry`, `qa`, `faculty` |
-| Lecturer | `lecturer` | `portal.lecturer`, `lecturer.classrooms`, `lecturer.materials`, `lecturer.attendance`, `lecturer.marking` |
+| Applicant | `applicant` | `portal.applicant` only (fixed — no module toggles) |
+| Student | `student` | Lean: `portal.student`, `student.study`, `student.pay`, `student.support` (no Access sub-modules) |
+| Staff | `lecturer` | Temporary: `portal.lecturer`, `staff.directory`. Optional desks: `bursary`, `registry`, `qa`, `faculty`. No Community / Dashboard grant |
+| Lecturer | `lecturer` | `portal.lecturer`, Classrooms (`lecturer.overview`, `attendance`, `assessments`, `materials`), `lecturer.community` |
+
+Permissions follow the **portal menu hierarchy**, with Lecturer Classrooms → Overview / Attendance / Assessments / Materials and Lecturer Community. Student Access permissions are top-level; its process rules belong to University Flows. **Applicant** is a separate fixed admissions role. Contract and diagram: [access-module-hierarchy.md](access-module-hierarchy.md), [`access-module-hierarchy.yaml`](../contracts/access-module-hierarchy.yaml), [hosted diagram](../../diagrams/access-module-hierarchy.html). Applicant list review: [applicant-list-review.md](applicant-list-review.md). Campus configurability help: [campus-configurability.md](campus-configurability.md).
 
 Campus Admin (`admin.{slug}@raisd.demo`, password `{slug without hyphens}2026`) is `roleKey` `admin` on `campus-{slug}` with an empty desk list. Shared `registry@raisd.demo` and `bursary@raisd.demo` are `admin` with the matching desk tag. Registry’s desk permission also includes `sso.manage_learners`.
 
-The Access page register heading follows the selected preset: **Register student**, **Register staff**, or **Register lecturer**. Applying a preset does not remove an existing Admin or Control assignment.
+The Access page register heading follows the selected preset: **Register applicant**, **Register student**, **Register staff**, or **Register lecturer**. Applicant shows a fixed permission line; student/staff/lecturer show indented modules and sub-modules (clearing a parent clears its children). The **same role can be assigned to many users** — tick rows and use **Apply {preset} to selected**, or Apply on each card. Applying a preset does not remove an existing Admin or Control assignment. Hosted walkthroughs: [access templates](../../reports/e2e-access-templates-2026-10-20/index.html), [applicant list review](../../reports/applicant-list-review-2026-10-20/index.html), [joint granular access demo](../../reports/joint-granular-access-2026-10-20/index.html).
 
 ## Staff portal menus
 
@@ -103,7 +113,9 @@ A person may hold **multiple** role assignments (campus-scoped). After login:
 
 ## Admin
 
-Control portal (requires `control` role) grants or revokes campus Admin access and reads audit events. People and audit responses omit every role other than Admin. Student, staff, and lecturer access is granted by Admin in the staff portal.
+Control portal (requires `control` role) is campus-first: list campuses, define **custom roles** (`entryRoleKey` + `permissions[]`), assign members (`customRoleId` on the assignment), and read audit events. Built-in **Campus Admin** per campus is not deletable and includes every Admin module plus `sso.manage_learners`. Permissions resolve live from the custom role on `/v1/me` and introspect. People and audit responses for Control actors omit every role other than Admin. Student, staff, and lecturer day-to-day presets are still granted by Admin in the staff portal.
+
+Control APIs: `GET /v1/control/campuses`, `/v1/control/campuses/{campusId}/roles`, `/v1/control/campuses/{campusId}/members`, plus existing people/audit routes.
 
 ## Email delivery
 

@@ -1,5 +1,12 @@
 # Applicant portal
 
+## University Flows Admissions v1 - 20 October 2026
+
+New applications pin a versioned campus policy on first valid saved campus selection. Eligibility precedes Registration Fee collection; Application Fee and admissions Registration Fee are one charge. Payment uses a real catalogue/authorised quote and existing receipt routes. Conditional Offers permit outstanding English, with a calendar-year deadline from arrival. Registry verifies the signed copy of each issued Offer version; Full reissue never inherits a previous signature. Offer acceptance enables Student continuation, followed by Bursary/Faculty module registration and CAF. Existing applications retain legacy behavior. Control changes are prospective and never grant access.
+
+The same eight-campus starting template is an owner-selected Demo default. Unconfirmed local/returning requirements, missing dates/prices and fee-credit decisions stay manual. Details and provenance: [University Flows](../ai/backend/university-flows.md). This is verified local source work, not hosted deployment or Live CMS acceptance.
+
+
 **Document:** SDD-04  
 **Status:** Working draft  
 **Date:** 18 September 2026  

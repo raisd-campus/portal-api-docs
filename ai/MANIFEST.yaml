@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-19
+updated: 2026-10-20
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,14 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-20: University Flows source integration preserves upstream custom roles and hosted Demo overlays; full verification receipt includes the recovered Chromium resource-load failure and unchanged interactive services.
+  - 2026-10-20: Control campus-first custom roles (Contentful-style) — openapi-sso campuses/roles/members; access-module-hierarchy v3 grantable admin.*; Staff Admin menus gate on admin.*.
+
+  - 2026-10-20: Owner-approved University Flows Admissions v1 supersedes configurability hold; prospective campus policy, scoped reviews, signed Offers, durable configuration and CAF.
+  - 2026-10-20: Multi-user role Apply on Access + joint granular demo (two limited students, lecturer without Marking) — reports/joint-granular-access-2026-10-20.
+  - 2026-10-20: Applicant list review, fixed Applicant Access preset, campus configurability help — applicant-list-review.md, campus-configurability.md, reports/applicant-list-review-2026-10-20, diagrams/campus-configurability.html.
+  - 2026-10-20: Access module hierarchy v2 (Faid review) — Classrooms Overview/Attendance/Assessments/Materials; Community on Lecturer; lean Student; Dashboard off grantable list.
+  - 2026-10-20: Access module hierarchy with sub-modules (Academic / Classrooms trees) — contracts/access-module-hierarchy.yaml, backend/access-module-hierarchy.md, diagrams/access-module-hierarchy.html; Access UI nests grantable children.
   - 2026-10-19: Shared AuthLayout released in design-system 0.9.0; SSO pins the exact registry archive. Responsive auth, accessibility and passkeys verified locally; hosted delivery is a separate claim.
   - 2026-10-19: Faid review fixes — staff RPC requires Admin staff session (no lecturer→Registry elevation); Access grants the hosted campus; SSO smoke uses admin not retired staff roleKey; Jenkins sync updates existing jobs in place and preserves active/retired history; portal-api-docs AI mirror synced including control-portal.md.
   - 2026-10-17: Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html.
@@ -161,6 +169,26 @@ backend:
     code: https://github.com/raisd-campus/sso
     local_code: ../../../sso/
     note: Demo 15 Oct 2026 — email magic link enabled; other channels stubbed.
+  - path: backend/access-module-hierarchy.md
+    topics: [access, rbac, permissions, modules, menus, student, staff, lecturer, admin, applicant]
+    contract: ../contracts/access-module-hierarchy.yaml
+    diagram: ../../diagrams/access-module-hierarchy.html
+    note: Demo 20 Oct 2026 — menu-aligned permission trees with sub-modules.
+  - path: backend/applicant-list-review.md
+    topics: [applicant, admissions, staff-admin, review, demo]
+    report: ../../reports/applicant-list-review-2026-10-20/
+    note: Stand-up 19 Oct — review of Admin Applicants tracker vs SSO Applicant role.
+  - path: contracts/admissions-policy.ts
+    topics: [admissions-policy, typed-settings, clearance]
+  - path: contracts/university-flows.openapi.json
+    topics: [admissions, zod, openapi, generated-contract]
+  - path: backend/university-flows.md
+    topics: [admissions, configuration, policies, campus, fees, offers, clearance, persistence]
+    contract: contracts/university-flows.openapi.json
+  - path: backend/campus-configurability.md
+    topics: [configurability, campus, application-flow, help, variables]
+    diagram: ../../diagrams/campus-configurability.html
+    note: Owner-approved 20 Oct implementation supersedes the first-flow hard-coding hold.
   - path: backend/notifications.md
     topics: [email, smtp, notifications, noreply, cms, deliverability]
     openapi: ../../openapi-notifications.yaml
@@ -576,3 +604,7 @@ shared_auth_release:
 shared_auth_hosted_delivery:
   - path: architecture/audits/2026-10-19-sso-auth-delivery.md
     topics: [sso, jenkins, argocd, image-permissions, readiness, hosted-verification]
+
+university_flows_verification:
+  - path: architecture/audits/2026-10-20-university-flows.md
+    topics: [admissions, configuration, verification, postgres, compatibility, handoff]

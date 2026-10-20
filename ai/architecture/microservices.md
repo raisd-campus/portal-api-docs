@@ -17,7 +17,7 @@ Raisd runs as **small, independently deployable services** on one UltaHost k3s n
 | **Applicant portal** | `applicant-portal` | `apply.{slug}.raisd.co` | Apply / evidence / track / enrol UI | SSO, Portal API | `applicant-portal` |
 | **Student portal** | `student-portal` | `student.{slug}.raisd.co` | Enrolled-student UI | SSO, Portal API | `student-portal` |
 | **Staff portal** | `lecturer-portal` | `staff.{slug}.raisd.co` | Teaching menus for `lecturer`; Admin menus at `/admin` for `admin`. Community only on the teaching sign-in | SSO, Portal API | `lecturer-portal` |
-| **Control** | `control-portal` | `control.raisd.co` | Super-admin — grants campus Admin access only (`roleKey` `control`) | SSO | `control-portal` |
+| **Control** | `control-portal` | `control.raisd.co` | Super-admin — campus custom roles/memberships and University Flows policies (`roleKey` `control`) | SSO, Portal API | `control-portal` |
 | **Campus landing** | `campus-landing` | `{slug}.raisd.co` | Login-only entry; RBAC portal picker or redirect | SSO | `campus-landing` |
 | **Keychain** | `keychain` | `keychain.raisd.co` | Demo login launcher (Open filled) | Browser → portals / SSO | `keychain` |
 | **Docs** | `control-plane` (+ Pages) | `docs.raisd.co` | Architecture / OpenAPI / design HTML | — (static) | `docs` |

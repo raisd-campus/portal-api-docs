@@ -1,5 +1,10 @@
 # Portal API (backend agent knowledge)
 
+## University Flows - 20 October 2026
+
+The API owns versioned campus Admissions, immutable publication, pinned case requirements, scoped reviews/credits and final Student registration enforcement. Policies use additive PostgreSQL JSONB state or the documented atomic local file; applications/evidence retain their existing stores. Existing record schema 4, legacy cases, attendance and scheduling are preserved. Fresh SSO introspection enforces active Control plus flows.configure for configuration and active Admin plus campus/desk scope for reviews. See [University Flows](university-flows.md), generated contracts and canonical OpenAPI. No hosted migration/deployment is included.
+
+
 **Code:** [`raisd-campus/portal-api`](https://github.com/raisd-campus/portal-api) (private; sibling checkout `~/src/raisd/portal-api`). Moved out of `control-plane/portal-api/` with history on 27 September 2026.<br>
 **OpenAPI source of truth:** [`openapi.yaml`](https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml) — stays in control-plane.<br>
 **Public docs:** https://docs.raisd.co/ · Swagger UI: https://docs.raisd.co/openapi.html<br>
@@ -96,7 +101,7 @@ Lecturer login advertises `getModuleDetails` in `supportedMethods`; `/v1/meta` a
 
 ## Reusable Materials connected memory Demo — 14 October 2026
 
-The opt-in DEMO_REUSABLE_MATERIALS=true capability adds shared memory-only plan drafts/publication, immutable class bindings/corrections and bounded original file upload/download. It rejects DATABASE_URL and Live CMS, retains schema 4 and never calls records.save. Existing Student Materials/assignment methods resolve the same class content. GET /v1/meta/materials and POST /v1/materials/{method} are documented in OpenAPI. Authenticated reads, lead publication, class assessment locks, exact registrations and early-download denial are server-enforced. See [detailed rules and local operation](reusable-materials.md). Current API activation and Live evidence storage remain separate.
+The opt-in DEMO_REUSABLE_MATERIALS=true capability adds process-memory plan drafts/publication, Classrooms attendance/submissions, immutable class bindings/corrections and bounded original file upload/download. It rejects Live CMS only (Demo stub may use Postgres for the canonical graph); mutable overlays never call records.save and reset on API restart. Existing Student Materials/assignment methods resolve the same class content. GET /v1/meta/materials, GET /v1/meta/classrooms and POST /v1/materials|classrooms/{method} are documented in OpenAPI. Hosted Demo enables the flag via gitops. See [reusable-materials.md](reusable-materials.md) and [classrooms.md](classrooms.md).
 
 
 ## Read-only Materials with teaching-week release — 14 October 2026

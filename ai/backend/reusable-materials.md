@@ -95,7 +95,7 @@ Student reads and every original-file chunk continue to enforce exact registrati
 
 ## Runtime and compatibility
 
-The opt-in DEMO_REUSABLE_MATERIALS flag remains the internal compatibility name. It requires memory records, no DATABASE_URL and CMS_MODE other than live. Both local portals use API 8087 via ignored .env.local. Local Student Demo credentials remain in the intended ignored control-plane/.credentials/demo-students.json; passwords are not written into tracked guidance. portal-api/.local-tests/start-materials-demo.ps1 restarts the local capability consistently.
+The opt-in DEMO_REUSABLE_MATERIALS flag remains the internal compatibility name. It rejects Live CMS only; Demo stub may use memory or Postgres for the canonical graph while Materials/Classrooms overlays stay process-memory. Both local portals use API 8087 via ignored .env.local. Hosted Demo enables the flag in gitops. Local Student Demo credentials remain in the intended ignored control-plane/.credentials/demo-students.json; passwords are not written into tracked guidance. portal-api/.local-tests/start-materials-demo.ps1 restarts the local capability consistently.
 
 Plans, class bindings, original files and sessions reset on API restart. Independent browser mock remains available with a blank API URL and is also read-only. Snapshot content is generated from canonical Student records; the read adapter computes week starts without rewriting seed records. Persisted schema stays 4, optional Faculty definition keys remain in JSON metadata without automatic reporting-column upgrades, and no migration/reseed/hosted write occurs.
 

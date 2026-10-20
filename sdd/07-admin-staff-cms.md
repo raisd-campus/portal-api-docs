@@ -1,8 +1,17 @@
 # Admin / staff CMS
 
+## Unified Admissions review - 20 October 2026
+
+Staff Applicants and the admissions overview now use the Portal API queue with stable case/person/campus IDs. Payments and Registrations compose the same policy-aware case review. Active Admin campus/desk permissions govern QA, Registry, Bursary, Faculty, IO and SSD actions; teaching-only roles do not gain Admin access. Evidence/messages and audit trails remain case-owned; failed/stale reviews retain drafts and safe retry identifiers. Bursary/Faculty module decisions require explicit reasons and checked clearance, followed by CAF generation. IO/SSD capabilities are available without automatically assigning staff.
+
+The disconnected tracker inventory is historical. [University Flows](../ai/backend/university-flows.md) defines supported configuration, confirmed defaults and manual decisions. No old CMS, hosted deployment or production migration is changed by this local implementation.
+
+
 **Document:** SDD-07  
 **Status:** Working draft  
-**Date:** 18 September 2026
+**Date:** 18 September 2026 (Demo menus 17 October 2026)
+
+Demo campus Admin lives in the Staff portal at `staff.{slug}.raisd.co/admin`. Those menus appear only for `roleKey` `admin`. Access registers a student, staff member, or lecturer from the selected preset. Current rules: [docs/ai/frontend/admin-portal.md](../ai/frontend/admin-portal.md).
 
 ## 1. Purpose
 

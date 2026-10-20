@@ -52,12 +52,20 @@ export type Message = z.infer<typeof messageSchema>
 const requiredContact = contactSchema.extend({ fullName: text.min(1), contactNumber: text.min(7), emailAddress: z.email() })
 const requiredAddress = addressSchema.extend({ addressLine: text.min(1), country: text.min(1), state: text.min(1), city: text.min(1), postcode: text.min(1) })
 const submittedPersonalSchema = personalDetailsSchema.extend({ fullName: text.min(1), countryOfCitizenship: text.regex(/^[A-Z]{2}$/), dateOfBirth: calendarDateSchema, placeOfBirth: text.min(1), gender: text.min(1), race: text.min(1), religion: text.min(1), contactNumber: text.min(7), emailAddress: z.email(), maritalStatus: z.enum(["single", "married", "divorced", "widowed"]), identificationNumber: text.min(1), fatherGuardian: requiredContact, motherGuardian: requiredContact, emergencyContact: requiredContact.extend({ relationship: text.min(1) }), permanentAddress: requiredAddress, currentAddress: requiredAddress, disabilityAnswer: z.enum(["yes", "no"]) })
+export const admissionsPolicyReferenceSchema = z.object({
+  id: z.string().min(1), version: z.number().int().positive(), campusId: z.string().min(1),
+  eligibilityRequired: z.boolean(), eligibilityConfirmationRequired: z.boolean(),
+  registrationReady: z.boolean(), registrationBlockers: z.array(z.string()), checkedAt: z.iso.datetime(),
+}).strict()
 export const admissionsHandoffV1Schema = /* @__PURE__ */ z.object({
   version: z.literal(1), applicationId: z.string().min(1), applicantId: z.string().min(1), personId: z.string().min(1), submittedAt: z.iso.datetime(),
+  admissionsPolicy: admissionsPolicyReferenceSchema.optional(),
   acceptedContext: acceptedEnrolmentContextSchema,
-  snapshot: snapshotSchema.extend({ consentChecked: z.literal(true), personalDetails: submittedPersonalSchema, academicDetails: academicDetailsSchema.extend({ qualifications: z.array(qualificationSchema.extend({ qualificationType: text.min(1), qualificationName: text.min(1), institutionName: text.min(1), countryOfEducation: text.min(1), startedOn: calendarDateSchema, completedOn: calendarDateSchema, result: text.min(1), transcript: evidenceSchema, academicCertificate: evidenceSchema })).min(1), englishResults: z.array(englishResultSchema.extend({ qualificationName: text.min(1), examinedOn: calendarDateSchema, score: text.min(1) })) }), paymentProof: snapshotSchema.shape.paymentProof.extend({ bankReference: text.min(1), file: evidenceSchema }), documents: documentsSchema.extend({ passportPhoto: evidenceSchema }) }),
+  snapshot: snapshotSchema.extend({ consentChecked: z.literal(true), personalDetails: submittedPersonalSchema, academicDetails: academicDetailsSchema.extend({ qualifications: z.array(qualificationSchema.extend({ qualificationType: text.min(1), qualificationName: text.min(1), institutionName: text.min(1), countryOfEducation: text.min(1), startedOn: calendarDateSchema, completedOn: calendarDateSchema, result: text.min(1), transcript: evidenceSchema, academicCertificate: evidenceSchema })).min(1), englishResults: z.array(englishResultSchema.extend({ qualificationName: text.min(1), examinedOn: calendarDateSchema, score: text.min(1) })) }), paymentProof: snapshotSchema.shape.paymentProof, documents: documentsSchema }),
 }).superRefine((handoff, context) => {
   const snapshot = handoff.snapshot, personal = snapshot.personalDetails
+  if (!handoff.admissionsPolicy && (!snapshot.paymentProof.bankReference || !snapshot.paymentProof.file || !snapshot.documents.passportPhoto)) context.addIssue({code:"custom",path:["snapshot"],message:"Legacy continuation requires the original payment proof and passport photo."})
+  if (handoff.admissionsPolicy && handoff.admissionsPolicy.campusId !== snapshot.studyPreferences.campusId) context.addIssue({code:"custom",path:["admissionsPolicy"],message:"The policy must belong to the application campus."})
   const submissionDate = handoff.submittedAt.slice(0, 10)
   const issue = (path: (string | number)[], message: string) => context.addIssue({ code: "custom", path: ["snapshot", ...path], message })
   if (personal.dateOfBirth >= submissionDate) issue(["personalDetails", "dateOfBirth"], "Date of birth must precede submission.")
@@ -76,7 +84,7 @@ export const admissionsHandoffV1Schema = /* @__PURE__ */ z.object({
     if (record.startedOn > record.completedOn || record.completedOn > submissionDate) issue(["academicDetails", "qualifications", index], "Qualification dates must be chronological and completed by submission.")
   })
   snapshot.academicDetails.englishResults.forEach((record, index) => {
-    if (record.examinedOn > submissionDate || record.expiresOn && record.expiresOn < record.examinedOn) issue(["academicDetails", "englishResults", index], "English result dates must be chronological and examined by submission.")
+    if (!handoff.admissionsPolicy && record.examinedOn > submissionDate || record.expiresOn && record.expiresOn < record.examinedOn) issue(["academicDetails", "englishResults", index], "English result dates must be chronological and examined by submission.")
   })
   if (handoff.personId !== handoff.acceptedContext.personId) context.addIssue({ code: "custom", path: ["acceptedContext", "personId"], message: "Accepted enrolment must belong to the applicant person." })
   if (handoff.acceptedContext.acceptedAt < handoff.submittedAt) context.addIssue({ code: "custom", path: ["acceptedContext", "acceptedAt"], message: "Acceptance cannot precede submission." })
@@ -87,7 +95,14 @@ export const admissionsHandoffV2Schema = z.object({ ...admissionsHandoffV1Schema
   if (!legacy.success) for (const issue of legacy.error.issues) context.addIssue({ code: "custom", path: issue.path, message: issue.message })
   const w = handoff.letters, p = handoff.snapshot.studyPreferences
   if (!["campus-lesotho", "campus-cyberjaya", "campus-botswana", "campus-eswatini", "campus-sierra-leone", "campus-cambodia", "campus-uganda", "campus-namibia"].includes(p.campusId) || p.applicantType === "alumni" && !p.previousStudentId) context.addIssue({ code: "custom", path: ["snapshot", "studyPreferences"], message: "Campus and applicable previous student ID are required." })
+  if (handoff.admissionsPolicy) {
+    const policy=handoff.admissionsPolicy
+    if (!w.offer || !w.offer.id.startsWith(`${handoff.applicationId}:offer:`) || w.offer.kind!=="offer" || w.offer.department!=="Registry" || w.offer.releasedAt<handoff.submittedAt || handoff.acceptedContext.acceptedAt<w.offer.releasedAt) context.addIssue({code:"custom",path:["letters","offer"],message:"The current issued Offer is required."})
+    if (policy.eligibilityRequired && (!w.eligibility || w.eligibility.id!==`${handoff.applicationId}:eligibility` || w.eligibility.releasedAt<handoff.submittedAt || w.eligibility.kind!=="eligibility")) context.addIssue({code:"custom",path:["letters","eligibility"],message:"The required eligibility letter is unavailable."})
+    if (policy.eligibilityConfirmationRequired && (!w.eligibilityConfirmedAt || !w.eligibility || w.eligibilityConfirmedAt<w.eligibility.releasedAt || w.offer && w.offer.releasedAt<w.eligibilityConfirmedAt)) context.addIssue({code:"custom",path:["letters"],message:"Eligibility confirmation must precede the Offer."})
+  } else {
   if (!w.eligibility || !w.offer || w.eligibility.id !== `${handoff.applicationId}:eligibility` || w.offer.id !== `${handoff.applicationId}:offer` || !w.eligibilityConfirmedAt || w.eligibility.kind !== "eligibility" || w.offer.kind !== "offer" || w.eligibility.department !== "Quality Assurance" || w.offer.department !== "Registry" || w.eligibility.releasedAt < handoff.submittedAt || w.eligibilityConfirmedAt < w.eligibility.releasedAt || w.offer.releasedAt < w.eligibilityConfirmedAt || handoff.acceptedContext.acceptedAt < w.offer.releasedAt) context.addIssue({ code: "custom", path: ["letters"], message: "Released letters and confirmations must follow the admissions sequence." })
+  }
 })
 export const admissionsHandoffSchema = z.union([admissionsHandoffV2Schema, admissionsHandoffV1Schema])
 export type AdmissionsHandoff = z.infer<typeof admissionsHandoffSchema>

@@ -6,6 +6,8 @@ info:
   description: |
     Demo SSO service at `https://sso.raisd.co`. Owns identity and RBAC.
     Portal API validates access tokens via `/v1/introspect`.
+    Control roles add flows.configure for University Flows; publishing settings never grants access.
+    IO/SSD desks require explicit assignment; persisted identities, passkeys and other grants are preserved.
     Channel `password` (email + password + forgot-password) is enabled in Demo.
     `email_magic_link` is disabled on Demo (410).
   contact:
@@ -385,6 +387,286 @@ paths:
         "204":
           description: Logged out
 
+  /v1/control/campuses:
+    get:
+      tags: [Admin]
+      operationId: controlListCampuses
+      summary: List Demo campuses with member and role counts (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Campuses
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [campuses]
+                properties:
+                  campuses:
+                    type: array
+                    items: { $ref: "#/components/schemas/CampusSummary" }
+        "403":
+          description: Forbidden
+
+  /v1/control/campuses/{campusId}/roles:
+    get:
+      tags: [Admin]
+      operationId: controlListCampusRoles
+      summary: List custom roles for a campus (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Roles plus permission catalog for the matrix UI
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [roles, catalog]
+                properties:
+                  roles:
+                    type: array
+                    items: { $ref: "#/components/schemas/CustomRole" }
+                  catalog:
+                    $ref: "#/components/schemas/PermissionCatalog"
+        "403":
+          description: Forbidden
+        "404":
+          description: Unknown campus
+    post:
+      tags: [Admin]
+      operationId: controlCreateCampusRole
+      summary: Create a custom role on a campus (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, entryRoleKey, permissions]
+              properties:
+                name: { type: string }
+                description: { type: string }
+                entryRoleKey:
+                  type: string
+                  enum: [admin, lecturer, student]
+                permissions:
+                  type: array
+                  items: { type: string }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [role]
+                properties:
+                  role: { $ref: "#/components/schemas/CustomRole" }
+        "400":
+          description: Invalid body
+        "403":
+          description: Forbidden
+        "404":
+          description: Unknown campus
+
+  /v1/control/campuses/{campusId}/roles/{roleId}:
+    get:
+      tags: [Admin]
+      operationId: controlGetCampusRole
+      summary: Get one custom role (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: roleId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Role
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [role, catalog]
+                properties:
+                  role: { $ref: "#/components/schemas/CustomRole" }
+                  catalog: { $ref: "#/components/schemas/PermissionCatalog" }
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+    put:
+      tags: [Admin]
+      operationId: controlUpdateCampusRole
+      summary: Update a custom role (built-in Campus Admin is not editable)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: roleId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                description: { type: string }
+                entryRoleKey:
+                  type: string
+                  enum: [admin, lecturer, student]
+                permissions:
+                  type: array
+                  items: { type: string }
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [role]
+                properties:
+                  role: { $ref: "#/components/schemas/CustomRole" }
+        "400":
+          description: Invalid body or built-in role
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+    delete:
+      tags: [Admin]
+      operationId: controlDeleteCampusRole
+      summary: Delete a custom role (blocked while members remain; built-in not deletable)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: roleId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          description: Built-in or still in use
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+
+  /v1/control/campuses/{campusId}/members:
+    get:
+      tags: [Admin]
+      operationId: controlListCampusMembers
+      summary: List people with a role assignment on this campus (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Members
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [members]
+                properties:
+                  members:
+                    type: array
+                    items: { $ref: "#/components/schemas/CampusMember" }
+        "403":
+          description: Forbidden
+        "404":
+          description: Unknown campus
+    post:
+      tags: [Admin]
+      operationId: controlAddCampusMember
+      summary: Add or update a campus membership (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, customRoleId]
+              properties:
+                email: { type: string, format: email }
+                displayName: { type: string }
+                customRoleId: { type: string }
+      responses:
+        "200":
+          description: Membership upserted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [member]
+                properties:
+                  member: { $ref: "#/components/schemas/CampusMember" }
+        "400":
+          description: Invalid body or role/campus mismatch
+        "403":
+          description: Forbidden
+        "404":
+          description: Unknown campus or role
+
+  /v1/control/campuses/{campusId}/members/{personId}:
+    delete:
+      tags: [Admin]
+      operationId: controlRemoveCampusMember
+      summary: Remove this campus’s role assignments for a person (requires rbac.manage)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: campusId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: personId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Updated person
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+
   /v1/control/people:
     get:
       tags: [Admin]
@@ -438,6 +720,10 @@ paths:
                         items: { type: string }
                       deskTags:
                         type: array
+                        items: { $ref: "#/components/schemas/DeskTag" }
+                      customRoleId: { type: string }
+                      permissions:
+                        type: array
                         items: { type: string }
                 cmsPersonRef:
                   type: string
@@ -479,7 +765,7 @@ paths:
                   items: { type: string }
                 deskTags:
                   type: array
-                  items: { type: string }
+                  items: { $ref: "#/components/schemas/DeskTag" }
       responses:
         "200":
           description: Upserted person
@@ -516,6 +802,10 @@ paths:
                         type: array
                         items: { type: string }
                       deskTags:
+                        type: array
+                        items: { $ref: "#/components/schemas/DeskTag" }
+                      customRoleId: { type: string }
+                      permissions:
                         type: array
                         items: { type: string }
       responses:
@@ -618,7 +908,7 @@ components:
           items: { type: string }
         deskTags:
           type: array
-          items: { type: string }
+          items: { $ref: "#/components/schemas/DeskTag" }
         permissions:
           type: array
           items: { type: string }
@@ -635,11 +925,76 @@ components:
           items: { type: string }
         deskTags:
           type: array
-          items: { type: string }
+          items: { $ref: "#/components/schemas/DeskTag" }
+        customRoleId: { type: string }
         permissions:
           type: array
           items: { type: string }
         portalHostHint: { type: string }
+
+    CampusSummary:
+      type: object
+      required: [id, slug, label, memberCount, roleCount]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        label: { type: string }
+        memberCount: { type: integer }
+        roleCount: { type: integer }
+
+    CustomRole:
+      type: object
+      required: [id, campusId, name, entryRoleKey, permissions]
+      properties:
+        id: { type: string }
+        campusId: { type: string }
+        name: { type: string }
+        description: { type: string }
+        entryRoleKey:
+          type: string
+          enum: [admin, lecturer, student]
+        permissions:
+          type: array
+          items: { type: string }
+        builtIn:
+          type: string
+          enum: [campus_admin]
+          description: Present on the seeded full Campus Admin role (not deletable or editable)
+
+    CampusMember:
+      type: object
+      required: [personId, email, displayName, assignments]
+      properties:
+        personId: { type: string }
+        email: { type: string }
+        displayName: { type: string }
+        assignments:
+          type: array
+          items: { $ref: "#/components/schemas/RoleAssignment" }
+
+    PermissionCatalogNode:
+      type: object
+      required: [id, label]
+      properties:
+        id: { type: string }
+        label: { type: string }
+        children:
+          type: array
+          items: { $ref: "#/components/schemas/PermissionCatalogNode" }
+
+    PermissionCatalog:
+      type: object
+      required: [admin, lecturer, student]
+      properties:
+        admin:
+          type: array
+          items: { $ref: "#/components/schemas/PermissionCatalogNode" }
+        lecturer:
+          type: array
+          items: { $ref: "#/components/schemas/PermissionCatalogNode" }
+        student:
+          type: array
+          items: { $ref: "#/components/schemas/PermissionCatalogNode" }
 
     Principal:
       type: object
@@ -686,3 +1041,7 @@ components:
         actorPersonId: { type: string }
         action: { type: string }
         detail: { type: object, additionalProperties: true }
+
+    DeskTag:
+      type: string
+      enum: [bursary, registry, qa, faculty, sso_admin, international_office, student_services]

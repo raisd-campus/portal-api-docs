@@ -1,5 +1,10 @@
 # Accepted admissions handoff and Student schema v4
 
+## Configured-policy continuation - 20 October 2026
+
+Handoff v1/v2 and transport envelope v3 remain readable. An additive admissionsPolicy reference identifies configured cases; their fee/eligibility requirements follow the pinned settings instead of unconditional legacy proof gates. Legacy handoffs still require their original payment/photo/letter sequence. The accepted handoff remains immutable; Portal API refreshes current admissions clearance and current issued Offer in separate Student projections from the owning accepted case. Final Faculty registration is blocked until that evaluator clears it, then CAF becomes downloadable. No record schema epoch/reset is introduced. See [University Flows](university-flows.md). Earlier local-only statements below describe historical boundaries.
+
+
 ## Status
 
 Applicant produces a serializable version-2 letter-confirmed handoff, retaining explicit v1 legacy compatibility; Student validates and maps it into an existing, explicitly accepted person/profile/enrolment. This is a tested local mock boundary, not a running shared backend. Application submission does not create a Student record or enrolment. Authentication, offers, Registry reconciliation, Live persistence and new campus policies remain future work.

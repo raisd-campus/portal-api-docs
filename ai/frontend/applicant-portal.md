@@ -1,5 +1,10 @@
 # Applicant portal — agent knowledge
 
+## Current Admissions policy flow - 20 October 2026
+
+New applications pin the campus policy at first valid saved campus selection. Eligibility precedes Registration Fee collection; Application Fee and admissions Registration Fee are one charge. The new five-step submission has no upfront payment step. Post-submission tasks collect the quoted fee, exact-version signed Offer, English evidence and requested corrections through existing owned-file routes. Policy-disabled stages are explicitly not required; missing data displays Not provided/manual review. Conditional acceptance enables Student continuation, followed by Bursary/Faculty registration and CAF. Legacy cases retain the earlier flow described in historical notes below. Shared package stays 0.8.0. See [University Flows](../backend/university-flows.md); local verified source does not establish hosted or Live CMS delivery.
+
+
 **Repository:** [`raisd-campus/applicant-portal`](https://github.com/raisd-campus/applicant-portal)
 **SDD:** [SDD-04](https://github.com/raisd-campus/control-plane/blob/main/docs/sdd/04-applicant-portal.md)
 **Campus agents:** [../AGENTS.md](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md)

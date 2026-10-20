@@ -19,6 +19,10 @@ targets:
   overview: diagrams/index.html
   distributed: diagrams/distributed-cms-architecture.html
   architecture: diagrams/architecture.html
+  access-hierarchy: diagrams/access-module-hierarchy.html
+  campus-config: diagrams/campus-configurability.html
+  report-applicant-list-review-2026-10-20: https://docs.raisd.co/reports/applicant-list-review-2026-10-20/
+  report-joint-granular-access-2026-10-20: https://docs.raisd.co/reports/joint-granular-access-2026-10-20/
   migration: diagrams/migration.html
   raisd: diagrams/raisd-cms/index.html
   raisd-sp: diagrams/raisd-cms/student-portal.html
@@ -92,6 +96,7 @@ targets:
   report-e2e-module-enrol-2026-10-11: https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/
   report-e2e-learning-lms-2026-10-11: https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/
   report-e2e-access-control-2026-10-20: https://docs.raisd.co/reports/e2e-access-control-2026-10-20/
+  report-e2e-access-templates-2026-10-20: https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/
 
 # External (absolute) link ids used in the menu
 external:
@@ -199,6 +204,10 @@ path_rules:
     section: dfd
   - match: { file: architecture.html }
     section: architecture
+  - match: { file: access-module-hierarchy.html }
+    section: access-hierarchy
+  - match: { file: campus-configurability.html }
+    section: campus-config
   - match: { file: lms.html }
     section: lms
   - match: { file: lms-architecture.html }
@@ -258,9 +267,11 @@ menu:
 
   - label: Architecture
     href: architecture
-    active: [architecture, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features]
+    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features]
     children:
       - { label: Architecture home, href: architecture }
+      - { label: Access module hierarchy, href: access-hierarchy }
+      - { label: Campus configurability help, href: campus-config }
       - { label: Microservices, href: microservices }
       - { label: "VPS topology", href: vps-topology }
       - { label: "CI/CD pipeline", href: cicd }
@@ -491,6 +502,9 @@ menu:
           - { label: "E2E Demo modules · 11 Oct", href: report-e2e-module-enrol-2026-10-11 }
           - { label: "E2E Demo LMS learning · 11 Oct", href: report-e2e-learning-lms-2026-10-11 }
           - { label: "E2E access control · 20 Oct", href: report-e2e-access-control-2026-10-20 }
+          - { label: "E2E access templates · 20 Oct", href: report-e2e-access-templates-2026-10-20 }
+          - { label: "Applicant list review · 20 Oct", href: report-applicant-list-review-2026-10-20 }
+          - { label: "Joint granular access · 20 Oct", href: report-joint-granular-access-2026-10-20 }
 
   - label: SDD
     href: sdd
@@ -588,11 +602,41 @@ search:
     summary: Control creates a campus Admin. The Admin grants and revokes student, staff, and lecturer access, with sign-in before and after revoke.
     keywords: [e2e, access, control, admin, student, staff, lecturer, revoke, sso, rbac]
 
+  - title: E2E access templates · 20 Oct 2026
+    href: report-e2e-access-templates-2026-10-20
+    section: End to End Demo
+    summary: Campus Admin creates student, staff, and lecturer access from the Access page templates, then adjusts a permission before Create.
+    keywords: [e2e, access, template, preset, student, staff, lecturer, register, screenshot, demo]
+
+  - title: Applicant list review · 20 Oct 2026
+    href: report-applicant-list-review-2026-10-20
+    section: End to End Demo
+    summary: Review of the Admin Applicants Demo tracker and the fixed Applicant SSO role on Access.
+    keywords: [applicant, list, review, access, fixed, role, admissions, demo]
+
+  - title: Joint granular access · 20 Oct 2026
+    href: report-joint-granular-access-2026-10-20
+    section: End to End Demo
+    summary: Same limited Student role on two users, multi-select Apply, and a Lecturer without Marking for a joint demo.
+    keywords: [joint, demo, granular, permissions, multi-user, role, student, lecturer, access]
+
+  - title: Campus configurability help
+    href: campus-config
+    section: Architecture
+    summary: Help for future campus packs — hard-code the first flow, then configure steps and variables without expanding roles from Access.
+    keywords: [configurability, campus, application-flow, help, variables, packs]
+
   - title: E2E Demo LMS learning · 11 Oct 2026
     href: report-e2e-learning-lms-2026-10-11
     section: End to End Demo
     summary: Hosted Demo — Lecturer publishes FDN101 materials; student opens Materials teaching weeks (LMS surface).
     keywords: [e2e, lms, lecturer, materials, student, learning, publish, screenshot, demo]
+
+  - title: Access module hierarchy
+    href: access-hierarchy
+    section: Architecture
+    summary: Role and permission trees for Student, Staff, Lecturer, and Admin — parent modules with sub-modules aligned to portal menus.
+    keywords: [access, rbac, permissions, modules, hierarchy, student, staff, lecturer, classrooms, academic]
 
   - title: Distributed CMS target
     href: distributed

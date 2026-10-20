@@ -77,7 +77,7 @@ Only Faculty-owned definitions, canonical sessions, registrations, teaching week
 
 ## Shared state and access
 
-`createDemoClassrooms` owns a dedicated process-memory overlay alongside `createDemoMaterials`, enabled only when the existing memory-only `DEMO_REUSABLE_MATERIALS=true` service is enabled. `GET /v1/meta/classrooms` advertises version 1, one MiB chunks, 50 MiB submissions and memory persistence. Saved attendance/logs/feedback/files survive portal navigation and sign-out, then reset on API restart. Unsaved Lecturer edits live in session-owned client memory and reset on refresh/logout/account change.
+`createDemoClassrooms` owns a dedicated process-memory overlay alongside `createDemoMaterials`, enabled when `DEMO_REUSABLE_MATERIALS=true` (Demo stub only — not Live CMS). The overlay may read the Demo graph from memory or Postgres RecordStore; mutable attendance/marks/files stay in process memory. `GET /v1/meta/classrooms` advertises version 1, one MiB chunks, 50 MiB submissions and memory persistence for that overlay. Saved attendance/logs/feedback/files survive portal navigation and sign-out, then reset on API restart. Unsaved Lecturer edits live in session-owned client memory and reset on refresh/logout/account change. Hosted Demo sets the flag in `gitops/apps/portal-api/deployment.yaml`.
 
 Every operation validates the active role and identity. Lecturer access checks campus and exact teaching assignment; Student access checks the exact registration, programme enrolment and offering. Student responses exclude marking drafts and teaching logs. Lecturer browser mock retains read-only classroom details and Materials; connected activities show unavailable guidance. Configured HTTP errors never switch to mock.
 

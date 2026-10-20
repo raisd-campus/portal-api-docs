@@ -4,6 +4,19 @@ Read this after `AGENTS.md` when resuming the project in a new Codex chat or on 
 
 ## Current baseline
 
+### University Flows integration and source delivery — 20 October 2026
+
+Owner-authorized campus Admissions overhaul is integrated with latest Control/SSO custom roles and memberships, active Staff module permissions and hosted Demo Materials support. Control drafts/previews/publishes prospective campus policies; Applicant uses its pinned eligibility-first requirements and exact signed Offer versions. Staff reviews share the API queue. Student continuation refreshes admissions clearance before Bursary/Faculty module approval and CAF generation. Legacy cases and financial history retain their behavior; no schema reset or shared component source change.
+
+Eight dirty repositories were backed up in named Git stashes, then restored after fast-forward pulls. The active Staff repo is lecturer-portal; the old separate staff-portal remote is unavailable and unchanged. Desk assignment now preserves custom-role IDs, learner memberships and permission ceilings. SSO check includes the Node HTTP/persistence suites separately from browser discovery.
+
+Student token/assets/lint, 806 units, build, production exclusions and bundle budgets passed. Initial Chromium run: 277 passed, 46 expected skips and one ERR_NO_BUFFER_SPACE loading React Router; exact original-config retry and four focused repeats passed unchanged. Required WebKit: 41 passed, 31 expected skips. Applicant full check and seven handoff browser projects, Staff 73 units/build/Demo parity, Control 13 units/20 browser cases/clean 0.9.1 build, SSO Node suites/build/51 browser cases (one expected skip), API regressions/type/contracts/bundle and actual isolated PostgreSQL restart checks passed. Shared check: 24 units/38 consumer cases. See the [verification and source-delivery receipt](../../architecture/audits/2026-10-20-university-flows.md#upstream-integration-and-source-publication-20-october-2026).
+
+Canonical guidance, OpenAPI, SDDs and public/portal mirrors are synchronized. This source delivery does not establish Jenkins/Argo deployment or Live CMS persistence. The interactive API/SSO were left running to preserve Demo changes; server-source updates activate only after an owner-requested restart. No test reset the interactive Demo. Policy storage remains independently durable; application/evidence/attendance memory boundaries remain unchanged.
+
+Next: use the interactive policy/application walkthrough. Treat missing campus dates/prices and unconfirmed policy values as explicit manual reviews; do not invent amounts or clearances. Hosted build/deployment verification and an interactive server restart remain separate actions.
+
+
 ### Upstream integration and source publication — 16 October 2026
 
 All eight local campus repositories were pulled before integrating the current

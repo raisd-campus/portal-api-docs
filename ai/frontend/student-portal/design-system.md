@@ -1,5 +1,10 @@
 # Portal Design System
 
+## Admissions clearance and CAF composition - 20 October 2026
+
+The existing Module Registration summary composes a shared ContentSection panel for a new-policy student's admissions blockers. It preserves the shared page shell, gutters, typography, fields and responsive controls. Documents reuses existing document cards/actions for an owned completed-registration CAF PDF and later issued Offer versions. No shared component source or pin changes are made; Student remains on 0.8.0.
+
+
 > Shared tokens, portal shell, and portal-neutral components live in the versioned `@raisd-campus/design-system` package. Read the [canonical component guide](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue for exact APIs ([0.8.0 online](https://github.com/raisd-campus/design-system/blob/v0.8.0/docs/components.md)). This document retains student-specific composition and responsive rules.
 
 ## Shared disclosure and avatar refinement

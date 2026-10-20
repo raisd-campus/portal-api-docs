@@ -175,6 +175,71 @@
       "path": "https://docs.raisd.co/reports/e2e-access-control-2026-10-20/"
     },
     {
+      "title": "E2E access templates \u00b7 20 Oct 2026",
+      "summary": "Campus Admin creates student, staff, and lecturer access from the Access page templates, then adjusts a permission before Create.",
+      "section": "End to End Demo",
+      "keywords": [
+        "e2e",
+        "access",
+        "template",
+        "preset",
+        "student",
+        "staff",
+        "lecturer",
+        "register",
+        "screenshot",
+        "demo"
+      ],
+      "path": "https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/"
+    },
+    {
+      "title": "Applicant list review \u00b7 20 Oct 2026",
+      "summary": "Review of the Admin Applicants Demo tracker and the fixed Applicant SSO role on Access.",
+      "section": "End to End Demo",
+      "keywords": [
+        "applicant",
+        "list",
+        "review",
+        "access",
+        "fixed",
+        "role",
+        "admissions",
+        "demo"
+      ],
+      "path": "https://docs.raisd.co/reports/applicant-list-review-2026-10-20/"
+    },
+    {
+      "title": "Joint granular access \u00b7 20 Oct 2026",
+      "summary": "Same limited Student role on two users, multi-select Apply, and a Lecturer without Marking for a joint demo.",
+      "section": "End to End Demo",
+      "keywords": [
+        "joint",
+        "demo",
+        "granular",
+        "permissions",
+        "multi-user",
+        "role",
+        "student",
+        "lecturer",
+        "access"
+      ],
+      "path": "https://docs.raisd.co/reports/joint-granular-access-2026-10-20/"
+    },
+    {
+      "title": "Campus configurability help",
+      "summary": "Help for future campus packs \u2014 hard-code the first flow, then configure steps and variables without expanding roles from Access.",
+      "section": "Architecture",
+      "keywords": [
+        "configurability",
+        "campus",
+        "application-flow",
+        "help",
+        "variables",
+        "packs"
+      ],
+      "path": "diagrams/campus-configurability.html"
+    },
+    {
       "title": "E2E Demo LMS learning \u00b7 11 Oct 2026",
       "summary": "Hosted Demo \u2014 Lecturer publishes FDN101 materials; student opens Materials teaching weeks (LMS surface).",
       "section": "End to End Demo",
@@ -190,6 +255,24 @@
         "demo"
       ],
       "path": "https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/"
+    },
+    {
+      "title": "Access module hierarchy",
+      "summary": "Role and permission trees for Student, Staff, Lecturer, and Admin \u2014 parent modules with sub-modules aligned to portal menus.",
+      "section": "Architecture",
+      "keywords": [
+        "access",
+        "rbac",
+        "permissions",
+        "modules",
+        "hierarchy",
+        "student",
+        "staff",
+        "lecturer",
+        "classrooms",
+        "academic"
+      ],
+      "path": "diagrams/access-module-hierarchy.html"
     },
     {
       "title": "Distributed CMS target",

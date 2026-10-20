@@ -1,5 +1,10 @@
 # Admin desks — agent knowledge
 
+## API-backed Admissions - 20 October 2026
+
+The deployed Staff repository remains `lecturer-portal`; the retired standalone Admin repository is unchanged. Its Admin Applicants/Payments/Registrations now compose the shared, campus-scoped Portal API admissions queue and policy evaluator. Registry, QA, Bursary, Faculty, IO and SSD actions require explicitly assigned desks; policy settings never expand access. Module reviews require an explicit reason and authorised payment/arrangement basis. See [University Flows](../backend/university-flows.md). Earlier tracker descriptions are historical.
+
+
 **Repository:** [`raisd-campus/lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) (`src/staff-admin`)
 **SDD:** [SDD-07](../../sdd/07-admin-staff-cms.md)
 **Campus agents:** [../AGENTS.md](../AGENTS.md)
@@ -7,20 +12,20 @@
 
 ## Status
 
-Admin (Registry, Faculty, Bursary, QA) is the **Admin** menu inside the staff portal. It renders only when the active SSO role is `admin`. A Staff or Lecturer sign-in does not show these items and is redirected to `/`. Sign-in is Raisd SSO. An `admin` role lands on `/admin`.
+Admin (Registry, Faculty, Bursary, QA) is the **Admin** menu inside the staff portal. It renders only when the active SSO role is `admin`. A Staff or Lecturer sign-in does not show these items and is redirected to `/`. Sign-in is Raisd SSO. An `admin` role lands on its first permitted Admin module. Explicit `admin.*` permissions gate menus; review actions also require the active campus and assigned desk.
 
 | Route | Purpose | Who sees it |
 |---|---|---|
 | `/admin` | Overview KPIs | Campus Admin |
-| `/admin/applicants` | Applicant tracker | Campus Admin |
+| `/admin/applicants` | API-backed admissions queue | Admin with Applicants module |
 | `/admin/students` | Student tracker | Campus Admin |
 | `/admin/payments` | Payment verification | Campus Admin |
 | `/admin/registrations` | Registrations | Campus Admin |
 | `/admin/access` | Student, staff, and lecturer access | Campus Admin (`sso.manage_learners`) |
 
-Access presets are Student, Staff, and Lecturer. The register heading is **Register student**, **Register staff**, or **Register lecturer** for the preset in use. Staff and Lecturer both store `roleKey` `lecturer`; Staff adds dashboard, directory, and community permissions, and may add bursary, registry, qa, or faculty desks. Role grants use the hosted campus (`campus-{slug}` from `staff.{slug}.raisd.co`), not a hard-coded Lesotho id. Payments and registrations call Portal API with the Admin staff session only. Control still grants Admin only. Rules: [sso.md](../backend/sso.md).
+Access presets are **Applicant** (fixed `portal.applicant`), Student, Staff, and Lecturer. The register heading follows the preset. Student uses top-level Academic, Fees and Support permissions; Staff has Directory; Lecturer has Classrooms sub-modules and Community. Applicant has no module toggles. The same preset can be assigned to **many users** (per-row Apply, or multi-select **Apply to selected**). Staff and Lecturer both store `roleKey` `lecturer`; Staff adds Directory and may have explicitly assigned review desks; Community belongs to Lecturer. Role grants use the hosted campus (`campus-{slug}` from `staff.{slug}.raisd.co`), not a hard-coded Lesotho id. The **Applicants** page reads the shared campus-scoped Portal API admissions queue; the SSO Applicant role is a separate access grant. Payments and registrations call Portal API with the Admin staff session only. Control manages campus custom roles and memberships; its University Flows settings never grant access. Rules: [sso.md](../backend/sso.md). Hierarchy: [access-module-hierarchy.md](../backend/access-module-hierarchy.md). List review: [applicant-list-review.md](../backend/applicant-list-review.md). Joint demo: [joint-granular-access-2026-10-20](../../reports/joint-granular-access-2026-10-20/).
 
-**Hosted walkthroughs:**
+**Historical hosted walkthroughs (legacy cases; new-policy cases follow the eligibility-first guide above):**
 
 1. Applicant submits with fee proof → Staff Bursary **Approve payment** → Staff QA/Registry **Verify documents** → Applicant **Confirm Eligibility** → Staff Registry **Release Offer Letter** → Applicant **Accept Enrolment** → continue in Student Portal. Evidence: [E2E applicant enrol](../../reports/e2e-applicant-staff-enrol-2026-10-11/) (re-captured 13 Oct 2026).
 2. Alya confirms Semester 1 modules → Staff Bursary **Approve Bursary clearance** → Registry **Approve Faculty → enrol units** → Student Modules lists registered units with lecturers. Evidence: [E2E student modules](../../reports/e2e-student-module-enrol-2026-10-11/).

@@ -1,5 +1,12 @@
 # Student portal
 
+## Admissions clearance and CAF - 20 October 2026
+
+A configured admissions case carries its pinned policy into the immutable accepted handoff. Portal API separately refreshes current clearance and the current issued Offer from the owned case. Preparation/submission of modules is allowed; final Faculty completion requires admissions clearance after Bursary review. The legacy direct-confirm route cannot bypass the new case gate. A completed owned registration request exposes a clearly labelled Demo CAF PDF listing registered modules. Approved Registration Fee credits use the existing financial adjustment ledger with matching currency, source funds and remaining invoice balance. Existing students without a new case retain legacy behavior; schema epoch 4 and scheduling/grading rules are unchanged.
+
+See [University Flows](../ai/backend/university-flows.md). Policy persistence is separate from existing Student/evidence storage; local source verification does not establish hosted or Live readiness.
+
+
 **Document:** SDD-05  
 **Status:** Working draft  
 **Date:** 18 September 2026  

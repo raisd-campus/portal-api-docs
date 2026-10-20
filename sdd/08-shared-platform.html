@@ -97,6 +97,8 @@
           <a class="nav-dd-main" href="../diagrams/architecture.html">Architecture</a>
           <div class="nav-dd-menu" role="menu">
             <a href="../diagrams/architecture.html">Architecture home</a>
+            <a href="../diagrams/access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../diagrams/campus-configurability.html">Campus configurability help</a>
             <a href="../diagrams/architecture.html#services">Microservices</a>
             <a href="../diagrams/architecture.html#vps">VPS topology</a>
             <a href="../diagrams/architecture.html#cicd">CI/CD pipeline</a>
@@ -310,6 +312,9 @@
               <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
               <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
               <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access control · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
               </div>
             </div>
           </div>
@@ -335,6 +340,10 @@
   </header>
   <main class="sdd-doc">
 <h1 id="shared-platform">Shared platform</h1>
+<h2 id="control-university-flows-20-october-2026">Control University Flows - 20 October 2026</h2>
+<p>Control adds an extensible University Flows registry and campus Admissions editor using released design-system 0.9.1. Existing portals keep sufficient 0.8.0 pins; shared sources are unchanged. Save draft, validate/preview and publish produce immutable effective policy versions for new applications. Reversion publishes a copy as a new version. Active Control plus flows.configure is required; policy settings never grant access. Existing identities/passkeys/grants remain intact, and review desk assignment stays a separate People operation.</p>
+<p>Portal API validates inputs/outputs and owns one policy evaluator across affected mutations. Additive PostgreSQL state persists versions/drafts/audit/retries; local memory Demo uses a private atomic policy file with cross-process locking. Existing application/Student/evidence persistence and schema epoch remain unchanged. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a> and canonical OpenAPI. Hosted deployment/publication/production migrations are outside this delivery.</p>
+
 <p><strong>Document:</strong> SDD-08<br />
 <strong>Status:</strong> Working draft<br />
 <strong>Date:</strong> 18 September 2026</p>

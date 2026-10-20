@@ -1,5 +1,10 @@
 # Academic Modules behaviour
 
+## New-policy admissions clearance - 20 October 2026
+
+Module registration shows outstanding admissions blockers from the API and still permits preparation/submission. Final Faculty approval re-resolves the owning accepted case and enforces its pinned international/tuition/deadline/current-signature requirements. Existing students retain their prior immigration rules. Module completion generates the owned CAF; accepting an Offer alone does not. No scheduling/grading policy changes are included. See [University Flows](../../backend/university-flows.md).
+
+
 On coarse pointers, lecturer review ratings provide five 44px square targets. Below a 30rem review container, the Poor/Excellent endpoints sit above the evenly spaced targets; below 40rem, the controls sit beneath the question. Detail metadata uses the shared stacked `DetailField` treatment in narrow panels.
 
 The Academic Modules routes are frontend-only views backed by `PortalApi.getAcademicModules()`, `PortalApi.getAcademicModuleDetail()`, and the separately loaded `PortalApi.getAcademicModuleMaterials()`, `PortalApi.getAcademicModuleMaterialDetail()`, and `PortalApi.getAcademicModuleAttendance()`. They present the selected Programme Enrolment's registered modules, semester-specific offering details, structured learning materials, read-only attendance, and a session-only assignment-submission demonstration without connecting to a live student-record or learning-management system.
