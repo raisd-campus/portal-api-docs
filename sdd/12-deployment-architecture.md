@@ -210,3 +210,7 @@ The Demo node requires a capacity check before heavy Student builds; insufficien
 capacity must preserve the active release. Hosted delivery and capability activation
 remain separate. See the [delivery evidence and operational handoff](../ai/architecture/audits/2026-10-16-jenkins-delivery-verification.md)
 for build results, recovery provenance and retained boundaries.
+
+### Control University Flows integration - 20 October 2026
+
+The Control web origin must be permitted by Portal API CORS for Admissions configuration, independently of SSO authorization. The Demo API deployment preserves its existing configured origin list and adds only https://control.raisd.co at entrypoint; no database reset, credential change or permission grant is involved. Verification includes browser preflight and authenticated policy-editor reads, rather than health alone.

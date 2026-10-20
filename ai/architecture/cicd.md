@@ -172,3 +172,7 @@ to root. SSO normalizes only that public tree with `chmod -R a+rX` during image
 assembly, then runs as `node`. The SSO readiness probe uses `/login`; liveness
 continues to use `/health`. A successful image push or API health response alone
 is not authentication-page acceptance.
+
+## Control Admissions browser access - 20 October 2026
+
+Control now calls Portal API for University Flows. The deployed API entrypoint appends the exact origin https://control.raisd.co to an existing nonempty CORS_ORIGIN list; it retains every configured campus/Swagger origin and leaves unset/empty development behavior unchanged. It then execs the existing Node runtime. Control still needs an active Control role and flows.configure; an allowed browser origin grants no permissions. The previous deployment passed authenticated HTTP probes but the browser was blocked by missing Access-Control-Allow-Origin. Run python scripts/test-api-control-cors.py for the three offline entrypoint cases, and verify the hosted OPTIONS response and authenticated editor after rollout.

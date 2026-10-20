@@ -888,7 +888,9 @@ and capability activation remain separate. See the <a
 href="../ai/architecture/audits/2026-10-16-jenkins-delivery-verification.html">delivery
 evidence and operational handoff</a> for build results, recovery
 provenance and retained boundaries.</p>
-  </main>
+  <h3 id="control-university-flows-integration-20-october-2026">Control University Flows integration - 20 October 2026</h3>
+<p>The Control web origin must be permitted by Portal API CORS for Admissions configuration, independently of SSO authorization. The Demo API deployment preserves its existing configured origin list and adds only https://control.raisd.co at entrypoint; no database reset, credential change or permission grant is involved. Verification includes browser preflight and authenticated policy-editor reads, rather than health alone.</p>
+</main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";

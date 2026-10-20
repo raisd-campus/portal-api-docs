@@ -1,6 +1,6 @@
 # University Flows - Admissions v1
 
-Local implementation, 20 October 2026. Hosted deployment, registry publication and production migrations are outside this delivery. This owner-approved work supersedes the earlier instruction to hold campus configurability until the first hard-coded campus flow was complete. Existing access ceilings, the fixed Applicant role, SSO persistence and teaching-record fixes remain.
+Implementation, 20 October 2026. The subsequent owner-requested [hosted Demo deployment verification](../architecture/audits/2026-10-20-application-flow-deployment.md) covers Jenkins/Argo, exact releases and authenticated reads/previews. No shared-package release or Live CMS migration is included. This owner-approved work supersedes the earlier instruction to hold campus configurability until the first hard-coded campus flow was complete. Existing access ceilings, the fixed Applicant role, SSO persistence and teaching-record fixes remain.
 
 ## Ownership and defaults
 
@@ -75,7 +75,7 @@ Inputs and resolved policy/queue/detail outputs are Zod-validated. Canonical Ope
 
 ## Persistence and local operation
 
-With the existing `DATABASE_URL`, policy state uses the additive `university_flow_policy_state` JSONB table. Versions, drafts, audit and retry receipts commit in one PostgreSQL transaction using a row lock. This is separate from existing applicant/student/evidence stores. Starting this source against a configured database creates additive policy storage; this task applies no hosted migration.
+With the existing `DATABASE_URL`, policy state uses the additive `university_flow_policy_state` JSONB table. Versions, drafts, audit and retry receipts commit in one PostgreSQL transaction using a row lock. This is separate from existing applicant/student/evidence stores. Starting this source against a configured database creates additive policy storage. The subsequent hosted Demo rollout reports postgres policy storage; it did not reset existing records or apply a separate Live CMS migration.
 
 Without a configured database, policy settings use an atomic file store at `FLOW_POLICY_STATE_PATH`, default `<portal-api cwd>/.data/university-flows.json`. Keep that directory private and backed up; use a durable mounted path for a persistent service. Atomic rename and an exclusive per-file transaction lock protect concurrent local processes; dead-process locks recover on restart with serialized recovery. An interrupted recovery lock fails closed and requires operator inspection; never delete a live process lock. Unreadable/corrupt data is never silently reseeded. Explicit memory-only stores are used only in isolated tests. API/Control responses expose the actual storage mode. Restart-safe policy configuration does not make memory Demo applications, attendance or evidence durable.
 
@@ -103,3 +103,7 @@ Run Portal API `test:flows`, `test:flows:postgres` against an isolated database,
 | P3 | Other campus document/reviewer packs | Verified evidence dependencies and capability availability |
 
 Document applicability, supported reviewer routing, correction-reply requirements and Offer acceptance deadlines are already Admissions v1 settings. Later candidates require their own approved scope through this framework; arbitrary scripts and automatic tax/refund calculations are excluded.
+
+### Hosted Demo verification - 20 October 2026
+
+Open https://control.raisd.co/flows and configure Admissions for the selected campus. Existing Control Demo accounts require the active Control role with flows.configure. Control uses released design-system 0.9.1; all eight policies report configured database storage. Hosted policy reads, validation and all four local/international/new/returning previews passed for every campus. Control browser loading/validation/preview and the Staff API-backed queue were checked without saving or publishing a policy or changing admissions, financial or registration decisions. A missing Control CORS origin was fixed in the GitOps API entrypoint, preserving all 26 existing portal/Control/Swagger origins and denying an unrelated origin. This is Demo delivery evidence, not Live CMS acceptance. See the deployment receipt for exact revisions, Student artifact recovery and retained native-build capacity limits.

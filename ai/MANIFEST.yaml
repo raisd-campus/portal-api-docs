@@ -608,3 +608,7 @@ shared_auth_hosted_delivery:
 university_flows_verification:
   - path: architecture/audits/2026-10-20-university-flows.md
     topics: [admissions, configuration, verification, postgres, compatibility, handoff]
+
+application_flow_deployment:
+  - path: architecture/audits/2026-10-20-application-flow-deployment.md
+    topics: [admissions, deployment, jenkins, argo, cors, artifact, verification]

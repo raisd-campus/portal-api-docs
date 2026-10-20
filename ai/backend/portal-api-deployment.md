@@ -98,7 +98,7 @@ No Helm chart beyond what k3s ships (SDD-12 §7). Plain YAML plus `kubectl apply
 | Variable | Secret? | Local | Production | Notes |
 |---|---|---|---|---|
 | `PORT` / `HOST` | No | `8080` / `0.0.0.0` | same | |
-| `CORS_ORIGIN` | No | `*` (dev) | `https://apply.raisd.co` (+ `student`, `teach`, `staff` as each stage adds them) | Comma list; exact origins |
+| `CORS_ORIGIN` | No | `*` (dev) | `https://apply.raisd.co` (+ Student, teaching, Staff and https://control.raisd.co for University Flows) | Comma list; exact origins |
 | `CMS_MODE` | No | `stub` | `live` | `live` refuses to boot if the mock engine is loaded |
 | `CAMPUS_DEFAULT` | No | `cyberjaya` | `cyberjaya` | Campus config key |
 | `DATABASE_URL` | **Yes** | local Postgres | in-cluster `postgres` Service | Never exposed to portals |
