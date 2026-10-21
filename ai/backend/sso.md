@@ -20,7 +20,7 @@ SSO owns **identity + RBAC**. Portal API owns campus Demo/Live data. Portals nev
 | Login channels, sessions, role assignments | SSO |
 | Portal records, CMS adapter, Demo scenarios | Portal API |
 | Full RBAC admin UI | [Control](../frontend/control-portal.md) → SSO `/v1/control/*` APIs (campuses, custom roles, members) |
-| Student, staff, and lecturer access | Campus Admin (`sso.manage_learners`) at `staff.{slug}.raisd.co/admin/access` |
+| Student, staff, and lecturer access | Campus Admin (`sso.manage_learners`) at `staff.{slug}.raisd.co/admin/access` via `/v1/access/people*` (fixed presets; not Control people APIs) |
 | Auto-provision on apply / enrol | Portal API → `POST /v1/internal/people/upsert` |
 
 ADR-1 (CMS as Live SoR) still holds: Demo people are Raisd-local (`cmsPersonRef` optional/null). Live CMS person link is future work.
@@ -75,20 +75,20 @@ Campus Admin desk tags: `bursary` · `registry` · `qa` · `faculty` · `sso_adm
 | `sso.manage_learners` | Admin (with Access), and a Registry desk tag | Create and assign **student, staff, and lecturer** presets. Extra permissions outside the preset list are dropped |
 | `portal.lecturer` plus staff or lecturer extras | `lecturer` role | Staff portal teaching menus. There is no separate `staff` role key |
 
-There is no `staff` role key. **Staff** and **Lecturer** are both `roleKey` `lecturer`. The landing picker labels that role **Staff** (hint: Staff portal). **Admin** stays **Admin** (hint: Staff portal · Registry, Faculty, Bursary).
+There is no `staff` role key. **Staff** and **Lecturer** are both `roleKey` `lecturer`. The landing multi-role picker distinguishes them from permissions: Staff (`staff.directory`) vs Lecturer (Classrooms / Community). A person holds at most one non-custom lecturer-slot preset (applying Staff replaces Lecturer and vice versa). **Admin** stays **Admin** (hint: Staff portal · Registry, Faculty, Bursary).
 
 | Preset | Stored role | Permissions |
 |---|---|---|
 | Applicant | `applicant` | `portal.applicant` only (fixed — no module toggles) |
 | Student | `student` | Lean: `portal.student`, `student.study`, `student.pay`, `student.support` (no Access sub-modules) |
-| Staff | `lecturer` | Temporary: `portal.lecturer`, `staff.directory`. Optional desks: `bursary`, `registry`, `qa`, `faculty`. No Community / Dashboard grant |
+| Staff | `lecturer` | Temporary: `portal.lecturer`, `staff.directory`. Optional desks: `bursary`, `registry`, `qa`, `faculty`. `sso_admin` is rejected (it would grant `rbac.manage`). No Community / Dashboard grant |
 | Lecturer | `lecturer` | `portal.lecturer`, Classrooms (`lecturer.overview`, `attendance`, `assessments`, `materials`), `lecturer.community` |
 
 Permissions follow the **portal menu hierarchy**, with Lecturer Classrooms → Overview / Attendance / Assessments / Materials and Lecturer Community. Student Access permissions are top-level; its process rules belong to University Flows. **Applicant** is a separate fixed admissions role. Contract and diagram: [access-module-hierarchy.md](access-module-hierarchy.md), [`access-module-hierarchy.yaml`](../contracts/access-module-hierarchy.yaml), [hosted diagram](../../diagrams/access-module-hierarchy.html). Applicant list review: [applicant-list-review.md](applicant-list-review.md). Campus configurability help: [campus-configurability.md](campus-configurability.md).
 
 Campus Admin (`admin.{slug}@raisd.demo`, password `{slug without hyphens}2026`) is `roleKey` `admin` on `campus-{slug}` with an empty desk list. Shared `registry@raisd.demo` and `bursary@raisd.demo` are `admin` with the matching desk tag. Registry’s desk permission also includes `sso.manage_learners`.
 
-The Access page register heading follows the selected preset: **Register applicant**, **Register student**, **Register staff**, or **Register lecturer**. Applicant shows a fixed permission line; student/staff/lecturer show indented modules and sub-modules (clearing a parent clears its children). The **same role can be assigned to many users** — tick rows and use **Apply {preset} to selected**, or Apply on each card. Applying a preset does not remove an existing Admin or Control assignment. Hosted walkthroughs: [access templates](../../reports/e2e-access-templates-2026-10-20/index.html), [applicant list review](../../reports/applicant-list-review-2026-10-20/index.html), [joint granular access demo](../../reports/joint-granular-access-2026-10-20/index.html).
+The Access page register heading follows the selected preset: **Register applicant**, **Register student**, **Register staff**, or **Register lecturer**. Presets are **fixed** permission sets (read-only summary on Access). Campus Admin cannot toggle modules or desk tags — Control owns custom role matrices and Admin review desks. The **same preset can be assigned to many users** — tick rows and use **Apply {preset} to selected**, or Apply on each card. Applying a preset does not remove an existing Admin or Control assignment. APIs: `GET/POST /v1/access/people`, `PUT /v1/access/people/{id}/roles`. Those calls are limited to campuses on the active Admin role: a Lesotho Admin cannot list, create, or change Botswana learner access, and a Staff create cannot attach the `sso_admin` desk. Control people routes require `rbac.manage` and only mutate admin/customRoleId memberships. Hosted walkthroughs: [access templates](../../reports/e2e-access-templates-2026-10-20/index.html), [applicant list review](../../reports/applicant-list-review-2026-10-20/index.html), [joint granular access demo](../../reports/joint-granular-access-2026-10-20/index.html).
 
 ## Staff portal menus
 
@@ -107,13 +107,15 @@ Portal API exchange for `admin` creates a staff session (Bursary when that desk 
 A person may hold **multiple** role assignments (campus-scoped). After login:
 
 - **One role** → auto-select and continue to `returnUrl?code=`  
-- **Many roles** → **campus landing** portal picker (`{slug}.raisd.co/?step=roles&session=…`). Labels: Applicant, Student, Staff (`lecturer`), Admin (`admin`), Control. Handoff is `apply|student|staff.{slug}.raisd.co` (Admin opens `staff.{slug}.raisd.co/admin`) or `control.raisd.co`  
+- **Many roles** → **campus landing** portal picker (`{slug}.raisd.co/?step=roles&session=…`). Labels: Applicant, Student, Staff or Lecturer (from `lecturer` permissions), Admin (`admin`), Control. Handoff is `apply|student|staff.{slug}.raisd.co` (Admin opens `staff.{slug}.raisd.co/admin`) or `control.raisd.co`  
 - Portals may still offer **Switch role** in-shell after an active session  
 - Control UI: `https://control.raisd.co` (legacy `admin.raisd.co` → 301)
 
 ## Admin
 
-Control portal (requires `control` role) is campus-first: list campuses, define **custom roles** (`entryRoleKey` + `permissions[]`), assign members (`customRoleId` on the assignment), and read audit events. Built-in **Campus Admin** per campus is not deletable and includes every Admin module plus `sso.manage_learners`. Permissions resolve live from the custom role on `/v1/me` and introspect. People and audit responses for Control actors omit every role other than Admin. Student, staff, and lecturer day-to-day presets are still granted by Admin in the staff portal.
+Control portal (requires `control` role) is campus-first: list campuses, define **custom roles** (`entryRoleKey` + `permissions[]` checkbox matrix), assign or change members (`customRoleId` on the assignment), and read audit events. Built-in **Campus Admin** per campus is not deletable and includes every Admin module plus `sso.manage_learners`. Permissions resolve live from the custom role on `/v1/me` and introspect. People, audit, and campus **Members** responses for Control actors omit learner presets (`student` / `applicant` / bare `lecturer`). Only `roleKey` `admin` or assignments with a `customRoleId` appear; `memberCount` matches that filter. Student, staff, and lecturer day-to-day presets are still granted by Admin in the staff portal.
+
+`GET /v1/control/audit` supports `limit` / `offset` pagination (`limit` max **200**), inclusive `from` / `to` bounds (ISO date-time or `YYYY-MM-DD` UTC), and search filters `q` (user email/name/id), `access` (`admin` | `custom` | roleKey), and `campusId`. The Control Audit page pages results and CSV export walks every matching page until the full filtered set is downloaded. Exported cells that start with `=`, `+`, `-`, or `@` are prefixed so a spreadsheet does not treat a name as a formula.
 
 Control APIs: `GET /v1/control/campuses`, `/v1/control/campuses/{campusId}/roles`, `/v1/control/campuses/{campusId}/members`, plus existing people/audit routes.
 

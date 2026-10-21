@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-20
+updated: 2026-10-21
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,14 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-21: Access is campus-scoped and rejects the sso_admin desk; Control Audit CSV prefixes formula-like cells; public openapi-sso.yaml includes /v1/access/people*.
+  - 2026-10-21: Control Audit search by user (q), access level (admin/custom), and campusId — plus date range, pagination, and CSV export.
+  - 2026-10-21: Control Audit supports date-range filter, pagination (limit/offset), and CSV export from the Control portal.
+  - 2026-10-21: Control People omits learner-only accounts; Control Audit keeps custom-role grants (aligned with forControl/Members).
+  - 2026-10-21: Access-control walkthrough refreshed — reports/e2e-access-control-2026-10-21 (Control Admin-only Members, Access fixed presets, forControl omit learners, 28-step PASS).
+  - 2026-10-21: Multi-access display — landing picker labels Staff vs Lecturer from permissions; Access/SSO keep one lecturer-slot preset; revoke by assignment id.
+  - 2026-10-21: Separated Control vs Campus Access assignment APIs — /v1/access/people* for fixed learner presets; /v1/control/people* for admin/custom roles only; Access UI drops module toggles.
+  - 2026-10-21: Control Members list no longer treats learner presets as Admin — SSO filters campus members/memberCount to admin|customRoleId; Control badge no longer defaults unknown roles to "Admin".
   - 2026-10-20: University Flows source integration preserves upstream custom roles and hosted Demo overlays; full verification receipt includes the recovered Chromium resource-load failure and unchanged interactive services.
   - 2026-10-20: Control campus-first custom roles (Contentful-style) — openapi-sso campuses/roles/members; access-module-hierarchy v3 grantable admin.*; Staff Admin menus gate on admin.*.
 
