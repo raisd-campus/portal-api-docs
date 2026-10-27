@@ -153,6 +153,68 @@ export const admissionsSettingsSchema = z
         extractRequired: false,
         reviewStepsRequired: [],
       }),
+    /**
+     * FM-05 Admissions Settings catalogues (Demo). Live Lesotho CMS catalogues are not
+     * synced; Control edits these Demo lists for intake / certificate / subject / school / entry rules.
+     */
+    catalogues: z
+      .object({
+        intakePeriods: z
+          .array(
+            z
+              .object({
+                id: text,
+                label: text,
+                startsOn: z.iso.date().nullable(),
+              })
+              .strict()
+          )
+          .max(50),
+        certificateTypes: z
+          .array(z.object({ id: text, label: text }).strict())
+          .max(50),
+        subjects: z
+          .array(
+            z
+              .object({
+                id: text,
+                label: text,
+                code: z.string().trim().min(1).max(32).optional(),
+              })
+              .strict()
+          )
+          .max(100),
+        recognizedSchools: z
+          .array(
+            z
+              .object({
+                id: text,
+                name: text,
+                countryCode: z.string().length(2).optional(),
+              })
+              .strict()
+          )
+          .max(200),
+        entryRequirements: z
+          .array(
+            z
+              .object({
+                id: text,
+                programmeHint: text,
+                ruleSummary: text,
+              })
+              .strict()
+          )
+          .max(100),
+      })
+      .strict()
+      .default({
+        intakePeriods: [],
+        certificateTypes: [],
+        subjects: [],
+        recognizedSchools: [],
+        entryRequirements: [],
+      }),
   })
   .strict()
 export type AdmissionsSettings = z.infer<typeof admissionsSettingsSchema>
@@ -470,6 +532,13 @@ export const defaultAdmissionsSettings: AdmissionsSettings = {
     extractRequired: false,
     reviewStepsRequired: [],
   },
+  catalogues: {
+    intakePeriods: [],
+    certificateTypes: [],
+    subjects: [],
+    recognizedSchools: [],
+    entryRequirements: [],
+  },
 }
 export function defaultAdmissionsPolicy(
   campusId: string
@@ -480,6 +549,45 @@ export function defaultAdmissionsPolicy(
       showRankScore: true,
       extractRequired: true,
       reviewStepsRequired: ["faculty", "qa", "registry"],
+    }
+    settings.catalogues = {
+      intakePeriods: [
+        {
+          id: "demo-first-intake",
+          label: "Demo first intake",
+          startsOn: "2026-02-01",
+        },
+        {
+          id: "ls-2026-07",
+          label: "2026-07",
+          startsOn: "2026-07-01",
+        },
+      ],
+      certificateTypes: [
+        { id: "lgcse", label: "LGCSE" },
+        { id: "cosc", label: "COSC" },
+        { id: "other", label: "Other secondary certificate" },
+      ],
+      subjects: [
+        { id: "eng", label: "English Language", code: "ENG" },
+        { id: "math", label: "Mathematics", code: "MATH" },
+        { id: "sesotho", label: "Sesotho", code: "SES" },
+      ],
+      recognizedSchools: [
+        {
+          id: "ls-demo-high",
+          name: "Demo High School (Maseru)",
+          countryCode: "LS",
+        },
+      ],
+      entryRequirements: [
+        {
+          id: "ls-design-demo",
+          programmeHint: "Design (Demo)",
+          ruleSummary:
+            "Demo rule — LGCSE/COSC English + Maths; not Live Lesotho entry policy.",
+        },
+      ],
     }
   }
   return admissionsPolicyVersionSchema.parse({
