@@ -19,7 +19,7 @@ export const ROLES = [
         steps: [
           "Open https://apply.lesotho.raisd.co (or Keychain → Applicant Lesotho).",
           "Pick completed@raisd.demo to continue a prepared Demo case, or fresh@raisd.demo for an empty draft.",
-          "Land on the Applicant shell — Demo ≠ Live CMS.",
+          "Land on the Applicant shell.",
         ],
         durationMs: 7000,
       },
@@ -454,7 +454,7 @@ export const ROLES = [
   },
 ]
 
-/** Real Demo portal URLs loaded in the playback iframe (Demo ≠ Live). Autopilot runs inside these hosts. */
+/** Real Demo portal URLs loaded in the playback iframe. Autopilot runs inside these hosts. */
 export const SCENE_URLS = {
   "app-signin": "https://apply.lesotho.raisd.co/applications",
   "app-draft": "https://apply.lesotho.raisd.co/applications",
@@ -578,11 +578,12 @@ export function createPlayer(options) {
   function postExecute({ force = false } = {}) {
     const frame = frameEl || document.getElementById("portal-frame")
     if (!frame?.contentWindow) return
-    if (!force && executeSentForNonce === executeNonce) return
-    executeSentForNonce = executeNonce
+    // Skip only when this scene already got a result (not merely "sent once").
+    if (!force && executeSentForNonce === executeNonce && !pendingRequestId) return
     const { role, scene } = current()
     const requestId = crypto.randomUUID()
     pendingRequestId = requestId
+    executeSentForNonce = executeNonce
     setExecStatus(`Executing ${scene.id}…`)
     const message = {
       type: "raisd.demo.playback.execute",
@@ -595,12 +596,25 @@ export function createPlayer(options) {
       frame.contentWindow.postMessage(message, "*")
     } catch (err) {
       setExecStatus(`Could not reach portal: ${err instanceof Error ? err.message : "error"}`)
+      pendingRequestId = null
+      return
     }
+    // Retry a few times while waiting for the portal autopilot listener.
+    ;[1200, 3000, 6000].forEach((ms) => {
+      window.setTimeout(() => {
+        if (pendingRequestId !== requestId) return
+        try {
+          frame.contentWindow?.postMessage(message, "*")
+        } catch {
+          /* ignore */
+        }
+      }, ms)
+    })
     window.setTimeout(() => {
       if (pendingRequestId === requestId) {
-        setExecStatus("No autopilot reply yet — portal may need deploy, or use Open.")
+        setExecStatus("Waiting for portal autopilot… try Reload, or Open in a tab.")
       }
-    }, 15000)
+    }, 20000)
   }
 
   function loadPortal(url, { force = false } = {}) {
@@ -609,6 +623,7 @@ export function createPlayer(options) {
     const open = openBtn || document.getElementById("btn-open")
     executeNonce += 1
     executeSentForNonce = -1
+    pendingRequestId = null
     if (urlEl) {
       urlEl.textContent = url
       if (urlEl.tagName === "A") urlEl.href = url
@@ -617,7 +632,7 @@ export function createPlayer(options) {
     if (!frame) return
     if (!force && lastFrameUrl === url) {
       setLoading(false)
-      postExecute()
+      postExecute({ force: true })
       return
     }
     setLoading(true)
@@ -625,7 +640,8 @@ export function createPlayer(options) {
     const onLoad = () => {
       setLoading(false)
       frame.removeEventListener("load", onLoad)
-      window.setTimeout(() => postExecute(), 600)
+      // Prefer waiting for portal "ready"; also nudge after paint.
+      window.setTimeout(() => postExecute({ force: true }), 900)
     }
     frame.addEventListener("load", onLoad)
     frame.src = url
@@ -683,7 +699,8 @@ export function createPlayer(options) {
     const data = event.data
     if (!data || typeof data !== "object") return
     if (data.type === "raisd.demo.playback.ready" && data.version === 1) {
-      postExecute()
+      // Portal listener is up — always (re)send while this scene still awaits a result.
+      postExecute({ force: true })
       return
     }
     if (
@@ -768,13 +785,9 @@ export function createPlayer(options) {
         span.textContent = tag
         fmEl.appendChild(span)
       }
-      const demo = document.createElement("span")
-      demo.className = "tag tag-out"
-      demo.textContent = "Demo ≠ Live"
-      fmEl.appendChild(demo)
       const live = document.createElement("span")
       live.className = "tag tag-partial"
-      live.textContent = "Live Demo app"
+      live.textContent = "Live portal"
       fmEl.appendChild(live)
     }
     if (stageEl) {

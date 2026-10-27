@@ -407,15 +407,14 @@
   <p class="lede">
     Play / Next loads the <strong>real Demo portals</strong> and sends an autopilot command so each scene
     autofills and executes (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control).
-    Demo ≠ Live CMS. Modules:
+    Modules:
     <a href="feature-modules.html">feature-modules.html</a>
     · Markdown
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-feature-modules.md">lesotho-feature-modules.md</a>.
   </p>
 
   <div class="banner">
-    <strong>Demo ≠ Live.</strong>
-    Autopilot signs in with Demo accounts inside the iframe and calls real Portal API actions.
+    Autopilot signs in with Demo accounts inside the iframe and runs real Portal API actions.
     Deep-link <code>?role=bursary</code>, etc. Keyboard: Space play/pause · ← → step.
     Use <strong>Open</strong> if the embed is blocked. Status shows Executing / Done / Error under the frame.
   </div>
@@ -477,7 +476,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028e"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028f"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       stageEl: document.getElementById("stage"),
