@@ -51,19 +51,19 @@
     .stage .tag-partial { background: #cfe0f5; }
     .stage .tag-out { background: #dfe3e8; color: #445; }
     .stage-narration { display: grid; gap: 8px; }
-    /* Browser lookalike “video” */
+    /* Real Demo portal frame */
     .browser {
       position: relative; border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.14); background: #e8eef2;
+      border: 1px solid rgba(255,255,255,.14); background: #0b1016;
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
       display: flex; flex-direction: column;
-      min-height: 380px; height: min(58vh, 520px);
+      min-height: 480px; height: min(68vh, 640px);
     }
     .browser-chrome {
-      flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+      flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 10px;
       background: linear-gradient(180deg, #2a323c, #1e252e); border-bottom: 1px solid #111;
     }
-    .browser-dots { display: flex; gap: 5px; }
+    .browser-dots { display: flex; gap: 5px; flex: 0 0 auto; }
     .browser-dots span { width: 9px; height: 9px; border-radius: 50%; background: #5c6570; }
     .browser-dots span:nth-child(1) { background: #ff5f57; }
     .browser-dots span:nth-child(2) { background: #febc2e; }
@@ -72,98 +72,29 @@
       flex: 1; min-width: 0; font: 12px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
       color: #e8eef5; background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.12);
       border-radius: 6px; padding: 5px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      text-decoration: none;
     }
-    .browser-view {
-      position: relative; flex: 1 1 auto; min-height: 320px; overflow: auto;
-      font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif; color: #122028; background: #eef3f6;
+    .browser-url:hover { color: #9ec5ff; }
+    .browser-actions { display: flex; gap: 6px; flex: 0 0 auto; }
+    .browser-actions button, .browser-actions a {
+      font: 11px/1 inherit; color: #e8eef5; background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16); border-radius: 6px; padding: 5px 8px;
+      text-decoration: none; cursor: pointer; white-space: nowrap;
     }
-    .demo-cursor {
-      position: absolute; width: 18px; height: 18px; margin: -2px 0 0 -2px;
-      border-radius: 50% 50% 50% 0; transform: rotate(-45deg) translate(0,0);
-      background: #0f6b5d; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.35);
-      pointer-events: none; z-index: 20; opacity: 0; transition: left .55s cubic-bezier(.2,.8,.2,1), top .55s cubic-bezier(.2,.8,.2,1), opacity .2s;
+    .browser-actions button:hover, .browser-actions a:hover { background: rgba(255,255,255,.18); }
+    .browser-frame-wrap {
+      position: relative; flex: 1 1 auto; min-height: 420px; background: #fff;
     }
-    .demo-cursor[data-visible="true"] { opacity: 1; }
-    .demo-cursor[data-click="true"] { animation: cursor-click .35s ease; }
-    @keyframes cursor-click {
-      0% { transform: rotate(-45deg) scale(1); }
-      40% { transform: rotate(-45deg) scale(.72); }
-      100% { transform: rotate(-45deg) scale(1); }
+    .browser-frame-wrap iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff;
     }
-    .hot { outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .2s, box-shadow .2s, background .2s; }
-    .hot[data-active="true"] {
-      outline-color: #0f6b5d;
-      box-shadow: 0 0 0 4px rgba(15,107,93,.22);
-      background: #e3f2ee !important;
+    .browser-loading {
+      position: absolute; inset: 0; display: grid; place-items: center; gap: 8px;
+      background: #f3f6f8; color: #334650; font-size: 14px; z-index: 2;
+      pointer-events: none; transition: opacity .25s;
     }
-    /* Portal shells */
-    .pshell { display: grid; grid-template-columns: 168px 1fr; min-height: 100%; height: 100%; }
-    .pshell[data-layout="top"] { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-    .pside {
-      background: #0a1a1f; color: #d7ebe6; padding: 12px 10px; display: flex; flex-direction: column; gap: 4px;
-      font-size: 12px;
-    }
-    .pside .brand { display: flex; align-items: center; gap: 8px; padding: 4px 8px 12px; font-weight: 700; font-size: 13px; color: #fff; }
-    .pside .brand img { height: 16px; width: auto; filter: brightness(1.2); }
-    .pside .nav-item {
-      padding: 7px 10px; border-radius: 6px; color: #9dcdc2; cursor: default;
-    }
-    .pside .nav-item[data-on="true"] { background: rgba(15,107,93,.45); color: #fff; font-weight: 600; }
-    .ptop {
-      background: linear-gradient(90deg, #0a4a41, #0f6b5d); color: #fff;
-      display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; font-size: 13px;
-    }
-    .ptop strong { font-size: 14px; }
-    .pmain { padding: 14px 16px; overflow: auto; height: 100%; background: #eef3f6; }
-    .pmain h3 { margin: 0 0 8px; font-size: 15px; color: #0a4a41; }
-    .pmain .sub { margin: 0 0 12px; font-size: 12px; color: #62747e; }
-    .card {
-      background: #fff; border: 1px solid #d5e0e5; border-radius: 8px; padding: 12px; margin-bottom: 10px;
-    }
-    .card h4 { margin: 0 0 8px; font-size: 13px; color: #122028; }
-    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 6px 0; }
-    .field {
-      flex: 1; min-width: 120px; border: 1px solid #c5d2d8; border-radius: 6px;
-      padding: 7px 10px; background: #fafcfc; font-size: 12px; color: #334650;
-    }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      border: none; border-radius: 6px; padding: 7px 12px; font-size: 12px; font-weight: 700;
-      background: #0f6b5d; color: #fff; cursor: default;
-    }
-    .btn.ghost { background: #fff; color: #0a4a41; border: 1px solid #9dcdc2; }
-    .btn.warn { background: #9a6418; }
-    .pill {
-      display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700;
-      background: #e3f2ee; color: #0a4a41;
-    }
-    .pill.amber { background: #f7edd8; color: #9a6418; }
-    .pill.blue { background: #dbeafe; color: #1e3a5f; }
-    .table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
-    .table th, .table td { border-bottom: 1px solid #d5e0e5; padding: 7px 8px; text-align: left; }
-    .table th { font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: #62747e; background: #f7fafb; }
-    .table tr[data-sel="true"] td { background: #e3f2ee; }
-    .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; border-bottom: 1px solid #d5e0e5; padding-bottom: 6px; }
-    .tab { padding: 5px 10px; border-radius: 6px 6px 0 0; font-size: 11px; color: #62747e; background: transparent; }
-    .tab[data-on="true"] { background: #fff; color: #0a4a41; font-weight: 700; border: 1px solid #d5e0e5; border-bottom-color: #fff; }
-    .steps-bar { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-    .steps-bar span {
-      font-size: 11px; padding: 4px 8px; border-radius: 999px; background: #e8eef2; color: #62747e;
-    }
-    .steps-bar span[data-on="true"] { background: #0f6b5d; color: #fff; font-weight: 700; }
-    .kc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-    .kc-card {
-      background: #fff; border: 1px solid #d5e0e5; border-radius: 10px; padding: 12px; text-align: left;
-    }
-    .kc-card strong { display: block; font-size: 12px; margin-bottom: 4px; }
-    .kc-card span { font-size: 11px; color: #62747e; }
-    .toast {
-      position: absolute; right: 14px; bottom: 14px; background: #0a4a41; color: #fff;
-      padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
-      box-shadow: 0 8px 20px rgba(0,0,0,.25); opacity: 0; transform: translateY(8px);
-      transition: opacity .25s, transform .25s; z-index: 15; max-width: 240px;
-    }
-    .toast[data-show="true"] { opacity: 1; transform: translateY(0); }
+    .browser-loading[data-show="false"] { opacity: 0; }
+    .browser-loading strong { color: #0a4a41; }
     .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
     .controls button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; }
     .controls button:disabled { opacity: .45; cursor: not-allowed; }
@@ -175,10 +106,8 @@
     .status-line { font-size: 13px; color: var(--muted); margin-top: 8px; }
     .kbd { font-size: 12px; color: var(--muted); }
     @media (max-width: 640px) {
-      .browser { height: auto; min-height: 420px; }
-      .browser-view { min-height: 360px; }
-      .pshell:not([data-layout="top"]) { grid-template-columns: 1fr; }
-      .pshell:not([data-layout="top"]) .pside { flex-direction: row; flex-wrap: wrap; }
+      .browser { height: auto; min-height: 520px; }
+      .browser-frame-wrap { min-height: 460px; height: 70vh; }
     }
   </style>
   <script src="../site-auth.js"></script>
@@ -473,14 +402,13 @@
 
 
 <main class="wrap">
-  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · portal lookalike playback</p>
+  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · live portal playback</p>
   <h1>Demo role playback</h1>
   <p class="lede">
-    Autoplay <strong>website lookalike video</strong> of Raisd Lesotho Demo features,
-    <strong>one role after another</strong>
-    (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control).
-    The browser frame mimics the portal UI; the cursor walks the click path.
-    Still HTML playback (not a <code>.mp4</code>) and Demo ≠ Live CMS.
+    Autoplay walks Raisd Lesotho Demo features <strong>one role after another</strong>
+    (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control)
+    inside the <strong>real Demo portal apps</strong> (iframe to apply / staff / student / control / Keychain).
+    Demo ≠ Live CMS. Sign in via Keychain for the role account if the frame shows SSO.
     Modules:
     <a href="feature-modules.html">feature-modules.html</a>
     · Markdown
@@ -489,9 +417,10 @@
 
   <div class="banner">
     <strong>Demo ≠ Live.</strong>
-    Play animates a portal lookalike for every role. Deep-link
-    <code>?role=bursary</code>, <code>?role=registry</code>, etc. Keyboard: Space play/pause · ← → step.
-    Open Keychain: <a href="https://keychain.raisd.co/">keychain.raisd.co</a>.
+    Play loads the real Demo host for each scene. Prefer signing in first at
+    <a href="https://keychain.raisd.co/" target="_blank" rel="noopener noreferrer">keychain.raisd.co</a>
+    so the iframe keeps the session. Deep-link <code>?role=bursary</code>, etc.
+    Keyboard: Space play/pause · ← → step. Use <strong>Open</strong> if the embed needs a full tab.
   </div>
 
   <div class="playback" aria-label="Role-by-role Demo playback">
@@ -506,16 +435,22 @@
           <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
           <span id="account" class="stage-account"></span>
         </div>
-        <div class="browser" id="browser" aria-label="Portal lookalike video">
+        <div class="browser" id="browser" aria-label="Live Demo portal">
           <div class="browser-chrome">
             <div class="browser-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div class="browser-url" id="browser-url">Loading Demo URL…</div>
+            <a class="browser-url" id="browser-url" href="#" target="_blank" rel="noopener noreferrer">Loading Demo URL…</a>
+            <div class="browser-actions">
+              <button type="button" id="btn-reload" title="Reload portal frame">Reload</button>
+              <a id="btn-open" href="#" target="_blank" rel="noopener noreferrer">Open</a>
+            </div>
           </div>
-          <div class="browser-view" id="browser-view">
-            <div class="pmain"><div class="card"><h4>Loading portal lookalike…</h4><p class="sub">If this stays blank, hard-refresh (cache).</p></div></div>
+          <div class="browser-frame-wrap">
+            <div class="browser-loading" id="browser-loading" data-show="true">
+              <div><strong>Loading real Demo portal…</strong></div>
+              <div>Sign in with the Keychain account for this role if prompted.</div>
+            </div>
+            <iframe id="portal-frame" title="Raisd Demo portal" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe>
           </div>
-          <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
-          <div class="toast" id="demo-toast" data-show="false"></div>
         </div>
         <div class="stage-narration">
           <p id="route" class="stage-route"></p>
@@ -544,8 +479,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    // Cache-bust: Pages serves JS with max-age=604800
-    import { createPlayer } from "./demo-role-playback.js?v=20261028c"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028d"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       stageEl: document.getElementById("stage"),
@@ -557,11 +491,11 @@
       bodyEl: document.getElementById("scene-body"),
       stepsEl: document.getElementById("scene-steps"),
       fmEl: document.getElementById("scene-fm"),
-      browserEl: document.getElementById("browser"),
       browserUrlEl: document.getElementById("browser-url"),
-      browserViewEl: document.getElementById("browser-view"),
-      cursorEl: document.getElementById("demo-cursor"),
-      toastEl: document.getElementById("demo-toast"),
+      frameEl: document.getElementById("portal-frame"),
+      loadingEl: document.getElementById("browser-loading"),
+      reloadBtn: document.getElementById("btn-reload"),
+      openBtn: document.getElementById("btn-open"),
       progressRoleEl: document.getElementById("progress-role"),
       progressAllEl: document.getElementById("progress-all"),
       statusEl: document.getElementById("status-line"),
