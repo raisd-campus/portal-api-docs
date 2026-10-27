@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-27T23:48:03.125Z",
+  "recordedAt": "2026-10-27T23:58:40.785Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -93,11 +93,11 @@
         "FM-15"
       ],
       "poster": "fac-open.poster.jpg",
-      "bytes": 72128,
-      "detail": "fac-open @ /admin/applicants · golden bur-pay poster",
+      "bytes": 57618,
+      "detail": "fac-open @ /admin/applicants (case selected)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:33:16.632Z"
+      "recordedAt": "2026-10-27T23:57:52.549Z"
     },
     {
       "sceneId": "fac-rank",
@@ -108,11 +108,11 @@
         "FM-05"
       ],
       "poster": "fac-rank.poster.jpg",
-      "bytes": 72128,
-      "detail": "fac-rank @ /admin/applicants · golden bur-pay poster",
+      "bytes": 56075,
+      "detail": "fac-rank @ /admin/applicants (Set rank / score form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:34:41.639Z"
+      "recordedAt": "2026-10-27T23:57:58.238Z"
     },
     {
       "sceneId": "fac-rec",
@@ -123,11 +123,11 @@
         "FM-05"
       ],
       "poster": "fac-rec.poster.jpg",
-      "bytes": 72128,
-      "detail": "fac-rec @ /admin/applicants · golden bur-pay poster",
+      "bytes": 65701,
+      "detail": "fac-rec @ /admin/applicants (Record desk recommendation form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:34:46.633Z"
+      "recordedAt": "2026-10-27T23:58:04.497Z"
     },
     {
       "sceneId": "qa-open",
@@ -138,11 +138,11 @@
         "FM-15"
       ],
       "poster": "qa-open.poster.jpg",
-      "bytes": 39439,
-      "detail": "qa-open @ document-review",
+      "bytes": 52119,
+      "detail": "qa-open @ document-review (case selected)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T23:45:19.316Z"
+      "recordedAt": "2026-10-27T23:58:28.739Z"
     },
     {
       "sceneId": "qa-extract",
@@ -153,11 +153,11 @@
         "FM-05"
       ],
       "poster": "qa-extract.poster.jpg",
-      "bytes": 39529,
-      "detail": "qa-extract @ document-review",
+      "bytes": 58612,
+      "detail": "qa-extract @ document-review (Extract certificate form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T23:46:43.403Z"
+      "recordedAt": "2026-10-27T23:58:34.430Z"
     },
     {
       "sceneId": "qa-verify",
@@ -168,11 +168,11 @@
         "FM-03"
       ],
       "poster": "qa-verify.poster.jpg",
-      "bytes": 39529,
-      "detail": "qa-verify @ document-review",
+      "bytes": 62515,
+      "detail": "qa-verify @ document-review (Verify eligibility form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T23:46:47.487Z"
+      "recordedAt": "2026-10-27T23:58:40.673Z"
     },
     {
       "sceneId": "bur-pay",

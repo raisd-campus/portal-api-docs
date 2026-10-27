@@ -209,6 +209,53 @@ async function selectQueueRow(page) {
   }
 }
 
+/** Open the admissions Review action dropdown and pick a labelled option. */
+async function selectReviewAction(page, actionLabel) {
+  const trigger = page.getByRole("button", { name: /review action/i })
+  if ((await trigger.count()) === 0) {
+    // Detail pane may be below the fold after selecting a row.
+    await page.getByText(/review action/i).first().scrollIntoViewIfNeeded().catch(() => {})
+    await dwell(page, 400)
+  }
+  if ((await trigger.count()) === 0) return false
+  await trigger.first().scrollIntoViewIfNeeded().catch(() => {})
+  await trigger.first().click({ timeout: 8000 }).catch(() => {})
+  await dwell(page, 400)
+  const option = page.getByRole("menuitemradio", { name: actionLabel }).or(
+    page.getByRole("menuitem", { name: actionLabel }),
+  )
+  if ((await option.count()) === 0) {
+    // Close menu if the action is not offered for this desk/case.
+    await page.keyboard.press("Escape").catch(() => {})
+    return false
+  }
+  await option.first().click({ timeout: 8000 })
+  await dwell(page, 700)
+  await page.getByText(/review action/i).first().scrollIntoViewIfNeeded().catch(() => {})
+  return true
+}
+
+async function fillReviewNote(page, note) {
+  const input = page.locator("#review-note")
+  if ((await input.count()) === 0) return
+  await input.fill(note).catch(() => {})
+}
+
+/** Prefer a Lesotho Demo applicant row (0/3) over empty pending shells. */
+async function selectLesothoDemoRow(page) {
+  const preferred = page
+    .locator("table tbody tr")
+    .filter({ hasText: /demo lesotho applicant/i })
+    .filter({ hasText: /0\/3|pending review/i })
+    .first()
+  if (await preferred.count()) {
+    await preferred.click().catch(() => {})
+    await dwell(page, 1000)
+    return
+  }
+  await selectQueueRow(page)
+}
+
 async function applicantsEmpty(page) {
   const text = ((await page.locator("body").innerText().catch(() => "")) || "").toLowerCase()
   if (/no submitted (payment proofs|applications)|not available/.test(text)) return true
@@ -389,14 +436,35 @@ async function runSceneActions(page, context, sceneId) {
         const path = await openBursaryAdmissionsDesk(page, context)
         return `${sceneId} @ ${path}`
       }
-      await selectQueueRow(page)
+      await selectLesothoDemoRow(page)
+      if (sceneId === "fac-open") {
+        // Queue + selected case detail (no review form yet).
+        await page.getByText(/demo lesotho applicant/i).first().scrollIntoViewIfNeeded().catch(() => {})
+        await dwell(page, 1200)
+        return "fac-open @ /admin/applicants (case selected)"
+      }
       if (sceneId === "fac-rank") {
-        await page.getByLabel(/^rank$/i).fill("2").catch(() => {})
-        await page.getByLabel(/^score$/i).fill("78.5").catch(() => {})
-        await safeClick(page.getByRole("button", { name: /set rank|save metrics|apply metrics/i }))
+        const ok = await selectReviewAction(page, /set rank\s*\/\s*score/i)
+        if (ok) {
+          await page.locator("#review-rank").fill("2").catch(() => {})
+          await page.locator("#review-score").fill("78.5").catch(() => {})
+          await fillReviewNote(page, "Demo faculty rank/score for storyboard")
+          await dwell(page, 1200)
+        }
+        return ok
+          ? "fac-rank @ /admin/applicants (Set rank / score form)"
+          : "fac-rank @ /admin/applicants (action unavailable)"
       }
       if (sceneId === "fac-rec") {
-        await safeClick(page.getByRole("button", { name: /recommend|record recommendation/i }))
+        const ok = await selectReviewAction(page, /record desk recommendation/i)
+        if (ok) {
+          // Leave outcome on Recommended; show the review form prominently.
+          await fillReviewNote(page, "Demo faculty recommendation — approve for QA")
+          await dwell(page, 1200)
+        }
+        return ok
+          ? "fac-rec @ /admin/applicants (Record desk recommendation form)"
+          : "fac-rec @ /admin/applicants (action unavailable)"
       }
       await dwell(page, 1800)
       return `${sceneId} @ /admin/applicants`
@@ -415,14 +483,34 @@ async function runSceneActions(page, context, sceneId) {
         const path = await openBursaryAdmissionsDesk(page, context)
         return `${sceneId} @ ${path}`
       }
-      await selectQueueRow(page)
+      await selectLesothoDemoRow(page)
+      if (sceneId === "qa-open") {
+        await page.getByText(/document review|demo lesotho applicant/i).first().scrollIntoViewIfNeeded().catch(() => {})
+        await dwell(page, 1200)
+        return "qa-open @ document-review (case selected)"
+      }
       if (sceneId === "qa-extract") {
-        await page.getByLabel(/certificate/i).fill("LGCSE-DEMO-1").catch(() => {})
-        await page.getByLabel(/institution/i).fill("Demo High School (Maseru)").catch(() => {})
-        await safeClick(page.getByRole("button", { name: /extract/i }))
+        const ok = await selectReviewAction(page, /extract certificate/i)
+        if (ok) {
+          await page.locator("#extract-cert").fill("LGCSE-DEMO-1").catch(() => {})
+          await page.locator("#extract-institution").fill("Demo High School (Maseru)").catch(() => {})
+          await page.locator("#extract-subjects").fill("Sesotho | B; Mathematics | C; English | C").catch(() => {})
+          await fillReviewNote(page, "Demo LGCSE extract for storyboard")
+          await dwell(page, 1200)
+        }
+        return ok
+          ? "qa-extract @ document-review (Extract certificate form)"
+          : "qa-extract @ document-review (action unavailable)"
       }
       if (sceneId === "qa-verify") {
-        await safeClick(page.getByRole("button", { name: /verify documents/i }))
+        const ok = await selectReviewAction(page, /verify eligibility and documents/i)
+        if (ok) {
+          await fillReviewNote(page, "Demo QA verify documents for storyboard")
+          await dwell(page, 1200)
+        }
+        return ok
+          ? "qa-verify @ document-review (Verify eligibility form)"
+          : "qa-verify @ document-review (action unavailable)"
       }
       await dwell(page, 1800)
       return `${sceneId} @ document-review`
