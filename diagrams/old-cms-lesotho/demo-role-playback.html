@@ -65,9 +65,10 @@
       display: block; width: 100%; max-height: min(68vh, 640px); background: #000; vertical-align: top;
     }
     .video-missing {
-      display: grid; place-items: center; gap: 8px; min-height: 320px; padding: 24px;
+      display: none; place-items: center; gap: 8px; min-height: 320px; padding: 24px;
       background: #101820; color: #c5d0dc; text-align: center;
     }
+    .video-missing:not([hidden]) { display: grid; }
     .video-missing strong { color: #fff; font-size: 1.05rem; }
     .video-missing code { color: #9ec5ff; }
     .video-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
@@ -436,7 +437,7 @@
         <button type="button" id="btn-pause">Pause</button>
         <button type="button" id="btn-prev">Prev</button>
         <button type="button" id="btn-next">Next</button>
-        <button type="button" id="btn-speed" title="Playback speed">1×</button>
+        <button type="button" id="btn-speed" title="Playback speed">2×</button>
         <span class="kbd">Space · ← →</span>
       </div>
       <div class="bars">
@@ -450,7 +451,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028h"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028j"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),

@@ -7,7 +7,7 @@ export const ROLES = [
     id: "applicant",
     label: "Applicant",
     portal: "https://apply.lesotho.raisd.co",
-    account: "Keychain · completed@raisd.demo (or fresh@raisd.demo)",
+    account: "Keychain · completed@raisd.demo / completed2026",
     summary: "Apply → fee proof → offer accept (FM-02 / FM-09)",
     scenes: [
       {
@@ -81,7 +81,7 @@ export const ROLES = [
     id: "faculty",
     label: "Faculty Review",
     portal: "https://staff.lesotho.raisd.co",
-    account: "Keychain · lesotho.faculty@raisd.demo",
+    account: "Keychain · lesotho.faculty@raisd.demo / lesotho2026",
     summary: "Rank / score / recommendation desk (FM-03 / FM-05 / FM-15)",
     scenes: [
       {
@@ -129,7 +129,7 @@ export const ROLES = [
     id: "qa",
     label: "QA",
     portal: "https://staff.lesotho.raisd.co",
-    account: "Keychain · lesotho.qa@raisd.demo",
+    account: "Keychain · lesotho.qa@raisd.demo / lesotho2026",
     summary: "LGCSE extract and document verify (FM-04 / FM-03)",
     scenes: [
       {
@@ -177,7 +177,7 @@ export const ROLES = [
     id: "bursary",
     label: "Bursary",
     portal: "https://staff.lesotho.raisd.co",
-    account: "Keychain · lesotho.bursary@raisd.demo",
+    account: "Keychain · lesotho.bursary@raisd.demo / lesotho2026",
     summary: "Fee verify, Fees & Fines preview, registration clearance (FM-09 / FM-08)",
     scenes: [
       {
@@ -225,7 +225,7 @@ export const ROLES = [
     id: "registry",
     label: "Registry",
     portal: "https://staff.lesotho.raisd.co",
-    account: "Keychain · lesotho.registry@raisd.demo",
+    account: "Keychain · lesotho.registry@raisd.demo / lesotho2026",
     summary: "Offer release, registration desk, 12-tab file (FM-03 / FM-08 / FM-07)",
     scenes: [
       {
@@ -299,7 +299,7 @@ export const ROLES = [
     id: "year-leader",
     label: "Year Leader",
     portal: "https://staff.lesotho.raisd.co",
-    account: "Keychain · lesotho.yearleader@raisd.demo",
+    account: "Keychain · lesotho.yearleader@raisd.demo / lesotho2026",
     summary: "Narrow Students view (FM-07 / FM-15)",
     scenes: [
       {
@@ -347,7 +347,7 @@ export const ROLES = [
     id: "student",
     label: "Student",
     portal: "https://student.lesotho.raisd.co",
-    account: "Keychain · alya@raisd.demo or Lesotho DEV student after accept",
+    account: "Keychain · alya@raisd.demo / alya2026",
     summary: "Registration with NMDS + finance / CAF (FM-06 / FM-08 / FM-09)",
     scenes: [
       {
@@ -395,7 +395,7 @@ export const ROLES = [
     id: "control",
     label: "Control",
     portal: "https://control.raisd.co",
-    account: "Keychain · sso.admin@raisd.demo (flows.configure)",
+    account: "Keychain · sso.admin@raisd.demo / admin2026",
     summary: "Lesotho Flows catalogues and position seeds (FM-05 / FM-15)",
     scenes: [
       {
@@ -555,7 +555,7 @@ export function createPlayer(options) {
   let manifestById = {}
   let index = 0
   let playing = false
-  let speed = 1
+  let speed = 2
   let stepTimer = null
   let stepHighlight = 0
   let activeFm = null
@@ -630,6 +630,26 @@ export function createPlayer(options) {
     history.replaceState(null, "", url)
   }
 
+  function showMissing(sceneId) {
+    if (videoEl) {
+      videoEl.pause()
+      videoEl.removeAttribute("src")
+      videoEl.removeAttribute("poster")
+      videoEl.hidden = true
+    }
+    if (missingEl) {
+      missingEl.hidden = false
+      const idEl = missingEl.querySelector("[data-missing-id]")
+      if (idEl) idEl.textContent = sceneId
+    }
+    setVideoStatus(`Video not recorded yet · ${sceneId}`)
+  }
+
+  function hideMissing() {
+    if (missingEl) missingEl.hidden = true
+    if (videoEl) videoEl.hidden = false
+  }
+
   function loadSceneVideo({ autoplay = false } = {}) {
     const { scene } = current()
     const video = videoEl
@@ -638,48 +658,61 @@ export function createPlayer(options) {
     const src = videoSrcFor(scene.id)
     const poster = posterFor(scene.id)
     setVideoStatus(`Loading ${scene.id}…`)
-    if (missingEl) missingEl.hidden = true
-    video.hidden = false
-    video.poster = poster
+    hideMissing()
+    video.pause()
+    // Drop prior media listeners by cloning is heavy; detach known handlers via replace.
+    video.onerror = null
+    video.onloadeddata = null
+    video.onloadedmetadata = null
     video.playbackRate = speed
+    // Avoid broken poster URLs flipping UI; set poster only after media proves present.
+    video.removeAttribute("poster")
 
-    const onError = () => {
+    const fail = () => {
       if (token !== loadToken) return
-      video.removeEventListener("error", onError)
-      video.removeAttribute("src")
-      video.load()
-      video.hidden = true
-      if (missingEl) {
-        missingEl.hidden = false
-        const idEl = missingEl.querySelector("[data-missing-id]")
-        if (idEl) idEl.textContent = scene.id
-      }
-      setVideoStatus(`Video not recorded yet · ${scene.id}`)
+      showMissing(scene.id)
       if (playing) {
-        // Advance after a short beat so Play still walks the storyboard.
         window.setTimeout(() => {
           if (token !== loadToken || !playing) return
           next()
-        }, Math.max(2500, Math.round((scene.durationMs || 5000) / speed)))
+        }, Math.max(1800, Math.round((scene.durationMs || 5000) / speed)))
       }
     }
 
-    const onLoaded = () => {
+    const ok = () => {
       if (token !== loadToken) return
-      video.removeEventListener("loadeddata", onLoaded)
-      video.removeEventListener("error", onError)
+      hideMissing()
+      video.poster = poster
       setVideoStatus(`Ready · ${scene.id}`)
       if (autoplay || playing) {
+        video.playbackRate = speed
         video.play().catch(() => {
           setVideoStatus(`Paused · click Play on the video · ${scene.id}`)
         })
       }
     }
 
-    video.addEventListener("error", onError)
-    video.addEventListener("loadeddata", onLoaded)
-    video.src = src
-    video.load()
+    // Prefer an existence check so a 404 never leaves a half-broken <video> state.
+    fetch(src, { method: "HEAD", cache: "no-cache" })
+      .then((res) => {
+        if (token !== loadToken) return
+        if (!res.ok) {
+          fail()
+          return
+        }
+        video.onerror = fail
+        video.onloadeddata = ok
+        video.src = src
+        video.load()
+      })
+      .catch(() => {
+        // HEAD may be blocked; fall back to direct media load.
+        if (token !== loadToken) return
+        video.onerror = fail
+        video.onloadeddata = ok
+        video.src = src
+        video.load()
+      })
   }
 
   function renderRoleList() {
@@ -880,7 +913,10 @@ export function createPlayer(options) {
   }
 
   function toggleSpeed() {
-    speed = speed === 1 ? 1.5 : speed === 1.5 ? 2 : 1
+    // Cycle faster rates for walkthrough review.
+    const rates = [2, 3, 4, 1.5]
+    const i = rates.indexOf(speed)
+    speed = rates[(i + 1) % rates.length]
     updateChrome()
     if (playing) startStepPulse(current().scene.steps || [])
   }
