@@ -1489,5 +1489,10 @@ export function createPlayer(options) {
   }
 
   render()
+  // Second paint after layout — catches zero-height first frame / late DOM.
+  requestAnimationFrame(() => {
+    render()
+    requestAnimationFrame(() => moveCursorToHot(stepHighlight))
+  })
   return { play, pause, prev, next, render }
 }

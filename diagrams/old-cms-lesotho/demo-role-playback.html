@@ -509,9 +509,11 @@
         <div class="browser" id="browser" aria-label="Portal lookalike video">
           <div class="browser-chrome">
             <div class="browser-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div class="browser-url" id="browser-url">https://…</div>
+            <div class="browser-url" id="browser-url">Loading Demo URL…</div>
           </div>
-          <div class="browser-view" id="browser-view"></div>
+          <div class="browser-view" id="browser-view">
+            <div class="pmain"><div class="card"><h4>Loading portal lookalike…</h4><p class="sub">If this stays blank, hard-refresh (cache).</p></div></div>
+          </div>
           <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
           <div class="toast" id="demo-toast" data-show="false"></div>
         </div>
@@ -543,7 +545,7 @@
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
     // Cache-bust: Pages serves JS with max-age=604800
-    import { createPlayer } from "./demo-role-playback.js?v=20261028b"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028c"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       stageEl: document.getElementById("stage"),
