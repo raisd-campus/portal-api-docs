@@ -55,24 +55,24 @@
     .stage .tag-out { background: #dfe3e8; color: #445; cursor: default; }
     .stage .tag[data-active="true"] { outline: 2px solid #9ec5ff; }
     .stage-narration { display: grid; gap: 8px; }
-    .video-shell {
+    .screen-shell {
       position: relative; border-radius: 12px; overflow: hidden;
       border: 1px solid rgba(255,255,255,.14); background: #0b1016;
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
       min-height: 280px;
     }
-    .video-shell video {
-      display: block; width: 100%; max-height: min(68vh, 640px); background: #000; vertical-align: top;
+    .screen-shell img {
+      display: block; width: 100%; max-height: min(68vh, 640px); object-fit: contain; background: #0b1016; vertical-align: top;
     }
-    .video-missing {
+    .screen-missing {
       display: none; place-items: center; gap: 8px; min-height: 320px; padding: 24px;
       background: #101820; color: #c5d0dc; text-align: center;
     }
-    .video-missing:not([hidden]) { display: grid; }
-    .video-missing strong { color: #fff; font-size: 1.05rem; }
-    .video-missing code { color: #9ec5ff; }
-    .video-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
-    .video-toolbar a {
+    .screen-missing:not([hidden]) { display: grid; }
+    .screen-missing strong { color: #fff; font-size: 1.05rem; }
+    .screen-missing code { color: #9ec5ff; }
+    .screen-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+    .screen-toolbar a {
       font-size: 12px; color: #9ec5ff; text-decoration: underline; text-underline-offset: 2px;
     }
     .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
@@ -378,10 +378,10 @@
 
 
 <main class="wrap">
-  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · recorded walkthrough</p>
+  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · step-by-step screens</p>
   <h1>Demo role playback</h1>
   <p class="lede">
-    Play / Next walks <strong>recorded Demo portal videos</strong> scene by scene
+    Prev / Next walks <strong>Demo portal screenshots</strong> step by step
     (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control),
     tracked by feature module. Catalogue:
     <a href="feature-modules.html">feature-modules.html</a>
@@ -390,9 +390,9 @@
   </p>
 
   <div class="banner">
-    Recorded Demo walkthrough · feature-tracked by FM.
+    Screenshot storyboard · feature-tracked by FM.
     Deep-link <code>?scene=bur-pay</code>, <code>?fm=FM-09</code>, or <code>?role=bursary</code>.
-    Keyboard: Space play/pause · ← → step. Use <strong>Open portal</strong> to try the live Demo host for the current scene.
+    Keyboard: ← → previous/next step · Space auto-advance. Use <strong>Open portal</strong> for the live Demo host.
   </div>
 
   <div class="playback" aria-label="Role-by-role Demo playback">
@@ -413,15 +413,15 @@
           <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
           <span id="account" class="stage-account"></span>
         </div>
-        <div class="video-shell" aria-label="Recorded Demo scene video">
-          <video id="scene-video" controls playsinline preload="metadata"></video>
-          <div id="video-missing" class="video-missing" hidden>
-            <strong>Video not recorded yet</strong>
+        <div class="screen-shell" aria-label="Demo scene screenshot">
+          <img id="scene-screen" alt="Demo scene screenshot" />
+          <div id="screen-missing" class="screen-missing" hidden>
+            <strong>Screen not captured yet</strong>
             <div>Scene <code data-missing-id></code> — re-run <code>record-playback-videos.mjs</code>.</div>
           </div>
         </div>
-        <div class="video-toolbar">
-          <p id="video-status" class="stage-account" style="margin:0">Idle</p>
+        <div class="screen-toolbar">
+          <p id="screen-status" class="stage-account" style="margin:0">Idle</p>
           <a id="btn-open-portal" href="#" target="_blank" rel="noopener noreferrer">Open portal</a>
         </div>
         <div class="stage-narration">
@@ -433,12 +433,12 @@
         </div>
       </div>
       <div class="controls">
-        <button type="button" class="primary" id="btn-play">Play</button>
+        <button type="button" id="btn-prev">Previous</button>
+        <button type="button" class="primary" id="btn-next">Next</button>
+        <button type="button" id="btn-play">Auto</button>
         <button type="button" id="btn-pause">Pause</button>
-        <button type="button" id="btn-prev">Prev</button>
-        <button type="button" id="btn-next">Next</button>
-        <button type="button" id="btn-speed" title="Playback speed">2×</button>
-        <span class="kbd">Space · ← →</span>
+        <button type="button" id="btn-speed" title="Auto-advance speed">1×</button>
+        <span class="kbd">← → · Space</span>
       </div>
       <div class="bars">
         <div class="bar-label"><span>This role</span><span id="status-line" class="status-line" style="margin:0"></span></div>
@@ -451,7 +451,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028j"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028k"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),
@@ -464,9 +464,9 @@
       bodyEl: document.getElementById("scene-body"),
       stepsEl: document.getElementById("scene-steps"),
       fmEl: document.getElementById("scene-fm"),
-      videoEl: document.getElementById("scene-video"),
-      missingEl: document.getElementById("video-missing"),
-      videoStatusEl: document.getElementById("video-status"),
+      screenEl: document.getElementById("scene-screen"),
+      missingEl: document.getElementById("screen-missing"),
+      screenStatusEl: document.getElementById("screen-status"),
       openPortalBtn: document.getElementById("btn-open-portal"),
       progressRoleEl: document.getElementById("progress-role"),
       progressAllEl: document.getElementById("progress-all"),

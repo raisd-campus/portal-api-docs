@@ -1,6 +1,6 @@
 /**
- * Lesotho Raisd Demo W1–W3 role-by-role recorded video playback.
- * Each scene plays a WebM from ./playback-videos/{sceneId}.webm and tracks FM tags.
+ * Lesotho Raisd Demo W1–W3 role-by-role screenshot storyboard.
+ * Each scene shows ./playback-videos/{sceneId}.poster.jpg; Prev/Next step through scenes.
  */
 export const ROLES = [
   {
@@ -518,7 +518,7 @@ export function buildFeatureIndex(roles = ROLES) {
     .map(([fm, scenes]) => ({ fm, scenes }))
 }
 
-const VIDEO_BASE = "./playback-videos"
+const MEDIA_BASE = "./playback-videos"
 
 export function createPlayer(options) {
   const {
@@ -534,9 +534,9 @@ export function createPlayer(options) {
     bodyEl,
     stepsEl,
     fmEl,
-    videoEl,
+    screenEl,
     missingEl,
-    videoStatusEl,
+    screenStatusEl,
     openPortalBtn,
     progressRoleEl,
     progressAllEl,
@@ -546,17 +546,18 @@ export function createPlayer(options) {
     prevBtn,
     nextBtn,
     speedBtn,
-    manifestUrl = `${VIDEO_BASE}/manifest.json`,
+    manifestUrl = `${MEDIA_BASE}/manifest.json`,
   } = options
 
   const flat = flattenScenes(roles)
   const featureIndex = buildFeatureIndex(roles)
-  /** @type {Record<string, { file?: string, poster?: string }>} */
+  /** @type {Record<string, { poster?: string }>} */
   let manifestById = {}
   let index = 0
   let playing = false
-  let speed = 2
+  let speed = 1
   let stepTimer = null
+  let advanceTimer = null
   let stepHighlight = 0
   let activeFm = null
   let loadToken = 0
@@ -574,22 +575,20 @@ export function createPlayer(options) {
       clearInterval(stepTimer)
       stepTimer = null
     }
+    if (advanceTimer != null) {
+      clearTimeout(advanceTimer)
+      advanceTimer = null
+    }
   }
 
-  function videoSrcFor(sceneId) {
+  function screenSrcFor(sceneId) {
     const entry = manifestById[sceneId]
-    if (entry?.file) return `${VIDEO_BASE}/${entry.file}`
-    return `${VIDEO_BASE}/${sceneId}.webm`
+    if (entry?.poster) return `${MEDIA_BASE}/${entry.poster}`
+    return `${MEDIA_BASE}/${sceneId}.poster.jpg`
   }
 
-  function posterFor(sceneId) {
-    const entry = manifestById[sceneId]
-    if (entry?.poster) return `${VIDEO_BASE}/${entry.poster}`
-    return `${VIDEO_BASE}/${sceneId}.poster.jpg`
-  }
-
-  function setVideoStatus(text) {
-    if (videoStatusEl) videoStatusEl.textContent = text
+  function setScreenStatus(text) {
+    if (screenStatusEl) screenStatusEl.textContent = text
   }
 
   function highlightSteps(steps) {
@@ -602,12 +601,15 @@ export function createPlayer(options) {
 
   function startStepPulse(steps) {
     clearStepTimer()
-    if (!steps?.length) return
+    if (!steps?.length) {
+      if (playing) scheduleAdvance()
+      return
+    }
     stepHighlight = 0
     highlightSteps(steps)
     if (!playing) return
     const per = Math.max(
-      1400,
+      1200,
       Math.round(((current().scene.durationMs || 7000) / speed) / steps.length)
     )
     stepTimer = setInterval(() => {
@@ -616,8 +618,20 @@ export function createPlayer(options) {
       if (stepHighlight >= steps.length - 1 && stepTimer) {
         clearInterval(stepTimer)
         stepTimer = null
+        scheduleAdvance()
       }
     }, per)
+  }
+
+  function scheduleAdvance() {
+    if (!playing) return
+    if (advanceTimer != null) clearTimeout(advanceTimer)
+    const dwell = Math.max(1800, Math.round(2200 / speed))
+    advanceTimer = setTimeout(() => {
+      advanceTimer = null
+      if (!playing) return
+      next()
+    }, dwell)
   }
 
   function syncUrl() {
@@ -631,88 +645,48 @@ export function createPlayer(options) {
   }
 
   function showMissing(sceneId) {
-    if (videoEl) {
-      videoEl.pause()
-      videoEl.removeAttribute("src")
-      videoEl.removeAttribute("poster")
-      videoEl.hidden = true
+    if (screenEl) {
+      screenEl.removeAttribute("src")
+      screenEl.hidden = true
     }
     if (missingEl) {
       missingEl.hidden = false
       const idEl = missingEl.querySelector("[data-missing-id]")
       if (idEl) idEl.textContent = sceneId
     }
-    setVideoStatus(`Video not recorded yet · ${sceneId}`)
+    setScreenStatus(`Screen not captured yet · ${sceneId}`)
   }
 
   function hideMissing() {
     if (missingEl) missingEl.hidden = true
-    if (videoEl) videoEl.hidden = false
+    if (screenEl) screenEl.hidden = false
   }
 
-  function loadSceneVideo({ autoplay = false } = {}) {
+  function loadSceneScreen() {
     const { scene } = current()
-    const video = videoEl
-    if (!video) return
+    const img = screenEl
+    if (!img) return
     const token = ++loadToken
-    const src = videoSrcFor(scene.id)
-    const poster = posterFor(scene.id)
-    setVideoStatus(`Loading ${scene.id}…`)
+    const src = screenSrcFor(scene.id)
+    setScreenStatus(`Loading ${scene.id}…`)
     hideMissing()
-    video.pause()
-    // Drop prior media listeners by cloning is heavy; detach known handlers via replace.
-    video.onerror = null
-    video.onloadeddata = null
-    video.onloadedmetadata = null
-    video.playbackRate = speed
-    // Avoid broken poster URLs flipping UI; set poster only after media proves present.
-    video.removeAttribute("poster")
 
     const fail = () => {
       if (token !== loadToken) return
       showMissing(scene.id)
-      if (playing) {
-        window.setTimeout(() => {
-          if (token !== loadToken || !playing) return
-          next()
-        }, Math.max(1800, Math.round((scene.durationMs || 5000) / speed)))
-      }
+      if (playing) scheduleAdvance()
     }
 
     const ok = () => {
       if (token !== loadToken) return
       hideMissing()
-      video.poster = poster
-      setVideoStatus(`Ready · ${scene.id}`)
-      if (autoplay || playing) {
-        video.playbackRate = speed
-        video.play().catch(() => {
-          setVideoStatus(`Paused · click Play on the video · ${scene.id}`)
-        })
-      }
+      setScreenStatus(`Step ${index + 1}/${totalCount()} · ${scene.id}`)
     }
 
-    // Prefer an existence check so a 404 never leaves a half-broken <video> state.
-    fetch(src, { method: "HEAD", cache: "no-cache" })
-      .then((res) => {
-        if (token !== loadToken) return
-        if (!res.ok) {
-          fail()
-          return
-        }
-        video.onerror = fail
-        video.onloadeddata = ok
-        video.src = src
-        video.load()
-      })
-      .catch(() => {
-        // HEAD may be blocked; fall back to direct media load.
-        if (token !== loadToken) return
-        video.onerror = fail
-        video.onloadeddata = ok
-        video.src = src
-        video.load()
-      })
+    img.onload = ok
+    img.onerror = fail
+    img.alt = `${scene.title} — Demo screenshot`
+    img.src = `${src}?v=${encodeURIComponent(manifestById[scene.id]?.recordedAt || "1")}`
   }
 
   function renderRoleList() {
@@ -817,10 +791,10 @@ export function createPlayer(options) {
         })
         fmEl.appendChild(span)
       }
-      const recorded = document.createElement("span")
-      recorded.className = "tag tag-out"
-      recorded.textContent = "Recorded video"
-      fmEl.appendChild(recorded)
+      const shot = document.createElement("span")
+      shot.className = "tag tag-out"
+      shot.textContent = "Screenshot step"
+      fmEl.appendChild(shot)
     }
     if (stageEl) {
       stageEl.dataset.role = role.id
@@ -838,13 +812,13 @@ export function createPlayer(options) {
       progressAllEl.parentElement?.setAttribute("aria-valuemax", String(totalCount()))
     }
     if (statusEl) {
-      statusEl.textContent = `Role ${current().roleIndex + 1}/${roles.length} · Scene ${sceneIndex + 1}/${role.scenes.length} · ${index + 1}/${totalCount()}`
+      statusEl.textContent = `Role ${current().roleIndex + 1}/${roles.length} · Step ${sceneIndex + 1}/${role.scenes.length} · ${index + 1}/${totalCount()}`
     }
     renderRoleList()
     renderFeatureList()
     syncUrl()
     updateChrome()
-    loadSceneVideo({ autoplay: playing })
+    loadSceneScreen()
     if (playing) startStepPulse(scene.steps || [])
   }
 
@@ -854,35 +828,27 @@ export function createPlayer(options) {
     if (prevBtn) prevBtn.disabled = index <= 0
     if (nextBtn) nextBtn.disabled = index >= totalCount() - 1
     if (speedBtn) speedBtn.textContent = `${speed}×`
-    if (videoEl) videoEl.playbackRate = speed
   }
 
   function play() {
     playing = true
-    if (index >= totalCount() - 1 && videoEl?.ended) {
+    if (index >= totalCount() - 1) {
       index = 0
       render()
       return
     }
     updateChrome()
+    setScreenStatus(`Auto · ${current().scene.id}`)
     startStepPulse(current().scene.steps || [])
-    if (videoEl && !videoEl.hidden) {
-      videoEl.playbackRate = speed
-      videoEl.play().catch(() => {})
-      setVideoStatus(`Playing · ${current().scene.id}`)
-    } else {
-      loadSceneVideo({ autoplay: true })
-    }
   }
 
   function pause({ keepStatus = false } = {}) {
     playing = false
     clearStepTimer()
-    videoEl?.pause()
     updateChrome()
     if (!keepStatus && statusEl) {
       const { sceneIndex } = current()
-      statusEl.textContent = `Paused · Role ${current().roleIndex + 1}/${roles.length} · Scene ${sceneIndex + 1}/${current().role.scenes.length}`
+      statusEl.textContent = `Paused · Role ${current().roleIndex + 1}/${roles.length} · Step ${sceneIndex + 1}/${current().role.scenes.length}`
     }
   }
 
@@ -899,10 +865,9 @@ export function createPlayer(options) {
     if (index >= totalCount() - 1) {
       playing = false
       clearStepTimer()
-      videoEl?.pause()
       updateChrome()
       if (statusEl) statusEl.textContent = "Finished all roles"
-      setVideoStatus("Finished all scenes")
+      setScreenStatus("Finished all steps")
       return
     }
     const wasPlaying = playing
@@ -913,21 +878,12 @@ export function createPlayer(options) {
   }
 
   function toggleSpeed() {
-    // Cycle faster rates for walkthrough review.
-    const rates = [2, 3, 4, 1.5]
+    const rates = [1, 1.5, 2, 3]
     const i = rates.indexOf(speed)
     speed = rates[(i + 1) % rates.length]
     updateChrome()
     if (playing) startStepPulse(current().scene.steps || [])
   }
-
-  videoEl?.addEventListener("ended", () => {
-    if (!playing) {
-      setVideoStatus(`Ended · ${current().scene.id}`)
-      return
-    }
-    next()
-  })
 
   playBtn?.addEventListener("click", play)
   pauseBtn?.addEventListener("click", pause)
@@ -937,7 +893,7 @@ export function createPlayer(options) {
 
   window.addEventListener("keydown", (e) => {
     const tag = (e.target && e.target.tagName) || ""
-    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "VIDEO") return
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return
     if (e.code === "Space") {
       e.preventDefault()
       if (playing) pause()
