@@ -63,10 +63,24 @@
     }
     .screen-shell img {
       display: block; width: 100%; max-height: min(68vh, 640px); object-fit: contain; background: #0b1016; vertical-align: top;
+      opacity: 1; transition: opacity .15s ease;
     }
+    .screen-shell[data-loading="true"] img { opacity: .35; }
+    .screen-loading {
+      position: absolute; inset: 0; z-index: 4; display: none; place-items: center; gap: 12px;
+      flex-direction: column; background: rgba(8, 12, 18, .55); color: #e8eef5; font-size: 14px;
+      pointer-events: none;
+    }
+    .screen-shell[data-loading="true"] .screen-loading { display: flex; }
+    .screen-spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.22); border-top-color: #9ec5ff;
+      animation: screen-spin .7s linear infinite;
+    }
+    @keyframes screen-spin { to { transform: rotate(360deg); } }
     .screen-nav {
       position: absolute; top: 50%; transform: translateY(-50%);
-      z-index: 3; width: 44px; height: 72px; margin: 0; padding: 0;
+      z-index: 5; width: 44px; height: 72px; margin: 0; padding: 0;
       border: 1px solid rgba(255,255,255,.22); border-radius: 10px;
       background: rgba(10, 16, 22, .72); color: #fff; font: 700 28px/1 system-ui, sans-serif;
       cursor: pointer; backdrop-filter: blur(6px);
@@ -77,15 +91,45 @@
     .screen-nav-next { right: 10px; }
     .screen-missing {
       display: none; place-items: center; gap: 8px; min-height: 320px; padding: 24px;
-      background: #101820; color: #c5d0dc; text-align: center;
+      background: #101820; color: #c5d0dc; text-align: center; position: relative; z-index: 2;
     }
     .screen-missing:not([hidden]) { display: grid; }
     .screen-missing strong { color: #fff; font-size: 1.05rem; }
     .screen-missing code { color: #9ec5ff; }
     .screen-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
-    .screen-toolbar a {
+    .screen-toolbar a, .screen-toolbar button.linkish {
       font-size: 12px; color: #9ec5ff; text-decoration: underline; text-underline-offset: 2px;
+      background: none; border: 0; padding: 0; cursor: pointer; font: inherit;
     }
+    .player-modal {
+      border: 0; padding: 0; margin: 0; width: 100vw; max-width: 100vw; height: 100vh; max-height: 100vh;
+      background: #0b1016; color: #e8eef5;
+    }
+    .player-modal::backdrop { background: rgba(0, 0, 0, .72); }
+    .player-modal[open] { display: flex; flex-direction: column; }
+    .player-modal-chrome {
+      flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.12);
+      background: #121820;
+    }
+    .player-modal-chrome strong { font-size: 14px; }
+    .player-modal-chrome button {
+      font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.08); color: #fff; padding: 8px 12px;
+    }
+    .player-modal-body {
+      flex: 1 1 auto; min-height: 0; overflow: auto; padding: 16px 18px 24px;
+    }
+    .player-modal-body .playback {
+      margin: 0; max-width: none; grid-template-columns: minmax(220px, 280px) 1fr;
+    }
+    .player-modal-body .screen-shell img {
+      max-height: min(78vh, 920px);
+    }
+    .player-modal-body .stage {
+      min-height: auto;
+    }
+    body.player-modal-open { overflow: hidden; }
     .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
     .controls button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; }
     .controls button:disabled { opacity: .45; cursor: not-allowed; }
@@ -406,63 +450,80 @@
     Keyboard: ← → previous/next step · Space auto-advance. Use <strong>Open portal</strong> for the live Demo host.
   </div>
 
-  <div class="playback" aria-label="Role-by-role Demo playback">
-    <aside class="side-stack">
-      <div>
-        <h2 class="side-heading type-section">Roles</h2>
-        <div id="role-list" class="role-list" role="listbox" aria-label="Demo roles"></div>
-      </div>
-      <div>
-        <h2 class="side-heading type-section">Features</h2>
-        <div id="feature-list" class="fm-list" role="listbox" aria-label="Feature modules"></div>
-      </div>
-    </aside>
-    <div>
-      <div id="stage" class="stage" aria-live="polite">
-        <div class="stage-top">
-          <span id="role-badge" class="stage-badge">Role</span>
-          <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
-          <span id="account" class="stage-account"></span>
+  <div id="playback-slot">
+    <div class="playback" id="playback-root" aria-label="Role-by-role Demo playback">
+      <aside class="side-stack">
+        <div>
+          <h2 class="side-heading type-section">Roles</h2>
+          <div id="role-list" class="role-list" role="listbox" aria-label="Demo roles"></div>
         </div>
-        <div class="screen-shell" aria-label="Demo scene screenshot">
-          <button type="button" class="screen-nav screen-nav-prev" id="btn-prev" aria-label="Previous step">‹</button>
-          <img id="scene-screen" alt="Demo scene screenshot" />
-          <button type="button" class="screen-nav screen-nav-next" id="btn-next" aria-label="Next step">›</button>
-          <div id="screen-missing" class="screen-missing" hidden>
-            <strong>Screen not captured yet</strong>
-            <div>Scene <code data-missing-id></code> — re-run <code>record-playback-videos.mjs --screens-only</code>.</div>
+        <div>
+          <h2 class="side-heading type-section">Features</h2>
+          <div id="feature-list" class="fm-list" role="listbox" aria-label="Feature modules"></div>
+        </div>
+      </aside>
+      <div id="player-main">
+        <div id="stage" class="stage" aria-live="polite">
+          <div class="stage-top">
+            <span id="role-badge" class="stage-badge">Role</span>
+            <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
+            <span id="account" class="stage-account"></span>
+          </div>
+          <div class="screen-shell" id="screen-shell" aria-label="Demo scene screenshot" data-loading="true">
+            <button type="button" class="screen-nav screen-nav-prev" id="btn-prev" aria-label="Previous step">‹</button>
+            <img id="scene-screen" alt="Demo scene screenshot" />
+            <button type="button" class="screen-nav screen-nav-next" id="btn-next" aria-label="Next step">›</button>
+            <div class="screen-loading" id="screen-loading" aria-live="polite">
+              <div class="screen-spinner" aria-hidden="true"></div>
+              <span>Loading screen…</span>
+            </div>
+            <div id="screen-missing" class="screen-missing" hidden>
+              <strong>Screen not captured yet</strong>
+              <div>Scene <code data-missing-id></code> — re-run <code>record-playback-videos.mjs --screens-only</code>.</div>
+            </div>
+          </div>
+          <div class="screen-toolbar">
+            <p id="screen-status" class="stage-account" style="margin:0">Idle</p>
+            <span style="display:flex;gap:14px;align-items:center">
+              <button type="button" class="linkish" id="btn-expand">Expand fullscreen</button>
+              <a id="btn-open-portal" href="#" target="_blank" rel="noopener noreferrer">Open portal</a>
+            </span>
+          </div>
+          <div class="stage-narration">
+            <p id="route" class="stage-route"></p>
+            <h2 id="scene-title">Loading…</h2>
+            <p id="scene-body" class="stage-body"></p>
+            <div id="scene-steps" class="exec-panel"></div>
+            <div id="scene-fm" class="stage-fm"></div>
           </div>
         </div>
-        <div class="screen-toolbar">
-          <p id="screen-status" class="stage-account" style="margin:0">Idle</p>
-          <a id="btn-open-portal" href="#" target="_blank" rel="noopener noreferrer">Open portal</a>
+        <div class="controls">
+          <button type="button" class="primary" id="btn-play">Auto</button>
+          <button type="button" id="btn-pause">Pause</button>
+          <button type="button" id="btn-speed" title="Auto-advance speed">1×</button>
+          <span class="kbd">← → on image · Space auto · Esc exit expand</span>
         </div>
-        <div class="stage-narration">
-          <p id="route" class="stage-route"></p>
-          <h2 id="scene-title">Loading…</h2>
-          <p id="scene-body" class="stage-body"></p>
-          <div id="scene-steps" class="exec-panel"></div>
-          <div id="scene-fm" class="stage-fm"></div>
+        <div class="bars">
+          <div class="bar-label"><span>This role</span><span id="status-line" class="status-line" style="margin:0"></span></div>
+          <div class="bar" role="progressbar" aria-label="Progress in current role" aria-valuemin="0"><span id="progress-role"></span></div>
+          <div class="bar-label"><span>All roles</span></div>
+          <div class="bar" role="progressbar" aria-label="Overall playback progress" aria-valuemin="0"><span id="progress-all"></span></div>
         </div>
-      </div>
-      <div class="controls">
-        <button type="button" class="primary" id="btn-play">Auto</button>
-        <button type="button" id="btn-pause">Pause</button>
-        <button type="button" id="btn-speed" title="Auto-advance speed">1×</button>
-        <span class="kbd">← → on image · Space auto</span>
-      </div>
-      <div class="bars">
-        <div class="bar-label"><span>This role</span><span id="status-line" class="status-line" style="margin:0"></span></div>
-        <div class="bar" role="progressbar" aria-label="Progress in current role" aria-valuemin="0"><span id="progress-role"></span></div>
-        <div class="bar-label"><span>All roles</span></div>
-        <div class="bar" role="progressbar" aria-label="Overall playback progress" aria-valuemin="0"><span id="progress-all"></span></div>
       </div>
     </div>
   </div>
+
+  <dialog id="player-modal" class="player-modal" aria-label="Demo playback fullscreen">
+    <div class="player-modal-chrome">
+      <strong>Demo role playback · fullscreen</strong>
+      <button type="button" id="btn-collapse">Close</button>
+    </div>
+    <div class="player-modal-body" id="player-modal-body"></div>
+  </dialog>
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028m"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028n"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),
@@ -476,9 +537,16 @@
       stepsEl: document.getElementById("scene-steps"),
       fmEl: document.getElementById("scene-fm"),
       screenEl: document.getElementById("scene-screen"),
+      screenShellEl: document.getElementById("screen-shell"),
       missingEl: document.getElementById("screen-missing"),
       screenStatusEl: document.getElementById("screen-status"),
       openPortalBtn: document.getElementById("btn-open-portal"),
+      expandBtn: document.getElementById("btn-expand"),
+      collapseBtn: document.getElementById("btn-collapse"),
+      playbackRootEl: document.getElementById("playback-root"),
+      playbackSlotEl: document.getElementById("playback-slot"),
+      modalEl: document.getElementById("player-modal"),
+      modalBodyEl: document.getElementById("player-modal-body"),
       progressRoleEl: document.getElementById("progress-role"),
       progressAllEl: document.getElementById("progress-all"),
       statusEl: document.getElementById("status-line"),

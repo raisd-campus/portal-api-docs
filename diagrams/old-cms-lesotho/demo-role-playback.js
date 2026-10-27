@@ -535,9 +535,16 @@ export function createPlayer(options) {
     stepsEl,
     fmEl,
     screenEl,
+    screenShellEl,
     missingEl,
     screenStatusEl,
     openPortalBtn,
+    expandBtn,
+    collapseBtn,
+    playbackRootEl,
+    playbackSlotEl,
+    modalEl,
+    modalBodyEl,
     progressRoleEl,
     progressAllEl,
     statusEl,
@@ -644,7 +651,13 @@ export function createPlayer(options) {
     history.replaceState(null, "", url)
   }
 
+  function setLoading(on) {
+    const shell = screenShellEl || screenEl?.closest?.(".screen-shell")
+    if (shell) shell.setAttribute("data-loading", on ? "true" : "false")
+  }
+
   function showMissing(sceneId) {
+    setLoading(false)
     if (screenEl) {
       screenEl.removeAttribute("src")
       screenEl.hidden = true
@@ -669,6 +682,7 @@ export function createPlayer(options) {
     const token = ++loadToken
     const src = screenSrcFor(scene.id)
     setScreenStatus(`Loading ${scene.id}…`)
+    setLoading(true)
     hideMissing()
 
     const fail = () => {
@@ -680,13 +694,34 @@ export function createPlayer(options) {
     const ok = () => {
       if (token !== loadToken) return
       hideMissing()
+      setLoading(false)
       setScreenStatus(`Step ${index + 1}/${totalCount()} · ${scene.id}`)
     }
 
     img.onload = ok
     img.onerror = fail
     img.alt = `${scene.title} — Demo screenshot`
-    img.src = `${src}?v=${encodeURIComponent(manifestById[scene.id]?.recordedAt || "1")}`
+    // Force reload indicator even when browser serves from cache.
+    img.src = `${src}?v=${encodeURIComponent(manifestById[scene.id]?.recordedAt || "1")}&i=${token}`
+  }
+
+  function openExpand() {
+    if (!modalEl || !modalBodyEl || !playbackRootEl || !playbackSlotEl) return
+    if (modalEl.open) return
+    modalBodyEl.appendChild(playbackRootEl)
+    modalEl.showModal()
+    document.body.classList.add("player-modal-open")
+    if (expandBtn) expandBtn.textContent = "Expanded"
+  }
+
+  function closeExpand() {
+    if (!modalEl || !playbackRootEl || !playbackSlotEl) return
+    if (playbackRootEl.parentElement !== playbackSlotEl) {
+      playbackSlotEl.appendChild(playbackRootEl)
+    }
+    if (modalEl.open) modalEl.close()
+    document.body.classList.remove("player-modal-open")
+    if (expandBtn) expandBtn.textContent = "Expand fullscreen"
   }
 
   function renderRoleList() {
@@ -890,10 +925,27 @@ export function createPlayer(options) {
   prevBtn?.addEventListener("click", prev)
   nextBtn?.addEventListener("click", next)
   speedBtn?.addEventListener("click", toggleSpeed)
+  expandBtn?.addEventListener("click", openExpand)
+  collapseBtn?.addEventListener("click", closeExpand)
+  modalEl?.addEventListener("cancel", (e) => {
+    e.preventDefault()
+    closeExpand()
+  })
+  modalEl?.addEventListener("close", () => {
+    if (playbackRootEl && playbackSlotEl && playbackRootEl.parentElement !== playbackSlotEl) {
+      playbackSlotEl.appendChild(playbackRootEl)
+    }
+    document.body.classList.remove("player-modal-open")
+    if (expandBtn) expandBtn.textContent = "Expand fullscreen"
+  })
 
   window.addEventListener("keydown", (e) => {
     const tag = (e.target && e.target.tagName) || ""
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return
+    if (e.code === "Escape" && modalEl?.open) {
+      closeExpand()
+      return
+    }
     if (e.code === "Space") {
       e.preventDefault()
       if (playing) pause()
