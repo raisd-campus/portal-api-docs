@@ -114,108 +114,79 @@ async function dismissErrorDialog(page) {
   }
 }
 
-/** SSO email+password (Keychain catalog) → optional role pick → destination host. */
-async function ssoSignIn(page, email, password, returnUrl) {
-  const loginUrl = `${SSO}/login?keychain=1&returnUrl=${encodeURIComponent(returnUrl)}`
-  await gotoSafe(page, loginUrl)
-  await dismissErrorDialog(page)
-  const emailField = page.getByLabel(/email/i)
-  if (await emailField.count()) await emailField.fill(email)
-  else await page.locator('input[type="email"], input[type="text"]').first().fill(email)
-  await page.getByLabel(/^password$/i).fill(password)
-  await safeClick(page.getByRole("button", { name: /sign in|continue|log in/i }))
-  await page.waitForTimeout(2500)
-  await dismissErrorDialog(page)
-  // Role / campus picker
-  const staffPick = page.getByRole("button", { name: /staff|admin|lecturer/i })
-  const applicantPick = page.getByRole("button", { name: /applicant/i })
-  const studentPick = page.getByRole("button", { name: /student/i })
-  const controlPick = page.getByRole("button", { name: /control/i })
-  if (returnUrl.includes("staff") && (await staffPick.count())) await staffPick.first().click()
-  else if (returnUrl.includes("apply") && (await applicantPick.count())) await applicantPick.first().click()
-  else if (returnUrl.includes("student") && (await studentPick.count())) await studentPick.first().click()
-  else if (returnUrl.includes("control") && (await controlPick.count())) await controlPick.first().click()
-  else if (await page.getByRole("button", { name: /continue|open|lesotho/i }).count()) {
-    await safeClick(page.getByRole("button", { name: /continue|open|lesotho/i }))
+/** Demo Keychain SSO password channel → portal consumes ?code=. */
+async function ssoApiSignIn(page, email, password, returnUrl) {
+  await gotoSafe(page, SSO)
+  const result = await page.evaluate(
+    async ({ sso, email, password, returnUrl }) => {
+      const r = await fetch(`${sso}/v1/auth/channels/password/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, returnUrl }),
+      })
+      return { ok: r.ok, status: r.status, body: await r.json().catch(() => ({})) }
+    },
+    { sso: SSO, email, password, returnUrl },
+  )
+  if (!result.ok || !result.body?.redirectTo) {
+    throw new Error(
+      `SSO login failed for ${email}: ${result.body?.error || result.status || "no redirect"}`,
+    )
   }
+  await gotoSafe(page, result.body.redirectTo)
+  // Let the portal exchange ?code= before navigating elsewhere.
+  await page.waitForFunction(() => !/[?&]code=/.test(location.search), null, { timeout: 45000 }).catch(() => {})
   await page.waitForTimeout(2500)
+  if (/sso\.raisd\.co\/login/i.test(page.url())) {
+    throw new Error(`SSO session did not stick for ${email}; still on ${page.url()}`)
+  }
 }
 
 async function applicantSignIn(page, context) {
   const acct = KEYCHAIN_USERS.applicant
-  await clearSite(page, context, APPLICANT)
-  await gotoSafe(page, `${APPLICANT}/`)
-  await page.waitForTimeout(800)
-  await dismissErrorDialog(page)
-  const draftBtn = page.getByRole("button", { name: /draft ready to submit|completed/i })
-  if (await draftBtn.count()) {
-    await draftBtn.first().click()
-  } else {
-    // Fall back to SSO Keychain user when local persona chips are absent.
-    await ssoSignIn(page, acct.email, acct.password, `${APPLICANT}/`)
+  await context.clearCookies()
+  await ssoApiSignIn(page, acct.email, acct.password, `${APPLICANT}/`)
+  if (!/apply\.lesotho\.raisd\.co/i.test(page.url())) {
     await gotoSafe(page, `${APPLICANT}/applications`)
-    return
   }
-  await page.getByLabel(/^password$/i).fill(acct.password)
-  await page.getByRole("button", { name: /^sign in$/i }).click()
-  await page.waitForTimeout(1500)
-  await dismissErrorDialog(page)
-  // Wrong password → retry once with Keychain value via SSO path.
-  if (await page.getByText(/incorrect|invalid password|email or password/i).count()) {
-    await dismissErrorDialog(page)
-    await ssoSignIn(page, acct.email, acct.password, `${APPLICANT}/`)
-  }
+  await page.waitForTimeout(2000)
   await page
-    .getByRole("heading", { name: /my applications|applications/i })
+    .getByText(/my applications|application no|enrolment accepted|add application/i)
+    .first()
     .waitFor({ timeout: 45000 })
-    .catch(() => {})
-  await dwell(page, 1200)
+  await dwell(page, 2000)
 }
 
 async function staffSignInUi(page, context, roleKey) {
   const acct = KEYCHAIN_USERS[roleKey]
   if (!acct) throw new Error(`Unknown staff role ${roleKey}`)
-  await ssoSignIn(page, acct.email, acct.password, `${STAFF}/sign-in?sso=1`)
-  await gotoSafe(page, `${STAFF}/admin`)
-  await page.waitForTimeout(1200)
-  // If still on sign-in, try portal form with Keychain email (not short usernames).
-  if (/sign-in|login/i.test(page.url())) {
-    await gotoSafe(page, `${STAFF}/sign-in`)
-    const email = page.getByLabel(/email|username/i)
-    if (await email.count()) await email.fill(acct.email)
-    await page.getByLabel(/^password$/i).fill(acct.password)
-    await safeClick(page.getByRole("button", { name: /^sign in$/i }))
-    await page.waitForTimeout(2500)
-    await dismissErrorDialog(page)
+  await context.clearCookies()
+  await ssoApiSignIn(page, acct.email, acct.password, `${STAFF}/`)
+  if (!/staff\.lesotho\.raisd\.co\/admin/i.test(page.url())) {
     await gotoSafe(page, `${STAFF}/admin`)
   }
+  await page.waitForTimeout(2000)
+  // Soft assert — Demo staff chrome varies by desk; don't fail the clip on copy.
+  await page.getByText(/overview|applicants|campus|admin|bursary|registry|faculty|qa/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+  await page.waitForTimeout(1500)
 }
 
 async function studentSignIn(page, context) {
   const acct = KEYCHAIN_USERS.student
-  await gotoSafe(page, `${STUDENT}/`)
-  const alya = page.getByRole("button", { name: /alya putri/i })
-  if (await alya.count()) await alya.click()
-  const studentNo = page.getByLabel(/student number/i)
-  if (await studentNo.count()) await studentNo.fill("10029841")
-  const email = page.getByLabel(/email/i)
-  if ((await email.count()) && !(await studentNo.count())) await email.fill(acct.email)
-  await page.getByLabel(/^password$/i).fill(acct.password)
-  await page.getByRole("button", { name: /^sign in$/i }).click()
-  await page.waitForTimeout(2500)
-  await dismissErrorDialog(page)
-  if (await page.getByText(/incorrect|invalid password|email or password/i).count()) {
-    await dismissErrorDialog(page)
-    await ssoSignIn(page, acct.email, acct.password, `${STUDENT}/`)
+  await context.clearCookies()
+  await ssoApiSignIn(page, acct.email, acct.password, `${STUDENT}/`)
+  if (!/student\.lesotho\.raisd\.co/i.test(page.url())) {
+    await gotoSafe(page, `${STUDENT}/`)
   }
-  await page.waitForTimeout(2000)
+  await page.waitForTimeout(2500)
 }
 
 async function controlSignIn(page, context) {
   const acct = KEYCHAIN_USERS.control
-  await ssoSignIn(page, acct.email, acct.password, `${CONTROL}/sign-in?sso=1`)
+  await context.clearCookies()
+  await ssoApiSignIn(page, acct.email, acct.password, `${CONTROL}/`)
   await gotoSafe(page, `${CONTROL}/flows/admissions/campus-lesotho`)
-  await page.waitForTimeout(1200)
+  await page.waitForTimeout(1500)
 }
 
 async function openApplicantCase(page) {
@@ -247,22 +218,31 @@ async function runSceneActions(page, context, sceneId, roleId) {
       return "applicant signed in"
     }
     case "app-draft": {
-      if (!(await page.getByRole("heading", { name: /my applications|applications/i }).count())) {
+      try {
+        if (!(await page.getByRole("heading", { name: /my applications|applications/i }).count())) {
+          await applicantSignIn(page, context)
+        }
+      } catch {
         await applicantSignIn(page, context)
       }
-      await page.goto(`${APPLICANT}/applications`, { waitUntil: "domcontentloaded" }).catch(() => {})
+      await gotoSafe(page, `${APPLICANT}/applications`)
       await dwell(page, 1200)
       await openApplicantCase(page)
       await dwell(page, 2500)
       return "applicant draft view"
     }
     case "app-fee": {
-      if (!(await page.getByRole("heading", { name: /my applications|applications|application/i }).count())) {
+      try {
+        if (!(await page.getByRole("heading", { name: /my applications|applications|application/i }).count())) {
+          await applicantSignIn(page, context)
+        }
+      } catch {
         await applicantSignIn(page, context)
       }
+      await gotoSafe(page, `${APPLICANT}/applications`)
       await openApplicantCase(page)
-      await safeClick(page.getByRole("button", { name: /application fee|fee/i }))
-      await page.mouse.wheel(0, 400)
+      await safeClick(page.getByRole("button", { name: /application fee|fee|view application/i }))
+      await page.mouse.wheel(0, 400).catch(() => {})
       await dwell(page, 2800)
       return "applicant fee step"
     }
@@ -472,6 +452,17 @@ async function recordScene(browser, entry, storageStatePath) {
     await dwell(page, 1500)
   }
 
+  // Prefer an authenticated URL for the closing frame when still on SSO login chrome.
+  try {
+    const u = page.url()
+    if (/sso\.raisd\.co|\/login|\/sign-in/i.test(u)) {
+      const target = SCENE_URLS[scene.id]
+      if (target) await gotoSafe(page, target)
+      await page.waitForTimeout(2000)
+    }
+  } catch {
+    /* ignore */
+  }
   const posterPath = path.join(outDir, `${scene.id}.poster.jpg`)
   await page.screenshot({ path: posterPath, type: "jpeg", quality: 72 }).catch(() => {})
 

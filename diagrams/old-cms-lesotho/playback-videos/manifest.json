@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-27T21:12:57.723Z",
+  "recordedAt": "2026-10-27T21:44:43.279Z",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
     "staff": "https://staff.lesotho.raisd.co",
@@ -19,10 +19,10 @@
       ],
       "file": "app-signin.webm",
       "poster": "app-signin.poster.jpg",
-      "bytes": 166529,
+      "bytes": 258043,
       "detail": "applicant signed in",
       "error": null,
-      "recordedAt": "2026-10-27T21:03:31.926Z"
+      "recordedAt": "2026-10-27T21:37:15.756Z"
     },
     {
       "sceneId": "app-draft",
@@ -34,10 +34,10 @@
       ],
       "file": "app-draft.webm",
       "poster": "app-draft.poster.jpg",
-      "bytes": 248976,
+      "bytes": 426960,
       "detail": "applicant draft view",
       "error": null,
-      "recordedAt": "2026-10-27T21:03:53.058Z"
+      "recordedAt": "2026-10-27T21:37:45.358Z"
     },
     {
       "sceneId": "app-fee",
@@ -49,10 +49,10 @@
       ],
       "file": "app-fee.webm",
       "poster": "app-fee.poster.jpg",
-      "bytes": 279241,
+      "bytes": 451360,
       "detail": "applicant fee step",
       "error": null,
-      "recordedAt": "2026-10-27T21:04:14.119Z"
+      "recordedAt": "2026-10-27T21:38:15.787Z"
     },
     {
       "sceneId": "app-eligibility",
@@ -64,10 +64,10 @@
       ],
       "file": "app-eligibility.webm",
       "poster": "app-eligibility.poster.jpg",
-      "bytes": 323829,
+      "bytes": 1234515,
       "detail": "applicant eligibility",
       "error": null,
-      "recordedAt": "2026-10-27T21:04:36.703Z"
+      "recordedAt": "2026-10-27T21:18:26.596Z"
     },
     {
       "sceneId": "app-offer",
@@ -78,10 +78,10 @@
       ],
       "file": "app-offer.webm",
       "poster": "app-offer.poster.jpg",
-      "bytes": 299534,
+      "bytes": 1186680,
       "detail": "applicant offer",
       "error": null,
-      "recordedAt": "2026-10-27T21:05:00.209Z"
+      "recordedAt": "2026-10-27T21:19:37.689Z"
     },
     {
       "sceneId": "fac-open",
@@ -93,10 +93,10 @@
       ],
       "file": "fac-open.webm",
       "poster": "fac-open.poster.jpg",
-      "bytes": 573322,
+      "bytes": 936495,
       "detail": "faculty applicants",
       "error": null,
-      "recordedAt": "2026-10-27T21:05:25.873Z"
+      "recordedAt": "2026-10-27T21:41:30.933Z"
     },
     {
       "sceneId": "fac-rank",
@@ -108,10 +108,10 @@
       ],
       "file": "fac-rank.webm",
       "poster": "fac-rank.poster.jpg",
-      "bytes": 243648,
+      "bytes": 253176,
       "detail": "faculty fac-rank",
       "error": null,
-      "recordedAt": "2026-10-27T21:05:42.016Z"
+      "recordedAt": "2026-10-27T21:20:18.284Z"
     },
     {
       "sceneId": "fac-rec",
@@ -123,10 +123,10 @@
       ],
       "file": "fac-rec.webm",
       "poster": "fac-rec.poster.jpg",
-      "bytes": 240698,
+      "bytes": 258668,
       "detail": "faculty fac-rec",
       "error": null,
-      "recordedAt": "2026-10-27T21:05:58.672Z"
+      "recordedAt": "2026-10-27T21:20:34.919Z"
     },
     {
       "sceneId": "qa-open",
@@ -138,10 +138,10 @@
       ],
       "file": "qa-open.webm",
       "poster": "qa-open.poster.jpg",
-      "bytes": 486430,
+      "bytes": 927177,
       "detail": "qa open",
       "error": null,
-      "recordedAt": "2026-10-27T21:06:22.307Z"
+      "recordedAt": "2026-10-27T21:42:18.589Z"
     },
     {
       "sceneId": "qa-extract",
@@ -153,10 +153,10 @@
       ],
       "file": "qa-extract.webm",
       "poster": "qa-extract.poster.jpg",
-      "bytes": 262900,
+      "bytes": 262267,
       "detail": "qa-extract",
       "error": null,
-      "recordedAt": "2026-10-27T21:06:42.407Z"
+      "recordedAt": "2026-10-27T21:21:14.215Z"
     },
     {
       "sceneId": "qa-verify",
@@ -168,10 +168,10 @@
       ],
       "file": "qa-verify.webm",
       "poster": "qa-verify.poster.jpg",
-      "bytes": 264641,
+      "bytes": 242423,
       "detail": "qa-verify",
       "error": null,
-      "recordedAt": "2026-10-27T21:07:03.071Z"
+      "recordedAt": "2026-10-27T21:21:30.712Z"
     },
     {
       "sceneId": "bur-pay",
@@ -183,10 +183,10 @@
       ],
       "file": "bur-pay.webm",
       "poster": "bur-pay.poster.jpg",
-      "bytes": 467084,
+      "bytes": 818806,
       "detail": "bursary payments",
       "error": null,
-      "recordedAt": "2026-10-27T21:07:30.004Z"
+      "recordedAt": "2026-10-27T21:43:06.271Z"
     },
     {
       "sceneId": "bur-fees",
@@ -197,10 +197,10 @@
       ],
       "file": "bur-fees.webm",
       "poster": "bur-fees.poster.jpg",
-      "bytes": 230183,
+      "bytes": 252468,
       "detail": "bursary fees",
       "error": null,
-      "recordedAt": "2026-10-27T21:07:48.558Z"
+      "recordedAt": "2026-10-27T21:22:14.708Z"
     },
     {
       "sceneId": "bur-reg",
@@ -212,10 +212,10 @@
       ],
       "file": "bur-reg.webm",
       "poster": "bur-reg.poster.jpg",
-      "bytes": 242582,
+      "bytes": 242118,
       "detail": "bursary registrations",
       "error": null,
-      "recordedAt": "2026-10-27T21:08:05.527Z"
+      "recordedAt": "2026-10-27T21:22:31.124Z"
     },
     {
       "sceneId": "reg-offer",
@@ -226,10 +226,10 @@
       ],
       "file": "reg-offer.webm",
       "poster": "reg-offer.poster.jpg",
-      "bytes": 578890,
+      "bytes": 912582,
       "detail": "registry offer desk",
       "error": null,
-      "recordedAt": "2026-10-27T21:08:33.393Z"
+      "recordedAt": "2026-10-27T21:43:52.908Z"
     },
     {
       "sceneId": "reg-queue",
@@ -240,10 +240,10 @@
       ],
       "file": "reg-queue.webm",
       "poster": "reg-queue.poster.jpg",
-      "bytes": 256178,
+      "bytes": 242658,
       "detail": "registry registrations",
       "error": null,
-      "recordedAt": "2026-10-27T21:08:51.078Z"
+      "recordedAt": "2026-10-27T21:23:11.047Z"
     },
     {
       "sceneId": "reg-list",
@@ -254,10 +254,10 @@
       ],
       "file": "reg-list.webm",
       "poster": "reg-list.poster.jpg",
-      "bytes": 253775,
+      "bytes": 255913,
       "detail": "registry students",
       "error": null,
-      "recordedAt": "2026-10-27T21:09:09.741Z"
+      "recordedAt": "2026-10-27T21:23:31.008Z"
     },
     {
       "sceneId": "reg-file-academics",
@@ -268,10 +268,10 @@
       ],
       "file": "reg-file-academics.webm",
       "poster": "reg-file-academics.poster.jpg",
-      "bytes": 289887,
+      "bytes": 251776,
       "detail": "reg-file-academics",
       "error": null,
-      "recordedAt": "2026-10-27T21:09:29.583Z"
+      "recordedAt": "2026-10-27T21:23:47.060Z"
     },
     {
       "sceneId": "reg-file-sponsors",
@@ -283,10 +283,10 @@
       ],
       "file": "reg-file-sponsors.webm",
       "poster": "reg-file-sponsors.poster.jpg",
-      "bytes": 239526,
+      "bytes": 252897,
       "detail": "reg-file-sponsors",
       "error": null,
-      "recordedAt": "2026-10-27T21:09:46.289Z"
+      "recordedAt": "2026-10-27T21:24:04.947Z"
     },
     {
       "sceneId": "yl-signin",
@@ -298,10 +298,10 @@
       ],
       "file": "yl-signin.webm",
       "poster": "yl-signin.poster.jpg",
-      "bytes": 509817,
+      "bytes": 940292,
       "detail": "year leader home",
       "error": null,
-      "recordedAt": "2026-10-27T21:10:15.212Z"
+      "recordedAt": "2026-10-27T21:44:43.262Z"
     },
     {
       "sceneId": "yl-list",
@@ -312,10 +312,10 @@
       ],
       "file": "yl-list.webm",
       "poster": "yl-list.poster.jpg",
-      "bytes": 255786,
+      "bytes": 241967,
       "detail": "year leader list",
       "error": null,
-      "recordedAt": "2026-10-27T21:10:32.335Z"
+      "recordedAt": "2026-10-27T21:24:43.210Z"
     },
     {
       "sceneId": "yl-file",
@@ -327,10 +327,10 @@
       ],
       "file": "yl-file.webm",
       "poster": "yl-file.poster.jpg",
-      "bytes": 242978,
+      "bytes": 241466,
       "detail": "year leader file",
       "error": null,
-      "recordedAt": "2026-10-27T21:10:50.293Z"
+      "recordedAt": "2026-10-27T21:24:59.596Z"
     },
     {
       "sceneId": "stu-signin",
@@ -343,10 +343,10 @@
       ],
       "file": "stu-signin.webm",
       "poster": "stu-signin.poster.jpg",
-      "bytes": 273921,
+      "bytes": 333960,
       "detail": "student signed in",
       "error": null,
-      "recordedAt": "2026-10-27T21:11:07.091Z"
+      "recordedAt": "2026-10-27T21:35:58.475Z"
     },
     {
       "sceneId": "stu-reg",
@@ -358,10 +358,10 @@
       ],
       "file": "stu-reg.webm",
       "poster": "stu-reg.poster.jpg",
-      "bytes": 284477,
+      "bytes": 271209,
       "detail": "student registration",
       "error": null,
-      "recordedAt": "2026-10-27T21:11:28.394Z"
+      "recordedAt": "2026-10-27T21:25:37.710Z"
     },
     {
       "sceneId": "stu-finance",
@@ -373,10 +373,10 @@
       ],
       "file": "stu-finance.webm",
       "poster": "stu-finance.poster.jpg",
-      "bytes": 246494,
+      "bytes": 276808,
       "detail": "student finance",
       "error": null,
-      "recordedAt": "2026-10-27T21:11:46.698Z"
+      "recordedAt": "2026-10-27T21:25:55.610Z"
     },
     {
       "sceneId": "ctl-flows",
@@ -387,10 +387,10 @@
       ],
       "file": "ctl-flows.webm",
       "poster": "ctl-flows.poster.jpg",
-      "bytes": 367124,
+      "bytes": 489039,
       "detail": "control flows",
       "error": null,
-      "recordedAt": "2026-10-27T21:12:06.100Z"
+      "recordedAt": "2026-10-27T21:36:19.883Z"
     },
     {
       "sceneId": "ctl-review",
@@ -401,10 +401,10 @@
       ],
       "file": "ctl-review.webm",
       "poster": "ctl-review.poster.jpg",
-      "bytes": 239300,
+      "bytes": 248262,
       "detail": "control desk review",
       "error": null,
-      "recordedAt": "2026-10-27T21:12:22.476Z"
+      "recordedAt": "2026-10-27T21:26:32.178Z"
     },
     {
       "sceneId": "ctl-catalogues",
@@ -415,10 +415,10 @@
       ],
       "file": "ctl-catalogues.webm",
       "poster": "ctl-catalogues.poster.jpg",
-      "bytes": 232223,
+      "bytes": 220863,
       "detail": "control catalogues",
       "error": null,
-      "recordedAt": "2026-10-27T21:12:40.241Z"
+      "recordedAt": "2026-10-27T21:26:49.994Z"
     },
     {
       "sceneId": "ctl-positions",
@@ -430,10 +430,10 @@
       ],
       "file": "ctl-positions.webm",
       "poster": "ctl-positions.poster.jpg",
-      "bytes": 262496,
+      "bytes": 248122,
       "detail": "control campus",
       "error": null,
-      "recordedAt": "2026-10-27T21:12:57.698Z"
+      "recordedAt": "2026-10-27T21:27:07.283Z"
     }
   ]
 }
