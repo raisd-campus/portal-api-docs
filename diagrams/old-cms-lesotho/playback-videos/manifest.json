@@ -1,0 +1,439 @@
+{
+  "recordedAt": "2026-10-27T20:57:07.578Z",
+  "host": {
+    "applicant": "https://apply.lesotho.raisd.co",
+    "staff": "https://staff.lesotho.raisd.co",
+    "student": "https://student.lesotho.raisd.co",
+    "control": "https://control.raisd.co",
+    "keychain": "https://keychain.raisd.co"
+  },
+  "scenes": [
+    {
+      "sceneId": "app-signin",
+      "roleId": "applicant",
+      "title": "Sign in to Applicant",
+      "fm": [
+        "FM-01",
+        "FM-02",
+        "FM-14"
+      ],
+      "file": "app-signin.webm",
+      "poster": "app-signin.poster.jpg",
+      "bytes": 1131565,
+      "detail": "applicant signed in",
+      "error": null,
+      "recordedAt": "2026-10-27T20:33:18.466Z"
+    },
+    {
+      "sceneId": "app-draft",
+      "roleId": "applicant",
+      "title": "Draft and submit application",
+      "fm": [
+        "FM-02",
+        "FM-05"
+      ],
+      "file": "app-draft.webm",
+      "poster": "app-draft.poster.jpg",
+      "bytes": 218050,
+      "detail": "applicant draft view",
+      "error": null,
+      "recordedAt": "2026-10-27T20:33:35.993Z"
+    },
+    {
+      "sceneId": "app-fee",
+      "roleId": "applicant",
+      "title": "Application fee proof",
+      "fm": [
+        "FM-09",
+        "FM-02"
+      ],
+      "file": "app-fee.webm",
+      "poster": "app-fee.poster.jpg",
+      "bytes": 1233218,
+      "detail": "applicant fee step",
+      "error": null,
+      "recordedAt": "2026-10-27T20:43:09.497Z"
+    },
+    {
+      "sceneId": "app-eligibility",
+      "roleId": "applicant",
+      "title": "Confirm eligibility",
+      "fm": [
+        "FM-02",
+        "FM-03"
+      ],
+      "file": "app-eligibility.webm",
+      "poster": "app-eligibility.poster.jpg",
+      "bytes": 1171212,
+      "detail": "applicant eligibility",
+      "error": null,
+      "recordedAt": "2026-10-27T20:44:21.469Z"
+    },
+    {
+      "sceneId": "app-offer",
+      "roleId": "applicant",
+      "title": "Accept Offer Letter",
+      "fm": [
+        "FM-02"
+      ],
+      "file": "app-offer.webm",
+      "poster": "app-offer.poster.jpg",
+      "bytes": 1189184,
+      "detail": "applicant offer",
+      "error": null,
+      "recordedAt": "2026-10-27T20:45:27.752Z"
+    },
+    {
+      "sceneId": "fac-open",
+      "roleId": "faculty",
+      "title": "Open Admissions review",
+      "fm": [
+        "FM-03",
+        "FM-15"
+      ],
+      "file": "fac-open.webm",
+      "poster": "fac-open.poster.jpg",
+      "bytes": 398981,
+      "detail": "faculty applicants",
+      "error": null,
+      "recordedAt": "2026-10-27T20:48:18.015Z"
+    },
+    {
+      "sceneId": "fac-rank",
+      "roleId": "faculty",
+      "title": "Set rank and score",
+      "fm": [
+        "FM-03",
+        "FM-05"
+      ],
+      "file": "fac-rank.webm",
+      "poster": "fac-rank.poster.jpg",
+      "bytes": 304752,
+      "detail": "faculty fac-rank",
+      "error": null,
+      "recordedAt": "2026-10-27T20:51:25.588Z"
+    },
+    {
+      "sceneId": "fac-rec",
+      "roleId": "faculty",
+      "title": "Record faculty recommendation",
+      "fm": [
+        "FM-03",
+        "FM-05"
+      ],
+      "file": "fac-rec.webm",
+      "poster": "fac-rec.poster.jpg",
+      "bytes": 297506,
+      "detail": "faculty fac-rec",
+      "error": null,
+      "recordedAt": "2026-10-27T20:51:47.602Z"
+    },
+    {
+      "sceneId": "qa-open",
+      "roleId": "qa",
+      "title": "Open Document review",
+      "fm": [
+        "FM-04",
+        "FM-15"
+      ],
+      "file": "qa-open.webm",
+      "poster": "qa-open.poster.jpg",
+      "bytes": 510123,
+      "detail": "qa open",
+      "error": null,
+      "recordedAt": "2026-10-27T20:48:52.353Z"
+    },
+    {
+      "sceneId": "qa-extract",
+      "roleId": "qa",
+      "title": "Run LGCSE extract",
+      "fm": [
+        "FM-04",
+        "FM-05"
+      ],
+      "file": "qa-extract.webm",
+      "poster": "qa-extract.poster.jpg",
+      "bytes": 309646,
+      "detail": "qa-extract",
+      "error": null,
+      "recordedAt": "2026-10-27T20:52:09.280Z"
+    },
+    {
+      "sceneId": "qa-verify",
+      "roleId": "qa",
+      "title": "Verify documents",
+      "fm": [
+        "FM-04",
+        "FM-03"
+      ],
+      "file": "qa-verify.webm",
+      "poster": "qa-verify.poster.jpg",
+      "bytes": 272430,
+      "detail": "qa-verify",
+      "error": null,
+      "recordedAt": "2026-10-27T20:52:29.476Z"
+    },
+    {
+      "sceneId": "bur-pay",
+      "roleId": "bursary",
+      "title": "Verify application payment",
+      "fm": [
+        "FM-09",
+        "FM-03"
+      ],
+      "file": "bur-pay.webm",
+      "poster": "bur-pay.poster.jpg",
+      "bytes": 391043,
+      "detail": "bursary payments",
+      "error": null,
+      "recordedAt": "2026-10-27T20:49:29.849Z"
+    },
+    {
+      "sceneId": "bur-fees",
+      "roleId": "bursary",
+      "title": "Fees & Fines catalogue preview",
+      "fm": [
+        "FM-09"
+      ],
+      "file": "bur-fees.webm",
+      "poster": "bur-fees.poster.jpg",
+      "bytes": 266563,
+      "detail": "bursary fees",
+      "error": null,
+      "recordedAt": "2026-10-27T20:52:48.458Z"
+    },
+    {
+      "sceneId": "bur-reg",
+      "roleId": "bursary",
+      "title": "Bursary registration clearance",
+      "fm": [
+        "FM-08",
+        "FM-09"
+      ],
+      "file": "bur-reg.webm",
+      "poster": "bur-reg.poster.jpg",
+      "bytes": 266467,
+      "detail": "bursary registrations",
+      "error": null,
+      "recordedAt": "2026-10-27T20:53:15.099Z"
+    },
+    {
+      "sceneId": "reg-offer",
+      "roleId": "registry",
+      "title": "Release Offer Letter",
+      "fm": [
+        "FM-03"
+      ],
+      "file": "reg-offer.webm",
+      "poster": "reg-offer.poster.jpg",
+      "bytes": 417850,
+      "detail": "registry offer desk",
+      "error": null,
+      "recordedAt": "2026-10-27T20:50:06.281Z"
+    },
+    {
+      "sceneId": "reg-queue",
+      "roleId": "registry",
+      "title": "Module registration desk",
+      "fm": [
+        "FM-08"
+      ],
+      "file": "reg-queue.webm",
+      "poster": "reg-queue.poster.jpg",
+      "bytes": 378701,
+      "detail": "registry registrations",
+      "error": null,
+      "recordedAt": "2026-10-27T20:54:02.683Z"
+    },
+    {
+      "sceneId": "reg-list",
+      "roleId": "registry",
+      "title": "Students list",
+      "fm": [
+        "FM-07"
+      ],
+      "file": "reg-list.webm",
+      "poster": "reg-list.poster.jpg",
+      "bytes": 291991,
+      "detail": "registry students",
+      "error": null,
+      "recordedAt": "2026-10-27T20:54:22.555Z"
+    },
+    {
+      "sceneId": "reg-file-academics",
+      "roleId": "registry",
+      "title": "Student file — Academics",
+      "fm": [
+        "FM-07"
+      ],
+      "file": "reg-file-academics.webm",
+      "poster": "reg-file-academics.poster.jpg",
+      "bytes": 274195,
+      "detail": "reg-file-academics",
+      "error": null,
+      "recordedAt": "2026-10-27T20:54:42.189Z"
+    },
+    {
+      "sceneId": "reg-file-sponsors",
+      "roleId": "registry",
+      "title": "Student file — Sponsors / Registration",
+      "fm": [
+        "FM-07",
+        "FM-08"
+      ],
+      "file": "reg-file-sponsors.webm",
+      "poster": "reg-file-sponsors.poster.jpg",
+      "bytes": 282956,
+      "detail": "reg-file-sponsors",
+      "error": null,
+      "recordedAt": "2026-10-27T20:55:04.122Z"
+    },
+    {
+      "sceneId": "yl-signin",
+      "roleId": "year-leader",
+      "title": "Sign in as Year Leader",
+      "fm": [
+        "FM-01",
+        "FM-15"
+      ],
+      "file": "yl-signin.webm",
+      "poster": "yl-signin.poster.jpg",
+      "bytes": 351583,
+      "detail": "year leader home",
+      "error": null,
+      "recordedAt": "2026-10-27T20:50:31.601Z"
+    },
+    {
+      "sceneId": "yl-list",
+      "roleId": "year-leader",
+      "title": "Browse enrolled students",
+      "fm": [
+        "FM-07"
+      ],
+      "file": "yl-list.webm",
+      "poster": "yl-list.poster.jpg",
+      "bytes": 274641,
+      "detail": "year leader list",
+      "error": null,
+      "recordedAt": "2026-10-27T20:55:24.770Z"
+    },
+    {
+      "sceneId": "yl-file",
+      "roleId": "year-leader",
+      "title": "Read registry file",
+      "fm": [
+        "FM-07",
+        "FM-15"
+      ],
+      "file": "yl-file.webm",
+      "poster": "yl-file.poster.jpg",
+      "bytes": 485646,
+      "detail": "year leader file",
+      "error": null,
+      "recordedAt": "2026-10-27T20:55:55.506Z"
+    },
+    {
+      "sceneId": "stu-signin",
+      "roleId": "student",
+      "title": "Sign in to Student",
+      "fm": [
+        "FM-01",
+        "FM-06",
+        "FM-14"
+      ],
+      "file": "stu-signin.webm",
+      "poster": "stu-signin.poster.jpg",
+      "bytes": 389111,
+      "detail": "student signed in",
+      "error": null,
+      "recordedAt": "2026-10-27T20:39:17.997Z"
+    },
+    {
+      "sceneId": "stu-reg",
+      "roleId": "student",
+      "title": "Submit module registration",
+      "fm": [
+        "FM-06",
+        "FM-08"
+      ],
+      "file": "stu-reg.webm",
+      "poster": "stu-reg.poster.jpg",
+      "bytes": 307081,
+      "detail": "student registration",
+      "error": null,
+      "recordedAt": "2026-10-27T20:39:40.078Z"
+    },
+    {
+      "sceneId": "stu-finance",
+      "roleId": "student",
+      "title": "Finance and CAF",
+      "fm": [
+        "FM-06",
+        "FM-09"
+      ],
+      "file": "stu-finance.webm",
+      "poster": "stu-finance.poster.jpg",
+      "bytes": 259812,
+      "detail": "student finance",
+      "error": null,
+      "recordedAt": "2026-10-27T20:39:59.135Z"
+    },
+    {
+      "sceneId": "ctl-flows",
+      "roleId": "control",
+      "title": "Open Lesotho Admissions Flows",
+      "fm": [
+        "FM-05"
+      ],
+      "file": "ctl-flows.webm",
+      "poster": "ctl-flows.poster.jpg",
+      "bytes": 364504,
+      "detail": "control flows",
+      "error": null,
+      "recordedAt": "2026-10-27T20:50:57.014Z"
+    },
+    {
+      "sceneId": "ctl-review",
+      "roleId": "control",
+      "title": "Desk review flags",
+      "fm": [
+        "FM-05"
+      ],
+      "file": "ctl-review.webm",
+      "poster": "ctl-review.poster.jpg",
+      "bytes": 298400,
+      "detail": "control desk review",
+      "error": null,
+      "recordedAt": "2026-10-27T20:56:26.362Z"
+    },
+    {
+      "sceneId": "ctl-catalogues",
+      "roleId": "control",
+      "title": "Load Demo catalogues",
+      "fm": [
+        "FM-05"
+      ],
+      "file": "ctl-catalogues.webm",
+      "poster": "ctl-catalogues.poster.jpg",
+      "bytes": 290100,
+      "detail": "control catalogues",
+      "error": null,
+      "recordedAt": "2026-10-27T20:56:48.151Z"
+    },
+    {
+      "sceneId": "ctl-positions",
+      "roleId": "control",
+      "title": "Positions note",
+      "fm": [
+        "FM-15",
+        "FM-01"
+      ],
+      "file": "ctl-positions.webm",
+      "poster": "ctl-positions.poster.jpg",
+      "bytes": 287625,
+      "detail": "control campus",
+      "error": null,
+      "recordedAt": "2026-10-27T20:57:07.558Z"
+    }
+  ]
+}

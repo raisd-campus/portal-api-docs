@@ -1,6 +1,6 @@
 /**
- * Lesotho Raisd Demo W1–W3 role-by-role live Demo portal iframe playback.
- * Each scene includes how it is executed on Demo hosts.
+ * Lesotho Raisd Demo W1–W3 role-by-role recorded video playback.
+ * Each scene plays a WebM from ./playback-videos/{sceneId}.webm and tracks FM tags.
  */
 export const ROLES = [
   {
@@ -337,7 +337,7 @@ export const ROLES = [
         steps: [
           "Open the selected student file.",
           "Step through Academics → Student → Registration tabs.",
-          "No Live CAP-53 write — Demo read shell only.",
+          "Demo read shell for year follow-up.",
         ],
         durationMs: 7000,
       },
@@ -454,7 +454,7 @@ export const ROLES = [
   },
 ]
 
-/** Real Demo portal URLs loaded in the playback iframe. Autopilot runs inside these hosts. */
+/** Demo portal URLs used by the recorder (and “Open portal” link). */
 export const SCENE_URLS = {
   "app-signin": "https://apply.lesotho.raisd.co/applications",
   "app-draft": "https://apply.lesotho.raisd.co/applications",
@@ -505,10 +505,26 @@ export function flattenScenes(roles = ROLES) {
   return flat
 }
 
+export function buildFeatureIndex(roles = ROLES) {
+  const map = new Map()
+  for (const entry of flattenScenes(roles)) {
+    for (const fm of entry.scene.fm || []) {
+      if (!map.has(fm)) map.set(fm, [])
+      map.get(fm).push(entry)
+    }
+  }
+  return [...map.entries()]
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([fm, scenes]) => ({ fm, scenes }))
+}
+
+const VIDEO_BASE = "./playback-videos"
+
 export function createPlayer(options) {
   const {
     roles = ROLES,
     roleListEl,
+    featureListEl,
     stageEl,
     roleBadgeEl,
     portalEl,
@@ -518,33 +534,32 @@ export function createPlayer(options) {
     bodyEl,
     stepsEl,
     fmEl,
-    browserUrlEl,
-    frameEl,
-    loadingEl,
-    reloadBtn,
-    openBtn,
+    videoEl,
+    missingEl,
+    videoStatusEl,
+    openPortalBtn,
     progressRoleEl,
     progressAllEl,
     statusEl,
-    execStatusEl,
     playBtn,
     pauseBtn,
     prevBtn,
     nextBtn,
     speedBtn,
+    manifestUrl = `${VIDEO_BASE}/manifest.json`,
   } = options
 
   const flat = flattenScenes(roles)
+  const featureIndex = buildFeatureIndex(roles)
+  /** @type {Record<string, { file?: string, poster?: string }>} */
+  let manifestById = {}
   let index = 0
   let playing = false
   let speed = 1
-  let timer = null
   let stepTimer = null
   let stepHighlight = 0
-  let lastFrameUrl = ""
-  let pendingRequestId = null
-  let executeNonce = 0
-  let executeSentForNonce = -1
+  let activeFm = null
+  let loadToken = 0
 
   function totalCount() {
     return flat.length
@@ -554,98 +569,27 @@ export function createPlayer(options) {
     return flat[index] ?? flat[0]
   }
 
-  function clearTimer() {
-    if (timer != null) {
-      clearTimeout(timer)
-      timer = null
-    }
+  function clearStepTimer() {
     if (stepTimer != null) {
       clearInterval(stepTimer)
       stepTimer = null
     }
   }
 
-  function setLoading(on) {
-    const el = loadingEl || document.getElementById("browser-loading")
-    if (el) el.setAttribute("data-show", on ? "true" : "false")
+  function videoSrcFor(sceneId) {
+    const entry = manifestById[sceneId]
+    if (entry?.file) return `${VIDEO_BASE}/${entry.file}`
+    return `${VIDEO_BASE}/${sceneId}.webm`
   }
 
-  function setExecStatus(text) {
-    const el = execStatusEl || document.getElementById("exec-status")
-    if (el) el.textContent = text
+  function posterFor(sceneId) {
+    const entry = manifestById[sceneId]
+    if (entry?.poster) return `${VIDEO_BASE}/${entry.poster}`
+    return `${VIDEO_BASE}/${sceneId}.poster.jpg`
   }
 
-  function postExecute({ force = false } = {}) {
-    const frame = frameEl || document.getElementById("portal-frame")
-    if (!frame?.contentWindow) return
-    // Skip only when this scene already got a result (not merely "sent once").
-    if (!force && executeSentForNonce === executeNonce && !pendingRequestId) return
-    const { role, scene } = current()
-    const requestId = crypto.randomUUID()
-    pendingRequestId = requestId
-    executeSentForNonce = executeNonce
-    setExecStatus(`Executing ${scene.id}…`)
-    const message = {
-      type: "raisd.demo.playback.execute",
-      version: 1,
-      sceneId: scene.id,
-      roleId: role.id,
-      requestId,
-    }
-    try {
-      frame.contentWindow.postMessage(message, "*")
-    } catch (err) {
-      setExecStatus(`Could not reach portal: ${err instanceof Error ? err.message : "error"}`)
-      pendingRequestId = null
-      return
-    }
-    // Retry a few times while waiting for the portal autopilot listener.
-    ;[1200, 3000, 6000].forEach((ms) => {
-      window.setTimeout(() => {
-        if (pendingRequestId !== requestId) return
-        try {
-          frame.contentWindow?.postMessage(message, "*")
-        } catch {
-          /* ignore */
-        }
-      }, ms)
-    })
-    window.setTimeout(() => {
-      if (pendingRequestId === requestId) {
-        setExecStatus("Waiting for portal autopilot… try Reload, or Open in a tab.")
-      }
-    }, 20000)
-  }
-
-  function loadPortal(url, { force = false } = {}) {
-    const urlEl = browserUrlEl || document.getElementById("browser-url")
-    const frame = frameEl || document.getElementById("portal-frame")
-    const open = openBtn || document.getElementById("btn-open")
-    executeNonce += 1
-    executeSentForNonce = -1
-    pendingRequestId = null
-    if (urlEl) {
-      urlEl.textContent = url
-      if (urlEl.tagName === "A") urlEl.href = url
-    }
-    if (open) open.href = url
-    if (!frame) return
-    if (!force && lastFrameUrl === url) {
-      setLoading(false)
-      postExecute({ force: true })
-      return
-    }
-    setLoading(true)
-    lastFrameUrl = url
-    const onLoad = () => {
-      setLoading(false)
-      frame.removeEventListener("load", onLoad)
-      // Prefer waiting for portal "ready"; also nudge after paint.
-      window.setTimeout(() => postExecute({ force: true }), 900)
-    }
-    frame.addEventListener("load", onLoad)
-    frame.src = url
-    setTimeout(() => setLoading(false), 10000)
+  function setVideoStatus(text) {
+    if (videoStatusEl) videoStatusEl.textContent = text
   }
 
   function highlightSteps(steps) {
@@ -657,6 +601,7 @@ export function createPlayer(options) {
   }
 
   function startStepPulse(steps) {
+    clearStepTimer()
     if (!steps?.length) return
     stepHighlight = 0
     highlightSteps(steps)
@@ -675,47 +620,67 @@ export function createPlayer(options) {
     }, per)
   }
 
-  function schedule() {
-    clearTimer()
-    if (!playing) return
-    const { scene } = current()
-    startStepPulse(scene.steps || [])
-    // Longer dwell: wait for execute + UI
-    const ms = Math.max(10000, Math.round((scene.durationMs || 12000) / speed))
-    timer = setTimeout(() => {
-      if (index >= totalCount() - 1) {
-        playing = false
-        updateChrome()
-        if (statusEl) statusEl.textContent = "Finished all roles"
-        return
-      }
-      index += 1
-      render()
-      schedule()
-    }, ms)
+  function syncUrl() {
+    const { role, scene } = current()
+    const url = new URL(location.href)
+    url.searchParams.set("role", role.id)
+    url.searchParams.set("scene", scene.id)
+    if (activeFm) url.searchParams.set("fm", activeFm)
+    else url.searchParams.delete("fm")
+    history.replaceState(null, "", url)
   }
 
-  window.addEventListener("message", (event) => {
-    const data = event.data
-    if (!data || typeof data !== "object") return
-    if (data.type === "raisd.demo.playback.ready" && data.version === 1) {
-      // Portal listener is up — always (re)send while this scene still awaits a result.
-      postExecute({ force: true })
-      return
-    }
-    if (
-      (data.type === "raisd.demo.playback.done" || data.type === "raisd.demo.playback.error") &&
-      data.version === 1 &&
-      data.requestId === pendingRequestId
-    ) {
-      pendingRequestId = null
-      if (data.type === "raisd.demo.playback.done") {
-        setExecStatus(`Done · ${data.detail || data.sceneId}`)
-      } else {
-        setExecStatus(`Error · ${data.detail || data.sceneId}`)
+  function loadSceneVideo({ autoplay = false } = {}) {
+    const { scene } = current()
+    const video = videoEl
+    if (!video) return
+    const token = ++loadToken
+    const src = videoSrcFor(scene.id)
+    const poster = posterFor(scene.id)
+    setVideoStatus(`Loading ${scene.id}…`)
+    if (missingEl) missingEl.hidden = true
+    video.hidden = false
+    video.poster = poster
+    video.playbackRate = speed
+
+    const onError = () => {
+      if (token !== loadToken) return
+      video.removeEventListener("error", onError)
+      video.removeAttribute("src")
+      video.load()
+      video.hidden = true
+      if (missingEl) {
+        missingEl.hidden = false
+        const idEl = missingEl.querySelector("[data-missing-id]")
+        if (idEl) idEl.textContent = scene.id
+      }
+      setVideoStatus(`Video not recorded yet · ${scene.id}`)
+      if (playing) {
+        // Advance after a short beat so Play still walks the storyboard.
+        window.setTimeout(() => {
+          if (token !== loadToken || !playing) return
+          next()
+        }, Math.max(2500, Math.round((scene.durationMs || 5000) / speed)))
       }
     }
-  })
+
+    const onLoaded = () => {
+      if (token !== loadToken) return
+      video.removeEventListener("loadeddata", onLoaded)
+      video.removeEventListener("error", onError)
+      setVideoStatus(`Ready · ${scene.id}`)
+      if (autoplay || playing) {
+        video.play().catch(() => {
+          setVideoStatus(`Paused · click Play on the video · ${scene.id}`)
+        })
+      }
+    }
+
+    video.addEventListener("error", onError)
+    video.addEventListener("loadeddata", onLoaded)
+    video.src = src
+    video.load()
+  }
 
   function renderRoleList() {
     if (!roleListEl) return
@@ -725,25 +690,42 @@ export function createPlayer(options) {
       btn.type = "button"
       btn.className = "role-item"
       btn.dataset.roleId = role.id
-      btn.setAttribute(
-        "aria-current",
-        current().roleIndex === roleIndex ? "true" : "false"
-      )
+      btn.setAttribute("aria-current", current().roleIndex === roleIndex ? "true" : "false")
       btn.innerHTML = `<span class="role-ord">${roleIndex + 1}</span><span class="role-meta"><strong>${role.label}</strong><span>${role.summary}</span></span>`
       btn.addEventListener("click", () => {
         const first = flat.findIndex((f) => f.roleIndex === roleIndex)
         if (first < 0) return
-        playing = false
-        clearTimer()
+        pause({ keepStatus: true })
         index = first
+        activeFm = null
         render()
-        updateChrome()
-        const url = new URL(location.href)
-        url.searchParams.set("role", role.id)
-        history.replaceState(null, "", url)
       })
       roleListEl.appendChild(btn)
     })
+  }
+
+  function renderFeatureList() {
+    if (!featureListEl) return
+    featureListEl.innerHTML = ""
+    for (const { fm, scenes } of featureIndex) {
+      const btn = document.createElement("button")
+      btn.type = "button"
+      btn.className = "fm-item"
+      const sceneIds = current().scene.fm || []
+      const isActive = activeFm === fm || sceneIds.includes(fm)
+      btn.setAttribute("aria-current", isActive ? "true" : "false")
+      const labels = [...new Set(scenes.map((s) => s.role.label))].slice(0, 3).join(" · ")
+      btn.innerHTML = `<span class="fm-code">${fm}</span><span class="fm-meta"><strong>${scenes.length} scene${scenes.length === 1 ? "" : "s"}</strong><span>${labels}</span></span>`
+      btn.addEventListener("click", () => {
+        const first = flat.findIndex((f) => (f.scene.fm || []).includes(fm))
+        if (first < 0) return
+        pause({ keepStatus: true })
+        index = first
+        activeFm = fm
+        render()
+      })
+      featureListEl.appendChild(btn)
+    }
   }
 
   function render() {
@@ -759,7 +741,10 @@ export function createPlayer(options) {
     if (routeEl) routeEl.textContent = scene.route
     if (titleEl) titleEl.textContent = scene.title
     if (bodyEl) bodyEl.textContent = scene.body
-    loadPortal(url)
+    if (openPortalBtn) {
+      openPortalBtn.href = url
+      openPortalBtn.hidden = !url
+    }
     if (stepsEl) {
       stepsEl.innerHTML = ""
       const heading = document.createElement("h3")
@@ -780,15 +765,29 @@ export function createPlayer(options) {
     if (fmEl) {
       fmEl.innerHTML = ""
       for (const tag of scene.fm) {
-        const span = document.createElement("span")
+        const span = document.createElement("button")
+        span.type = "button"
         span.className = "tag tag-partial"
         span.textContent = tag
+        if (activeFm === tag) span.setAttribute("data-active", "true")
+        span.addEventListener("click", () => {
+          activeFm = tag
+          const first = flat.findIndex((f) => (f.scene.fm || []).includes(tag))
+          if (first >= 0) {
+            pause({ keepStatus: true })
+            index = first
+            render()
+          } else {
+            renderFeatureList()
+            syncUrl()
+          }
+        })
         fmEl.appendChild(span)
       }
-      const live = document.createElement("span")
-      live.className = "tag tag-partial"
-      live.textContent = "Live portal"
-      fmEl.appendChild(live)
+      const recorded = document.createElement("span")
+      recorded.className = "tag tag-out"
+      recorded.textContent = "Recorded video"
+      fmEl.appendChild(recorded)
     }
     if (stageEl) {
       stageEl.dataset.role = role.id
@@ -809,7 +808,11 @@ export function createPlayer(options) {
       statusEl.textContent = `Role ${current().roleIndex + 1}/${roles.length} · Scene ${sceneIndex + 1}/${role.scenes.length} · ${index + 1}/${totalCount()}`
     }
     renderRoleList()
+    renderFeatureList()
+    syncUrl()
     updateChrome()
+    loadSceneVideo({ autoplay: playing })
+    if (playing) startStepPulse(scene.steps || [])
   }
 
   function updateChrome() {
@@ -818,23 +821,33 @@ export function createPlayer(options) {
     if (prevBtn) prevBtn.disabled = index <= 0
     if (nextBtn) nextBtn.disabled = index >= totalCount() - 1
     if (speedBtn) speedBtn.textContent = `${speed}×`
+    if (videoEl) videoEl.playbackRate = speed
   }
 
   function play() {
     playing = true
-    if (index >= totalCount() - 1) {
+    if (index >= totalCount() - 1 && videoEl?.ended) {
       index = 0
       render()
+      return
     }
     updateChrome()
-    schedule()
+    startStepPulse(current().scene.steps || [])
+    if (videoEl && !videoEl.hidden) {
+      videoEl.playbackRate = speed
+      videoEl.play().catch(() => {})
+      setVideoStatus(`Playing · ${current().scene.id}`)
+    } else {
+      loadSceneVideo({ autoplay: true })
+    }
   }
 
-  function pause() {
+  function pause({ keepStatus = false } = {}) {
     playing = false
-    clearTimer()
+    clearStepTimer()
+    videoEl?.pause()
     updateChrome()
-    if (statusEl) {
+    if (!keepStatus && statusEl) {
       const { sceneIndex } = current()
       statusEl.textContent = `Paused · Role ${current().roleIndex + 1}/${roles.length} · Scene ${sceneIndex + 1}/${current().role.scenes.length}`
     }
@@ -842,47 +855,53 @@ export function createPlayer(options) {
 
   function prev() {
     if (index <= 0) return
-    clearTimer()
+    const wasPlaying = playing
+    clearStepTimer()
     index -= 1
     render()
-    if (playing) schedule()
+    if (wasPlaying) play()
   }
 
   function next() {
     if (index >= totalCount() - 1) {
       playing = false
-      clearTimer()
+      clearStepTimer()
+      videoEl?.pause()
       updateChrome()
       if (statusEl) statusEl.textContent = "Finished all roles"
+      setVideoStatus("Finished all scenes")
       return
     }
-    clearTimer()
+    const wasPlaying = playing
+    clearStepTimer()
     index += 1
     render()
-    if (playing) schedule()
+    if (wasPlaying) play()
   }
 
   function toggleSpeed() {
     speed = speed === 1 ? 1.5 : speed === 1.5 ? 2 : 1
     updateChrome()
-    if (playing) schedule()
+    if (playing) startStepPulse(current().scene.steps || [])
   }
+
+  videoEl?.addEventListener("ended", () => {
+    if (!playing) {
+      setVideoStatus(`Ended · ${current().scene.id}`)
+      return
+    }
+    next()
+  })
 
   playBtn?.addEventListener("click", play)
   pauseBtn?.addEventListener("click", pause)
   prevBtn?.addEventListener("click", prev)
   nextBtn?.addEventListener("click", next)
   speedBtn?.addEventListener("click", toggleSpeed)
-  reloadBtn?.addEventListener("click", () => {
-    const { role, scene } = current()
-    loadPortal(sceneUrl(role, scene), { force: true })
-  })
 
   window.addEventListener("keydown", (e) => {
     const tag = (e.target && e.target.tagName) || ""
-    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return
-    // Don't steal keys while user types inside the portal iframe focus
-    if (document.activeElement && document.activeElement.tagName === "IFRAME") return
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "VIDEO") return
     if (e.code === "Space") {
       e.preventDefault()
       if (playing) pause()
@@ -897,12 +916,36 @@ export function createPlayer(options) {
   })
 
   const params = new URLSearchParams(location.search)
+  const sceneParam = params.get("scene")
   const roleParam = params.get("role")
-  if (roleParam) {
+  const fmParam = params.get("fm")
+  if (sceneParam) {
+    const found = flat.findIndex((f) => f.scene.id === sceneParam)
+    if (found >= 0) index = found
+  } else if (roleParam) {
     const first = flat.findIndex((f) => f.role.id === roleParam)
     if (first >= 0) index = first
   }
+  if (fmParam) {
+    activeFm = fmParam
+    if (!sceneParam) {
+      const first = flat.findIndex((f) => (f.scene.fm || []).includes(fmParam))
+      if (first >= 0) index = first
+    }
+  }
 
-  render()
+  fetch(manifestUrl)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((data) => {
+      if (!data?.scenes) return
+      for (const entry of data.scenes) {
+        if (entry?.sceneId) manifestById[entry.sceneId] = entry
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      render()
+    })
+
   return { play, pause, prev, next, render }
 }
