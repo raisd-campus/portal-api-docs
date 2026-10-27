@@ -545,6 +545,10 @@ export function createPlayer(options) {
     playbackSlotEl,
     modalEl,
     modalBodyEl,
+    stepProgressRoleEl,
+    stepProgressCountEl,
+    stepProgressTrackEl,
+    sectionProgressEl,
     progressRoleEl,
     progressAllEl,
     statusEl,
@@ -770,6 +774,68 @@ export function createPlayer(options) {
     }
   }
 
+  function shortStepLabel(title) {
+    const clean = String(title || "").replace(/^Open\s+/i, "").trim()
+    if (clean.length <= 28) return clean
+    return `${clean.slice(0, 26).trim()}…`
+  }
+
+  function renderSectionProgress() {
+    if (!sectionProgressEl) return
+    const { roleIndex } = current()
+    sectionProgressEl.innerHTML = ""
+    roles.forEach((role, i) => {
+      const btn = document.createElement("button")
+      btn.type = "button"
+      btn.textContent = `${i + 1}. ${role.label}`
+      btn.setAttribute("role", "tab")
+      btn.setAttribute("aria-current", i === roleIndex ? "true" : "false")
+      if (i < roleIndex) btn.setAttribute("data-done", "true")
+      btn.title = role.summary || role.label
+      btn.addEventListener("click", () => {
+        const first = flat.findIndex((f) => f.roleIndex === i)
+        if (first < 0) return
+        pause({ keepStatus: true })
+        index = first
+        activeFm = null
+        render()
+      })
+      sectionProgressEl.appendChild(btn)
+    })
+  }
+
+  function renderStepProgress() {
+    const { role, scene, sceneIndex, roleIndex } = current()
+    if (stepProgressRoleEl) {
+      stepProgressRoleEl.textContent = `${roleIndex + 1}. ${role.label}`
+    }
+    if (stepProgressCountEl) {
+      stepProgressCountEl.textContent = `Step ${sceneIndex + 1} of ${role.scenes.length} · screen ${scene.id}`
+    }
+    if (!stepProgressTrackEl) return
+    stepProgressTrackEl.innerHTML = ""
+    role.scenes.forEach((s, i) => {
+      const li = document.createElement("li")
+      const state = i < sceneIndex ? "done" : i === sceneIndex ? "current" : "todo"
+      li.dataset.state = state
+      const btn = document.createElement("button")
+      btn.type = "button"
+      btn.setAttribute("aria-current", i === sceneIndex ? "step" : "false")
+      btn.title = s.title
+      btn.innerHTML = `<span class="step-ord">${i + 1}</span><span class="step-label">${shortStepLabel(s.title)}</span>`
+      btn.addEventListener("click", () => {
+        const target = flat.findIndex((f) => f.roleIndex === roleIndex && f.sceneIndex === i)
+        if (target < 0) return
+        pause({ keepStatus: true })
+        index = target
+        activeFm = null
+        render()
+      })
+      li.appendChild(btn)
+      stepProgressTrackEl.appendChild(li)
+    })
+  }
+
   function render() {
     const { role, scene, sceneIndex } = current()
     const url = sceneUrl(role, scene)
@@ -835,6 +901,8 @@ export function createPlayer(options) {
       stageEl.dataset.role = role.id
       stageEl.dataset.scene = scene.id
     }
+    renderSectionProgress()
+    renderStepProgress()
     if (progressRoleEl) {
       const n = role.scenes.length
       progressRoleEl.style.width = `${((sceneIndex + 1) / n) * 100}%`

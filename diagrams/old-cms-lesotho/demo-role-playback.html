@@ -38,6 +38,75 @@
     }
     .stage-top { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 13px; opacity: .92; }
     .stage-badge { font-weight: 700; letter-spacing: .02em; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); }
+    .step-progress {
+      display: grid; gap: 10px; padding: 12px 14px; border-radius: 10px;
+      background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.1);
+    }
+    .step-progress-head {
+      display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between;
+    }
+    .step-progress-head strong { font-size: 13px; color: #fff; letter-spacing: .02em; }
+    .step-progress-head span { font-size: 12px; color: #9db0c0; }
+    .step-progress-track {
+      list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0; align-items: stretch;
+    }
+    .step-progress-track > li {
+      flex: 1 1 0; min-width: 96px; display: flex; align-items: stretch; position: relative;
+    }
+    .step-progress-track > li:not(:last-child)::after {
+      content: ""; position: absolute; top: 14px; left: calc(50% + 16px); right: -2px; height: 2px;
+      background: rgba(255,255,255,.16); z-index: 0;
+    }
+    .step-progress-track > li[data-state="done"]:not(:last-child)::after,
+    .step-progress-track > li[data-state="current"]:not(:last-child)::after {
+      background: color-mix(in oklab, var(--accent, #0f6b5d) 70%, #7eb6ff);
+    }
+    .step-progress-track button {
+      position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; align-items: center;
+      gap: 6px; padding: 0 6px 2px; border: 0; background: transparent; color: #9db0c0;
+      cursor: pointer; font: inherit; text-align: center;
+    }
+    .step-progress-track button:hover .step-ord {
+      border-color: #7eb6ff; color: #fff;
+    }
+    .step-ord {
+      width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center;
+      font-size: 12px; font-weight: 700; border: 2px solid rgba(255,255,255,.22);
+      background: #18222c; color: #e8eef5;
+    }
+    .step-label {
+      font-size: 11px; line-height: 1.3; color: inherit; max-width: 9.5rem;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .step-progress-track li[data-state="done"] .step-ord {
+      background: var(--accent, #0f6b5d); border-color: transparent; color: #fff;
+    }
+    .step-progress-track li[data-state="done"] button { color: #c5d0dc; }
+    .step-progress-track li[data-state="current"] .step-ord {
+      background: #7eb6ff; border-color: transparent; color: #0b1016;
+      box-shadow: 0 0 0 3px rgba(126, 182, 255, .28);
+    }
+    .step-progress-track li[data-state="current"] button { color: #fff; font-weight: 600; }
+    .step-progress-track li[data-state="current"] .step-label { color: #fff; }
+    .section-progress {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 0;
+    }
+    .section-progress button {
+      font: inherit; font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); color: #9db0c0;
+      cursor: pointer;
+    }
+    .section-progress button:hover { border-color: #7eb6ff; color: #e8eef5; }
+    .section-progress button[aria-current="true"] {
+      background: rgba(126, 182, 255, .2); border-color: #7eb6ff; color: #fff;
+    }
+    .section-progress button[data-done="true"]:not([aria-current="true"]) {
+      color: #c5d0dc; border-color: rgba(15, 107, 93, .55);
+    }
+    @media (max-width: 720px) {
+      .step-progress-track > li { flex: 1 1 calc(50% - 4px); min-width: 0; }
+      .step-progress-track > li:not(:last-child)::after { display: none; }
+    }
     .stage-narration h2 { margin: 0; font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.25; color: #fff; }
     .stage-route { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; opacity: .85; }
     .stage-body { margin: 0; font-size: .98rem; line-height: 1.45; color: #d7e0ea; }
@@ -530,6 +599,14 @@
             <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
             <span id="account" class="stage-account"></span>
           </div>
+          <nav class="step-progress" aria-label="Playback progress">
+            <div class="step-progress-head">
+              <strong id="step-progress-role">Section</strong>
+              <span id="step-progress-count">Step —</span>
+            </div>
+            <div class="section-progress" id="section-progress" role="tablist" aria-label="Roles"></div>
+            <ol class="step-progress-track" id="step-progress-track" aria-label="Steps in this role"></ol>
+          </nav>
           <div class="screen-shell" id="screen-shell" aria-label="Demo scene screenshot" data-loading="true">
             <button type="button" class="screen-nav screen-nav-prev" id="btn-prev" aria-label="Previous step">‹</button>
             <img id="scene-screen" alt="Demo scene screenshot" />
@@ -584,7 +661,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028p"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028q"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),
@@ -608,6 +685,10 @@
       playbackSlotEl: document.getElementById("playback-slot"),
       modalEl: document.getElementById("player-modal"),
       modalBodyEl: document.getElementById("player-modal-body"),
+      stepProgressRoleEl: document.getElementById("step-progress-role"),
+      stepProgressCountEl: document.getElementById("step-progress-count"),
+      stepProgressTrackEl: document.getElementById("step-progress-track"),
+      sectionProgressEl: document.getElementById("section-progress"),
       progressRoleEl: document.getElementById("progress-role"),
       progressAllEl: document.getElementById("progress-all"),
       statusEl: document.getElementById("status-line"),
