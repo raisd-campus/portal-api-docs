@@ -1297,17 +1297,28 @@ export function createPlayer(options) {
     })
   }
 
-  function renderBrowser(role, scene) {
+  function sceneUrl(role, scene) {
     const frame = UI[scene.id]
+    if (frame?.url) return frame.url
     const path = (scene.route || "").split("·")[0].trim()
-    const url =
-      frame?.url ||
-      `${role.portal}${path.startsWith("/") ? path : "/" + path}`
-    if (browserUrlEl) browserUrlEl.textContent = url
-    if (browserViewEl) {
-      browserViewEl.innerHTML = renderUiHtml(scene.id)
+    if (!path || path === "/") return role.portal
+    return `${role.portal.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`
+  }
+
+  function renderBrowser(role, scene) {
+    // Re-query in case refs were stale; Pages HTML/JS can cache independently.
+    const urlEl = browserUrlEl || document.getElementById("browser-url")
+    const viewEl = browserViewEl || document.getElementById("browser-view")
+    const toast = toastEl || document.getElementById("demo-toast")
+    const url = sceneUrl(role, scene)
+    if (urlEl) urlEl.textContent = url
+    if (viewEl) {
+      viewEl.innerHTML = renderUiHtml(scene.id)
+      if (!viewEl.firstElementChild) {
+        viewEl.innerHTML = `<div class="pmain"><div class="card"><h4>${scene.title || "Demo"}</h4><p class="sub">${url}</p></div></div>`
+      }
     }
-    if (toastEl) toastEl.setAttribute("data-show", "false")
+    if (toast) toast.setAttribute("data-show", "false")
   }
 
   function render() {
