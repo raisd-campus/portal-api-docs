@@ -402,14 +402,12 @@
 
 
 <main class="wrap">
-  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · live portal playback</p>
+  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · live portal autopilot</p>
   <h1>Demo role playback</h1>
   <p class="lede">
-    Autoplay walks Raisd Lesotho Demo features <strong>one role after another</strong>
-    (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control)
-    inside the <strong>real Demo portal apps</strong> (iframe to apply / staff / student / control / Keychain).
-    Demo ≠ Live CMS. Sign in via Keychain for the role account if the frame shows SSO.
-    Modules:
+    Play / Next loads the <strong>real Demo portals</strong> and sends an autopilot command so each scene
+    autofills and executes (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control).
+    Demo ≠ Live CMS. Modules:
     <a href="feature-modules.html">feature-modules.html</a>
     · Markdown
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-feature-modules.md">lesotho-feature-modules.md</a>.
@@ -417,10 +415,9 @@
 
   <div class="banner">
     <strong>Demo ≠ Live.</strong>
-    Play loads the real Demo host for each scene. Prefer signing in first at
-    <a href="https://keychain.raisd.co/" target="_blank" rel="noopener noreferrer">keychain.raisd.co</a>
-    so the iframe keeps the session. Deep-link <code>?role=bursary</code>, etc.
-    Keyboard: Space play/pause · ← → step. Use <strong>Open</strong> if the embed needs a full tab.
+    Autopilot signs in with Demo accounts inside the iframe and calls real Portal API actions.
+    Deep-link <code>?role=bursary</code>, etc. Keyboard: Space play/pause · ← → step.
+    Use <strong>Open</strong> if the embed is blocked. Status shows Executing / Done / Error under the frame.
   </div>
 
   <div class="playback" aria-label="Role-by-role Demo playback">
@@ -452,6 +449,7 @@
             <iframe id="portal-frame" title="Raisd Demo portal" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe>
           </div>
         </div>
+        <p id="exec-status" class="stage-account" style="margin:0">Autopilot idle</p>
         <div class="stage-narration">
           <p id="route" class="stage-route"></p>
           <h2 id="scene-title">Loading…</h2>
@@ -479,7 +477,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028d"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028e"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       stageEl: document.getElementById("stage"),
@@ -499,6 +497,7 @@
       progressRoleEl: document.getElementById("progress-role"),
       progressAllEl: document.getElementById("progress-all"),
       statusEl: document.getElementById("status-line"),
+      execStatusEl: document.getElementById("exec-status"),
       playBtn: document.getElementById("btn-play"),
       pauseBtn: document.getElementById("btn-pause"),
       prevBtn: document.getElementById("btn-prev"),

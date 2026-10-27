@@ -454,13 +454,13 @@ export const ROLES = [
   },
 ]
 
-/** Real Demo portal URLs loaded in the playback iframe (Demo ≠ Live). */
+/** Real Demo portal URLs loaded in the playback iframe (Demo ≠ Live). Autopilot runs inside these hosts. */
 export const SCENE_URLS = {
-  "app-signin": "https://keychain.raisd.co/",
-  "app-draft": "https://apply.lesotho.raisd.co/apply",
-  "app-fee": "https://apply.lesotho.raisd.co/apply",
-  "app-eligibility": "https://apply.lesotho.raisd.co/apply",
-  "app-offer": "https://apply.lesotho.raisd.co/apply",
+  "app-signin": "https://apply.lesotho.raisd.co/applications",
+  "app-draft": "https://apply.lesotho.raisd.co/applications",
+  "app-fee": "https://apply.lesotho.raisd.co/applications",
+  "app-eligibility": "https://apply.lesotho.raisd.co/applications",
+  "app-offer": "https://apply.lesotho.raisd.co/applications",
   "fac-open": "https://staff.lesotho.raisd.co/admin/applicants",
   "fac-rank": "https://staff.lesotho.raisd.co/admin/applicants",
   "fac-rec": "https://staff.lesotho.raisd.co/admin/applicants",
@@ -475,16 +475,16 @@ export const SCENE_URLS = {
   "reg-list": "https://staff.lesotho.raisd.co/admin/students",
   "reg-file-academics": "https://staff.lesotho.raisd.co/admin/students",
   "reg-file-sponsors": "https://staff.lesotho.raisd.co/admin/students",
-  "yl-signin": "https://keychain.raisd.co/",
+  "yl-signin": "https://staff.lesotho.raisd.co/admin",
   "yl-list": "https://staff.lesotho.raisd.co/admin/students",
   "yl-file": "https://staff.lesotho.raisd.co/admin/students",
-  "stu-signin": "https://keychain.raisd.co/",
+  "stu-signin": "https://student.lesotho.raisd.co/",
   "stu-reg": "https://student.lesotho.raisd.co/registration",
   "stu-finance": "https://student.lesotho.raisd.co/finance",
   "ctl-flows": "https://control.raisd.co/flows/admissions/campus-lesotho",
   "ctl-review": "https://control.raisd.co/flows/admissions/campus-lesotho",
   "ctl-catalogues": "https://control.raisd.co/flows/admissions/campus-lesotho",
-  "ctl-positions": "https://control.raisd.co/",
+  "ctl-positions": "https://control.raisd.co/campuses/campus-lesotho",
 }
 
 export function sceneUrl(role, scene) {
@@ -526,6 +526,7 @@ export function createPlayer(options) {
     progressRoleEl,
     progressAllEl,
     statusEl,
+    execStatusEl,
     playBtn,
     pauseBtn,
     prevBtn,
@@ -541,6 +542,9 @@ export function createPlayer(options) {
   let stepTimer = null
   let stepHighlight = 0
   let lastFrameUrl = ""
+  let pendingRequestId = null
+  let executeNonce = 0
+  let executeSentForNonce = -1
 
   function totalCount() {
     return flat.length
@@ -566,10 +570,45 @@ export function createPlayer(options) {
     if (el) el.setAttribute("data-show", on ? "true" : "false")
   }
 
+  function setExecStatus(text) {
+    const el = execStatusEl || document.getElementById("exec-status")
+    if (el) el.textContent = text
+  }
+
+  function postExecute({ force = false } = {}) {
+    const frame = frameEl || document.getElementById("portal-frame")
+    if (!frame?.contentWindow) return
+    if (!force && executeSentForNonce === executeNonce) return
+    executeSentForNonce = executeNonce
+    const { role, scene } = current()
+    const requestId = crypto.randomUUID()
+    pendingRequestId = requestId
+    setExecStatus(`Executing ${scene.id}…`)
+    const message = {
+      type: "raisd.demo.playback.execute",
+      version: 1,
+      sceneId: scene.id,
+      roleId: role.id,
+      requestId,
+    }
+    try {
+      frame.contentWindow.postMessage(message, "*")
+    } catch (err) {
+      setExecStatus(`Could not reach portal: ${err instanceof Error ? err.message : "error"}`)
+    }
+    window.setTimeout(() => {
+      if (pendingRequestId === requestId) {
+        setExecStatus("No autopilot reply yet — portal may need deploy, or use Open.")
+      }
+    }, 15000)
+  }
+
   function loadPortal(url, { force = false } = {}) {
     const urlEl = browserUrlEl || document.getElementById("browser-url")
     const frame = frameEl || document.getElementById("portal-frame")
     const open = openBtn || document.getElementById("btn-open")
+    executeNonce += 1
+    executeSentForNonce = -1
     if (urlEl) {
       urlEl.textContent = url
       if (urlEl.tagName === "A") urlEl.href = url
@@ -578,6 +617,7 @@ export function createPlayer(options) {
     if (!frame) return
     if (!force && lastFrameUrl === url) {
       setLoading(false)
+      postExecute()
       return
     }
     setLoading(true)
@@ -585,11 +625,11 @@ export function createPlayer(options) {
     const onLoad = () => {
       setLoading(false)
       frame.removeEventListener("load", onLoad)
+      window.setTimeout(() => postExecute(), 600)
     }
     frame.addEventListener("load", onLoad)
     frame.src = url
-    // Fallback hide loader if load is slow / blocked
-    setTimeout(() => setLoading(false), 8000)
+    setTimeout(() => setLoading(false), 10000)
   }
 
   function highlightSteps(steps) {
@@ -624,8 +664,8 @@ export function createPlayer(options) {
     if (!playing) return
     const { scene } = current()
     startStepPulse(scene.steps || [])
-    // Longer dwell so the real portal can be used while autoplay runs
-    const ms = Math.max(6000, Math.round((scene.durationMs || 9000) / speed))
+    // Longer dwell: wait for execute + UI
+    const ms = Math.max(10000, Math.round((scene.durationMs || 12000) / speed))
     timer = setTimeout(() => {
       if (index >= totalCount() - 1) {
         playing = false
@@ -638,6 +678,27 @@ export function createPlayer(options) {
       schedule()
     }, ms)
   }
+
+  window.addEventListener("message", (event) => {
+    const data = event.data
+    if (!data || typeof data !== "object") return
+    if (data.type === "raisd.demo.playback.ready" && data.version === 1) {
+      postExecute()
+      return
+    }
+    if (
+      (data.type === "raisd.demo.playback.done" || data.type === "raisd.demo.playback.error") &&
+      data.version === 1 &&
+      data.requestId === pendingRequestId
+    ) {
+      pendingRequestId = null
+      if (data.type === "raisd.demo.playback.done") {
+        setExecStatus(`Done · ${data.detail || data.sceneId}`)
+      } else {
+        setExecStatus(`Error · ${data.detail || data.sceneId}`)
+      }
+    }
+  })
 
   function renderRoleList() {
     if (!roleListEl) return
