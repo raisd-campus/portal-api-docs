@@ -454,6 +454,663 @@ export const ROLES = [
   },
 ]
 
+/** Portal lookalike frames keyed by scene id (HTML mock, not Live screenshots). */
+const UI = {
+  "app-signin": {
+    url: "https://keychain.raisd.co/",
+    toast: "Opening Applicant Demo…",
+    html: () => keychainFrame("completed@raisd.demo", "Applicant · Lesotho"),
+  },
+  "app-draft": {
+    url: "https://apply.lesotho.raisd.co/apply",
+    toast: "Application submitted",
+    html: () =>
+      applicantFrame({
+        step: 1,
+        title: "Draft application",
+        body: formCard(
+          ["Campus: Lesotho", "Programme: BSc Demo", "Documents: 2 uploaded"],
+          "Submit application",
+          [0, 1, 2]
+        ),
+      }),
+  },
+  "app-fee": {
+    url: "https://apply.lesotho.raisd.co/apply?step=payment",
+    toast: "Fee proof saved · LSL 300",
+    html: () =>
+      applicantFrame({
+        step: 2,
+        title: "Application fee proof",
+        body: `
+          <div class="card">
+            <h4>Bank proof · Demo LSL 300</h4>
+            <div class="row"><div class="field hot" data-hot="0">Bank ref: DEMO-REF-8841</div></div>
+            <div class="row"><div class="field hot" data-hot="1">📎 payment.pdf</div></div>
+            <div class="row"><button class="btn hot" data-hot="2">Save proof</button></div>
+          </div>`,
+      }),
+  },
+  "app-eligibility": {
+    url: "https://apply.lesotho.raisd.co/apply?step=eligibility",
+    toast: "Eligibility confirmed",
+    html: () =>
+      applicantFrame({
+        step: 3,
+        title: "Confirm eligibility",
+        body: `
+          <div class="card">
+            <h4>Intake · Faculty · Programme</h4>
+            <p class="sub">QA verified documents. Confirm to unlock Offer release.</p>
+            <div class="row"><span class="pill hot" data-hot="0">Awaiting confirm</span></div>
+            <div class="row"><button class="btn hot" data-hot="1">Open confirmation</button>
+            <button class="btn hot" data-hot="2">Confirm eligibility</button></div>
+          </div>`,
+      }),
+  },
+  "app-offer": {
+    url: "https://apply.lesotho.raisd.co/apply?step=offer",
+    toast: "Enrolment accepted → Student",
+    html: () =>
+      applicantFrame({
+        step: 4,
+        title: "Offer Letter",
+        body: `
+          <div class="card">
+            <h4>DEMO Offer Letter</h4>
+            <p class="sub">Registry released · PDF ready</p>
+            <div class="row"><button class="btn ghost hot" data-hot="0">Preview PDF</button>
+            <button class="btn hot" data-hot="1">Download</button>
+            <button class="btn hot" data-hot="2">Accept Enrolment</button></div>
+          </div>`,
+      }),
+  },
+  "fac-open": {
+    url: "https://staff.lesotho.raisd.co/admin/applicants",
+    toast: "Case opened",
+    html: () =>
+      staffFrame({
+        nav: "Applicants",
+        role: "Faculty Review",
+        title: "Admissions · Applicants",
+        body: tableCard(
+          ["Applicant", "Campus", "Status", "Desk"],
+          [
+            ["Alya M.", "Lesotho", "Submitted", "Faculty"],
+            ["Demo Case", "Lesotho", "Draft", "—"],
+          ],
+          0,
+          [0, 1, 0]
+        ),
+      }),
+  },
+  "fac-rank": {
+    url: "https://staff.lesotho.raisd.co/admin/applicants/review",
+    toast: "Rank / score saved",
+    html: () =>
+      staffFrame({
+        nav: "Applicants",
+        role: "Faculty Review",
+        title: "Review · Rank & score",
+        body: `
+          <div class="card">
+            <h4>showRankScore · Lesotho policy</h4>
+            <div class="row"><div class="field hot" data-hot="0">Rank: 12</div>
+            <div class="field hot" data-hot="1">Score: 78</div></div>
+            <div class="row"><button class="btn hot" data-hot="2">Save review fields</button></div>
+          </div>`,
+      }),
+  },
+  "fac-rec": {
+    url: "https://staff.lesotho.raisd.co/admin/applicants/recommendation",
+    toast: "Recommendation 1/3",
+    html: () =>
+      staffFrame({
+        nav: "Applicants",
+        role: "Faculty Review",
+        title: "Faculty recommendation",
+        body: `
+          <div class="card">
+            <h4>Desk 1 of 3 · faculty → QA → Registry</h4>
+            <div class="row"><button class="btn hot" data-hot="0">Approve</button>
+            <button class="btn ghost hot" data-hot="1">Action required</button></div>
+            <div class="row"><div class="field hot" data-hot="2">Note: Demo faculty OK</div>
+            <button class="btn hot" data-hot="2">Submit</button></div>
+            <p class="sub"><span class="pill">Progress 1/3</span></p>
+          </div>`,
+      }),
+  },
+  "qa-open": {
+    url: "https://staff.lesotho.raisd.co/admin/document-review",
+    toast: "Document desk",
+    html: () =>
+      staffFrame({
+        nav: "Documents",
+        role: "QA",
+        title: "Document review",
+        body: tableCard(
+          ["Applicant", "Extract", "Verify", "Desk"],
+          [["Alya M.", "Pending", "—", "QA"]],
+          0,
+          [0, 1, 0]
+        ),
+      }),
+  },
+  "qa-extract": {
+    url: "https://staff.lesotho.raisd.co/admin/document-review?panel=extract",
+    toast: "LGCSE extract saved",
+    html: () =>
+      staffFrame({
+        nav: "Documents",
+        role: "QA",
+        title: "LGCSE extract",
+        body: `
+          <div class="card">
+            <h4>extractRequired · Demo certificate rows</h4>
+            <div class="row"><button class="btn hot" data-hot="0">Run extract</button></div>
+            <table class="table hot" data-hot="1"><thead><tr><th>Subject</th><th>Grade</th></tr></thead>
+            <tbody><tr><td>Mathematics</td><td>B</td></tr><tr><td>English</td><td>C</td></tr></tbody></table>
+            <div class="row"><button class="btn hot" data-hot="2">Save extract</button></div>
+          </div>`,
+      }),
+  },
+  "qa-verify": {
+    url: "https://staff.lesotho.raisd.co/admin/document-review?panel=verify",
+    toast: "Documents verified",
+    html: () =>
+      staffFrame({
+        nav: "Documents",
+        role: "QA",
+        title: "Verify documents",
+        body: `
+          <div class="card">
+            <div class="row"><span class="pill hot" data-hot="0">Faculty ✓ · Extract ✓</span></div>
+            <div class="row"><button class="btn hot" data-hot="1">Verify documents</button>
+            <button class="btn ghost hot" data-hot="2">QA recommendation</button></div>
+          </div>`,
+      }),
+  },
+  "bur-pay": {
+    url: "https://staff.lesotho.raisd.co/admin/payments",
+    toast: "Payment approved",
+    html: () =>
+      staffFrame({
+        nav: "Payments",
+        role: "Bursary",
+        title: "Application payments",
+        body: tableCard(
+          ["Ref", "Amount", "Proof", "Action"],
+          [["DEMO-REF-8841", "LSL 300", "payment.pdf", "Pending"]],
+          0,
+          [0, 1, 2],
+          `<div class="row" style="margin-top:8px"><button class="btn hot" data-hot="2">Approve payment</button></div>`
+        ),
+      }),
+  },
+  "bur-fees": {
+    url: "https://staff.lesotho.raisd.co/admin/fees",
+    toast: "Catalogue · LSL",
+    html: () =>
+      staffFrame({
+        nav: "Fees",
+        role: "Bursary",
+        title: "Fees & Fines · Lesotho",
+        body: `
+          <div class="card hot" data-hot="0">
+            <h4>Campus finance profile</h4>
+            <table class="table"><thead><tr><th>Fee</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr class="hot" data-hot="1"><td>Application</td><td>LSL 300</td></tr>
+              <tr><td>AcceptanceFee</td><td>LSL 550</td></tr>
+              <tr class="hot" data-hot="2"><td>Registration Fee</td><td>LSL 550</td></tr>
+            </tbody></table>
+            <p class="sub">Configure rates / banks — not Live yet</p>
+          </div>`,
+      }),
+  },
+  "bur-reg": {
+    url: "https://staff.lesotho.raisd.co/admin/registrations",
+    toast: "Bursary clearance OK",
+    html: () =>
+      staffFrame({
+        nav: "Registrations",
+        role: "Bursary",
+        title: "Module registration · Bursary desk",
+        body: `
+          <div class="card">
+            <table class="table"><thead><tr><th>Student</th><th>Sponsor</th><th>Borrower</th><th>Desk</th></tr></thead>
+            <tbody><tr class="hot" data-hot="0" data-sel="true"><td>10029841</td><td>nmds</td><td>BR-4421</td><td>Bursary</td></tr></tbody></table>
+            <div class="row"><button class="btn ghost hot" data-hot="1">verified-payment</button>
+            <button class="btn hot" data-hot="2">Approve Bursary</button></div>
+          </div>`,
+      }),
+  },
+  "reg-offer": {
+    url: "https://staff.lesotho.raisd.co/admin/applicants?view=offer",
+    toast: "Offer released",
+    html: () =>
+      staffFrame({
+        nav: "Applicants",
+        role: "Registry",
+        title: "Release Offer Letter",
+        body: `
+          <div class="card">
+            <div class="row"><span class="pill hot" data-hot="0">Eligibility ✓ · Desks 3/3</span></div>
+            <div class="row"><button class="btn hot" data-hot="1">Select case</button>
+            <button class="btn hot" data-hot="2">Release Offer Letter</button></div>
+          </div>`,
+      }),
+  },
+  "reg-queue": {
+    url: "https://staff.lesotho.raisd.co/admin/registrations",
+    toast: "Faculty desk cleared",
+    html: () =>
+      staffFrame({
+        nav: "Registrations",
+        role: "Registry",
+        title: "Module requests · Faculty desk",
+        body: `
+          <div class="card">
+            <table class="table hot" data-hot="0"><thead><tr><th>Student</th><th>sponsorCode</th><th>Next</th></tr></thead>
+            <tbody><tr data-sel="true"><td>10029841</td><td>nmds</td><td>Faculty</td></tr></tbody></table>
+            <div class="row"><button class="btn hot" data-hot="1">Approve modules</button>
+            <span class="pill blue hot" data-hot="2">NMDS columns</span></div>
+          </div>`,
+      }),
+  },
+  "reg-list": {
+    url: "https://staff.lesotho.raisd.co/admin/students",
+    toast: "Registry list",
+    html: () =>
+      staffFrame({
+        nav: "Students",
+        role: "Registry",
+        title: "Students · Demo registry",
+        body: tableCard(
+          ["ID", "Name", "Programme", "Term"],
+          [
+            ["10029841", "Alya M.", "BSc Demo", "2026-1"],
+            ["10029100", "Lesotho DEV", "Dip Demo", "2026-1"],
+          ],
+          0,
+          [0, 1, 0]
+        ),
+      }),
+  },
+  "reg-file-academics": {
+    url: "https://staff.lesotho.raisd.co/admin/students/10029841?tab=academics",
+    toast: "Academics tab",
+    html: () =>
+      staffFrame({
+        nav: "Students",
+        role: "Registry",
+        title: "Student file · 10029841",
+        body: fileTabs(
+          "Academics",
+          `
+          <div class="card hot" data-hot="0">
+            <h4>Programme · term · modules</h4>
+            <table class="table hot" data-hot="1"><thead><tr><th>Code</th><th>Name</th><th>Status</th><th>Cr</th></tr></thead>
+            <tbody><tr><td>CS101</td><td>Intro</td><td>Active</td><td>12</td></tr></tbody></table>
+            <p class="sub hot" data-hot="2">Demo graph · not Live CAP-53</p>
+          </div>`
+        ),
+      }),
+  },
+  "reg-file-sponsors": {
+    url: "https://staff.lesotho.raisd.co/admin/students/10029841?tab=sponsors",
+    toast: "Sponsors / Registration",
+    html: () =>
+      staffFrame({
+        nav: "Students",
+        role: "Registry",
+        title: "Student file · Sponsors",
+        body: fileTabs(
+          "Sponsors",
+          `
+          <div class="card">
+            <h4 class="hot" data-hot="0">NMDS awards · borrower BR-4421</h4>
+            <p class="sub hot" data-hot="1">Registration requests · sponsorCode nmds</p>
+            <div class="row"><span class="pill hot" data-hot="2">Finance</span>
+            <span class="pill">Documents</span><span class="pill">Audit</span></div>
+          </div>`
+        ),
+      }),
+  },
+  "yl-signin": {
+    url: "https://staff.lesotho.raisd.co/admin",
+    toast: "Year Leader shell",
+    html: () =>
+      staffFrame({
+        nav: "Overview",
+        role: "Year Leader",
+        narrow: true,
+        title: "Admin · narrow role",
+        body: `
+          <div class="card">
+            <div class="row"><span class="pill hot" data-hot="0">lesotho.yearleader@raisd.demo</span></div>
+            <div class="row"><span class="pill hot" data-hot="1">Overview + Students only</span>
+            <span class="pill amber hot" data-hot="2">Payments / Access hidden</span></div>
+          </div>`,
+      }),
+  },
+  "yl-list": {
+    url: "https://staff.lesotho.raisd.co/admin/students",
+    toast: "Students list",
+    html: () =>
+      staffFrame({
+        nav: "Students",
+        role: "Year Leader",
+        narrow: true,
+        title: "Enrolled students",
+        body: tableCard(
+          ["ID", "Programme", "Term", "Sponsor"],
+          [["10029841", "BSc Demo", "2026-1", "nmds"]],
+          0,
+          [0, 1, 0]
+        ),
+      }),
+  },
+  "yl-file": {
+    url: "https://staff.lesotho.raisd.co/admin/students/10029841",
+    toast: "Read-only file",
+    html: () =>
+      staffFrame({
+        nav: "Students",
+        role: "Year Leader",
+        narrow: true,
+        title: "Student file · read",
+        body: fileTabs(
+          "Academics",
+          `
+          <div class="card">
+            <div class="row"><span class="pill hot" data-hot="0">File open</span></div>
+            <div class="row"><span class="tab hot" data-hot="1" data-on="true">Academics</span>
+            <span class="tab">Student</span><span class="tab hot" data-hot="1">Registration</span></div>
+            <p class="sub hot" data-hot="2">No Live CAP-53 write</p>
+          </div>`
+        ),
+      }),
+  },
+  "stu-signin": {
+    url: "https://student.lesotho.raisd.co/",
+    toast: "Dashboard loaded",
+    html: () =>
+      studentFrame({
+        nav: "Dashboard",
+        title: "Student dashboard",
+        body: `
+          <div class="card">
+            <div class="row"><span class="pill hot" data-hot="0">student.lesotho.raisd.co</span></div>
+            <div class="row"><div class="field hot" data-hot="1">alya@raisd.demo · 10029841</div></div>
+            <div class="row"><span class="pill hot" data-hot="2">Enrolment active · Demo</span></div>
+          </div>`,
+      }),
+  },
+  "stu-reg": {
+    url: "https://student.lesotho.raisd.co/registration",
+    toast: "Registration submitted",
+    html: () =>
+      studentFrame({
+        nav: "Registration",
+        title: "Module registration",
+        body: `
+          <div class="card">
+            <div class="row"><div class="field hot" data-hot="0">Term 2026-1 · select modules</div></div>
+            <div class="row"><label class="field hot" data-hot="1"><input type="checkbox" checked disabled> CS101 Intro</label>
+            <label class="field"><input type="checkbox" checked disabled> CS102 Lab</label></div>
+            <div class="row"><div class="field hot" data-hot="2">sponsorCode: nmds</div>
+            <div class="field hot" data-hot="2">borrower: BR-4421</div>
+            <button class="btn hot" data-hot="2">Submit</button></div>
+          </div>`,
+      }),
+  },
+  "stu-finance": {
+    url: "https://student.lesotho.raisd.co/finance",
+    toast: "CAF / invoice · DEMO",
+    html: () =>
+      studentFrame({
+        nav: "Finance",
+        title: "Finance & CAF",
+        body: `
+          <div class="card">
+            <div class="row"><span class="pill amber hot" data-hot="0">Awaiting Staff clearance…</span></div>
+            <div class="row"><button class="btn ghost hot" data-hot="1">Open Finance</button></div>
+            <div class="row"><div class="field hot" data-hot="2">CAF · DEMO · LSL from finance profile</div></div>
+          </div>`,
+      }),
+  },
+  "ctl-flows": {
+    url: "https://control.raisd.co/flows/admissions/campus-lesotho",
+    toast: "Lesotho Flows",
+    html: () =>
+      controlFrame({
+        nav: "Flows",
+        title: "Admissions · campus-lesotho",
+        body: `
+          <div class="card">
+            <div class="row"><span class="pill hot" data-hot="0">sso.admin@raisd.demo</span></div>
+            <div class="row"><button class="btn hot" data-hot="1">Flows → Admissions → Lesotho</button></div>
+            <div class="row"><span class="pill blue hot" data-hot="2">Draft settings loaded</span></div>
+          </div>`,
+      }),
+  },
+  "ctl-review": {
+    url: "https://control.raisd.co/flows/admissions/campus-lesotho#desk-review",
+    toast: "Desk flags OK",
+    html: () =>
+      controlFrame({
+        nav: "Flows",
+        title: "Desk review · Lesotho",
+        body: `
+          <div class="card hot" data-hot="0">
+            <h4>Desk review flags</h4>
+            <div class="row"><label class="field hot" data-hot="1"><input type="checkbox" checked disabled> showRankScore</label>
+            <label class="field hot" data-hot="1"><input type="checkbox" checked disabled> extractRequired</label></div>
+            <p class="sub hot" data-hot="2">Desks: faculty → qa → registry</p>
+          </div>`,
+      }),
+  },
+  "ctl-catalogues": {
+    url: "https://control.raisd.co/flows/admissions/campus-lesotho#catalogues",
+    toast: "Demo catalogues loaded",
+    html: () =>
+      controlFrame({
+        nav: "Flows",
+        title: "Admissions catalogues",
+        body: `
+          <div class="card">
+            <h4 class="hot" data-hot="0">Intake · certificate · subject · school · entry</h4>
+            <div class="row"><button class="btn hot" data-hot="1">Load Lesotho Demo catalogues</button></div>
+            <div class="row"><button class="btn ghost hot" data-hot="2">Validate draft</button></div>
+          </div>`,
+      }),
+  },
+  "ctl-positions": {
+    url: "https://control.raisd.co/campuses/lesotho/roles",
+    toast: "Roles seeded via Keychain",
+    html: () =>
+      controlFrame({
+        nav: "Campuses",
+        title: "Lesotho · members / roles",
+        body: `
+          <div class="card">
+            <div class="row"><button class="btn ghost hot" data-hot="0">Open campus roles</button></div>
+            <div class="row"><span class="pill hot" data-hot="1">Registry</span>
+            <span class="pill hot" data-hot="1">QA</span>
+            <span class="pill hot" data-hot="1">Bursary</span>
+            <span class="pill hot" data-hot="1">Faculty</span>
+            <span class="pill hot" data-hot="1">Year Leader</span></div>
+            <p class="sub hot" data-hot="2">Publishing Flow ≠ granting access</p>
+          </div>`,
+      }),
+  },
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+}
+
+function formCard(fields, cta, hotIdx) {
+  const rows = fields
+    .map(
+      (f, i) =>
+        `<div class="row"><div class="field hot" data-hot="${hotIdx[i] ?? i}">${esc(f)}</div></div>`
+    )
+    .join("")
+  return `<div class="card">${rows}<div class="row"><button class="btn hot" data-hot="${hotIdx[hotIdx.length - 1] ?? 2}">${esc(cta)}</button></div></div>`
+}
+
+function tableCard(headers, rows, sel, hotMap, extra = "") {
+  const th = headers.map((h) => `<th>${esc(h)}</th>`).join("")
+  const body = rows
+    .map((r, ri) => {
+      const cells = r.map((c) => `<td>${esc(c)}</td>`).join("")
+      const hot = hotMap?.[ri] != null ? ` class="hot" data-hot="${hotMap[ri]}"` : ""
+      const selAttr = ri === sel ? ` data-sel="true"` : ""
+      return `<tr${hot}${selAttr}>${cells}</tr>`
+    })
+    .join("")
+  return `<div class="card"><table class="table"><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table>${extra}</div>`
+}
+
+function fileTabs(active, inner) {
+  const tabs = [
+    "Student",
+    "Academics",
+    "Registration",
+    "Sponsors",
+    "Finance",
+    "Documents",
+  ]
+  const bar = tabs
+    .map(
+      (t) =>
+        `<span class="tab${t === active ? " hot" : ""}" data-hot="${t === active ? "0" : ""}" data-on="${t === active ? "true" : "false"}">${t}</span>`
+    )
+    .join("")
+  return `<div class="tabs">${bar}</div>${inner}`
+}
+
+function keychainFrame(account, portalLabel) {
+  return `
+    <div class="pshell" data-layout="top">
+      <div class="ptop"><strong>Raisd Keychain</strong><span>Demo accounts</span></div>
+      <div class="pmain">
+        <h3>Pick a Demo account</h3>
+        <p class="sub">Demo ≠ Live · one-click portal handoff</p>
+        <div class="kc-grid">
+          <div class="kc-card hot" data-hot="0"><strong>${esc(account)}</strong><span>${esc(portalLabel)}</span></div>
+          <div class="kc-card hot" data-hot="1"><strong>fresh@raisd.demo</strong><span>Empty draft</span></div>
+          <div class="kc-card hot" data-hot="2"><strong>Continue →</strong><span>Applicant shell</span></div>
+        </div>
+      </div>
+    </div>`
+}
+
+function applicantFrame({ step, title, body }) {
+  const labels = ["Draft", "Fee", "Eligibility", "Offer", "Done"]
+  const bar = labels
+    .map(
+      (l, i) =>
+        `<span data-on="${i === step ? "true" : "false"}">${esc(l)}</span>`
+    )
+    .join("")
+  return `
+    <div class="pshell" data-layout="top">
+      <div class="ptop"><strong>Raisd Applicant · Lesotho</strong><span>apply.lesotho.raisd.co</span></div>
+      <div class="pmain">
+        <div class="steps-bar">${bar}</div>
+        <h3>${esc(title)}</h3>
+        ${body}
+      </div>
+    </div>`
+}
+
+function staffNav(active, narrow) {
+  const items = narrow
+    ? ["Overview", "Students"]
+    : ["Overview", "Applicants", "Documents", "Payments", "Fees", "Registrations", "Students", "Access"]
+  return items
+    .map(
+      (n) =>
+        `<div class="nav-item${n === active ? " hot" : ""}" data-on="${n === active ? "true" : "false"}" data-hot="${n === active ? "1" : ""}">${n}</div>`
+    )
+    .join("")
+}
+
+function staffFrame({ nav, role, title, body, narrow = false }) {
+  return `
+    <div class="pshell">
+      <aside class="pside">
+        <div class="brand"><img src="../assets/raisd-logo.svg" alt="" /> Staff</div>
+        ${staffNav(nav, narrow)}
+        <div style="margin-top:auto;padding:8px;font-size:11px;opacity:.75">${esc(role)}</div>
+      </aside>
+      <div class="pmain">
+        <h3>${esc(title)}</h3>
+        <p class="sub">staff.lesotho.raisd.co · Demo ≠ Live</p>
+        ${body}
+      </div>
+    </div>`
+}
+
+function studentFrame({ nav, title, body }) {
+  const items = ["Dashboard", "Registration", "Finance", "Learning"]
+  const side = items
+    .map(
+      (n) =>
+        `<div class="nav-item" data-on="${n === nav ? "true" : "false"}">${n}</div>`
+    )
+    .join("")
+  return `
+    <div class="pshell">
+      <aside class="pside">
+        <div class="brand"><img src="../assets/raisd-logo.svg" alt="" /> Student</div>
+        ${side}
+      </aside>
+      <div class="pmain">
+        <h3>${esc(title)}</h3>
+        <p class="sub">student.lesotho.raisd.co · Demo</p>
+        ${body}
+      </div>
+    </div>`
+}
+
+function controlFrame({ nav, title, body }) {
+  const items = ["Overview", "Flows", "Campuses", "Members"]
+  const side = items
+    .map(
+      (n) =>
+        `<div class="nav-item" data-on="${n === nav ? "true" : "false"}">${n}</div>`
+    )
+    .join("")
+  return `
+    <div class="pshell">
+      <aside class="pside">
+        <div class="brand"><img src="../assets/raisd-logo.svg" alt="" /> Control</div>
+        ${side}
+      </aside>
+      <div class="pmain">
+        <h3>${esc(title)}</h3>
+        <p class="sub">control.raisd.co · Demo policy</p>
+        ${body}
+      </div>
+    </div>`
+}
+
+function renderUiHtml(sceneId) {
+  const frame = UI[sceneId]
+  if (!frame) {
+    return `<div class="pmain"><div class="card"><h4>Demo scene</h4><p class="sub">${esc(sceneId)}</p></div></div>`
+  }
+  return typeof frame.html === "function" ? frame.html() : frame.html
+}
+
 export function flattenScenes(roles = ROLES) {
   const flat = []
   roles.forEach((role, roleIndex) => {
@@ -477,6 +1134,11 @@ export function createPlayer(options) {
     bodyEl,
     stepsEl,
     fmEl,
+    browserEl,
+    browserUrlEl,
+    browserViewEl,
+    cursorEl,
+    toastEl,
     progressRoleEl,
     progressAllEl,
     statusEl,
@@ -514,20 +1176,67 @@ export function createPlayer(options) {
     }
   }
 
+  function moveCursorToHot(stepIdx) {
+    if (!browserEl || !cursorEl || !browserViewEl) return
+    const hots = browserViewEl.querySelectorAll(".hot")
+    hots.forEach((el) => {
+      const hot = Number(el.getAttribute("data-hot"))
+      el.setAttribute("data-active", hot === stepIdx ? "true" : "false")
+    })
+    const target =
+      browserViewEl.querySelector(`.hot[data-hot="${stepIdx}"]`) ||
+      browserViewEl.querySelector(".hot")
+    if (!target) {
+      cursorEl.setAttribute("data-visible", "false")
+      return
+    }
+    const br = browserEl.getBoundingClientRect()
+    const tr = target.getBoundingClientRect()
+    const x = tr.left - br.left + Math.min(tr.width * 0.65, tr.width - 8)
+    const y = tr.top - br.top + Math.min(tr.height * 0.55, tr.height - 8)
+    cursorEl.style.left = `${Math.max(8, x)}px`
+    cursorEl.style.top = `${Math.max(40, y)}px`
+    cursorEl.setAttribute("data-visible", "true")
+    cursorEl.setAttribute("data-click", "false")
+    requestAnimationFrame(() => {
+      cursorEl.setAttribute("data-click", "true")
+      setTimeout(() => cursorEl.setAttribute("data-click", "false"), 380)
+    })
+  }
+
+  function showToast(sceneId, stepIdx, stepCount) {
+    if (!toastEl) return
+    const frame = UI[sceneId]
+    const show = stepIdx >= Math.max(0, (stepCount || 1) - 1)
+    if (show && frame?.toast) {
+      toastEl.textContent = frame.toast
+      toastEl.setAttribute("data-show", "true")
+    } else {
+      toastEl.setAttribute("data-show", "false")
+    }
+  }
+
   function highlightSteps(steps) {
     if (!stepsEl) return
     const items = stepsEl.querySelectorAll("li")
     items.forEach((li, i) => {
       li.setAttribute("data-active", i === stepHighlight ? "true" : "false")
     })
+    moveCursorToHot(stepHighlight)
+    const { scene } = current()
+    showToast(scene.id, stepHighlight, steps?.length || 0)
   }
 
   function startStepPulse(steps) {
-    if (!steps?.length || !playing) return
+    if (!steps?.length) {
+      moveCursorToHot(0)
+      return
+    }
     stepHighlight = 0
     highlightSteps(steps)
+    if (!playing) return
     const per = Math.max(
-      1600,
+      1400,
       Math.round(((current().scene.durationMs || 7000) / speed) / steps.length)
     )
     stepTimer = setInterval(() => {
@@ -545,7 +1254,7 @@ export function createPlayer(options) {
     if (!playing) return
     const { scene } = current()
     startStepPulse(scene.steps || [])
-    const ms = Math.max(2500, Math.round((scene.durationMs || 7000) / speed))
+    const ms = Math.max(2800, Math.round((scene.durationMs || 7000) / speed))
     timer = setTimeout(() => {
       if (index >= totalCount() - 1) {
         playing = false
@@ -588,6 +1297,19 @@ export function createPlayer(options) {
     })
   }
 
+  function renderBrowser(role, scene) {
+    const frame = UI[scene.id]
+    const path = (scene.route || "").split("·")[0].trim()
+    const url =
+      frame?.url ||
+      `${role.portal}${path.startsWith("/") ? path : "/" + path}`
+    if (browserUrlEl) browserUrlEl.textContent = url
+    if (browserViewEl) {
+      browserViewEl.innerHTML = renderUiHtml(scene.id)
+    }
+    if (toastEl) toastEl.setAttribute("data-show", "false")
+  }
+
   function render() {
     const { role, scene, sceneIndex } = current()
     if (roleBadgeEl) roleBadgeEl.textContent = role.label
@@ -603,6 +1325,7 @@ export function createPlayer(options) {
     if (routeEl) routeEl.textContent = scene.route
     if (titleEl) titleEl.textContent = scene.title
     if (bodyEl) bodyEl.textContent = scene.body
+    renderBrowser(role, scene)
     if (stepsEl) {
       stepsEl.innerHTML = ""
       const heading = document.createElement("h3")
@@ -618,7 +1341,8 @@ export function createPlayer(options) {
       }
       stepsEl.appendChild(ol)
       stepHighlight = 0
-      highlightSteps(scene.steps || [])
+      // layout then place cursor
+      requestAnimationFrame(() => highlightSteps(scene.steps || []))
     }
     if (fmEl) {
       fmEl.innerHTML = ""
@@ -687,8 +1411,8 @@ export function createPlayer(options) {
     clearTimer()
     updateChrome()
     if (statusEl) {
-      const { role, sceneIndex } = current()
-      statusEl.textContent = `Paused · Role ${current().roleIndex + 1}/${roles.length} · Scene ${sceneIndex + 1}/${role.scenes.length}`
+      const { sceneIndex } = current()
+      statusEl.textContent = `Paused · Role ${current().roleIndex + 1}/${roles.length} · Scene ${sceneIndex + 1}/${current().role.scenes.length}`
     }
   }
 
@@ -740,6 +1464,10 @@ export function createPlayer(options) {
       e.preventDefault()
       next()
     }
+  })
+
+  window.addEventListener("resize", () => {
+    moveCursorToHot(stepHighlight)
   })
 
   const params = new URLSearchParams(location.search)
