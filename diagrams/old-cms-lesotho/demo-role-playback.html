@@ -129,6 +129,67 @@
     .player-modal-body .stage {
       min-height: auto;
     }
+    /* Fullscreen dialog sits on the light docs page — force dark side panel tokens */
+    dialog.player-modal,
+    dialog.player-modal .player-modal-body {
+      color: #e8eef5;
+      --surface: #18222c;
+      --line: rgba(255,255,255,.16);
+      --muted: #9db0c0;
+      --accent-soft: #243445;
+      background: #0f141a;
+    }
+    dialog.player-modal .player-modal-body .side-heading { color: #e8eef5; }
+    dialog.player-modal .player-modal-body .role-item,
+    dialog.player-modal .player-modal-body .fm-item {
+      background: #18222c;
+      border: 1px solid rgba(255,255,255,.16);
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .role-item:hover,
+    dialog.player-modal .player-modal-body .fm-item:hover {
+      border-color: #7eb6ff;
+      background: #1e2a36;
+    }
+    dialog.player-modal .player-modal-body .role-item[aria-current="true"],
+    dialog.player-modal .player-modal-body .fm-item[aria-current="true"] {
+      border-color: #7eb6ff;
+      background: #243445;
+    }
+    dialog.player-modal .player-modal-body .role-ord,
+    dialog.player-modal .player-modal-body .fm-code {
+      background: #2a3644;
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .role-item[aria-current="true"] .role-ord,
+    dialog.player-modal .player-modal-body .fm-item[aria-current="true"] .fm-code {
+      background: var(--accent, #0f6b5d);
+      color: #fff;
+    }
+    dialog.player-modal .player-modal-body .role-meta strong,
+    dialog.player-modal .player-modal-body .fm-meta strong {
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .role-meta span,
+    dialog.player-modal .player-modal-body .fm-meta span {
+      color: #9db0c0;
+    }
+    dialog.player-modal .player-modal-body .bars .bar-label,
+    dialog.player-modal .player-modal-body .status-line,
+    dialog.player-modal .player-modal-body .kbd {
+      color: #9db0c0;
+    }
+    dialog.player-modal .player-modal-body .controls button {
+      background: #1a2430;
+      border-color: rgba(255,255,255,.18);
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .controls button.primary {
+      background: var(--accent, #0f6b5d);
+      border-color: transparent;
+      color: #fff;
+    }
+    dialog.player-modal .player-modal-body .bar { background: rgba(255,255,255,.12); }
     body.player-modal-open { overflow: hidden; }
     .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
     .controls button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; }
@@ -523,7 +584,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028n"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028p"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),

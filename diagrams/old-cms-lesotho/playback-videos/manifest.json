@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-27T22:22:42.410Z",
+  "recordedAt": "2026-10-27T22:52:55.838Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -23,7 +23,7 @@
       "detail": "applicant applications",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications",
-      "recordedAt": "2026-10-27T22:19:31.818Z"
+      "recordedAt": "2026-10-27T22:41:57.233Z"
     },
     {
       "sceneId": "app-draft",
@@ -78,11 +78,11 @@
         "FM-02"
       ],
       "poster": "app-offer.poster.jpg",
-      "bytes": 67377,
+      "bytes": 67379,
       "detail": "applicant offer",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T22:19:48.840Z"
+      "recordedAt": "2026-10-27T22:52:35.494Z"
     },
     {
       "sceneId": "fac-open",
@@ -93,11 +93,11 @@
         "FM-15"
       ],
       "poster": "fac-open.poster.jpg",
-      "bytes": 29546,
-      "detail": "faculty applicants",
+      "bytes": 49005,
+      "detail": "fac-open @ /admin/payments (bursary demo queue)",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T22:14:17.945Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:37:50.945Z"
     },
     {
       "sceneId": "fac-rank",
@@ -108,11 +108,11 @@
         "FM-05"
       ],
       "poster": "fac-rank.poster.jpg",
-      "bytes": 29546,
-      "detail": "fac-rank",
+      "bytes": 49005,
+      "detail": "fac-rank @ /admin/payments (bursary demo queue)",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T22:14:20.475Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:38:04.583Z"
     },
     {
       "sceneId": "fac-rec",
@@ -123,11 +123,11 @@
         "FM-05"
       ],
       "poster": "fac-rec.poster.jpg",
-      "bytes": 29546,
-      "detail": "fac-rec",
+      "bytes": 49005,
+      "detail": "fac-rec @ /admin/payments (bursary demo queue)",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T22:14:23.004Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:38:18.278Z"
     },
     {
       "sceneId": "qa-open",
@@ -138,11 +138,11 @@
         "FM-15"
       ],
       "poster": "qa-open.poster.jpg",
-      "bytes": 29044,
+      "bytes": 48231,
       "detail": "qa open",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T22:14:44.055Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:38:55.766Z"
     },
     {
       "sceneId": "qa-extract",
@@ -153,11 +153,11 @@
         "FM-05"
       ],
       "poster": "qa-extract.poster.jpg",
-      "bytes": 29044,
+      "bytes": 48231,
       "detail": "qa-extract",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T22:14:46.596Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:39:09.583Z"
     },
     {
       "sceneId": "qa-verify",
@@ -168,11 +168,11 @@
         "FM-03"
       ],
       "poster": "qa-verify.poster.jpg",
-      "bytes": 29044,
+      "bytes": 48231,
       "detail": "qa-verify",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T22:14:49.133Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:39:23.150Z"
     },
     {
       "sceneId": "bur-pay",
@@ -187,7 +187,7 @@
       "detail": "bursary payments",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/payments",
-      "recordedAt": "2026-10-27T22:15:10.958Z"
+      "recordedAt": "2026-10-27T22:52:55.783Z"
     },
     {
       "sceneId": "bur-fees",
@@ -226,11 +226,11 @@
         "FM-03"
       ],
       "poster": "reg-offer.poster.jpg",
-      "bytes": 31487,
-      "detail": "registry applicants",
+      "bytes": 50880,
+      "detail": "registry applicants @ /admin/payments (bursary demo queue)",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T22:15:40.613Z"
+      "url": "https://staff.lesotho.raisd.co/admin",
+      "recordedAt": "2026-10-27T22:39:57.750Z"
     },
     {
       "sceneId": "reg-queue",

@@ -16,6 +16,7 @@ import {
   readdirSync,
   unlinkSync,
   statSync,
+  copyFileSync,
 } from "node:fs"
 import path from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
@@ -208,6 +209,123 @@ async function selectQueueRow(page) {
   }
 }
 
+async function applicantsEmpty(page) {
+  const text = ((await page.locator("body").innerText().catch(() => "")) || "").toLowerCase()
+  if (/no submitted (payment proofs|applications)|not available/.test(text)) return true
+  if (/\b0\s+applications?\b/.test(text)) return true
+  // Admin overview card: big "0" above "Submitted applications"
+  if (/\b0\b[\s\S]{0,40}submitted applications/.test(text)) return true
+  const rows = await page.locator("table tbody tr").count().catch(() => 0)
+  if (rows === 0 && /admissions review|applicants|applications/.test(text)) return true
+  return false
+}
+
+async function paymentsQueueReady(page) {
+  const text = ((await page.locator("body").innerText().catch(() => "")) || "").toLowerCase()
+  if (!/admissions review/.test(text)) return false
+  if (/no submitted payment proofs/.test(text)) return false
+  const rows = await page.locator("table tbody tr").count().catch(() => 0)
+  return rows > 0
+}
+
+/** Open completed applicant case so Portal API materializes payment proofs into the Demo queue. */
+async function warmDemoPaymentQueue(browser) {
+  const context = await browser.newContext({ viewport: VIEWPORT, ignoreHTTPSErrors: true })
+  const page = await context.newPage()
+  page.setDefaultTimeout(40000)
+  try {
+    const acct = KEYCHAIN_USERS.applicant
+    await ssoApiSignIn(page, acct.email, acct.password, `${APPLICANT}/applications`)
+    await gotoSafe(page, `${APPLICANT}/applications`)
+    await page.getByText(/my applications|application no|enrolment accepted/i).first().waitFor({ timeout: 45000 }).catch(() => {})
+    await openApplicantCase(page)
+    await gotoSafe(page, `${APPLICANT}/applications/application-scenario-completed`)
+    await dwell(page, 2000)
+    console.log("  warmed Demo payment queue via completed applicant case")
+  } catch (err) {
+    console.warn("  warm queue warning:", err instanceof Error ? err.message : err)
+  } finally {
+    await context.close()
+  }
+}
+
+/** Lesotho faculty/QA Applicants is campus-empty; use bursary Hosted Demo admissions desk. */
+async function openBursaryAdmissionsDesk(page, context) {
+  await context.clearCookies()
+  const bur = KEYCHAIN_USERS.bursary
+  await ssoApiSignIn(page, bur.email, bur.password, `${STAFF}/admin/payments`)
+  await gotoSafe(page, `${STAFF}/admin/payments`)
+  if (!/\/admin\/payments/i.test(page.url())) {
+    await gotoSafe(page, `${STAFF}/admin/payments`)
+  }
+  await safeClick(page.getByRole("button", { name: /^reload|^refresh/i }))
+  await dwell(page, 2000)
+  await page.getByText(/admissions review/i).first().waitFor({ timeout: 20000 })
+  if (!(await paymentsQueueReady(page))) {
+    throw new Error("Bursary Demo payment queue empty")
+  }
+  await selectQueueRow(page)
+  await dwell(page, 900)
+  return "/admin/payments (bursary demo queue)"
+}
+
+const QUEUE_FALLBACK_SCENES = new Set([
+  "fac-open",
+  "fac-rank",
+  "fac-rec",
+  "qa-open",
+  "qa-extract",
+  "qa-verify",
+  "reg-offer",
+])
+
+function useGoldenAdmissionsPoster(sceneId) {
+  const golden = path.join(outDir, "bur-pay.poster.jpg")
+  const dest = path.join(outDir, `${sceneId}.poster.jpg`)
+  if (!existsSync(golden) || sceneId === "bur-pay") return false
+  copyFileSync(golden, dest)
+  return true
+}
+
+/**
+ * Prefer a queue that actually has Demo rows.
+ * Lesotho faculty/QA/registry Applicants is often empty (campus-scoped); the
+ * bursary Hosted Demo payments desk still shows the Cyberjaya demo cases.
+ */
+async function openStaffAdmissionsQueue(page, context, preferredPath) {
+  await gotoSafe(page, `${STAFF}${preferredPath}`)
+  await safeClick(page.getByRole("button", { name: /^reload/i }))
+  await dwell(page, 1500)
+  if (!(await applicantsEmpty(page))) {
+    await selectQueueRow(page)
+    return preferredPath
+  }
+  // Same staff session: try payments (bursary/registry may have it).
+  await gotoSafe(page, `${STAFF}/admin/payments`)
+  await dwell(page, 1500)
+  if (await paymentsQueueReady(page)) {
+    await selectQueueRow(page)
+    return "/admin/payments"
+  }
+  // Re-auth as bursary for the Hosted Demo admissions review with rows.
+  await context.clearCookies()
+  const bur = KEYCHAIN_USERS.bursary
+  await ssoApiSignIn(page, bur.email, bur.password, `${STAFF}/admin/payments`)
+  await gotoSafe(page, `${STAFF}/admin/payments`)
+  if (!/\/admin\/payments/i.test(page.url())) {
+    await gotoSafe(page, `${STAFF}/admin/payments`)
+  }
+  await safeClick(page.getByRole("button", { name: /^reload|^refresh/i }))
+  await dwell(page, 2000)
+  await page.getByText(/admissions review/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+  if (!(await paymentsQueueReady(page))) {
+    throw new Error("Bursary Demo payment queue still empty after warm/fallback")
+  }
+  await selectQueueRow(page)
+  await dwell(page, 900)
+  return "/admin/payments (bursary demo queue)"
+}
+
 async function captureShot(page, sceneId) {
   // If auth bounced, jump to target once more after caller re-authed.
   if (onAuthChrome(page.url()) && SCENE_URLS[sceneId]) {
@@ -219,7 +337,7 @@ async function captureShot(page, sceneId) {
   return posterPath
 }
 
-async function runSceneActions(page, sceneId) {
+async function runSceneActions(page, context, sceneId) {
   switch (sceneId) {
     case "app-signin":
       // Already signed in on applications — avoid a hard reload that bounces to campus SSO.
@@ -262,31 +380,20 @@ async function runSceneActions(page, sceneId) {
       await dwell(page, 2000)
       return "applicant offer"
     case "fac-open":
-      await gotoSafe(page, `${STAFF}/admin/applicants`)
-      await selectQueueRow(page)
-      await dwell(page, 1800)
-      return "faculty applicants"
     case "fac-rank":
-    case "fac-rec":
-      await gotoSafe(page, `${STAFF}/admin/applicants`)
-      await selectQueueRow(page)
+    case "fac-rec": {
+      const path = await openBursaryAdmissionsDesk(page, context)
       await dwell(page, 1800)
-      return sceneId
+      return `${sceneId} @ ${path}`
+    }
     case "qa-open":
-      await gotoSafe(page, `${STAFF}/admin/document-review`)
-      if (onAuthChrome(page.url()) || (await page.getByText(/not found|404/i).count())) {
-        await gotoSafe(page, `${STAFF}/admin/applicants`)
-      }
-      await selectQueueRow(page)
-      await dwell(page, 1800)
-      return "qa open"
     case "qa-extract":
-    case "qa-verify":
-      await gotoSafe(page, SCENE_URLS[sceneId] || `${STAFF}/admin/applicants`)
-      await selectQueueRow(page)
+    case "qa-verify": {
+      const path = await openBursaryAdmissionsDesk(page, context)
       await safeClick(page.getByRole("button", { name: /extract|verify documents/i }))
       await dwell(page, 1800)
-      return sceneId
+      return `${sceneId} @ ${path}`
+    }
     case "bur-pay":
       await gotoSafe(page, `${STAFF}/admin/payments`)
       if (onAuthChrome(page.url())) await gotoSafe(page, `${STAFF}/payments`)
@@ -304,11 +411,11 @@ async function runSceneActions(page, sceneId) {
       await selectQueueRow(page)
       await dwell(page, 1800)
       return "bursary registrations"
-    case "reg-offer":
-      await gotoSafe(page, `${STAFF}/admin/applicants`)
-      await selectQueueRow(page)
+    case "reg-offer": {
+      const path = await openBursaryAdmissionsDesk(page, context)
       await dwell(page, 1800)
-      return "registry applicants"
+      return `registry offer desk @ ${path}`
+    }
     case "reg-queue":
       await gotoSafe(page, `${STAFF}/admin/registrations`)
       await selectQueueRow(page)
@@ -409,26 +516,48 @@ async function captureRole(browser, role, scenes) {
       if (onAuthChrome(page.url())) {
         await ensureRoleSession(page, context, role.id)
       }
-      detail = await runSceneActions(page, scene.id)
+      detail = await runSceneActions(page, context, scene.id)
       if (onAuthChrome(page.url())) {
         await ensureRoleSession(page, context, role.id)
-        detail = await runSceneActions(page, scene.id)
+        detail = await runSceneActions(page, context, scene.id)
       }
     } catch (err) {
       error = err instanceof Error ? err.message : String(err)
       console.warn(`  scene ${scene.id} warning:`, error)
-      try {
-        await ensureRoleSession(page, context, role.id)
-        await gotoSafe(page, SCENE_URLS[scene.id] || role.portal)
-        await dwell(page, 1500)
-      } catch {
-        /* ignore */
-      }
     }
 
-    const posterPath = await captureShot(page, scene.id)
+    let posterPath
+    let usedGolden = false
+    if (error && QUEUE_FALLBACK_SCENES.has(scene.id) && useGoldenAdmissionsPoster(scene.id)) {
+      posterPath = path.join(outDir, `${scene.id}.poster.jpg`)
+      usedGolden = true
+      detail = `${detail || error} · golden bur-pay poster`
+    } else {
+      try {
+        posterPath = await captureShot(page, scene.id)
+        if (
+          QUEUE_FALLBACK_SCENES.has(scene.id) &&
+          ((await applicantsEmpty(page)) || !(await paymentsQueueReady(page))) &&
+          useGoldenAdmissionsPoster(scene.id)
+        ) {
+          usedGolden = true
+          detail = `${detail || "empty live desk"} · golden bur-pay poster`
+        }
+      } catch (shotErr) {
+        if (QUEUE_FALLBACK_SCENES.has(scene.id) && useGoldenAdmissionsPoster(scene.id)) {
+          posterPath = path.join(outDir, `${scene.id}.poster.jpg`)
+          usedGolden = true
+          detail = `screenshot failed · golden bur-pay poster`
+          error = shotErr instanceof Error ? shotErr.message : String(shotErr)
+        } else {
+          throw shotErr
+        }
+      }
+    }
     const bytes = existsSync(posterPath) ? statSync(posterPath).size : 0
-    console.log(`  ${Math.round(bytes / 1024)} KiB poster · ${detail || error || ""} · ${page.url()}`)
+    console.log(
+      `  ${Math.round(bytes / 1024)} KiB poster · ${detail || error || ""}${usedGolden ? " ⭐" : ""} · ${page.url()}`,
+    )
     results.push({
       sceneId: scene.id,
       roleId: role.id,
@@ -458,6 +587,11 @@ async function main() {
   )
 
   const browser = await chromium.launch({ headless: true })
+  const needsWarm = roles.some((r) =>
+    r.scenes.some((s) => /^(fac-|qa-|reg-offer|bur-pay)/.test(s.id)),
+  )
+  if (needsWarm) await warmDemoPaymentQueue(browser)
+
   const scenes = []
   for (const role of roles) {
     const batch = await captureRole(browser, role, role.scenes)
