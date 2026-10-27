@@ -64,6 +64,17 @@
     .screen-shell img {
       display: block; width: 100%; max-height: min(68vh, 640px); object-fit: contain; background: #0b1016; vertical-align: top;
     }
+    .screen-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 3; width: 44px; height: 72px; margin: 0; padding: 0;
+      border: 1px solid rgba(255,255,255,.22); border-radius: 10px;
+      background: rgba(10, 16, 22, .72); color: #fff; font: 700 28px/1 system-ui, sans-serif;
+      cursor: pointer; backdrop-filter: blur(6px);
+    }
+    .screen-nav:hover:not(:disabled) { background: rgba(15, 107, 93, .88); border-color: transparent; }
+    .screen-nav:disabled { opacity: .28; cursor: not-allowed; }
+    .screen-nav-prev { left: 10px; }
+    .screen-nav-next { right: 10px; }
     .screen-missing {
       display: none; place-items: center; gap: 8px; min-height: 320px; padding: 24px;
       background: #101820; color: #c5d0dc; text-align: center;
@@ -414,10 +425,12 @@
           <span id="account" class="stage-account"></span>
         </div>
         <div class="screen-shell" aria-label="Demo scene screenshot">
+          <button type="button" class="screen-nav screen-nav-prev" id="btn-prev" aria-label="Previous step">‹</button>
           <img id="scene-screen" alt="Demo scene screenshot" />
+          <button type="button" class="screen-nav screen-nav-next" id="btn-next" aria-label="Next step">›</button>
           <div id="screen-missing" class="screen-missing" hidden>
             <strong>Screen not captured yet</strong>
-            <div>Scene <code data-missing-id></code> — re-run <code>record-playback-videos.mjs</code>.</div>
+            <div>Scene <code data-missing-id></code> — re-run <code>record-playback-videos.mjs --screens-only</code>.</div>
           </div>
         </div>
         <div class="screen-toolbar">
@@ -433,12 +446,10 @@
         </div>
       </div>
       <div class="controls">
-        <button type="button" id="btn-prev">Previous</button>
-        <button type="button" class="primary" id="btn-next">Next</button>
-        <button type="button" id="btn-play">Auto</button>
+        <button type="button" class="primary" id="btn-play">Auto</button>
         <button type="button" id="btn-pause">Pause</button>
         <button type="button" id="btn-speed" title="Auto-advance speed">1×</button>
-        <span class="kbd">← → · Space</span>
+        <span class="kbd">← → on image · Space auto</span>
       </div>
       <div class="bars">
         <div class="bar-label"><span>This role</span><span id="status-line" class="status-line" style="margin:0"></span></div>
@@ -451,7 +462,7 @@
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028k"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028m"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),
