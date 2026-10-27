@@ -139,6 +139,20 @@ export const admissionsSettingsSchema = z
         z.object({ intakeId: text, registrationOn: z.iso.date() }).strict()
       )
       .max(100),
+    /** Lesotho / desk-chain review options (FM-05). Off by default; on for campus-lesotho demo. */
+    review: z
+      .object({
+        showRankScore: z.boolean(),
+        extractRequired: z.boolean(),
+        /** Ordered desks that must record a recommendation (e.g. faculty → qa → registry). */
+        reviewStepsRequired: z.array(flowDeskSchema).max(5),
+      })
+      .strict()
+      .default({
+        showRankScore: false,
+        extractRequired: false,
+        reviewStepsRequired: [],
+      }),
   })
   .strict()
 export type AdmissionsSettings = z.infer<typeof admissionsSettingsSchema>
@@ -293,6 +307,51 @@ export const admissionsFlowSchema = z
         .strict()
     ),
     events: z.array(flowEventSchema),
+    /** FM-03: optional rank/score for Lesotho desk queue. */
+    reviewMetrics: z
+      .object({
+        rank: z.number().int().positive().nullable(),
+        score: z.number().nullable(),
+      })
+      .strict()
+      .nullable()
+      .default(null),
+    /** FM-03: desk recommendation chain (n/required). */
+    reviewSteps: z
+      .array(
+        z
+          .object({
+            desk: flowDeskSchema,
+            outcome: z.enum(["recommended", "not-recommended"]),
+            reason: text,
+            at: z.iso.datetime(),
+            actorId: text,
+          })
+          .strict()
+      )
+      .default([]),
+    /** FM-04: LGCSE / certificate extract recorded by Document review desk. */
+    documentExtract: z
+      .object({
+        status: z.enum(["pending", "extracted", "verified"]),
+        certificateNumber: z.string().nullable(),
+        institution: z.string().nullable(),
+        subjects: z
+          .array(
+            z
+              .object({
+                subject: text,
+                grade: text,
+              })
+              .strict()
+          )
+          .default([]),
+        extractedAt: z.iso.datetime().nullable(),
+        extractedBy: z.string().nullable(),
+      })
+      .strict()
+      .nullable()
+      .default(null),
   })
   .strict()
 export type AdmissionsFlow = z.infer<typeof admissionsFlowSchema>
@@ -322,6 +381,9 @@ export const flowActionInputSchema = z
       "clear-finance",
       "deadline-exception",
       "reviewer-message",
+      "record-desk-recommendation",
+      "set-review-metrics",
+      "extract-document",
     ]),
     note: z.string().trim().max(10000).default(""),
     deadlineKind: z
@@ -337,6 +399,24 @@ export const flowActionInputSchema = z
     amountMinor: z.number().int().positive().optional(),
     currency: currency.optional(),
     basis: z.enum(["first-year", "semester"]).optional(),
+    recommendationOutcome: z
+      .enum(["recommended", "not-recommended"])
+      .optional(),
+    rank: z.number().int().positive().optional(),
+    score: z.number().optional(),
+    certificateNumber: z.string().trim().max(200).optional(),
+    institution: z.string().trim().max(400).optional(),
+    subjects: z
+      .array(
+        z
+          .object({
+            subject: text,
+            grade: text,
+          })
+          .strict()
+      )
+      .max(40)
+      .optional(),
   })
   .strict()
 export type FlowActionInput = z.infer<typeof flowActionInputSchema>
@@ -385,10 +465,23 @@ export const defaultAdmissionsSettings: AdmissionsSettings = {
     registrationGate: "manual",
   },
   registrationDates: [],
+  review: {
+    showRankScore: false,
+    extractRequired: false,
+    reviewStepsRequired: [],
+  },
 }
 export function defaultAdmissionsPolicy(
   campusId: string
 ): AdmissionsPolicyVersion {
+  const settings = structuredClone(defaultAdmissionsSettings)
+  if (campusId === "campus-lesotho") {
+    settings.review = {
+      showRankScore: true,
+      extractRequired: true,
+      reviewStepsRequired: ["faculty", "qa", "registry"],
+    }
+  }
   return admissionsPolicyVersionSchema.parse({
     id: `admissions:${campusId}:1`,
     flowId: "admissions",
@@ -399,7 +492,7 @@ export function defaultAdmissionsPolicy(
     publishedBy: "owner-demo-template",
     reason:
       "Owner-selected starting template; jurisdictional and unresolved rules require operational confirmation.",
-    settings: structuredClone(defaultAdmissionsSettings),
+    settings,
     source: "owner-demo-template",
   })
 }
@@ -431,6 +524,18 @@ export function newAdmissionsFlow(
     offerHistory: [],
     credits: [],
     events: [],
+    reviewMetrics: null,
+    reviewSteps: [],
+    documentExtract: policy.settings.review.extractRequired
+      ? {
+          status: "pending",
+          certificateNumber: null,
+          institution: null,
+          subjects: [],
+          extractedAt: null,
+          extractedBy: null,
+        }
+      : null,
   })
 }
 export function validateAdmissionsSettings(input: unknown): string[] {
