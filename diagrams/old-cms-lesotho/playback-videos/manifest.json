@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-27T22:52:55.838Z",
+  "recordedAt": "2026-10-27T23:48:03.125Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -23,7 +23,7 @@
       "detail": "applicant applications",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications",
-      "recordedAt": "2026-10-27T22:41:57.233Z"
+      "recordedAt": "2026-10-27T23:32:36.371Z"
     },
     {
       "sceneId": "app-draft",
@@ -38,7 +38,7 @@
       "detail": "applicant case",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T22:19:36.090Z"
+      "recordedAt": "2026-10-27T23:32:40.645Z"
     },
     {
       "sceneId": "app-fee",
@@ -53,7 +53,7 @@
       "detail": "applicant fee",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T22:19:40.364Z"
+      "recordedAt": "2026-10-27T23:32:44.928Z"
     },
     {
       "sceneId": "app-eligibility",
@@ -68,7 +68,7 @@
       "detail": "applicant eligibility",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T22:19:44.598Z"
+      "recordedAt": "2026-10-27T23:32:49.179Z"
     },
     {
       "sceneId": "app-offer",
@@ -78,11 +78,11 @@
         "FM-02"
       ],
       "poster": "app-offer.poster.jpg",
-      "bytes": 67379,
+      "bytes": 67377,
       "detail": "applicant offer",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T22:52:35.494Z"
+      "recordedAt": "2026-10-27T23:32:53.428Z"
     },
     {
       "sceneId": "fac-open",
@@ -93,11 +93,11 @@
         "FM-15"
       ],
       "poster": "fac-open.poster.jpg",
-      "bytes": 49005,
-      "detail": "fac-open @ /admin/payments (bursary demo queue)",
+      "bytes": 72128,
+      "detail": "fac-open @ /admin/applicants · golden bur-pay poster",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:37:50.945Z"
+      "url": "https://staff.lesotho.raisd.co/admin/applicants",
+      "recordedAt": "2026-10-27T23:33:16.632Z"
     },
     {
       "sceneId": "fac-rank",
@@ -108,11 +108,11 @@
         "FM-05"
       ],
       "poster": "fac-rank.poster.jpg",
-      "bytes": 49005,
-      "detail": "fac-rank @ /admin/payments (bursary demo queue)",
+      "bytes": 72128,
+      "detail": "fac-rank @ /admin/applicants · golden bur-pay poster",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:38:04.583Z"
+      "url": "https://staff.lesotho.raisd.co/admin/applicants",
+      "recordedAt": "2026-10-27T23:34:41.639Z"
     },
     {
       "sceneId": "fac-rec",
@@ -123,11 +123,11 @@
         "FM-05"
       ],
       "poster": "fac-rec.poster.jpg",
-      "bytes": 49005,
-      "detail": "fac-rec @ /admin/payments (bursary demo queue)",
+      "bytes": 72128,
+      "detail": "fac-rec @ /admin/applicants · golden bur-pay poster",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:38:18.278Z"
+      "url": "https://staff.lesotho.raisd.co/admin/applicants",
+      "recordedAt": "2026-10-27T23:34:46.633Z"
     },
     {
       "sceneId": "qa-open",
@@ -138,11 +138,11 @@
         "FM-15"
       ],
       "poster": "qa-open.poster.jpg",
-      "bytes": 48231,
-      "detail": "qa open",
+      "bytes": 39439,
+      "detail": "qa-open @ document-review",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:38:55.766Z"
+      "url": "https://staff.lesotho.raisd.co/admin/document-review",
+      "recordedAt": "2026-10-27T23:45:19.316Z"
     },
     {
       "sceneId": "qa-extract",
@@ -153,11 +153,11 @@
         "FM-05"
       ],
       "poster": "qa-extract.poster.jpg",
-      "bytes": 48231,
-      "detail": "qa-extract",
+      "bytes": 39529,
+      "detail": "qa-extract @ document-review",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:39:09.583Z"
+      "url": "https://staff.lesotho.raisd.co/admin/document-review",
+      "recordedAt": "2026-10-27T23:46:43.403Z"
     },
     {
       "sceneId": "qa-verify",
@@ -168,11 +168,11 @@
         "FM-03"
       ],
       "poster": "qa-verify.poster.jpg",
-      "bytes": 48231,
-      "detail": "qa-verify",
+      "bytes": 39529,
+      "detail": "qa-verify @ document-review",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:39:23.150Z"
+      "url": "https://staff.lesotho.raisd.co/admin/document-review",
+      "recordedAt": "2026-10-27T23:46:47.487Z"
     },
     {
       "sceneId": "bur-pay",
@@ -183,11 +183,11 @@
         "FM-03"
       ],
       "poster": "bur-pay.poster.jpg",
-      "bytes": 72128,
+      "bytes": 79561,
       "detail": "bursary payments",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/payments",
-      "recordedAt": "2026-10-27T22:52:55.783Z"
+      "recordedAt": "2026-10-27T23:47:09.208Z"
     },
     {
       "sceneId": "bur-fees",
@@ -197,11 +197,11 @@
         "FM-09"
       ],
       "poster": "bur-fees.poster.jpg",
-      "bytes": 27712,
+      "bytes": 30769,
       "detail": "bursary fees",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/fees",
-      "recordedAt": "2026-10-27T22:15:14.140Z"
+      "recordedAt": "2026-10-27T23:47:12.381Z"
     },
     {
       "sceneId": "bur-reg",
@@ -212,11 +212,11 @@
         "FM-09"
       ],
       "poster": "bur-reg.poster.jpg",
-      "bytes": 49544,
+      "bytes": 49542,
       "detail": "bursary registrations",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:15:17.132Z"
+      "recordedAt": "2026-10-27T23:37:04.574Z"
     },
     {
       "sceneId": "reg-offer",
@@ -226,11 +226,11 @@
         "FM-03"
       ],
       "poster": "reg-offer.poster.jpg",
-      "bytes": 50880,
-      "detail": "registry applicants @ /admin/payments (bursary demo queue)",
+      "bytes": 61152,
+      "detail": "registry offer desk @ /admin/applicants",
       "error": null,
-      "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:39:57.750Z"
+      "url": "https://staff.lesotho.raisd.co/admin/applicants",
+      "recordedAt": "2026-10-27T23:47:43.734Z"
     },
     {
       "sceneId": "reg-queue",
@@ -244,7 +244,7 @@
       "detail": "registry registrations",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/registrations",
-      "recordedAt": "2026-10-27T22:15:43.747Z"
+      "recordedAt": "2026-10-27T23:37:31.298Z"
     },
     {
       "sceneId": "reg-list",
@@ -254,11 +254,11 @@
         "FM-07"
       ],
       "poster": "reg-list.poster.jpg",
-      "bytes": 33981,
+      "bytes": 41470,
       "detail": "registry students",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T22:15:46.846Z"
+      "recordedAt": "2026-10-27T23:37:34.282Z"
     },
     {
       "sceneId": "reg-file-academics",
@@ -268,11 +268,11 @@
         "FM-07"
       ],
       "poster": "reg-file-academics.poster.jpg",
-      "bytes": 33981,
+      "bytes": 41470,
       "detail": "reg-file-academics",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T22:15:49.388Z"
+      "recordedAt": "2026-10-27T23:37:36.814Z"
     },
     {
       "sceneId": "reg-file-sponsors",
@@ -283,11 +283,11 @@
         "FM-08"
       ],
       "poster": "reg-file-sponsors.poster.jpg",
-      "bytes": 33981,
+      "bytes": 41470,
       "detail": "reg-file-sponsors",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T22:15:51.922Z"
+      "recordedAt": "2026-10-27T23:37:39.363Z"
     },
     {
       "sceneId": "yl-signin",
@@ -298,11 +298,11 @@
         "FM-15"
       ],
       "poster": "yl-signin.poster.jpg",
-      "bytes": 48550,
+      "bytes": 48584,
       "detail": "year leader home",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T22:16:29.948Z"
+      "recordedAt": "2026-10-27T23:38:00.387Z"
     },
     {
       "sceneId": "yl-list",
@@ -312,11 +312,11 @@
         "FM-07"
       ],
       "poster": "yl-list.poster.jpg",
-      "bytes": 31909,
+      "bytes": 39160,
       "detail": "year leader list",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T22:16:33.004Z"
+      "recordedAt": "2026-10-27T23:38:03.495Z"
     },
     {
       "sceneId": "yl-file",
@@ -327,11 +327,11 @@
         "FM-15"
       ],
       "poster": "yl-file.poster.jpg",
-      "bytes": 31909,
+      "bytes": 39160,
       "detail": "year leader file",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T22:16:35.532Z"
+      "recordedAt": "2026-10-27T23:38:06.037Z"
     },
     {
       "sceneId": "stu-signin",
@@ -346,8 +346,8 @@
       "bytes": 89567,
       "detail": "student home",
       "error": null,
-      "url": "https://student.lesotho.raisd.co/?code=BjW7UgYMmqAHVQlEE5ery8RPEoA-rcwH&programmeEnrolmentId=programme-enrolment-alya-bdes",
-      "recordedAt": "2026-10-27T22:22:37.252Z"
+      "url": "https://student.lesotho.raisd.co/?code=_tYWPTqKK2AaBFFEVe8jD_r5V_mtRdDk&programmeEnrolmentId=programme-enrolment-alya-bdes",
+      "recordedAt": "2026-10-27T23:38:45.181Z"
     },
     {
       "sceneId": "stu-reg",
@@ -358,11 +358,11 @@
         "FM-08"
       ],
       "poster": "stu-reg.poster.jpg",
-      "bytes": 51729,
+      "bytes": 65272,
       "detail": "student registration",
       "error": null,
       "url": "https://student.lesotho.raisd.co/announcements/announcement-registration?programmeEnrolmentId=programme-enrolment-alya-bdes",
-      "recordedAt": "2026-10-27T22:22:39.850Z"
+      "recordedAt": "2026-10-27T23:38:47.715Z"
     },
     {
       "sceneId": "stu-finance",
@@ -373,11 +373,11 @@
         "FM-09"
       ],
       "poster": "stu-finance.poster.jpg",
-      "bytes": 72769,
+      "bytes": 50834,
       "detail": "student finance",
       "error": null,
       "url": "https://student.lesotho.raisd.co/finance?programmeEnrolmentId=programme-enrolment-alya-bdes",
-      "recordedAt": "2026-10-27T22:22:42.383Z"
+      "recordedAt": "2026-10-27T23:38:50.248Z"
     },
     {
       "sceneId": "ctl-flows",
@@ -387,11 +387,11 @@
         "FM-05"
       ],
       "poster": "ctl-flows.poster.jpg",
-      "bytes": 60566,
+      "bytes": 60549,
       "detail": "control flows",
       "error": null,
       "url": "https://control.raisd.co/flows/admissions/campus-lesotho",
-      "recordedAt": "2026-10-27T22:21:26.939Z"
+      "recordedAt": "2026-10-27T23:39:12.405Z"
     },
     {
       "sceneId": "ctl-review",
@@ -401,11 +401,11 @@
         "FM-05"
       ],
       "poster": "ctl-review.poster.jpg",
-      "bytes": 60566,
+      "bytes": 22580,
       "detail": "control review",
       "error": null,
       "url": "https://control.raisd.co/flows/admissions/campus-lesotho",
-      "recordedAt": "2026-10-27T22:21:29.474Z"
+      "recordedAt": "2026-10-27T23:48:03.100Z"
     },
     {
       "sceneId": "ctl-catalogues",
@@ -415,11 +415,11 @@
         "FM-05"
       ],
       "poster": "ctl-catalogues.poster.jpg",
-      "bytes": 22580,
+      "bytes": 60549,
       "detail": "control catalogues",
       "error": null,
       "url": "https://control.raisd.co/flows/admissions/campus-lesotho",
-      "recordedAt": "2026-10-27T22:21:32.005Z"
+      "recordedAt": "2026-10-27T23:39:17.480Z"
     },
     {
       "sceneId": "ctl-positions",
@@ -434,7 +434,7 @@
       "detail": "control campus",
       "error": null,
       "url": "https://control.raisd.co/campuses/campus-lesotho",
-      "recordedAt": "2026-10-27T22:21:35.281Z"
+      "recordedAt": "2026-10-27T23:39:20.772Z"
     }
   ]
 }

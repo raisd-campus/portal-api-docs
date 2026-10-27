@@ -382,17 +382,50 @@ async function runSceneActions(page, context, sceneId) {
     case "fac-open":
     case "fac-rank":
     case "fac-rec": {
-      const path = await openBursaryAdmissionsDesk(page, context)
+      await gotoSafe(page, `${STAFF}/admin/applicants`)
+      await safeClick(page.getByRole("button", { name: /^reload/i }))
+      await dwell(page, 1500)
+      if (await applicantsEmpty(page)) {
+        const path = await openBursaryAdmissionsDesk(page, context)
+        return `${sceneId} @ ${path}`
+      }
+      await selectQueueRow(page)
+      if (sceneId === "fac-rank") {
+        await page.getByLabel(/^rank$/i).fill("2").catch(() => {})
+        await page.getByLabel(/^score$/i).fill("78.5").catch(() => {})
+        await safeClick(page.getByRole("button", { name: /set rank|save metrics|apply metrics/i }))
+      }
+      if (sceneId === "fac-rec") {
+        await safeClick(page.getByRole("button", { name: /recommend|record recommendation/i }))
+      }
       await dwell(page, 1800)
-      return `${sceneId} @ ${path}`
+      return `${sceneId} @ /admin/applicants`
     }
     case "qa-open":
     case "qa-extract":
     case "qa-verify": {
-      const path = await openBursaryAdmissionsDesk(page, context)
-      await safeClick(page.getByRole("button", { name: /extract|verify documents/i }))
+      await gotoSafe(page, `${STAFF}/admin/document-review`)
+      await safeClick(page.getByRole("button", { name: /^reload/i }))
+      await dwell(page, 1500)
+      if (onAuthChrome(page.url()) || (await page.getByText(/not found|404/i).count()) || (await applicantsEmpty(page))) {
+        await gotoSafe(page, `${STAFF}/admin/applicants`)
+        await dwell(page, 1200)
+      }
+      if (await applicantsEmpty(page)) {
+        const path = await openBursaryAdmissionsDesk(page, context)
+        return `${sceneId} @ ${path}`
+      }
+      await selectQueueRow(page)
+      if (sceneId === "qa-extract") {
+        await page.getByLabel(/certificate/i).fill("LGCSE-DEMO-1").catch(() => {})
+        await page.getByLabel(/institution/i).fill("Demo High School (Maseru)").catch(() => {})
+        await safeClick(page.getByRole("button", { name: /extract/i }))
+      }
+      if (sceneId === "qa-verify") {
+        await safeClick(page.getByRole("button", { name: /verify documents/i }))
+      }
       await dwell(page, 1800)
-      return `${sceneId} @ ${path}`
+      return `${sceneId} @ document-review`
     }
     case "bur-pay":
       await gotoSafe(page, `${STAFF}/admin/payments`)
@@ -412,9 +445,17 @@ async function runSceneActions(page, context, sceneId) {
       await dwell(page, 1800)
       return "bursary registrations"
     case "reg-offer": {
-      const path = await openBursaryAdmissionsDesk(page, context)
+      await gotoSafe(page, `${STAFF}/admin/applicants`)
+      await safeClick(page.getByRole("button", { name: /^reload/i }))
+      await dwell(page, 1500)
+      if (await applicantsEmpty(page)) {
+        const path = await openBursaryAdmissionsDesk(page, context)
+        return `registry offer desk @ ${path}`
+      }
+      await selectQueueRow(page)
+      await safeClick(page.getByRole("button", { name: /release offer|offer letter/i }))
       await dwell(page, 1800)
-      return `registry offer desk @ ${path}`
+      return "registry offer desk @ /admin/applicants"
     }
     case "reg-queue":
       await gotoSafe(page, `${STAFF}/admin/registrations`)
@@ -535,11 +576,8 @@ async function captureRole(browser, role, scenes) {
     } else {
       try {
         posterPath = await captureShot(page, scene.id)
-        if (
-          QUEUE_FALLBACK_SCENES.has(scene.id) &&
-          ((await applicantsEmpty(page)) || !(await paymentsQueueReady(page))) &&
-          useGoldenAdmissionsPoster(scene.id)
-        ) {
+        // Only replace with bursary golden when the live desk is still empty.
+        if (QUEUE_FALLBACK_SCENES.has(scene.id) && (await applicantsEmpty(page)) && useGoldenAdmissionsPoster(scene.id)) {
           usedGolden = true
           detail = `${detail || "empty live desk"} · golden bur-pay poster`
         }
