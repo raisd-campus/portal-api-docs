@@ -122,6 +122,7 @@ Vara Drive pack (5 Oct 2026): DB **`campus2_lesotho`** — **369** tables / **35
 |---|---|
 | Lesotho pilot approach | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Workflow & control proposal | [lesotho-workflow-control-improvements.md](lesotho-workflow-control-improvements.md) |
+| Feature modules | [lesotho-feature-modules.md](lesotho-feature-modules.md) |
 | Database gap (proxy) | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | CMS vs Applicant portal | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |
 | Diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |

@@ -113,18 +113,19 @@ Do **not** import HR / Library / LMS resources into Control for M4.
 
 Newer CMS Google + link + Dev Login is the campus benchmark for **roles**, not the Raisd Live identity product. Demo keychain remains the staging switcher analogue. No Google-link requirement for Lesotho pilot acceptance.
 
-## Modular packaging (for the parallel standup actions)
+## Modular packaging
 
-Independent modules that can be owned and demoed without touching Faid’s versioned-flow restructuring of Applicant:
+Full division of existing vs missing features into independent modules (**FM-01…FM-16**, **FM-X** out of pack): [lesotho-feature-modules.md](lesotho-feature-modules.md) · Pages [`feature-modules.html`](../../diagrams/old-cms-lesotho/feature-modules.html).
 
-| Module | Owns | Depends on |
-|---|---|---|
-| Admissions desks + Flows Lesotho profile | Staff queue, rank/score, document types | University Flows + Control desks |
-| CAP-53 student read + registry file | Staff student surface | Portal API adapter |
-| Registration clearance + NMDS fields | Staff registrations | Flows #2 or continuation |
-| Finance profile + LSL catalogue | Fees presentation + verify | [campus-finance-profiles.yaml](../contracts/campus-finance-profiles.yaml) |
-| Control position seeds | Custom roles | SSO Control API |
-| Print / QR verification metadata | Certificates / SoR later | Cambodia QR as pattern only |
+| Quick map | Module ID |
+|---|---|
+| Admissions desks + Flows Lesotho profile | FM-03 · FM-05 |
+| CAP-53 student read + registry file | FM-07 |
+| Registration clearance + NMDS | FM-08 |
+| Finance profile + LSL catalogue | FM-09 |
+| Control position seeds | FM-15 |
+| Print / QR verification metadata | FM-12 |
+| Applicant journey (Faid-owned rewrite) | FM-02 |
 
 ## Faid — please confirm
 
@@ -140,6 +141,7 @@ Independent modules that can be owned and demoed without touching Faid’s versi
 | Topic | Path |
 |---|---|
 | Pages | [workflow-control-improvements.html](../../diagrams/old-cms-lesotho/workflow-control-improvements.html) |
+| Feature modules (FM-01…FM-16) | [lesotho-feature-modules.md](lesotho-feature-modules.md) · [feature-modules.html](../../diagrams/old-cms-lesotho/feature-modules.html) |
 | Newer CMS gap | [lesotho-newer-cms.md](lesotho-newer-cms.md) · [newer-cms-gap.html](../../diagrams/old-cms-lesotho/newer-cms-gap.html) |
 | DB × FE × flows | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | CMS vs Applicant | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |

@@ -8,6 +8,7 @@
 **Database + M4 gap (schema × FE × flows):** [../backend/lesotho-db-gap.md](../backend/lesotho-db-gap.md) ([`#m4-gap-analysis`](../backend/lesotho-db-gap.md#m4-gap-analysis--schema--frontend--flows)).  
 **CMS vs Applicant flow (8 Oct 2026):** [../backend/lesotho-cms-vs-applicant-portal.md](../backend/lesotho-cms-vs-applicant-portal.md) · Pages [`cms-vs-applicant.html`](../../diagrams/old-cms-lesotho/cms-vs-applicant.html).  
 **Workflow & control proposal (28 Oct 2026):** [../backend/lesotho-workflow-control-improvements.md](../backend/lesotho-workflow-control-improvements.md) · Pages [`workflow-control-improvements.html`](../../diagrams/old-cms-lesotho/workflow-control-improvements.html).  
+**Feature modules (28 Oct 2026):** [../backend/lesotho-feature-modules.md](../backend/lesotho-feature-modules.md) · Pages [`feature-modules.html`](../../diagrams/old-cms-lesotho/feature-modules.html).  
 **Diagram analysis (Pages):** [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) ([`#db-gap`](../../diagrams/old-cms-lesotho/index.html#db-gap), [`#gap-x`](../../diagrams/old-cms-lesotho/index.html#gap-x)).
 
 ## Decision (emphasised)
@@ -91,6 +92,7 @@ Live flat hostnames in SDD-12 (`apply.raisd.co`, …) remain the acceptance grow
 | Lesotho CMS inventory | [../backend/old-cms-lesotho.md](../backend/old-cms-lesotho.md) |
 | Newer CMS manual and Raisd gap (23 Oct 2026) | [../backend/lesotho-newer-cms.md](../backend/lesotho-newer-cms.md) |
 | Workflow & control improvements (28 Oct 2026) | [../backend/lesotho-workflow-control-improvements.md](../backend/lesotho-workflow-control-improvements.md) |
+| Feature modules FM-01…FM-16 (28 Oct 2026) | [../backend/lesotho-feature-modules.md](../backend/lesotho-feature-modules.md) |
 | Lesotho DB + M4 gap analysis | [../backend/lesotho-db-gap.md](../backend/lesotho-db-gap.md) |
 | Lesotho diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
 | Botswana sibling (family tree) | [../backend/old-cms-botswana.md](../backend/old-cms-botswana.md) |

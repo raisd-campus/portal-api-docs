@@ -4,7 +4,7 @@
 **Product:** staging Admin portal (dark UI, `DEBUG` ribbon). Host used for this walk: `https://luct.vercel.app`.  
 **Walked:** 23 October 2026, signed in as a campus **Admin** whose position is **Registry Manager**. Active term on the dashboard: **2026-07**.  
 **This file:** user manual and gap analysis for that portal. It does not copy student or staff records.  
-**Published:** [mind map](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms.html) · [Obsidian 3D](https://docs.raisd.co/diagrams/old-cms/obsidian.html?campus=lesotho) · [user manual](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-manual.html) · [gap vs Raisd](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-gap.html) · [workflow & control (Faid)](https://docs.raisd.co/diagrams/old-cms-lesotho/workflow-control-improvements.html) · [screenshots](../../diagrams/old-cms-lesotho/newer-cms-screenshots.html) (278 Admin screens, 23–26 Oct 2026) · [exports](../../diagrams/old-cms-lesotho/newer-cms-exports.html) (seven downloads, 26 Oct 2026).  
+**Published:** [mind map](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms.html) · [Obsidian 3D](https://docs.raisd.co/diagrams/old-cms/obsidian.html?campus=lesotho) · [user manual](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-manual.html) · [gap vs Raisd](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-gap.html) · [workflow & control (Faid)](https://docs.raisd.co/diagrams/old-cms-lesotho/workflow-control-improvements.html) · [feature modules](https://docs.raisd.co/diagrams/old-cms-lesotho/feature-modules.html) · [screenshots](../../diagrams/old-cms-lesotho/newer-cms-screenshots.html) (278 Admin screens, 23–26 Oct 2026) · [exports](../../diagrams/old-cms-lesotho/newer-cms-exports.html) (seven downloads, 26 Oct 2026).  
 **Older inventories:** screenshot seed [old-cms-lesotho.md](old-cms-lesotho.md) (3 and 5 Oct 2026). Structure of the **old** LUCT CMS remains [lesotho-db-gap.md](lesotho-db-gap.md). Pilot framing: [lesotho-pilot.md](../architecture/lesotho-pilot.md).
 
 This portal is the campus feature benchmark (ADR-1). It is **not** the Raisd system of record. Raisd portals still go through the Portal API. Nothing in this file is Raisd Live.
@@ -694,5 +694,6 @@ Certificate references use `LSO` + a programme code + the student number. Codes 
 | Old CMS structure and M4 gap | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | Applicant comparison | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |
 | Workflow & control proposal (28 Oct) | [lesotho-workflow-control-improvements.md](lesotho-workflow-control-improvements.md) · [workflow-control-improvements.html](../../diagrams/old-cms-lesotho/workflow-control-improvements.html) |
+| Feature modules FM-01…FM-16 (28 Oct) | [lesotho-feature-modules.md](lesotho-feature-modules.md) · [feature-modules.html](../../diagrams/old-cms-lesotho/feature-modules.html) |
 | Raisd Admin desks | [admin-portal.md](../frontend/admin-portal.md) |
 | Raisd Applicant | [applicant-portal.md](../frontend/applicant-portal.md) |
