@@ -9,15 +9,32 @@
     lesotho: {
       label: "Lesotho",
       code: "LSO-MAS",
-      data: "./fsd-knowledge-lesotho.json",
+      data: "./fsd-knowledge-lesotho-newer-cms.json",
+      db: "Admin Portal sidebar (23 Oct 2026)",
+      heading: "Lesotho newer CMS Admin Portal",
+      aliases: ["ls", "lso", "lesotho", "lso-mas", "maseru", "limkokwing", "luct-ls", "newer-cms", "admin-portal"],
+      toc: [
+        ["../old-cms-lesotho/newer-cms.html", "Mind map", "Mermaid sign-in + sidebar"],
+        ["../old-cms-lesotho/newer-cms-manual.html", "User manual", "Section desks"],
+        [null, "Obsidian 3D", "This page"],
+        ["../old-cms-lesotho/newer-cms-screenshots.html", "Screenshots", "278 Admin screens"],
+        ["../old-cms-lesotho/newer-cms-exports.html", "Exports", "26 Oct downloads"],
+        ["../old-cms-lesotho/newer-cms-gap.html", "Gap vs Raisd", "Pilot cut"],
+        ["?campus=lesotho-screenshot", "Screenshot FSD", "3 Oct SoT graph"],
+      ],
+    },
+    "lesotho-screenshot": {
+      label: "Lesotho (screenshot)",
+      code: "LSO-MAS",
+      data: "./fsd-knowledge-lesotho-screenshot.json",
       db: "screenshot SoT (dump pending)",
-      heading: "Lesotho newer CMS (pilot)",
-      aliases: ["ls", "lso", "lesotho", "lso-mas", "maseru", "limkokwing", "luct-ls"],
+      heading: "Lesotho newer CMS (3 Oct screenshot FSD)",
+      aliases: ["lesotho-screenshot", "lso-screenshot", "screenshot-fsd"],
       toc: [
         ["../old-cms-lesotho/index.html", "Feature analysis", "Screenshot SoT · M4 pilot"],
-        ["../old-cms-lesotho/index.html#why", "Why pilot", "Meeting reasons"],
-        [null, "Obsidian", "This page"],
-        ["../old-cms-lesotho/index.html#admissions", "Flows", "Admissions · registry · NMDS"],
+        ["../old-cms-lesotho/newer-cms.html", "Mind map", "23 Oct Mermaid"],
+        ["?campus=lesotho", "Obsidian Admin", "Admin Portal 3D"],
+        [null, "Obsidian screenshot", "This page"],
         ["../old-cms-lesotho/index.html#admissions", "Admissions", "LGCSE · 3-step · Loti"],
         ["../old-cms-lesotho/index.html#registry", "Registry / NMDS", "Transcript · card · sponsors"],
         ["../old-cms-lesotho/index.html#cap", "CAP seed", "Parity checklist"],
@@ -189,7 +206,7 @@
       note.setAttribute("role", "status");
       note.textContent =
         "Unknown campus “" + campusChoice.requested + "” — showing " + campus.label +
-        ". Use ?campus=lesotho, eswatini, cambodia, cyberjaya, botswana or sierra-leone.";
+        ". Use ?campus=lesotho, lesotho-screenshot, eswatini, cambodia, cyberjaya, botswana or sierra-leone.";
       heroLead.insertAdjacentElement("afterend", note);
     }
     if (toc) {

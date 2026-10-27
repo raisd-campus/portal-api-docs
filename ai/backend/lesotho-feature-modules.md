@@ -131,19 +131,19 @@ Status: **Existing** · **Partial** · **Missing**.
 |---|---|---|---|---|
 | **FM-01** | Identity & Access | Existing | SSO, Access presets, Control roles, Users | — |
 | **FM-02** | Applicant journey | Partial | Apply wizard / offer / accept | FM-01; **Faid owns** rewrite |
-| **FM-03** | Admissions staff desks | Partial | Review queue, applicants, n/3, recommendation | FM-01, FM-05 |
-| **FM-04** | Document extract (LGCSE) | Missing | Document Review desk | FM-03 |
-| **FM-05** | Flows — Lesotho Admissions profile | Partial | Intake/settings policy, desk order | FM-01 |
+| **FM-03** | Admissions staff desks | Existing (Demo W1) | Review queue Progress/Rank/Score/Recommendation, n/3 desk action | FM-01, FM-05 |
+| **FM-04** | Document extract (LGCSE) | Existing (Demo W1) | Document Review route + `extract-document` on applicant-store | FM-03 |
+| **FM-05** | Flows — Lesotho Admissions profile | Existing (Demo W3) | `review.*` + Demo `catalogues` (intakes, certificates, subjects, schools, entry); Control surface; Admissions Payments via Staff Payments | FM-01 |
 | **FM-06** | Student self-service | Existing | Student Demo journeys | FM-01 |
-| **FM-07** | Staff registry file (CAP-53) | Missing | Students, docs, status, terms, bulk cards/photos; phase-2 notes/letters/blocked/referrals | FM-01 |
-| **FM-08** | Registration clearance + NMDS | Partial | Registration queue, sponsor/borrower, clearance | FM-05/03, FM-09 |
-| **FM-09** | Finance + LSL catalogue | Partial | Fees & Fines, plans, banks/debtors (p2), admissions payments | FM-01 |
+| **FM-07** | Staff registry file (CAP-53) | Existing (Demo W3) | Staff Students list + **12-tab** Demo file from record graph; phase-2 notes/letters/blocked/referrals; Live CAP-53 still mapped only | FM-01 |
+| **FM-08** | Registration clearance + NMDS | Existing (Demo W3) | Borrower/sponsor on request + **registry file Sponsors/Registration**; Create Sponsorship master still phase-2 | FM-05/03, FM-09 |
+| **FM-09** | Finance + LSL catalogue | Existing (Demo W3) | Profile JSON + Fees & Fines Staff preview (Application/Acceptance/Registration + walk seeds); banks/debtors/plans later | FM-01 |
 | **FM-10** | Graduation & certificates | Partial | Graduations, hoods, name tags, certificate stock/batches | FM-07, FM-12 |
 | **FM-11** | Remarks staff queue | Missing | Remark Requests + re-assessment fee | FM-06 |
 | **FM-12** | Print / QR metadata | Missing | Certificate QR, SoR/transcript print, name tags | FM-10 |
 | **FM-13** | Notifications | Existing | Outbound email (`notify`) — replaces need for Mail | FM-01 |
 | **FM-14** | Campus landing & hosts | Existing | `*.lesotho.raisd.co` | FM-01 |
-| **FM-15** | Control position seeds | Missing | Positions → custom roles / desks | FM-01, FM-05 |
+| **FM-15** | Control position seeds | Existing (Demo W1) | Five `lesotho-*` SSO custom roles + desk tags + Keychain | FM-01, FM-05 |
 | **FM-16** | Academic deepen | Partial | Curriculum, timetable, attendance admin, gradebook, calendars, tools | After P0/P1 |
 | **FM-17** | Analytics (campus reports) | Missing | Enrollments, admissions, graduations, senate/BoE — not HR/Library reports | After W2–W3 |
 | **FM-18** | Discipline | Missing | Dishonesty, suspensions | Late |
@@ -161,22 +161,80 @@ Status: **Existing** · **Partial** · **Missing**.
 | Notifications outbound | FM-13 |
 | CAP-53 mapping · finance YAML | feeds FM-07 · FM-09 |
 
-## Missing gaps → module
+## Screenshot gap → modules still to develop (post W1+W2)
 
-| Gap vs newer CMS | Module |
+**SoT:** newer CMS Admin screenshots under [`docs/diagrams/old-cms-lesotho/screenshots/`](../../diagrams/old-cms-lesotho/screenshots/) (~278 frames) · leave-outs locked above.  
+**Bar:** Demo ≠ Live. W1+W2 closed admissions desks / LGCSE extract seed / NMDS-on-request / LSL application-fee loader — not full CMS desks.
+
+### Leave out (do not develop)
+
+| Exclude | Screenshot menus |
 |---|---|
-| Admissions n/3, rank, score | FM-03 · FM-05 |
-| LGCSE / Sesotho extract | FM-04 |
-| Registration queue + borrower + clearance history | FM-08 |
-| Staff 12-tab student file | FM-07 |
-| LSL Fees & Fines catalogue | FM-09 |
-| Position ↔ desk parity | FM-15 |
-| Certificate / hood / name-tag production | FM-10 · FM-12 |
-| Staff remarks desk | FM-11 |
-| Timetable generator | FM-16 |
-| Campus report pack (non-HR/Library) | FM-17 |
-| Discipline desks | FM-18 |
-| HRMS · LMS · Website · Library · Mail | **FM-X — leave out** |
+| **HRMS** | Human Resource · Appraisals · Analytics → Appraisals |
+| **LMS** | Five Days · Fortinet |
+| **Website** | Website (Pages … Events) |
+| **Library** | Library · Analytics → Library |
+| **Mail** | Mail client (use **FM-13** outbound notify instead) |
+
+### Must develop next (in-scope gaps)
+
+| Priority | Module | Screenshot evidence | Build |
+|---|---|---|---|
+| **P0** | **FM-07** Staff registry file | Students list (~21.5k) + **12 tabs** | **W3 Demo met** — Live CAP-53 still later |
+| **P0** | **FM-09** Finance + LSL catalogue (deepen) | Fees & Fines preview; Banks; Debtors; Payment Plans | **W3 Demo catalogue met** — banks/plans **W4** |
+| **P0** | **FM-05** Flows Lesotho profile (deepen) | Admissions Settings catalogues; Admissions Payments | **W3 Demo catalogues met** |
+| **P1** | **FM-08** Registration + NMDS (deepen) | Sponsor on file + request; Create Sponsorship master; history | **W3 file/request met** — sponsor master **later** |
+| **P1** | **FM-03 · FM-04** Admissions deepen | Review dashboard (by school, activity); Document Review at scale + Verified/Rejected + full LGCSE fields | After W2 seed |
+| **P1** | **FM-10 · FM-12** Ceremony / print | Graduations · Hoods · Name tags · Certificate batches / stock / QR | **W4** if ceremony in M4 |
+| **P2** | **FM-11** Remarks staff queue | Remark Requests badge; re-assessment fee | **W5** |
+| **P2** | **FM-16** Academic deepen | Timetable generator / allocations / venues; staff attendance | **W5** |
+| **P2** | **FM-17** Analytics | Enrollment / registration / graduation / senate / BoE (no HR/Library reports) | **W6** |
+| **P2** | **FM-18** Discipline | Academic Dishonesty · Suspensions · Blocked Students | **W6** |
+| **Parallel** | **FM-02** Applicant journey | Applicant wizard / versioned flow | **Faid-owned** — no cross-module PRs into flow internals |
+
+### Registry phase-2 (inside FM-07 — confirm with Faid)
+
+| Screenshot desk | In M4? |
+|---|---|
+| Letters / templates | Confirm |
+| Student Referrals · Notes | Confirm |
+| Student Status | Confirm |
+| Blocked Students | Confirm |
+
+### Demo role playback
+
+Interactive HTML storyboard (not `.mp4`) walks Raisd W1–W3 Demo features **one role after another**:
+Applicant → Faculty Review → QA → Bursary → Registry → Year Leader → Student → Control.
+
+Pages: [`docs/diagrams/old-cms-lesotho/demo-role-playback.html`](../../diagrams/old-cms-lesotho/demo-role-playback.html) · script [`demo-role-playback.js`](../../diagrams/old-cms-lesotho/demo-role-playback.js). Deep-link `?role=bursary` etc.
+
+### Already sufficient for Demo (not “done Live”)
+
+| Module | Demo bar met | Still not Live CMS |
+|---|---|---|
+| FM-01 · FM-13 · FM-14 | SSO, notify, hosts | — |
+| FM-03 · FM-04 · FM-15 | n/3, extract seed, position seeds | Scale UX / OCR / 28 positions |
+| FM-06 | Student Demo suite | Registry-grade print |
+| FM-08 · FM-09 | Borrower on request + file Sponsors; Fees & Fines Demo preview | Sponsor master; banks/debtors/plans; Live amounts |
+| FM-05 | `review.*` + Demo catalogues + Payments desk | Live Lesotho catalogue sync |
+| FM-07 | Staff Students + 12-tab Demo file | Live CAP-53; phase-2 letters/blocked |
+
+### Gap → module (quick)
+
+| Gap vs newer CMS | Module | Develop? |
+|---|---|---|
+| 12-tab student file | **FM-07** | **W3 Demo done** — Live CAP-53 next |
+| LSL Fees & Fines / banks / debtors / plans | **FM-09** | Catalogue Demo done — banks/plans next |
+| Admissions settings + payments | **FM-05** | **W3 Demo done** |
+| Sponsor master + NMDS on student | **FM-08** | File/request done — sponsor master next |
+| Review/Document CMS UX depth | **FM-03 · FM-04** | Yes — polish |
+| Certificate / hood / name-tag / QR | **FM-10 · FM-12** | Yes if ceremony in M4 |
+| Staff remarks desk | **FM-11** | Yes — later |
+| Timetable generator | **FM-16** | Yes — later |
+| Campus report pack (non-HR/Library) | **FM-17** | Yes — later |
+| Discipline desks | **FM-18** | Yes — later |
+| Applicant versioned-flow rewrite | **FM-02** | Faid parallel |
+| HRMS · LMS · Website · Library · Mail | **FM-X** | **No** |
 
 ## Dependency graph
 

@@ -86,7 +86,9 @@ Treat Academic / Finance / Library clearance as **gates with messages** (gown fe
 
 ### C1 — Position → custom role seed map
 
-| Newer CMS position (examples) | Propose Raisd Control custom role | Entry | Desks / modules |
+**Status (Demo W1):** Seeded in SSO (`lesothoPositionRoles` + Keychain `lesotho.*@raisd.demo`). Built-in Campus Admin unchanged; narrow roles omit `admin.access`.
+
+| Newer CMS position (examples) | Raisd Control custom role | Entry | Desks / modules |
 |---|---|---|---|
 | Registry HOD / Registry Manager | `lesotho-registry` | Admin | Registrations, Students, Applicants (read), Access none |
 | QA / Academic Quality | `lesotho-qa` | Admin | Applicants + QA desk on Flows |

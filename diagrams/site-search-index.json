@@ -345,6 +345,87 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md"
     },
     {
+      "title": "Lesotho newer CMS mind map",
+      "summary": "Mermaid sign-in flow and Admin Portal sidebar mind map with legend. Matching Obsidian 3D graph under LUCT CMS.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "newer-cms",
+        "mind-map",
+        "mermaid",
+        "legend",
+        "obsidian",
+        "admin",
+        "registry",
+        "luct"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms.html"
+    },
+    {
+      "title": "Lesotho newer CMS user manual",
+      "summary": "Section-by-section Admin manual for Registry, Academic, Finance, Admissions, HR, Library, Website, Analytics, and Mail.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "user-manual",
+        "registry",
+        "admissions",
+        "finance",
+        "fees",
+        "nmds",
+        "positions"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-manual.html"
+    },
+    {
+      "title": "Lesotho newer CMS screenshots",
+      "summary": "278 Admin screens from the 23\u201326 Oct 2026 Lesotho staging walk, grouped by menu section.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "screenshots",
+        "newer-cms",
+        "registry",
+        "admissions",
+        "finance",
+        "gallery"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-screenshots.html"
+    },
+    {
+      "title": "Lesotho newer CMS exports",
+      "summary": "Seven 26 Oct 2026 staging downloads \u2014 graduation list, name tags, certificate batch, and registration and graduation reports. Counts and layout only.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "exports",
+        "graduation",
+        "certificates",
+        "name-tags",
+        "registration",
+        "enrollment",
+        "analytics"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-exports.html"
+    },
+    {
+      "title": "Lesotho newer CMS gap vs Raisd",
+      "summary": "Gap between the 23 Oct 2026 Lesotho staging Admin and the Raisd portals still in Demo.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "gap",
+        "raisd",
+        "demo",
+        "m4",
+        "admissions",
+        "registration",
+        "fees",
+        "positions"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-gap.html"
+    },
+    {
       "title": "Lesotho CMS pilot feature analysis",
       "summary": "Screenshot-based feature and flow analysis for the Lesotho pilot \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
       "section": "LUCT CMS",
@@ -828,8 +909,8 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md"
     },
     {
-      "title": "Obsidian 3D FSD \u2014 Lesotho",
-      "summary": "Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
+      "title": "Newer CMS Obsidian 3D \u2014 Lesotho Admin Portal",
+      "summary": "Interactive 3D Admin Portal mind map for the Lesotho newer CMS \u2014 Registry through Mail, matching the Mermaid mind map.",
       "section": "LUCT CMS",
       "keywords": [
         "obsidian",
@@ -838,11 +919,30 @@
         "3d",
         "lesotho",
         "pilot",
+        "admin-portal",
+        "mind-map",
+        "newer-cms",
+        "registry",
+        "admissions"
+      ],
+      "path": "diagrams/old-cms/obsidian.html?campus=lesotho"
+    },
+    {
+      "title": "Obsidian 3D screenshot FSD \u2014 Lesotho",
+      "summary": "Interactive 3D knowledge graph from the 3 Oct Lesotho screenshot SoT \u2014 admissions, registry, NMDS, graduation, CAP seed.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "obsidian",
+        "fsd",
+        "graph",
+        "3d",
+        "lesotho",
+        "screenshot",
         "nmds",
         "lgcse",
         "m4"
       ],
-      "path": "diagrams/old-cms/obsidian.html?campus=lesotho"
+      "path": "diagrams/old-cms/obsidian.html?campus=lesotho-screenshot"
     },
     {
       "title": "Architecture",

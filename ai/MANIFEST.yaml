@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-27
+updated: 2026-10-28
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,10 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-28: Lesotho Demo role-by-role HTML playback (W1–W3 storyboard) — diagrams/old-cms-lesotho/demo-role-playback.html.
+  - 2026-10-28: Lesotho W3 Demo — FM-07 12-tab registry file; FM-05 catalogues; FM-09 Fees & Fines preview; FM-08 sponsor/borrower on file (lesotho-feature-modules.md).
+  - 2026-10-28: Lesotho screenshot gap → modules still to develop (post W1+W2) — FM-07/09/05 next; deepen FM-08/03/04; W4+ FM-10–12/11/16–18; FM-X leave-outs locked (lesotho-feature-modules.md).
+  - 2026-10-28: Lesotho W1+W2 Demo — FM-15 SSO/Keychain position seeds; FM-05 review flags; FM-03 n/3 rank/score desks; FM-04 LGCSE extract + Document review; FM-09 finance profile JSON loader; FM-08 NMDS borrower on registration (Demo only, no Live CMS writes).
   - 2026-10-27: Lesotho newer CMS exports — seven 26 Oct staging downloads (graduation list, name tags, certificate batch, registration and graduation reports). Counts and layout only. No student roster.
   - 2026-10-28: Lesotho modules organized — FM-01…FM-18 map every in-scope newer-CMS menu; leave out HRMS/LMS/Website/Library/Mail (lesotho-feature-modules.md + feature-modules.html).
   - 2026-10-28: Lesotho feature modules FM-01…FM-16 — backend/lesotho-feature-modules.md + diagrams/old-cms-lesotho/feature-modules.html (standup 27 Oct divide existing/missing into independent modules).
@@ -278,7 +282,7 @@ backend:
       - backend/campus-finance-profile.md
       - backend/university-flows.md
     pages: ../diagrams/old-cms-lesotho/feature-modules.html
-    note: 28 Oct 2026 — standup 27 Oct actions. FM-01…FM-18 organize agreed newer-CMS functionality; FM-X leave-out HRMS/LMS/Website/Library/Mail; waves W0–W6. Not Live.
+    note: 28 Oct 2026 — standup 27 Oct actions. FM-01…FM-18 organize agreed newer-CMS functionality; FM-X leave-out HRMS/LMS/Website/Library/Mail; waves W0–W6. Not Live. Demo role playback: ../diagrams/old-cms-lesotho/demo-role-playback.html (W1–W3 storyboard, not .mp4).
   - path: backend/lesotho-db-gap.md
     topics: [lesotho, pilot, m4, database, gap, nmds, lgcse, schema, botswana, cyberjaya, cap-48, cap-53]
     related:
