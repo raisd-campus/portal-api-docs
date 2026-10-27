@@ -305,158 +305,145 @@
   
 
 <main class="wrap">
-  <p class="eyebrow">Standup 27 Oct · Module division · 28 Oct 2026</p>
-  <h1>Lesotho — independent feature modules</h1>
+  <p class="eyebrow">Standup 27 Oct · Organized modules · 28 Oct 2026</p>
+  <h1>Lesotho — agreed functionality by module</h1>
   <p class="lede">
-    Proposal: divide existing Demo surfaces and missing newer-CMS gaps into independent modules (FM-01…FM-16), with HRMS / LMS / Library out of pack.
+    Every in-scope newer-CMS Admin surface is assigned to <strong>FM-01…FM-18</strong>.
+    Leave out for now: <strong>HRMS · LMS · Website · Library · Mail</strong>.
     Canonical:
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-feature-modules.md">lesotho-feature-modules.md</a>.
-    Workflow &amp; control:
+    Workflow:
     <a href="workflow-control-improvements.html">workflow-control-improvements.html</a>.
-    Gap matrix:
+    Gap:
     <a href="newer-cms-gap.html">newer-cms-gap.html</a>.
   </p>
 
   <div class="banner">
     <strong>Proposed — not Live.</strong>
-    Modules must demo alone, stay out of Faid’s Applicant flow rewrite, and exclude HRMS / LMS / Library unless the WG widens scope.
+    Exclusions are WG-confirmed for this pack. Raisd outbound email is FM-13 (<code>notify</code>), not the newer-CMS Mail client.
   </div>
 
   <nav class="toc" aria-label="Sections">
-    <a href="#rules"><strong>1. Rules</strong><span>R1–R6</span></a>
-    <a href="#catalogue"><strong>2. Catalogue</strong><span>FM-01…FM-16</span></a>
-    <a href="#existing"><strong>3. Existing</strong><span>Demo → FM</span></a>
-    <a href="#missing"><strong>4. Missing</strong><span>Gaps → FM</span></a>
-    <a href="#waves"><strong>5. Waves</strong><span>W0–W5</span></a>
-    <a href="#faid"><strong>6. Faid</strong><span>Confirm</span></a>
+    <a href="#exclude"><strong>1. Exclusions</strong><span>5 groups</span></a>
+    <a href="#organize"><strong>2. Organized</strong><span>CMS → FM</span></a>
+    <a href="#catalogue"><strong>3. Catalogue</strong><span>FM-01…FM-18</span></a>
+    <a href="#waves"><strong>4. Waves</strong><span>W0–W6</span></a>
+    <a href="#faid"><strong>5. Faid</strong><span>Confirm</span></a>
   </nav>
 
-  <section class="section" id="rules">
-    <h2>1. Independence rules</h2>
+  <section class="section" id="exclude">
+    <h2>1. Leave out for now</h2>
     <div class="card"><div class="card-body" style="overflow-x:auto">
       <table class="data">
-        <thead><tr><th>ID</th><th>Rule</th></tr></thead>
+        <thead><tr><th>#</th><th>Exclude</th><th>Newer CMS menus</th></tr></thead>
         <tbody>
-          <tr><td>R1</td><td>One job per module</td></tr>
-          <tr><td>R2</td><td>Stay out of Faid’s Applicant versioned-flow / access-rule rewrite</td></tr>
-          <tr><td>R3</td><td>Demo alone on Lesotho hosts with sample data</td></tr>
-          <tr><td>R4</td><td>Contract (API / Flows) before UI polish</td></tr>
-          <tr><td>R5</td><td>Human +/− testing even if AI-assisted</td></tr>
-          <tr><td>R6</td><td>HRMS, LMS, Library are not modules in this pack</td></tr>
+          <tr><td>1</td><td><strong>HRMS</strong></td><td>Human Resource · Appraisals · Analytics → Appraisals</td></tr>
+          <tr><td>2</td><td><strong>LMS</strong></td><td>Five Days · Academic → Fortinet</td></tr>
+          <tr><td>3</td><td><strong>Website</strong></td><td>Pages, Articles, Categories, Enquiries, Alumni, Media, Events, …</td></tr>
+          <tr><td>4</td><td><strong>Library</strong></td><td>Catalog, Loans, Books, E-Library, … · Analytics → Library</td></tr>
+          <tr><td>5</td><td><strong>Mail</strong></td><td>Compose, Inbox, Accounts, Templates, Queue (use FM-13 notify instead)</td></tr>
+        </tbody>
+      </table>
+    </div></div>
+  </section>
+
+  <section class="section" id="organize">
+    <h2>2. Organized functionality (in-scope → module)</h2>
+    <h3>Registry</h3>
+    <div class="card"><div class="card-body" style="overflow-x:auto">
+      <table class="data">
+        <thead><tr><th>Newer CMS</th><th>Module</th><th>Phase</th></tr></thead>
+        <tbody>
+          <tr><td>Students · Documents · Student Status · Terms</td><td>FM-07</td><td>Core</td></tr>
+          <tr><td>Registration queue</td><td>FM-08</td><td>Core</td></tr>
+          <tr><td>Graduations · Hoods · Name tags · Certificates</td><td>FM-10 · FM-12</td><td>W4 if in M4</td></tr>
+          <tr><td>Remark Requests</td><td>FM-11</td><td>W5</td></tr>
+          <tr><td>Referrals · Notes · Letters · Blocked</td><td>FM-07</td><td>Phase 2</td></tr>
+        </tbody>
+      </table>
+    </div></div>
+    <h3>Admissions · Finance · Academic · Admin · Other</h3>
+    <div class="card"><div class="card-body" style="overflow-x:auto">
+      <table class="data">
+        <thead><tr><th>Area</th><th>Items</th><th>Module</th></tr></thead>
+        <tbody>
+          <tr><td>Admissions</td><td>Review, Applicants, Document Review, Settings, Admissions Payments</td><td>FM-03 · FM-04 · FM-05 · FM-09</td></tr>
+          <tr><td>Finance</td><td>Sponsors/NMDS, Fees &amp; Fines, Plans, Banks, Debtors</td><td>FM-08 · FM-09</td></tr>
+          <tr><td>Academic</td><td>Lecturers, Modules, Curriculum, Attendance, Gradebook, Timetable (not Fortinet/Five Days)</td><td>FM-16</td></tr>
+          <tr><td>Admin</td><td>Users, Positions, Calendars, Bulk cards/photos, Tools</td><td>FM-01 · FM-15 · FM-07 · FM-16</td></tr>
+          <tr><td>Admin Notifications</td><td>Templates / broadcast</td><td>FM-13 (not Mail)</td></tr>
+          <tr><td>Discipline</td><td>Dishonesty, Suspensions</td><td>FM-18</td></tr>
+          <tr><td>Analytics</td><td>Admissions, Enrollments, Graduations, Senate/BoE, Portal Usage (not Appraisals/Library)</td><td>FM-17</td></tr>
+          <tr><td>Raisd shell</td><td>SSO, landing, Applicant portal, Student Demo, Flows</td><td>FM-01 · FM-14 · FM-02 · FM-06 · FM-05</td></tr>
         </tbody>
       </table>
     </div></div>
   </section>
 
   <section class="section" id="catalogue">
-    <h2>2. Module catalogue</h2>
+    <h2>3. Module catalogue</h2>
     <div class="card"><div class="card-body" style="overflow-x:auto">
       <table class="data">
-        <thead><tr><th>ID</th><th>Module</th><th>Status</th><th>Surfaces</th><th>Depends on</th></tr></thead>
+        <thead><tr><th>ID</th><th>Module</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td>FM-01</td><td>Identity &amp; Access</td><td><span class="tag tag-partial">Existing</span></td><td>SSO · Access · Control roles</td><td>—</td></tr>
-          <tr><td>FM-02</td><td>Applicant journey</td><td><span class="tag tag-mismatch">Partial</span></td><td>apply.lesotho · <strong>Faid owns rewrite</strong></td><td>FM-01</td></tr>
-          <tr><td>FM-03</td><td>Admissions staff desks</td><td><span class="tag tag-mismatch">Partial</span></td><td>Staff Applicants · Flow desks</td><td>FM-01, FM-05</td></tr>
-          <tr><td>FM-04</td><td>Document extract (LGCSE)</td><td><span class="tag tag-gap">Missing</span></td><td>Staff document review</td><td>FM-03</td></tr>
-          <tr><td>FM-05</td><td>Flows — Lesotho Admissions profile</td><td><span class="tag tag-mismatch">Partial</span></td><td>Control /flows</td><td>FM-01</td></tr>
-          <tr><td>FM-06</td><td>Student self-service</td><td><span class="tag tag-partial">Existing</span></td><td>Student portal Demo</td><td>FM-01</td></tr>
-          <tr><td>FM-07</td><td>CAP-53 read + staff registry file</td><td><span class="tag tag-gap">Missing</span></td><td>Portal API · Staff Students</td><td>FM-01</td></tr>
-          <tr><td>FM-08</td><td>Registration clearance + NMDS</td><td><span class="tag tag-mismatch">Partial</span></td><td>Student reg · Staff Registrations</td><td>FM-05/03, FM-09</td></tr>
-          <tr><td>FM-09</td><td>Finance profile + LSL catalogue</td><td><span class="tag tag-mismatch">Partial</span></td><td>Fees · Payments</td><td>FM-01</td></tr>
-          <tr><td>FM-10</td><td>Graduation &amp; certificates</td><td><span class="tag tag-mismatch">Partial</span></td><td>Student Demo · staff print later</td><td>FM-07, FM-12</td></tr>
-          <tr><td>FM-11</td><td>Remarks staff queue</td><td><span class="tag tag-gap">Missing</span></td><td>Staff reassessment</td><td>FM-06</td></tr>
-          <tr><td>FM-12</td><td>Print / QR metadata</td><td><span class="tag tag-gap">Missing</span></td><td>Certificates · SoR</td><td>FM-10</td></tr>
-          <tr><td>FM-13</td><td>Notifications</td><td><span class="tag tag-partial">Existing</span></td><td>notify.raisd.co</td><td>FM-01</td></tr>
-          <tr><td>FM-14</td><td>Campus landing &amp; hosts</td><td><span class="tag tag-partial">Existing</span></td><td>lesotho.raisd.co</td><td>FM-01</td></tr>
-          <tr><td>FM-15</td><td>Control position seeds</td><td><span class="tag tag-gap">Missing</span></td><td>Control Members / desks</td><td>FM-01, FM-05</td></tr>
-          <tr><td>FM-16</td><td>Academic deepen</td><td><span class="tag tag-mismatch">Partial</span></td><td>Timetable / attendance admin</td><td>After P0/P1</td></tr>
-          <tr><td>FM-X</td><td>Out of pack</td><td><span class="tag tag-out">Excluded</span></td><td>HR · LMS · Library · Website · Mail · Analytics</td><td>—</td></tr>
-        </tbody>
-      </table>
-    </div></div>
-  </section>
-
-  <section class="section" id="existing">
-    <h2>3. Existing Demo → module</h2>
-    <div class="card"><div class="card-body" style="overflow-x:auto">
-      <table class="data">
-        <thead><tr><th>Existing Demo</th><th>Module</th></tr></thead>
-        <tbody>
-          <tr><td>SSO + campus apex / picker</td><td>FM-01 · FM-14</td></tr>
-          <tr><td>Access presets + Control roles + Flows Admissions v1</td><td>FM-01 · FM-05</td></tr>
-          <tr><td>Applicant submit / evidence / offer / accept</td><td>FM-02 · FM-09</td></tr>
-          <tr><td>Staff Applicants / Payments / Registrations</td><td>FM-03 · FM-08 · FM-09</td></tr>
-          <tr><td>Student portal Demo suite</td><td>FM-06 (+ deepen via FM-08/09/10/11)</td></tr>
-          <tr><td>Notifications</td><td>FM-13</td></tr>
-          <tr><td>CAP-53 mapping · finance YAML proposal</td><td>feeds FM-07 · FM-09</td></tr>
-        </tbody>
-      </table>
-    </div></div>
-  </section>
-
-  <section class="section" id="missing">
-    <h2>4. Missing gaps → module</h2>
-    <div class="card"><div class="card-body" style="overflow-x:auto">
-      <table class="data">
-        <thead><tr><th>Gap vs newer CMS</th><th>Module</th></tr></thead>
-        <tbody>
-          <tr><td>Admissions n/3, rank, score, recommendation</td><td>FM-03 · FM-05</td></tr>
-          <tr><td>LGCSE / Sesotho extract desk</td><td>FM-04</td></tr>
-          <tr><td>Registration queue + borrower + clearance history</td><td>FM-08</td></tr>
-          <tr><td>Staff 12-tab student file</td><td>FM-07</td></tr>
-          <tr><td>LSL Fees &amp; Fines catalogue</td><td>FM-09</td></tr>
-          <tr><td>Position ↔ desk parity</td><td>FM-15</td></tr>
-          <tr><td>Certificate / hood / name-tag production</td><td>FM-10 · FM-12 (if in M4)</td></tr>
-          <tr><td>Staff remarks desk</td><td>FM-11</td></tr>
-          <tr><td>Timetable generator</td><td>FM-16</td></tr>
-          <tr><td>HR / LMS / Library / …</td><td>FM-X</td></tr>
+          <tr><td>FM-01</td><td>Identity &amp; Access</td><td><span class="tag tag-partial">Existing</span></td></tr>
+          <tr><td>FM-02</td><td>Applicant journey (Faid-owned rewrite)</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-03</td><td>Admissions staff desks</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-04</td><td>Document extract (LGCSE)</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-05</td><td>Flows — Lesotho Admissions profile</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-06</td><td>Student self-service</td><td><span class="tag tag-partial">Existing</span></td></tr>
+          <tr><td>FM-07</td><td>Staff registry file (CAP-53)</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-08</td><td>Registration clearance + NMDS</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-09</td><td>Finance + LSL catalogue</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-10</td><td>Graduation &amp; certificates</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-11</td><td>Remarks staff queue</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-12</td><td>Print / QR metadata</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-13</td><td>Notifications (<code>notify</code>)</td><td><span class="tag tag-partial">Existing</span></td></tr>
+          <tr><td>FM-14</td><td>Campus landing &amp; hosts</td><td><span class="tag tag-partial">Existing</span></td></tr>
+          <tr><td>FM-15</td><td>Control position seeds</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-16</td><td>Academic deepen</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
+          <tr><td>FM-17</td><td>Analytics (campus reports)</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-18</td><td>Discipline</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-X</td><td>HRMS · LMS · Website · Library · Mail</td><td><span class="tag tag-out">Excluded</span></td></tr>
         </tbody>
       </table>
     </div></div>
   </section>
 
   <section class="section" id="waves">
-    <h2>5. Build waves (≈2–3 features / week)</h2>
+    <h2>4. Build waves</h2>
     <div class="card"><div class="card-body" style="overflow-x:auto">
       <table class="data">
         <thead><tr><th>Wave</th><th>Modules</th><th>Goal</th></tr></thead>
         <tbody>
-          <tr><td>W0</td><td>FM-01, FM-14, FM-13, FM-05 draft</td><td>Identity + policy shell</td></tr>
-          <tr><td>W1</td><td>FM-03, FM-04, FM-15</td><td>Admissions parity + desk roles</td></tr>
-          <tr><td>W2</td><td>FM-08, FM-09</td><td>Registration clearance + LSL fees</td></tr>
+          <tr><td>W0</td><td>FM-01, FM-14, FM-13, FM-05</td><td>Identity + policy shell</td></tr>
+          <tr><td>W1</td><td>FM-03, FM-04, FM-15</td><td>Admissions parity</td></tr>
+          <tr><td>W2</td><td>FM-08, FM-09</td><td>Registration + LSL fees</td></tr>
           <tr><td>W3</td><td>FM-07</td><td>Staff registry file</td></tr>
-          <tr><td>W4</td><td>FM-10, FM-12 optional</td><td>Ceremony / QR if in scope</td></tr>
-          <tr><td>W5</td><td>FM-11, FM-16</td><td>Remarks staff; academic admin</td></tr>
-          <tr><td>Parallel</td><td>FM-02</td><td>Faid Applicant rewrite — no block on W1–W3</td></tr>
+          <tr><td>W4</td><td>FM-10, FM-12</td><td>Ceremony / QR</td></tr>
+          <tr><td>W5</td><td>FM-11, FM-16</td><td>Remarks; academic admin</td></tr>
+          <tr><td>W6</td><td>FM-17, FM-18</td><td>Reports; discipline</td></tr>
+          <tr><td>Parallel</td><td>FM-02</td><td>Faid Applicant rewrite</td></tr>
         </tbody>
       </table>
     </div></div>
-    <pre class="tree">FM-01 Identity
-  ├── FM-14 Landing · FM-13 Notifications
-  ├── FM-05 Flows profile → FM-03 desks → FM-04 documents
-  │                    └→ FM-08 registration (+ FM-09 fees)
-  ├── FM-02 Applicant (Faid-owned, parallel)
-  ├── FM-06 Student → FM-08 / FM-11 / FM-10 → FM-12
-  ├── FM-07 CAP-53 staff file · FM-09 Finance · FM-15 Positions
-  └── FM-16 Academic deepen (late)
-FM-X  HR · LMS · Library · Website · Mail · Analytics</pre>
+    <pre class="tree">In pack:  FM-01 … FM-18
+Out:      HRMS · LMS · Website · Library · Mail</pre>
   </section>
 
   <section class="section" id="faid">
-    <h2>6. Faid — please confirm</h2>
+    <h2>5. Faid — please confirm</h2>
     <ol>
-      <li>Accept <strong>FM-01…FM-16</strong> IDs and the <strong>FM-X</strong> exclusion list?</li>
-      <li>Keep <strong>FM-10 / FM-12</strong> in M4 or optional W4?</li>
-      <li>Confirm <strong>FM-02</strong> stays Faid-owned (no other-module PRs into Applicant flow internals)?</li>
-      <li>First Aslam try-module: <strong>FM-03</strong> or <strong>FM-09</strong>?</li>
+      <li>Exclusions locked: <strong>HRMS · LMS · Website · Library · Mail</strong>?</li>
+      <li>Keep FM-10/FM-12 and FM-17/FM-18 in later waves, or drop any?</li>
+      <li>FM-07 phase-2 (letters / blocked / referrals) in or out of M4?</li>
+      <li>FM-02 remains Faid-owned?</li>
     </ol>
     <p>
       Markdown:
       <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-feature-modules.md">lesotho-feature-modules.md</a>
       · Workflow:
-      <a href="workflow-control-improvements.html">workflow-control-improvements.html</a>
-      · Gap:
-      <a href="newer-cms-gap.html">newer-cms-gap.html</a>.
+      <a href="workflow-control-improvements.html">workflow-control-improvements.html</a>.
     </p>
   </section>
 </main>

@@ -694,6 +694,6 @@ Certificate references use `LSO` + a programme code + the student number. Codes 
 | Old CMS structure and M4 gap | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | Applicant comparison | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |
 | Workflow & control proposal (28 Oct) | [lesotho-workflow-control-improvements.md](lesotho-workflow-control-improvements.md) · [workflow-control-improvements.html](../../diagrams/old-cms-lesotho/workflow-control-improvements.html) |
-| Feature modules FM-01…FM-16 (28 Oct) | [lesotho-feature-modules.md](lesotho-feature-modules.md) · [feature-modules.html](../../diagrams/old-cms-lesotho/feature-modules.html) |
+| Feature modules FM-01…FM-18 (28 Oct; leave out HRMS/LMS/Website/Library/Mail) | [lesotho-feature-modules.md](lesotho-feature-modules.md) · [feature-modules.html](../../diagrams/old-cms-lesotho/feature-modules.html) |
 | Raisd Admin desks | [admin-portal.md](../frontend/admin-portal.md) |
 | Raisd Applicant | [applicant-portal.md](../frontend/applicant-portal.md) |

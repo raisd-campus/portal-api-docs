@@ -10,6 +10,7 @@ decision:
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
   - 2026-10-27: Lesotho newer CMS exports — seven 26 Oct staging downloads (graduation list, name tags, certificate batch, registration and graduation reports). Counts and layout only. No student roster.
+  - 2026-10-28: Lesotho modules organized — FM-01…FM-18 map every in-scope newer-CMS menu; leave out HRMS/LMS/Website/Library/Mail (lesotho-feature-modules.md + feature-modules.html).
   - 2026-10-28: Lesotho feature modules FM-01…FM-16 — backend/lesotho-feature-modules.md + diagrams/old-cms-lesotho/feature-modules.html (standup 27 Oct divide existing/missing into independent modules).
   - 2026-10-28: Lesotho feature gaps → workflow & control proposal for Faid — backend/lesotho-workflow-control-improvements.md + diagrams/old-cms-lesotho/workflow-control-improvements.html (standup 27 Oct action).
   - 2026-10-23: Lesotho newer CMS Admin walk — backend/lesotho-newer-cms.md (mind map, section manual, Raisd gap). Staging Google sign-in and Dev Login. No PII.
@@ -277,7 +278,7 @@ backend:
       - backend/campus-finance-profile.md
       - backend/university-flows.md
     pages: ../diagrams/old-cms-lesotho/feature-modules.html
-    note: 28 Oct 2026 — standup 27 Oct action. FM-01…FM-16 catalogue maps existing Demo vs missing newer-CMS gaps; FM-X excludes HRMS/LMS/Library; build waves W0–W5. Not Live.
+    note: 28 Oct 2026 — standup 27 Oct actions. FM-01…FM-18 organize agreed newer-CMS functionality; FM-X leave-out HRMS/LMS/Website/Library/Mail; waves W0–W6. Not Live.
   - path: backend/lesotho-db-gap.md
     topics: [lesotho, pilot, m4, database, gap, nmds, lgcse, schema, botswana, cyberjaya, cap-48, cap-53]
     related:

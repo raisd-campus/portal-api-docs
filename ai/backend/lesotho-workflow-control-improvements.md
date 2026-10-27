@@ -11,17 +11,18 @@ This document is a **proposal for Faid / Working Group**. It is not Live campus 
 
 ## Scope cut (standup 27 Oct)
 
-The meeting agreed Lesotho-based scope **excludes** HRMS, LMS (FiveDays / in-house later), and Library for this acceptance cut. Printed outputs should keep **QR verification** where the newer CMS already prints QR (certificates). Delivery should stay phased (~two or three features per week), with human testing of AI-assisted modules.
+**Leave out for now (confirmed):** **HRMS · LMS · Website · Library · Mail.** Full assignment of remaining newer-CMS menus → modules: [lesotho-feature-modules.md](lesotho-feature-modules.md). Printed outputs should keep **QR verification** where the newer CMS already prints QR (certificates). Delivery should stay phased (~two or three features per week), with human testing of AI-assisted modules.
 
-| In M4 acceptance cut (propose) | Explicitly out (defer / M5+) |
+| In modular pack (organize into FM-*) | Explicitly out (FM-X) |
 |---|---|
-| Admissions review + document extract | Human Resource / appraisals |
-| Applicant → staff desks → offer / accept | Library / e-library |
-| Registration request queue + clearance + NMDS borrower | FiveDays LMS / Fortinet |
-| Student file (academics, finance, sponsors, card, print) | Website CMS / in-portal mail |
-| LSL fees & fines catalogue (Bursary verify path) | Full analytics pack (unless a named report is acceptance-critical) |
-| Position → Control role / desk mapping | Discipline / blocked / letter desks (confirm with Faid) |
-| Graduations / certificates / hoods (if pilot must match registry ceremony ops) | Timetable generator depth (read CMS first) |
+| Admissions review + document extract | **HRMS** (HR + appraisals) |
+| Applicant → staff desks → offer / accept | **LMS** (Five Days + Fortinet) |
+| Registration request queue + clearance + NMDS borrower | **Website** (campus CMS / marketing) |
+| Student file (academics, finance, sponsors, card, print) | **Library** (incl. e-library) |
+| LSL fees & fines catalogue (Bursary verify path) | **Mail** (in-portal client; use Raisd `notify` instead) |
+| Position → Control role / desk mapping | |
+| Graduations / certificates / hoods (if ceremony in M4) | |
+| Discipline · Analytics reports (late modules FM-17/18 — not excluded) | |
 
 ## Feature gap summary (newer CMS → Raisd)
 
@@ -39,7 +40,7 @@ Raisd status is Demo unless marked otherwise. Full row matrix: [lesotho-newer-cm
 | P1 | Print / QR artefacts | SoR print, certificates with QR, name tags | Demo screens; Cambodia QR is separate M5 reference | Government-grade print expectation |
 | P2 | Graduation clearance | Multi-dept gates + gown/fee messages | Student Demo graduation | Wizard ≠ one status bit |
 | P2 | Remarks staff queue | Badge + re-assessment fee | Student Demo remark only | Staff reassessment |
-| — | HR / LMS / Library / Website / Mail / Analytics | Full sidebar groups | Out of Raisd portal set | Standup: out of this scope |
+| — | HRMS / LMS / Website / Library / Mail | Full sidebar groups | Out of Raisd portal set | Confirmed leave-out; Analytics stays late FM-17 |
 
 ## Proposed workflow improvements
 
@@ -129,7 +130,7 @@ Full division of existing vs missing features into independent modules (**FM-01�
 
 ## Faid — please confirm
 
-1. **Scope cut:** Accept HRMS / LMS / Library out of M4? Any ceremony (graduation/certificates) that must stay in?  
+1. **Scope cut:** Confirm leave-out **HRMS · LMS · Website · Library · Mail**. Any ceremony (graduation/certificates) that must stay in?  
 2. **W1:** Exact Lesotho admissions desk order and whether rank/score are Live-required.  
 3. **W2:** Registration as a second University Flow vs Admissions continuation.  
 4. **C1:** Approve or rename the five Lesotho custom-role seeds; list any missing positions.  

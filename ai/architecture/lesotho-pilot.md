@@ -92,7 +92,7 @@ Live flat hostnames in SDD-12 (`apply.raisd.co`, …) remain the acceptance grow
 | Lesotho CMS inventory | [../backend/old-cms-lesotho.md](../backend/old-cms-lesotho.md) |
 | Newer CMS manual and Raisd gap (23 Oct 2026) | [../backend/lesotho-newer-cms.md](../backend/lesotho-newer-cms.md) |
 | Workflow & control improvements (28 Oct 2026) | [../backend/lesotho-workflow-control-improvements.md](../backend/lesotho-workflow-control-improvements.md) |
-| Feature modules FM-01…FM-16 (28 Oct 2026) | [../backend/lesotho-feature-modules.md](../backend/lesotho-feature-modules.md) |
+| Feature modules FM-01…FM-18 (28 Oct 2026; exclude HRMS/LMS/Website/Library/Mail) | [../backend/lesotho-feature-modules.md](../backend/lesotho-feature-modules.md) |
 | Lesotho DB + M4 gap analysis | [../backend/lesotho-db-gap.md](../backend/lesotho-db-gap.md) |
 | Lesotho diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
 | Botswana sibling (family tree) | [../backend/old-cms-botswana.md](../backend/old-cms-botswana.md) |
