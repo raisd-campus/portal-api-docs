@@ -1,6 +1,6 @@
 /**
  * Lesotho Raisd Demo W1–W3 role-by-role live Demo portal iframe playback.
- * Each scene includes how it is executed on Demo hosts (not Live CMS).
+ * Each scene includes how it is executed on Demo hosts.
  */
 export const ROLES = [
   {
@@ -189,7 +189,7 @@ export const ROLES = [
         steps: [
           "Keychain → lesotho.bursary@raisd.demo → staff.lesotho.raisd.co.",
           "Open Admin → Payments (Admissions payment reviews).",
-          "Select the pending proof → Approve payment (Demo stub — not Live CMS).",
+          "Select the pending proof → Approve payment (Demo stub).",
         ],
         durationMs: 7000,
       },
@@ -202,7 +202,7 @@ export const ROLES = [
         steps: [
           "Open Admin → Fees & Fines.",
           "Confirm Application LSL 300, AcceptanceFee 550, Registration Fee 550, plus walk seeds.",
-          "Note: Configure rates / banks / plans are not Live yet.",
+          "Note: Configure rates / banks / plans may be stubs in Demo.",
         ],
         durationMs: 7000,
       },
@@ -276,7 +276,7 @@ export const ROLES = [
         steps: [
           "On the open file, select Academics.",
           "Read programme status, term, and module grid (Code / Name / Status / Cr / Mk / Gd).",
-          "Remember: Demo graph projection — not Live CAP-53.",
+          "Remember: Demo graph projection for CAP-53 enrolment.",
         ],
         durationMs: 7000,
       },

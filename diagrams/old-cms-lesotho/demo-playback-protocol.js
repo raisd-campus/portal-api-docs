@@ -1,6 +1,6 @@
 /**
  * Demo role playback postMessage wire (docs ↔ portal iframes).
- * Demo hosts only — not Live CMS.
+ * Demo hosts only.
  */
 export const DEMO_PLAYBACK_VERSION = 1
 export const DEMO_PLAYBACK_READY = "raisd.demo.playback.ready"
