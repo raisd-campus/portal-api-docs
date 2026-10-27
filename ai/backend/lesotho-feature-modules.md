@@ -206,6 +206,8 @@ Status: **Existing** · **Partial** · **Missing**.
 Interactive HTML storyboard (not `.mp4`) walks Raisd W1–W3 Demo features **one role after another**:
 Applicant → Faculty Review → QA → Bursary → Registry → Year Leader → Student → Control.
 
+Each scene includes **How executed** — Keychain account, host URL, and numbered click path so a reviewer can replay the Demo desk-by-desk.
+
 Pages: [`docs/diagrams/old-cms-lesotho/demo-role-playback.html`](../../diagrams/old-cms-lesotho/demo-role-playback.html) · script [`demo-role-playback.js`](../../diagrams/old-cms-lesotho/demo-role-playback.js). Deep-link `?role=bursary` etc.
 
 ### Already sufficient for Demo (not “done Live”)

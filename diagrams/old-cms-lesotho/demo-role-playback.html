@@ -38,6 +38,14 @@
     .stage h2 { margin: 0; font-size: clamp(1.35rem, 2.2vw, 1.85rem); line-height: 1.2; color: #fff; }
     .stage-route { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; opacity: .85; }
     .stage-body { margin: 0; font-size: 1.05rem; line-height: 1.5; max-width: 52rem; color: #d7e0ea; }
+    .stage-account { margin: 0; font-size: 13px; opacity: .88; }
+    .stage-portal { color: #9ec5ff; text-decoration: underline; text-underline-offset: 2px; }
+    .stage-portal:not([href]) { color: inherit; text-decoration: none; }
+    .exec-panel { margin-top: 4px; padding: 14px 16px; border-radius: 10px; background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.1); }
+    .exec-heading { margin: 0 0 8px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #9ec5ff; }
+    .exec-steps { margin: 0; padding-left: 1.25rem; display: grid; gap: 8px; }
+    .exec-steps li { color: #c5d0dc; line-height: 1.45; transition: color .2s ease, transform .2s ease; }
+    .exec-steps li[data-active="true"] { color: #fff; transform: translateX(2px); }
     .stage-fm { margin-top: auto; padding-top: 8px; }
     .stage .tag { color: #1a2430; background: #e8eef5; border-color: transparent; }
     .stage .tag-partial { background: #cfe0f5; }
@@ -350,7 +358,8 @@
   <p class="lede">
     Autoplay storyboard of Raisd Lesotho Demo features, <strong>one role after another</strong>
     (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control).
-    Not a video file and not Live CMS screenshots.
+    Each scene shows <strong>How executed</strong> — Keychain account, host, and click path.
+    Not a screen-recorded <code>.mp4</code> and not Live CMS screenshots.
     Modules:
     <a href="feature-modules.html">feature-modules.html</a>
     · Markdown
@@ -359,8 +368,9 @@
 
   <div class="banner">
     <strong>Demo ≠ Live.</strong>
-    Frames are captions of Demo surfaces shipped in W1–W3. Deep-link a role with
+    Play walks every role’s execution steps in order. Deep-link
     <code>?role=bursary</code>, <code>?role=registry</code>, etc. Keyboard: Space play/pause · ← → step.
+    Open Keychain: <a href="https://keychain.raisd.co/">keychain.raisd.co</a>.
   </div>
 
   <div class="playback" aria-label="Role-by-role Demo playback">
@@ -372,11 +382,13 @@
       <div id="stage" class="stage" aria-live="polite">
         <div class="stage-top">
           <span id="role-badge" class="stage-badge">Role</span>
-          <span id="portal"></span>
+          <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
         </div>
+        <p id="account" class="stage-account"></p>
         <p id="route" class="stage-route"></p>
         <h2 id="scene-title">Loading…</h2>
         <p id="scene-body" class="stage-body"></p>
+        <div id="scene-steps" class="exec-panel"></div>
         <div id="scene-fm" class="stage-fm"></div>
       </div>
       <div class="controls">
@@ -404,9 +416,11 @@
       stageEl: document.getElementById("stage"),
       roleBadgeEl: document.getElementById("role-badge"),
       portalEl: document.getElementById("portal"),
+      accountEl: document.getElementById("account"),
       routeEl: document.getElementById("route"),
       titleEl: document.getElementById("scene-title"),
       bodyEl: document.getElementById("scene-body"),
+      stepsEl: document.getElementById("scene-steps"),
       fmEl: document.getElementById("scene-fm"),
       progressRoleEl: document.getElementById("progress-role"),
       progressAllEl: document.getElementById("progress-all"),

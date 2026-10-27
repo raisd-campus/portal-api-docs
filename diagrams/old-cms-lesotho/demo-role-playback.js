@@ -1,12 +1,13 @@
 /**
  * Lesotho Raisd Demo W1–W3 role-by-role storyboard playback.
- * Demo ≠ Live. No Portal API calls.
+ * Each scene includes how it is executed on Demo hosts (not Live CMS).
  */
 export const ROLES = [
   {
     id: "applicant",
     label: "Applicant",
-    portal: "applicant.lesotho.raisd.co",
+    portal: "https://apply.lesotho.raisd.co",
+    account: "Keychain · completed@raisd.demo (or fresh@raisd.demo)",
     summary: "Apply → fee proof → offer accept (FM-02 / FM-09)",
     scenes: [
       {
@@ -14,47 +15,73 @@ export const ROLES = [
         title: "Sign in to Applicant",
         route: "/sign-in",
         fm: ["FM-01", "FM-02", "FM-14"],
-        body: "Open the Lesotho Applicant host and sign in with a Demo applicant account (Keychain or SSO).",
-        durationMs: 5500,
+        body: "Open the Lesotho Applicant host and enter via Keychain or SSO.",
+        steps: [
+          "Open https://apply.lesotho.raisd.co (or Keychain → Applicant Lesotho).",
+          "Pick completed@raisd.demo to continue a prepared Demo case, or fresh@raisd.demo for an empty draft.",
+          "Land on the Applicant shell — Demo ≠ Live CMS.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "app-draft",
         title: "Draft and submit application",
         route: "/apply",
-        fm: ["FM-02"],
-        body: "Complete study preferences for campus-lesotho, academic evidence, and submit. Policy pins to the Lesotho Admissions profile.",
-        durationMs: 6000,
+        fm: ["FM-02", "FM-05"],
+        body: "Complete Lesotho study preferences and submit so the Admissions policy pins.",
+        steps: [
+          "Open Apply / continue draft.",
+          "Set campus to Lesotho; complete personal, academic, and document sections required by the Demo form.",
+          "Submit. The case pins campus-lesotho Admissions policy (review flags + catalogues).",
+        ],
+        durationMs: 7500,
       },
       {
         id: "app-fee",
         title: "Application fee proof",
         route: "/apply · payment",
         fm: ["FM-09", "FM-02"],
-        body: "Upload bank proof for the LSL application fee from the campus finance profile (Demo amount LSL 300).",
-        durationMs: 5500,
+        body: "Upload bank proof for the profile-backed LSL application fee (Demo LSL 300).",
+        steps: [
+          "When the flow asks for payment proof, enter a bank reference.",
+          "Upload any small Demo PDF/image as proof (not a real bank receipt).",
+          "Save — queue moves to Bursary verification (FM-09).",
+        ],
+        durationMs: 7000,
       },
       {
         id: "app-eligibility",
         title: "Confirm eligibility",
         route: "/apply · eligibility",
         fm: ["FM-02", "FM-03"],
-        body: "After QA verifies documents, confirm eligibility and continue towards Offer.",
-        durationMs: 5500,
+        body: "After QA verifies documents, confirm eligibility and continue to Offer.",
+        steps: [
+          "Wait until Staff QA has verified documents (see QA role scenes).",
+          "Open the eligibility confirmation popup (intake / faculty / programme).",
+          "Confirm — does not enrol yet; unlocks Registry Offer release.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "app-offer",
         title: "Accept Offer Letter",
         route: "/apply · offer",
         fm: ["FM-02"],
-        body: "When Registry releases the Demo Offer, preview and Accept Enrolment to hand off into Student.",
-        durationMs: 6000,
+        body: "After Registry releases the Demo Offer, accept enrolment and hand off to Student.",
+        steps: [
+          "Wait until Registry releases the Offer (Registry role).",
+          "Preview / download the DEMO Offer PDF.",
+          "Accept Enrolment — Applicant signs out; open Student with the new Demo account.",
+        ],
+        durationMs: 7500,
       },
     ],
   },
   {
     id: "faculty",
     label: "Faculty Review",
-    portal: "admin.lesotho.raisd.co · Applicants",
+    portal: "https://staff.lesotho.raisd.co",
+    account: "Keychain · lesotho.faculty@raisd.demo",
     summary: "Rank / score / recommendation desk (FM-03 / FM-05 / FM-15)",
     scenes: [
       {
@@ -62,31 +89,47 @@ export const ROLES = [
         title: "Open Admissions review",
         route: "/admin/applicants",
         fm: ["FM-03", "FM-15"],
-        body: "Sign in as Lesotho Faculty Review. Open the submitted Lesotho application in the Staff Applicants queue.",
-        durationMs: 5500,
+        body: "Sign in as Lesotho Faculty Review and open the submitted application.",
+        steps: [
+          "Keychain → lesotho.faculty@raisd.demo → staff.lesotho.raisd.co.",
+          "Open Admin → Applicants (Admissions workspace).",
+          "Select the submitted Lesotho application from the queue.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "fac-rank",
         title: "Set rank and score",
         route: "/admin/applicants · review",
         fm: ["FM-03", "FM-05"],
-        body: "Lesotho policy enables showRankScore. Record the Demo rank and score on the case.",
-        durationMs: 5500,
+        body: "Lesotho policy enables showRankScore — record Demo rank and score.",
+        steps: [
+          "On the case detail, find Rank / Score fields (FM-05 flag).",
+          "Enter Demo values (any integers in range).",
+          "Save the review fields before recording the recommendation.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "fac-rec",
         title: "Record faculty recommendation",
         route: "/admin/applicants · recommendation",
         fm: ["FM-03", "FM-05"],
-        body: "Complete the first desk in the faculty → QA → Registry n/3 recommendation chain.",
-        durationMs: 6000,
+        body: "Complete desk 1 of 3 in the faculty → QA → Registry chain.",
+        steps: [
+          "Choose recommendation outcome (approve / action-required).",
+          "Add a short Demo note.",
+          "Submit — Progress shows 1/3; next desk is QA.",
+        ],
+        durationMs: 7000,
       },
     ],
   },
   {
     id: "qa",
     label: "QA",
-    portal: "admin.lesotho.raisd.co · Document review",
+    portal: "https://staff.lesotho.raisd.co",
+    account: "Keychain · lesotho.qa@raisd.demo",
     summary: "LGCSE extract and document verify (FM-04 / FM-03)",
     scenes: [
       {
@@ -94,31 +137,47 @@ export const ROLES = [
         title: "Open Document review",
         route: "/admin/document-review",
         fm: ["FM-04", "FM-15"],
-        body: "Sign in as Lesotho QA. Open the case that needs extract and document verification.",
-        durationMs: 5500,
+        body: "Sign in as Lesotho QA and open the case awaiting extract / verify.",
+        steps: [
+          "Keychain → lesotho.qa@raisd.demo → staff.lesotho.raisd.co.",
+          "Open Admin → Document review (or Applicants → documents desk).",
+          "Select the same Lesotho application Faculty just recommended.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "qa-extract",
         title: "Run LGCSE extract",
         route: "/admin/document-review · extract",
         fm: ["FM-04", "FM-05"],
-        body: "Lesotho policy sets extractRequired. Record Demo certificate subject rows (LGCSE seed).",
-        durationMs: 6000,
+        body: "Policy sets extractRequired — record Demo LGCSE subject rows.",
+        steps: [
+          "Trigger extract-document / open extract panel.",
+          "Confirm Demo LGCSE (or COSC) certificate rows appear.",
+          "Save extract — required before verify-documents succeeds.",
+        ],
+        durationMs: 7500,
       },
       {
         id: "qa-verify",
         title: "Verify documents",
         route: "/admin/document-review · verify",
         fm: ["FM-04", "FM-03"],
-        body: "After extract and prior recommendations, complete QA verify-documents so eligibility can proceed.",
-        durationMs: 5500,
+        body: "Complete QA verify so eligibility can proceed for the applicant.",
+        steps: [
+          "Ensure faculty recommendation and extract are present.",
+          "Run Verify documents on the case.",
+          "Record QA recommendation if still required for n/3 — Progress moves toward Registry.",
+        ],
+        durationMs: 7000,
       },
     ],
   },
   {
     id: "bursary",
     label: "Bursary",
-    portal: "admin.lesotho.raisd.co · Payments / Fees / Registrations",
+    portal: "https://staff.lesotho.raisd.co",
+    account: "Keychain · lesotho.bursary@raisd.demo",
     summary: "Fee verify, Fees & Fines preview, registration clearance (FM-09 / FM-08)",
     scenes: [
       {
@@ -126,31 +185,47 @@ export const ROLES = [
         title: "Verify application payment",
         route: "/admin/payments",
         fm: ["FM-09", "FM-03"],
-        body: "Open Admissions Payments / payment queue and approve the Demo fee proof (not Live CMS).",
-        durationMs: 5500,
+        body: "Approve the Demo application-fee proof in the payments queue.",
+        steps: [
+          "Keychain → lesotho.bursary@raisd.demo → staff.lesotho.raisd.co.",
+          "Open Admin → Payments (Admissions payment reviews).",
+          "Select the pending proof → Approve payment (Demo stub — not Live CMS).",
+        ],
+        durationMs: 7000,
       },
       {
         id: "bur-fees",
         title: "Fees & Fines catalogue preview",
         route: "/admin/fees",
         fm: ["FM-09"],
-        body: "Open Fees & Fines to review the Demo LSL catalogue (Application 300, Acceptance 550, Registration 550, walk seeds).",
-        durationMs: 6000,
+        body: "Open the Demo LSL catalogue from the campus finance profile.",
+        steps: [
+          "Open Admin → Fees & Fines.",
+          "Confirm Application LSL 300, AcceptanceFee 550, Registration Fee 550, plus walk seeds.",
+          "Note: Configure rates / banks / plans are not Live yet.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "bur-reg",
         title: "Bursary registration clearance",
         route: "/admin/registrations",
         fm: ["FM-08", "FM-09"],
-        body: "On a module-registration request, record verified-payment or approved-arrangement clearance. Note sponsor / borrower when present.",
-        durationMs: 6000,
+        body: "Clear a student module-registration request; capture NMDS fields when shown.",
+        steps: [
+          "Open Admin → Registrations → Module requests.",
+          "Select a pending request (Lesotho student preferred).",
+          "Choose verified-payment or approved-arrangement, add note, approve Bursary desk — watch sponsor/borrower columns.",
+        ],
+        durationMs: 8000,
       },
     ],
   },
   {
     id: "registry",
     label: "Registry",
-    portal: "admin.lesotho.raisd.co · Applicants / Registrations / Students",
+    portal: "https://staff.lesotho.raisd.co",
+    account: "Keychain · lesotho.registry@raisd.demo",
     summary: "Offer release, registration desk, 12-tab file (FM-03 / FM-08 / FM-07)",
     scenes: [
       {
@@ -158,47 +233,73 @@ export const ROLES = [
         title: "Release Offer Letter",
         route: "/admin/applicants · offer",
         fm: ["FM-03"],
-        body: "As Lesotho Registry, release the Demo Offer after eligibility confirmation (n/3 desks complete).",
-        durationMs: 5500,
+        body: "Release the Demo Offer after eligibility + n/3 desks.",
+        steps: [
+          "Keychain → lesotho.registry@raisd.demo → staff.lesotho.raisd.co.",
+          "Open Applicants; select the case with eligibility confirmed and desks complete.",
+          "Release Offer Letter — Applicant can now Accept Enrolment.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "reg-queue",
         title: "Module registration desk",
         route: "/admin/registrations",
         fm: ["FM-08"],
-        body: "Review student module requests. Faculty side checks modules after Bursary clearance; sponsor/borrower columns show NMDS Demo fields.",
-        durationMs: 6000,
+        body: "Complete Faculty side after Bursary clearance; NMDS columns visible.",
+        steps: [
+          "Open Registrations → Module requests.",
+          "If next desk is faculty, approve modules / availability with a note.",
+          "Confirm sponsorCode / borrowerReference display for NMDS Demo requests.",
+        ],
+        durationMs: 7500,
       },
       {
         id: "reg-list",
         title: "Students list",
         route: "/admin/students",
         fm: ["FM-07"],
-        body: "Open the Demo registry list (graph-backed). Select a student such as the Lesotho fixture.",
-        durationMs: 5500,
+        body: "Open the Demo registry list from the record graph.",
+        steps: [
+          "Open Admin → Students.",
+          "Confirm Demo enrolled students load (including Lesotho fixture when seeded).",
+          "Click a row to open the 12-tab registry file.",
+        ],
+        durationMs: 6500,
       },
       {
         id: "reg-file-academics",
         title: "Student file — Academics",
         route: "/admin/students · Academics",
         fm: ["FM-07"],
-        body: "Twelve-tab Demo file: programme, term, module grid (Code, Name, Status, Cr, Mk, Gd). Not Live CAP-53.",
-        durationMs: 5500,
+        body: "Walk the Academics tab: programme, term, module grid.",
+        steps: [
+          "On the open file, select Academics.",
+          "Read programme status, term, and module grid (Code / Name / Status / Cr / Mk / Gd).",
+          "Remember: Demo graph projection — not Live CAP-53.",
+        ],
+        durationMs: 7000,
       },
       {
         id: "reg-file-sponsors",
         title: "Student file — Sponsors / Registration",
         route: "/admin/students · Sponsors",
         fm: ["FM-07", "FM-08"],
-        body: "Sponsors tab shows funding awards and borrower reference; Registration tab lists requests with sponsorCode.",
-        durationMs: 6000,
+        body: "Confirm NMDS awards and registration request sponsor fields.",
+        steps: [
+          "Open Sponsors — funding awards + borrower reference.",
+          "Open Registration — requests list with sponsorCode / clearance.",
+          "Optionally skim Finance / Documents / Audit tabs for Demo projections.",
+        ],
+        durationMs: 7500,
       },
     ],
   },
   {
     id: "year-leader",
     label: "Year Leader",
-    portal: "admin.lesotho.raisd.co · Students",
+    portal: "https://staff.lesotho.raisd.co",
+    account: "Keychain · lesotho.yearleader@raisd.demo",
     summary: "Narrow Students view (FM-07 / FM-15)",
     scenes: [
       {
@@ -206,31 +307,47 @@ export const ROLES = [
         title: "Sign in as Year Leader",
         route: "/sign-in",
         fm: ["FM-01", "FM-15"],
-        body: "Use the Lesotho Year Leader custom role (Students + Overview; no Access).",
-        durationMs: 5000,
+        body: "Use the narrow Lesotho Year Leader custom role.",
+        steps: [
+          "Keychain → lesotho.yearleader@raisd.demo.",
+          "Land on staff.lesotho.raisd.co Admin with Overview + Students only (no Access).",
+          "Confirm Payments / Access menus are hidden.",
+        ],
+        durationMs: 6500,
       },
       {
         id: "yl-list",
         title: "Browse enrolled students",
         route: "/admin/students",
         fm: ["FM-07"],
-        body: "Open the Demo Students list scoped to campus access.",
-        durationMs: 5500,
+        body: "Open the Demo Students list in campus scope.",
+        steps: [
+          "Open Admin → Students.",
+          "Scan list for programme / term / sponsor columns.",
+          "Select a student for read follow-up.",
+        ],
+        durationMs: 6500,
       },
       {
         id: "yl-file",
         title: "Read registry file",
         route: "/admin/students · file",
         fm: ["FM-07", "FM-15"],
-        body: "Open a student file read-only for year follow-up. Same 12-tab Demo shell as Registry.",
-        durationMs: 5500,
+        body: "Open the same 12-tab Demo file read-only for year follow-up.",
+        steps: [
+          "Open the selected student file.",
+          "Step through Academics → Student → Registration tabs.",
+          "No Live CAP-53 write — Demo read shell only.",
+        ],
+        durationMs: 7000,
       },
     ],
   },
   {
     id: "student",
     label: "Student",
-    portal: "student.lesotho.raisd.co",
+    portal: "https://student.lesotho.raisd.co",
+    account: "Keychain · alya@raisd.demo or Lesotho DEV student after accept",
     summary: "Registration with NMDS + finance / CAF (FM-06 / FM-08 / FM-09)",
     scenes: [
       {
@@ -238,31 +355,47 @@ export const ROLES = [
         title: "Sign in to Student",
         route: "/sign-in",
         fm: ["FM-01", "FM-06", "FM-14"],
-        body: "Open the Lesotho Student host with the Demo Lesotho student (or post-acceptance account).",
-        durationMs: 5500,
+        body: "Open the Lesotho Student host with a Demo student account.",
+        steps: [
+          "Open https://student.lesotho.raisd.co (Keychain Student).",
+          "Use alya@raisd.demo or the account created by Accept Enrolment / Lesotho fixture.",
+          "Confirm Dashboard loads for the Demo enrolment.",
+        ],
+        durationMs: 6500,
       },
       {
         id: "stu-reg",
         title: "Submit module registration",
         route: "/registration",
         fm: ["FM-06", "FM-08"],
-        body: "Select modules for the term. Where NMDS applies, supply sponsorCode and borrowerReference on the request.",
-        durationMs: 6000,
+        body: "Select modules and, when NMDS applies, enter sponsor + borrower.",
+        steps: [
+          "Open Registration / module selection for the current term.",
+          "Choose modules allowed by Demo curriculum rules.",
+          "If prompted, enter sponsorCode (e.g. nmds) and borrowerReference — Submit for Staff clearance.",
+        ],
+        durationMs: 8000,
       },
       {
         id: "stu-finance",
         title: "Finance and CAF",
         route: "/finance",
         fm: ["FM-06", "FM-09"],
-        body: "After Bursary + Faculty clearance, review Demo invoices / CAF artefacts. Amounts come from the finance profile, not Live CMS.",
-        durationMs: 6000,
+        body: "After Staff clearance, review Demo invoices / CAF.",
+        steps: [
+          "Complete Bursary + Faculty clearance on Staff (see those roles).",
+          "Return to Student → Finance / documents.",
+          "Open CAF / invoice artefacts labelled DEMO — amounts from finance profile JSON.",
+        ],
+        durationMs: 7500,
       },
     ],
   },
   {
     id: "control",
     label: "Control",
-    portal: "control.raisd.co",
+    portal: "https://control.raisd.co",
+    account: "Keychain · sso.admin@raisd.demo (flows.configure)",
     summary: "Lesotho Flows catalogues and position seeds (FM-05 / FM-15)",
     scenes: [
       {
@@ -270,32 +403,52 @@ export const ROLES = [
         title: "Open Lesotho Admissions Flows",
         route: "/flows/admissions/campus-lesotho",
         fm: ["FM-05"],
-        body: "Control editor with flows.configure opens the campus-lesotho Admissions policy draft.",
-        durationMs: 5500,
+        body: "Open the Control Admissions policy editor for campus-lesotho.",
+        steps: [
+          "Keychain → sso.admin@raisd.demo → control.raisd.co.",
+          "Open Flows → Admissions → Lesotho.",
+          "Load current / draft settings (Demo storage).",
+        ],
+        durationMs: 7000,
       },
       {
         id: "ctl-review",
         title: "Desk review flags",
         route: "/flows · Desk review",
         fm: ["FM-05"],
-        body: "Confirm showRankScore, extractRequired, and faculty → QA → Registry recommendation desks.",
-        durationMs: 5500,
+        body: "Confirm Lesotho review flags for rank, extract, and n/3 desks.",
+        steps: [
+          "Scroll to Desk review (Lesotho).",
+          "Ensure showRankScore and extractRequired are on.",
+          "Confirm recommendation desks: faculty → qa → registry (or Use faculty → QA → Registry).",
+        ],
+        durationMs: 7000,
       },
       {
         id: "ctl-catalogues",
         title: "Load Demo catalogues",
         route: "/flows · Admissions catalogues",
         fm: ["FM-05"],
-        body: "Load Lesotho Demo catalogues: intakes, certificate types, subjects, recognized schools, entry requirements.",
-        durationMs: 6000,
+        body: "Load intake / certificate / subject / school / entry Demo lists.",
+        steps: [
+          "Open Admissions catalogues (Demo) card.",
+          "Click Load Lesotho Demo catalogues.",
+          "Validate draft (optional) — publish only if you intend to bump the Demo policy version.",
+        ],
+        durationMs: 7500,
       },
       {
         id: "ctl-positions",
         title: "Positions note",
         route: "/campuses · roles",
         fm: ["FM-15", "FM-01"],
-        body: "Lesotho Registry / QA / Bursary / Faculty Review / Year Leader custom roles are seeded in SSO + Keychain for Demo desks.",
-        durationMs: 6000,
+        body: "Lesotho desk roles are seeded in SSO + Keychain for Demo.",
+        steps: [
+          "Open Campus members / roles for Lesotho (or rely on Keychain presets).",
+          "Confirm custom roles: Registry, QA, Bursary, Faculty Review, Year Leader.",
+          "Publishing a Flow never grants portal access — assignments stay on Members.",
+        ],
+        durationMs: 7500,
       },
     ],
   },
@@ -318,9 +471,11 @@ export function createPlayer(options) {
     stageEl,
     roleBadgeEl,
     portalEl,
+    accountEl,
     routeEl,
     titleEl,
     bodyEl,
+    stepsEl,
     fmEl,
     progressRoleEl,
     progressAllEl,
@@ -337,6 +492,8 @@ export function createPlayer(options) {
   let playing = false
   let speed = 1
   let timer = null
+  let stepTimer = null
+  let stepHighlight = 0
 
   function totalCount() {
     return flat.length
@@ -351,13 +508,44 @@ export function createPlayer(options) {
       clearTimeout(timer)
       timer = null
     }
+    if (stepTimer != null) {
+      clearInterval(stepTimer)
+      stepTimer = null
+    }
+  }
+
+  function highlightSteps(steps) {
+    if (!stepsEl) return
+    const items = stepsEl.querySelectorAll("li")
+    items.forEach((li, i) => {
+      li.setAttribute("data-active", i === stepHighlight ? "true" : "false")
+    })
+  }
+
+  function startStepPulse(steps) {
+    if (!steps?.length || !playing) return
+    stepHighlight = 0
+    highlightSteps(steps)
+    const per = Math.max(
+      1600,
+      Math.round(((current().scene.durationMs || 7000) / speed) / steps.length)
+    )
+    stepTimer = setInterval(() => {
+      stepHighlight = Math.min(steps.length - 1, stepHighlight + 1)
+      highlightSteps(steps)
+      if (stepHighlight >= steps.length - 1 && stepTimer) {
+        clearInterval(stepTimer)
+        stepTimer = null
+      }
+    }, per)
   }
 
   function schedule() {
     clearTimer()
     if (!playing) return
     const { scene } = current()
-    const ms = Math.max(2000, Math.round((scene.durationMs || 5500) / speed))
+    startStepPulse(scene.steps || [])
+    const ms = Math.max(2500, Math.round((scene.durationMs || 7000) / speed))
     timer = setTimeout(() => {
       if (index >= totalCount() - 1) {
         playing = false
@@ -379,7 +567,10 @@ export function createPlayer(options) {
       btn.type = "button"
       btn.className = "role-item"
       btn.dataset.roleId = role.id
-      btn.setAttribute("aria-current", current().roleIndex === roleIndex ? "true" : "false")
+      btn.setAttribute(
+        "aria-current",
+        current().roleIndex === roleIndex ? "true" : "false"
+      )
       btn.innerHTML = `<span class="role-ord">${roleIndex + 1}</span><span class="role-meta"><strong>${role.label}</strong><span>${role.summary}</span></span>`
       btn.addEventListener("click", () => {
         const first = flat.findIndex((f) => f.roleIndex === roleIndex)
@@ -400,10 +591,35 @@ export function createPlayer(options) {
   function render() {
     const { role, scene, sceneIndex } = current()
     if (roleBadgeEl) roleBadgeEl.textContent = role.label
-    if (portalEl) portalEl.textContent = role.portal
+    if (portalEl) {
+      portalEl.textContent = role.portal
+      if (role.portal.startsWith("http")) {
+        portalEl.href = role.portal
+      } else {
+        portalEl.removeAttribute("href")
+      }
+    }
+    if (accountEl) accountEl.textContent = role.account || ""
     if (routeEl) routeEl.textContent = scene.route
     if (titleEl) titleEl.textContent = scene.title
     if (bodyEl) bodyEl.textContent = scene.body
+    if (stepsEl) {
+      stepsEl.innerHTML = ""
+      const heading = document.createElement("h3")
+      heading.className = "exec-heading"
+      heading.textContent = "How executed"
+      stepsEl.appendChild(heading)
+      const ol = document.createElement("ol")
+      ol.className = "exec-steps"
+      for (const step of scene.steps || []) {
+        const li = document.createElement("li")
+        li.textContent = step
+        ol.appendChild(li)
+      }
+      stepsEl.appendChild(ol)
+      stepHighlight = 0
+      highlightSteps(scene.steps || [])
+    }
     if (fmEl) {
       fmEl.innerHTML = ""
       for (const tag of scene.fm) {
@@ -432,7 +648,10 @@ export function createPlayer(options) {
     }
     if (progressAllEl) {
       progressAllEl.style.width = `${((index + 1) / totalCount()) * 100}%`
-      progressAllEl.parentElement?.setAttribute("aria-valuenow", String(index + 1))
+      progressAllEl.parentElement?.setAttribute(
+        "aria-valuenow",
+        String(index + 1)
+      )
       progressAllEl.parentElement?.setAttribute(
         "aria-valuemax",
         String(totalCount())
@@ -455,8 +674,7 @@ export function createPlayer(options) {
 
   function play() {
     playing = true
-    if (statusEl && index >= totalCount() - 1) {
-      /* restart from beginning when finished */
+    if (index >= totalCount() - 1) {
       index = 0
       render()
     }
