@@ -14,7 +14,7 @@ Access permissions follow the **portal menu hierarchy**, including **sub-modules
 | Layer | Who | Does |
 |---|---|---|
 | Control / super-admin | Control portal | Creates **campus-scoped custom roles** (named permission sets) and assigns campus members; seeds built-in **Campus Admin** |
-| Campus Admin | Staff portal → Access | Assigns Applicant / Student / Staff / Lecturer presets; may enable or disable permissions already in Student/Staff/Lecturer; cannot expand the role or create custom roles |
+| Campus Admin | Staff portal → Access (`/v1/access/people*`) | Assigns fixed Applicant / Student / Staff / Lecturer presets only; cannot edit permission matrices or create custom roles |
 | Applicant | Fixed admissions flow | Access preset with `portal.applicant` only — not the student/staff checkbox model |
 | Student policy | University | Student portal process/config — not Staff-granted sub-modules in Access |
 
@@ -22,7 +22,7 @@ Staff and Lecturer both store `roleKey` `lecturer` with different permission tre
 
 ## Control custom roles (Contentful-style)
 
-Each custom role stores `entryRoleKey` (`admin` | `lecturer` | `student`) and a `permissions[]` set from the grantable catalog. Memberships reference `customRoleId`; SSO resolves permissions **live** from the role definition. Built-in **Campus Admin** is not deletable and includes the full Admin tree plus `sso.manage_learners`.
+Each custom role stores `entryRoleKeys` (`admin`, `lecturer`, and/or `student`) and a `permissions[]` set from those portals' grantable catalogs. A role may enter more than one portal. `entryRoleKey` remains the first selected portal for older clients. Memberships reference `customRoleId`; SSO resolves permissions **live** from the role definition and, at sign-in, offers one portal choice per selected portal. A token is bound to the portal the person chooses. Built-in **Campus Admin** is not deletable, enters Admin only, and includes the full Admin tree plus `sso.manage_learners`.
 
 ## Grantable trees (Access presets + Control matrix)
 
@@ -44,8 +44,9 @@ Community is **not** on Staff. Staff modules will be overhauled later:
 ```
 Staff portal (portal.lecturer)
 └── Directory (staff.directory)
-(+ optional desk tags: bursary · registry · qa · faculty)
 ```
+
+Access assigns this preset as a fixed set (no desk checkboxes). Admin review desks are assigned in Control.
 
 ### Lecturer
 
@@ -82,7 +83,7 @@ The Access preset editor shows the grantable tree with indented sub-modules unde
 ## Evidence
 
 - Template walkthrough: [e2e-access-templates-2026-10-20](../../reports/e2e-access-templates-2026-10-20/)
-- Grant / revoke walkthrough: [e2e-access-control-2026-10-20](../../reports/e2e-access-control-2026-10-20/)
+- Grant / revoke walkthrough: [e2e-access-control-2026-10-21](../../reports/e2e-access-control-2026-10-21/) (Control Admin + Access presets; prior [20 Oct](../../reports/e2e-access-control-2026-10-20/))
 
 ## Related
 

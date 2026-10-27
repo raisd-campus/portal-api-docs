@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Lesotho registered students report</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    a.chip { text-decoration: none; color: inherit; }
+    .jump { display: flex; flex-wrap: wrap; gap: 8px; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../campus-configurability.html">Campus configurability help</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../distributed-cms-architecture.html">Target architecture</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="../migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="newer-cms.html">Newer CMS mind map</a>
+              <a href="newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="newer-cms-exports.html">Newer CMS exports</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
+              <a href="index.html">Feature analysis</a>
+              <a href="cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
+              <a href="index.html#admissions">Flows</a>
+              <a href="index.html#why">Why pilot</a>
+              <a href="index.html#admissions">Admissions</a>
+              <a href="index.html#registry">Registry / NMDS</a>
+              <a href="index.html#cap">CAP seed</a>
+              <a href="index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="../old-cms/fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/email-templates.html">Email templates</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="../old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-21/" target="_blank" rel="noopener noreferrer">E2E access control · 21 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <p class="eyebrow">Lesotho pilot · newer CMS · export · 26 Oct 2026</p>
+    <h1>Registered students</h1>
+    <p class="lead">Spreadsheet from Analytics → Student Enrollments → Registration Reports → Students. File <code>registered-students-2026-10-26.xlsx</code>. Generated 26 October 2026 at 15:45. Term <strong>2026-07</strong>. Total students <strong>4,641</strong>.</p>
+    <p class="jump"><a class="chip" href="newer-cms.html">Mind map</a> <a class="chip" href="newer-cms-manual.html">User manual</a> <a class="chip" href="newer-cms-gap.html">Gap vs Raisd</a> <a class="chip" href="newer-cms-screenshots.html">Screenshots</a> <a class="chip" href="newer-cms-exports.html">Exports</a></p>
+    <p class="jump"><a class="chip" href="newer-cms-exports.html">Index</a> <a class="chip" href="newer-cms-export-graduation-list.html">Graduation list</a> <a class="chip" href="newer-cms-export-name-tags.html">Name tags</a> <a class="chip" href="newer-cms-export-certificate-manifest.html">Certificate manifest</a> <a class="chip" href="newer-cms-export-certificate-batch.html">Certificate batch</a> <span class="chip">Registered students</span> <a class="chip" href="newer-cms-export-enrollment-summary.html">Enrollment summary</a> <a class="chip" href="newer-cms-export-graduation-summary.html">Graduation summary</a></p>
+  </section>
+  <div class="note warn">
+    <strong>Counts and layout only.</strong>
+    Student names, student numbers, and certificate references that contain a student number stay out of this page.
+  </div>
+  <section class="section" id="sheets"><h2>Sheets</h2><p><strong>Full Registration Report</strong> is one row per student. A logo drawing sits above the title block. Columns, from row 11:</p><ul><li>No.</li><li>Student Number</li><li>Student Name</li><li>Gender</li><li>Program</li><li>Semester</li><li>School</li><li>Sponsor</li></ul><p>The student rows are not copied onto this page. The counts below are taken from those columns. The header row is excluded. Gender, semester, school, and sponsor each have 4,641 values.</p><h3>Gender</h3><div class="table-wrap"><table class="data"><thead><tr><th>Gender</th><th class="num">Students</th></tr></thead><tbody><tr><td>F</td><td class="num">2,915</td></tr><tr><td>M</td><td class="num">1,681</td></tr><tr><td>—</td><td class="num">45</td></tr></tbody></table></div><h3>Semester</h3><div class="table-wrap"><table class="data"><thead><tr><th>Semester</th><th class="num">Students</th></tr></thead><tbody><tr><td>Year 1 • Sem 1</td><td class="num">1,229</td></tr><tr><td>Year 1 • Sem 2</td><td class="num">158</td></tr><tr><td>Year 2 • Sem 1</td><td class="num">1,293</td></tr><tr><td>Year 3 • Sem 1</td><td class="num">1,373</td></tr><tr><td>Year 4 • Sem 1</td><td class="num">587</td></tr><tr><td>Year 4 • Sem 2</td><td class="num">1</td></tr></tbody></table></div><h3>Sponsor</h3><div class="table-wrap"><table class="data"><thead><tr><th>Sponsor</th><th class="num">Students</th></tr></thead><tbody><tr><td>NMDS</td><td class="num">4,008</td></tr><tr><td>Self Sponsored</td><td class="num">524</td></tr><tr><td>LUCT Sponsorship</td><td class="num">39</td></tr><tr><td>Higherlife Foundation</td><td class="num">38</td></tr><tr><td>Lesotho Communications Authority</td><td class="num">27</td></tr><tr><td>LUCT Staff Benefits</td><td class="num">2</td></tr><tr><td>JB Marks</td><td class="num">1</td></tr><tr><td>LUCT Staff Development</td><td class="num">1</td></tr><tr><td>Other</td><td class="num">1</td></tr></tbody></table></div><p>Schools on this report are six faculties. Communication and film share Faculty of Communication, Media and Broadcasting. Fashion sits inside Faculty of Design. That labelling differs from the 17 September graduation list.</p></section><section class="section" id="summary"><h2>Summary sheet</h2><p>Sheet <strong>Summary</strong> has a fixed header: School/Faculty, Program, Y1S1, Y1S2, Y2S1, Y3S1, Y4S1, Y4S2, Total. Empty cells are semesters with no students in that row. 49 programmes. Grand total 4,641, matching the title block.</p><div class="table-wrap"><table class="data"><thead><tr><th>Programme</th><th class="num">Y1 S1</th><th class="num">Y1 S2</th><th class="num">Y2 S1</th><th class="num">Y3 S1</th><th class="num">Y4 S1</th><th class="num">Y4 S2</th><th class="num">Total</th></tr></thead><tbody><tr><td><strong>Faculty of Architecture and the Built Environment</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>BA in Interior Architecture</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num">1</td></tr><tr><td>Bachelor of Architectural Studies</td><td class="num">40</td><td class="num"></td><td class="num">43</td><td class="num">28</td><td class="num">19</td><td class="num"></td><td class="num">130</td></tr><tr><td>Diploma in Architecture Technology</td><td class="num">43</td><td class="num"></td><td class="num">45</td><td class="num">92</td><td class="num"></td><td class="num"></td><td class="num">180</td></tr><tr><td><strong>Faculty total</strong></td><td class="num">83</td><td class="num"></td><td class="num">88</td><td class="num">120</td><td class="num">20</td><td class="num"></td><td class="num">311</td></tr><tr><td><strong>Faculty of Business Management and Globalisation</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Associate Degree in Business Management</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num"></td><td class="num">1</td></tr><tr><td>B Bus in Entrepreneurship</td><td class="num">54</td><td class="num"></td><td class="num">53</td><td class="num">36</td><td class="num">31</td><td class="num"></td><td class="num">174</td></tr><tr><td>B Bus in International Business</td><td class="num">34</td><td class="num"></td><td class="num">77</td><td class="num">50</td><td class="num">68</td><td class="num"></td><td class="num">229</td></tr><tr><td>BA (Hons) in Human Resource Management</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num">1</td></tr><tr><td>BA in Human Resource Management</td><td class="num">63</td><td class="num"></td><td class="num">84</td><td class="num">73</td><td class="num">105</td><td class="num">1</td><td class="num">326</td></tr><tr><td>Certificate in Marketing</td><td class="num"></td><td class="num">22</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">22</td></tr><tr><td>Diploma in Business Management</td><td class="num">41</td><td class="num"></td><td class="num">35</td><td class="num">44</td><td class="num"></td><td class="num"></td><td class="num">120</td></tr><tr><td>Diploma in Marketing</td><td class="num">30</td><td class="num"></td><td class="num">27</td><td class="num">43</td><td class="num"></td><td class="num"></td><td class="num">100</td></tr><tr><td>Diploma in Retail Management</td><td class="num">16</td><td class="num"></td><td class="num">26</td><td class="num">29</td><td class="num"></td><td class="num"></td><td class="num">71</td></tr><tr><td><strong>Faculty total</strong></td><td class="num">238</td><td class="num">22</td><td class="num">302</td><td class="num">276</td><td class="num">205</td><td class="num">1</td><td class="num">1044</td></tr><tr><td><strong>Faculty of Communication, Media and Broadcasting</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Associate Degree in Public Relations</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num"></td><td class="num">1</td></tr><tr><td>BA (Hons) in Broadcasting &amp; Journalism</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num">1</td></tr><tr><td>BA (Hons) in Professional Communication</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num">1</td></tr><tr><td>BA in Broadcasting &amp; Journalism</td><td class="num">53</td><td class="num"></td><td class="num">46</td><td class="num">42</td><td class="num">64</td><td class="num"></td><td class="num">205</td></tr><tr><td>BA in Digital Film</td><td class="num">32</td><td class="num"></td><td class="num">46</td><td class="num">41</td><td class="num">27</td><td class="num"></td><td class="num">146</td></tr><tr><td>BA in Professional Communication</td><td class="num">52</td><td class="num"></td><td class="num">48</td><td class="num">35</td><td class="num">60</td><td class="num"></td><td class="num">195</td></tr><tr><td>Certificate in Performing Arts</td><td class="num"></td><td class="num">25</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">25</td></tr><tr><td>Certificate in Radio Broadcasting</td><td class="num"></td><td class="num">31</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">31</td></tr><tr><td>Diploma in Broadcasting Radio &amp; TV</td><td class="num">26</td><td class="num"></td><td class="num">38</td><td class="num">35</td><td class="num"></td><td class="num"></td><td class="num">99</td></tr><tr><td>Diploma in Film Production</td><td class="num">32</td><td class="num"></td><td class="num">34</td><td class="num">46</td><td class="num"></td><td class="num"></td><td class="num">112</td></tr><tr><td>Diploma in Journalism &amp; Media</td><td class="num">27</td><td class="num"></td><td class="num">30</td><td class="num">26</td><td class="num"></td><td class="num"></td><td class="num">83</td></tr><tr><td>Diploma in Public Relations</td><td class="num">38</td><td class="num"></td><td class="num">29</td><td class="num">54</td><td class="num"></td><td class="num"></td><td class="num">121</td></tr><tr><td><strong>Faculty total</strong></td><td class="num">260</td><td class="num">56</td><td class="num">271</td><td class="num">280</td><td class="num">153</td><td class="num"></td><td class="num">1020</td></tr><tr><td><strong>Faculty of Creativity in Tourism &amp; Hospitality</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Associate Degree in International Tourism</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">2</td><td class="num"></td><td class="num"></td><td class="num">2</td></tr><tr><td>Associate Degree in Tourism Management</td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num">1</td><td class="num"></td><td class="num"></td><td class="num">2</td></tr><tr><td>BA (Hons) in Tourism Management</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num"></td><td class="num">1</td></tr><tr><td>BA in Tourism Management</td><td class="num">53</td><td class="num"></td><td class="num">46</td><td class="num">51</td><td class="num">59</td><td class="num"></td><td class="num">209</td></tr><tr><td>Certificate in Innovative Travel &amp; Tourism</td><td class="num"></td><td class="num">32</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">32</td></tr><tr><td>Diploma in Events Management</td><td class="num">24</td><td class="num"></td><td class="num">23</td><td class="num">14</td><td class="num"></td><td class="num"></td><td class="num">61</td></tr><tr><td>Diploma in Hotel Management</td><td class="num">29</td><td class="num"></td><td class="num">31</td><td class="num">31</td><td class="num"></td><td class="num"></td><td class="num">91</td></tr><tr><td>Diploma in Tourism Management</td><td class="num">64</td><td class="num"></td><td class="num">54</td><td class="num">91</td><td class="num"></td><td class="num"></td><td class="num">209</td></tr><tr><td><strong>Faculty total</strong></td><td class="num">170</td><td class="num">32</td><td class="num">155</td><td class="num">191</td><td class="num">59</td><td class="num"></td><td class="num">607</td></tr><tr><td><strong>Faculty of Design</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Associate Degree in Creative Advertising</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num"></td><td class="num">1</td></tr><tr><td>Associate Degree in Graphic Design</td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num">2</td><td class="num"></td><td class="num"></td><td class="num">3</td></tr><tr><td>BA in Fashion &amp; Retailing</td><td class="num">49</td><td class="num"></td><td class="num">44</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">93</td></tr><tr><td>Certificate in Graphic Design</td><td class="num"></td><td class="num">20</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">20</td></tr><tr><td>Diploma in Creative Advertising</td><td class="num">24</td><td class="num"></td><td class="num">33</td><td class="num">33</td><td class="num"></td><td class="num"></td><td class="num">90</td></tr><tr><td>Diploma in Fashion &amp; Apparel Design</td><td class="num">52</td><td class="num"></td><td class="num">63</td><td class="num">106</td><td class="num"></td><td class="num"></td><td class="num">221</td></tr><tr><td>Diploma in Graphic Design</td><td class="num">46</td><td class="num"></td><td class="num">42</td><td class="num">76</td><td class="num"></td><td class="num"></td><td class="num">164</td></tr><tr><td><strong>Faculty total</strong></td><td class="num">171</td><td class="num">20</td><td class="num">183</td><td class="num">218</td><td class="num"></td><td class="num"></td><td class="num">592</td></tr><tr><td><strong>Faculty of Information &amp; Communication Technology</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Associate Degree in Business Information Technology</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num"></td><td class="num">1</td></tr><tr><td>BSc (Hons) in Business Information Technology</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">2</td><td class="num"></td><td class="num">2</td></tr><tr><td>BSc (Hons) in Software Engineering with Multimedia</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">1</td><td class="num"></td><td class="num">1</td></tr><tr><td>BSc in Business Information Technology</td><td class="num">51</td><td class="num"></td><td class="num">49</td><td class="num">50</td><td class="num">42</td><td class="num"></td><td class="num">192</td></tr><tr><td>BSc in Information Technology</td><td class="num">75</td><td class="num"></td><td class="num">70</td><td class="num">56</td><td class="num">54</td><td class="num"></td><td class="num">255</td></tr><tr><td>BSc in Software Engineering with Multimedia</td><td class="num">76</td><td class="num"></td><td class="num">62</td><td class="num">50</td><td class="num">51</td><td class="num"></td><td class="num">239</td></tr><tr><td>Certificate in Business Information Technology</td><td class="num"></td><td class="num">28</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">28</td></tr><tr><td>Diploma in Business Information Technology</td><td class="num">27</td><td class="num"></td><td class="num">45</td><td class="num">65</td><td class="num"></td><td class="num"></td><td class="num">137</td></tr><tr><td>Diploma in Information Technology</td><td class="num">46</td><td class="num"></td><td class="num">35</td><td class="num">36</td><td class="num"></td><td class="num"></td><td class="num">117</td></tr><tr><td>Diploma in Multimedia &amp; Software Engineering</td><td class="num">32</td><td class="num"></td><td class="num">33</td><td class="num">30</td><td class="num"></td><td class="num"></td><td class="num">95</td></tr><tr><td><strong>Faculty total</strong></td><td class="num">307</td><td class="num">28</td><td class="num">294</td><td class="num">288</td><td class="num">150</td><td class="num"></td><td class="num">1067</td></tr><tr><td><strong>Grand total</strong></td><td class="num">1229</td><td class="num">158</td><td class="num">1293</td><td class="num">1373</td><td class="num">587</td><td class="num">1</td><td class="num">4641</td></tr></tbody></table></div><p>The Word file of the same summary is <a href="newer-cms-export-enrollment-summary.html">Enrollment summary</a>. It drops a semester column when that faculty has no students in it.</p></section>
+</main>
+<p class="footer">Raisd · newer CMS exports saved 26 Oct 2026 · staging Admin · no student roster</p>
+<script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+  <script src="../keychain-access.js" defer></script>
+</body>
+</html>

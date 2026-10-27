@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Lesotho newer CMS mind map</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .tag { display: inline-block; margin: 0 4px 4px 0; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .tag-gap { background: #fff6e8; border-color: #e0c48a; color: var(--warn); }
+    .tag-mismatch { background: #f3e8fd; border-color: #c9b0e8; color: #5a2a8a; }
+    .tag-partial { background: var(--accent-soft); border-color: #b7c9de; color: var(--accent); }
+    .tag-out { background: #eef1f5; border-color: var(--line); color: var(--muted); }
+  </style>
+  <style>
+    .map-diagram { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; overflow-x: auto; margin: 0 0 16px; }
+    .map-legend { margin: 0 0 20px; }
+    .map-legend h3 { margin: 0 0 10px; font-size: 1rem; }
+    .map-legend .obsidian-legend { margin-top: 0; }
+    .map-legend .legend { margin-top: 12px; }
+    .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    a.chip { text-decoration: none; color: inherit; }
+    .jump { display: flex; flex-wrap: wrap; gap: 8px; }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../campus-configurability.html">Campus configurability help</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../distributed-cms-architecture.html">Target architecture</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="../migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="newer-cms.html">Newer CMS mind map</a>
+              <a href="newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="newer-cms-exports.html">Newer CMS exports</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
+              <a href="index.html">Feature analysis</a>
+              <a href="cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
+              <a href="index.html#admissions">Flows</a>
+              <a href="index.html#why">Why pilot</a>
+              <a href="index.html#admissions">Admissions</a>
+              <a href="index.html#registry">Registry / NMDS</a>
+              <a href="index.html#cap">CAP seed</a>
+              <a href="index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="../old-cms/fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/email-templates.html">Email templates</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="../old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-21/" target="_blank" rel="noopener noreferrer">E2E access control · 21 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Lesotho pilot · newer CMS · 23 Oct 2026</p>
+      <h1>Lesotho newer CMS — mind map</h1>
+      <p class="lead">Mind map, sign-in, and shell. Staging Admin at <code>luct.vercel.app</code>. Active term <strong>2026-07</strong>. This is the campus benchmark. Raisd portals stay Demo until a campus accepts them.</p>
+      <p class="jump"><span class="chip">Mind map</span> <a class="chip" href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a> <a class="chip" href="newer-cms-manual.html">User manual</a> <a class="chip" href="newer-cms-gap.html">Gap vs Raisd</a> <a class="chip" href="workflow-control-improvements.html">Workflow &amp; control</a> <a class="chip" href="newer-cms-screenshots.html">Screenshots</a> <a class="chip" href="newer-cms-exports.html">Exports</a></p>
+    </section>
+    <nav class="toc" aria-label="On this page"><a href="#evidence-boundary">Evidence boundary</a><a href="#mind-map">Mind map</a><a href="#legend">Legend</a><a href="#1-sign-in">1. Sign in</a><a href="#2-shell">2. Shell</a></nav>
+    <div class="note warn">
+      <strong>No personal records.</strong>
+      Counts, menus, routes, statuses, and fee names only. Names, emails, student numbers, marks, and documents stay out of this site.
+    </div>
+    <p><strong>Campus:</strong> Limkokwing University of Creative Technology — Lesotho.</p>
+<p><strong>Product:</strong> staging Admin portal (dark UI, <code>DEBUG</code> ribbon). Host used for this walk: <code>https://luct.vercel.app</code>.</p>
+<p><strong>Walked:</strong> 23 October 2026, signed in as a campus <strong>Admin</strong> whose position is <strong>Registry Manager</strong>. Active term on the dashboard: <strong>2026-07</strong>.</p>
+<p><strong>This file:</strong> user manual and gap analysis for that portal. It does not copy student or staff records.</p>
+<p><strong>Older inventories:</strong> screenshot seed <a href="../../ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a> (3 and 5 Oct 2026). Structure of the <strong>old</strong> LUCT CMS remains <a href="../../ai/backend/lesotho-db-gap.md">lesotho-db-gap.md</a>. Pilot framing: <a href="../../ai/architecture/lesotho-pilot.md">lesotho-pilot.md</a>.</p>
+<p>This portal is the campus feature benchmark (ADR-1). It is <strong>not</strong> the Raisd system of record. Raisd portals still go through the Portal API. Nothing in this file is Raisd Live.</p>
+
+<section class="section" id="evidence-boundary"><h2>Evidence boundary</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Observed this session</th><th>Not in this file</th></tr></thead><tbody><tr><td>Menu, routes, tabs, filters, statuses, aggregate counts, fee names and LSL amounts on screen</td><td>Names, emails, student numbers, marks, documents, session tokens, passwords</td></tr><tr><td>Admin shell after Dev Login</td><td>Student portal and applicant wizard (not opened). Those journeys stay on the 3 Oct screenshot inventory</td></tr><tr><td>One student file, one registration request, the review queue, document-type chips, Fees &amp; Fines, one position</td><td>Every leaf screen. Routes that were not opened are marked <strong>not opened</strong></td></tr></tbody></table></div>
+<p>The internal system admin account in Dev Login is <strong>banned</strong> and does not open the portal. Use a campus Admin account.</p>
+</section>
+<section class="section" id="mind-map"><h2>Mind map</h2>
+<p>Sign-in, then the Admin Portal sidebar in menu order. A menu item is shown only when the signed-in user has that item’s <strong>resource + action</strong> (the action that reveals the item is <code>read</code>, except where a screen says otherwise). The same Admin Portal tree is also an interactive <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D graph</a>.</p>
+<div class="map-legend" id="legend">
+  <h3>Legend</h3>
+  <div class="legend" aria-label="Diagram shapes">
+    <div class="legend-item"><strong>Sign-in flowchart</strong><span>Rectangles are screens. The diamond is the linked-email decision. Arrows are the next step.</span></div>
+    <div class="legend-item"><strong>Admin Portal centre</strong><span>The hub is the Admin shell after sign-in. Work starts from the sidebar, not dashboard widgets.</span></div>
+    <div class="legend-item"><strong>First ring</strong><span>Sidebar groups, in menu order: Registry through Mail.</span></div>
+    <div class="legend-item"><strong>Outer nodes</strong><span>Menu items and nested desks under that group.</span></div>
+  </div>
+  <div class="obsidian-legend" aria-label="Sidebar group colours">
+    <span class="obs-legend-item"><i style="background:#e0af68"></i>Registry</span>
+    <span class="obs-legend-item"><i style="background:#f7768e"></i>Discipline</span>
+    <span class="obs-legend-item"><i style="background:#bb9af7"></i>Admin</span>
+    <span class="obs-legend-item"><i style="background:#ff9e64"></i>Academic</span>
+    <span class="obs-legend-item"><i style="background:#9ece6a"></i>Five Days</span>
+    <span class="obs-legend-item"><i style="background:#db4b4b"></i>Finance</span>
+    <span class="obs-legend-item"><i style="background:#2ac3de"></i>Admissions</span>
+    <span class="obs-legend-item"><i style="background:#73daca"></i>Human Resource</span>
+    <span class="obs-legend-item"><i style="background:#7dcfff"></i>Library</span>
+    <span class="obs-legend-item"><i style="background:#b4f9f8"></i>Website</span>
+    <span class="obs-legend-item"><i style="background:#7aa2f7"></i>Analytics</span>
+    <span class="obs-legend-item"><i style="background:#c0caf5"></i>Mail</span>
+    <span class="obs-legend-item"><i style="background:#c0caf5"></i>Sign in</span>
+  </div>
+</div>
+<h3>Sign in</h3>
+<pre class="mermaid map-diagram">flowchart TD
+  google[Sign in with Google]
+  google --&gt; linked{Email linked?}
+  linked --&gt;|Yes| home[Role home]
+  linked --&gt;|No| account[Link your account]
+  account --&gt; student[I am a Student]
+  account --&gt; applicant[I am a New Applicant]
+  account --&gt; dev[Dev Login]
+  dev --&gt; role[Role]
+  role --&gt; position[Position, optional]
+  position --&gt; user[User]
+  user --&gt; portal[Admin Portal]</pre>
+<h3>Admin Portal</h3>
+<pre class="mermaid map-diagram">mindmap
+  root((Admin Portal))
+    Registry
+      Students
+      Documents
+      Registration
+      Graduations
+        Graduation Dates
+        Hoods
+        Name tags
+      Certificates
+        Print batches
+        Collections
+        Stock
+      Student Status
+      Remark Requests
+      Student Referrals
+      Notes
+      Letters
+        Generate
+        Templates
+      Blocked Students
+      Terms
+    Discipline
+      Academic Dishonesty
+      Suspensions
+    Admin
+      Calendar
+      Academic Calendar
+      Users
+      Positions
+      Notifications
+        Templates
+        Broadcast
+      Activity Tracker
+      Settings
+      Tools
+        Simulator
+        Grade Finder
+        AI Query
+      Bulk
+        Export Transcript
+        Student Cards
+        Student Photos
+    Academic
+      Lecturers
+      Assessments
+      Assessment Types
+      Attendance
+      Gradebook
+      Modules
+      Schools
+      Curriculum
+      Fortinet
+      Timetable
+        Generator
+        Allocations
+        Venues
+        Venue Types
+    Five Days
+      LMS courses
+    Finance
+      Sponsors
+      Banks
+      Debtors
+      Pricing
+        Repeat Modules
+        Fees and Fines
+        Payment Plans
+    Admissions
+      Review
+      Applicants
+      Admissions Payments
+      Document Review
+      Settings
+        Intake Periods
+        Certificate Types
+        Subjects
+        Recognized Schools
+        Entry Requirements
+    Human Resource
+      Employees
+      Contracts
+      Positions
+      Unit Heads
+      Vacancies
+      Appraisals
+        Academic
+        Support
+        Teaching Observations
+        Student Feedback
+        Settings
+    Library
+      Catalog
+      Loans
+      Books
+      Fines
+      E-Library
+      Publications
+      Question Papers
+      Authorities
+        Authors
+        Subjects
+    Website
+      Pages
+      Articles
+      Categories
+      Featured Programs
+      Enquiries
+      Campus Sites
+      Alumni
+      Media
+      Events
+    Analytics
+      Course Summary
+      Attendance
+      Appraisals
+      Board of Examination
+      Senate Report
+      Student Enrollments
+      Graduations
+      Admissions
+      Sponsor Reports
+      Portal Usage
+      Library
+    Mail
+      Compose
+      Inbox
+      Accounts
+      Templates
+      Drafts
+      Sent
+      Queue</pre>
+</section>
+<section class="section" id="1-sign-in"><h2>1. Sign in</h2>
+<ol><li>Open the staging host. The login page is Limkokwing University of Creative Technology, Lesotho. The only sign-in control is <strong>Sign in with Google</strong>. Assistance is <strong>Contact Registry</strong>.</li><li>Google may ask for a device prompt (this walk used the YouTube app on a phone).</li><li>If that Google email is not linked to a campus user, the next screen is <strong>Link your account</strong>. It shows the email and three ways forward:</li></ol>
+<ul><li><strong>I am a Student</strong></li><li><strong>I am a New Applicant</strong></li><li><strong>Dev Login</strong>, the orange control at the bottom right</li></ul>
+<ol start="4"><li>Dev Login lists <strong>Roles</strong>, then optional <strong>Positions</strong>, then <strong>Users</strong>. Search narrows the user list. Choosing a user calls the dev login and continues into that user’s home.</li></ol>
+<h3>Roles in Dev Login (23 Oct 2026)</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Role</th><th>Users</th></tr></thead><tbody><tr><td>Finance</td><td>6</td></tr><tr><td>Registry</td><td>3</td></tr><tr><td>Library</td><td>9</td></tr><tr><td>Resource</td><td>0</td></tr><tr><td>Academic</td><td>158</td></tr><tr><td>Marketing</td><td>6</td></tr><tr><td>Student Services</td><td>5</td></tr><tr><td>Admin</td><td>2</td></tr><tr><td>Leap</td><td>1</td></tr><tr><td>Human Resource</td><td>3</td></tr><tr><td>IT</td><td>4</td></tr><tr><td>Quality Assurance</td><td>3</td></tr><tr><td>Registrar</td><td>1</td></tr><tr><td>Head of Institution</td><td>1</td></tr><tr><td>Student</td><td>7,932</td></tr><tr><td>Applicant</td><td>4,585</td></tr><tr><td>User</td><td>4,242</td></tr></tbody></table></div>
+<p>Admin has two users. One is an internal system account and is banned. The campus Admin opens the Admin Portal. After sign-in the orange Dev Login control stays on the shell, so a permitted user can switch identity without returning to Google.</p>
+<p><strong>Student account count (7,932) is not the student master (21,527).</strong> They are different counters. This walk does not explain the difference.</p>
+</section>
+<section class="section" id="2-shell"><h2>2. Shell</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Control</th><th>What it does</th></tr></thead><tbody><tr><td>Logo</td><td>Returns toward the portal home</td></tr><tr><td>Search</td><td>Read-only until opened. Hint <strong>Ctrl+K</strong></td></tr><tr><td>Tasks</td><td>Opens the task list. The walk showed a badge of 5</td></tr><tr><td>Notifications</td><td>Notification inbox</td></tr><tr><td>Theme</td><td>Light / dark</td></tr><tr><td>Account menu</td><td>Signed-in name and position</td></tr><tr><td>Term chip</td><td>Dashboard shows <strong>Terms: 2026-07</strong></td></tr><tr><td>Dev Login</td><td>Switch role / position / user</td></tr></tbody></table></div>
+<p>The empty dashboard title is <strong>Admin Portal</strong>. Work starts from the sidebar, not from dashboard widgets.</p></section>
+  </main>
+
+  <p class="footer">
+    Raisd · newer CMS walk 23 Oct 2026 · staging Admin · no student or staff records ·
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-newer-cms.md">source markdown</a>
+  </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+  <script src="../keychain-access.js" defer></script>
+</body>
+</html>

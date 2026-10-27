@@ -30,7 +30,7 @@ Limits remain **5 attachments**, **25 MiB per file**, **75 MiB total**. Safe pre
 
 `createCommunityChatStore` offers serialized memory transactions and Postgres transactions protected by one advisory lock. Additive `demo_community_chat` stores the shared conversation/message/read/idempotency document separately from `student_portal_state.chat_store`; `demo_community_chat_chunks` stores artifact bytes separately. This simple Demo store is not a Live messaging scale design. Memory lasts until API restart; Postgres retains shared history and bytes across fresh adapters/API processes.
 
-`migrations/demo-community-chat.sql` is explicit and idempotent. Enabling Postgres transport requires these tables; application startup never applies chat DDL. During development use only disposable localhost data. Do not run it against hosted databases without a separate instruction.
+`migrations/demo-community-chat.sql` is explicit and idempotent. `npm run db:migrate` applies the same statements with the rest of the Demo schema. Enabling Postgres transport requires these tables; application startup never applies chat DDL. During development use only disposable localhost data. Do not run it against hosted databases without a separate instruction.
 
 `migrateLegacyCommunityChat(records, store, studentIds)` is an explicit non-destructive import across owned enrolments. It copies programme/module/DM history, skips service chats, hashes exact legacy variants to deduplicate identical records, preserves differing bodies and retains original stores. Unrecoverable attachments have no resource and their old preview URL is removed. Run import before enabling shared writes: new imports reject an already active shared send history. Repeating a completed import adds zero records.
 

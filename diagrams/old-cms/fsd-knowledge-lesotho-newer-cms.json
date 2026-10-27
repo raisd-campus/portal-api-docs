@@ -1,0 +1,2257 @@
+{
+  "title": "Lesotho newer CMS \u2014 Admin Portal mind map",
+  "campus": "LSO-MAS",
+  "source": "docs/diagrams/old-cms-lesotho/newer-cms.html",
+  "root": "portal",
+  "groups": {
+    "root": {
+      "label": "Admin Portal",
+      "color": "#7aa2f7"
+    },
+    "signin": {
+      "label": "Sign in",
+      "color": "#c0caf5"
+    },
+    "registry": {
+      "label": "Registry",
+      "color": "#e0af68"
+    },
+    "discipline": {
+      "label": "Discipline",
+      "color": "#f7768e"
+    },
+    "admin": {
+      "label": "Admin",
+      "color": "#bb9af7"
+    },
+    "academic": {
+      "label": "Academic",
+      "color": "#ff9e64"
+    },
+    "fivedays": {
+      "label": "Five Days",
+      "color": "#9ece6a"
+    },
+    "finance": {
+      "label": "Finance",
+      "color": "#db4b4b"
+    },
+    "admissions": {
+      "label": "Admissions",
+      "color": "#2ac3de"
+    },
+    "hr": {
+      "label": "Human Resource",
+      "color": "#73daca"
+    },
+    "library": {
+      "label": "Library",
+      "color": "#7dcfff"
+    },
+    "website": {
+      "label": "Website",
+      "color": "#b4f9f8"
+    },
+    "analytics": {
+      "label": "Analytics",
+      "color": "#7aa2f7"
+    },
+    "mail": {
+      "label": "Mail",
+      "color": "#c0caf5"
+    }
+  },
+  "walkthrough": [
+    "portal",
+    "signin",
+    "grp-registry",
+    "reg-students",
+    "reg-registration",
+    "reg-graduations",
+    "reg-certs",
+    "grp-discipline",
+    "grp-admin",
+    "adm-positions",
+    "grp-academic",
+    "ac-timetable",
+    "grp-fivedays",
+    "grp-finance",
+    "fin-fees",
+    "grp-admissions",
+    "adm-review",
+    "adm-docrev",
+    "grp-hr",
+    "hr-appraisals",
+    "grp-library",
+    "grp-website",
+    "grp-analytics",
+    "an-enroll",
+    "grp-mail"
+  ],
+  "nodes": [
+    {
+      "id": "portal",
+      "label": "Admin Portal",
+      "group": "root",
+      "val": 28,
+      "summary": "Staging Admin shell after Google or Dev Login. Work starts from the sidebar. A menu item is shown only when the user has that item\u2019s resource + action (usually read).",
+      "menus": [
+        "Registry",
+        "Discipline",
+        "Admin",
+        "Academic",
+        "Five Days",
+        "Finance",
+        "Admissions",
+        "Human Resource",
+        "Library",
+        "Website",
+        "Analytics",
+        "Mail"
+      ],
+      "href": "../old-cms-lesotho/newer-cms.html",
+      "raisd": "Campus feature benchmark (ADR-1). Not the Raisd system of record.",
+      "tables": [
+        "luct.vercel.app",
+        "term 2026-07",
+        "DEBUG ribbon"
+      ]
+    },
+    {
+      "id": "signin",
+      "label": "Sign in with Google",
+      "group": "signin",
+      "val": 14,
+      "summary": "Only sign-in control on the Lesotho staging login page.",
+      "menus": [
+        "Sign in with Google"
+      ],
+      "href": "../old-cms-lesotho/newer-cms.html#1-sign-in"
+    },
+    {
+      "id": "link",
+      "label": "Link your account",
+      "group": "signin",
+      "val": 10,
+      "summary": "Shown when the Google email is not linked. Student, New Applicant, or Dev Login.",
+      "menus": [
+        "I am a Student",
+        "I am a New Applicant",
+        "Dev Login"
+      ]
+    },
+    {
+      "id": "dev",
+      "label": "Dev Login",
+      "group": "signin",
+      "val": 10,
+      "summary": "Orange control. Role \u2192 optional Position \u2192 User. Stays on the Admin shell after sign-in.",
+      "menus": [
+        "Role",
+        "Position",
+        "User"
+      ]
+    },
+    {
+      "id": "grp-registry",
+      "label": "Registry",
+      "group": "registry",
+      "val": 16,
+      "summary": "Student file, registration requests, graduations, certificates, status, remarks, referrals, notes, letters, blocked students, terms.",
+      "href": "../old-cms-lesotho/newer-cms-manual.html"
+    },
+    {
+      "id": "reg-students",
+      "label": "Students",
+      "group": "registry",
+      "val": 10,
+      "summary": "Student master. 21,527 records on the 23 Oct walk.",
+      "tables": [
+        "/registry/students"
+      ],
+      "menus": [
+        "Students"
+      ]
+    },
+    {
+      "id": "reg-documents",
+      "label": "Documents",
+      "group": "registry",
+      "val": 8,
+      "summary": "Scanned student papers.",
+      "tables": [
+        "/registry/documents"
+      ],
+      "menus": [
+        "Documents"
+      ]
+    },
+    {
+      "id": "reg-registration",
+      "label": "Registration",
+      "group": "registry",
+      "val": 10,
+      "summary": "Registration Requests queue.",
+      "tables": [
+        "/registry/registration/requests"
+      ],
+      "menus": [
+        "Registration"
+      ]
+    },
+    {
+      "id": "reg-graduations",
+      "label": "Graduations",
+      "group": "registry",
+      "val": 10,
+      "summary": "Ceremony dates, hoods, name tags."
+    },
+    {
+      "id": "reg-grad-dates",
+      "label": "Graduation Dates",
+      "group": "registry",
+      "val": 6,
+      "summary": "Ceremony dates.",
+      "tables": [
+        "/registry/graduations/dates"
+      ],
+      "menus": [
+        "Graduation Dates"
+      ]
+    },
+    {
+      "id": "reg-grad-hoods",
+      "label": "Hoods",
+      "group": "registry",
+      "val": 6,
+      "summary": "Hood catalogue.",
+      "tables": [
+        "/registry/graduations/hoods"
+      ],
+      "menus": [
+        "Hoods"
+      ]
+    },
+    {
+      "id": "reg-grad-tags",
+      "label": "Name tags",
+      "group": "registry",
+      "val": 6,
+      "summary": "Stage name tags.",
+      "tables": [
+        "/registry/graduations/tags"
+      ],
+      "menus": [
+        "Name tags"
+      ]
+    },
+    {
+      "id": "reg-certs",
+      "label": "Certificates",
+      "group": "registry",
+      "val": 10,
+      "summary": "Print batches, collections, stock."
+    },
+    {
+      "id": "reg-cert-jobs",
+      "label": "Print batches",
+      "group": "registry",
+      "val": 6,
+      "summary": "Certificate print jobs.",
+      "tables": [
+        "/registry/certificates/jobs"
+      ],
+      "menus": [
+        "Print batches"
+      ]
+    },
+    {
+      "id": "reg-cert-collections",
+      "label": "Collections",
+      "group": "registry",
+      "val": 6,
+      "summary": "Collection desk.",
+      "tables": [
+        "/registry/certificates/collections"
+      ],
+      "menus": [
+        "Collections"
+      ]
+    },
+    {
+      "id": "reg-cert-stock",
+      "label": "Stock",
+      "group": "registry",
+      "val": 6,
+      "summary": "Certificate stock.",
+      "tables": [
+        "/registry/certificates/stock"
+      ],
+      "menus": [
+        "Stock"
+      ]
+    },
+    {
+      "id": "reg-status",
+      "label": "Student Status",
+      "group": "registry",
+      "val": 8,
+      "summary": "Status workflow.",
+      "tables": [
+        "/registry/student-statuses"
+      ],
+      "menus": [
+        "Student Status"
+      ]
+    },
+    {
+      "id": "reg-remarks",
+      "label": "Remark Requests",
+      "group": "registry",
+      "val": 8,
+      "summary": "Re-assessment review.",
+      "tables": [
+        "/registry/remark-requests"
+      ],
+      "menus": [
+        "Remark Requests"
+      ]
+    },
+    {
+      "id": "reg-referrals",
+      "label": "Student Referrals",
+      "group": "registry",
+      "val": 8,
+      "summary": "Referrals, memos, notifications.",
+      "tables": [
+        "/registry/student-referrals"
+      ],
+      "menus": [
+        "Student Referrals"
+      ]
+    },
+    {
+      "id": "reg-notes",
+      "label": "Notes",
+      "group": "registry",
+      "val": 7,
+      "summary": "Cross-student notes desk.",
+      "tables": [
+        "/registry/student-notes"
+      ],
+      "menus": [
+        "Notes"
+      ]
+    },
+    {
+      "id": "reg-letters",
+      "label": "Letters",
+      "group": "registry",
+      "val": 8,
+      "summary": "Generate letters and templates."
+    },
+    {
+      "id": "reg-letters-gen",
+      "label": "Generate",
+      "group": "registry",
+      "val": 5,
+      "summary": "Generate a letter.",
+      "tables": [
+        "/registry/letters/generate"
+      ],
+      "menus": [
+        "Generate"
+      ]
+    },
+    {
+      "id": "reg-letters-tpl",
+      "label": "Templates",
+      "group": "registry",
+      "val": 5,
+      "summary": "Letter templates.",
+      "tables": [
+        "/registry/letters/templates"
+      ],
+      "menus": [
+        "Templates"
+      ]
+    },
+    {
+      "id": "reg-blocked",
+      "label": "Blocked Students",
+      "group": "registry",
+      "val": 7,
+      "summary": "Hold list.",
+      "tables": [
+        "/registry/blocked-students"
+      ],
+      "menus": [
+        "Blocked Students"
+      ]
+    },
+    {
+      "id": "reg-terms",
+      "label": "Terms",
+      "group": "registry",
+      "val": 7,
+      "summary": "Term configuration. Dashboard chip 2026-07.",
+      "tables": [
+        "/registry/terms"
+      ],
+      "menus": [
+        "Terms"
+      ]
+    },
+    {
+      "id": "grp-discipline",
+      "label": "Discipline",
+      "group": "discipline",
+      "val": 12,
+      "summary": "Academic dishonesty and suspensions."
+    },
+    {
+      "id": "dis-dishonesty",
+      "label": "Academic Dishonesty",
+      "group": "discipline",
+      "val": 7,
+      "summary": "Dishonesty cases.",
+      "tables": [
+        "/registry/academic-dishonesty"
+      ],
+      "menus": [
+        "Academic Dishonesty"
+      ]
+    },
+    {
+      "id": "dis-suspensions",
+      "label": "Suspensions",
+      "group": "discipline",
+      "val": 7,
+      "summary": "Suspensions.",
+      "tables": [
+        "/registry/suspensions"
+      ],
+      "menus": [
+        "Suspensions"
+      ]
+    },
+    {
+      "id": "grp-admin",
+      "label": "Admin",
+      "group": "admin",
+      "val": 16,
+      "summary": "Calendar, users, positions, notifications, activity, settings, tools, bulk."
+    },
+    {
+      "id": "adm-calendar",
+      "label": "Calendar",
+      "group": "admin",
+      "val": 7,
+      "summary": "Manage tasks.",
+      "tables": [
+        "/admin/tasks"
+      ],
+      "menus": [
+        "Calendar"
+      ]
+    },
+    {
+      "id": "adm-acad-cal",
+      "label": "Academic Calendar",
+      "group": "admin",
+      "val": 7,
+      "summary": "Academic calendar.",
+      "tables": [
+        "/admin/academic-calendar"
+      ],
+      "menus": [
+        "Academic Calendar"
+      ]
+    },
+    {
+      "id": "adm-users",
+      "label": "Users",
+      "group": "admin",
+      "val": 8,
+      "summary": "Portal users.",
+      "tables": [
+        "/admin/users"
+      ],
+      "menus": [
+        "Users"
+      ]
+    },
+    {
+      "id": "adm-positions",
+      "label": "Positions",
+      "group": "admin",
+      "val": 9,
+      "summary": "28 positions and permissions.",
+      "tables": [
+        "/admin/user-positions"
+      ],
+      "menus": [
+        "Positions"
+      ]
+    },
+    {
+      "id": "adm-notifications",
+      "label": "Notifications",
+      "group": "admin",
+      "val": 8,
+      "summary": "Templates and broadcast."
+    },
+    {
+      "id": "adm-notif-tpl",
+      "label": "Templates",
+      "group": "admin",
+      "val": 5,
+      "summary": "Notification templates.",
+      "tables": [
+        "/admin/notifications/templates"
+      ],
+      "menus": [
+        "Templates"
+      ]
+    },
+    {
+      "id": "adm-notif-bc",
+      "label": "Broadcast",
+      "group": "admin",
+      "val": 5,
+      "summary": "Broadcast a notification.",
+      "tables": [
+        "/admin/notifications/broadcast"
+      ],
+      "menus": [
+        "Broadcast"
+      ]
+    },
+    {
+      "id": "adm-activity",
+      "label": "Activity Tracker",
+      "group": "admin",
+      "val": 7,
+      "summary": "Activity log.",
+      "tables": [
+        "/admin/activity-tracker"
+      ],
+      "menus": [
+        "Activity Tracker"
+      ]
+    },
+    {
+      "id": "adm-settings",
+      "label": "Settings",
+      "group": "admin",
+      "val": 7,
+      "summary": "Portal settings.",
+      "tables": [
+        "/admin/settings"
+      ],
+      "menus": [
+        "Settings"
+      ]
+    },
+    {
+      "id": "adm-tools",
+      "label": "Tools",
+      "group": "admin",
+      "val": 8,
+      "summary": "Simulator, Grade Finder, AI Query."
+    },
+    {
+      "id": "adm-sim",
+      "label": "Simulator",
+      "group": "admin",
+      "val": 5,
+      "summary": "Simulation tool.",
+      "tables": [
+        "/admin/tools/simulate"
+      ],
+      "menus": [
+        "Simulator"
+      ]
+    },
+    {
+      "id": "adm-grade",
+      "label": "Grade Finder",
+      "group": "admin",
+      "val": 5,
+      "summary": "Grade lookup.",
+      "tables": [
+        "/admin/tools/grade-finder"
+      ],
+      "menus": [
+        "Grade Finder"
+      ]
+    },
+    {
+      "id": "adm-ai",
+      "label": "AI Query",
+      "group": "admin",
+      "val": 5,
+      "summary": "Query assistant.",
+      "tables": [
+        "/admin/tools/query"
+      ],
+      "menus": [
+        "AI Query"
+      ]
+    },
+    {
+      "id": "adm-bulk",
+      "label": "Bulk",
+      "group": "admin",
+      "val": 8,
+      "summary": "Bulk transcript, cards, photos."
+    },
+    {
+      "id": "adm-bulk-tr",
+      "label": "Export Transcript",
+      "group": "admin",
+      "val": 5,
+      "summary": "Bulk transcript export.",
+      "tables": [
+        "/admin/bulk/transcripts"
+      ],
+      "menus": [
+        "Export Transcript"
+      ]
+    },
+    {
+      "id": "adm-bulk-cards",
+      "label": "Student Cards",
+      "group": "admin",
+      "val": 5,
+      "summary": "Bulk card production.",
+      "tables": [
+        "/admin/bulk/student-cards"
+      ],
+      "menus": [
+        "Student Cards"
+      ]
+    },
+    {
+      "id": "adm-bulk-photos",
+      "label": "Student Photos",
+      "group": "admin",
+      "val": 5,
+      "summary": "Bulk photo handling.",
+      "tables": [
+        "/admin/bulk/student-photos"
+      ],
+      "menus": [
+        "Student Photos"
+      ]
+    },
+    {
+      "id": "grp-academic",
+      "label": "Academic",
+      "group": "academic",
+      "val": 16,
+      "summary": "Lecturers, assessments, attendance, gradebook, modules, schools, curriculum, Fortinet, timetable."
+    },
+    {
+      "id": "ac-lecturers",
+      "label": "Lecturers",
+      "group": "academic",
+      "val": 8,
+      "summary": "Modules assigned to lecturers.",
+      "tables": [
+        "/academic/assigned-modules"
+      ],
+      "menus": [
+        "Lecturers"
+      ]
+    },
+    {
+      "id": "ac-assessments",
+      "label": "Assessments",
+      "group": "academic",
+      "val": 7,
+      "summary": "Assessment records.",
+      "tables": [
+        "/academic/assessments"
+      ],
+      "menus": [
+        "Assessments"
+      ]
+    },
+    {
+      "id": "ac-atypes",
+      "label": "Assessment Types",
+      "group": "academic",
+      "val": 7,
+      "summary": "Assessment type catalogue.",
+      "tables": [
+        "/academic/assessment-types"
+      ],
+      "menus": [
+        "Assessment Types"
+      ]
+    },
+    {
+      "id": "ac-attendance",
+      "label": "Attendance",
+      "group": "academic",
+      "val": 7,
+      "summary": "Class attendance desk.",
+      "tables": [
+        "/academic/attendance"
+      ],
+      "menus": [
+        "Attendance"
+      ]
+    },
+    {
+      "id": "ac-gradebook",
+      "label": "Gradebook",
+      "group": "academic",
+      "val": 7,
+      "summary": "Gradebook."
+    },
+    {
+      "id": "ac-modules",
+      "label": "Modules",
+      "group": "academic",
+      "val": 7,
+      "summary": "Module catalogue.",
+      "tables": [
+        "/academic/modules"
+      ],
+      "menus": [
+        "Modules"
+      ]
+    },
+    {
+      "id": "ac-schools",
+      "label": "Schools",
+      "group": "academic",
+      "val": 7,
+      "summary": "Schools (FICT and others).",
+      "tables": [
+        "/registry/schools"
+      ],
+      "menus": [
+        "Schools"
+      ]
+    },
+    {
+      "id": "ac-curriculum",
+      "label": "Curriculum",
+      "group": "academic",
+      "val": 7,
+      "summary": "Programmes and curriculum.",
+      "tables": [
+        "/registry/curriculum"
+      ],
+      "menus": [
+        "Curriculum"
+      ]
+    },
+    {
+      "id": "ac-fortinet",
+      "label": "Fortinet",
+      "group": "academic",
+      "val": 6,
+      "summary": "Fortinet plugin.",
+      "tables": [
+        "/plugins/fortinet"
+      ],
+      "menus": [
+        "Fortinet"
+      ]
+    },
+    {
+      "id": "ac-timetable",
+      "label": "Timetable",
+      "group": "academic",
+      "val": 9,
+      "summary": "Generator, allocations, venues."
+    },
+    {
+      "id": "ac-tt-gen",
+      "label": "Generator",
+      "group": "academic",
+      "val": 5,
+      "summary": "Timetable generator.",
+      "tables": [
+        "/timetable/generator"
+      ],
+      "menus": [
+        "Generator"
+      ]
+    },
+    {
+      "id": "ac-tt-alloc",
+      "label": "Allocations",
+      "group": "academic",
+      "val": 5,
+      "summary": "Timetable allocations.",
+      "tables": [
+        "/timetable/timetable-allocations"
+      ],
+      "menus": [
+        "Allocations"
+      ]
+    },
+    {
+      "id": "ac-tt-venues",
+      "label": "Venues",
+      "group": "academic",
+      "val": 5,
+      "summary": "Venues.",
+      "tables": [
+        "/timetable/venues"
+      ],
+      "menus": [
+        "Venues"
+      ]
+    },
+    {
+      "id": "ac-tt-vtypes",
+      "label": "Venue Types",
+      "group": "academic",
+      "val": 5,
+      "summary": "Venue types.",
+      "tables": [
+        "/timetable/venue-types"
+      ],
+      "menus": [
+        "Venue Types"
+      ]
+    },
+    {
+      "id": "grp-fivedays",
+      "label": "Five Days",
+      "group": "fivedays",
+      "val": 12,
+      "summary": "In-portal LMS."
+    },
+    {
+      "id": "fd-courses",
+      "label": "LMS courses",
+      "group": "fivedays",
+      "val": 8,
+      "summary": "FiveDays courses.",
+      "tables": [
+        "/lms/courses"
+      ],
+      "menus": [
+        "LMS courses"
+      ]
+    },
+    {
+      "id": "grp-finance",
+      "label": "Finance",
+      "group": "finance",
+      "val": 14,
+      "summary": "Sponsors, banks, debtors, pricing.",
+      "href": "../old-cms-lesotho/newer-cms-manual.html"
+    },
+    {
+      "id": "fin-sponsors",
+      "label": "Sponsors",
+      "group": "finance",
+      "val": 8,
+      "summary": "Sponsor master (NMDS and others).",
+      "tables": [
+        "/finance/sponsors"
+      ],
+      "menus": [
+        "Sponsors"
+      ]
+    },
+    {
+      "id": "fin-banks",
+      "label": "Banks",
+      "group": "finance",
+      "val": 7,
+      "summary": "Bank list.",
+      "tables": [
+        "/finance/banks"
+      ],
+      "menus": [
+        "Banks"
+      ]
+    },
+    {
+      "id": "fin-debtors",
+      "label": "Debtors",
+      "group": "finance",
+      "val": 7,
+      "summary": "Debtor accounts.",
+      "tables": [
+        "/finance/debtors"
+      ],
+      "menus": [
+        "Debtors"
+      ]
+    },
+    {
+      "id": "fin-pricing",
+      "label": "Pricing",
+      "group": "finance",
+      "val": 9,
+      "summary": "Repeat modules, fees and fines, payment plans."
+    },
+    {
+      "id": "fin-repeat",
+      "label": "Repeat Modules",
+      "group": "finance",
+      "val": 5,
+      "summary": "Repeat-module pricing.",
+      "tables": [
+        "/finance/pricing/repeat-modules"
+      ],
+      "menus": [
+        "Repeat Modules"
+      ]
+    },
+    {
+      "id": "fin-fees",
+      "label": "Fees and Fines",
+      "group": "finance",
+      "val": 7,
+      "summary": "LSL fee and fine catalogue.",
+      "tables": [
+        "/finance/pricing/fees-and-fines"
+      ],
+      "menus": [
+        "Fees and Fines"
+      ]
+    },
+    {
+      "id": "fin-plans",
+      "label": "Payment Plans",
+      "group": "finance",
+      "val": 5,
+      "summary": "Instalment plans.",
+      "tables": [
+        "/finance/pricing/payment-plans"
+      ],
+      "menus": [
+        "Payment Plans"
+      ]
+    },
+    {
+      "id": "grp-admissions",
+      "label": "Admissions",
+      "group": "admissions",
+      "val": 16,
+      "summary": "Review, applicants, payments, document review, settings.",
+      "href": "../old-cms-lesotho/newer-cms-manual.html"
+    },
+    {
+      "id": "adm-review",
+      "label": "Review",
+      "group": "admissions",
+      "val": 9,
+      "summary": "Recommendation queue. Progress n/3.",
+      "tables": [
+        "/admissions/admissions-review"
+      ],
+      "menus": [
+        "Review"
+      ]
+    },
+    {
+      "id": "adm-applicants",
+      "label": "Applicants",
+      "group": "admissions",
+      "val": 8,
+      "summary": "Applicant master.",
+      "tables": [
+        "/admissions/applicants"
+      ],
+      "menus": [
+        "Applicants"
+      ]
+    },
+    {
+      "id": "adm-pay",
+      "label": "Admissions Payments",
+      "group": "admissions",
+      "val": 7,
+      "summary": "Application payment verification.",
+      "tables": [
+        "/admissions/payments"
+      ],
+      "menus": [
+        "Admissions Payments"
+      ]
+    },
+    {
+      "id": "adm-docrev",
+      "label": "Document Review",
+      "group": "admissions",
+      "val": 8,
+      "summary": "Submitted document queue.",
+      "tables": [
+        "/admissions/documents"
+      ],
+      "menus": [
+        "Document Review"
+      ]
+    },
+    {
+      "id": "adm-settings",
+      "label": "Settings",
+      "group": "admissions",
+      "val": 9,
+      "summary": "Intake and entry catalogues."
+    },
+    {
+      "id": "adm-intake",
+      "label": "Intake Periods",
+      "group": "admissions",
+      "val": 5,
+      "summary": "Intakes.",
+      "tables": [
+        "/admissions/intake-periods"
+      ],
+      "menus": [
+        "Intake Periods"
+      ]
+    },
+    {
+      "id": "adm-ctypes",
+      "label": "Certificate Types",
+      "group": "admissions",
+      "val": 5,
+      "summary": "School-certificate types.",
+      "tables": [
+        "/admissions/certificate-types"
+      ],
+      "menus": [
+        "Certificate Types"
+      ]
+    },
+    {
+      "id": "adm-subjects",
+      "label": "Subjects",
+      "group": "admissions",
+      "val": 5,
+      "summary": "School subjects used in extracts.",
+      "tables": [
+        "/admissions/subjects"
+      ],
+      "menus": [
+        "Subjects"
+      ]
+    },
+    {
+      "id": "adm-schools",
+      "label": "Recognized Schools",
+      "group": "admissions",
+      "val": 5,
+      "summary": "Schools the campus accepts.",
+      "tables": [
+        "/admissions/recognized-schools"
+      ],
+      "menus": [
+        "Recognized Schools"
+      ]
+    },
+    {
+      "id": "adm-entry",
+      "label": "Entry Requirements",
+      "group": "admissions",
+      "val": 5,
+      "summary": "Entry rules.",
+      "tables": [
+        "/admissions/entry-requirements"
+      ],
+      "menus": [
+        "Entry Requirements"
+      ]
+    },
+    {
+      "id": "grp-hr",
+      "label": "Human Resource",
+      "group": "hr",
+      "val": 14,
+      "summary": "Employees, contracts, positions, unit heads, vacancies, appraisals."
+    },
+    {
+      "id": "hr-employees",
+      "label": "Employees",
+      "group": "hr",
+      "val": 7,
+      "summary": "Employee master.",
+      "tables": [
+        "/human-resource/employees"
+      ],
+      "menus": [
+        "Employees"
+      ]
+    },
+    {
+      "id": "hr-contracts",
+      "label": "Contracts",
+      "group": "hr",
+      "val": 6,
+      "summary": "Contracts.",
+      "tables": [
+        "/human-resource/contracts"
+      ],
+      "menus": [
+        "Contracts"
+      ]
+    },
+    {
+      "id": "hr-positions",
+      "label": "Positions",
+      "group": "hr",
+      "val": 6,
+      "summary": "HR positions.",
+      "tables": [
+        "/human-resource/positions"
+      ],
+      "menus": [
+        "Positions"
+      ]
+    },
+    {
+      "id": "hr-units",
+      "label": "Unit Heads",
+      "group": "hr",
+      "val": 6,
+      "summary": "Unit heads.",
+      "tables": [
+        "/human-resource/unit-heads"
+      ],
+      "menus": [
+        "Unit Heads"
+      ]
+    },
+    {
+      "id": "hr-vacancies",
+      "label": "Vacancies",
+      "group": "hr",
+      "val": 6,
+      "summary": "Vacancies.",
+      "tables": [
+        "/human-resource/vacancies"
+      ],
+      "menus": [
+        "Vacancies"
+      ]
+    },
+    {
+      "id": "hr-appraisals",
+      "label": "Appraisals",
+      "group": "hr",
+      "val": 9,
+      "summary": "Academic, support, observations, feedback, settings."
+    },
+    {
+      "id": "hr-app-acad",
+      "label": "Academic",
+      "group": "hr",
+      "val": 5,
+      "summary": "Academic appraisals.",
+      "tables": [
+        "/appraisals/staff-appraisals/academic"
+      ],
+      "menus": [
+        "Academic"
+      ]
+    },
+    {
+      "id": "hr-app-sup",
+      "label": "Support",
+      "group": "hr",
+      "val": 5,
+      "summary": "Support appraisals.",
+      "tables": [
+        "/appraisals/staff-appraisals/support"
+      ],
+      "menus": [
+        "Support"
+      ]
+    },
+    {
+      "id": "hr-app-obs",
+      "label": "Teaching Observations",
+      "group": "hr",
+      "val": 5,
+      "summary": "Teaching observations.",
+      "tables": [
+        "/appraisals/teaching-observations"
+      ],
+      "menus": [
+        "Teaching Observations"
+      ]
+    },
+    {
+      "id": "hr-app-fb",
+      "label": "Student Feedback",
+      "group": "hr",
+      "val": 5,
+      "summary": "Student feedback.",
+      "tables": [
+        "/appraisals/student-feedback"
+      ],
+      "menus": [
+        "Student Feedback"
+      ]
+    },
+    {
+      "id": "hr-app-set",
+      "label": "Settings",
+      "group": "hr",
+      "val": 5,
+      "summary": "Periods, questions, review chains.",
+      "tables": [
+        "/appraisals/settings/periods"
+      ],
+      "menus": [
+        "Settings"
+      ]
+    },
+    {
+      "id": "grp-library",
+      "label": "Library",
+      "group": "library",
+      "val": 14,
+      "summary": "Catalog, loans, books, fines, e-library, publications, papers, authorities."
+    },
+    {
+      "id": "lib-catalog",
+      "label": "Catalog",
+      "group": "library",
+      "val": 6,
+      "summary": "Library catalog.",
+      "tables": [
+        "/library/catalog"
+      ],
+      "menus": [
+        "Catalog"
+      ]
+    },
+    {
+      "id": "lib-loans",
+      "label": "Loans",
+      "group": "library",
+      "val": 6,
+      "summary": "Loans.",
+      "tables": [
+        "/library/loans"
+      ],
+      "menus": [
+        "Loans"
+      ]
+    },
+    {
+      "id": "lib-books",
+      "label": "Books",
+      "group": "library",
+      "val": 6,
+      "summary": "Books.",
+      "tables": [
+        "/library/books"
+      ],
+      "menus": [
+        "Books"
+      ]
+    },
+    {
+      "id": "lib-fines",
+      "label": "Fines",
+      "group": "library",
+      "val": 6,
+      "summary": "Overdue charges.",
+      "tables": [
+        "/library/fines"
+      ],
+      "menus": [
+        "Fines"
+      ]
+    },
+    {
+      "id": "lib-elib",
+      "label": "E-Library",
+      "group": "library",
+      "val": 6,
+      "summary": "E-Library links.",
+      "tables": [
+        "/library/e-library"
+      ],
+      "menus": [
+        "E-Library"
+      ]
+    },
+    {
+      "id": "lib-pubs",
+      "label": "Publications",
+      "group": "library",
+      "val": 6,
+      "summary": "Research and journals.",
+      "tables": [
+        "/library/publications"
+      ],
+      "menus": [
+        "Publications"
+      ]
+    },
+    {
+      "id": "lib-papers",
+      "label": "Question Papers",
+      "group": "library",
+      "val": 6,
+      "summary": "Past exam papers.",
+      "tables": [
+        "/library/resources/question-papers"
+      ],
+      "menus": [
+        "Question Papers"
+      ]
+    },
+    {
+      "id": "lib-auth",
+      "label": "Authorities",
+      "group": "library",
+      "val": 7,
+      "summary": "Authors and subjects."
+    },
+    {
+      "id": "lib-authors",
+      "label": "Authors",
+      "group": "library",
+      "val": 5,
+      "summary": "Authors.",
+      "tables": [
+        "/library/authors"
+      ],
+      "menus": [
+        "Authors"
+      ]
+    },
+    {
+      "id": "lib-subjects",
+      "label": "Subjects",
+      "group": "library",
+      "val": 5,
+      "summary": "Subjects.",
+      "tables": [
+        "/library/subjects"
+      ],
+      "menus": [
+        "Subjects"
+      ]
+    },
+    {
+      "id": "grp-website",
+      "label": "Website",
+      "group": "website",
+      "val": 14,
+      "summary": "Public-site content edited in Admin."
+    },
+    {
+      "id": "web-pages",
+      "label": "Pages",
+      "group": "website",
+      "val": 5,
+      "summary": "Pages.",
+      "tables": [
+        "/website/pages"
+      ],
+      "menus": [
+        "Pages"
+      ]
+    },
+    {
+      "id": "web-articles",
+      "label": "Articles",
+      "group": "website",
+      "val": 5,
+      "summary": "Articles.",
+      "tables": [
+        "/website/articles"
+      ],
+      "menus": [
+        "Articles"
+      ]
+    },
+    {
+      "id": "web-cats",
+      "label": "Categories",
+      "group": "website",
+      "val": 5,
+      "summary": "Categories.",
+      "tables": [
+        "/website/categories"
+      ],
+      "menus": [
+        "Categories"
+      ]
+    },
+    {
+      "id": "web-feat",
+      "label": "Featured Programs",
+      "group": "website",
+      "val": 5,
+      "summary": "Featured programs.",
+      "tables": [
+        "/website/featured-programs"
+      ],
+      "menus": [
+        "Featured Programs"
+      ]
+    },
+    {
+      "id": "web-enq",
+      "label": "Enquiries",
+      "group": "website",
+      "val": 5,
+      "summary": "Enquiries.",
+      "tables": [
+        "/website/enquiries"
+      ],
+      "menus": [
+        "Enquiries"
+      ]
+    },
+    {
+      "id": "web-campuses",
+      "label": "Campus Sites",
+      "group": "website",
+      "val": 5,
+      "summary": "Campus sites.",
+      "tables": [
+        "/website/campuses"
+      ],
+      "menus": [
+        "Campus Sites"
+      ]
+    },
+    {
+      "id": "web-alumni",
+      "label": "Alumni",
+      "group": "website",
+      "val": 5,
+      "summary": "Alumni.",
+      "tables": [
+        "/website/alumni"
+      ],
+      "menus": [
+        "Alumni"
+      ]
+    },
+    {
+      "id": "web-media",
+      "label": "Media",
+      "group": "website",
+      "val": 5,
+      "summary": "Media.",
+      "tables": [
+        "/website/media"
+      ],
+      "menus": [
+        "Media"
+      ]
+    },
+    {
+      "id": "web-events",
+      "label": "Events",
+      "group": "website",
+      "val": 5,
+      "summary": "Events.",
+      "tables": [
+        "/website/events"
+      ],
+      "menus": [
+        "Events"
+      ]
+    },
+    {
+      "id": "grp-analytics",
+      "label": "Analytics",
+      "group": "analytics",
+      "val": 14,
+      "summary": "Registry, academic, finance, and library reports.",
+      "href": "../old-cms-lesotho/newer-cms-exports.html"
+    },
+    {
+      "id": "an-course",
+      "label": "Course Summary",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Course summary.",
+      "tables": [
+        "/reports/academic/course-summary"
+      ],
+      "menus": [
+        "Course Summary"
+      ]
+    },
+    {
+      "id": "an-att",
+      "label": "Attendance",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Attendance report.",
+      "tables": [
+        "/reports/academic/attendance"
+      ],
+      "menus": [
+        "Attendance"
+      ]
+    },
+    {
+      "id": "an-app",
+      "label": "Appraisals",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Appraisal reports.",
+      "tables": [
+        "/reports/human-resource/appraisals"
+      ],
+      "menus": [
+        "Appraisals"
+      ]
+    },
+    {
+      "id": "an-boe",
+      "label": "Board of Examination",
+      "group": "analytics",
+      "val": 5,
+      "summary": "BOE.",
+      "tables": [
+        "/reports/academic/boe"
+      ],
+      "menus": [
+        "Board of Examination"
+      ]
+    },
+    {
+      "id": "an-senate",
+      "label": "Senate Report",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Senate report.",
+      "tables": [
+        "/reports/academic/senate-report"
+      ],
+      "menus": [
+        "Senate Report"
+      ]
+    },
+    {
+      "id": "an-enroll",
+      "label": "Student Enrollments",
+      "group": "analytics",
+      "val": 6,
+      "summary": "Registration reports.",
+      "tables": [
+        "/reports/registry/student-enrollments"
+      ],
+      "menus": [
+        "Student Enrollments"
+      ]
+    },
+    {
+      "id": "an-grad",
+      "label": "Graduations",
+      "group": "analytics",
+      "val": 6,
+      "summary": "Graduation reports.",
+      "tables": [
+        "/reports/registry/graduations"
+      ],
+      "menus": [
+        "Graduations"
+      ]
+    },
+    {
+      "id": "an-adm",
+      "label": "Admissions",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Admissions reports.",
+      "tables": [
+        "/reports/admissions"
+      ],
+      "menus": [
+        "Admissions"
+      ]
+    },
+    {
+      "id": "an-sponsor",
+      "label": "Sponsor Reports",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Sponsor reports.",
+      "tables": [
+        "/reports/finance/sponsors"
+      ],
+      "menus": [
+        "Sponsor Reports"
+      ]
+    },
+    {
+      "id": "an-portal",
+      "label": "Portal Usage",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Portal usage.",
+      "tables": [
+        "/reports/registry/portal-usage"
+      ],
+      "menus": [
+        "Portal Usage"
+      ]
+    },
+    {
+      "id": "an-lib",
+      "label": "Library",
+      "group": "analytics",
+      "val": 5,
+      "summary": "Library reports.",
+      "tables": [
+        "/reports/library"
+      ],
+      "menus": [
+        "Library"
+      ]
+    },
+    {
+      "id": "grp-mail",
+      "label": "Mail",
+      "group": "mail",
+      "val": 12,
+      "summary": "Compose, inbox, accounts, templates, drafts, sent, queue."
+    },
+    {
+      "id": "mail-compose",
+      "label": "Compose",
+      "group": "mail",
+      "val": 5,
+      "summary": "Compose.",
+      "tables": [
+        "/mail/compose"
+      ],
+      "menus": [
+        "Compose"
+      ]
+    },
+    {
+      "id": "mail-inbox",
+      "label": "Inbox",
+      "group": "mail",
+      "val": 5,
+      "summary": "Inbox.",
+      "tables": [
+        "/mail/inbox"
+      ],
+      "menus": [
+        "Inbox"
+      ]
+    },
+    {
+      "id": "mail-accounts",
+      "label": "Accounts",
+      "group": "mail",
+      "val": 5,
+      "summary": "Accounts.",
+      "tables": [
+        "/mail/accounts"
+      ],
+      "menus": [
+        "Accounts"
+      ]
+    },
+    {
+      "id": "mail-tpl",
+      "label": "Templates",
+      "group": "mail",
+      "val": 5,
+      "summary": "Templates.",
+      "tables": [
+        "/mail/templates"
+      ],
+      "menus": [
+        "Templates"
+      ]
+    },
+    {
+      "id": "mail-drafts",
+      "label": "Drafts",
+      "group": "mail",
+      "val": 5,
+      "summary": "Drafts.",
+      "tables": [
+        "/mail/send"
+      ],
+      "menus": [
+        "Drafts"
+      ]
+    },
+    {
+      "id": "mail-sent",
+      "label": "Sent",
+      "group": "mail",
+      "val": 5,
+      "summary": "Sent.",
+      "tables": [
+        "/mail/sent"
+      ],
+      "menus": [
+        "Sent"
+      ]
+    },
+    {
+      "id": "mail-queue",
+      "label": "Queue",
+      "group": "mail",
+      "val": 5,
+      "summary": "Queue.",
+      "tables": [
+        "/mail/queue"
+      ],
+      "menus": [
+        "Queue"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "portal",
+      "target": "signin"
+    },
+    {
+      "source": "signin",
+      "target": "link"
+    },
+    {
+      "source": "link",
+      "target": "dev"
+    },
+    {
+      "source": "portal",
+      "target": "grp-registry"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-students"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-documents"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-registration"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-graduations"
+    },
+    {
+      "source": "reg-graduations",
+      "target": "reg-grad-dates"
+    },
+    {
+      "source": "reg-graduations",
+      "target": "reg-grad-hoods"
+    },
+    {
+      "source": "reg-graduations",
+      "target": "reg-grad-tags"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-certs"
+    },
+    {
+      "source": "reg-certs",
+      "target": "reg-cert-jobs"
+    },
+    {
+      "source": "reg-certs",
+      "target": "reg-cert-collections"
+    },
+    {
+      "source": "reg-certs",
+      "target": "reg-cert-stock"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-status"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-remarks"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-referrals"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-notes"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-letters"
+    },
+    {
+      "source": "reg-letters",
+      "target": "reg-letters-gen"
+    },
+    {
+      "source": "reg-letters",
+      "target": "reg-letters-tpl"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-blocked"
+    },
+    {
+      "source": "grp-registry",
+      "target": "reg-terms"
+    },
+    {
+      "source": "portal",
+      "target": "grp-discipline"
+    },
+    {
+      "source": "grp-discipline",
+      "target": "dis-dishonesty"
+    },
+    {
+      "source": "grp-discipline",
+      "target": "dis-suspensions"
+    },
+    {
+      "source": "portal",
+      "target": "grp-admin"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-calendar"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-acad-cal"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-users"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-positions"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-notifications"
+    },
+    {
+      "source": "adm-notifications",
+      "target": "adm-notif-tpl"
+    },
+    {
+      "source": "adm-notifications",
+      "target": "adm-notif-bc"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-activity"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-settings"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-tools"
+    },
+    {
+      "source": "adm-tools",
+      "target": "adm-sim"
+    },
+    {
+      "source": "adm-tools",
+      "target": "adm-grade"
+    },
+    {
+      "source": "adm-tools",
+      "target": "adm-ai"
+    },
+    {
+      "source": "grp-admin",
+      "target": "adm-bulk"
+    },
+    {
+      "source": "adm-bulk",
+      "target": "adm-bulk-tr"
+    },
+    {
+      "source": "adm-bulk",
+      "target": "adm-bulk-cards"
+    },
+    {
+      "source": "adm-bulk",
+      "target": "adm-bulk-photos"
+    },
+    {
+      "source": "portal",
+      "target": "grp-academic"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-lecturers"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-assessments"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-atypes"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-attendance"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-gradebook"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-modules"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-schools"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-curriculum"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-fortinet"
+    },
+    {
+      "source": "grp-academic",
+      "target": "ac-timetable"
+    },
+    {
+      "source": "ac-timetable",
+      "target": "ac-tt-gen"
+    },
+    {
+      "source": "ac-timetable",
+      "target": "ac-tt-alloc"
+    },
+    {
+      "source": "ac-timetable",
+      "target": "ac-tt-venues"
+    },
+    {
+      "source": "ac-timetable",
+      "target": "ac-tt-vtypes"
+    },
+    {
+      "source": "portal",
+      "target": "grp-fivedays"
+    },
+    {
+      "source": "grp-fivedays",
+      "target": "fd-courses"
+    },
+    {
+      "source": "portal",
+      "target": "grp-finance"
+    },
+    {
+      "source": "grp-finance",
+      "target": "fin-sponsors"
+    },
+    {
+      "source": "grp-finance",
+      "target": "fin-banks"
+    },
+    {
+      "source": "grp-finance",
+      "target": "fin-debtors"
+    },
+    {
+      "source": "grp-finance",
+      "target": "fin-pricing"
+    },
+    {
+      "source": "fin-pricing",
+      "target": "fin-repeat"
+    },
+    {
+      "source": "fin-pricing",
+      "target": "fin-fees"
+    },
+    {
+      "source": "fin-pricing",
+      "target": "fin-plans"
+    },
+    {
+      "source": "portal",
+      "target": "grp-admissions"
+    },
+    {
+      "source": "grp-admissions",
+      "target": "adm-review"
+    },
+    {
+      "source": "grp-admissions",
+      "target": "adm-applicants"
+    },
+    {
+      "source": "grp-admissions",
+      "target": "adm-pay"
+    },
+    {
+      "source": "grp-admissions",
+      "target": "adm-docrev"
+    },
+    {
+      "source": "grp-admissions",
+      "target": "adm-settings"
+    },
+    {
+      "source": "adm-settings",
+      "target": "adm-intake"
+    },
+    {
+      "source": "adm-settings",
+      "target": "adm-ctypes"
+    },
+    {
+      "source": "adm-settings",
+      "target": "adm-subjects"
+    },
+    {
+      "source": "adm-settings",
+      "target": "adm-schools"
+    },
+    {
+      "source": "adm-settings",
+      "target": "adm-entry"
+    },
+    {
+      "source": "portal",
+      "target": "grp-hr"
+    },
+    {
+      "source": "grp-hr",
+      "target": "hr-employees"
+    },
+    {
+      "source": "grp-hr",
+      "target": "hr-contracts"
+    },
+    {
+      "source": "grp-hr",
+      "target": "hr-positions"
+    },
+    {
+      "source": "grp-hr",
+      "target": "hr-units"
+    },
+    {
+      "source": "grp-hr",
+      "target": "hr-vacancies"
+    },
+    {
+      "source": "grp-hr",
+      "target": "hr-appraisals"
+    },
+    {
+      "source": "hr-appraisals",
+      "target": "hr-app-acad"
+    },
+    {
+      "source": "hr-appraisals",
+      "target": "hr-app-sup"
+    },
+    {
+      "source": "hr-appraisals",
+      "target": "hr-app-obs"
+    },
+    {
+      "source": "hr-appraisals",
+      "target": "hr-app-fb"
+    },
+    {
+      "source": "hr-appraisals",
+      "target": "hr-app-set"
+    },
+    {
+      "source": "portal",
+      "target": "grp-library"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-catalog"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-loans"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-books"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-fines"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-elib"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-pubs"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-papers"
+    },
+    {
+      "source": "grp-library",
+      "target": "lib-auth"
+    },
+    {
+      "source": "lib-auth",
+      "target": "lib-authors"
+    },
+    {
+      "source": "lib-auth",
+      "target": "lib-subjects"
+    },
+    {
+      "source": "portal",
+      "target": "grp-website"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-pages"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-articles"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-cats"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-feat"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-enq"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-campuses"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-alumni"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-media"
+    },
+    {
+      "source": "grp-website",
+      "target": "web-events"
+    },
+    {
+      "source": "portal",
+      "target": "grp-analytics"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-course"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-att"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-app"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-boe"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-senate"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-enroll"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-grad"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-adm"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-sponsor"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-portal"
+    },
+    {
+      "source": "grp-analytics",
+      "target": "an-lib"
+    },
+    {
+      "source": "portal",
+      "target": "grp-mail"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-compose"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-inbox"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-accounts"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-tpl"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-drafts"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-sent"
+    },
+    {
+      "source": "grp-mail",
+      "target": "mail-queue"
+    }
+  ]
+}

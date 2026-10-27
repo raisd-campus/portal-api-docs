@@ -6,15 +6,15 @@
 # 20 Oct 2026: Control campus-first custom roles; Admin modules become grantable.
 # Hosted diagram: docs/diagrams/access-module-hierarchy.html
 
-version: 3
-updated: 2026-10-20
+version: 4
+updated: 2026-10-21
 status: Demo
 
 boundaries:
-  control: "Owns campus-scoped custom roles (named permission sets) and campus memberships. Creates built-in Campus Admin and arbitrary custom roles with entryRoleKey admin|lecturer|student."
-  campus_admin: "Assigns Applicant / Student / Staff / Lecturer presets and may enable or disable permissions already in those roles. Cannot create custom roles or expand beyond the grantable catalog."
+  control: "Owns campus-scoped custom roles (named permission sets) and campus memberships. Creates built-in Campus Admin and arbitrary custom roles with entryRoleKeys of admin, lecturer, and/or student. A role may enter more than one portal. APIs under /v1/control/*."
+  campus_admin: "Assigns fixed Applicant / Student / Staff / Lecturer presets via /v1/access/people* only. Cannot create custom roles, edit permission matrices, or call Control people role writes."
   applicant: "Fixed admissions flow — Access preset with portal.applicant only; no module checkboxes."
-  student_policy: "Student portal process is Uni Policy, not Staff-granted sub-modules. Access configures top-level Student modules only."
+  student_policy: "Student portal process is Uni Policy, not Staff-granted sub-modules. Student Access preset is a fixed lean set."
 
 role_model:
   - preset: Applicant
@@ -24,7 +24,7 @@ role_model:
   - preset: Student
     roleKey: student
     portal: student.{slug}.raisd.co
-    note: "Lean Access tree — no Student sub-module toggles. Custom roles may use entryRoleKey student."
+    note: "Lean Access tree — no Student sub-module toggles. Custom roles may include student in entryRoleKeys, alone or with other portals."
   - preset: Staff
     roleKey: lecturer
     portal: staff.{slug}.raisd.co
@@ -145,7 +145,7 @@ notes:
   dashboard: "Dashboard is not on the Access grantable list. It will show stats from the user's other module access."
   staff_modules: "Staff module list is temporary and will be overhauled."
   legacy_ids: "SSO still accepts staff.dashboard, staff.community, lecturer.marking, student.register, student.results on existing people."
-  custom_roles: "Control defines campus-scoped named roles (Contentful-style). Each role has entryRoleKey + permissions[]. Memberships reference customRoleId; permissions resolve live from the role definition."
+  custom_roles: "Control defines campus-scoped named roles (Contentful-style). Each role has entryRoleKeys (one or more of admin, lecturer, student) + permissions[]. Memberships reference customRoleId; permissions resolve live from the role definition. Sign-in offers each selected portal separately."
 
 grantable_now:
   student:

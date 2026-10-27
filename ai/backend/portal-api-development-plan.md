@@ -90,7 +90,7 @@ Exit: CI runs lint, typecheck, unit, route, conformance and smoke; error envelop
 
 | # | Work item | Notes |
 |---|---|---|
-| 3.1 | Postgres access layer and migrations | Pick one migration tool and record it (candidates: Drizzle, Kysely + node-pg-migrate). Migrations run as a Job / pre-start step, never from a portal |
+| 3.1 | Postgres access layer and migrations | The current Demo schema is created by portal-api `npm run db:migrate` (idempotent SQL already owned by the service, recorded in `schema_migrations`). Live persistence still needs one chosen tool (candidates: Drizzle, Kysely + node-pg-migrate). Migrations run as a Job / pre-start step, never from a portal |
 | 3.2 | Tables, first cut | `sessions` (token hash, principal, role, campus, expiry, revoked_at), `audit_events` (who, what, when, campus, request id), `campus_config`, `idempotency_keys`, `cms_write_attempts` (outbox / ack log) |
 | 3.3 | Session store on Postgres | Tokens stored hashed; logout revokes (fixes SDD-08 "logout does not end the session") |
 | 3.4 | Evidence store abstraction | Interface with a local-volume driver (k3s PVC `evidence`) first; content hash, MIME sniffing, size limit; metadata row in Postgres |

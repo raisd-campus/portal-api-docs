@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Lesotho newer CMS user manual</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .tag { display: inline-block; margin: 0 4px 4px 0; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .tag-gap { background: #fff6e8; border-color: #e0c48a; color: var(--warn); }
+    .tag-mismatch { background: #f3e8fd; border-color: #c9b0e8; color: #5a2a8a; }
+    .tag-partial { background: var(--accent-soft); border-color: #b7c9de; color: var(--accent); }
+    .tag-out { background: #eef1f5; border-color: var(--line); color: var(--muted); }
+  </style>
+  <style>
+    pre.tree { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; overflow-x: auto; font-size: 13px; line-height: 1.45; }
+    a.chip { text-decoration: none; color: inherit; }
+    .jump { display: flex; flex-wrap: wrap; gap: 8px; }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../campus-configurability.html">Campus configurability help</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../distributed-cms-architecture.html">Target architecture</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="../migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="newer-cms.html">Newer CMS mind map</a>
+              <a href="newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="newer-cms-exports.html">Newer CMS exports</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
+              <a href="index.html">Feature analysis</a>
+              <a href="cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
+              <a href="index.html#admissions">Flows</a>
+              <a href="index.html#why">Why pilot</a>
+              <a href="index.html#admissions">Admissions</a>
+              <a href="index.html#registry">Registry / NMDS</a>
+              <a href="index.html#cap">CAP seed</a>
+              <a href="index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="../old-cms/fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/email-templates.html">Email templates</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="../old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-21/" target="_blank" rel="noopener noreferrer">E2E access control · 21 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Lesotho pilot · newer CMS · 23 Oct 2026</p>
+      <h1>Lesotho newer CMS — user manual</h1>
+      <p class="lead">Section-by-section Admin manual. Staging Admin at <code>luct.vercel.app</code>. Active term <strong>2026-07</strong>. This is the campus benchmark. Raisd portals stay Demo until a campus accepts them.</p>
+      <p class="jump"><a class="chip" href="newer-cms.html">Mind map</a> <span class="chip">User manual</span> <a class="chip" href="newer-cms-gap.html">Gap vs Raisd</a> <a class="chip" href="workflow-control-improvements.html">Workflow &amp; control</a> <a class="chip" href="newer-cms-screenshots.html">Screenshots</a> <a class="chip" href="newer-cms-exports.html">Exports</a></p>
+    </section>
+    <nav class="toc" aria-label="On this page"><a href="#3-registry">3. Registry</a><a href="#4-discipline">4. Discipline</a><a href="#5-admin">5. Admin</a><a href="#6-academic">6. Academic</a><a href="#7-finance">7. Finance</a><a href="#8-admissions">8. Admissions</a><a href="#9-human-resource-and-appraisals">9. Human Resource and appraisals</a><a href="#10-library">10. Library</a><a href="#11-website">11. Website</a><a href="#12-analytics">12. Analytics</a><a href="#13-mail">13. Mail</a><a href="#14-student-and-applicant">14. Student and applicant</a></nav>
+    <div class="note warn">
+      <strong>No personal records.</strong>
+      Counts, menus, routes, statuses, and fee names only. Names, emails, student numbers, marks, and documents stay out of this site.
+    </div>
+    
+<section class="section" id="3-registry"><h2>3. Registry</h2>
+<h3>Students — <code>/registry/students</code></h3>
+<p>Master–detail. <strong>21,527 records</strong>, 1,436 pages. Search, <strong>Filter Students</strong>, and <strong>New</strong> (New was disabled for this Admin). Selecting a row opens the student file. Nothing is selected until a row is chosen.</p>
+<p>Student file tabs:</p>
+<div class="table-wrap"><table class="data"><thead><tr><th>Tab</th><th>What it is for</th></tr></thead><tbody><tr><td>Academics</td><td>Programme (status such as ACTIVE), term, year and semester, GPA, CGPA, <strong>Print</strong>, and the module grid</td></tr><tr><td>Student</td><td>Identity and programme profile</td></tr><tr><td>Registration</td><td>Term registration on this student</td></tr><tr><td>Attendance</td><td>Attendance for the student</td></tr><tr><td>Card</td><td>Campus card photo and preview</td></tr><tr><td>Graduation</td><td>Graduation record for the student</td></tr><tr><td>Finance</td><td>Student charges, payments, balance</td></tr><tr><td>Sponsors</td><td>Sponsor and borrower number (NMDS on this campus)</td></tr><tr><td>Education</td><td>Prior education</td></tr><tr><td>Documents</td><td>Documents filed on the student</td></tr><tr><td>Notes</td><td>Staff notes</td></tr><tr><td>Audit</td><td>Change history</td></tr></tbody></table></div>
+<p>Academics module grid columns: <strong>Code, Name, Status, Cr, Mk, Gd</strong>. Status values seen include <strong>Compulsory</strong>. The grid is the statement-of-results source for this student. Print sits on this tab.</p>
+<h3>Documents — <code>/registry/documents</code></h3>
+<p><strong>Scanned student papers.</strong> Separate from Admissions Document Review. Permission resource <code>documents</code>.</p>
+<h3>Registration — <code>/registry/registration/requests</code></h3>
+<p><strong>Registration Requests.</strong> <strong>3,835 records</strong>, 256 pages. Master–detail.</p>
+<p>Opened request tabs: <strong>Details, Clearance, History</strong>.</p>
+<p>Details shows:</p>
+<div class="table-wrap"><table class="data"><thead><tr><th>Field</th><th>Notes</th></tr></thead><tbody><tr><td>Student</td><td>Linked student</td></tr><tr><td>Date</td><td>Request timestamp</td></tr><tr><td>Semester</td><td>Year and semester label, for example Year 1 • Semester 2</td></tr><tr><td>Term</td><td>Term code, for example 2026-07</td></tr><tr><td>Status</td><td><strong>PENDING</strong> on the request that was opened</td></tr><tr><td>Sponsor</td><td>Sponsor name, or none</td></tr><tr><td>Borrower No.</td><td>Sponsor borrower number when present</td></tr><tr><td>Modules</td><td>Count, then a table</td></tr></tbody></table></div>
+<p>Module table columns: <strong>Code, Name, Credits, Type, Status</strong>. Type seen: <strong>Compulsory</strong>. Module status seen: <strong>PENDING</strong>.</p>
+<p>Clearance on that request had no department rows, only a message field. History is the third tab. This is the staff queue for registration, not the student self-service screen.</p>
+<p>A registration clearance route exists in the client (<code>/registry/registration/clearance</code>) and was <strong>not opened</strong>.</p>
+<h3>Graduations</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Graduation Dates</td><td><code>/registry/graduations/dates</code></td><td>Ceremony dates</td></tr><tr><td>Hoods</td><td><code>/registry/graduations/hoods</code></td><td>Hood catalogue</td></tr><tr><td>Name tags</td><td><code>/registry/graduations/tags</code></td><td>Name tags</td></tr></tbody></table></div>
+<p>A clearance route exists (<code>/registry/graduations/clearance</code>) and was <strong>not opened</strong>. The 3 Oct screenshots still describe the multi-department clearance wizard (Academic / Finance, approve or reject, gown and fee message).</p>
+<h3>Certificates</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Print batches</td><td><code>/registry/certificates/jobs</code></td><td>Certificate print jobs</td></tr><tr><td>Collections</td><td><code>/registry/certificates/collections</code></td><td>Collection desk</td></tr><tr><td>Stock</td><td><code>/registry/certificates/stock</code></td><td>Certificate stock</td></tr></tbody></table></div>
+<p>The group is visible when the user can read certificate jobs or certificate collections.</p>
+<h3>Student Status — <code>/registry/student-statuses</code></h3>
+<p>Status workflow for students. The 23 Oct sidebar showed a badge of <strong>1</strong>.</p>
+<h3>Remark Requests — <code>/registry/remark-requests</code></h3>
+<p>Re-assessment review. Sidebar badge <strong>64</strong> on this walk. Staff queue for remark / reassessment. Related fee name on Fees &amp; Fines: <strong>Re-assessment</strong>, LSL 350.00 (see Finance).</p>
+<h3>Student Referrals — <code>/registry/student-referrals</code></h3>
+<p>Referrals, memos, and notifications.</p>
+<h3>Notes — <code>/registry/student-notes</code></h3>
+<p>Notes on students. Same idea as the Notes tab on the student file, as a cross-student desk.</p>
+<h3>Letters</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Letters</td><td><code>/registry/letters/generate</code></td><td>Generate a letter</td></tr><tr><td>Templates</td><td><code>/registry/letters/templates</code></td><td>Letter templates</td></tr></tbody></table></div>
+<h3>Blocked Students — <code>/registry/blocked-students</code></h3>
+<p>Students blocked from an action (the screen itself was <strong>not opened</strong>). Treat as a hold list until a later walk confirms the block reasons.</p>
+<h3>Terms — <code>/registry/terms</code></h3>
+<p>Term configuration. The dashboard term chip read <strong>2026-07</strong>.</p>
+</section>
+<section class="section" id="4-discipline"><h2>4. Discipline</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Academic Dishonesty</td><td><code>/registry/academic-dishonesty</code></td><td>Dishonesty cases</td></tr><tr><td>Suspensions</td><td><code>/registry/suspensions</code></td><td>Suspensions</td></tr></tbody></table></div>
+<p>Both were <strong>not opened</strong>. They are registry-domain routes under a Discipline heading.</p>
+</section>
+<section class="section" id="5-admin"><h2>5. Admin</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Calendar</td><td><code>/admin/tasks</code></td><td>Manage tasks. Same family as the header Tasks button</td></tr><tr><td>Academic Calendar</td><td><code>/admin/academic-calendar</code></td><td>Academic calendar</td></tr><tr><td>Users</td><td><code>/admin/users</code></td><td>Portal users</td></tr><tr><td>Positions</td><td><code>/admin/user-positions</code></td><td>Positions and permissions</td></tr><tr><td>Notification templates</td><td><code>/admin/notifications/templates</code></td><td>Notification templates</td></tr><tr><td>Broadcast</td><td><code>/admin/notifications/broadcast</code></td><td>Broadcast a notification</td></tr><tr><td>Activity Tracker</td><td><code>/admin/activity-tracker</code></td><td>Activity log</td></tr><tr><td>Settings</td><td><code>/admin/settings</code></td><td>Portal settings</td></tr></tbody></table></div>
+<h3>Tools</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Simulator</td><td><code>/admin/tools/simulate</code></td><td>Simulation tool. <strong>Not opened</strong></td></tr><tr><td>Grade Finder</td><td><code>/admin/tools/grade-finder</code></td><td>Grade lookup. <strong>Not opened</strong></td></tr><tr><td>AI Query</td><td><code>/admin/tools/query</code></td><td>Query assistant. <strong>Not opened</strong></td></tr></tbody></table></div>
+<h3>Bulk</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Export Transcript</td><td><code>/admin/bulk/transcripts</code></td><td>Bulk transcript export</td></tr><tr><td>Student Cards</td><td><code>/admin/bulk/student-cards</code></td><td>Bulk card production</td></tr><tr><td>Student Photos</td><td><code>/admin/bulk/student-photos</code></td><td>Bulk photo handling. Menu permission uses students <strong>update</strong></td></tr></tbody></table></div>
+<h3>Positions — <code>/admin/user-positions</code></h3>
+<p><strong>28 positions.</strong> Search and a Role filter. <strong>New</strong> was disabled for this Admin. Page 1 showed:</p>
+<div class="table-wrap"><table class="data"><thead><tr><th>Position</th><th>Role</th></tr></thead><tbody><tr><td>HOD Human Resource</td><td>Human Resource</td></tr><tr><td>IT HOD</td><td>IT</td></tr><tr><td>Library HOD</td><td>Library</td></tr><tr><td>Academic Manager</td><td>Academic</td></tr><tr><td>Student Services Staff</td><td>Student Services</td></tr><tr><td>Marketing HOD</td><td>Marketing</td></tr><tr><td>Marketing Staff</td><td>Marketing</td></tr><tr><td>Year Leader</td><td>Academic</td></tr><tr><td>IT Staff</td><td>IT</td></tr><tr><td>Head of Academic Quality Assurance</td><td>Quality Assurance</td></tr><tr><td>Head of Institution</td><td>Head of Institution</td></tr><tr><td>Registry HOD</td><td>Registry</td></tr><tr><td>Finance HOD</td><td>Finance</td></tr><tr><td>Lecturer</td><td>Academic</td></tr><tr><td>Academic Admin</td><td>Academic</td></tr></tbody></table></div>
+<p>The other 13 positions were on later pages and were <strong>not listed</strong>.</p>
+<p>Opening <strong>Registry HOD</strong> shows Name, Role (<code>REGISTRY</code>), Description, and <strong>Permissions</strong> grouped as Academic, Appraisals, Registry, Certificates, Admissions, Finance, Admin, Library, Reports, Settings. The sidebar itself is built from resource/action pairs. Resources declared on the menu include <code>students</code>, <code>documents</code>, <code>registration</code>, <code>graduation</code>, <code>certificate-jobs</code>, <code>certificate-collections</code>, <code>student-statuses</code>, <code>remark-requests</code>, <code>student-referrals</code>, <code>student-notes</code>, <code>letters</code>, <code>letter-templates</code>, <code>blocked-students</code>, <code>terms-settings</code>, <code>academic-dishonesty</code>, <code>suspensions</code>, <code>tasks</code>, <code>academic-calendar</code>, <code>users</code>, <code>user-positions</code>, <code>notification-settings</code>, <code>notification-broadcast</code>, <code>activity-tracker</code>, <code>prints</code>, <code>assigned-modules</code>, <code>assessments</code>, <code>assessment-types</code>, <code>attendance</code>, <code>gradebook</code>, <code>modules</code>, <code>schools</code>, <code>curriculum</code>, <code>sponsors</code>, <code>banks</code>, <code>debtors</code>, <code>pricing</code>, <code>payment-plans</code>, <code>admissions-review</code>, <code>applicants</code>, <code>admissions-payments</code>, <code>admissions-documents</code>, <code>intake-periods</code>, <code>certificate-types</code>, <code>subjects</code>, <code>recognized-schools</code>, <code>entry-requirements</code>, <code>employees</code>, <code>employee-contracts</code>, <code>employee-positions</code>, <code>employee-unit-heads</code>, <code>vacancies</code>, <code>staff-appraisals</code>, <code>teaching-observations</code>, <code>feedback-cycles</code>, <code>appraisal-periods</code>, <code>teaching-observation-criteria</code>, <code>staff-appraisal-review-chain</code>, <code>library</code>, <code>mails</code>, and the <code>website-*</code> and <code>reports-*</code> resources.</p>
+</section>
+<section class="section" id="6-academic"><h2>6. Academic</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Lecturers</td><td><code>/academic/assigned-modules</code></td><td>Modules assigned to lecturers</td></tr><tr><td>Assessments</td><td><code>/academic/assessments</code></td><td>Assessment records</td></tr><tr><td>Assessment Types</td><td><code>/academic/assessment-types</code></td><td>Assessment type catalogue</td></tr><tr><td>Attendance</td><td><code>/academic/attendance</code></td><td>Attendance desk (class side, distinct from the student Attendance tab)</td></tr><tr><td>Gradebook</td><td>Menu item, no child links in the client menu</td><td>Gradebook. Special routes exist and were <strong>not opened</strong>: <code>/academic/gradebook/special/deferred</code>, <code>.../remark</code>, <code>.../supplementary</code></td></tr><tr><td>Modules</td><td><code>/academic/modules</code></td><td>Module catalogue</td></tr><tr><td>Schools</td><td><code>/registry/schools</code></td><td>Schools (FICT and others)</td></tr><tr><td>Curriculum</td><td><code>/registry/curriculum</code></td><td>Programmes and curriculum. A review route <code>/registry/curriculum/review</code> exists and was <strong>not opened</strong></td></tr><tr><td>FiveDays</td><td><code>/lms/courses</code></td><td>Learning Management System inside this portal. <strong>Not opened</strong></td></tr><tr><td>Fortinet</td><td><code>/plugins/fortinet</code></td><td>Fortinet plugin. <strong>Not opened</strong></td></tr></tbody></table></div>
+<h3>Timetable</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th></tr></thead><tbody><tr><td>Generator</td><td><code>/timetable/generator</code></td></tr><tr><td>Allocations</td><td><code>/timetable/timetable-allocations</code></td></tr><tr><td>Venues</td><td><code>/timetable/venues</code></td></tr><tr><td>Venue Types</td><td><code>/timetable/venue-types</code></td></tr></tbody></table></div>
+<p>These four were <strong>not opened</strong>. The menu is the timetable desk: generate, allocate, and maintain venues.</p>
+<p>Other academic routes present in the client and <strong>not opened</strong>: <code>/academic/academic-roles</code> and reporting paths under <code>/academic/reporting/</code> for lecturers, principal lecturers, program leaders, and year leaders.</p>
+</section>
+<section class="section" id="7-finance"><h2>7. Finance</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Sponsors</td><td><code>/finance/sponsors</code></td><td>Sponsor master (NMDS and others)</td></tr><tr><td>Banks</td><td><code>/finance/banks</code></td><td>Bank list</td></tr><tr><td>Debtors</td><td><code>/finance/debtors</code></td><td>Debtor accounts</td></tr><tr><td>Repeat Modules</td><td><code>/finance/pricing/repeat-modules</code></td><td>Repeat-module pricing</td></tr><tr><td>Fees and Fines</td><td><code>/finance/pricing/fees-and-fines</code></td><td>Fee and fine catalogue</td></tr><tr><td>Payment Plans</td><td><code>/finance/pricing/payment-plans</code></td><td>Instalment plans</td></tr></tbody></table></div>
+<p>Sponsors, banks, debtors, repeat modules, and payment plans were <strong>not opened</strong>.</p>
+<h3>Fees &amp; Fines — opened</h3>
+<p>Heading <strong>Fees &amp; Fines</strong>. Action: <strong>Configure rates</strong>. Category chips: <strong>All, Fines, Graduation, Registration, Student Card</strong>.</p>
+<p>Amounts on the All view during this walk (currency <strong>LSL</strong>). This is the staging catalogue on screen, not a Raisd fee decision:</p>
+<div class="table-wrap"><table class="data"><thead><tr><th>Name</th><th>Amount (LSL)</th></tr></thead><tbody><tr><td>AdmChg</td><td>500.00</td></tr><tr><td>Air Ticket</td><td>350.00</td></tr><tr><td>Certificates reprinting</td><td>1,000.00</td></tr><tr><td>Camera fines</td><td>10.00</td></tr><tr><td>IT fines</td><td>250.00</td></tr><tr><td>Interest surcharge / fine</td><td>500.00</td></tr><tr><td>Late Registration Fee</td><td>450.00</td></tr><tr><td>Late registration</td><td>350.00</td></tr><tr><td>Late / instalment interest</td><td>35.00</td></tr><tr><td>Library Fine</td><td>100.00</td></tr><tr><td>Misc Charges</td><td>150.00</td></tr><tr><td>Re-assessment</td><td>350.00</td></tr><tr><td>Recreational Fees</td><td>1,000.00</td></tr><tr><td>Resource Fees</td><td>500.00</td></tr><tr><td>Transcripts</td><td>500.00</td></tr></tbody></table></div>
+<p>The list can continue below the first screen. Do not treat this table as the full tuition catalogue.</p>
+</section>
+<section class="section" id="8-admissions"><h2>8. Admissions</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Review</td><td><code>/admissions/admissions-review</code></td><td>Recommendation queue</td></tr><tr><td>Applicants</td><td><code>/admissions/applicants</code></td><td>Applicant master</td></tr><tr><td>Admissions Payments</td><td><code>/admissions/payments</code></td><td>Application payment verification</td></tr><tr><td>Document Review</td><td><code>/admissions/documents</code></td><td>Submitted document queue</td></tr><tr><td>Intake Periods</td><td><code>/admissions/intake-periods</code></td><td>Intakes</td></tr><tr><td>Certificate Types</td><td><code>/admissions/certificate-types</code></td><td>School-certificate types</td></tr><tr><td>Subjects</td><td><code>/admissions/subjects</code></td><td>School subjects used in extracts</td></tr><tr><td>Recognized Schools</td><td><code>/admissions/recognized-schools</code></td><td>Schools the campus accepts</td></tr><tr><td>Entry Requirements</td><td><code>/admissions/entry-requirements</code></td><td>Entry rules</td></tr></tbody></table></div>
+<p>Applicants, payments, and the five settings screens were <strong>not opened</strong>. A hostel route <code>/admissions/hostel-applications</code> exists in the client and was <strong>not opened</strong>. It is not in the sidebar that was on screen.</p>
+<h3>Review — opened</h3>
+<p>Search and <strong>Filter</strong>. Filter fields: <strong>Pending, Approved, Rejected, Intake Period, School, Program</strong>.</p>
+<p>Each card shows rank, programme code, intake, score, and progress <strong>n/3</strong>. The intake on the cards in this queue was <strong>January 2026</strong>. Schools named in the by-school panel: <strong>FBMG, FABE, FICT</strong>.</p>
+<p>The side panel is <strong>Review Progress</strong>: counts for <strong>recommended</strong>, <strong>not recommended</strong>, and <strong>pending</strong>, plus <strong>Your Activity</strong> (reviewed today versus the queue). For this Admin the queue was <strong>4</strong> applications (1 recommended, 2 not recommended, 1 pending). That is this user’s review queue, not the applicant population (4,585 applicant accounts in Dev Login).</p>
+<p>Progress <strong>n/3</strong> matches the three-step recommendation chain seen on 3 Oct (Academic, QA, Registrar). This walk did not open a single application’s Review / Documents / History tabs.</p>
+<h3>Document Review — opened</h3>
+<p><strong>4,066 records</strong>, 272 pages. Search and <strong>Filter Documents</strong>. Document-type chips on the list include:</p>
+<ul><li>ACADEMIC RECORD</li><li>CERTIFICATE</li><li>APPLICATION FORM</li><li>IDENTITY</li><li>PROOF OF_PAYMENT</li></ul>
+<p>A scanned script and extracted subject rows (including LGCSE and Sesotho) were described from the 3 Oct screenshots. This walk did not open a single document, so those extract fields are <strong>not re-confirmed</strong> here.</p>
+</section>
+<section class="section" id="9-human-resource-and-appraisals"><h2>9. Human Resource and appraisals</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Purpose</th></tr></thead><tbody><tr><td>Employees</td><td><code>/human-resource/employees</code></td><td>Employee master</td></tr><tr><td>Contracts</td><td><code>/human-resource/contracts</code></td><td>Contracts</td></tr><tr><td>Positions</td><td><code>/human-resource/positions</code></td><td>HR positions (distinct from Admin user positions)</td></tr><tr><td>Unit Heads</td><td><code>/human-resource/unit-heads</code></td><td>Unit heads</td></tr><tr><td>Vacancies</td><td><code>/human-resource/vacancies</code></td><td>Vacancies</td></tr></tbody></table></div>
+<p>A profile-change route <code>/human-resource/profile-change</code> exists and was <strong>not opened</strong>.</p>
+<h3>Appraisals</h3>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th></tr></thead><tbody><tr><td>Academic Appraisals</td><td><code>/appraisals/staff-appraisals/academic</code></td></tr><tr><td>Support Appraisals</td><td><code>/appraisals/staff-appraisals/support</code></td></tr><tr><td>Teaching Observations</td><td><code>/appraisals/teaching-observations</code></td></tr><tr><td>Student Feedback</td><td><code>/appraisals/student-feedback</code></td></tr><tr><td>Appraisal Periods</td><td><code>/appraisals/settings/periods</code></td></tr><tr><td>Student-feedback questions</td><td><code>/appraisals/settings/student-feedback</code></td></tr><tr><td>PRL observation questions</td><td><code>/appraisals/settings/observation-criteria</code></td></tr><tr><td>Academic appraisal questions</td><td><code>/appraisals/settings/staff-appraisals/academic</code></td></tr><tr><td>Support appraisal questions</td><td><code>/appraisals/settings/staff-appraisals/support</code></td></tr><tr><td>Academic review chain</td><td><code>/appraisals/settings/staff-appraisals/academic/review-chain</code></td></tr><tr><td>Support review chain</td><td><code>/appraisals/settings/staff-appraisals/support/review-chain</code></td></tr></tbody></table></div>
+<p>None of the HR or appraisal screens were opened. The menu is enough to see that appraisals split academic staff from support staff, and that questions and review chains are configured separately from the appraisal runs.</p>
+</section>
+<section class="section" id="10-library"><h2>10. Library</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th><th>Notes</th></tr></thead><tbody><tr><td>Catalog</td><td><code>/library/catalog</code></td><td></td></tr><tr><td>Loans</td><td><code>/library/loans</code></td><td></td></tr><tr><td>Books</td><td><code>/library/books</code></td><td></td></tr><tr><td>Fines</td><td><code>/library/fines</code></td><td>Overdue charges</td></tr><tr><td>E-Library</td><td><code>/library/e-library</code></td><td></td></tr><tr><td>Publications</td><td><code>/library/publications</code></td><td>Research and journals</td></tr><tr><td>Question Papers</td><td><code>/library/resources/question-papers</code></td><td>Past exam papers</td></tr><tr><td>Authors</td><td><code>/library/authors</code></td><td>Under Authorities</td></tr><tr><td>Subjects</td><td><code>/library/subjects</code></td><td>Under Authorities</td></tr></tbody></table></div>
+<p>Not opened. Library Fine on the finance catalogue was LSL 100.00.</p>
+</section>
+<section class="section" id="11-website"><h2>11. Website</h2>
+<p>Public-site content for the campus, edited inside the same Admin portal.</p>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th></tr></thead><tbody><tr><td>Pages</td><td><code>/website/pages</code></td></tr><tr><td>Articles</td><td><code>/website/articles</code></td></tr><tr><td>Categories</td><td><code>/website/categories</code></td></tr><tr><td>Featured Programs</td><td><code>/website/featured-programs</code></td></tr><tr><td>Enquiries</td><td><code>/website/enquiries</code></td></tr><tr><td>Campus Sites</td><td><code>/website/campuses</code></td></tr><tr><td>Alumni</td><td><code>/website/alumni</code></td></tr><tr><td>Media</td><td><code>/website/media</code></td></tr><tr><td>Events</td><td><code>/website/events</code></td></tr></tbody></table></div>
+<p>Not opened. Unread-enquiry count is a server action in the client (<code>countUnreadEnquiries</code>).</p>
+</section>
+<section class="section" id="12-analytics"><h2>12. Analytics</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Report</th><th>Route</th></tr></thead><tbody><tr><td>Course Summary</td><td><code>/reports/academic/course-summary</code></td></tr><tr><td>Attendance</td><td><code>/reports/academic/attendance</code></td></tr><tr><td>Appraisals</td><td><code>/reports/human-resource/appraisals</code></td></tr><tr><td>Board of Examination</td><td><code>/reports/academic/boe</code></td></tr><tr><td>Senate Report</td><td><code>/reports/academic/senate-report</code></td></tr><tr><td>Student Enrollments</td><td><code>/reports/registry/student-enrollments</code></td></tr><tr><td>Graduations</td><td><code>/reports/registry/graduations</code></td></tr><tr><td>Admissions</td><td><code>/reports/admissions</code></td></tr><tr><td>Sponsor Reports</td><td><code>/reports/finance/sponsors</code></td></tr><tr><td>Portal Usage</td><td><code>/reports/registry/portal-usage</code></td></tr><tr><td>Library</td><td><code>/reports/library</code></td></tr></tbody></table></div>
+<p>Not opened. Further registry report routes exist in the client (<code>/reports/registry/programs</code>, <code>/reports/registry/sponsors</code>) and were not in the sidebar list above.</p>
+</section>
+<section class="section" id="13-mail"><h2>13. Mail</h2>
+<div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Route</th></tr></thead><tbody><tr><td>Compose</td><td><code>/mail/compose</code></td></tr><tr><td>Inbox</td><td><code>/mail/inbox</code></td></tr><tr><td>Accounts</td><td><code>/mail/accounts</code></td></tr><tr><td>Templates</td><td><code>/mail/templates</code></td></tr><tr><td>Drafts</td><td><code>/mail/send</code></td></tr><tr><td>Sent</td><td><code>/mail/sent</code></td></tr><tr><td>Queue</td><td><code>/mail/queue</code></td></tr></tbody></table></div>
+<p>Not opened. Drafts is the menu label; the route in the client is <code>/mail/send</code>. This is in-portal mail, separate from Raisd outbound notifications.</p>
+</section>
+<section class="section" id="14-student-and-applicant"><h2>14. Student and applicant</h2>
+<p>This Admin session did not open the student home or the applicant form.</p>
+<p>An unlinked Google user can choose <strong>I am a Student</strong> or <strong>I am a New Applicant</strong> on Link your account. Client routes named from that screen are <code>/student-portal</code> and <code>/auth/student-link</code>. They were not followed.</p>
+<p>The 3 Oct screenshot inventory (<a href="../../ai/backend/old-cms-lesotho.md">old-cms-lesotho.md</a>) still describes the student home as programme, year/semester, Active, CGPA, and module count, with Registration, Curriculum, Finance, Assessments, Timetable, and Results. Treat that as the earlier UX seed, not as re-tested on 23 Oct.</p></section>
+  </main>
+
+  <p class="footer">
+    Raisd · newer CMS walk 23 Oct 2026 · staging Admin · no student or staff records ·
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-newer-cms.md">source markdown</a>
+  </p>
+  <script src="../abbr-tooltips.js" defer></script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+  <script src="../keychain-access.js" defer></script>
+</body>
+</html>

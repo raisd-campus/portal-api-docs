@@ -21,6 +21,12 @@ The API owns versioned campus Admissions, immutable publication, pinned case req
 
 Knowledge changes land here first, then mirror into `portal-api/docs/` (see that repo's `docs/SOURCE.md`).
 
+## Database schema
+
+`npm run db:migrate` creates the current Demo schema on `DATABASE_URL` and records each step in `schema_migrations`. It creates record tables, reporting views, session tables, applicant state, University Flows policy storage, and the Demo admissions-artifact and community-chat tables. It does not insert fixture rows or drop existing data. A second run reapplies the idempotent statements and reports the schema as current. API startup still does not apply artifact or chat DDL. `npm run db:seed` and `npm run db:reset` remain the fixture commands. This is a local operator command, not a hosted rollout.
+
+On 22 October 2026 an empty PostgreSQL 16 database on `127.0.0.1` was recreated with that command. The first run applied 9 migrations in 1 second (113 tables, 4 views, 118 indexes, no fixture rows). The second run reported the schema current. `db:seed` then loaded schema version 4: 3,214 rows in 99 collection tables (13 student profiles, 1 programme, 18 user accounts). Session, artifact, community-chat and University Flows tables remained. The database was dropped afterward. The seed notice `unversioned to 4` is the empty `portal_meta` created by migrate before the first fixture row. Report: [database recreation, 22 Oct](../../reports/database-recreation-2026-10-22/).
+
 ## Stage 1 behaviour (current)
 
 - Bearer demo sessions and `POST /v1/portal/:method` for every student `PortalApi` method.

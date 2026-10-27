@@ -21,6 +21,7 @@ This knowledge base is the **input** for human-facing and published documentatio
 5. Keep Demo/Live language exact ([status-language.md](status-language.md)).
 6. After generating, update [MANIFEST.yaml](../MANIFEST.yaml) if new knowledge files were added.
 7. Refresh design system HTML only for observable shared or student-owned pattern changes. Keep package API text with its version, replace affected static captures when visuals change, and retain capture provenance. Do not regenerate the design system pages for unrelated task completion.
+8. **Walkthrough reports** under `docs/reports/` stay **text-first** while portal UI is changing — do not commit or publish stale UI screenshots. Capture scripts omit images unless `INCLUDE_SCREENSHOTS=1`. The design-system catalogue and CMS benchmark diagram shots are separate (see [AGENTS.md](../AGENTS.md#hosted-walkthrough-screenshots-while-portal-ui-is-changing)).
 
 The [catalogue source README](../../design-system/README.md) gives the capture, generation, validation, and mirror commands. Publish shared changes after the corresponding package release so the public pages show an installable version.
 

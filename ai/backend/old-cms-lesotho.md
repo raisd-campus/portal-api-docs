@@ -5,6 +5,7 @@
 **Sources (3 Oct 2026):** Working Group weekly (Read.ai email summary); WhatsApp Working Group CMS 2026 — Faid Zamin screenshots of the **newer** Lesotho Admin / Student system (`PHOTO-2026-10-03-12-41-*`); Vara note on old-CMS family tree.  
 **Screenshot re-share (5 Oct 2026, 15:18):** Aslam attached 18 Lesotho UI photos — **byte-identical** to the 3 Oct Faid set (MD5 match; no new surfaces). Feature analysis unchanged; provenance only.\
 **Diagram analysis:** [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html).  
+**Admin walk (23 Oct 2026):** [lesotho-newer-cms.md](lesotho-newer-cms.md) — mind map, section manual, and gap vs the Raisd portals. No student records.  
 **Database gap (proxy → dump):** [lesotho-db-gap.md](lesotho-db-gap.md) · Pages [`#db-gap`](../../diagrams/old-cms-lesotho/index.html#db-gap).  
 **CMS vs Applicant portal (8 Oct 2026):** [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) · Pages [`cms-vs-applicant.html`](../../diagrams/old-cms-lesotho/cms-vs-applicant.html).  
 
@@ -120,6 +121,7 @@ Vara Drive pack (5 Oct 2026): DB **`campus2_lesotho`** — **369** tables / **35
 | Topic | Path |
 |---|---|
 | Lesotho pilot approach | [../architecture/lesotho-pilot.md](../architecture/lesotho-pilot.md) |
+| Workflow & control proposal | [lesotho-workflow-control-improvements.md](lesotho-workflow-control-improvements.md) |
 | Database gap (proxy) | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | CMS vs Applicant portal | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |
 | Diagram analysis | [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) |
