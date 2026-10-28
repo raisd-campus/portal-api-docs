@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-27T23:58:40.785Z",
+  "recordedAt": "2026-10-28T00:20:19.984Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -64,11 +64,11 @@
         "FM-03"
       ],
       "poster": "app-eligibility.poster.jpg",
-      "bytes": 67377,
-      "detail": "applicant eligibility",
+      "bytes": 50693,
+      "detail": "applicant eligibility · Confirm Eligibility Letter popup · poster-captured",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T23:32:49.179Z"
+      "recordedAt": "2026-10-28T00:20:19.961Z"
     },
     {
       "sceneId": "app-offer",
@@ -78,11 +78,11 @@
         "FM-02"
       ],
       "poster": "app-offer.poster.jpg",
-      "bytes": 67377,
-      "detail": "applicant offer",
+      "bytes": 49313,
+      "detail": "applicant offer · Accept Enrolment popup · poster-captured",
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T23:32:53.428Z"
+      "recordedAt": "2026-10-28T00:19:24.910Z"
     },
     {
       "sceneId": "fac-open",

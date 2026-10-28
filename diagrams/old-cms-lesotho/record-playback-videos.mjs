@@ -384,6 +384,149 @@ async function captureShot(page, sceneId) {
   return posterPath
 }
 
+/** Minimal valid Demo PDF (issuedLetterSchema requires %PDF- after atob). */
+const DEMO_LETTER_PDF_B64 =
+  "JVBERi0xLjEKMSAwIG9iajw8IC9UeXBlIC9DYXRhbG9nIC9QYWdlcyAyIDAgUiA+PmVuZG9iagoyIDAgb2JqPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj5lbmRvYmoKMyAwIG9iajw8IC9UeXBlIC9QYWdlIC9QYXJlbnQgMiAwIFIgL01lZGlhQm94IFswIDAgMzAwIDE0NF0gL0NvbnRlbnRzIDQgMCBSID4+ZW5kb2JqCjQgMCBvYmo8PCAvTGVuZ3RoIDQ0ID4+c3RyZWFtCkJUIC9GMSAxMiBUZiA0MCAxMDAgVGQgKERFTU8gTEVUVEVSKSBUaiBFVAplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDAwMDU4IDAwMDAwIG4gCjAwMDAwMDAxMTUgMDAwMDAgbiAKMDAwMDAwMDIwNiAwMDAwMCBuIAp0cmFpbGVyPDwgL1NpemUgNSAvUm9vdCAxIDAgUiA+PgpzdGFydHhyZWYKMzAwCiUlRU9G"
+
+function demoLetter(kind) {
+  const eligibility = kind !== "offer"
+  return {
+    id: eligibility ? "letter-eligibility-demo" : "letter-offer-demo",
+    kind: eligibility ? "eligibility" : "offer",
+    department: eligibility ? "Quality Assurance" : "Registry",
+    fileName: eligibility ? "eligibility-letter-1.pdf" : "offer-letter-1.pdf",
+    releasedAt: "2026-10-13T08:00:00.000Z",
+    pdfBase64: DEMO_LETTER_PDF_B64,
+  }
+}
+
+function reshapeApplicantForLetterScene(record, mode) {
+  if (!record || typeof record !== "object") return record
+  const next = structuredClone(record)
+  next.status = "approved"
+  next.acceptance = null
+  // Prefer classic letter workflow UI over Lesotho flow stages for these storyboard shots.
+  next.flow = null
+  next.verification = {
+    ...(next.verification || {}),
+    paymentVerifiedAt: next.verification?.paymentVerifiedAt || "2026-10-13T07:00:00.000Z",
+    documentsVerifiedAt: next.verification?.documentsVerifiedAt || "2026-10-13T07:30:00.000Z",
+  }
+  if (mode === "eligibility") {
+    next.letters = {
+      eligibility: demoLetter("eligibility"),
+      eligibilityConfirmedAt: null,
+      offer: null,
+    }
+  } else {
+    next.letters = {
+      eligibility: demoLetter("eligibility"),
+      eligibilityConfirmedAt: "2026-10-13T09:00:00.000Z",
+      offer: demoLetter("offer"),
+    }
+  }
+  return next
+}
+
+/**
+ * Demo applicants are often already Enrolment Accepted, so Confirm/Accept popups never appear.
+ * Rewrite getApplications / getApplication RPC payloads for storyboard-only mid-flow letter UIs.
+ * Install only after a live session is already on /applications — mocking during SSO exchange
+ * can bounce the portal back to campus login.
+ */
+async function withApplicantLetterMock(page, mode, run) {
+  const handler = async (route) => {
+    try {
+      const response = await route.fetch()
+      const text = await response.text()
+      let body
+      try {
+        body = JSON.parse(text)
+      } catch {
+        await route.fulfill({ response })
+        return
+      }
+      if (body?.result) {
+        if (Array.isArray(body.result)) {
+          body.result = body.result.map((row) => reshapeApplicantForLetterScene(row, mode))
+        } else if (typeof body.result === "object") {
+          body.result = reshapeApplicantForLetterScene(body.result, mode)
+        }
+      }
+      await route.fulfill({
+        status: response.status(),
+        contentType: "application/json",
+        body: JSON.stringify(body),
+      })
+    } catch {
+      await route.continue().catch(() => {})
+    }
+  }
+  await page.route("**/v1/applicant/getApplications", handler)
+  await page.route("**/v1/applicant/getApplication", handler)
+  try {
+    return await run()
+  } finally {
+    await page.unroute("**/v1/applicant/getApplications", handler).catch(() => {})
+    await page.unroute("**/v1/applicant/getApplication", handler).catch(() => {})
+  }
+}
+
+async function ensureApplicantApplications(page, context) {
+  if (onAuthChrome(page.url()) || !/apply\.lesotho\.raisd\.co/i.test(page.url())) {
+    await ensureRoleSession(page, context, "applicant")
+  }
+  if (!/apply\.lesotho\.raisd\.co\/applications/i.test(page.url())) {
+    await gotoSafe(page, `${APPLICANT}/applications`)
+  }
+  await page
+    .getByText(/my applications|application no|enrolment accepted|add application/i)
+    .first()
+    .waitFor({ timeout: 45000 })
+}
+
+async function openApplicantLetterPopup(page, context, mode, sceneId) {
+  // 1) Land with a real accepted session (no mock yet).
+  await ensureApplicantApplications(page, context)
+  // 2) Mock mid-flow letters, open popup, and screenshot before unroute
+  //    (unrouting can refetch the accepted case and dismiss the dialog).
+  await withApplicantLetterMock(page, mode, async () => {
+    // Soft refetch via list navigation — avoid full document goto (can bounce SSO).
+    await safeClick(page.getByRole("button", { name: /^my applications$/i }))
+    await safeClick(page.getByRole("link", { name: /^my applications$/i }))
+    await dwell(page, 1500)
+    await openApplicantCase(page)
+    await dwell(page, 1200)
+    const openLabel =
+      mode === "offer"
+        ? /confirm and accept enrolment/i
+        : /confirm and continue enrolment/i
+    const cta = page.getByRole("button", { name: openLabel }).first()
+    await cta.scrollIntoViewIfNeeded().catch(() => {})
+    await dwell(page, 400)
+    let opened = false
+    try {
+      await cta.click({ timeout: 8000 })
+      opened = true
+    } catch {
+      opened = await safeClick(page.getByRole("button", { name: /confirm and (continue|accept)/i }))
+    }
+    if (opened) {
+      await page.getByRole("dialog").waitFor({ timeout: 15000 })
+      await dwell(page, 1200)
+    } else {
+      // Still capture the mid-flow letter desk even if the popup did not open.
+      await dwell(page, 1000)
+    }
+    await page.screenshot({
+      path: path.join(outDir, `${sceneId}.poster.jpg`),
+      type: "jpeg",
+      quality: 78,
+      fullPage: false,
+    })
+  })
+}
+
 async function runSceneActions(page, context, sceneId) {
   switch (sceneId) {
     case "app-signin":
@@ -411,21 +554,11 @@ async function runSceneActions(page, context, sceneId) {
       await dwell(page, 2000)
       return "applicant fee"
     case "app-eligibility":
-      if (!/apply\.lesotho\.raisd\.co/i.test(page.url()) || onAuthChrome(page.url())) {
-        await gotoSafe(page, `${APPLICANT}/applications`)
-      }
-      await openApplicantCase(page)
-      await safeClick(page.getByRole("button", { name: /eligib|confirm and continue|view application/i }))
-      await dwell(page, 2000)
-      return "applicant eligibility"
+      await openApplicantLetterPopup(page, context, "eligibility", sceneId)
+      return "applicant eligibility · Confirm Eligibility Letter popup · poster-captured"
     case "app-offer":
-      if (!/apply\.lesotho\.raisd\.co/i.test(page.url()) || onAuthChrome(page.url())) {
-        await gotoSafe(page, `${APPLICANT}/applications`)
-      }
-      await openApplicantCase(page)
-      await safeClick(page.getByRole("button", { name: /offer|accept enrolment|view application/i }))
-      await dwell(page, 2000)
-      return "applicant offer"
+      await openApplicantLetterPopup(page, context, "offer", sceneId)
+      return "applicant offer · Accept Enrolment popup · poster-captured"
     case "fac-open":
     case "fac-rank":
     case "fac-rec": {
@@ -661,6 +794,9 @@ async function captureRole(browser, role, scenes) {
       posterPath = path.join(outDir, `${scene.id}.poster.jpg`)
       usedGolden = true
       detail = `${detail || error} · golden bur-pay poster`
+    } else if (/\bposter-captured\b/.test(detail || "")) {
+      // Scene already wrote the poster (e.g. letter popup while mock still active).
+      posterPath = path.join(outDir, `${scene.id}.poster.jpg`)
     } else {
       try {
         posterPath = await captureShot(page, scene.id)
