@@ -765,7 +765,12 @@ async function runSceneActions(page, context, sceneId) {
     case "bur-fees":
       await gotoSafe(page, `${STAFF}/admin/fees`)
       if (onAuthChrome(page.url())) await gotoSafe(page, `${STAFF}/fees`)
-      await dwell(page, 2000)
+      // Wait for finance profile catalogue — not the FLOW_UNAVAILABLE error strip.
+      await page
+        .getByText(/application fee|catalogue preview|acceptancefee|registration fee/i)
+        .first()
+        .waitFor({ timeout: 25000 })
+      await dwell(page, 1500)
       return "bursary fees"
     case "bur-reg":
       await gotoSafe(page, `${STAFF}/admin/registrations`)

@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T01:18:42.677Z",
+  "recordedAt": "2026-10-28T01:36:52.579Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -212,11 +212,11 @@
         "FM-09"
       ],
       "poster": "bur-fees.poster.jpg",
-      "bytes": 30769,
+      "bytes": 66911,
       "detail": "bursary fees",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/fees",
-      "recordedAt": "2026-10-27T23:47:12.381Z"
+      "recordedAt": "2026-10-28T01:36:52.554Z"
     },
     {
       "sceneId": "bur-reg",
