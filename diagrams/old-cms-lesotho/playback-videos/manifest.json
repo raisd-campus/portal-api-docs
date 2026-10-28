@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T00:26:19.564Z",
+  "recordedAt": "2026-10-28T00:29:45.643Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -313,10 +313,10 @@
       ],
       "poster": "yl-list.poster.jpg",
       "bytes": 39160,
-      "detail": "year leader list",
+      "detail": "year leader students list",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T23:38:03.495Z"
+      "recordedAt": "2026-10-28T00:29:40.554Z"
     },
     {
       "sceneId": "yl-file",
@@ -327,11 +327,11 @@
         "FM-15"
       ],
       "poster": "yl-file.poster.jpg",
-      "bytes": 39160,
-      "detail": "year leader file",
+      "bytes": 53045,
+      "detail": "year leader student file · Academics (read)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-27T23:38:06.037Z"
+      "recordedAt": "2026-10-28T00:29:45.618Z"
     },
     {
       "sceneId": "stu-signin",

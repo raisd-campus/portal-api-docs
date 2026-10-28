@@ -748,13 +748,24 @@ async function runSceneActions(page, context, sceneId) {
       return "year leader home"
     case "yl-list":
       await gotoSafe(page, `${STAFF}/admin/students`)
+      await page.getByText(/enrolled students|demo registry file/i).first().waitFor({ timeout: 20000 }).catch(() => {})
       await dwell(page, 1800)
-      return "year leader list"
-    case "yl-file":
+      return "year leader students list"
+    case "yl-file": {
       await gotoSafe(page, `${STAFF}/admin/students`)
-      await selectQueueRow(page)
-      await dwell(page, 1800)
-      return "year leader file"
+      await page.getByText(/enrolled students|demo lesotho student/i).first().waitFor({ timeout: 20000 })
+      await openRegistryStudentFile(page)
+      await page.getByRole("tab", { name: /^academics$/i }).click({ timeout: 8000 }).catch(() => {})
+      await dwell(page, 700)
+      await page
+        .getByRole("heading", { name: /demo lesotho student/i })
+        .first()
+        .scrollIntoViewIfNeeded()
+        .catch(() => {})
+      await page.getByText(/^modules$/i).first().scrollIntoViewIfNeeded().catch(() => {})
+      await dwell(page, 1200)
+      return "year leader student file · Academics (read)"
+    }
     case "stu-signin":
       if (!/student\.lesotho\.raisd\.co/i.test(page.url()) || onAuthChrome(page.url()) || /[?&]code=/.test(page.url())) {
         await page.waitForFunction(() => !/[?&]code=/.test(location.search), null, { timeout: 20000 }).catch(() => {})
