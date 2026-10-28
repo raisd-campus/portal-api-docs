@@ -13,17 +13,17 @@
 <main class="wf-page">
   <p class="eyebrow">Lesotho · ingested newer-CMS → Raisd Staff Admin · DS 0.19.8 patterns</p>
   <h1>Lesotho Demo desk wireframes</h1>
-  <p class="design-context">Lo-fi wireframes for every Staff Admin Demo desk mapped from the ingested newer-CMS Lesotho screenshots and FM-03…FM-18 catalogue. Layouts follow existing Staff pages (title + muted description + DetailSectionCard / DataTable) and call out the shared design-system components to compose — not Live CMS chrome.</p>
+  <p class="design-context">Lo-fi wireframes for every Staff Admin Demo desk mapped from the ingested newer-CMS Lesotho screenshots and FM-03…FM-18 catalogue. Desktop shells use a <strong>two-level side menu</strong>: labelled <code>PortalSidebar</code> primary nav, plus a contextual <code>aside</code> sub-side to its right (LinkedList rhythm — Admissions / Registry / Finance / Completions / Teaching / Oversight). Text uses ellipsis + <code>minmax(0,1fr)</code> grids so labels never overlap. Frames call out the shared design-system elements to compose — not Live CMS chrome.</p>
   <p class="wf-banner"><strong>Wireframe only.</strong> Demo ≠ Live. Sources: <a href="../feature-modules.html">feature modules</a> · <a href="../newer-cms-screenshots.html">screenshot inventory</a> · <a href="../../../design-system/candidates/0.19.8/">DS 0.19.8 pack</a> · <a href="README.md">README</a></p>
   <nav class="wf-toc" aria-label="On this page">
 <a href="#applicants">Applicants</a>
 <a href="#document-review">Document review</a>
 <a href="#payments">Payments</a>
-<a href="#fees">Fees & Fines</a>
+<a href="#fees">Fees &amp; Fines</a>
 <a href="#registrations">Registrations</a>
 <a href="#sponsors">Sponsors</a>
 <a href="#students">Students list</a>
-<a href="#student-file">Student file (12 tabs)</a>
+<a href="#student-file">Student file</a>
 <a href="#graduations">Graduations</a>
 <a href="#certificates">Certificates</a>
 <a href="#remarks">Remarks</a>
@@ -39,37 +39,24 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Admissions</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot active" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item active" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Admissions">Admissions</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Review queue — Rank / score / recommend"><div class="t">Review queue</div><div class="d">Rank / score / recommend</div></div><div class="wf-sub-item active" title="Applicants — Programme applications"><div class="t">Applicants</div><div class="d">Programme applications</div></div><div class="wf-sub-item" title="Document review — LGCSE extract + verify"><div class="t">Document review</div><div class="d">LGCSE extract + verify</div></div><div class="wf-sub-item" title="Evaluations — Needed assessments"><div class="t">Evaluations</div><div class="d">Needed assessments</div></div><div class="wf-sub-item" title="Intake settings — Periods · subjects · schools"><div class="t">Intake settings</div><div class="d">Periods · subjects · schools</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Applicants</span></div>
+            <div class="wf-crumbs" title="Admin / Applicants"><span>Admin</span><span>/</span><span class="cur">Applicants</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Applicants</h3>
-      <p class="sub">Admissions review queue · rank / score / recommendation (FM-03 / FM-05)</p>
-      <p class="wf-ds-map">DS: <code>ContentSection · DataTable · DetailSectionCard · DetailField · PageActionBar · AuditTrail · Popup</code></p>
+      <h3 title="Applicants">Applicants</h3>
+      <p class="sub" title="Admissions review queue · rank / score / recommendation">Admissions review queue · rank / score / recommendation</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">PortalNavGroup</span><span class="wf-ds-chip">PortalNavItem</span><span class="wf-ds-chip">PortalHeader</span><span class="wf-ds-chip">PortalBreadcrumb</span><span class="wf-ds-chip">PortalAccount</span><span class="wf-ds-chip">ContentSection</span><span class="wf-ds-chip">SummaryCard</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">ChipField</span><span class="wf-ds-chip">RadioField</span><span class="wf-ds-chip">PageActionBar</span><span class="wf-ds-chip">AuditTrail</span><span class="wf-ds-chip">Popup</span><span class="wf-ds-chip">Button</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-split">
-  <div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Applicant</span><span>Programme</span><span>Status</span><span>Rank</span><span>Score</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Thabo M.</span><span>BA Design</span><span>Under review</span><span>—</span><span>—</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Palesa N.</span><span>BSc IT</span><span>Recommended</span><span>3</span><span>78</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Neo M.</span><span>BA Media</span><span>Offer ready</span><span>1</span><span>91</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-  <div class="wf-form">
-    <div class="wf-form-row"><label>Review action</label><div class="wf-input">Set rank / score</div></div>
-    <div class="wf-form-row"><label>Rank</label><div class="wf-input">2</div></div>
-    <div class="wf-form-row"><label>Score</label><div class="wf-input">84</div></div>
-    <div class="wf-form-row"><label>Note</label><div class="wf-input">Strong portfolio</div></div>
-    <div class="wf-actions"><button type="button" class="wf-btn primary">Save review</button></div>
-  </div>
-</div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Under review</div><div class="val">12</div></div><div class="wf-summary-card"><div class="lbl">Recommended</div><div class="val">4</div></div><div class="wf-summary-card"><div class="lbl">Offer ready</div><div class="val">2</div></div><div class="wf-summary-card"><div class="lbl">Avg score</div><div class="val">81</div></div></div><div class="wf-seg"><span class="on">All</span><span>Under review</span><span>Recommended</span><span>Offer ready</span></div><div style="height:.55rem"></div><div class="wf-split"><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Applicant</span><span>Programme</span><span>Status</span><span>Rank</span><span>Score</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Thabo M.">Thabo M.</span><span title="BA Design">BA Design</span><span title="Under review">Under review</span><span title="—">—</span><span title="—">—</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Palesa N.">Palesa N.</span><span title="BSc IT">BSc IT</span><span title="Recommended">Recommended</span><span title="3">3</span><span title="78">78</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Neo M.">Neo M.</span><span title="BA Media">BA Media</span><span title="Offer ready">Offer ready</span><span title="1">1</span><span title="91">91</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-form"><div class="wf-form-row"><label>Review action</label><div class="wf-input" title="Set rank / score">Set rank / score</div></div><div class="wf-form-row"><label>Rank</label><div class="wf-input" title="2">2</div></div><div class="wf-form-row"><label>Score</label><div class="wf-input" title="84">84</div></div><div class="wf-form-row"><label>Tags (ChipField)</label><div class="wf-input" title="Portfolio · Interview">Portfolio · Interview</div></div><div class="wf-form-row"><label>Decision (RadioField)</label><div class="wf-input" title="Recommend">Recommend</div></div><div class="wf-actions"><button type="button" class="wf-btn primary">Save review</button></div></div></div><div class="wf-audit"><div class="wf-audit-row"><div class="av"></div><div class="txt"><strong>Staff · Recommended</strong><span>Yesterday · score 84</span></div></div><div class="wf-audit-row"><div class="av"></div><div class="txt"><strong>System · Documents verified</strong><span>2 days ago</span></div></div></div><div class="wf-actionbar"><div class="lead" title="Unsaved review changes">Unsaved review changes</div><div class="wf-actions"><button type="button" class="wf-btn">Cancel</button><button type="button" class="wf-btn primary">Save</button></div></div></div>
         </div>
       </div>
     </div></div>
@@ -80,37 +67,24 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Admissions</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot active" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item active" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Admissions">Admissions</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Review queue — Rank / score / recommend"><div class="t">Review queue</div><div class="d">Rank / score / recommend</div></div><div class="wf-sub-item" title="Applicants — Programme applications"><div class="t">Applicants</div><div class="d">Programme applications</div></div><div class="wf-sub-item active" title="Document review — LGCSE extract + verify"><div class="t">Document review</div><div class="d">LGCSE extract + verify</div></div><div class="wf-sub-item" title="Evaluations — Needed assessments"><div class="t">Evaluations</div><div class="d">Needed assessments</div></div><div class="wf-sub-item" title="Intake settings — Periods · subjects · schools"><div class="t">Intake settings</div><div class="d">Periods · subjects · schools</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Document review</span></div>
+            <div class="wf-crumbs" title="Admin / Document review"><span>Admin</span><span>/</span><span class="cur">Document review</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Document review</h3>
-      <p class="sub">LGCSE extract + verify (FM-04)</p>
-      <p class="wf-ds-map">DS: <code>DataTable · DetailSectionCard · DetailField · Button · FileUploadField read-only</code></p>
+      <h3 title="Document review">Document review</h3>
+      <p class="sub" title="LGCSE extract + verify">LGCSE extract + verify</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">FileUploadField</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">Button</span><span class="wf-ds-chip">IssueCard</span><span class="wf-ds-chip">EmptyState</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Applicant</span><span>Document</span><span>Extract</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Thabo M.</span><span>LGCSE.pdf</span><span>Pending</span><span>Needs extract</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Palesa N.</span><span>LGCSE.pdf</span><span>6 subjects</span><span>Verified</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-form">
-  <div class="wf-form-row"><label>Certificate number</label><div class="wf-input">LG-2024-01422</div></div>
-  <div class="wf-form-row"><label>Institution</label><div class="wf-input">ECOL</div></div>
-  <div class="wf-form-row"><label>Subjects</label><div class="wf-input">English A · Maths B · …</div></div>
-  <div class="wf-actions">
-    <button type="button" class="wf-btn">Run extract</button>
-    <button type="button" class="wf-btn primary">Verify documents</button>
-  </div>
-</div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-issue">2 extracts pending — IssueCard pattern</div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Applicant</span><span>Document</span><span>Extract</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="Thabo M.">Thabo M.</span><span title="LGCSE.pdf">LGCSE.pdf</span><span title="Pending">Pending</span><span title="Needs extract">Needs extract</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="Palesa N.">Palesa N.</span><span title="LGCSE.pdf">LGCSE.pdf</span><span title="6 subjects">6 subjects</span><span title="Verified">Verified</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-file-tile"><div class="ico" style="width:2rem;height:2rem;border-radius:.35rem;background:var(--wf-elevated);border:1px solid var(--wf-line);flex:0 0 auto"></div><div class="meta"><div class="name" title="LGCSE.pdf">LGCSE.pdf · FileUploadField readOnly</div><div class="wf-field-label">248 KB · surface-raised tile</div></div></div><div class="wf-form"><div class="wf-form-row"><label>Certificate number</label><div class="wf-input" title="LG-2024-01422">LG-2024-01422</div></div><div class="wf-form-row"><label>Institution</label><div class="wf-input" title="ECOL">ECOL</div></div><div class="wf-form-row"><label>Subjects</label><div class="wf-input" title="English A · Maths B · …">English A · Maths B · …</div></div><div class="wf-actions"><button type="button" class="wf-btn">Run extract</button><button type="button" class="wf-btn primary">Verify documents</button></div></div></div>
         </div>
       </div>
     </div></div>
@@ -121,240 +95,182 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Finance</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot active" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item active" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Finance">Finance</h4></div><div class="wf-subside-list"><div class="wf-sub-item active" title="Payments — Fee receipts"><div class="t">Payments</div><div class="d">Fee receipts</div></div><div class="wf-sub-item" title="Fees &amp; Fines — Pricing catalogue"><div class="t">Fees &amp; Fines</div><div class="d">Pricing catalogue</div></div><div class="wf-sub-item" title="Sponsors — NMDS / merit schemes"><div class="t">Sponsors</div><div class="d">NMDS / merit schemes</div></div><div class="wf-sub-item" title="Payment plans — Installment rules"><div class="t">Payment plans</div><div class="d">Installment rules</div></div><div class="wf-sub-item" title="Banks — Settlement accounts"><div class="t">Banks</div><div class="d">Settlement accounts</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Payments</span></div>
+            <div class="wf-crumbs" title="Admin / Payments"><span>Admin</span><span>/</span><span class="cur">Payments</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Payments</h3>
-      <p class="sub">Application fee verification queue (FM-09)</p>
-      <p class="wf-ds-map">DS: <code>DataTable · DetailSectionCard · Badge · PageActionBar</code></p>
+      <h3 title="Payments">Payments</h3>
+      <p class="sub" title="Demo fee receipts · sponsor coverage">Demo fee receipts · sponsor coverage</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">SummaryCard</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">SegmentedTabs</span><span class="wf-ds-chip">PageActionBar</span><span class="wf-ds-chip">RecordSummaryCard</span><span class="wf-ds-chip">Button</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Applicant</span><span>Amount</span><span>Proof</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Thabo M.</span><span>LSL 300</span><span>payment.pdf</span><span>Pending verify</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Palesa N.</span><span>LSL 300</span><span>payment.pdf</span><span>Verified</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-actions"><button type="button" class="wf-btn primary">Verify payment</button></div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Received</div><div class="val">LSL 84k</div></div><div class="wf-summary-card"><div class="lbl">Pending</div><div class="val">LSL 12k</div></div><div class="wf-summary-card"><div class="lbl">Sponsored</div><div class="val">68%</div></div><div class="wf-summary-card"><div class="lbl">Overdue</div><div class="val">3</div></div></div><div class="wf-seg"><span class="on">Receipts</span><span>Pending</span><span>Sponsored</span></div><div style="height:.55rem"></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Type</span><span>Amount</span><span>Sponsor</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="Tuition">Tuition</span><span title="LSL 4,500">LSL 4,500</span><span title="NMDS">NMDS</span><span title="Paid">Paid</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Palesa N.">Palesa N.</span><span title="Fine">Fine</span><span title="LSL 150">LSL 150</span><span title="—">—</span><span title="Open">Open</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-actionbar"><div class="lead" title="PageActionBar · leading status">PageActionBar · leading status</div><div class="wf-actions"><button type="button" class="wf-btn primary">Record payment</button></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="fees">
-    <h2>Fees & Fines — /admin/fees</h2>
-    <p class="wf-lede">FM-09 · newer CMS Finance → Fees and Fines</p>
+    <h2>Fees &amp; Fines — /admin/fees</h2>
+    <p class="wf-lede">FM-09 · newer CMS Pricing / Fees and Fines</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Finance</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot active" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item active" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Finance">Finance</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Payments — Fee receipts"><div class="t">Payments</div><div class="d">Fee receipts</div></div><div class="wf-sub-item active" title="Fees &amp; Fines — Pricing catalogue"><div class="t">Fees &amp; Fines</div><div class="d">Pricing catalogue</div></div><div class="wf-sub-item" title="Sponsors — NMDS / merit schemes"><div class="t">Sponsors</div><div class="d">NMDS / merit schemes</div></div><div class="wf-sub-item" title="Payment plans — Installment rules"><div class="t">Payment plans</div><div class="d">Installment rules</div></div><div class="wf-sub-item" title="Banks — Settlement accounts"><div class="t">Banks</div><div class="d">Settlement accounts</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Fees & Fines</span></div>
+            <div class="wf-crumbs" title="Admin / Fees & Fines"><span>Admin</span><span>/</span><span class="cur">Fees &amp; Fines</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Fees & Fines</h3>
-      <p class="sub">Campus finance profile catalogue preview (FM-09)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DetailField · DataTable</code></p>
+      <h3 title="Fees &amp; Fines">Fees &amp; Fines</h3>
+      <p class="sub" title="Catalogue · fine codes · payment plans">Catalogue · fine codes · payment plans</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">ChipField</span><span class="wf-ds-chip">Switch</span><span class="wf-ds-chip">Input</span><span class="wf-ds-chip">Button</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-form">
-  <div class="wf-field-label">campus-lesotho · LSL</div>
-  <div class="wf-form-row"><label>Application fee (local)</label><div class="wf-input">LSL 300.00</div></div>
-  <div class="wf-form-row"><label>Application fee (international)</label><div class="wf-input">LSL 300.00</div></div>
-</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Code</span><span>Label</span><span>Amount</span><span>Kind</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>APP</span><span>Application fee</span><span>LSL 300</span><span>fee</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>ACC</span><span>Acceptance fee</span><span>LSL 1,500</span><span>fee</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>REG</span><span>Registration</span><span>LSL 2,000</span><span>fee</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-form"><div class="wf-form-row"><label>Catalogue status (Switch)</label><div class="wf-input" title="Published">Published</div></div><div class="wf-form-row"><label>Fine codes (ChipField)</label><div class="wf-input" title="Late · Library · Card">Late · Library · Card</div></div><div class="wf-form-row"><label>Default plan</label><div class="wf-input" title="3 installments">3 installments</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Code</span><span>Label</span><span>Amount</span><span>Plan</span></div><div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="TUI-BA">TUI-BA</span><span title="BA Design tuition">BA Design tuition</span><span title="LSL 18,000">LSL 18,000</span><span title="3×">3×</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="FINE-LATE">FINE-LATE</span><span title="Late registration">Late registration</span><span title="LSL 250">LSL 250</span><span title="—">—</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-actionbar"><div class="lead" title="Catalogue draft saved">Catalogue draft saved</div><div class="wf-actions"><button type="button" class="wf-btn primary">Publish</button></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="registrations">
     <h2>Registrations — /admin/registrations</h2>
-    <p class="wf-lede">FM-08 · newer CMS Registry → Registration</p>
+    <p class="wf-lede">FM-08 · newer CMS Registration screenshots 043–048</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Registry</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot active" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item active" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Registry">Registry</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Students — Active pupil directory"><div class="t">Students</div><div class="d">Active pupil directory</div></div><div class="wf-sub-item" title="Student file — 12-tab CAP-53 record"><div class="t">Student file</div><div class="d">12-tab CAP-53 record</div></div><div class="wf-sub-item" title="Documents — Linked student files"><div class="t">Documents</div><div class="d">Linked student files</div></div><div class="wf-sub-item active" title="Registrations — Term enrolment"><div class="t">Registrations</div><div class="d">Term enrolment</div></div><div class="wf-sub-item" title="Student status — Holds · remissions"><div class="t">Student status</div><div class="d">Holds · remissions</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Registrations</span></div>
+            <div class="wf-crumbs" title="Admin / Registrations"><span>Admin</span><span>/</span><span class="cur">Registrations</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Registrations</h3>
-      <p class="sub">Module request clearance · NMDS columns (FM-08)</p>
-      <p class="wf-ds-map">DS: <code>DataTable · Badge · DetailSectionCard · PageActionBar</code></p>
+      <h3 title="Registrations">Registrations</h3>
+      <p class="sub" title="Term enrolment · module picks">Term enrolment · module picks</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">ChipField</span><span class="wf-ds-chip">PageActionBar</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">Button</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Sponsor</span><span>Borrower</span><span>Basis</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>NMDS</span><span>BR-1001</span><span>verified-payment</span><span>Awaiting clearance</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Palesa N.</span><span>Merit</span><span>—</span><span>approved-arrangement</span><span>Cleared</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-actions"><button type="button" class="wf-btn primary">Clear registration</button></div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Programme</span><span>Term</span><span>Modules</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="BA Design">BA Design</span><span title="2026/1">2026/1</span><span title="4">4</span><span title="Active">Active</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Palesa N.">Palesa N.</span><span title="BSc IT">BSc IT</span><span title="2026/1">2026/1</span><span title="5">5</span><span title="Pending">Pending</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-form"><div class="wf-form-row"><label>Modules (ChipField)</label><div class="wf-input" title="DES101 · DES102 · DES110">DES101 · DES102 · DES110</div></div><div class="wf-form-row"><label>Hold</label><div class="wf-input" title="None">None</div></div><div class="wf-actions"><button type="button" class="wf-btn primary">Confirm enrolment</button></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="sponsors">
     <h2>Sponsors — /admin/sponsors</h2>
-    <p class="wf-lede">FM-08 · newer CMS Finance → Sponsors + Create Sponsorship</p>
+    <p class="wf-lede">FM-08 · newer CMS Finance → Sponsors</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Finance</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot active" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item active" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Finance">Finance</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Payments — Fee receipts"><div class="t">Payments</div><div class="d">Fee receipts</div></div><div class="wf-sub-item" title="Fees &amp; Fines — Pricing catalogue"><div class="t">Fees &amp; Fines</div><div class="d">Pricing catalogue</div></div><div class="wf-sub-item active" title="Sponsors — NMDS / merit schemes"><div class="t">Sponsors</div><div class="d">NMDS / merit schemes</div></div><div class="wf-sub-item" title="Payment plans — Installment rules"><div class="t">Payment plans</div><div class="d">Installment rules</div></div><div class="wf-sub-item" title="Banks — Settlement accounts"><div class="t">Banks</div><div class="d">Settlement accounts</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Sponsors</span></div>
+            <div class="wf-crumbs" title="Admin / Sponsors"><span>Admin</span><span>/</span><span class="cur">Sponsors</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Sponsorship master</h3>
-      <p class="sub">Create Demo schemes linked to student-file awards (FM-08)</p>
-      <p class="wf-ds-map">DS: <code>ContentSection · DetailSectionCard · Input · Button · DataTable</code></p>
+      <h3 title="Sponsors">Sponsors</h3>
+      <p class="sub" title="NMDS / merit schemes · borrower links">NMDS / merit schemes · borrower links</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">Input</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">LinkedList</span><span class="wf-ds-chip">Button</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-form">
-  <div class="wf-form-row"><label>Scheme name</label><div class="wf-input">Partner scholarship</div></div>
-  <div class="wf-actions"><button type="button" class="wf-btn primary">Create sponsorship</button></div>
-</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Scheme</span><span>Code</span><span>Status</span><span>Awards</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>NMDS</span><span>NMDS</span><span>Active</span><span>12</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Merit scholarship</span><span>MERIT</span><span>Active</span><span>3</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-form"><div class="wf-form-row"><label>Scheme</label><div class="wf-input" title="NMDS">NMDS</div></div><div class="wf-form-row"><label>Borrower id</label><div class="wf-input" title="BR-1001">BR-1001</div></div><div class="wf-form-row"><label>Coverage</label><div class="wf-input" title="Tuition + stipend">Tuition + stipend</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Scheme</span><span>Borrower</span><span>Coverage</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="NMDS">NMDS</span><span title="BR-1001">BR-1001</span><span title="Tuition">Tuition</span><span title="Active">Active</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Palesa N.">Palesa N.</span><span title="Merit">Merit</span><span title="MR-22">MR-22</span><span title="Tuition">Tuition</span><span title="Active">Active</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-form"><div class="wf-field-label">LinkedList · panel</div><div class="wf-sub-item active"><div class="t">NMDS award letter</div><div class="d">Linked document</div></div><div class="wf-sub-item"><div class="t">Bank mandate</div><div class="d">Settlement</div></div></div><div class="wf-actionbar"><div class="lead" title="Sponsor link dirty">Sponsor link dirty</div><div class="wf-actions"><button type="button" class="wf-btn primary">Save scheme</button></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="students">
     <h2>Students list — /admin/students</h2>
-    <p class="wf-lede">FM-07 · newer CMS Registry → Students</p>
+    <p class="wf-lede">FM-07 · newer CMS Academic → Students</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Registry</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot active" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item active" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Registry">Registry</h4></div><div class="wf-subside-list"><div class="wf-sub-item active" title="Students — Active pupil directory"><div class="t">Students</div><div class="d">Active pupil directory</div></div><div class="wf-sub-item" title="Student file — 12-tab CAP-53 record"><div class="t">Student file</div><div class="d">12-tab CAP-53 record</div></div><div class="wf-sub-item" title="Documents — Linked student files"><div class="t">Documents</div><div class="d">Linked student files</div></div><div class="wf-sub-item" title="Registrations — Term enrolment"><div class="t">Registrations</div><div class="d">Term enrolment</div></div><div class="wf-sub-item" title="Student status — Holds · remissions"><div class="t">Student status</div><div class="d">Holds · remissions</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Students</span></div>
+            <div class="wf-crumbs" title="Admin / Students"><span>Admin</span><span>/</span><span class="cur">Students</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Students</h3>
-      <p class="sub">Registry list entry to 12-tab file (FM-07)</p>
-      <p class="wf-ds-map">DS: <code>AdminTable / DataTable · ContentSection · Badge · PortalBreadcrumb</code></p>
+      <h3 title="Students">Students</h3>
+      <p class="sub" title="Active directory · open file workspace">Active directory · open file workspace</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">ContentSection</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">AdminTable</span><span class="wf-ds-chip">PortalBreadcrumb</span><span class="wf-ds-chip">SummaryCard</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">EmptyState</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Programme</span><span>Term</span><span>Sponsor</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>BA Design</span><span>2026/1</span><span>NMDS</span><span>Active</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Palesa N.</span><span>BSc IT</span><span>2026/1</span><span>Merit</span><span>Active</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Active</div><div class="val">248</div></div><div class="wf-summary-card"><div class="lbl">On hold</div><div class="val">6</div></div><div class="wf-summary-card"><div class="lbl">Graduating</div><div class="val">40</div></div><div class="wf-summary-card"><div class="lbl">New term</div><div class="val">112</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Programme</span><span>Term</span><span>Sponsor</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="BA Design">BA Design</span><span title="2026/1">2026/1</span><span title="NMDS">NMDS</span><span title="Active">Active</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Palesa N.">Palesa N.</span><span title="BSc IT">BSc IT</span><span title="2026/1">2026/1</span><span title="Merit">Merit</span><span title="Active">Active</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="student-file">
-    <h2>Student file — /admin/students · tabs</h2>
+    <h2>Student file (12 tabs) — /admin/students · *</h2>
     <p class="wf-lede">FM-07 · screenshots 006–041 Students Selected *</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Registry</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot active" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item active" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Registry">Registry</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Students — Active pupil directory"><div class="t">Students</div><div class="d">Active pupil directory</div></div><div class="wf-sub-item active" title="Student file — 12-tab CAP-53 record"><div class="t">Student file</div><div class="d">12-tab CAP-53 record</div></div><div class="wf-sub-item" title="Documents — Linked student files"><div class="t">Documents</div><div class="d">Linked student files</div></div><div class="wf-sub-item" title="Registrations — Term enrolment"><div class="t">Registrations</div><div class="d">Term enrolment</div></div><div class="wf-sub-item" title="Student status — Holds · remissions"><div class="t">Student status</div><div class="d">Holds · remissions</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Students</span><span>/</span><span class="cur">Demo Lesotho Student</span></div>
+            <div class="wf-crumbs" title="Students / Demo Lesotho Student"><span>Students</span><span>/</span><span class="cur">Demo Lesotho Student</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Student file</h3>
-      <p class="sub">12-tab CAP-53 style Demo file (FM-07)</p>
-      <p class="wf-ds-map">DS: <code>TabbedPagePanel / Tabs · DetailSectionCard · DetailField · DataTable · AuditTrail · Badge</code></p>
+      <h3 title="Student file">Student file</h3>
+      <p class="sub" title="12-tab CAP-53 style Demo file">12-tab CAP-53 style Demo file</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">AdminRecordWorkspace</span><span class="wf-ds-chip">AdminRecordPanel</span><span class="wf-ds-chip">AdminRecordActions</span><span class="wf-ds-chip">TabbedPagePanel</span><span class="wf-ds-chip">Tabs</span><span class="wf-ds-chip">SegmentedTabs</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">FileUploadField</span><span class="wf-ds-chip">AuditTrail</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">LinkedList</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-panel" style="max-height:none">
-  <div class="wf-panel-body" style="display:block;text-align:left;justify-items:stretch">
-    <div style="display:flex;gap:1rem;align-items:center;margin-bottom:.75rem">
-      <div class="wf-avatar" style="width:4rem;height:4rem"></div>
-      <div>
-        <div class="wf-field-value">Demo Lesotho Student</div>
-        <div class="wf-field-label">STU-LES-0001 · BA Design</div>
-        <span class="wf-status-pill">Active</span>
-      </div>
-    </div>
-    <div class="wf-file-tabs"><div class="wf-file-tab active">Academics</div><div class="wf-file-tab">Student</div><div class="wf-file-tab">Registration</div><div class="wf-file-tab">Attendance</div><div class="wf-file-tab">Card</div><div class="wf-file-tab">Graduation</div><div class="wf-file-tab">Finance</div><div class="wf-file-tab">Sponsors</div><div class="wf-file-tab">Education</div><div class="wf-file-tab">Documents</div><div class="wf-file-tab">Notes</div><div class="wf-file-tab">Audit</div></div>
-    <div style="padding-top:.85rem;display:grid;gap:.65rem">
-      <div class="wf-form-row"><label>Programme status</label><div class="wf-input">Enrolled</div></div>
-      <div class="wf-form-row"><label>GPA / CGPA</label><div class="wf-input">3.2 / 3.1</div></div>
-      <div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Module</span><span>Mark</span><span>Grade</span></div>
-      <div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES101</span><span>72</span><span>A-</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES102</span><span>68</span><span>B+</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-    </div>
-  </div>
-</div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-panel" style="max-height:none"><div class="wf-panel-body" style="display:block;text-align:left;justify-items:stretch"><div style="display:flex;gap:1rem;align-items:center;margin-bottom:.75rem;min-width:0"><div class="wf-avatar" style="width:4rem;height:4rem;flex:0 0 auto"></div><div style="min-width:0"><div class="wf-field-value" title="Demo Lesotho Student">Demo Lesotho Student</div><div class="wf-field-label">STU-LES-0001 · BA Design</div><span class="wf-status-pill">Active</span></div></div><div class="wf-file-tabs"><div class="wf-file-tab active">Academics</div><div class="wf-file-tab">Student</div><div class="wf-file-tab">Registration</div><div class="wf-file-tab">Attendance</div><div class="wf-file-tab">Card</div><div class="wf-file-tab">Graduation</div><div class="wf-file-tab">Finance</div><div class="wf-file-tab">Sponsors</div><div class="wf-file-tab">Education</div><div class="wf-file-tab">Documents</div><div class="wf-file-tab">Notes</div><div class="wf-file-tab">Audit</div></div><div style="padding-top:.85rem;display:grid;gap:.65rem"><div class="wf-form"><div class="wf-form-row"><label>Programme status</label><div class="wf-input" title="Enrolled">Enrolled</div></div><div class="wf-form-row"><label>GPA / CGPA</label><div class="wf-input" title="3.2 / 3.1">3.2 / 3.1</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Module</span><span>Mark</span><span>Grade</span></div><div class="row selected" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span title="DES101">DES101</span><span title="72">72</span><span title="A-">A-</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span title="DES102">DES102</span><span title="68">68</span><span title="B+">B+</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-file-tile"><div class="ico" style="width:2rem;height:2rem;border-radius:.35rem;background:var(--wf-elevated);border:1px solid var(--wf-line);flex:0 0 auto"></div><div class="meta"><div class="name">Identity.pdf · FileUploadField</div><div class="wf-field-label">readOnly · Documents tab</div></div></div><div class="wf-audit"><div class="wf-audit-row"><div class="av"></div><div class="txt"><strong>Registrar · Status Active</strong><span>AuditTrail · 3 days ago</span></div></div></div></div></div></div><div class="wf-actionbar"><div class="lead" title="AdminRecordActions · Edit mode">AdminRecordActions · Edit mode</div><div class="wf-actions"><button type="button" class="wf-btn">Cancel</button><button type="button" class="wf-btn primary">Save</button></div></div></div>
         </div>
       </div>
     </div><div class="wf-frame phone">
-      <div class="wf-frame-label"><span>Phone · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Phone · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot active" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Students</span><span>/</span><span class="cur">File</span></div>
+            <div class="wf-crumbs" title="Students / Demo Lesotho Student"><span>Students</span><span>/</span><span class="cur">Demo Lesotho Student</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Student file</h3>
-      <p class="sub">Phone stacks tabs + content</p>
-      <p class="wf-ds-map">DS: <code>same DS components · stacked</code></p>
+      <h3 title="Student file">Student file</h3>
+      <p class="sub" title="Phone stacks tabs + content">Phone stacks tabs + content</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">AdminRecordWorkspace</span><span class="wf-ds-chip">AdminRecordPanel</span><span class="wf-ds-chip">AdminRecordActions</span><span class="wf-ds-chip">TabbedPagePanel</span><span class="wf-ds-chip">Tabs</span><span class="wf-ds-chip">SegmentedTabs</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">FileUploadField</span><span class="wf-ds-chip">AuditTrail</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">LinkedList</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-file-tabs"><div class="wf-file-tab">Academics</div><div class="wf-file-tab active">Sponsors</div><div class="wf-file-tab">Graduation</div><div class="wf-file-tab">…</div></div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Scheme</span><span>Borrower</span><span>Coverage</span></div>
-      <div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>NMDS</span><span>BR-1001</span><span>Tuition</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-file-tabs"><div class="wf-file-tab">Academics</div><div class="wf-file-tab active">Sponsors</div><div class="wf-file-tab">Graduation</div><div class="wf-file-tab">…</div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Scheme</span><span>Borrower</span><span>Coverage</span></div><div class="row selected" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span title="NMDS">NMDS</span><span title="BR-1001">BR-1001</span><span title="Tuition">Tuition</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div></div>
         </div>
       </div>
     </div></div>
@@ -365,36 +281,24 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Completions</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot active" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item active" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Completions">Completions</h4></div><div class="wf-subside-list"><div class="wf-sub-item active" title="Graduations — Ceremonies · hoods"><div class="t">Graduations</div><div class="d">Ceremonies · hoods</div></div><div class="wf-sub-item" title="Certificates — Print batches · QR"><div class="t">Certificates</div><div class="d">Print batches · QR</div></div><div class="wf-sub-item" title="Remarks — Re-assessment requests"><div class="t">Remarks</div><div class="d">Re-assessment requests</div></div><div class="wf-sub-item" title="Name tags — Ceremony stationery"><div class="t">Name tags</div><div class="d">Ceremony stationery</div></div><div class="wf-sub-item" title="Clearance — Finance gate"><div class="t">Clearance</div><div class="d">Finance gate</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Graduations</span></div>
+            <div class="wf-crumbs" title="Admin / Graduations"><span>Admin</span><span>/</span><span class="cur">Graduations</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Graduation ceremonies</h3>
-      <p class="sub">Ceremony queue + hood / name-tag preview (FM-10)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · DetailField</code></p>
+      <h3 title="Graduation ceremonies">Graduation ceremonies</h3>
+      <p class="sub" title="Ceremony queue + hood / name-tag preview">Ceremony queue + hood / name-tag preview</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">SummaryCard</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">Button</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(6, minmax(0,1fr));"><span>Ceremony</span><span>Date</span><span>Gowns</span><span>RSVP</span><span>Clearance</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(6, minmax(0,1fr));"><span>Nov 2026</span><span>2026-11-14</span><span>40</span><span>32</span><span>5</span><span>Open</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-form">
-  <div class="wf-form-row"><label>Name tag sample</label><div class="wf-input">DEMO LESOTHO STUDENT</div></div>
-</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>Hood size</span><span>Count</span></div>
-      <div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>S</span><span>8</span></div><div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>M</span><span>18</span></div><div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>L</span><span>14</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Gowns</div><div class="val">40</div></div><div class="wf-summary-card"><div class="lbl">RSVP</div><div class="val">32</div></div><div class="wf-summary-card"><div class="lbl">Clearance holds</div><div class="val">5</div></div><div class="wf-summary-card"><div class="lbl">Hood S/M/L</div><div class="val">8/18/14</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(6, minmax(0,1fr));"><span>Ceremony</span><span>Date</span><span>Gowns</span><span>RSVP</span><span>Clearance</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(6, minmax(0,1fr));"><span title="Nov 2026">Nov 2026</span><span title="2026-11-14">2026-11-14</span><span title="40">40</span><span title="32">32</span><span title="5">5</span><span title="Open">Open</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-form"><div class="wf-form-row"><label>Name tag sample</label><div class="wf-input" title="DEMO LESOTHO STUDENT">DEMO LESOTHO STUDENT</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>Hood size</span><span>Count</span></div><div class="row selected" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span title="S">S</span><span title="8">8</span></div><div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span title="M">M</span><span title="18">18</span></div><div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span title="L">L</span><span title="14">14</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-actionbar"><div class="lead" title="Ceremony open">Ceremony open</div><div class="wf-actions"><button type="button" class="wf-btn">Preview tags</button><button type="button" class="wf-btn primary">Confirm gown</button></div></div></div>
         </div>
       </div>
     </div></div>
@@ -405,29 +309,24 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Completions</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot active" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item active" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Completions">Completions</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Graduations — Ceremonies · hoods"><div class="t">Graduations</div><div class="d">Ceremonies · hoods</div></div><div class="wf-sub-item active" title="Certificates — Print batches · QR"><div class="t">Certificates</div><div class="d">Print batches · QR</div></div><div class="wf-sub-item" title="Remarks — Re-assessment requests"><div class="t">Remarks</div><div class="d">Re-assessment requests</div></div><div class="wf-sub-item" title="Name tags — Ceremony stationery"><div class="t">Name tags</div><div class="d">Ceremony stationery</div></div><div class="wf-sub-item" title="Clearance — Finance gate"><div class="t">Clearance</div><div class="d">Finance gate</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Certificates</span></div>
+            <div class="wf-crumbs" title="Admin / Certificates"><span>Admin</span><span>/</span><span class="cur">Certificates</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Certificates & QR print</h3>
-      <p class="sub">Demo batches + QR watermark (FM-12)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · Button · Badge</code></p>
+      <h3 title="Certificates &amp; QR print">Certificates &amp; QR print</h3>
+      <p class="sub" title="Demo batches + QR watermark">Demo batches + QR watermark</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">Button</span><span class="wf-ds-chip">FileUploadField</span><span class="wf-ds-chip">EmptyState</span><span class="wf-ds-chip">PageActionBar</span><span class="wf-ds-chip">Popup</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Batch</span><span>Type</span><span>Stock</span><span>Generated</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>DEMO-CERT-01</span><span>Certificate</span><span>100</span><span>12</span><span>Open</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>DEMO-TAG-01</span><span>Name tag</span><span>200</span><span>40</span><span>Open</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-actions"><button type="button" class="wf-btn primary">Generate DEMO certificate</button></div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Batch</span><span>Type</span><span>Stock</span><span>Generated</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="DEMO-CERT-01">DEMO-CERT-01</span><span title="Certificate">Certificate</span><span title="100">100</span><span title="12">12</span><span title="Open">Open</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="DEMO-TAG-01">DEMO-TAG-01</span><span title="Name tag">Name tag</span><span title="200">200</span><span title="40">40</span><span title="Open">Open</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-empty">EmptyState · no print job running</div><div class="wf-actionbar"><div class="lead" title="Ready to generate">Ready to generate</div><div class="wf-actions"><button type="button" class="wf-btn primary">Generate DEMO certificate</button></div></div></div>
         </div>
       </div>
     </div></div>
@@ -438,29 +337,24 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Completions</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item active" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Completions">Completions</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Graduations — Ceremonies · hoods"><div class="t">Graduations</div><div class="d">Ceremonies · hoods</div></div><div class="wf-sub-item" title="Certificates — Print batches · QR"><div class="t">Certificates</div><div class="d">Print batches · QR</div></div><div class="wf-sub-item active" title="Remarks — Re-assessment requests"><div class="t">Remarks</div><div class="d">Re-assessment requests</div></div><div class="wf-sub-item" title="Name tags — Ceremony stationery"><div class="t">Name tags</div><div class="d">Ceremony stationery</div></div><div class="wf-sub-item" title="Clearance — Finance gate"><div class="t">Clearance</div><div class="d">Finance gate</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Remarks</span></div>
+            <div class="wf-crumbs" title="Admin / Remarks"><span>Admin</span><span>/</span><span class="cur">Remarks</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Remark requests</h3>
-      <p class="sub">Re-assessment fee + Demo decision (FM-11)</p>
-      <p class="wf-ds-map">DS: <code>DataTable · Badge · PageActionBar · DetailSectionCard</code></p>
+      <h3 title="Remark requests">Remark requests</h3>
+      <p class="sub" title="Re-assessment fee + Demo decision">Re-assessment fee + Demo decision</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">IssueCard</span><span class="wf-ds-chip">RadioField</span><span class="wf-ds-chip">PageActionBar</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">Button</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Student</span><span>Module</span><span>Fee</span><span>Status</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>DES101</span><span>LSL 250</span><span>Open</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-actions"><button type="button" class="wf-btn primary">Record decision</button></div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-issue">Open remark · fee LSL 250 unpaid — IssueCard</div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Student</span><span>Module</span><span>Fee</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="DES101">DES101</span><span title="LSL 250">LSL 250</span><span title="Open">Open</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-form"><div class="wf-form-row"><label>Decision (RadioField)</label><div class="wf-input" title="Uphold original mark">Uphold original mark</div></div><div class="wf-form-row"><label>Note</label><div class="wf-input" title="Demo decision">Demo decision</div></div><div class="wf-actions"><button type="button" class="wf-btn primary">Record decision</button></div></div></div>
         </div>
       </div>
     </div></div>
@@ -471,148 +365,112 @@
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Teaching</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item active" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Teaching">Teaching</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Attendance — Session rolls"><div class="t">Attendance</div><div class="d">Session rolls</div></div><div class="wf-sub-item active" title="Gradebook — Module marks"><div class="t">Gradebook</div><div class="d">Module marks</div></div><div class="wf-sub-item" title="Timetable — Sessions · venues"><div class="t">Timetable</div><div class="d">Sessions · venues</div></div><div class="wf-sub-item" title="Curriculum — Modules · periods"><div class="t">Curriculum</div><div class="d">Modules · periods</div></div><div class="wf-sub-item" title="Assessments — Types · entries"><div class="t">Assessments</div><div class="d">Types · entries</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Academic</span></div>
+            <div class="wf-crumbs" title="Admin / Academic"><span>Admin</span><span>/</span><span class="cur">Academic</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Academic overview</h3>
-      <p class="sub">Attendance sessions + gradebook matrix (FM-16)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · SegmentedTabs</code></p>
+      <h3 title="Academic">Academic</h3>
+      <p class="sub" title="Attendance rolls + gradebook">Attendance rolls + gradebook</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">SegmentedTabs</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">SummaryCard</span><span class="wf-ds-chip">Button</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Module</span><span>Sessions recorded</span><span>Scheduled</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES101</span><span>8</span><span>10</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES102</span><span>6</span><span>10</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Student</span><span>DES101</span><span>DES102</span></div>
-      <div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>A-</span><span>B+</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-seg"><span class="on">Gradebook</span><span>Attendance</span><span>Modules</span></div><div style="height:.55rem"></div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Sessions</div><div class="val">24</div></div><div class="wf-summary-card"><div class="lbl">Avg attendance</div><div class="val">92%</div></div><div class="wf-summary-card"><div class="lbl">Marks entered</div><div class="val">18</div></div><div class="wf-summary-card"><div class="lbl">Missing</div><div class="val">3</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Module</span><span>Student</span><span>Mark</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="DES101">DES101</span><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="72">72</span><span title="Final">Final</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="DES102">DES102</span><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="—">—</span><span title="Draft">Draft</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="timetable">
     <h2>Timetable — /admin/timetable</h2>
-    <p class="wf-lede">FM-16 · newer CMS Timetable / Generator / Venues</p>
+    <p class="wf-lede">FM-16 · newer CMS Exams → Timetables</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Teaching</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item active" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Teaching">Teaching</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Attendance — Session rolls"><div class="t">Attendance</div><div class="d">Session rolls</div></div><div class="wf-sub-item" title="Gradebook — Module marks"><div class="t">Gradebook</div><div class="d">Module marks</div></div><div class="wf-sub-item active" title="Timetable — Sessions · venues"><div class="t">Timetable</div><div class="d">Sessions · venues</div></div><div class="wf-sub-item" title="Curriculum — Modules · periods"><div class="t">Curriculum</div><div class="d">Modules · periods</div></div><div class="wf-sub-item" title="Assessments — Types · entries"><div class="t">Assessments</div><div class="d">Types · entries</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Timetable</span></div>
+            <div class="wf-crumbs" title="Admin / Timetable"><span>Admin</span><span>/</span><span class="cur">Timetable</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Timetable generator & venues</h3>
-      <p class="sub">Venue catalogue + Demo generator (FM-16)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · Button · DetailField</code></p>
+      <h3 title="Timetable">Timetable</h3>
+      <p class="sub" title="Sessions · venues · allocations">Sessions · venues · allocations</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">ChipField</span><span class="wf-ds-chip">Button</span><span class="wf-ds-chip">PageActionBar</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-actions"><button type="button" class="wf-btn primary">Run Demo generator</button></div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Venue</span><span>Type</span><span>Capacity</span></div>
-      <div class="row selected" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Studio A</span><span>Studio</span><span>24</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Lab 1</span><span>Lab</span><span>30</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Module</span><span>Venue</span><span>Day</span><span>Slot</span></div>
-      <div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>DES101</span><span>Studio A</span><span>Mon</span><span>09:00</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>DES102</span><span>Lab 1</span><span>Wed</span><span>11:00</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-form"><div class="wf-form-row"><label>Venues (ChipField)</label><div class="wf-input" title="Hall A · Lab 2">Hall A · Lab 2</div></div><div class="wf-form-row"><label>Session</label><div class="wf-input" title="Mon 09:00">Mon 09:00</div></div><div class="wf-form-row"><label>Module</label><div class="wf-input" title="DES101">DES101</div></div></div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Day</span><span>Time</span><span>Module</span><span>Venue</span><span>Cohort</span></div><div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Mon">Mon</span><span title="09:00">09:00</span><span title="DES101">DES101</span><span title="Hall A">Hall A</span><span title="BA1">BA1</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span title="Wed">Wed</span><span title="14:00">14:00</span><span title="DES102">DES102</span><span title="Lab 2">Lab 2</span><span title="BA1">BA1</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-actionbar"><div class="lead" title="Draft timetable">Draft timetable</div><div class="wf-actions"><button type="button" class="wf-btn primary">Publish sessions</button></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="analytics">
     <h2>Analytics — /admin/analytics</h2>
-    <p class="wf-lede">FM-17 · newer CMS Analytics (in-scope reports)</p>
+    <p class="wf-lede">FM-17 · newer CMS Reports / BI Ready</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Oversight</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item active" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Oversight">Oversight</h4></div><div class="wf-subside-list"><div class="wf-sub-item active" title="Analytics — Summary cards"><div class="t">Analytics</div><div class="d">Summary cards</div></div><div class="wf-sub-item" title="Discipline — Cases · outcomes"><div class="t">Discipline</div><div class="d">Cases · outcomes</div></div><div class="wf-sub-item" title="Access — Roles · SSO"><div class="t">Access</div><div class="d">Roles · SSO</div></div><div class="wf-sub-item" title="Activity — Audit trail"><div class="t">Activity</div><div class="d">Audit trail</div></div><div class="wf-sub-item" title="Reports — Board packs"><div class="t">Reports</div><div class="d">Board packs</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Analytics</span></div>
+            <div class="wf-crumbs" title="Admin / Analytics"><span>Admin</span><span>/</span><span class="cur">Analytics</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Campus analytics</h3>
-      <p class="sub">Demo count cards — no HR/Library (FM-17)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DetailField · SummaryCard pattern</code></p>
+      <h3 title="Analytics">Analytics</h3>
+      <p class="sub" title="Summary-card rhythm · board packs">Summary-card rhythm · board packs</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">SummaryCard</span><span class="wf-ds-chip">RecordSummaryCard</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DetailField</span><span class="wf-ds-chip">SegmentedTabs</span><span class="wf-ds-chip">EmptyState</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-kpi-grid"><div class="wf-kpi"><div class="val">128</div><div class="lbl">Active enrolments</div></div><div class="wf-kpi"><div class="val">42</div><div class="lbl">Admissions pipeline</div></div><div class="wf-kpi"><div class="val">17</div><div class="lbl">Registration requests</div></div><div class="wf-kpi"><div class="val">9</div><div class="lbl">Graduation clearances</div></div><div class="wf-kpi"><div class="val">5</div><div class="lbl">Sponsor schemes</div></div></div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-seg"><span class="on">Overview</span><span>Admissions</span><span>Finance</span><span>Exams</span></div><div style="height:.55rem"></div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Applicants</div><div class="val">318</div></div><div class="wf-summary-card"><div class="lbl">Enrolled</div><div class="val">248</div></div><div class="wf-summary-card"><div class="lbl">Fee recovery</div><div class="val">86%</div></div><div class="wf-summary-card"><div class="lbl">Clearance risk</div><div class="val">5</div></div></div><div class="wf-summary-row"><div class="wf-summary-card"><div class="lbl">Attendance</div><div class="val">92%</div></div><div class="wf-summary-card"><div class="lbl">Remarks open</div><div class="val">2</div></div><div class="wf-summary-card"><div class="lbl">Cert stock</div><div class="val">88</div></div><div class="wf-summary-card"><div class="lbl">Discipline</div><div class="val">1</div></div></div><div class="wf-empty">EmptyState · chart placeholder (portal owns series)</div></div>
         </div>
       </div>
     </div></div>
   </section>
   <section class="wf-section" id="discipline">
     <h2>Discipline — /admin/discipline</h2>
-    <p class="wf-lede">FM-18 · newer CMS Discipline</p>
+    <p class="wf-lede">FM-18 · newer CMS Discipline / referrals</p>
     <div class="wf-meta">
       <span class="wf-tag pkg">Design system layout</span>
       <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+      <span class="wf-tag">Two-level side · Oversight</span>
     </div>
     <div class="wf-frames"><div class="wf-frame">
-      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell · aside+edge</span></div>
       <div class="wf-shell">
-        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <aside class="wf-primary" aria-label="Primary navigation"><div class="wf-logo">Raisd · LKW</div><div class="wf-nav-group-label">Admin</div><div class="wf-nav-item" title="Overview"><span class="ico" aria-hidden="true"></span><span class="lbl">Overview</span></div><div class="wf-nav-item" title="Applicants"><span class="ico" aria-hidden="true"></span><span class="lbl">Applicants</span></div><div class="wf-nav-item" title="Students"><span class="ico" aria-hidden="true"></span><span class="lbl">Students</span></div><div class="wf-nav-item" title="Payments"><span class="ico" aria-hidden="true"></span><span class="lbl">Payments</span></div><div class="wf-nav-item" title="Fees &amp; Fines"><span class="ico" aria-hidden="true"></span><span class="lbl">Fees &amp; Fines</span></div><div class="wf-nav-item" title="Sponsors"><span class="ico" aria-hidden="true"></span><span class="lbl">Sponsors</span></div><div class="wf-nav-item" title="Registrations"><span class="ico" aria-hidden="true"></span><span class="lbl">Registrations</span></div><div class="wf-nav-item" title="Graduations"><span class="ico" aria-hidden="true"></span><span class="lbl">Graduations</span></div><div class="wf-nav-item" title="Certificates"><span class="ico" aria-hidden="true"></span><span class="lbl">Certificates</span></div><div class="wf-nav-item" title="Remarks"><span class="ico" aria-hidden="true"></span><span class="lbl">Remarks</span></div><div class="wf-nav-item" title="Academic"><span class="ico" aria-hidden="true"></span><span class="lbl">Academic</span></div><div class="wf-nav-item" title="Timetable"><span class="ico" aria-hidden="true"></span><span class="lbl">Timetable</span></div><div class="wf-nav-item" title="Analytics"><span class="ico" aria-hidden="true"></span><span class="lbl">Analytics</span></div><div class="wf-nav-item active" title="Discipline"><span class="ico" aria-hidden="true"></span><span class="lbl">Discipline</span></div><div class="wf-primary-foot"><div class="wf-nav-item" title="Log out"><span class="ico" aria-hidden="true"></span><span class="lbl">Log out</span></div></div></aside><aside class="wf-subside" aria-label="Secondary navigation"><div class="wf-subside-head"><div class="kicker">Sub-side · LinkedList</div><h4 title="Oversight">Oversight</h4></div><div class="wf-subside-list"><div class="wf-sub-item" title="Analytics — Summary cards"><div class="t">Analytics</div><div class="d">Summary cards</div></div><div class="wf-sub-item active" title="Discipline — Cases · outcomes"><div class="t">Discipline</div><div class="d">Cases · outcomes</div></div><div class="wf-sub-item" title="Access — Roles · SSO"><div class="t">Access</div><div class="d">Roles · SSO</div></div><div class="wf-sub-item" title="Activity — Audit trail"><div class="t">Activity</div><div class="d">Audit trail</div></div><div class="wf-sub-item" title="Reports — Board packs"><div class="t">Reports</div><div class="d">Board packs</div></div></div></aside>
         <div class="wf-main">
           <header class="wf-header">
-            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Discipline</span></div>
+            <div class="wf-crumbs" title="Admin / Discipline"><span>Admin</span><span>/</span><span class="cur">Discipline</span></div>
             <div class="wf-account" aria-hidden="true"></div>
           </header>
           <div class="wf-body"><div class="wf-title-row"><div>
       <div class="wf-field-label">Lesotho Demo</div>
-      <h3>Discipline</h3>
-      <p class="sub">Dishonesty / suspension / blocked (FM-18)</p>
-      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · Badge</code></p>
+      <h3 title="Discipline">Discipline</h3>
+      <p class="sub" title="Cases · outcomes · referrals">Cases · outcomes · referrals</p>
+      <div class="wf-ds-chips"><span class="wf-ds-chip">PortalShell</span><span class="wf-ds-chip">PortalSidebar</span><span class="wf-ds-chip">DetailSectionCard</span><span class="wf-ds-chip">DataTable</span><span class="wf-ds-chip">Badge</span><span class="wf-ds-chip">IssueCard</span><span class="wf-ds-chip">AuditTrail</span><span class="wf-ds-chip">RadioField</span><span class="wf-ds-chip">PageActionBar</span><span class="wf-ds-chip">FlowEditor</span></div>
     </div></div>
-    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
-<div class="wf-table">
-      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Student</span><span>Kind</span><span>Status</span><span>Opened</span></div>
-      <div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Demo Student</span><span>Academic dishonesty</span><span>Open</span><span>2026-10-12</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Neo M.</span><span>Suspension</span><span>Active</span><span>2026-09-01</span></div>
-      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
-    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div><div class="wf-issue">1 open referral — IssueCard</div><div class="wf-table"><div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Case</span><span>Student</span><span>Type</span><span>Status</span></div><div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span title="DISC-01">DISC-01</span><span title="Demo Lesotho Student">Demo Lesotho Student</span><span title="Misconduct">Misconduct</span><span title="Open">Open</span></div><div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div></div><div class="wf-form"><div class="wf-form-row"><label>Outcome (RadioField)</label><div class="wf-input" title="Warning">Warning</div></div><div class="wf-form-row"><label>FlowEditor step</label><div class="wf-input" title="Hearing scheduled">Hearing scheduled</div></div></div><div class="wf-audit"><div class="wf-audit-row"><div class="av"></div><div class="txt"><strong>Dean · Case opened</strong><span>AuditTrail · today</span></div></div></div><div class="wf-actionbar"><div class="lead" title="Case dirty">Case dirty</div><div class="wf-actions"><button type="button" class="wf-btn primary">Save outcome</button></div></div></div>
         </div>
       </div>
     </div></div>
   </section>
-  <div class="wf-callouts">
-    <div class="wf-callout">
-      <strong>Design-system adoption target</strong>
-      Directory desks → <code>AdminTable</code> / existing <code>DataTable</code>; student file → tabbed workspace with <code>AdminRecordPanel</code> when pin upgrades to 0.19.8; forms → <code>DetailField</code> + <code>ChipField</code>/<code>RadioField</code> where multi-select or Draft/Published applies.
-    </div>
-    <div class="wf-callout">
-      <strong>Out of scope</strong>
-      HRMS, LMS, Website, Library, Mail (FM-X). Applicant journey rewrite remains Faid-owned (FM-02).
-    </div>
-  </div>
 </main>
-<script src="../../nav-dropdown.js" defer></script>
-<script src="../../site-search.js" defer></script>
-<script src="../../keychain-access.js" defer></script>
 </body>
 </html>
