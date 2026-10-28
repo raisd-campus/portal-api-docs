@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T01:15:25.218Z",
+  "recordedAt": "2026-10-28T01:18:42.677Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -83,6 +83,21 @@
       "error": null,
       "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
       "recordedAt": "2026-10-28T00:19:24.910Z"
+    },
+    {
+      "sceneId": "app-accepted",
+      "roleId": "applicant",
+      "title": "Enrolment Accepted",
+      "fm": [
+        "FM-02",
+        "FM-06"
+      ],
+      "poster": "app-accepted.poster.jpg",
+      "bytes": 67377,
+      "detail": "applicant · Enrolment Accepted",
+      "error": null,
+      "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
+      "recordedAt": "2026-10-28T01:18:42.591Z"
     },
     {
       "sceneId": "fac-open",

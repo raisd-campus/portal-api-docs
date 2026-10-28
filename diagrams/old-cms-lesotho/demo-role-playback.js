@@ -8,7 +8,7 @@ export const ROLES = [
     label: "Applicant",
     portal: "https://apply.lesotho.raisd.co",
     account: "Keychain · fresh@raisd.demo (draft) · completed@raisd.demo (fee → offer)",
-    summary: "Apply → fee proof → offer accept (FM-02 / FM-09)",
+    summary: "Apply → fee → eligibility → offer → Enrolment Accepted (FM-02 / FM-09)",
     scenes: [
       {
         id: "app-signin",
@@ -76,9 +76,23 @@ export const ROLES = [
         steps: [
           "Wait until Registry releases the Offer (Registry role).",
           "Preview / download the DEMO Offer PDF.",
-          "Accept Enrolment — Applicant signs out; open Student with the new Demo account.",
+          "Accept Enrolment — case moves to Enrolment Accepted (next scene).",
         ],
         durationMs: 7500,
+      },
+      {
+        id: "app-accepted",
+        title: "Enrolment Accepted",
+        route: "/applications · accepted",
+        fm: ["FM-02", "FM-06"],
+        body: "Step 6 — Application Details shows Enrolment Accepted and Continue to Student Portal.",
+        detail: "After Accept Enrolment, Application Details shows the green Enrolment Accepted status, the completed progress row (payment → documents → confirm → offer), and Continue to Student Portal. This is the Applicant hand-off beat before Student module registration (FM-02 / FM-06). Use completed@raisd.demo — fresh@ is for draft only.",
+        steps: [
+          "Keychain → completed@raisd.demo (prepared accepted case).",
+          "Open the application — status reads Enrolment Accepted.",
+          "Continue to Student Portal to start registration.",
+        ],
+        durationMs: 7000,
       },
     ],
   },
@@ -602,6 +616,7 @@ export const SCENE_URLS = {
   "app-fee": "https://apply.lesotho.raisd.co/applications",
   "app-eligibility": "https://apply.lesotho.raisd.co/applications",
   "app-offer": "https://apply.lesotho.raisd.co/applications",
+  "app-accepted": "https://apply.lesotho.raisd.co/applications",
   "fac-open": "https://staff.lesotho.raisd.co/admin/applicants",
   "fac-rank": "https://staff.lesotho.raisd.co/admin/applicants",
   "fac-rec": "https://staff.lesotho.raisd.co/admin/applicants",

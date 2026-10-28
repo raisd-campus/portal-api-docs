@@ -661,6 +661,12 @@ async function runSceneActions(page, context, sceneId) {
       await ensureApplicantPersona(page, context, "completed")
       await openApplicantLetterPopup(page, context, "offer", sceneId)
       return "applicant offer · Accept Enrolment popup · poster-captured"
+    case "app-accepted":
+      await ensureApplicantPersona(page, context, "completed")
+      await openApplicantCase(page)
+      await page.getByText(/enrolment accepted/i).first().waitFor({ timeout: 20000 })
+      await dwell(page, 1800)
+      return "applicant · Enrolment Accepted"
     case "fac-open":
     case "fac-rank":
     case "fac-rec": {
