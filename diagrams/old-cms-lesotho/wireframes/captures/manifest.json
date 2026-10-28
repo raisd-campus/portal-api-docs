@@ -1,0 +1,101 @@
+{
+  "capturedAt": "2026-10-28T20:40:46.674805+00:00",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "designSystem": "0.19.8",
+  "portal": "https://staff.lesotho.raisd.co",
+  "desks": [
+    {
+      "id": "applicants",
+      "title": "Applicants",
+      "route": "/admin/applicants",
+      "file": "captures/applicants.png"
+    },
+    {
+      "id": "document-review",
+      "title": "Document review",
+      "route": "/admin/document-review",
+      "file": "captures/document-review.png"
+    },
+    {
+      "id": "payments",
+      "title": "Payments",
+      "route": "/admin/payments",
+      "file": "captures/payments.png"
+    },
+    {
+      "id": "fees",
+      "title": "Fees & Fines",
+      "route": "/admin/fees",
+      "file": "captures/fees.png"
+    },
+    {
+      "id": "registrations",
+      "title": "Registrations",
+      "route": "/admin/registrations",
+      "file": "captures/registrations.png"
+    },
+    {
+      "id": "sponsors",
+      "title": "Sponsors",
+      "route": "/admin/sponsors",
+      "file": "captures/sponsors.png"
+    },
+    {
+      "id": "students",
+      "title": "Students list",
+      "route": "/admin/students",
+      "file": "captures/students.png"
+    },
+    {
+      "id": "student-file",
+      "title": "Student file (12 tabs)",
+      "route": "/admin/students \u00b7 file",
+      "file": "captures/student-file.png"
+    },
+    {
+      "id": "graduations",
+      "title": "Graduations",
+      "route": "/admin/graduations",
+      "file": "captures/graduations.png"
+    },
+    {
+      "id": "certificates",
+      "title": "Certificates",
+      "route": "/admin/certificates",
+      "file": "captures/certificates.png"
+    },
+    {
+      "id": "remarks",
+      "title": "Remarks",
+      "route": "/admin/remarks",
+      "file": "captures/remarks.png"
+    },
+    {
+      "id": "academic",
+      "title": "Academic",
+      "route": "/admin/academic",
+      "file": "captures/academic.png"
+    },
+    {
+      "id": "timetable",
+      "title": "Timetable",
+      "route": "/admin/timetable",
+      "file": "captures/timetable.png"
+    },
+    {
+      "id": "analytics",
+      "title": "Analytics",
+      "route": "/admin/analytics",
+      "file": "captures/analytics.png"
+    },
+    {
+      "id": "discipline",
+      "title": "Discipline",
+      "route": "/admin/discipline",
+      "file": "captures/discipline.png"
+    }
+  ]
+}
