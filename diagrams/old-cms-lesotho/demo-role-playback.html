@@ -710,17 +710,17 @@ flowchart TB
     FM04[FM-04 QA extract / verify]
     FM05[FM-05 Desk review flags + policy]
     FM07[FM-07 Registry file Academics / Sponsors]
-    FM08[FM-08 NMDS on request / file]
-  end
-  subgraph Gaps["Gaps vs newer CMS · still to deepen"]
+    FM08[FM-08 NMDS + Sponsorship master]
     FM10[FM-10 Graduation / ceremony]
     FM11[FM-11 Remarks queue]
-    FM12[FM-12 Print / QR]
-    FM16[FM-16 Academic deepen]
-    FM17[FM-17 Analytics]
-    FM18[FM-18 Discipline]
+    FM12[FM-12 Print / QR Demo]
+    FM16[FM-16 Academic attendance / gradebook]
+    FM17[FM-17 Analytics cards]
+    FM18[FM-18 Discipline list]
+  end
+  subgraph Gaps["Still Live later / out of Demo deepen"]
     CAP53[Live CAP-53 write-back]
-    SPON[Create Sponsorship master]
+    TIMETABLE[Timetable generator / venues]
   end
   subgraph Out["Out of M4"]
     HR[HRMS]
@@ -738,18 +738,15 @@ flowchart TB
   classDef gap fill:#fde8d8,stroke:#c45c26,color:#5c2e10
   classDef out fill:#eceff3,stroke:#8a93a0,color:#3a4450
   class FM01,FM02,FM06,FM09,FM13,FM14,FM15 baseline
-  class FM03,FM04,FM05,FM07,FM08 today
-  class FM10,FM11,FM12,FM16,FM17,FM18,CAP53,SPON gap
+  class FM03,FM04,FM05,FM07,FM08,FM10,FM11,FM12,FM16,FM17,FM18 today
+  class CAP53,TIMETABLE gap
   class HR,LMS,WEB,LIB,MAIL out
     </pre>
 
-    <h3>3. Open gaps (in-scope) after today’s Demo fill</h3>
+    <h3>3. Remaining after Demo deepen</h3>
     <div class="flow-gap-grid">
-      <div class="flow-gap-card"><strong>FM-10 · FM-12</strong><span>Graduation ceremony, hoods, certificate batches / QR — newer CMS has desks; Raisd Demo partial.</span></div>
-      <div class="flow-gap-card"><strong>FM-11 Remarks</strong><span>Remark Requests + re-assessment fee queue — missing on Raisd Staff.</span></div>
-      <div class="flow-gap-card"><strong>FM-08 sponsor master</strong><span>Create Sponsorship master still phase-2; request/file NMDS fields Demo today.</span></div>
-      <div class="flow-gap-card"><strong>FM-16–18</strong><span>Timetable / attendance admin, campus analytics, discipline — after P0/P1.</span></div>
-      <div class="flow-gap-card"><strong>Live CAP-53</strong><span>Registry file is Demo graph projection; Live write-back still mapped only.</span></div>
+      <div class="flow-gap-card"><strong>Live CAP-53</strong><span>Registry file is Demo graph projection; Live SoR read/write-back still mapped only.</span></div>
+      <div class="flow-gap-card"><strong>Timetable generator</strong><span>FM-16 Demo covers attendance rollup + gradebook; generator / venues stay later.</span></div>
       <div class="flow-gap-card"><strong>Out of M4</strong><span>HRMS, LMS, Website, Library, in-portal Mail — leave on newer CMS / other systems.</span></div>
     </div>
   </section>

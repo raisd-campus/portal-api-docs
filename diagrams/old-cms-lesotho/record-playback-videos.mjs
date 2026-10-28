@@ -712,6 +712,11 @@ async function runSceneActions(page, context, sceneId) {
       await selectQueueRow(page)
       await dwell(page, 1800)
       return "bursary registrations"
+    case "bur-sponsors":
+      await gotoSafe(page, `${STAFF}/admin/sponsors`)
+      await page.getByText(/sponsorship master|active schemes|nmds/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 2000)
+      return "bursary sponsorship master"
     case "reg-offer": {
       await gotoSafe(page, `${STAFF}/admin/applicants`)
       await safeClick(page.getByRole("button", { name: /^reload/i }))
@@ -760,6 +765,36 @@ async function runSceneActions(page, context, sceneId) {
         ? "registry student file · Sponsors (NMDS)"
         : "registry student file · Academics"
     }
+    case "reg-graduations":
+      await gotoSafe(page, `${STAFF}/admin/graduations`)
+      await page.getByText(/graduation ceremonies|hoods|name-tag/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 2000)
+      return "registry graduations"
+    case "reg-certificates":
+      await gotoSafe(page, `${STAFF}/admin/certificates`)
+      await page.getByText(/certificates|certificate batches|generate demo/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 2000)
+      return "registry certificates"
+    case "reg-remarks":
+      await gotoSafe(page, `${STAFF}/admin/remarks`)
+      await page.getByText(/remark requests|re-assessment/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 1800)
+      return "registry remarks"
+    case "reg-academic":
+      await gotoSafe(page, `${STAFF}/admin/academic`)
+      await page.getByText(/academic overview|attendance by module|gradebook/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 1800)
+      return "registry academic"
+    case "reg-analytics":
+      await gotoSafe(page, `${STAFF}/admin/analytics`)
+      await page.getByText(/campus analytics|active enrolments|demo graph/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 1800)
+      return "registry analytics"
+    case "reg-discipline":
+      await gotoSafe(page, `${STAFF}/admin/discipline`)
+      await page.getByText(/discipline|academic-dishonesty|suspension|blocked/i).first().waitFor({ timeout: 20000 }).catch(() => {})
+      await dwell(page, 1800)
+      return "registry discipline"
     case "yl-signin":
       await gotoSafe(page, `${STAFF}/admin`)
       await dwell(page, 1800)
