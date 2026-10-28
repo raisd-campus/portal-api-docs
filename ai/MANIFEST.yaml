@@ -9,6 +9,7 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-29: Lesotho ingested Demo desk wireframes — diagrams/old-cms-lesotho/wireframes/ maps FM-03…FM-18 Staff Admin routes to design-system layouts (PortalShell, DataTable, DetailSectionCard, tabs).
   - 2026-10-29: Design-system 0.19.8 wireframe review pack — candidates/0.19.8 lo-fi AdminRecordFlow / FlowEditor / ChipField wireframes + AI review note; no portal pin upgrade.
   - 2026-10-29: Design-system docs synced to released GitHub Packages **0.19.8** — package-catalogue.md + admin-record-flow.md, AI install/reference pins, HTML catalogue version + portal-api-docs mirror (historical captures retain provenance).
   - 2026-10-28: Lesotho Demo role playback — step-by-step screenshots + FM feature index (diagrams/old-cms-lesotho/demo-role-playback.html · playback-videos/*.poster.jpg).
