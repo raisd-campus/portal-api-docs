@@ -9,6 +9,7 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-29: Design-system 0.19.8 wireframe review pack — candidates/0.19.8 lo-fi AdminRecordFlow / FlowEditor / ChipField wireframes + AI review note; no portal pin upgrade.
   - 2026-10-29: Design-system docs synced to released GitHub Packages **0.19.8** — package-catalogue.md + admin-record-flow.md, AI install/reference pins, HTML catalogue version + portal-api-docs mirror (historical captures retain provenance).
   - 2026-10-28: Lesotho Demo role playback — step-by-step screenshots + FM feature index (diagrams/old-cms-lesotho/demo-role-playback.html · playback-videos/*.poster.jpg).
   - 2026-10-28: Lesotho Demo role-by-role screenshot storyboard (W1–W3) — diagrams/old-cms-lesotho/demo-role-playback.html.
@@ -576,6 +577,8 @@ design:
     topics: [design-system, package, catalogue, 0.19.8, ChipField, FlowEditor, AdminRecordFlow]
   - path: design/admin-record-flow.md
     topics: [design-system, admin-record-flow, AdminTable, workspace]
+  - path: design/2026-10-29-design-system-0198-review.md
+    topics: [design-system, 0.19.8, wireframes, review, AdminRecordFlow, FlowEditor]
 
 process:
   - path: process/generate-documentation.md
