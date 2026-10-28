@@ -731,7 +731,7 @@
     <ul class="flow-legend" aria-label="Colour legend">
       <li><span class="flow-swatch baseline" aria-hidden="true"></span> Baseline Raisd Demo (before deepen)</li>
       <li><span class="flow-swatch today" aria-hidden="true"></span> Added / deepened (Demo Existing)</li>
-      <li><span class="flow-swatch gap" aria-hidden="true"></span> Still Live later (CAP-53 write-back · timetable generator)</li>
+      <li><span class="flow-swatch gap" aria-hidden="true"></span> Still Live later (CAP-53 write-back)</li>
       <li><span class="flow-swatch out" aria-hidden="true"></span> Out of M4 (HR / LMS / Website / Library / Mail)</li>
     </ul>
 
@@ -771,6 +771,7 @@ flowchart LR
     ACAD[Academic overview]
     AN[Analytics cards]
     DISC[Discipline list]
+    TT[Timetable generator / venues]
     Y1[Year Leader read file]
     S1 --> S2 --> S3
     S2 --> SPON
@@ -779,6 +780,7 @@ flowchart LR
     G1 --> ACAD
     G1 --> AN
     G1 --> DISC
+    ACAD --> TT
     G1 -.-> Y1
   end
   subgraph Control["Control"]
@@ -799,7 +801,7 @@ flowchart LR
   classDef today fill:#c8ebe0,stroke:#0f6b5d,color:#0a3d36
   classDef gap fill:#fde8d8,stroke:#c45c26,color:#5c2e10
   class A1,A2,A3,A4,A5,A6,B1,R1,S1,S2,S3,C1,C3,C4,Y1 baseline
-  class F1,F2,F3,Q1,Q2,Q3,C2,G1,SPON,GRAD,CERT,REM,ACAD,AN,DISC today
+  class F1,F2,F3,Q1,Q2,Q3,C2,G1,SPON,GRAD,CERT,REM,ACAD,AN,DISC,TT today
     </pre>
 
     <h3>2. Newer Lesotho CMS coverage vs Raisd modules</h3>
@@ -824,13 +826,12 @@ flowchart TB
     FM10[FM-10 Graduation / ceremony]
     FM11[FM-11 Remarks queue]
     FM12[FM-12 Print / QR Demo]
-    FM16[FM-16 Academic attendance / gradebook]
+    FM16[FM-16 Academic + timetable / venues]
     FM17[FM-17 Analytics cards]
     FM18[FM-18 Discipline list]
   end
   subgraph Gaps["Still Live later / out of Demo deepen"]
     CAP53[Live CAP-53 write-back]
-    TIMETABLE[Timetable generator / venues]
   end
   subgraph Out["Out of M4"]
     HR[HRMS]
@@ -849,15 +850,15 @@ flowchart TB
   classDef out fill:#eceff3,stroke:#8a93a0,color:#3a4450
   class FM01,FM02,FM06,FM09,FM13,FM14,FM15 baseline
   class FM03,FM04,FM05,FM07,FM08,FM10,FM11,FM12,FM16,FM17,FM18 today
-  class CAP53,TIMETABLE gap
+  class CAP53 gap
   class HR,LMS,WEB,LIB,MAIL out
     </pre>
 
     <h3>3. Remaining after Demo deepen</h3>
     <div class="flow-gap-grid">
       <div class="flow-gap-card"><strong>Live CAP-53</strong><span>Registry file is Demo graph projection; Live SoR read/write-back still mapped only.</span></div>
-      <div class="flow-gap-card"><strong>Timetable generator</strong><span>FM-16 Demo covers attendance rollup + gradebook; generator / venues stay later.</span></div>
       <div class="flow-gap-card"><strong>Out of M4</strong><span>HRMS, LMS, Website, Library, in-portal Mail — leave on newer CMS / other systems.</span></div>
+      <div class="flow-gap-card"><strong>Live timetable solver</strong><span>Demo generator places modules into venues; Live conflict / capacity solver stays later.</span></div>
     </div>
   </section>
 
@@ -949,7 +950,7 @@ flowchart TB
 </main>
   <script src="../abbr-tooltips.js"></script>
   <script type="module">
-    import { createPlayer } from "./demo-role-playback.js?v=20261028-era4"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028-tt1"
     createPlayer({
       roleListEl: document.getElementById("role-list"),
       featureListEl: document.getElementById("feature-list"),

@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T01:36:52.579Z",
+  "recordedAt": "2026-10-28T01:48:01.216Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -388,6 +388,20 @@
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/academic",
       "recordedAt": "2026-10-28T01:10:49.900Z"
+    },
+    {
+      "sceneId": "reg-timetable",
+      "roleId": "registry",
+      "title": "Timetable generator & venues",
+      "fm": [
+        "FM-16"
+      ],
+      "poster": "reg-timetable.poster.jpg",
+      "bytes": 67339,
+      "detail": "registry timetable",
+      "error": null,
+      "url": "https://staff.lesotho.raisd.co/admin/timetable",
+      "recordedAt": "2026-10-28T01:48:01.189Z"
     },
     {
       "sceneId": "reg-analytics",

@@ -862,6 +862,14 @@ async function runSceneActions(page, context, sceneId) {
       await page.getByText(/academic overview|attendance by module|gradebook/i).first().waitFor({ timeout: 20000 }).catch(() => {})
       await dwell(page, 1800)
       return "registry academic"
+    case "reg-timetable":
+      await gotoSafe(page, `${STAFF}/admin/timetable`)
+      await page
+        .getByText(/timetable generator|venues|allocations|run demo generator/i)
+        .first()
+        .waitFor({ timeout: 25000 })
+      await dwell(page, 2000)
+      return "registry timetable"
     case "reg-analytics":
       await gotoSafe(page, `${STAFF}/admin/analytics`)
       await page.getByText(/campus analytics|active enrolments|demo graph/i).first().waitFor({ timeout: 20000 }).catch(() => {})

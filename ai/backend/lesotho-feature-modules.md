@@ -81,7 +81,7 @@ Maps every **in-scope** Admin sidebar item (and Raisd Demo surface) to a module.
 | Lecturers · Modules · Schools · Curriculum | **FM-16** | After admissions/registry P0 |
 | Assessments · Assessment Types · Gradebook | **FM-16** | Same |
 | Attendance | **FM-16** (staff) · **FM-06** (student Demo) | Student already Demo |
-| Timetable · Generator · Allocations · Venues | **FM-16** | Late generator |
+| Timetable · Generator · Allocations · Venues | **FM-16** | Demo Existing (`/admin/timetable`) |
 | Fortinet | **Excluded (LMS)** | — |
 | Five Days | **Excluded (LMS)** | — |
 
@@ -144,7 +144,7 @@ Status: **Existing** · **Partial** · **Missing**.
 | **FM-13** | Notifications | Existing | Outbound email (`notify`) — replaces need for Mail | FM-01 |
 | **FM-14** | Campus landing & hosts | Existing | `*.lesotho.raisd.co` | FM-01 |
 | **FM-15** | Control position seeds | Existing (Demo W1) | Five `lesotho-*` SSO custom roles + desk tags + Keychain | FM-01, FM-05 |
-| **FM-16** | Academic deepen | Existing (Demo) | `/admin/academic` attendance rollup + gradebook; timetable generator / venues later | After P0/P1 |
+| **FM-16** | Academic deepen | Existing (Demo) | `/admin/academic` attendance + gradebook; `/admin/timetable` generator / venues / allocations (Demo, not Live solver) | After P0/P1 |
 | **FM-17** | Analytics (campus reports) | Existing (Demo) | `/admin/analytics` Demo count cards (enrolments, admissions, registrations, graduations, sponsors) — no HR/Library | After W2–W3 |
 | **FM-18** | Discipline | Existing (Demo) | `/admin/discipline` dishonesty / suspension / blocked list | Late |
 | **FM-X** | Excluded | — | **HRMS · LMS · Website · Library · Mail** | No M4 capacity |
@@ -187,7 +187,7 @@ Status: **Existing** · **Partial** · **Missing**.
 | **P1** | **FM-03 · FM-04** Admissions deepen | Review dashboard (by school, activity); Document Review at scale + Verified/Rejected + full LGCSE fields | After W2 seed |
 | **P1** | **FM-10 · FM-12** Ceremony / print | Graduations · Hoods · Name tags · Certificate batches / stock / QR | **Demo met** — `/admin/graduations` + `/admin/certificates` (Live QR later) |
 | **P2** | **FM-11** Remarks staff queue | Remark Requests badge; re-assessment fee | **Demo met** — `/admin/remarks` |
-| **P2** | **FM-16** Academic deepen | Timetable generator / allocations / venues; staff attendance | **Demo partial** — attendance/gradebook desk; generator later |
+| **P2** | **FM-16** Academic deepen | Timetable generator / allocations / venues; staff attendance | **Demo Existing** — attendance/gradebook + `/admin/timetable` generator / venues |
 | **P2** | **FM-17** Analytics | Enrollment / registration / graduation / senate / BoE (no HR/Library reports) | **Demo met** — `/admin/analytics` cards |
 | **P2** | **FM-18** Discipline | Academic Dishonesty · Suspensions · Blocked Students | **Demo met** — `/admin/discipline` |
 | **Parallel** | **FM-02** Applicant journey | Applicant wizard / versioned flow | **Faid-owned** — no cross-module PRs into flow internals |
@@ -232,7 +232,7 @@ Pages: [`docs/diagrams/old-cms-lesotho/demo-role-playback.html`](../../diagrams/
 | Review/Document CMS UX depth | **FM-03 · FM-04** | Yes — polish |
 | Certificate / hood / name-tag / QR | **FM-10 · FM-12** | Yes if ceremony in M4 |
 | Staff remarks desk | **FM-11** | Yes — later |
-| Timetable generator | **FM-16** | Yes — later |
+| Timetable generator | **FM-16** | Yes — Demo Existing (`/admin/timetable`) |
 | Campus report pack (non-HR/Library) | **FM-17** | Yes — later |
 | Discipline desks | **FM-18** | Yes — later |
 | Applicant versioned-flow rewrite | **FM-02** | Faid parallel |
