@@ -36,7 +36,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
 
-For any portal UI task, also read [design/component-library.md](design/component-library.md) and the package's [component catalogue](https://github.com/raisd-campus/design-system/blob/main/docs/components.md) before creating a visual component.
+For any portal UI task, also read [design/component-library.md](design/component-library.md) and the released [package catalogue](design/package-catalogue.md) (0.19.8) before creating a visual component.
 
 ## 2. Product boundaries (campus-wide)
 
