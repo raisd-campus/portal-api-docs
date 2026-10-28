@@ -651,6 +651,56 @@ export const SCENE_URLS = {
   "ctl-positions": "https://control.raisd.co/campuses/campus-lesotho",
 }
 
+/**
+ * Screenshot border colour vs flow legend:
+ * - baseline (light blue) = already Demo before deepen
+ * - today (green) = enabled / deepened on 28 Oct 2026
+ */
+export const SCENE_ERA = {
+  "app-signin": "baseline",
+  "app-draft": "baseline",
+  "app-fee": "baseline",
+  "app-eligibility": "baseline",
+  "app-offer": "baseline",
+  "app-accepted": "baseline",
+  "fac-open": "today",
+  "fac-rank": "today",
+  "fac-rec": "today",
+  "qa-open": "today",
+  "qa-extract": "today",
+  "qa-verify": "today",
+  "bur-pay": "baseline",
+  "bur-fees": "baseline",
+  "bur-reg": "baseline",
+  "bur-sponsors": "today",
+  "reg-offer": "baseline",
+  "reg-queue": "baseline",
+  "reg-list": "today",
+  "reg-file-academics": "today",
+  "reg-file-sponsors": "today",
+  "reg-file-graduation": "today",
+  "reg-graduations": "today",
+  "reg-certificates": "today",
+  "reg-remarks": "today",
+  "reg-academic": "today",
+  "reg-analytics": "today",
+  "reg-discipline": "today",
+  "yl-signin": "baseline",
+  "yl-list": "baseline",
+  "yl-file": "baseline",
+  "stu-signin": "baseline",
+  "stu-reg": "baseline",
+  "stu-finance": "baseline",
+  "ctl-flows": "baseline",
+  "ctl-review": "today",
+  "ctl-catalogues": "baseline",
+  "ctl-positions": "baseline",
+}
+
+export function sceneEra(sceneId) {
+  return SCENE_ERA[sceneId] || "baseline"
+}
+
 export function sceneUrl(role, scene) {
   if (SCENE_URLS[scene.id]) return SCENE_URLS[scene.id]
   if (scene.href) return scene.href
@@ -1066,6 +1116,18 @@ export function createPlayer(options) {
     if (stageEl) {
       stageEl.dataset.role = role.id
       stageEl.dataset.scene = scene.id
+      stageEl.dataset.era = sceneEra(scene.id)
+    }
+    const shell = screenShellEl || screenEl?.closest?.(".screen-shell")
+    if (shell) {
+      const era = sceneEra(scene.id)
+      shell.dataset.era = era
+      shell.setAttribute(
+        "aria-label",
+        era === "today"
+          ? "Demo scene screenshot · enabled / deepened today (green border)"
+          : "Demo scene screenshot · baseline existing Demo (blue border)",
+      )
     }
     renderSectionProgress()
     renderStepProgress()
