@@ -209,6 +209,35 @@ async function selectQueueRow(page) {
   }
 }
 
+/** Open Demo Lesotho student registry file (FM-07). DataTable may be 1 body row. */
+async function openRegistryStudentFile(page) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const byLabel = page.getByRole("button", { name: /open file for|view details/i })
+    if (await byLabel.count()) {
+      await byLabel.first().click({ timeout: 8000 })
+    } else {
+      const row = page.locator("table tbody tr").filter({ hasText: /demo lesotho student|DEMO-LS/i }).first()
+      if (await row.count()) {
+        await row.click({ timeout: 8000 })
+      } else {
+        const anyRow = page.locator("table tbody tr").first()
+        if (await anyRow.count()) await anyRow.click({ timeout: 8000 })
+        else await page.getByText(/demo lesotho student/i).first().click({ timeout: 8000 })
+      }
+    }
+    try {
+      await page.getByRole("tab", { name: /^academics$/i }).waitFor({ timeout: 12000 })
+      await dwell(page, 1000)
+      return
+    } catch (err) {
+      if (attempt === 1) throw err
+      await gotoSafe(page, `${STAFF}/admin/students`)
+      await page.getByText(/enrolled students|demo lesotho student/i).first().waitFor({ timeout: 20000 })
+      await dwell(page, 1200)
+    }
+  }
+}
+
 /** Open the admissions Review action dropdown and pick a labelled option. */
 async function selectReviewAction(page, actionLabel) {
   const trigger = page.getByRole("button", { name: /review action/i })
@@ -685,17 +714,33 @@ async function runSceneActions(page, context, sceneId) {
       return "registry registrations"
     case "reg-list":
       await gotoSafe(page, `${STAFF}/admin/students`)
+      await page.getByText(/enrolled students|demo registry file/i).first().waitFor({ timeout: 20000 }).catch(() => {})
       await dwell(page, 1800)
-      return "registry students"
+      return "registry students list"
     case "reg-file-academics":
     case "reg-file-sponsors": {
       await gotoSafe(page, `${STAFF}/admin/students`)
-      await selectQueueRow(page)
-      const tab = sceneId.includes("sponsors") ? /sponsors/i : /academics/i
-      await safeClick(page.getByRole("tab", { name: tab }))
-      await safeClick(page.getByRole("button", { name: tab }))
-      await dwell(page, 1800)
-      return sceneId
+      await page.getByText(/enrolled students|demo lesotho student/i).first().waitFor({ timeout: 20000 })
+      await openRegistryStudentFile(page)
+      const sponsors = sceneId.includes("sponsors")
+      const tabName = sponsors ? /^sponsors$/i : /^academics$/i
+      await page.getByRole("tab", { name: tabName }).click({ timeout: 8000 })
+      await dwell(page, 900)
+      // Bring the open file (below the list) into the 720px storyboard viewport.
+      await page
+        .getByRole("heading", { name: /demo lesotho student/i })
+        .first()
+        .scrollIntoViewIfNeeded()
+        .catch(() => {})
+      if (sponsors) {
+        await page.getByText(/sponsors \(nmds\)/i).first().scrollIntoViewIfNeeded().catch(() => {})
+      } else {
+        await page.getByText(/^modules$/i).first().scrollIntoViewIfNeeded().catch(() => {})
+      }
+      await dwell(page, 1200)
+      return sponsors
+        ? "registry student file · Sponsors (NMDS)"
+        : "registry student file · Academics"
     }
     case "yl-signin":
       await gotoSafe(page, `${STAFF}/admin`)
