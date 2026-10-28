@@ -61,6 +61,8 @@ const students = readJson("demo-students.json") || { "first-semester-registratio
 /** Demo Keychain catalog passwords. */
 const KEYCHAIN_USERS = {
   applicant: { email: "completed@raisd.demo", password: "completed2026" },
+  /** Empty / in-progress draft for app-draft storyboard (completed is already Enrolment Accepted). */
+  "applicant-fresh": { email: "fresh@raisd.demo", password: "fresh2026" },
   faculty: { email: "lesotho.faculty@raisd.demo", password: "lesotho2026" },
   qa: { email: "lesotho.qa@raisd.demo", password: "lesotho2026" },
   bursary: { email: "lesotho.bursary@raisd.demo", password: "lesotho2026" },
@@ -199,6 +201,52 @@ async function openApplicantCase(page) {
   }
   await safeClick(page.getByRole("button", { name: /view application|resume draft|application no/i }))
   await dwell(page, 1000)
+}
+
+/** Switch Applicant Demo persona mid-role (fresh draft vs completed mid-flow). */
+async function ensureApplicantPersona(page, context, persona) {
+  const acct =
+    persona === "fresh" ? KEYCHAIN_USERS["applicant-fresh"] : KEYCHAIN_USERS.applicant
+  await context.clearCookies()
+  await ssoApiSignIn(page, acct.email, acct.password, `${APPLICANT}/applications`)
+  if (!/apply\.lesotho\.raisd\.co\/applications/i.test(page.url()) || onAuthChrome(page.url())) {
+    await gotoSafe(page, `${APPLICANT}/applications`)
+  }
+  await page
+    .getByText(/my applications|application no|enrolment accepted|add application|draft|resume/i)
+    .first()
+    .waitFor({ timeout: 45000 })
+  await dwell(page, 1000)
+}
+
+async function openApplicantDraft(page) {
+  // Prefer an existing draft; otherwise start a new application.
+  if (await safeClick(page.getByRole("button", { name: /resume draft|continue draft|edit draft/i }))) {
+    await dwell(page, 1500)
+    return "resume draft"
+  }
+  if (await safeClick(page.getByRole("link", { name: /resume draft|continue draft/i }))) {
+    await dwell(page, 1500)
+    return "resume draft link"
+  }
+  const draftCard = page.getByText(/draft|in progress|not submitted/i).first()
+  if (await draftCard.count()) {
+    await draftCard.click().catch(() => {})
+    await dwell(page, 1200)
+    await safeClick(page.getByRole("button", { name: /view application|resume|continue|open/i }))
+    await dwell(page, 1200)
+    return "draft card"
+  }
+  if (
+    (await safeClick(page.getByRole("button", { name: /add application|new application|start application/i }))) ||
+    (await safeClick(page.getByRole("link", { name: /add application|new application|start application/i })))
+  ) {
+    await dwell(page, 2000)
+    return "new application"
+  }
+  // Last resort: open first case (should not be completed when using fresh).
+  await openApplicantCase(page)
+  return "first case"
 }
 
 async function selectQueueRow(page) {
@@ -577,33 +625,40 @@ async function openApplicantLetterPopup(page, context, mode, sceneId) {
 async function runSceneActions(page, context, sceneId) {
   switch (sceneId) {
     case "app-signin":
-      // Already signed in on applications — avoid a hard reload that bounces to campus SSO.
-      if (!/apply\.lesotho\.raisd\.co/i.test(page.url()) || onAuthChrome(page.url())) {
-        await gotoSafe(page, `${APPLICANT}/applications`)
-      }
+      // List view after Keychain — completed case is fine for “signed in” beat.
+      await ensureApplicantPersona(page, context, "completed")
       await page.getByText(/my applications|application no|enrolment accepted/i).first().waitFor({ timeout: 20000 }).catch(() => {})
       await dwell(page, 1800)
       return "applicant applications"
-    case "app-draft":
-      if (!/apply\.lesotho\.raisd\.co/i.test(page.url()) || onAuthChrome(page.url())) {
-        await gotoSafe(page, `${APPLICANT}/applications`)
+    case "app-draft": {
+      // Must NOT use completed@ — that case is already Enrolment Accepted.
+      await ensureApplicantPersona(page, context, "fresh")
+      const how = await openApplicantDraft(page)
+      await page
+        .getByText(/personal|programme|study preference|submit application|draft|application details|documents/i)
+        .first()
+        .waitFor({ timeout: 20000 })
+        .catch(() => {})
+      // Guard: never publish a completed enrolment as the draft slide.
+      if (await page.getByText(/enrolment accepted/i).count()) {
+        throw new Error("app-draft captured Enrolment Accepted — fresh draft persona failed")
       }
-      await openApplicantCase(page)
       await dwell(page, 2000)
-      return "applicant case"
+      return `applicant draft · ${how}`
+    }
     case "app-fee":
-      if (!/apply\.lesotho\.raisd\.co/i.test(page.url()) || onAuthChrome(page.url())) {
-        await gotoSafe(page, `${APPLICANT}/applications`)
-      }
+      await ensureApplicantPersona(page, context, "completed")
       await openApplicantCase(page)
       await safeClick(page.getByRole("button", { name: /fee|payment|view application/i }))
       await page.mouse.wheel(0, 360).catch(() => {})
       await dwell(page, 2000)
       return "applicant fee"
     case "app-eligibility":
+      await ensureApplicantPersona(page, context, "completed")
       await openApplicantLetterPopup(page, context, "eligibility", sceneId)
       return "applicant eligibility · Confirm Eligibility Letter popup · poster-captured"
     case "app-offer":
+      await ensureApplicantPersona(page, context, "completed")
       await openApplicantLetterPopup(page, context, "offer", sceneId)
       return "applicant offer · Accept Enrolment popup · poster-captured"
     case "fac-open":

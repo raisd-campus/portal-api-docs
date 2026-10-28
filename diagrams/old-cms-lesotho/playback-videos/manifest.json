@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T01:10:56.168Z",
+  "recordedAt": "2026-10-28T01:15:25.218Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -34,11 +34,11 @@
         "FM-05"
       ],
       "poster": "app-draft.poster.jpg",
-      "bytes": 67377,
-      "detail": "applicant case",
+      "bytes": 67452,
+      "detail": "applicant draft · new application",
       "error": null,
-      "url": "https://apply.lesotho.raisd.co/applications/application-scenario-completed",
-      "recordedAt": "2026-10-27T23:32:40.645Z"
+      "url": "https://apply.lesotho.raisd.co/applications/new",
+      "recordedAt": "2026-10-28T01:15:25.170Z"
     },
     {
       "sceneId": "app-fee",
