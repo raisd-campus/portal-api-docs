@@ -725,6 +725,66 @@ export function eraForSceneIds(sceneIds) {
   return "baseline"
 }
 
+/**
+ * End-to-end Demo story beats for the in-player sequence diagram.
+ * Each beat is one message; `scenes` lists playback scenes that highlight it.
+ */
+export const JOURNEY_BEATS = [
+  { id: "signin", from: "Applicant", to: "Applicant", message: "Sign-in / Keychain", scenes: ["app-signin"] },
+  { id: "draft", from: "Applicant", to: "Applicant", message: "Draft & submit", scenes: ["app-draft"] },
+  { id: "fee", from: "Applicant", to: "Bursary", message: "Fee proof LSL", scenes: ["app-fee"] },
+  { id: "bur-verify", from: "Bursary", to: "Faculty", message: "Verify payment", scenes: ["bur-pay", "bur-fees"] },
+  { id: "faculty", from: "Faculty", to: "QA", message: "Rank / recommend", scenes: ["fac-open", "fac-rank", "fac-rec"] },
+  { id: "qa", from: "QA", to: "Applicant", message: "Extract / verify docs", scenes: ["qa-open", "qa-extract", "qa-verify"] },
+  { id: "eligibility", from: "Applicant", to: "Registry", message: "Confirm eligibility", scenes: ["app-eligibility"] },
+  { id: "offer", from: "Registry", to: "Applicant", message: "Release Offer", scenes: ["reg-offer"] },
+  { id: "accept", from: "Applicant", to: "Student", message: "Accept Offer", scenes: ["app-offer"] },
+  { id: "accepted", from: "Applicant", to: "Student", message: "Enrolment Accepted", scenes: ["app-accepted"] },
+  { id: "student", from: "Student", to: "Bursary", message: "Modules + NMDS / finance", scenes: ["stu-signin", "stu-reg", "stu-finance"] },
+  { id: "clearance", from: "Bursary", to: "Registry", message: "Registration clearance / sponsors", scenes: ["bur-reg", "bur-sponsors", "reg-queue"] },
+  { id: "file", from: "Registry", to: "Registry", message: "12-tab student file", scenes: ["reg-list", "reg-file-academics", "reg-file-sponsors", "reg-file-graduation"] },
+  { id: "ceremony", from: "Registry", to: "Registry", message: "Graduation / certificates / remarks", scenes: ["reg-graduations", "reg-certificates", "reg-remarks"] },
+  { id: "academic", from: "Registry", to: "Registry", message: "Academic / timetable / analytics / discipline", scenes: ["reg-academic", "reg-timetable", "reg-analytics", "reg-discipline"] },
+  { id: "year-leader", from: "YearLeader", to: "Registry", message: "Year Leader read file", scenes: ["yl-signin", "yl-list", "yl-file"] },
+  { id: "control", from: "Control", to: "Control", message: "Flows / flags / catalogues / positions", scenes: ["ctl-flows", "ctl-review", "ctl-catalogues", "ctl-positions"] },
+]
+
+const JOURNEY_ACTORS = ["Applicant", "Bursary", "Faculty", "QA", "Registry", "Student", "YearLeader", "Control"]
+
+const SCENE_TO_BEAT = (() => {
+  const map = new Map()
+  for (const beat of JOURNEY_BEATS) {
+    for (const sceneId of beat.scenes) map.set(sceneId, beat.id)
+  }
+  return map
+})()
+
+export function journeyBeatForScene(sceneId) {
+  const beatId = SCENE_TO_BEAT.get(sceneId)
+  return JOURNEY_BEATS.find((b) => b.id === beatId) || null
+}
+
+/** Mermaid sequenceDiagram source with the current beat wrapped in a highlight rect. */
+export function buildJourneySequenceMermaid(sceneId) {
+  const current = journeyBeatForScene(sceneId)
+  const lines = [
+    "sequenceDiagram",
+    "  autonumber",
+    ...JOURNEY_ACTORS.map((a) => `  participant ${a}`),
+  ]
+  for (const beat of JOURNEY_BEATS) {
+    const active = current && beat.id === current.id
+    if (active) lines.push("  rect rgba(15,107,93,0.18)")
+    lines.push(`  ${beat.from}->>${beat.to}: ${beat.message}`)
+    if (active) {
+      if (beat.from === beat.to) lines.push(`  Note right of ${beat.from}: You are here`)
+      else lines.push(`  Note over ${beat.from},${beat.to}: You are here`)
+      lines.push("  end")
+    }
+  }
+  return lines.join("\n")
+}
+
 export function sceneUrl(role, scene) {
   if (SCENE_URLS[scene.id]) return SCENE_URLS[scene.id]
   if (scene.href) return scene.href
@@ -771,6 +831,10 @@ export function createPlayer(options) {
     titleEl,
     bodyEl,
     detailEl,
+    journeyEl,
+    journeyMermaidEl,
+    journeyHereEl,
+    renderMermaid,
     stepsEl,
     fmEl,
     screenEl,
@@ -1060,6 +1124,65 @@ export function createPlayer(options) {
     })
   }
 
+  function jumpToSceneId(sceneId) {
+    const target = flat.findIndex((f) => f.scene.id === sceneId)
+    if (target < 0) return
+    pause({ keepStatus: true })
+    index = target
+    activeFm = null
+    render()
+  }
+
+  function renderJourney(sceneId) {
+    if (!journeyEl) return
+    const beat = journeyBeatForScene(sceneId)
+    journeyEl.hidden = false
+    if (journeyHereEl) {
+      journeyHereEl.textContent = beat
+        ? `Traveling · ${beat.from} → ${beat.to}: ${beat.message}`
+        : "Traveling · journey position"
+    }
+    // Clickable beat chips (jump to first scene of that beat)
+    let chips = journeyEl.querySelector("[data-journey-chips]")
+    if (!chips) {
+      chips = document.createElement("div")
+      chips.className = "journey-chips"
+      chips.dataset.journeyChips = "true"
+      chips.setAttribute("role", "list")
+      const mermaidWrap = journeyEl.querySelector(".journey-mermaid-wrap")
+      if (mermaidWrap) journeyEl.insertBefore(chips, mermaidWrap)
+      else journeyEl.appendChild(chips)
+    }
+    chips.innerHTML = ""
+    for (const b of JOURNEY_BEATS) {
+      const btn = document.createElement("button")
+      btn.type = "button"
+      btn.className = "journey-chip"
+      btn.setAttribute("role", "listitem")
+      const active = beat && b.id === beat.id
+      btn.dataset.active = active ? "true" : "false"
+      btn.dataset.era = sceneEra(b.scenes[0])
+      btn.title = `${b.from} → ${b.to}: ${b.message}`
+      btn.innerHTML = `<span class="journey-chip-ord"></span><span class="journey-chip-label">${b.message}</span>`
+      btn.addEventListener("click", () => jumpToSceneId(b.scenes[0]))
+      chips.appendChild(btn)
+    }
+    // Number chips after insert (CSS counters alternative)
+    ;[...chips.querySelectorAll(".journey-chip")].forEach((el, i) => {
+      const ord = el.querySelector(".journey-chip-ord")
+      if (ord) ord.textContent = String(i + 1)
+    })
+    if (journeyMermaidEl) {
+      const source = buildJourneySequenceMermaid(sceneId)
+      journeyMermaidEl.removeAttribute("data-processed")
+      journeyMermaidEl.className = "mermaid journey-mermaid"
+      journeyMermaidEl.textContent = source
+      if (typeof renderMermaid === "function") {
+        void Promise.resolve(renderMermaid(journeyMermaidEl)).catch(() => {})
+      }
+    }
+  }
+
   function renderStepProgress() {
     const { role, scene, sceneIndex, roleIndex } = current()
     if (stepProgressRoleEl) {
@@ -1115,6 +1238,7 @@ export function createPlayer(options) {
       openPortalBtn.href = url
       openPortalBtn.hidden = !url
     }
+    renderJourney(scene.id)
     if (stepsEl) {
       stepsEl.innerHTML = ""
       const heading = document.createElement("h3")
