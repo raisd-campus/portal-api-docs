@@ -1020,13 +1020,18 @@ export function createPlayer(options) {
     const { roleIndex } = current()
     sectionProgressEl.innerHTML = ""
     roles.forEach((role, i) => {
+      const era = eraForSceneIds(role.scenes.map((s) => s.id))
       const btn = document.createElement("button")
       btn.type = "button"
       btn.textContent = `${i + 1}. ${role.label}`
+      btn.dataset.era = era
       btn.setAttribute("role", "tab")
       btn.setAttribute("aria-current", i === roleIndex ? "true" : "false")
       if (i < roleIndex) btn.setAttribute("data-done", "true")
-      btn.title = role.summary || role.label
+      btn.title =
+        era === "today"
+          ? `${role.summary || role.label} · includes new / deepened desks`
+          : `${role.summary || role.label} · baseline existing Demo`
       btn.addEventListener("click", () => {
         const first = flat.findIndex((f) => f.roleIndex === i)
         if (first < 0) return
@@ -1052,11 +1057,16 @@ export function createPlayer(options) {
     role.scenes.forEach((s, i) => {
       const li = document.createElement("li")
       const state = i < sceneIndex ? "done" : i === sceneIndex ? "current" : "todo"
+      const era = sceneEra(s.id)
       li.dataset.state = state
+      li.dataset.era = era
       const btn = document.createElement("button")
       btn.type = "button"
       btn.setAttribute("aria-current", i === sceneIndex ? "step" : "false")
-      btn.title = s.title
+      btn.title =
+        era === "today"
+          ? `${s.title} · enabled / deepened today`
+          : `${s.title} · baseline existing Demo`
       btn.innerHTML = `<span class="step-ord">${i + 1}</span><span class="step-label">${shortStepLabel(s.title)}</span>`
       btn.addEventListener("click", () => {
         const target = flat.findIndex((f) => f.roleIndex === roleIndex && f.sceneIndex === i)
