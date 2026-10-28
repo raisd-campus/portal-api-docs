@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T01:48:01.216Z",
+  "recordedAt": "2026-10-28T20:40:06.469Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -198,11 +198,11 @@
         "FM-03"
       ],
       "poster": "bur-pay.poster.jpg",
-      "bytes": 79561,
+      "bytes": 85082,
       "detail": "bursary payments",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/payments",
-      "recordedAt": "2026-10-27T23:47:09.208Z"
+      "recordedAt": "2026-10-28T20:38:26.348Z"
     },
     {
       "sceneId": "bur-fees",
@@ -212,11 +212,11 @@
         "FM-09"
       ],
       "poster": "bur-fees.poster.jpg",
-      "bytes": 66911,
+      "bytes": 70167,
       "detail": "bursary fees",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/fees",
-      "recordedAt": "2026-10-28T01:36:52.554Z"
+      "recordedAt": "2026-10-28T20:38:29.050Z"
     },
     {
       "sceneId": "bur-reg",
@@ -227,11 +227,11 @@
         "FM-09"
       ],
       "poster": "bur-reg.poster.jpg",
-      "bytes": 49542,
+      "bytes": 57810,
       "detail": "bursary registrations",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin",
-      "recordedAt": "2026-10-27T23:37:04.574Z"
+      "recordedAt": "2026-10-28T20:39:45.821Z"
     },
     {
       "sceneId": "bur-sponsors",
@@ -241,11 +241,11 @@
         "FM-08"
       ],
       "poster": "bur-sponsors.poster.jpg",
-      "bytes": 62061,
+      "bytes": 69784,
       "detail": "bursary sponsorship master",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/sponsors",
-      "recordedAt": "2026-10-28T01:10:00.362Z"
+      "recordedAt": "2026-10-28T20:38:35.274Z"
     },
     {
       "sceneId": "reg-offer",
@@ -269,11 +269,11 @@
         "FM-08"
       ],
       "poster": "reg-queue.poster.jpg",
-      "bytes": 48881,
+      "bytes": 63035,
       "detail": "registry registrations",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/registrations",
-      "recordedAt": "2026-10-27T23:37:31.298Z"
+      "recordedAt": "2026-10-28T20:40:06.454Z"
     },
     {
       "sceneId": "reg-list",

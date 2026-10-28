@@ -1269,3 +1269,27 @@
 .wf-body > .wf-seg {
   max-width: 100%;
 }
+
+
+.wf-capture {
+  margin: 0;
+  border: 1px solid var(--wf-page-line, #d5dde6);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b0d10;
+  box-shadow: 0 8px 28px rgba(18, 32, 51, 0.12);
+}
+.wf-capture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+.wf-capture figcaption {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.8rem;
+  color: var(--wf-page-muted, #5a6b7d);
+  background: var(--wf-page-raised, #f4f7fa);
+  border-top: 1px solid var(--wf-page-line, #d5dde6);
+}
