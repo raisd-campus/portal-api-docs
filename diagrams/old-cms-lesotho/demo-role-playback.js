@@ -701,6 +701,14 @@ export function sceneEra(sceneId) {
   return SCENE_ERA[sceneId] || "baseline"
 }
 
+/** Green if any scene is deepened today; otherwise blue baseline. */
+export function eraForSceneIds(sceneIds) {
+  for (const id of sceneIds || []) {
+    if (sceneEra(id) === "today") return "today"
+  }
+  return "baseline"
+}
+
 export function sceneUrl(role, scene) {
   if (SCENE_URLS[scene.id]) return SCENE_URLS[scene.id]
   if (scene.href) return scene.href
@@ -947,10 +955,16 @@ export function createPlayer(options) {
     if (!roleListEl) return
     roleListEl.innerHTML = ""
     roles.forEach((role, roleIndex) => {
+      const era = eraForSceneIds(role.scenes.map((s) => s.id))
       const btn = document.createElement("button")
       btn.type = "button"
       btn.className = "role-item"
       btn.dataset.roleId = role.id
+      btn.dataset.era = era
+      btn.title =
+        era === "today"
+          ? `${role.label} · includes desks enabled / deepened today`
+          : `${role.label} · baseline existing Demo only`
       btn.setAttribute("aria-current", current().roleIndex === roleIndex ? "true" : "false")
       btn.innerHTML = `<span class="role-ord">${roleIndex + 1}</span><span class="role-meta"><strong>${role.label}</strong><span>${role.summary}</span></span>`
       btn.addEventListener("click", () => {
@@ -969,9 +983,15 @@ export function createPlayer(options) {
     if (!featureListEl) return
     featureListEl.innerHTML = ""
     for (const { fm, scenes } of featureIndex) {
+      const era = eraForSceneIds(scenes.map((s) => s.scene.id))
       const btn = document.createElement("button")
       btn.type = "button"
       btn.className = "fm-item"
+      btn.dataset.era = era
+      btn.title =
+        era === "today"
+          ? `${fm} · includes scenes enabled / deepened today`
+          : `${fm} · baseline existing Demo only`
       const sceneIds = current().scene.fm || []
       const isActive = activeFm === fm || sceneIds.includes(fm)
       btn.setAttribute("aria-current", isActive ? "true" : "false")

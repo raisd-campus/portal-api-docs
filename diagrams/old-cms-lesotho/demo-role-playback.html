@@ -19,16 +19,40 @@
     @media (max-width: 960px) { .playback { grid-template-columns: 1fr; } }
     .side-stack { display: flex; flex-direction: column; gap: 18px; max-height: min(78vh, 820px); overflow: auto; padding-right: 4px; }
     .role-list, .fm-list { display: flex; flex-direction: column; gap: 8px; }
-    .role-item, .fm-item { display: flex; gap: 10px; align-items: flex-start; text-align: left; width: 100%; padding: 10px 12px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: inherit; font: inherit; }
-    .role-item:hover, .fm-item:hover { border-color: var(--accent); }
-    .role-item[aria-current="true"], .fm-item[aria-current="true"] { border-color: var(--accent); background: var(--accent-soft); }
+    .role-item, .fm-item {
+      display: flex; gap: 10px; align-items: flex-start; text-align: left; width: 100%;
+      padding: 10px 12px; border-radius: var(--radius); background: var(--surface);
+      cursor: pointer; color: inherit; font: inherit;
+      border: 2px solid #6ea0d4; transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    /* Match flow / screenshot legend: blue = all baseline · green = any deepened today */
+    .role-item[data-era="baseline"], .fm-item[data-era="baseline"] {
+      border-color: #6ea0d4;
+      box-shadow: 0 0 0 1px rgba(61, 106, 158, .18);
+    }
+    .role-item[data-era="today"], .fm-item[data-era="today"] {
+      border-color: #2f9e8a;
+      box-shadow: 0 0 0 1px rgba(15, 107, 93, .22);
+    }
+    .role-item:hover, .fm-item:hover { filter: brightness(0.98); }
+    .role-item[aria-current="true"], .fm-item[aria-current="true"] {
+      background: var(--accent-soft);
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 35%, transparent);
+    }
+    .role-item[data-era="baseline"][aria-current="true"], .fm-item[data-era="baseline"][aria-current="true"] {
+      border-color: #3d6a9e;
+    }
+    .role-item[data-era="today"][aria-current="true"], .fm-item[data-era="today"][aria-current="true"] {
+      border-color: #0f6b5d;
+    }
     .role-ord, .fm-code { flex: 0 0 auto; min-width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--line); padding: 0 6px; }
     .fm-code { border-radius: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
     .role-item[aria-current="true"] .role-ord, .fm-item[aria-current="true"] .fm-code { background: var(--accent); color: #fff; }
     .role-meta, .fm-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .role-meta strong, .fm-meta strong { font-size: 14px; }
     .role-meta span, .fm-meta span { font-size: 12px; color: var(--muted); line-height: 1.35; }
-    .side-heading { margin: 0 0 8px; font-size: 1rem; }
+    .side-heading { margin: 0 0 4px; font-size: 1rem; }
+    .side-era-hint { margin: 0 0 8px; font-size: 11px; color: var(--muted); line-height: 1.35; }
     .stage {
       border: 1px solid var(--line); border-radius: var(--radius); background:
         radial-gradient(1200px 400px at 10% 0%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
@@ -790,10 +814,12 @@ flowchart TB
       <aside class="side-stack">
         <div>
           <h2 class="side-heading type-section">Roles</h2>
+          <p class="side-era-hint">Blue box = existing only · Green box = includes new desks</p>
           <div id="role-list" class="role-list" role="listbox" aria-label="Demo roles"></div>
         </div>
         <div>
           <h2 class="side-heading type-section">Features</h2>
+          <p class="side-era-hint">Blue box = existing only · Green box = includes new desks</p>
           <div id="feature-list" class="fm-list" role="listbox" aria-label="Feature modules"></div>
         </div>
       </aside>
@@ -812,9 +838,9 @@ flowchart TB
             <div class="section-progress" id="section-progress" role="tablist" aria-label="Roles"></div>
             <ol class="step-progress-track" id="step-progress-track" aria-label="Steps in this role"></ol>
           </nav>
-          <ul class="screen-era-legend" aria-label="Screenshot border legend">
-            <li><span class="screen-era-swatch baseline" aria-hidden="true"></span> Blue border · baseline existing Demo</li>
-            <li><span class="screen-era-swatch today" aria-hidden="true"></span> Green border · enabled / deepened today</li>
+          <ul class="screen-era-legend" aria-label="Border colour legend">
+            <li><span class="screen-era-swatch baseline" aria-hidden="true"></span> Blue · all baseline existing Demo</li>
+            <li><span class="screen-era-swatch today" aria-hidden="true"></span> Green · includes desks enabled / deepened today</li>
           </ul>
           <div class="screen-shell" id="screen-shell" aria-label="Demo scene screenshot" data-era="baseline" data-loading="true">
             <button type="button" class="screen-nav screen-nav-prev" id="btn-prev" aria-label="Previous step">‹</button>
