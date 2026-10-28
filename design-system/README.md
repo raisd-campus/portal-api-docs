@@ -52,3 +52,9 @@ also update existing site pages when a top-level section changes.
 The 6 October 2026 acceptance captures use shared 0.6.1 without a package change: Applicant confirmation belongs to Applicant, and the transferred Module Registration composition belongs to Student. They use only synthetic demo identities and evidence metadata.
 
 The 0.6.2 release adds Popup footerAfterDismiss. New Applicant save-before-leaving captures use that released slot; historical images retain their original package provenance.
+
+The 0.9.0 release adds shared AuthLayout fixture captures at phone, tablet and desktop widths. SSO consumes the exact published package; historical screenshots keep their original package/source versions.
+
+Release 0.9.1 adds the optional AuthLayout brandingPlacement=above variant. New mock consumer captures show it at 375/768/1440; the historical inside-card captures retain their 0.9.0 provenance.
+
+Released package **0.19.8** (GitHub Packages, 2026-10-28) is the current catalogue version. Full API text lives in [`docs/ai/design/package-catalogue.md`](../ai/design/package-catalogue.md) and admin workspace guidance in [`docs/ai/design/admin-record-flow.md`](../ai/design/admin-record-flow.md). Designs since 0.9.1 include AdminRecordFlow, ChipField, RadioField, PortalBreadcrumb, Switch, SortableList and FlowEditor. Historical PNGs keep their per-entry provenance; new fixture captures for those APIs require the package consumer examples when available and are not invented here.

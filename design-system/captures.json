@@ -1,5 +1,5 @@
 {
-  "packageVersion": "0.9.1",
+  "packageVersion": "0.19.8",
   "studentPortalCommit": "84c6bf541a4ecefc985a6429cac8a302b0098723",
   "capturedAt": "2026-09-26",
   "captureRoute": "/dev/design-system",
@@ -414,7 +414,7 @@
     },
     {
       "id": "detail-field-undivided-desktop",
-      "title": "Detail field · undivided",
+      "title": "Detail field \u00b7 undivided",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "desktop",
@@ -429,7 +429,7 @@
     },
     {
       "id": "detail-field-undivided-phone",
-      "title": "Detail field · undivided phone",
+      "title": "Detail field \u00b7 undivided phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -601,7 +601,7 @@
     },
     {
       "id": "module-detail-patterns-phone",
-      "title": "Module detail patterns · phone",
+      "title": "Module detail patterns \u00b7 phone",
       "page": "student-components",
       "owner": "student",
       "viewport": "phone",
@@ -613,7 +613,7 @@
     },
     {
       "id": "summary-cards-phone",
-      "title": "Summary cards · phone",
+      "title": "Summary cards \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -626,7 +626,7 @@
     },
     {
       "id": "content-sections-phone",
-      "title": "Content sections · phone",
+      "title": "Content sections \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -638,7 +638,7 @@
     },
     {
       "id": "timetable-minute-precision-phone",
-      "title": "Timetable minute precision · phone",
+      "title": "Timetable minute precision \u00b7 phone",
       "page": "student-components",
       "owner": "student",
       "viewport": "phone",
@@ -650,7 +650,7 @@
     },
     {
       "id": "tab-panel-banner-phone",
-      "title": "Tab-panel banner · phone",
+      "title": "Tab-panel banner \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -662,7 +662,7 @@
     },
     {
       "id": "linked-list-phone",
-      "title": "Linked list · phone",
+      "title": "Linked list \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -674,7 +674,7 @@
     },
     {
       "id": "page-action-bar-phone",
-      "title": "Page action bar · phone",
+      "title": "Page action bar \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -686,7 +686,7 @@
     },
     {
       "id": "data-table-phone",
-      "title": "Data table · phone",
+      "title": "Data table \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -698,7 +698,7 @@
     },
     {
       "id": "responsive-form-grid-phone",
-      "title": "Responsive form grid · phone",
+      "title": "Responsive form grid \u00b7 phone",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "phone",
@@ -711,7 +711,7 @@
     },
     {
       "id": "detail-field-phone",
-      "title": "Detail field · phone",
+      "title": "Detail field \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -723,7 +723,7 @@
     },
     {
       "id": "student-profile-control-phone",
-      "title": "Student profile control · phone",
+      "title": "Student profile control \u00b7 phone",
       "page": "student-components",
       "owner": "student",
       "viewport": "phone",
@@ -735,7 +735,7 @@
     },
     {
       "id": "calendar-month-and-agenda-phone",
-      "title": "Calendar month and agenda · phone",
+      "title": "Calendar month and agenda \u00b7 phone",
       "page": "student-components",
       "owner": "student",
       "viewport": "phone",
@@ -748,7 +748,7 @@
     },
     {
       "id": "module-detail-patterns-tablet",
-      "title": "Module detail patterns · tablet",
+      "title": "Module detail patterns \u00b7 tablet",
       "page": "student-components",
       "owner": "student",
       "viewport": "tablet",
@@ -760,7 +760,7 @@
     },
     {
       "id": "content-sections-tablet",
-      "title": "Content sections · tablet",
+      "title": "Content sections \u00b7 tablet",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "tablet",
@@ -772,7 +772,7 @@
     },
     {
       "id": "timetable-minute-precision-tablet",
-      "title": "Timetable minute precision · tablet",
+      "title": "Timetable minute precision \u00b7 tablet",
       "page": "student-components",
       "owner": "student",
       "viewport": "tablet",
@@ -784,7 +784,7 @@
     },
     {
       "id": "data-table-tablet",
-      "title": "Data table · tablet",
+      "title": "Data table \u00b7 tablet",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "tablet",
@@ -796,7 +796,7 @@
     },
     {
       "id": "student-profile-control-tablet",
-      "title": "Student profile control · tablet",
+      "title": "Student profile control \u00b7 tablet",
       "page": "student-components",
       "owner": "student",
       "viewport": "tablet",
@@ -808,7 +808,7 @@
     },
     {
       "id": "module-detail-materials",
-      "title": "Module detail patterns · Materials",
+      "title": "Module detail patterns \u00b7 Materials",
       "page": "student-components",
       "owner": "student",
       "viewport": "desktop",
@@ -820,7 +820,7 @@
     },
     {
       "id": "module-detail-attendance",
-      "title": "Module detail patterns · Attendance",
+      "title": "Module detail patterns \u00b7 Attendance",
       "page": "student-components",
       "owner": "student",
       "viewport": "desktop",
@@ -832,7 +832,7 @@
     },
     {
       "id": "tab-panel-banner-gradient",
-      "title": "Tab-panel banner · Gradient on",
+      "title": "Tab-panel banner \u00b7 Gradient on",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "desktop",
@@ -844,7 +844,7 @@
     },
     {
       "id": "accordion-collapsed",
-      "title": "Accordion · Collapsed",
+      "title": "Accordion \u00b7 Collapsed",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "desktop",
@@ -856,7 +856,7 @@
     },
     {
       "id": "dialog-open",
-      "title": "Overlays and feedback · Dialog open",
+      "title": "Overlays and feedback \u00b7 Dialog open",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "desktop",
@@ -868,7 +868,7 @@
     },
     {
       "id": "popup-open",
-      "title": "Overlays and feedback · Popup open",
+      "title": "Overlays and feedback \u00b7 Popup open",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "desktop",
@@ -933,7 +933,7 @@
     },
     {
       "id": "record-summary-card-phone",
-      "title": "Record summary card · phone",
+      "title": "Record summary card \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -2672,7 +2672,7 @@
     },
     {
       "id": "classrooms-feedback-20261015-phone",
-      "title": "Module detail patterns · Published assignment feedback · phone",
+      "title": "Module detail patterns \u00b7 Published assignment feedback \u00b7 phone",
       "page": "student-components",
       "owner": "student",
       "viewport": "phone",
@@ -2688,7 +2688,7 @@
     },
     {
       "id": "classrooms-feedback-20261015-tablet",
-      "title": "Module detail patterns · Published assignment feedback · tablet",
+      "title": "Module detail patterns \u00b7 Published assignment feedback \u00b7 tablet",
       "page": "student-components",
       "owner": "student",
       "viewport": "tablet",
@@ -2704,7 +2704,7 @@
     },
     {
       "id": "classrooms-feedback-20261015-desktop",
-      "title": "Module detail patterns · Published assignment feedback · desktop",
+      "title": "Module detail patterns \u00b7 Published assignment feedback \u00b7 desktop",
       "page": "student-components",
       "owner": "student",
       "viewport": "desktop",
@@ -2720,7 +2720,7 @@
     },
     {
       "id": "audit-trail-080-phone",
-      "title": "Audit trail · phone",
+      "title": "Audit trail \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -2736,7 +2736,7 @@
     },
     {
       "id": "disclosure-080-phone",
-      "title": "Accordion · phone",
+      "title": "Accordion \u00b7 phone",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "phone",
@@ -2752,7 +2752,7 @@
     },
     {
       "id": "audit-trail-080-tablet",
-      "title": "Audit trail · tablet",
+      "title": "Audit trail \u00b7 tablet",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "tablet",
@@ -2768,7 +2768,7 @@
     },
     {
       "id": "disclosure-080-tablet",
-      "title": "Accordion · tablet",
+      "title": "Accordion \u00b7 tablet",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "tablet",
@@ -2784,7 +2784,7 @@
     },
     {
       "id": "audit-trail-080-desktop",
-      "title": "Audit trail · desktop",
+      "title": "Audit trail \u00b7 desktop",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "desktop",
@@ -2800,7 +2800,7 @@
     },
     {
       "id": "disclosure-080-desktop",
-      "title": "Accordion · desktop",
+      "title": "Accordion \u00b7 desktop",
       "page": "shared-controls",
       "owner": "shared",
       "viewport": "desktop",
@@ -2816,7 +2816,7 @@
     },
     {
       "id": "auth-layout-090-phone",
-      "title": "Authentication layout · phone",
+      "title": "Authentication layout \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -2832,7 +2832,7 @@
     },
     {
       "id": "auth-layout-090-tablet",
-      "title": "Authentication layout · tablet",
+      "title": "Authentication layout \u00b7 tablet",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "tablet",
@@ -2848,7 +2848,7 @@
     },
     {
       "id": "auth-layout-090-desktop",
-      "title": "Authentication layout · desktop",
+      "title": "Authentication layout \u00b7 desktop",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "desktop",
@@ -2864,7 +2864,7 @@
     },
     {
       "id": "auth-layout-091-phone",
-      "title": "Authentication layout - branding above card - phone",
+      "title": "Authentication layout \u00b7 branding above \u00b7 phone",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "phone",
@@ -2880,7 +2880,7 @@
     },
     {
       "id": "auth-layout-091-tablet",
-      "title": "Authentication layout - branding above card - tablet",
+      "title": "Authentication layout \u00b7 branding above \u00b7 tablet",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "tablet",
@@ -2896,7 +2896,7 @@
     },
     {
       "id": "auth-layout-091-desktop",
-      "title": "Authentication layout - branding above card - desktop",
+      "title": "Authentication layout \u00b7 branding above \u00b7 desktop",
       "page": "shared-patterns",
       "owner": "shared",
       "viewport": "desktop",
@@ -2911,6 +2911,6 @@
       "releaseCommit": "008003f0ef15ddfc96774a34265709d4cf6663c1"
     }
   ],
-  "releaseIntegrity": "sha512-dplrheC3v0tIeK01No4wNm4G3ZaE1wt6cIybcmsCfYHEq55ri38jD+RVAUzwTMdauJ4FQRbgHjz1luLRosl+6w==",
-  "releaseSourceState": "Published exact archive from design-system 008003f0ef15ddfc96774a34265709d4cf6663c1, annotated v0.9.1; SSO opts into above-card branding"
+  "releaseIntegrity": "sha512-FYAjj7steFnPk9sjCnqCQpXnHEsjlvGrobsAMHC3uoZ5ThDgogJa92VseR8FPd+POUULnsO9JuNUAKGZlixDNw==",
+  "releaseSourceState": "Published GitHub Packages archive @raisd-campus/design-system@0.19.8 (2026-10-28); catalogue text mirrored to docs/ai/design/package-catalogue.md. Historical HTML captures retain per-entry packageVersion provenance; post-0.9.1 fixture screenshots await unpublished consumer examples."
 }

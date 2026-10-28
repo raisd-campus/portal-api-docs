@@ -6,7 +6,7 @@
   <link rel="icon" href="../diagrams/assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../diagrams/styles.css" />
   <link rel="stylesheet" href="styles.css" />
-  <title>Control Plane — Email templates</title>
+  <title>Documentation — Email templates</title>
   <style>
     .email-frame {
       width: 100%;
@@ -328,7 +328,8 @@
       <table class="var-table">
         <thead><tr><th>ID</th><th>Subject</th><th>Caller</th></tr></thead>
         <tbody>
-          <tr><td><code>magic_link</code></td><td>Your Limkokwing sign-in link</td><td>SSO</td></tr>
+          <tr><td><code>password_reset</code></td><td>Reset your Limkokwing password</td><td>SSO forgot-password</td></tr>
+          <tr><td><code>magic_link</code></td><td>Your Limkokwing sign-in link</td><td>SSO (channel disabled on Demo UI)</td></tr>
           <tr><td><code>applicant_submitted</code></td><td>Application received — {{applicationRef}}</td><td>Portal API</td></tr>
           <tr><td><code>enrolment_accepted</code></td><td>Enrolment accepted — {{programmeName}}</td><td>Portal API</td></tr>
           <tr><td><code>learner_access_granted</code></td><td>Your {{roleLabel}} access is ready</td><td>SSO admin create</td></tr>
@@ -339,14 +340,20 @@
     </section>
 
     <div class="design-cards">
-      <article class="design-card" id="magic_link">
-        <div class="design-card-head"><div><span class="design-badge">SSO</span><h2>magic_link</h2></div></div>
-        <p class="email-meta">Required: <code>magicLinkUrl</code> · Optional: <code>displayName</code>, <code>campusName</code>, <code>expiresMinutes</code></p>
-        <iframe class="email-frame" title="Preview magic_link" srcdoc="<!DOCTYPE html><html><body style='margin:0;background:#f1f5f9;font-family:Segoe UI,Roboto,Arial,sans-serif'><table width='100%' style='padding:16px'><tr><td align='center'><table width='100%' style='max-width:560px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden'><tr><td style='padding:20px 28px;background:#000000;text-align:center;border-radius:16px 16px 0 0'><img src='assets/lkw-logo.png' width='160' alt='Limkokwing University of Creative Technology' style='display:inline-block;max-width:160px;height:auto;border:0'/</td></tr><tr><td style='padding:28px'><p style='margin:0 0 12px;font-size:16px'>Hi Iman,</p><p style='margin:0 0 16px;font-size:15px;color:#334155'>Use this one-time link to sign in to Limkokwing (<strong>Lesotho campus</strong>). It expires in 15 minutes.</p><p style='margin:0 0 24px'><a href='#' style='display:inline-block;background:#000000;color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 18px;border-radius:12px'>Continue to Limkokwing</a></p><p style='margin:16px 0 0;font-size:13px;color:#64748b'>If you did not request this, you can ignore this email.</p></td></tr><tr><td style='padding:16px 28px 24px;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px'>Limkokwing University of Creative Technology</td></tr></table></td></tr></table>
+      <article class="design-card" id="password_reset">
+        <div class="design-card-head"><div><span class="design-badge">SSO</span><h2>password_reset</h2></div></div>
+        <p class="email-meta">Required: <code>resetUrl</code> · Optional: <code>displayName</code>, <code>campusName</code>, <code>expiresMinutes</code></p>
+        <iframe class="email-frame" title="Preview password_reset" srcdoc="<!DOCTYPE html><html><body style='margin:0;background:#f1f5f9;font-family:Segoe UI,Roboto,Arial,sans-serif'><table width='100%' style='padding:16px'><tr><td align='center'><table width='100%' style='max-width:560px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden'><tr><td style='padding:20px 28px;background:#000000;text-align:center;border-radius:16px 16px 0 0'><img src='assets/lkw-logo.png' width='160' alt='Limkokwing University of Creative Technology' style='display:inline-block;max-width:160px;height:auto;border:0'/</td></tr><tr><td style='padding:28px'><p style='margin:0 0 12px;font-size:16px'>Hi Iman,</p><p style='margin:0 0 16px;font-size:15px;color:#334155'>We received a request to reset your Limkokwing password for <strong>Lesotho campus</strong>. This link expires in 15 minutes.</p><p style='margin:0 0 24px'><a href='#' style='display:inline-block;background:#000000;color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 18px;border-radius:12px'>Reset password</a></p><p style='margin:16px 0 0;font-size:13px;color:#64748b'>If you did not request a password reset, you can ignore this email.</p></td></tr><tr><td style='padding:16px 28px 24px;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px'>Limkokwing University of Creative Technology</td></tr></table></td></tr></table>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
   <script src="../diagrams/keychain-access.js" defer></script>
 </body></html>"></iframe>
+      </article>
+
+      <article class="design-card" id="magic_link">
+        <div class="design-card-head"><div><span class="design-badge">SSO</span><h2>magic_link</h2></div></div>
+        <p class="email-meta">Required: <code>magicLinkUrl</code> · Optional: <code>displayName</code>, <code>campusName</code>, <code>expiresMinutes</code> · <em>Channel disabled on Demo login UI</em></p>
+        <iframe class="email-frame" title="Preview magic_link" srcdoc="<!DOCTYPE html><html><body style='margin:0;background:#f1f5f9;font-family:Segoe UI,Roboto,Arial,sans-serif'><table width='100%' style='padding:16px'><tr><td align='center'><table width='100%' style='max-width:560px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden'><tr><td style='padding:20px 28px;background:#000000;text-align:center;border-radius:16px 16px 0 0'><img src='assets/lkw-logo.png' width='160' alt='Limkokwing University of Creative Technology' style='display:inline-block;max-width:160px;height:auto;border:0'/</td></tr><tr><td style='padding:28px'><p style='margin:0 0 12px;font-size:16px'>Hi Iman,</p><p style='margin:0 0 16px;font-size:15px;color:#334155'>Use this one-time link to sign in to Limkokwing (<strong>Lesotho campus</strong>). It expires in 15 minutes.</p><p style='margin:0 0 24px'><a href='#' style='display:inline-block;background:#000000;color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 18px;border-radius:12px'>Continue to Limkokwing</a></p><p style='margin:16px 0 0;font-size:13px;color:#64748b'>If you did not request this, you can ignore this email.</p></td></tr><tr><td style='padding:16px 28px 24px;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px'>Limkokwing University of Creative Technology</td></tr></table></td></tr></table></body></html>"></iframe>
       </article>
 
       <article class="design-card" id="applicant_submitted">

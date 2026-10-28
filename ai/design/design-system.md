@@ -8,11 +8,19 @@ Tokens and components exported by `@raisd-campus/design-system` are shared imple
 
 Shared package 0.6.1 adds a pointer cursor to enabled accordion triggers, preserving disabled interaction and header geometry. `AvatarFallback` accepts `surface="subtle"` to use the darker surface-subtle token on a surface background; shared chat rows use this option. Other avatar sizes and image behavior are unchanged. Read-only file values compose `DetailField`'s standard readOnly label/value columns with a read-only `FileUploadField` value; stacked presentation remains an explicit variant.
 
+## Shared authentication layout
+
+Released package **0.9.1** owns presentation-only `AuthLayout` (`system/auth-layout`) for sign-in and password recovery. Required `title` and `children`; optional description, branding, tools, footer and IDs. Default `brandingPlacement="inside"` keeps branding in the card; `"above"` centres branding outside the card in the existing viewport scroller. Compose existing shared fields and actions; SSO owns password, reset, passkey, validation, pending/error and redirect workflows. Exact install and ownership rules: [component-library.md](component-library.md). Catalogue captures: [Authentication layout](https://docs.raisd.co/design-system/shared-patterns.html#auth-layout-090-phone).
+
+## Released shared package 0.19.8
+
+The installable shared package is **0.19.8**. Full API text: [package-catalogue.md](package-catalogue.md). Admin directory/workspace guidance: [admin-record-flow.md](admin-record-flow.md). Notable patterns since AuthLayout 0.9.1: elevated file tiles, PortalAccount identity lines, AdminRecordFlow (sticky sidebars, compact record-list, shell-gutter measurement), ContentSection label/subheading/description, ChipField, RadioField, PortalBreadcrumb, Switch/SortableList/FlowEditor. The public HTML catalogue version eyebrow tracks 0.19.8; historical screenshots keep their capture provenance. Import and ownership rules: [component-library.md](component-library.md).
+
 ## Direction
 
 The current portal is a dark-only responsive product for student-facing browser layouts from 375px through 1440px. Semantic tokens and reusable components are the supported way to express visual decisions. Development-only `/dev/*` routes provide basic phone usability at 375px and 430px; individual demonstrations remain outside the full student-facing responsive acceptance standard.
 
-The [published design system catalogue](https://docs.raisd.co/design-system/) shows released shared components and student-owned patterns in static mock-data captures. Use the package catalogue and installed declarations for exact APIs. Development-only Scenario, Admin Actions and Data Model tools retain their own responsive layouts.
+The [published design system catalogue](https://docs.raisd.co/design-system/) shows released shared components and student-owned patterns in static mock-data captures. Use the [0.19.8 package catalogue](package-catalogue.md) and installed declarations for exact APIs. Development-only Scenario, Admin Actions and Data Model tools retain their own responsive layouts.
 
 ## Responsive layout rules
 
