@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentation — Design-system 0.19.8 wireframes</title>
+  <link rel="icon" href="../../../diagrams/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../../diagrams/styles.css" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="wireframes.css" />
+</head>
+<body>
+<main class="wf-page">
+  <p class="eyebrow">Candidate · package 0.19.8 · not released captures</p>
+  <h1>Design-system 0.19.8 wireframes</h1>
+  <p class="design-context">Lo-fi structural review for Control / Staff Admin adoption. Annotated regions show package vs portal ownership. These are not production screenshots and do not change portal pins.</p>
+
+  <p class="wf-banner"><strong>Wireframe only.</strong> Team review before any app pin upgrade or feature work. Findings and decisions: <a href="README.md">README</a> · API text: <a href="../../../ai/design/package-catalogue.md">package-catalogue</a> · <a href="../../index.html">Released catalogue</a></p>
+
+  <nav class="wf-toc" aria-label="On this page">
+    <a href="#admin-directory">Admin directory</a>
+    <a href="#admin-workspace">Admin workspace</a>
+    <a href="#flow-editor">Flow editor</a>
+    <a href="#supporting-fields">Supporting fields</a>
+    <a href="#leave-dialog">Leave dialog</a>
+  </nav>
+
+  <!-- Admin directory -->
+  <section class="wf-section" id="admin-directory">
+    <h2>Admin directory — AdminTable</h2>
+    <p class="wf-lede"><code>system/admin-record-flow</code> · quick scopes via TabbedPagePanel · search/filter below tabs · pagination footer uses secondary current page (0.18.5).</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Package: table chrome</span>
+      <span class="wf-tag portal">Portal: authorised rows + persistence</span>
+    </div>
+
+    <div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · directory</span><span>ContentSection page + AdminTable</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Applicants</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body">
+            <div class="wf-title-row">
+              <div>
+                <div class="wf-field-label">Admissions</div>
+                <h3>Applicants</h3>
+                <p class="sub">label + title · ContentSection 0.12 / 0.15</p>
+              </div>
+              <button type="button" class="wf-btn primary">Add</button>
+            </div>
+            <div class="wf-tabs" role="tablist">
+              <div class="wf-tab active">All</div>
+              <div class="wf-tab">Under review</div>
+              <div class="wf-tab">Offered</div>
+              <div class="wf-tab">Accepted</div>
+            </div>
+            <div class="wf-toolbar">
+              <div class="wf-search">Search applicants…</div>
+              <button type="button" class="wf-btn ghost sm">Filters</button>
+            </div>
+            <div class="wf-table">
+              <div class="row head"><span>Name</span><span>Programme</span><span>Campus</span><span>Status</span></div>
+              <div class="row selected"><span>Thabo Mokoena</span><span>BA Design</span><span>Lesotho</span><span>Under review</span></div>
+              <div class="row"><span>Palesa Nthunya</span><span>BSc IT</span><span>Lesotho</span><span>Offered</span></div>
+              <div class="row"><span>Neo Molefe</span><span>BA Media</span><span>Lesotho</span><span>Accepted</span></div>
+              <div class="wf-footer">
+                <span>Showing 1–10 of 128</span>
+                <div class="wf-pages">
+                  <div class="wf-page-btn">‹</div>
+                  <div class="wf-page-btn current">1</div>
+                  <div class="wf-page-btn">2</div>
+                  <div class="wf-page-btn">›</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="wf-note">Table state never implies backend querying of unloaded rows. Portal supplies the complete authorised set for client filter/sort/page.</p>
+  </section>
+
+  <!-- Admin workspace -->
+  <section class="wf-section" id="admin-workspace">
+    <h2>Admin workspace — AdminRecordWorkspace</h2>
+    <p class="wf-lede">Two columns from <strong>56rem</strong>; phone stacks compact panel (max <code>min(50dvh, 24rem)</code>) above the form. Desktop sidebar sticky + content-only scroll (0.11.1); gutter height from PortalPageContent (0.19.8).</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Package: layout + chrome</span>
+      <span class="wf-tag portal">Portal: dirty / save / photos</span>
+    </div>
+
+    <div class="wf-frames pair">
+      <div class="wf-frame">
+        <div class="wf-frame-label"><span>Desktop · workspace</span><span>Summary + form</span></div>
+        <div class="wf-shell">
+          <aside class="wf-rail" aria-hidden="true"><div class="dot active"></div><div class="dot"></div></aside>
+          <div class="wf-main">
+            <header class="wf-header">
+              <div class="wf-crumbs">
+                <span>Applicants</span><span>/</span><span class="cur">Thabo Mokoena</span>
+              </div>
+              <div class="wf-account" aria-hidden="true"></div>
+            </header>
+            <div class="wf-body">
+              <div class="wf-title-row">
+                <h3>Applicant record</h3>
+                <div style="display:flex;gap:.4rem">
+                  <button type="button" class="wf-btn ghost sm">Audit</button>
+                  <button type="button" class="wf-btn ghost sm">Close</button>
+                </div>
+              </div>
+              <div class="wf-workspace">
+                <aside class="wf-panel">
+                  <div class="wf-panel-head">
+                    <div class="seg active">Summary</div>
+                    <div class="seg">List</div>
+                  </div>
+                  <div class="wf-panel-body">
+                    <div class="wf-avatar" aria-hidden="true"></div>
+                    <div>
+                      <div class="wf-field-label">Name</div>
+                      <div class="wf-field-value">Thabo Mokoena</div>
+                    </div>
+                    <div>
+                      <div class="wf-field-label">Reference</div>
+                      <div class="wf-field-value">APP-000128</div>
+                    </div>
+                    <span class="wf-status-pill">Under review</span>
+                  </div>
+                  <div class="wf-panel-foot">
+                    <button type="button" class="wf-btn" style="width:100%">Edit</button>
+                  </div>
+                </aside>
+                <div class="wf-form">
+                  <div class="wf-form-row">
+                    <label>Programme</label>
+                    <div class="wf-input">BA Design</div>
+                  </div>
+                  <div class="wf-form-row">
+                    <label>Campus</label>
+                    <div class="wf-input">Lesotho</div>
+                  </div>
+                  <div class="wf-form-row">
+                    <label>Status</label>
+                    <div class="wf-radios">
+                      <div class="wf-radio on"><span class="orb"></span> Draft</div>
+                      <div class="wf-radio"><span class="orb"></span> Published</div>
+                    </div>
+                  </div>
+                  <div class="wf-actions">
+                    <button type="button" class="wf-btn ghost">Cancel</button>
+                    <button type="button" class="wf-btn primary">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wf-frame phone">
+        <div class="wf-frame-label"><span>Phone · stacked</span><span>≤56rem</span></div>
+        <div class="wf-shell">
+          <div class="wf-main">
+            <header class="wf-header">
+              <div class="wf-crumbs"><span class="cur">Record</span></div>
+              <div class="wf-account" aria-hidden="true"></div>
+            </header>
+            <div class="wf-body">
+              <div class="wf-title-row">
+                <h3>Applicant</h3>
+                <button type="button" class="wf-btn ghost sm">Close</button>
+              </div>
+              <aside class="wf-panel">
+                <div class="wf-panel-head">
+                  <div class="seg">Summary</div>
+                  <div class="seg active">List</div>
+                </div>
+                <div class="wf-panel-body" style="justify-items:stretch;text-align:left;padding:.35rem .5rem">
+                  <div class="wf-list-row"><span>Thabo Mokoena</span><span class="status-bare">Under review</span></div>
+                  <div class="wf-list-row"><span>Palesa Nthunya</span><span class="status-bare">Offered</span></div>
+                  <div class="wf-list-row"><span>Neo Molefe</span><span class="status-bare">Accepted</span></div>
+                </div>
+              </aside>
+              <div class="wf-form">
+                <div class="wf-form-row">
+                  <label>Programme</label>
+                  <div class="wf-input">BA Design</div>
+                </div>
+                <div class="wf-actions">
+                  <button type="button" class="wf-btn primary" style="width:100%">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="wf-note">Compact <code>record-list</code> badges keep semantic text colour only (0.18.3). Summary status Badge keeps full chrome (0.19.6). Summary/list stay mounted so state survives switches.</p>
+  </section>
+
+  <!-- Flow editor -->
+  <section class="wf-section" id="flow-editor">
+    <h2>Flow editor — FlowEditor</h2>
+    <p class="wf-lede">Numbered steps · muted categories (Review · Payment · Document release · Applicant action) · external drag handle · sibling Switch · linked children · required hides switch · fixed locks handle (0.19.0–0.19.5).</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Package: presentation</span>
+      <span class="wf-tag portal">Portal: flow rules + publish</span>
+    </div>
+
+    <div class="wf-frames pair">
+      <div class="wf-frame">
+        <div class="wf-frame-label"><span>Editable</span><span>FlowEditor + SortableList</span></div>
+        <div class="wf-body">
+          <div class="wf-title-row">
+            <div>
+              <div class="wf-field-label">University Flows</div>
+              <h3>Admissions · Lesotho</h3>
+              <p class="sub">description slot · ContentSection 0.19.2</p>
+            </div>
+            <button type="button" class="wf-btn primary">Publish</button>
+          </div>
+          <div class="wf-flow">
+            <div class="wf-step">
+              <div class="wf-handle lock" title="Fixed">🔒</div>
+              <div class="wf-card">
+                <div class="wf-cats">Review</div>
+                <div class="wf-step-title"><span class="wf-num">1</span> Document check</div>
+                <div class="wf-required">Required — switch hidden</div>
+              </div>
+              <div class="wf-step-side">
+                <div class="wf-chev">›</div>
+              </div>
+            </div>
+            <div class="wf-step-group">
+              <div class="wf-step">
+                <div class="wf-handle">⋮⋮</div>
+                <div class="wf-card">
+                  <div class="wf-cats">Payment</div>
+                  <div class="wf-step-title"><span class="wf-num">2</span> Application fee</div>
+                </div>
+                <div class="wf-step-side">
+                  <div class="wf-switch on" aria-hidden="true"></div>
+                  <div class="wf-chev">›</div>
+                </div>
+              </div>
+              <div class="wf-step">
+                <div class="wf-handle" style="visibility:hidden">⋮⋮</div>
+                <div class="wf-card child">
+                  <div class="wf-cats">Applicant action</div>
+                  <div class="wf-step-title"><span class="wf-num">3</span> Upload proof</div>
+                </div>
+                <div class="wf-step-side">
+                  <div class="wf-switch on" aria-hidden="true"></div>
+                  <div class="wf-chev">›</div>
+                </div>
+              </div>
+            </div>
+            <div class="wf-step">
+              <div class="wf-handle">⋮⋮</div>
+              <div class="wf-card">
+                <div class="wf-cats">Document release · Review</div>
+                <div class="wf-step-title"><span class="wf-num">4</span> Offer letter</div>
+              </div>
+              <div class="wf-step-side">
+                <div class="wf-switch on" aria-hidden="true"></div>
+                <div class="wf-chev">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wf-frame">
+        <div class="wf-frame-label"><span>Read-only</span><span>inspection only</span></div>
+        <div class="wf-body">
+          <h3 style="margin:0;font-size:1.05rem">Published policy v3</h3>
+          <p class="sub" style="margin:0;color:var(--wf-muted);font-size:.8rem">Switches disabled · no drag · cards still open for inspect</p>
+          <div class="wf-flow">
+            <div class="wf-step">
+              <div class="wf-handle lock">🔒</div>
+              <div class="wf-card">
+                <div class="wf-cats">Review</div>
+                <div class="wf-step-title"><span class="wf-num">1</span> Document check</div>
+              </div>
+              <div class="wf-step-side"><div class="wf-chev">›</div></div>
+            </div>
+            <div class="wf-step">
+              <div class="wf-handle" style="opacity:.4">⋮⋮</div>
+              <div class="wf-card">
+                <div class="wf-cats">Payment</div>
+                <div class="wf-step-title"><span class="wf-num">2</span> Application fee</div>
+              </div>
+              <div class="wf-step-side">
+                <div class="wf-switch on" style="opacity:.45" aria-hidden="true"></div>
+                <div class="wf-chev">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="wf-note">Reorder: drag handle or Alt+Up/Down. Drop commits final index (0.19.7). Disallowed moves blocked before optimistic reorder; portal <code>canMove</code> / <code>onOrderChange</code> own acceptance.</p>
+  </section>
+
+  <!-- Supporting fields -->
+  <section class="wf-section" id="supporting-fields">
+    <h2>Supporting fields — ChipField · RadioField · PortalBreadcrumb</h2>
+    <p class="wf-lede">ChipField full-field toggle, 36px min-height, wrapping chips (0.17.0). RadioField stacks on phone / inline from sm. Breadcrumb overflow loads menu chunk lazily (0.18.4).</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Package: field chrome</span>
+      <span class="wf-tag portal">Portal: options + routes</span>
+    </div>
+
+    <div class="wf-frames pair">
+      <div class="wf-frame">
+        <div class="wf-frame-label"><span>Form fields</span><span>ChipField + RadioField</span></div>
+        <div class="wf-body">
+          <div class="wf-form-row">
+            <label>Apply to campuses</label>
+            <div class="wf-chip-field" title="Entire field toggles picker">
+              <span class="wf-chip">Lesotho <span class="x" aria-hidden="true">×</span></span>
+              <span class="wf-chip">Botswana <span class="x" aria-hidden="true">×</span></span>
+              <span class="wf-chip-ph">Search campuses…</span>
+            </div>
+          </div>
+          <div class="wf-form-row">
+            <label>Policy state</label>
+            <div class="wf-radios">
+              <div class="wf-radio on"><span class="orb"></span> Draft</div>
+              <div class="wf-radio"><span class="orb"></span> Published</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wf-frame">
+        <div class="wf-frame-label"><span>Header breadcrumbs</span><span>fit vs overflow</span></div>
+        <div class="wf-body" style="padding:0">
+          <header class="wf-header">
+            <div class="wf-crumbs">
+              <span>Flows</span><span>/</span><span>Admissions</span><span>/</span><span class="cur">Lesotho</span>
+            </div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <header class="wf-header" style="border-top:1px solid var(--wf-line)">
+            <div class="wf-crumbs">
+              <span class="ellipsis" title="aria-busy while menu chunk loads">…</span>
+              <span class="cur">Lesotho · Admissions policy editor</span>
+            </div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <p class="wf-note" style="margin:0.75rem">Overflow trail: ellipsis menu holds ancestors; current page stays visible. Router owns leave guards when navigating parents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leave dialog -->
+  <section class="wf-section" id="leave-dialog">
+    <h2>Unsaved leave — AdminRecordDialogs</h2>
+    <p class="wf-lede">Keep editing cancels · Discard then destination · Save continues only on acknowledged success. Dismissal locked while writes pending.</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Package: Popup chrome</span>
+      <span class="wf-tag portal">Portal: dirty + save result</span>
+    </div>
+
+    <div class="wf-frame" style="max-width:28rem">
+      <div class="wf-frame-label"><span>Popup</span><span>footerAfterDismiss pattern</span></div>
+      <div class="wf-dialog">
+        <h4>Unsaved changes</h4>
+        <p>Leave this record? Save to keep your edits, or discard them.</p>
+        <div class="wf-actions">
+          <button type="button" class="wf-btn ghost">Discard</button>
+          <button type="button" class="wf-btn">Keep editing</button>
+          <button type="button" class="wf-btn primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wf-callouts">
+    <div class="wf-callout">
+      <strong>Next after team approval</strong>
+      Deliberate portal pin to 0.19.8 for the chosen first consumer, then compose adapters only — do not copy package source. Fixture PNG captures for the released catalogue need the unpublished <code>examples/consumer</code> source.
+    </div>
+    <div class="wf-callout">
+      <strong>Out of scope here</strong>
+      Student / Applicant / Lecturer redesigns, git tag catch-up on design-system, and changing released catalogue provenance.
+    </div>
+  </div>
+</main>
+<script src="../../../diagrams/nav-dropdown.js" defer></script>
+<script src="../../../diagrams/site-search.js" defer></script>
+<script src="../../../diagrams/keychain-access.js" defer></script>
+</body>
+</html>
