@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentation — Lesotho Demo desk wireframes</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="wireframes.css" />
+  <script src="../../site-auth.js"></script>
+</head>
+<body>
+<main class="wf-page">
+  <p class="eyebrow">Lesotho · ingested newer-CMS → Raisd Staff Admin · DS 0.19.8 patterns</p>
+  <h1>Lesotho Demo desk wireframes</h1>
+  <p class="design-context">Lo-fi wireframes for every Staff Admin Demo desk mapped from the ingested newer-CMS Lesotho screenshots and FM-03…FM-18 catalogue. Layouts follow existing Staff pages (title + muted description + DetailSectionCard / DataTable) and call out the shared design-system components to compose — not Live CMS chrome.</p>
+  <p class="wf-banner"><strong>Wireframe only.</strong> Demo ≠ Live. Sources: <a href="../feature-modules.html">feature modules</a> · <a href="../newer-cms-screenshots.html">screenshot inventory</a> · <a href="../../../design-system/candidates/0.19.8/">DS 0.19.8 pack</a> · <a href="README.md">README</a></p>
+  <nav class="wf-toc" aria-label="On this page">
+<a href="#applicants">Applicants</a>
+<a href="#document-review">Document review</a>
+<a href="#payments">Payments</a>
+<a href="#fees">Fees & Fines</a>
+<a href="#registrations">Registrations</a>
+<a href="#sponsors">Sponsors</a>
+<a href="#students">Students list</a>
+<a href="#student-file">Student file (12 tabs)</a>
+<a href="#graduations">Graduations</a>
+<a href="#certificates">Certificates</a>
+<a href="#remarks">Remarks</a>
+<a href="#academic">Academic</a>
+<a href="#timetable">Timetable</a>
+<a href="#analytics">Analytics</a>
+<a href="#discipline">Discipline</a>
+  </nav>
+
+  <section class="wf-section" id="applicants">
+    <h2>Applicants — /admin/applicants</h2>
+    <p class="wf-lede">FM-03 / FM-05 / FM-15 · newer CMS Admissions → Review / Applicants</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot active" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Applicants</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Applicants</h3>
+      <p class="sub">Admissions review queue · rank / score / recommendation (FM-03 / FM-05)</p>
+      <p class="wf-ds-map">DS: <code>ContentSection · DataTable · DetailSectionCard · DetailField · PageActionBar · AuditTrail · Popup</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-split">
+  <div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Applicant</span><span>Programme</span><span>Status</span><span>Rank</span><span>Score</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Thabo M.</span><span>BA Design</span><span>Under review</span><span>—</span><span>—</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Palesa N.</span><span>BSc IT</span><span>Recommended</span><span>3</span><span>78</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Neo M.</span><span>BA Media</span><span>Offer ready</span><span>1</span><span>91</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+  <div class="wf-form">
+    <div class="wf-form-row"><label>Review action</label><div class="wf-input">Set rank / score</div></div>
+    <div class="wf-form-row"><label>Rank</label><div class="wf-input">2</div></div>
+    <div class="wf-form-row"><label>Score</label><div class="wf-input">84</div></div>
+    <div class="wf-form-row"><label>Note</label><div class="wf-input">Strong portfolio</div></div>
+    <div class="wf-actions"><button type="button" class="wf-btn primary">Save review</button></div>
+  </div>
+</div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="document-review">
+    <h2>Document review — /admin/document-review</h2>
+    <p class="wf-lede">FM-04 · newer CMS Admissions → Document Review</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot active" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Document review</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Document review</h3>
+      <p class="sub">LGCSE extract + verify (FM-04)</p>
+      <p class="wf-ds-map">DS: <code>DataTable · DetailSectionCard · DetailField · Button · FileUploadField read-only</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Applicant</span><span>Document</span><span>Extract</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Thabo M.</span><span>LGCSE.pdf</span><span>Pending</span><span>Needs extract</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Palesa N.</span><span>LGCSE.pdf</span><span>6 subjects</span><span>Verified</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-form">
+  <div class="wf-form-row"><label>Certificate number</label><div class="wf-input">LG-2024-01422</div></div>
+  <div class="wf-form-row"><label>Institution</label><div class="wf-input">ECOL</div></div>
+  <div class="wf-form-row"><label>Subjects</label><div class="wf-input">English A · Maths B · …</div></div>
+  <div class="wf-actions">
+    <button type="button" class="wf-btn">Run extract</button>
+    <button type="button" class="wf-btn primary">Verify documents</button>
+  </div>
+</div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="payments">
+    <h2>Payments — /admin/payments</h2>
+    <p class="wf-lede">FM-09 · newer CMS Admissions Payments / Finance</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot active" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Payments</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Payments</h3>
+      <p class="sub">Application fee verification queue (FM-09)</p>
+      <p class="wf-ds-map">DS: <code>DataTable · DetailSectionCard · Badge · PageActionBar</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Applicant</span><span>Amount</span><span>Proof</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Thabo M.</span><span>LSL 300</span><span>payment.pdf</span><span>Pending verify</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Palesa N.</span><span>LSL 300</span><span>payment.pdf</span><span>Verified</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-actions"><button type="button" class="wf-btn primary">Verify payment</button></div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="fees">
+    <h2>Fees & Fines — /admin/fees</h2>
+    <p class="wf-lede">FM-09 · newer CMS Finance → Fees and Fines</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot active" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Fees & Fines</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Fees & Fines</h3>
+      <p class="sub">Campus finance profile catalogue preview (FM-09)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DetailField · DataTable</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-form">
+  <div class="wf-field-label">campus-lesotho · LSL</div>
+  <div class="wf-form-row"><label>Application fee (local)</label><div class="wf-input">LSL 300.00</div></div>
+  <div class="wf-form-row"><label>Application fee (international)</label><div class="wf-input">LSL 300.00</div></div>
+</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Code</span><span>Label</span><span>Amount</span><span>Kind</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>APP</span><span>Application fee</span><span>LSL 300</span><span>fee</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>ACC</span><span>Acceptance fee</span><span>LSL 1,500</span><span>fee</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>REG</span><span>Registration</span><span>LSL 2,000</span><span>fee</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="registrations">
+    <h2>Registrations — /admin/registrations</h2>
+    <p class="wf-lede">FM-08 · newer CMS Registry → Registration</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot active" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Registrations</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Registrations</h3>
+      <p class="sub">Module request clearance · NMDS columns (FM-08)</p>
+      <p class="wf-ds-map">DS: <code>DataTable · Badge · DetailSectionCard · PageActionBar</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Sponsor</span><span>Borrower</span><span>Basis</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>NMDS</span><span>BR-1001</span><span>verified-payment</span><span>Awaiting clearance</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Palesa N.</span><span>Merit</span><span>—</span><span>approved-arrangement</span><span>Cleared</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-actions"><button type="button" class="wf-btn primary">Clear registration</button></div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="sponsors">
+    <h2>Sponsors — /admin/sponsors</h2>
+    <p class="wf-lede">FM-08 · newer CMS Finance → Sponsors + Create Sponsorship</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot active" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Sponsors</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Sponsorship master</h3>
+      <p class="sub">Create Demo schemes linked to student-file awards (FM-08)</p>
+      <p class="wf-ds-map">DS: <code>ContentSection · DetailSectionCard · Input · Button · DataTable</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-form">
+  <div class="wf-form-row"><label>Scheme name</label><div class="wf-input">Partner scholarship</div></div>
+  <div class="wf-actions"><button type="button" class="wf-btn primary">Create sponsorship</button></div>
+</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Scheme</span><span>Code</span><span>Status</span><span>Awards</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>NMDS</span><span>NMDS</span><span>Active</span><span>12</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Merit scholarship</span><span>MERIT</span><span>Active</span><span>3</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="students">
+    <h2>Students list — /admin/students</h2>
+    <p class="wf-lede">FM-07 · newer CMS Registry → Students</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot active" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Students</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Students</h3>
+      <p class="sub">Registry list entry to 12-tab file (FM-07)</p>
+      <p class="wf-ds-map">DS: <code>AdminTable / DataTable · ContentSection · Badge · PortalBreadcrumb</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Student</span><span>Programme</span><span>Term</span><span>Sponsor</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>BA Design</span><span>2026/1</span><span>NMDS</span><span>Active</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Palesa N.</span><span>BSc IT</span><span>2026/1</span><span>Merit</span><span>Active</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="student-file">
+    <h2>Student file — /admin/students · tabs</h2>
+    <p class="wf-lede">FM-07 · screenshots 006–041 Students Selected *</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot active" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Students</span><span>/</span><span class="cur">Demo Lesotho Student</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Student file</h3>
+      <p class="sub">12-tab CAP-53 style Demo file (FM-07)</p>
+      <p class="wf-ds-map">DS: <code>TabbedPagePanel / Tabs · DetailSectionCard · DetailField · DataTable · AuditTrail · Badge</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-panel" style="max-height:none">
+  <div class="wf-panel-body" style="display:block;text-align:left;justify-items:stretch">
+    <div style="display:flex;gap:1rem;align-items:center;margin-bottom:.75rem">
+      <div class="wf-avatar" style="width:4rem;height:4rem"></div>
+      <div>
+        <div class="wf-field-value">Demo Lesotho Student</div>
+        <div class="wf-field-label">STU-LES-0001 · BA Design</div>
+        <span class="wf-status-pill">Active</span>
+      </div>
+    </div>
+    <div class="wf-file-tabs"><div class="wf-file-tab active">Academics</div><div class="wf-file-tab">Student</div><div class="wf-file-tab">Registration</div><div class="wf-file-tab">Attendance</div><div class="wf-file-tab">Card</div><div class="wf-file-tab">Graduation</div><div class="wf-file-tab">Finance</div><div class="wf-file-tab">Sponsors</div><div class="wf-file-tab">Education</div><div class="wf-file-tab">Documents</div><div class="wf-file-tab">Notes</div><div class="wf-file-tab">Audit</div></div>
+    <div style="padding-top:.85rem;display:grid;gap:.65rem">
+      <div class="wf-form-row"><label>Programme status</label><div class="wf-input">Enrolled</div></div>
+      <div class="wf-form-row"><label>GPA / CGPA</label><div class="wf-input">3.2 / 3.1</div></div>
+      <div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Module</span><span>Mark</span><span>Grade</span></div>
+      <div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES101</span><span>72</span><span>A-</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES102</span><span>68</span><span>B+</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+    </div>
+  </div>
+</div></div>
+        </div>
+      </div>
+    </div><div class="wf-frame phone">
+      <div class="wf-frame-label"><span>Phone · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot active" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Students</span><span>/</span><span class="cur">File</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Student file</h3>
+      <p class="sub">Phone stacks tabs + content</p>
+      <p class="wf-ds-map">DS: <code>same DS components · stacked</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-file-tabs"><div class="wf-file-tab">Academics</div><div class="wf-file-tab active">Sponsors</div><div class="wf-file-tab">Graduation</div><div class="wf-file-tab">…</div></div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Scheme</span><span>Borrower</span><span>Coverage</span></div>
+      <div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>NMDS</span><span>BR-1001</span><span>Tuition</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="graduations">
+    <h2>Graduations — /admin/graduations</h2>
+    <p class="wf-lede">FM-10 · newer CMS Graduations / Hoods / Name tags</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot active" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Graduations</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Graduation ceremonies</h3>
+      <p class="sub">Ceremony queue + hood / name-tag preview (FM-10)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · DetailField</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(6, minmax(0,1fr));"><span>Ceremony</span><span>Date</span><span>Gowns</span><span>RSVP</span><span>Clearance</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(6, minmax(0,1fr));"><span>Nov 2026</span><span>2026-11-14</span><span>40</span><span>32</span><span>5</span><span>Open</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-form">
+  <div class="wf-form-row"><label>Name tag sample</label><div class="wf-input">DEMO LESOTHO STUDENT</div></div>
+</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>Hood size</span><span>Count</span></div>
+      <div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>S</span><span>8</span></div><div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>M</span><span>18</span></div><div class="row" style="grid-template-columns: repeat(2, minmax(0,1fr));"><span>L</span><span>14</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="certificates">
+    <h2>Certificates — /admin/certificates</h2>
+    <p class="wf-lede">FM-12 · newer CMS Certificates / Print</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot active" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Certificates</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Certificates & QR print</h3>
+      <p class="sub">Demo batches + QR watermark (FM-12)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · Button · Badge</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>Batch</span><span>Type</span><span>Stock</span><span>Generated</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>DEMO-CERT-01</span><span>Certificate</span><span>100</span><span>12</span><span>Open</span></div><div class="row" style="grid-template-columns: repeat(5, minmax(0,1fr));"><span>DEMO-TAG-01</span><span>Name tag</span><span>200</span><span>40</span><span>Open</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-actions"><button type="button" class="wf-btn primary">Generate DEMO certificate</button></div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="remarks">
+    <h2>Remarks — /admin/remarks</h2>
+    <p class="wf-lede">FM-11 · newer CMS Remark Requests</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Remarks</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Remark requests</h3>
+      <p class="sub">Re-assessment fee + Demo decision (FM-11)</p>
+      <p class="wf-ds-map">DS: <code>DataTable · Badge · PageActionBar · DetailSectionCard</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Student</span><span>Module</span><span>Fee</span><span>Status</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>DES101</span><span>LSL 250</span><span>Open</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-actions"><button type="button" class="wf-btn primary">Record decision</button></div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="academic">
+    <h2>Academic — /admin/academic</h2>
+    <p class="wf-lede">FM-16 · newer CMS Academic attendance / gradebook</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Academic</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Academic overview</h3>
+      <p class="sub">Attendance sessions + gradebook matrix (FM-16)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · SegmentedTabs</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Module</span><span>Sessions recorded</span><span>Scheduled</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES101</span><span>8</span><span>10</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>DES102</span><span>6</span><span>10</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Student</span><span>DES101</span><span>DES102</span></div>
+      <div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Demo Lesotho Student</span><span>A-</span><span>B+</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="timetable">
+    <h2>Timetable — /admin/timetable</h2>
+    <p class="wf-lede">FM-16 · newer CMS Timetable / Generator / Venues</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Timetable</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Timetable generator & venues</h3>
+      <p class="sub">Venue catalogue + Demo generator (FM-16)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · Button · DetailField</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-actions"><button type="button" class="wf-btn primary">Run Demo generator</button></div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Venue</span><span>Type</span><span>Capacity</span></div>
+      <div class="row selected" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Studio A</span><span>Studio</span><span>24</span></div><div class="row" style="grid-template-columns: repeat(3, minmax(0,1fr));"><span>Lab 1</span><span>Lab</span><span>30</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Module</span><span>Venue</span><span>Day</span><span>Slot</span></div>
+      <div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>DES101</span><span>Studio A</span><span>Mon</span><span>09:00</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>DES102</span><span>Lab 1</span><span>Wed</span><span>11:00</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="analytics">
+    <h2>Analytics — /admin/analytics</h2>
+    <p class="wf-lede">FM-17 · newer CMS Analytics (in-scope reports)</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Analytics</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Campus analytics</h3>
+      <p class="sub">Demo count cards — no HR/Library (FM-17)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DetailField · SummaryCard pattern</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-kpi-grid"><div class="wf-kpi"><div class="val">128</div><div class="lbl">Active enrolments</div></div><div class="wf-kpi"><div class="val">42</div><div class="lbl">Admissions pipeline</div></div><div class="wf-kpi"><div class="val">17</div><div class="lbl">Registration requests</div></div><div class="wf-kpi"><div class="val">9</div><div class="lbl">Graduation clearances</div></div><div class="wf-kpi"><div class="val">5</div><div class="lbl">Sponsor schemes</div></div></div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <section class="wf-section" id="discipline">
+    <h2>Discipline — /admin/discipline</h2>
+    <p class="wf-lede">FM-18 · newer CMS Discipline</p>
+    <div class="wf-meta">
+      <span class="wf-tag pkg">Design system layout</span>
+      <span class="wf-tag portal">Staff Admin · Lesotho Demo</span>
+    </div>
+    <div class="wf-frames"><div class="wf-frame">
+      <div class="wf-frame-label"><span>Desktop · Staff Admin</span><span>PortalShell</span></div>
+      <div class="wf-shell">
+        <aside class="wf-rail" aria-hidden="true"><div class="dot" title="Overview"></div><div class="dot" title="Applicants"></div><div class="dot" title="Students"></div><div class="dot" title="Payments"></div><div class="dot" title="Registrations"></div><div class="dot" title="Sponsors"></div><div class="dot" title="Graduations"></div><div class="dot" title="Certificates"></div></aside>
+        <div class="wf-main">
+          <header class="wf-header">
+            <div class="wf-crumbs"><span>Admin</span><span>/</span><span class="cur">Discipline</span></div>
+            <div class="wf-account" aria-hidden="true"></div>
+          </header>
+          <div class="wf-body"><div class="wf-title-row"><div>
+      <div class="wf-field-label">Lesotho Demo</div>
+      <h3>Discipline</h3>
+      <p class="sub">Dishonesty / suspension / blocked (FM-18)</p>
+      <p class="wf-ds-map">DS: <code>DetailSectionCard · DataTable · Badge</code></p>
+    </div></div>
+    <div class="wf-banner-demo">Demo ≠ Live CMS — synthetic Lesotho seeds only</div>
+<div class="wf-table">
+      <div class="row head" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Student</span><span>Kind</span><span>Status</span><span>Opened</span></div>
+      <div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Demo Student</span><span>Academic dishonesty</span><span>Open</span><span>2026-10-12</span></div><div class="row" style="grid-template-columns: repeat(4, minmax(0,1fr));"><span>Neo M.</span><span>Suspension</span><span>Active</span><span>2026-09-01</span></div>
+      <div class="wf-footer"><span>Demo queue</span><div class="wf-pages"><div class="wf-page-btn current">1</div></div></div>
+    </div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+  <div class="wf-callouts">
+    <div class="wf-callout">
+      <strong>Design-system adoption target</strong>
+      Directory desks → <code>AdminTable</code> / existing <code>DataTable</code>; student file → tabbed workspace with <code>AdminRecordPanel</code> when pin upgrades to 0.19.8; forms → <code>DetailField</code> + <code>ChipField</code>/<code>RadioField</code> where multi-select or Draft/Published applies.
+    </div>
+    <div class="wf-callout">
+      <strong>Out of scope</strong>
+      HRMS, LMS, Website, Library, Mail (FM-X). Applicant journey rewrite remains Faid-owned (FM-02).
+    </div>
+  </div>
+</main>
+<script src="../../nav-dropdown.js" defer></script>
+<script src="../../site-search.js" defer></script>
+<script src="../../keychain-access.js" defer></script>
+</body>
+</html>

@@ -7,6 +7,7 @@
 **As of:** 28 October 2026 (exclusions confirmed: HRMS · LMS · Website · Library · Mail).  
 **Source meeting:** Read.ai — *CMS 2026 Daily Stand-up*, 27 Oct 2026.  
 **Pages:** [`feature-modules.html`](../../diagrams/old-cms-lesotho/feature-modules.html).  
+**Wireframes (DS layouts):** [`wireframes/`](../../diagrams/old-cms-lesotho/wireframes/) — Staff Admin Demo desks for ingested newer-CMS surfaces, composed with design-system patterns.  
 **Inventory SoT:** [lesotho-newer-cms.md](lesotho-newer-cms.md) Admin mind map · [lesotho-workflow-control-improvements.md](lesotho-workflow-control-improvements.md) · [SDD-11](../../sdd/11-capability-catalog.md).
 
 Proposal for WG / Faid — not Live policy. Demo ≠ Live.
