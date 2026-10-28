@@ -16,6 +16,7 @@ export const ROLES = [
         route: "/sign-in",
         fm: ["FM-01", "FM-02", "FM-14"],
         body: "Open the Lesotho Applicant host and enter via Keychain or SSO.",
+        detail: "This first Applicant screen is the Lesotho apply host after Keychain/SSO. The prepared Demo account (completed@raisd.demo) already has a submitted case so the walkthrough can continue through fee, eligibility, and offer without filling a blank form. Fresh accounts exist for empty-draft demos, but the storyboard uses the completed path so staff desks have something to review.",
         steps: [
           "Open https://apply.lesotho.raisd.co (or Keychain → Applicant Lesotho).",
           "Pick completed@raisd.demo to continue a prepared Demo case, or fresh@raisd.demo for an empty draft.",
@@ -29,6 +30,7 @@ export const ROLES = [
         route: "/apply",
         fm: ["FM-02", "FM-05"],
         body: "Complete Lesotho study preferences and submit so the Admissions policy pins.",
+        detail: "Application Details shows the submitted Lesotho case pinned to campus-lesotho Admissions policy. Study preferences, personal and academic sections, and documents are already filled in the Demo seed. Submission is what attaches review flags (rank/score, extract, n/3 desks) and catalogues used later by Faculty, QA, and Registry—not a free-form CMS form.",
         steps: [
           "Open Apply / continue draft.",
           "Set campus to Lesotho; complete personal, academic, and document sections required by the Demo form.",
@@ -42,6 +44,7 @@ export const ROLES = [
         route: "/apply · payment",
         fm: ["FM-09", "FM-02"],
         body: "Upload bank proof for the profile-backed LSL application fee (Demo LSL 300).",
+        detail: "The Application Fee accordion holds the Demo LSL bank reference and payment.pdf proof. Amounts come from the campus finance profile (Demo LSL 300), not Live bank rails. Saving proof places the case on the Bursary payments queue (FM-09) until staff verify-payment runs.",
         steps: [
           "When the flow asks for payment proof, enter a bank reference.",
           "Upload any small Demo PDF/image as proof (not a real bank receipt).",
@@ -55,6 +58,7 @@ export const ROLES = [
         route: "/apply · eligibility",
         fm: ["FM-02", "FM-03"],
         body: "After QA verifies documents, confirm eligibility and continue to Offer.",
+        detail: "After QA verifies documents and releases the Eligibility Letter, the applicant opens Confirm Eligibility Letter. The popup shows intake, faculty, and programme with Preview/Download of the DEMO PDF. Confirming does not enrol the student—it only unlocks Registry to release an Offer Letter.",
         steps: [
           "Wait until Staff QA has verified documents (see QA role scenes).",
           "Open the eligibility confirmation popup (intake / faculty / programme).",
@@ -68,6 +72,7 @@ export const ROLES = [
         route: "/apply · offer",
         fm: ["FM-02"],
         body: "After Registry releases the Demo Offer, accept enrolment and hand off to Student.",
+        detail: "Once Registry releases the Offer, Accept Enrolment appears. The popup mirrors eligibility (programme summary + DEMO Offer PDF) but accepting signs the applicant out of Apply and hands them to Student Portal for module registration. Until this step, the case stays in Applicant.",
         steps: [
           "Wait until Registry releases the Offer (Registry role).",
           "Preview / download the DEMO Offer PDF.",
@@ -90,6 +95,7 @@ export const ROLES = [
         route: "/admin/applicants",
         fm: ["FM-03", "FM-15"],
         body: "Sign in as Lesotho Faculty Review and open the submitted application.",
+        detail: "Lesotho Faculty Review signs into Staff Admin Applicants. The campus-scoped queue lists Demo Lesotho applications with progress (n/3), rank, score, and recommendation columns. Selecting a row opens the case detail and review-action panel that Faculty uses for metrics and desk recommendation.",
         steps: [
           "Keychain → lesotho.faculty@raisd.demo → staff.lesotho.raisd.co.",
           "Open Admin → Applicants (Admissions workspace).",
@@ -103,6 +109,7 @@ export const ROLES = [
         route: "/admin/applicants · review",
         fm: ["FM-03", "FM-05"],
         body: "Lesotho policy enables showRankScore — record Demo rank and score.",
+        detail: "Lesotho Admissions policy enables showRankScore (FM-05). Faculty chooses Review action → Set rank / score, enters Demo rank and score, and can add a review note. Saving metrics updates the queue columns before the formal recommendation is recorded.",
         steps: [
           "On the case detail, find Rank / Score fields (FM-05 flag).",
           "Enter Demo values (any integers in range).",
@@ -116,6 +123,7 @@ export const ROLES = [
         route: "/admin/applicants · recommendation",
         fm: ["FM-03", "FM-05"],
         body: "Complete desk 1 of 3 in the faculty → QA → Registry chain.",
+        detail: "Faculty records desk 1 of 3 via Record desk recommendation (Recommended / Not recommended) with a short note. Progress advances toward QA as the next desk in faculty → qa → registry. This is policy-driven desk chaining, not a free-text CMS remark alone.",
         steps: [
           "Choose recommendation outcome (approve / action-required).",
           "Add a short Demo note.",
@@ -138,6 +146,7 @@ export const ROLES = [
         route: "/admin/document-review",
         fm: ["FM-04", "FM-15"],
         body: "Sign in as Lesotho QA and open the case awaiting extract / verify.",
+        detail: "Lesotho QA opens Document review (same Admissions workspace, documents desk). The queue shows cases awaiting extract and verify under extractRequired policy. Selecting the Demo applicant opens the review-action panel used for LGCSE extract and document verification.",
         steps: [
           "Keychain → lesotho.qa@raisd.demo → staff.lesotho.raisd.co.",
           "Open Admin → Document review (or Applicants → documents desk).",
@@ -151,6 +160,7 @@ export const ROLES = [
         route: "/admin/document-review · extract",
         fm: ["FM-04", "FM-05"],
         body: "Policy sets extractRequired — record Demo LGCSE subject rows.",
+        detail: "With extractRequired on, QA selects Extract certificate (LGCSE) and enters Demo certificate number, institution, and subject|grade rows. Saving extract is required before verify-documents can succeed—this models Lesotho secondary-certificate capture without Live OCR.",
         steps: [
           "Trigger extract-document / open extract panel.",
           "Confirm Demo LGCSE (or COSC) certificate rows appear.",
@@ -164,6 +174,7 @@ export const ROLES = [
         route: "/admin/document-review · verify",
         fm: ["FM-04", "FM-03"],
         body: "Complete QA verify so eligibility can proceed for the applicant.",
+        detail: "QA runs Verify eligibility and documents after extract (and faculty recommendation) are present. That completes the QA desk contribution to n/3 and unlocks applicant eligibility confirmation once letters/policy allow. Progress then moves toward Registry for offer release.",
         steps: [
           "Ensure faculty recommendation and extract are present.",
           "Run Verify documents on the case.",
@@ -186,6 +197,7 @@ export const ROLES = [
         route: "/admin/payments",
         fm: ["FM-09", "FM-03"],
         body: "Approve the Demo application-fee proof in the payments queue.",
+        detail: "Bursary opens Payments → Admissions review and selects the pending application-fee proof. Approve payment is a Demo stub (not a real bank settlement). Verification clears the payment gate so document/eligibility work can proceed on the admissions timeline.",
         steps: [
           "Keychain → lesotho.bursary@raisd.demo → staff.lesotho.raisd.co.",
           "Open Admin → Payments (Admissions payment reviews).",
@@ -199,6 +211,7 @@ export const ROLES = [
         route: "/admin/fees",
         fm: ["FM-09"],
         body: "Open the Demo LSL catalogue from the campus finance profile.",
+        detail: "Fees & Fines shows the Demo LSL catalogue from the Lesotho campus finance profile: Application, Acceptance, Registration Fee lines plus walk seeds. Configure rates / banks / plans may be stubs—this screen is for previewing profile-backed amounts, not Live fee-master editing.",
         steps: [
           "Open Admin → Fees & Fines.",
           "Confirm Application LSL 300, AcceptanceFee 550, Registration Fee 550, plus walk seeds.",
@@ -212,6 +225,7 @@ export const ROLES = [
         route: "/admin/registrations",
         fm: ["FM-08", "FM-09"],
         body: "Clear a student module-registration request; capture NMDS fields when shown.",
+        detail: "On Registrations → Module requests, Bursary clears a student registration request (verified-payment or approved-arrangement) with a note. NMDS Demo rows expose sponsorCode and borrowerReference columns so finance clearance stays aligned with sponsor funding (FM-08 / FM-09).",
         steps: [
           "Open Admin → Registrations → Module requests.",
           "Select a pending request (Lesotho student preferred).",
@@ -234,6 +248,7 @@ export const ROLES = [
         route: "/admin/applicants · offer",
         fm: ["FM-03"],
         body: "Release the Demo Offer after eligibility + n/3 desks.",
+        detail: "Registry releases the Demo Offer Letter once eligibility is confirmed and recommendation desks are complete. Release Offer Letter on the Applicants desk lets the applicant Accept Enrolment. This is the Registry step in the faculty → QA → Registry chain, not Faculty/QA work.",
         steps: [
           "Keychain → lesotho.registry@raisd.demo → staff.lesotho.raisd.co.",
           "Open Applicants; select the case with eligibility confirmed and desks complete.",
@@ -247,6 +262,7 @@ export const ROLES = [
         route: "/admin/registrations",
         fm: ["FM-08"],
         body: "Complete Faculty side after Bursary clearance; NMDS columns visible.",
+        detail: "After Bursary clearance, Registry/Faculty complete the module-registration desk. Approving availability with a note and checking NMDS sponsor/borrower columns keeps Staff clearance in sync with the student registration request before CAF/finance artefacts appear.",
         steps: [
           "Open Registrations → Module requests.",
           "If next desk is faculty, approve modules / availability with a note.",
@@ -260,6 +276,7 @@ export const ROLES = [
         route: "/admin/students",
         fm: ["FM-07"],
         body: "Open the Demo registry list from the record graph.",
+        detail: "Admin → Students lists Demo enrolled students from the student graph (FM-07), including Demo Lesotho Student. Columns show programme, term, sponsor/borrower, and status. The list is the entry point to the 12-tab registry file—select a row to open it.",
         steps: [
           "Open Admin → Students.",
           "Confirm Demo enrolled students load (including Lesotho fixture when seeded).",
@@ -273,6 +290,7 @@ export const ROLES = [
         route: "/admin/students · Academics",
         fm: ["FM-07"],
         body: "Walk the Academics tab: programme, term, module grid.",
+        detail: "Inside the open student file, Academics shows programme status, term, GPA/CGPA, and the module grid (Code / Name / Status / Credits / Mark / Grade). Values are Demo graph projections for CAP-53-style enrolment, not Live CMS academic history.",
         steps: [
           "On the open file, select Academics.",
           "Read programme status, term, and module grid (Code / Name / Status / Cr / Mk / Gd).",
@@ -286,6 +304,7 @@ export const ROLES = [
         route: "/admin/students · Sponsors",
         fm: ["FM-07", "FM-08"],
         body: "Confirm NMDS awards and registration request sponsor fields.",
+        detail: "Sponsors (NMDS) lists Demo funding awards (scheme, status, borrower, coverage). Registration tab requests show sponsorCode, borrowerReference, and clearance basis. Together they prove sponsor fields travel from student registration into Staff desks (FM-07 / FM-08).",
         steps: [
           "Open Sponsors — funding awards + borrower reference.",
           "Open Registration — requests list with sponsorCode / clearance.",
@@ -308,6 +327,7 @@ export const ROLES = [
         route: "/sign-in",
         fm: ["FM-01", "FM-15"],
         body: "Use the narrow Lesotho Year Leader custom role.",
+        detail: "Year Leader uses a narrow custom role: Staff Admin shows Overview and Students only—Payments, Access, and other desks stay hidden (FM-15). Keychain lesotho.yearleader@raisd.demo demonstrates least-privilege campus scope without granting full Registry powers.",
         steps: [
           "Keychain → lesotho.yearleader@raisd.demo.",
           "Land on staff.lesotho.raisd.co Admin with Overview + Students only (no Access).",
@@ -321,6 +341,7 @@ export const ROLES = [
         route: "/admin/students",
         fm: ["FM-07"],
         body: "Open the Demo Students list in campus scope.",
+        detail: "Year Leader browses the same Demo Students list in campus scope: programme, term, and sponsor columns for follow-up. They can open a file to read, but the role is intentionally read-oriented compared with Registry’s offer and registration desks.",
         steps: [
           "Open Admin → Students.",
           "Scan list for programme / term / sponsor columns.",
@@ -334,6 +355,7 @@ export const ROLES = [
         route: "/admin/students · file",
         fm: ["FM-07", "FM-15"],
         body: "Open the same 12-tab Demo file read-only for year follow-up.",
+        detail: "Opening a student shows the same 12-tab Demo registry file. Year Leader typically reads Academics (and related tabs) for year follow-up without bursary payment or offer-release actions—illustrating shared FM-07 data under a tighter permission shell.",
         steps: [
           "Open the selected student file.",
           "Step through Academics → Student → Registration tabs.",
@@ -356,6 +378,7 @@ export const ROLES = [
         route: "/sign-in",
         fm: ["FM-01", "FM-06", "FM-14"],
         body: "Open the Lesotho Student host with a Demo student account.",
+        detail: "Student Portal (student.lesotho.raisd.co) loads after Accept Enrolment or with the seeded alya@raisd.demo fixture. Dashboard confirms the Demo enrolment is active so Registration and Finance can be exercised next (FM-06 / FM-14).",
         steps: [
           "Open https://student.lesotho.raisd.co (Keychain Student).",
           "Use alya@raisd.demo or the account created by Accept Enrolment / Lesotho fixture.",
@@ -369,6 +392,7 @@ export const ROLES = [
         route: "/registration",
         fm: ["FM-06", "FM-08"],
         body: "Select modules and, when NMDS applies, enter sponsor + borrower.",
+        detail: "On Registration, the student selects term modules allowed by Demo curriculum rules. When NMDS applies, sponsorCode and borrowerReference are entered before submit. The request then waits for Bursary and Faculty/Registry Staff clearance (FM-06 / FM-08).",
         steps: [
           "Open Registration / module selection for the current term.",
           "Choose modules allowed by Demo curriculum rules.",
@@ -382,6 +406,7 @@ export const ROLES = [
         route: "/finance",
         fm: ["FM-06", "FM-09"],
         body: "After Staff clearance, review Demo invoices / CAF.",
+        detail: "After Staff clearance, Finance shows Demo invoices and CAF artefacts labelled DEMO. Amounts come from the Lesotho finance profile JSON—not Live payment gateways—so the storyboard can show post-registration finance without real money movement (FM-09).",
         steps: [
           "Complete Bursary + Faculty clearance on Staff (see those roles).",
           "Return to Student → Finance / documents.",
@@ -404,6 +429,7 @@ export const ROLES = [
         route: "/flows/admissions/campus-lesotho",
         fm: ["FM-05"],
         body: "Open the Control Admissions policy editor for campus-lesotho.",
+        detail: "Control opens Flows → Admissions → Lesotho. The Settings tab loads the published campus-lesotho Admissions policy (Demo DB storage): publication metadata, eligibility, fees, and other campus workflow sections. This is where Lesotho-specific flags and catalogues are authored.",
         steps: [
           "Keychain → sso.admin@raisd.demo → control.raisd.co.",
           "Open Flows → Admissions → Lesotho.",
@@ -417,6 +443,7 @@ export const ROLES = [
         route: "/flows · Desk review",
         fm: ["FM-05"],
         body: "Confirm Lesotho review flags for rank, extract, and n/3 desks.",
+        detail: "Desk review (Lesotho) holds FM-05 flags: Show rank and score, Document extract required, and ordered recommendation desks (faculty → qa → registry). Demo defaults keep these enabled so Staff desks in the storyboard match policy. Publishing never grants portal access by itself.",
         steps: [
           "Scroll to Desk review (Lesotho).",
           "Ensure showRankScore and extractRequired are on.",
@@ -430,6 +457,7 @@ export const ROLES = [
         route: "/flows · Admissions catalogues",
         fm: ["FM-05"],
         body: "Load intake / certificate / subject / school / entry Demo lists.",
+        detail: "Admissions catalogues (Demo) loads intake periods, certificate types, subjects, schools, and entry lists for Lesotho. Load Lesotho Demo catalogues fills draft lists for validation; publish only when you intend to bump the Demo policy version—these are not Live CMS catalogues.",
         steps: [
           "Open Admissions catalogues (Demo) card.",
           "Click Load Lesotho Demo catalogues.",
@@ -443,6 +471,7 @@ export const ROLES = [
         route: "/campuses · roles",
         fm: ["FM-15", "FM-01"],
         body: "Lesotho desk roles are seeded in SSO + Keychain for Demo.",
+        detail: "Campus members/roles (or Keychain presets) seed Lesotho desk identities: Registry, QA, Bursary, Faculty Review, Year Leader. Flow publish configures policy only; SSO/Keychain assignments remain how people actually reach Staff Admin desks (FM-15 / FM-01).",
         steps: [
           "Open Campus members / roles for Lesotho (or rely on Keychain presets).",
           "Confirm custom roles: Registry, QA, Bursary, Faculty Review, Year Leader.",
@@ -532,6 +561,7 @@ export function createPlayer(options) {
     routeEl,
     titleEl,
     bodyEl,
+    detailEl,
     stepsEl,
     fmEl,
     screenEl,
@@ -849,6 +879,7 @@ export function createPlayer(options) {
     if (routeEl) routeEl.textContent = scene.route
     if (titleEl) titleEl.textContent = scene.title
     if (bodyEl) bodyEl.textContent = scene.body
+    if (detailEl) detailEl.textContent = scene.detail || ""
     if (openPortalBtn) {
       openPortalBtn.href = url
       openPortalBtn.hidden = !url
