@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T00:29:45.643Z",
+  "recordedAt": "2026-10-28T00:33:05.443Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -387,11 +387,11 @@
         "FM-05"
       ],
       "poster": "ctl-flows.poster.jpg",
-      "bytes": 60549,
-      "detail": "control flows",
+      "bytes": 60692,
+      "detail": "control flows · Lesotho admissions settings",
       "error": null,
       "url": "https://control.raisd.co/flows/admissions/campus-lesotho",
-      "recordedAt": "2026-10-27T23:39:12.405Z"
+      "recordedAt": "2026-10-28T00:32:57.523Z"
     },
     {
       "sceneId": "ctl-review",
@@ -401,11 +401,11 @@
         "FM-05"
       ],
       "poster": "ctl-review.poster.jpg",
-      "bytes": 22580,
-      "detail": "control review",
+      "bytes": 81307,
+      "detail": "control flows · Desk review (Lesotho) flags",
       "error": null,
       "url": "https://control.raisd.co/flows/admissions/campus-lesotho",
-      "recordedAt": "2026-10-27T23:48:03.100Z"
+      "recordedAt": "2026-10-28T00:33:01.169Z"
     },
     {
       "sceneId": "ctl-catalogues",
@@ -415,11 +415,11 @@
         "FM-05"
       ],
       "poster": "ctl-catalogues.poster.jpg",
-      "bytes": 60549,
-      "detail": "control catalogues",
+      "bytes": 90102,
+      "detail": "control flows · Admissions catalogues (Demo)",
       "error": null,
       "url": "https://control.raisd.co/flows/admissions/campus-lesotho",
-      "recordedAt": "2026-10-27T23:39:17.480Z"
+      "recordedAt": "2026-10-28T00:33:05.419Z"
     },
     {
       "sceneId": "ctl-positions",

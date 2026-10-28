@@ -209,6 +209,24 @@ async function selectQueueRow(page) {
   }
 }
 
+/** Wait until Control Lesotho Admissions policy settings are painted (not the loading stub). */
+async function openControlAdmissionsFlow(page) {
+  await gotoSafe(page, `${CONTROL}/flows/admissions/campus-lesotho`)
+  await page
+    .getByText(/loading admissions policy/i)
+    .waitFor({ state: "hidden", timeout: 60000 })
+    .catch(() => {})
+  await page
+    .getByText(/desk review \(lesotho\)|eligibility and documents|admissions campus workflow/i)
+    .first()
+    .waitFor({ timeout: 60000 })
+  // Extra beat for toggles/lists after the heading paints.
+  await dwell(page, 1200)
+  if (await page.getByText(/loading admissions policy/i).count()) {
+    throw new Error("Control Admissions policy still loading")
+  }
+}
+
 /** Open Demo Lesotho student registry file (FM-07). DataTable may be 1 body row. */
 async function openRegistryStudentFile(page) {
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -785,20 +803,22 @@ async function runSceneActions(page, context, sceneId) {
       await dwell(page, 2500)
       return "student finance"
     case "ctl-flows":
-      await gotoSafe(page, `${CONTROL}/flows/admissions/campus-lesotho`)
-      await page.getByText(/loading admissions policy/i).waitFor({ state: "hidden", timeout: 30000 }).catch(() => {})
-      await dwell(page, 2500)
-      return "control flows"
+      await openControlAdmissionsFlow(page)
+      await page.getByText(/admissions campus workflow|eligibility and documents/i).first().scrollIntoViewIfNeeded().catch(() => {})
+      await dwell(page, 1500)
+      return "control flows · Lesotho admissions settings"
     case "ctl-review":
-      await gotoSafe(page, `${CONTROL}/flows/admissions/campus-lesotho`)
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.35)).catch(() => {})
-      await dwell(page, 1800)
-      return "control review"
+      await openControlAdmissionsFlow(page)
+      await page.getByText(/desk review \(lesotho\)/i).first().scrollIntoViewIfNeeded()
+      await page.getByText(/show rank and score|document extract required|use faculty/i).first().waitFor({ timeout: 10000 })
+      await dwell(page, 1500)
+      return "control flows · Desk review (Lesotho) flags"
     case "ctl-catalogues":
-      await gotoSafe(page, `${CONTROL}/flows/admissions/campus-lesotho`)
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.55)).catch(() => {})
-      await dwell(page, 1800)
-      return "control catalogues"
+      await openControlAdmissionsFlow(page)
+      await page.getByText(/admissions catalogues \(demo\)/i).first().scrollIntoViewIfNeeded()
+      await page.getByRole("button", { name: /load lesotho demo catalogues/i }).waitFor({ timeout: 10000 }).catch(() => {})
+      await dwell(page, 1500)
+      return "control flows · Admissions catalogues (Demo)"
     case "ctl-positions":
       await gotoSafe(page, `${CONTROL}/campuses/campus-lesotho`)
       await dwell(page, 2000)
