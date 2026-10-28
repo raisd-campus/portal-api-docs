@@ -189,7 +189,7 @@ export const ROLES = [
     label: "Bursary",
     portal: "https://staff.lesotho.raisd.co",
     account: "Keychain · lesotho.bursary@raisd.demo / lesotho2026",
-    summary: "Fee verify, Fees & Fines preview, registration clearance (FM-09 / FM-08)",
+    summary: "Fee verify, Fees & Fines, registration clearance, Sponsorship master (FM-09 / FM-08)",
     scenes: [
       {
         id: "bur-pay",
@@ -254,7 +254,7 @@ export const ROLES = [
     label: "Registry",
     portal: "https://staff.lesotho.raisd.co",
     account: "Keychain · lesotho.registry@raisd.demo / lesotho2026",
-    summary: "Offer release, registration desk, 12-tab file (FM-03 / FM-08 / FM-07)",
+    summary: "Offer, registration, 12-tab file, graduations, certificates, remarks, academic, analytics, discipline (FM-03 / FM-07–08 / FM-10–12 / FM-16–18)",
     scenes: [
       {
         id: "reg-offer",
@@ -303,12 +303,12 @@ export const ROLES = [
         title: "Student file — Academics",
         route: "/admin/students · Academics",
         fm: ["FM-07"],
-        body: "Walk the Academics tab: programme, term, module grid.",
-        detail: "Inside the open student file, Academics shows programme status, term, GPA/CGPA, and the module grid (Code / Name / Status / Credits / Mark / Grade). Values are Demo graph projections for CAP-53-style enrolment, not Live CMS academic history.",
+        body: "Walk the enriched Academics tab: programme, GPA, marks, and Demo≠Live banner.",
+        detail: "Inside the open student file, Academics shows programme status, term, Demo GPA/CGPA, and a module grid with marks/grades. A banner states Demo graph · not Live CAP-53. Values are Demo projections for CAP-53-style enrolment—not Live SoR write-back (FM-07).",
         steps: [
+          "Confirm the Demo≠Live banner on Students.",
           "On the open file, select Academics.",
-          "Read programme status, term, and module grid (Code / Name / Status / Cr / Mk / Gd).",
-          "Remember: Demo graph projection for CAP-53 enrolment.",
+          "Read programme, GPA/CGPA, and module grid (Code / Name / Status / Cr / Mk / Gd).",
         ],
         durationMs: 7000,
       },
@@ -317,14 +317,28 @@ export const ROLES = [
         title: "Student file — Sponsors / Registration",
         route: "/admin/students · Sponsors",
         fm: ["FM-07", "FM-08"],
-        body: "Confirm NMDS awards and registration request sponsor fields.",
-        detail: "Sponsors (NMDS) lists Demo funding awards (scheme, status, borrower, coverage). Registration tab requests show sponsorCode, borrowerReference, and clearance basis. Together they prove sponsor fields travel from student registration into Staff desks (FM-07 / FM-08).",
+        body: "Confirm NMDS awards linked to Sponsorship master and registration sponsor fields.",
+        detail: "Sponsors (NMDS) lists Demo funding awards (scheme, status, borrower, coverage) that resolve against the Create Sponsorship master catalogue. Registration tab requests show sponsorCode, borrowerReference, and clearance basis (FM-07 / FM-08).",
         steps: [
           "Open Sponsors — funding awards + borrower reference.",
           "Open Registration — requests list with sponsorCode / clearance.",
-          "Optionally skim Finance / Documents / Audit tabs for Demo projections.",
+          "Optionally skim Documents / Notes / Audit for enriched Demo rows.",
         ],
         durationMs: 7500,
+      },
+      {
+        id: "reg-file-graduation",
+        title: "Student file — Graduation",
+        route: "/admin/students · Graduation",
+        fm: ["FM-07", "FM-10"],
+        body: "Open the Graduation tab — ceremony, clearance, gown/hood, name tag.",
+        detail: "Graduation tab shows Demo ceremony label, clearance status, gown/hood sizes, and name-tag preview for the student. Production queues live under Admin → Graduations and Certificates (FM-07 / FM-10).",
+        steps: [
+          "On the open file, select Graduation.",
+          "Read ceremony, clearance, gown/hood, and name-tag fields.",
+          "Note link to ceremony / print desks for batch production.",
+        ],
+        durationMs: 6500,
       },
       {
         id: "reg-graduations",
@@ -417,7 +431,7 @@ export const ROLES = [
     label: "Year Leader",
     portal: "https://staff.lesotho.raisd.co",
     account: "Keychain · lesotho.yearleader@raisd.demo / lesotho2026",
-    summary: "Narrow Students view (FM-07 / FM-15)",
+    summary: "Narrow Overview + Students + Analytics (FM-07 / FM-15 / FM-17 read)",
     scenes: [
       {
         id: "yl-signin",
@@ -603,6 +617,7 @@ export const SCENE_URLS = {
   "reg-list": "https://staff.lesotho.raisd.co/admin/students",
   "reg-file-academics": "https://staff.lesotho.raisd.co/admin/students",
   "reg-file-sponsors": "https://staff.lesotho.raisd.co/admin/students",
+  "reg-file-graduation": "https://staff.lesotho.raisd.co/admin/students",
   "reg-graduations": "https://staff.lesotho.raisd.co/admin/graduations",
   "reg-certificates": "https://staff.lesotho.raisd.co/admin/certificates",
   "reg-remarks": "https://staff.lesotho.raisd.co/admin/remarks",

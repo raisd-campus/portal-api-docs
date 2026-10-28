@@ -603,39 +603,39 @@
 
 
 <main class="wrap">
-  <p class="eyebrow">Lesotho pilot · Raisd Demo W1–W3 · step-by-step screens</p>
+  <p class="eyebrow">Lesotho pilot · Raisd Demo deepen · step-by-step screens</p>
   <h1>Demo role playback</h1>
   <p class="lede">
     Prev / Next walks <strong>Demo portal screenshots</strong> step by step
     (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control),
-    tracked by feature module. Catalogue:
+    tracked by feature module — including Sponsorship master, graduations, certificates,
+    remarks, academic, analytics, and discipline desks. Catalogue:
     <a href="feature-modules.html">feature-modules.html</a>
     · Markdown
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-feature-modules.md">lesotho-feature-modules.md</a>.
   </p>
 
   <div class="banner">
-    Screenshot storyboard · feature-tracked by FM.
-    Deep-link <code>?scene=bur-pay</code>, <code>?fm=FM-09</code>, or <code>?role=bursary</code>.
+    Screenshot storyboard · feature-tracked by FM-01…FM-18.
+    Deep-link <code>?scene=bur-sponsors</code>, <code>?fm=FM-10</code>, <code>?role=registry</code>, or <code>?scene=reg-analytics</code>.
     Keyboard: ← → previous/next step · Space auto-advance. Use <strong>Open portal</strong> for the live Demo host.
   </div>
 
   <section class="flow-compare" aria-labelledby="flow-compare-title">
     <h2 id="flow-compare-title">Raisd Demo vs newer Lesotho CMS — system flow</h2>
     <p class="flow-lede">
-      End-to-end admissions → offer → enrolment → registration path.
-      Colours mark what Raisd already Demo’d <strong>before today’s update</strong>,
-      what was <strong>enabled or deepened today (28 Oct 2026)</strong>,
-      and what the <strong>newer Lesotho CMS still has that Raisd M4 leaves as gaps</strong>
-      (or intentionally out of scope). Detail:
+      End-to-end admissions → offer → enrolment → registration → ceremony / academic / analytics path.
+      Colours mark what Raisd already Demo’d <strong>before the deepen wave</strong>,
+      what was <strong>enabled or deepened (28 Oct 2026)</strong>,
+      and what remains <strong>Live later or out of M4</strong>. Detail:
       <a href="feature-modules.html">feature modules</a> ·
       <a href="newer-cms-gap.html">newer CMS gap</a> ·
       <a href="workflow-control-improvements.html">workflow &amp; control</a>.
     </p>
     <ul class="flow-legend" aria-label="Colour legend">
-      <li><span class="flow-swatch baseline" aria-hidden="true"></span> Baseline Raisd Demo (before today)</li>
-      <li><span class="flow-swatch today" aria-hidden="true"></span> Added / enabled today</li>
-      <li><span class="flow-swatch gap" aria-hidden="true"></span> Gap vs newer Lesotho CMS (in-scope later)</li>
+      <li><span class="flow-swatch baseline" aria-hidden="true"></span> Baseline Raisd Demo (before deepen)</li>
+      <li><span class="flow-swatch today" aria-hidden="true"></span> Added / deepened (Demo Existing)</li>
+      <li><span class="flow-swatch gap" aria-hidden="true"></span> Still Live later (CAP-53 write-back · timetable generator)</li>
       <li><span class="flow-swatch out" aria-hidden="true"></span> Out of M4 (HR / LMS / Website / Library / Mail)</li>
     </ul>
 
@@ -666,9 +666,22 @@ flowchart LR
     S1[Student modules + NMDS]
     S2[Bursary / Faculty clearance]
     S3[Student finance / CAF]
-    Y1[Year Leader read file]
+    SPON[Sponsorship master]
     G1[Registry 12-tab file]
+    GRAD[Graduations desk]
+    CERT[Certificates / QR]
+    REM[Remarks queue]
+    ACAD[Academic overview]
+    AN[Analytics cards]
+    DISC[Discipline list]
+    Y1[Year Leader read file]
     S1 --> S2 --> S3
+    S2 --> SPON
+    G1 --> GRAD --> CERT
+    G1 --> REM
+    G1 --> ACAD
+    G1 --> AN
+    G1 --> DISC
     G1 -.-> Y1
   end
   subgraph Control["Control"]
@@ -689,11 +702,11 @@ flowchart LR
   classDef today fill:#c8ebe0,stroke:#0f6b5d,color:#0a3d36
   classDef gap fill:#fde8d8,stroke:#c45c26,color:#5c2e10
   class A1,A2,A3,A4,A5,B1,R1,S1,S2,S3,C1,C3,C4,Y1 baseline
-  class F1,F2,F3,Q1,Q2,Q3,C2,G1 today
+  class F1,F2,F3,Q1,Q2,Q3,C2,G1,SPON,GRAD,CERT,REM,ACAD,AN,DISC today
     </pre>
 
     <h3>2. Newer Lesotho CMS coverage vs Raisd modules</h3>
-    <p class="flow-note">What the newer CMS Admin already ships (screenshot benchmark) mapped to Raisd FM-01…FM-18. Green = closed or deepened today on Demo; blue = already Demo before today; amber = still a gap for M4.</p>
+    <p class="flow-note">What the newer CMS Admin already ships (screenshot benchmark) mapped to Raisd FM-01…FM-18. Green = Demo Existing / deepened; blue = baseline Demo; amber = Live later only.</p>
     <pre class="mermaid">
 flowchart TB
   subgraph RaisdHave["Raisd already had Demo"]

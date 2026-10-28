@@ -317,7 +317,7 @@
     <a href="workflow-control-improvements.html">workflow-control-improvements.html</a>.
     Gap:
     <a href="newer-cms-gap.html">newer-cms-gap.html</a>.
-    Demo role playback (W1–W3 screenshot steps, FM-tracked):
+    Demo role playback (screenshot storyboard, FM-tracked — including deepen desks):
     <a href="demo-role-playback.html">demo-role-playback.html</a>.
   </p>
 
@@ -359,8 +359,8 @@
         <tbody>
           <tr><td>Students · Documents · Student Status · Terms</td><td>FM-07</td><td>Core</td></tr>
           <tr><td>Registration queue</td><td>FM-08</td><td>Core</td></tr>
-          <tr><td>Graduations · Hoods · Name tags · Certificates</td><td>FM-10 · FM-12</td><td>W4 if in M4</td></tr>
-          <tr><td>Remark Requests</td><td>FM-11</td><td>W5</td></tr>
+          <tr><td>Graduations · Hoods · Name tags · Certificates</td><td>FM-10 · FM-12</td><td>Demo Existing</td></tr>
+          <tr><td>Remark Requests</td><td>FM-11</td><td>Demo Existing</td></tr>
           <tr><td>Referrals · Notes · Letters · Blocked</td><td>FM-07</td><td>Phase 2</td></tr>
         </tbody>
       </table>
@@ -395,18 +395,18 @@
           <tr><td>FM-04</td><td>Document extract (LGCSE)</td><td><span class="tag tag-ok">Existing (Demo W1)</span></td></tr>
           <tr><td>FM-05</td><td>Flows — Lesotho Admissions profile</td><td><span class="tag tag-ok">Existing (Demo W3)</span></td></tr>
           <tr><td>FM-06</td><td>Student self-service</td><td><span class="tag tag-partial">Existing</span></td></tr>
-          <tr><td>FM-07</td><td>Staff registry file (CAP-53)</td><td><span class="tag tag-ok">Existing (Demo W3)</span></td></tr>
-          <tr><td>FM-08</td><td>Registration clearance + NMDS</td><td><span class="tag tag-ok">Existing (Demo W3)</span></td></tr>
+          <tr><td>FM-07</td><td>Staff registry file (CAP-53)</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
+          <tr><td>FM-08</td><td>Registration clearance + NMDS + Sponsorship master</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
           <tr><td>FM-09</td><td>Finance + LSL catalogue</td><td><span class="tag tag-ok">Existing (Demo W3)</span></td></tr>
-          <tr><td>FM-10</td><td>Graduation &amp; certificates</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
-          <tr><td>FM-11</td><td>Remarks staff queue</td><td><span class="tag tag-gap">Missing</span></td></tr>
-          <tr><td>FM-12</td><td>Print / QR metadata</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-10</td><td>Graduation ceremonies</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
+          <tr><td>FM-11</td><td>Remarks staff queue</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
+          <tr><td>FM-12</td><td>Print / QR Demo certificates</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
           <tr><td>FM-13</td><td>Notifications (<code>notify</code>)</td><td><span class="tag tag-partial">Existing</span></td></tr>
           <tr><td>FM-14</td><td>Campus landing &amp; hosts</td><td><span class="tag tag-partial">Existing</span></td></tr>
           <tr><td>FM-15</td><td>Control position seeds</td><td><span class="tag tag-ok">Existing (Demo W1)</span></td></tr>
-          <tr><td>FM-16</td><td>Academic deepen</td><td><span class="tag tag-mismatch">Partial</span></td></tr>
-          <tr><td>FM-17</td><td>Analytics (campus reports)</td><td><span class="tag tag-gap">Missing</span></td></tr>
-          <tr><td>FM-18</td><td>Discipline</td><td><span class="tag tag-gap">Missing</span></td></tr>
+          <tr><td>FM-16</td><td>Academic deepen (attendance / gradebook)</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
+          <tr><td>FM-17</td><td>Analytics (campus reports)</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
+          <tr><td>FM-18</td><td>Discipline</td><td><span class="tag tag-ok">Existing (Demo)</span></td></tr>
           <tr><td>FM-X</td><td>HRMS · LMS · Website · Library · Mail</td><td><span class="tag tag-out">Excluded</span></td></tr>
         </tbody>
       </table>
@@ -414,18 +414,16 @@
   </section>
 
   <section class="section" id="gap-develop">
-    <h2>3b. Still to develop (post W3 · leave-outs excluded)</h2>
+    <h2>3b. Remaining after Demo deepen (leave-outs excluded)</h2>
     <div class="card"><div class="card-body" style="overflow-x:auto">
-      <p class="type-body text-muted-foreground">Screenshot gap vs Raisd Demo. W3 Demo met for FM-07/05/09/08 file depth. Do not develop HRMS · LMS · Website · Library · Mail.</p>
+      <p class="type-body text-muted-foreground">Demo desks closed for FM-07/08/10–12/11/16–18. Live CAP-53 write-back and timetable generator stay later. Do not develop HRMS · LMS · Website · Library · Mail.</p>
       <table class="data">
         <thead><tr><th>Priority</th><th>Module</th><th>Build</th></tr></thead>
         <tbody>
-          <tr><td>Done (Demo)</td><td>FM-07 12-tab registry file · FM-05 catalogues · FM-09 Fees preview · FM-08 on file</td><td>W3</td></tr>
-          <tr><td>P0</td><td>FM-09 banks / debtors / payment plans</td><td>W4</td></tr>
-          <tr><td>P1</td><td>FM-08 Create Sponsorship master</td><td>Later</td></tr>
-          <tr><td>P1</td><td>FM-03 · FM-04 Review / Document UX deepen</td><td>After seed</td></tr>
-          <tr><td>P1</td><td>FM-10 · FM-12 Ceremony / QR (if in M4)</td><td>W4</td></tr>
-          <tr><td>P2</td><td>FM-11 · FM-16 · FM-17 · FM-18</td><td>W5–W6</td></tr>
+          <tr><td>Done (Demo)</td><td>FM-07–09 file/fees · FM-08 Sponsorship master · FM-10/12 ceremony+print · FM-11 remarks · FM-16 academic · FM-17 analytics · FM-18 discipline</td><td>Deepen</td></tr>
+          <tr><td>Later</td><td>Live CAP-53 SoR read/write-back</td><td>Live wave</td></tr>
+          <tr><td>Later</td><td>FM-16 timetable generator / venues</td><td>After Demo</td></tr>
+          <tr><td>P0</td><td>FM-09 banks / debtors / payment plans</td><td>Finance deepen</td></tr>
           <tr><td>Parallel</td><td>FM-02 Applicant rewrite</td><td>Faid</td></tr>
           <tr><td>—</td><td>FM-X HRMS · LMS · Website · Library · Mail</td><td><span class="tag tag-out">Excluded</span></td></tr>
         </tbody>
@@ -443,9 +441,9 @@
           <tr><td>W1</td><td>FM-03, FM-04, FM-15</td><td>Admissions parity</td></tr>
           <tr><td>W2</td><td>FM-08, FM-09</td><td>Registration + LSL fees</td></tr>
           <tr><td>W3</td><td>FM-07</td><td>Staff registry file</td></tr>
-          <tr><td>W4</td><td>FM-10, FM-12</td><td>Ceremony / QR</td></tr>
-          <tr><td>W5</td><td>FM-11, FM-16</td><td>Remarks; academic admin</td></tr>
-          <tr><td>W6</td><td>FM-17, FM-18</td><td>Reports; discipline</td></tr>
+          <tr><td>W4</td><td>FM-10, FM-12</td><td>Ceremony / QR — <strong>Demo met</strong></td></tr>
+          <tr><td>W5</td><td>FM-11, FM-16</td><td>Remarks; academic admin — <strong>Demo met</strong> (generator later)</td></tr>
+          <tr><td>W6</td><td>FM-17, FM-18</td><td>Reports; discipline — <strong>Demo met</strong></td></tr>
           <tr><td>Parallel</td><td>FM-02</td><td>Faid Applicant rewrite</td></tr>
         </tbody>
       </table>
@@ -458,8 +456,8 @@ Out:      HRMS · LMS · Website · Library · Mail</pre>
     <h2>5. Faid — please confirm</h2>
     <ol>
       <li>Exclusions locked: <strong>HRMS · LMS · Website · Library · Mail</strong>?</li>
-      <li>Keep FM-10/FM-12 and FM-17/FM-18 in later waves, or drop any?</li>
-      <li>FM-07 phase-2 (letters / blocked / referrals) in or out of M4?</li>
+      <li>Live CAP-53 write-back timing vs Demo-only registry file?</li>
+      <li>FM-16 timetable generator / venues — when after Demo attendance/gradebook?</li>
       <li>FM-02 remains Faid-owned?</li>
     </ol>
     <p>

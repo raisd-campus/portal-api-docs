@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T01:04:07.467Z",
+  "recordedAt": "2026-10-28T01:10:56.168Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -230,7 +230,7 @@
       "detail": "bursary sponsorship master",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/sponsors",
-      "recordedAt": "2026-10-28T01:04:07.449Z"
+      "recordedAt": "2026-10-28T01:10:00.362Z"
     },
     {
       "sceneId": "reg-offer",
@@ -282,11 +282,11 @@
         "FM-07"
       ],
       "poster": "reg-file-academics.poster.jpg",
-      "bytes": 55721,
+      "bytes": 62032,
       "detail": "registry student file · Academics",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T01:03:07.267Z"
+      "recordedAt": "2026-10-28T01:10:25.071Z"
     },
     {
       "sceneId": "reg-file-sponsors",
@@ -297,11 +297,26 @@
         "FM-08"
       ],
       "poster": "reg-file-sponsors.poster.jpg",
-      "bytes": 66784,
+      "bytes": 76519,
       "detail": "registry student file · Sponsors (NMDS)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T01:03:13.234Z"
+      "recordedAt": "2026-10-28T01:10:31.037Z"
+    },
+    {
+      "sceneId": "reg-file-graduation",
+      "roleId": "registry",
+      "title": "Student file — Graduation",
+      "fm": [
+        "FM-07",
+        "FM-10"
+      ],
+      "poster": "reg-file-graduation.poster.jpg",
+      "bytes": 72040,
+      "detail": "registry student file · Graduation",
+      "error": null,
+      "url": "https://staff.lesotho.raisd.co/admin/students",
+      "recordedAt": "2026-10-28T01:10:37.505Z"
     },
     {
       "sceneId": "reg-graduations",
@@ -315,7 +330,7 @@
       "detail": "registry graduations",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/graduations",
-      "recordedAt": "2026-10-28T01:03:19.196Z"
+      "recordedAt": "2026-10-28T01:10:40.705Z"
     },
     {
       "sceneId": "reg-certificates",
@@ -329,7 +344,7 @@
       "detail": "registry certificates",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/certificates",
-      "recordedAt": "2026-10-28T01:03:22.412Z"
+      "recordedAt": "2026-10-28T01:10:43.904Z"
     },
     {
       "sceneId": "reg-remarks",
@@ -343,7 +358,7 @@
       "detail": "registry remarks",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/remarks",
-      "recordedAt": "2026-10-28T01:03:25.399Z"
+      "recordedAt": "2026-10-28T01:10:46.900Z"
     },
     {
       "sceneId": "reg-academic",
@@ -357,7 +372,7 @@
       "detail": "registry academic",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/academic",
-      "recordedAt": "2026-10-28T01:03:28.426Z"
+      "recordedAt": "2026-10-28T01:10:49.900Z"
     },
     {
       "sceneId": "reg-analytics",
@@ -371,7 +386,7 @@
       "detail": "registry analytics",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/analytics",
-      "recordedAt": "2026-10-28T01:03:31.563Z"
+      "recordedAt": "2026-10-28T01:10:53.002Z"
     },
     {
       "sceneId": "reg-discipline",
@@ -385,7 +400,7 @@
       "detail": "registry discipline",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/discipline",
-      "recordedAt": "2026-10-28T01:03:34.698Z"
+      "recordedAt": "2026-10-28T01:10:56.145Z"
     },
     {
       "sceneId": "yl-signin",

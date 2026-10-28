@@ -741,12 +741,19 @@ async function runSceneActions(page, context, sceneId) {
       await dwell(page, 1800)
       return "registry students list"
     case "reg-file-academics":
-    case "reg-file-sponsors": {
+    case "reg-file-sponsors":
+    case "reg-file-graduation": {
       await gotoSafe(page, `${STAFF}/admin/students`)
-      await page.getByText(/enrolled students|demo lesotho student/i).first().waitFor({ timeout: 20000 })
+      await page.getByText(/enrolled students|demo lesotho student|demo graph/i).first().waitFor({ timeout: 20000 })
       await openRegistryStudentFile(page)
-      const sponsors = sceneId.includes("sponsors")
-      const tabName = sponsors ? /^sponsors$/i : /^academics$/i
+      const tab =
+        sceneId.includes("sponsors")
+          ? "sponsors"
+          : sceneId.includes("graduation")
+            ? "graduation"
+            : "academics"
+      const tabName =
+        tab === "sponsors" ? /^sponsors$/i : tab === "graduation" ? /^graduation$/i : /^academics$/i
       await page.getByRole("tab", { name: tabName }).click({ timeout: 8000 })
       await dwell(page, 900)
       // Bring the open file (below the list) into the 720px storyboard viewport.
@@ -755,15 +762,19 @@ async function runSceneActions(page, context, sceneId) {
         .first()
         .scrollIntoViewIfNeeded()
         .catch(() => {})
-      if (sponsors) {
+      if (tab === "sponsors") {
         await page.getByText(/sponsors \(nmds\)/i).first().scrollIntoViewIfNeeded().catch(() => {})
+      } else if (tab === "graduation") {
+        await page.getByText(/name tag|ceremony|gown/i).first().scrollIntoViewIfNeeded().catch(() => {})
       } else {
         await page.getByText(/^modules$/i).first().scrollIntoViewIfNeeded().catch(() => {})
       }
       await dwell(page, 1200)
-      return sponsors
+      return tab === "sponsors"
         ? "registry student file · Sponsors (NMDS)"
-        : "registry student file · Academics"
+        : tab === "graduation"
+          ? "registry student file · Graduation"
+          : "registry student file · Academics"
     }
     case "reg-graduations":
       await gotoSafe(page, `${STAFF}/admin/graduations`)
