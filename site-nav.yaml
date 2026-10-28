@@ -61,6 +61,7 @@ targets:
   luct-ls-feature-modules: diagrams/old-cms-lesotho/feature-modules.html
   luct-ls-workflow-control: diagrams/old-cms-lesotho/workflow-control-improvements.html
   luct-ls-demo-playback: diagrams/old-cms-lesotho/demo-role-playback.html
+  luct-ls-wireframes: diagrams/old-cms-lesotho/wireframes/index.html
   luct-ls-newer-cms-obsidian: diagrams/old-cms/obsidian.html
   ai-applicant-qr-fee: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md
   ai-campus-finance-profile: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md
@@ -171,6 +172,8 @@ path_rules:
     section: luct-ls-workflow-control
   - match: { prefix: diagrams/old-cms-lesotho/, file: demo-role-playback.html }
     section: luct-ls-demo-playback
+  - match: { prefix: diagrams/old-cms-lesotho/wireframes/ }
+    section: luct-ls-wireframes
   - match: { prefix: diagrams/old-cms-lesotho/ }
     section: luct-ls
   - match: { prefix: diagrams/old-cms-eswatini/, file: database.html }
@@ -367,6 +370,7 @@ menu:
       - luct-ls-feature-modules
       - luct-ls-workflow-control
       - luct-ls-demo-playback
+      - luct-ls-wireframes
       - luct-ls-newer-cms-obsidian
       - luct-sz
       - luct-sz-database
@@ -387,6 +391,7 @@ menu:
           - { label: Workflow & control (Faid), href: luct-ls-workflow-control }
           - { label: Feature modules, href: luct-ls-feature-modules }
           - { label: Demo role playback, href: luct-ls-demo-playback }
+          - { label: Demo desk wireframes, href: luct-ls-wireframes }
           - { label: Newer CMS screenshots, href: luct-ls-newer-cms-shots }
           - { label: Newer CMS exports, href: luct-ls-newer-cms-exports }
           - { label: Newer CMS Obsidian 3D, href: "luct-ls-newer-cms-obsidian?campus=lesotho" }

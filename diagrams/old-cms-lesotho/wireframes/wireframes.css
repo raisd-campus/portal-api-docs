@@ -1,7 +1,14 @@
 /* Lo-fi structural wireframes for DS 0.19.8 team review.
-   Not package screenshots. Dark portal-shaped; annotated regions. */
+   Page chrome follows docs (dark text on light). Frame interiors stay portal-dark. */
 
 :root {
+  /* Docs page (readable on styles.css light body) */
+  --wf-page-ink: #122033;
+  --wf-page-muted: #5a6b7d;
+  --wf-page-line: #d5dde6;
+  --wf-page-surface: #ffffff;
+  --wf-page-raised: #f4f7fa;
+  /* Portal-shaped frame (only inside .wf-frame) */
   --wf-bg: #0b0d10;
   --wf-surface: #14181f;
   --wf-raised: #1c222c;
@@ -12,13 +19,67 @@
   --wf-accent: #3b82f6;
   --wf-warn: #d97706;
   --wf-ok: #0d9488;
-  --wf-note: #fbbf24;
+  --wf-note: #b45309;
   --wf-radius: 12px;
   --wf-font: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
 }
 
 .wf-page {
   font-family: var(--wf-font);
+  color: var(--wf-page-ink);
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 3rem;
+}
+
+.wf-page h1,
+.wf-page h2,
+.wf-page h3 {
+  color: var(--wf-page-ink);
+}
+
+.wf-page .eyebrow,
+.wf-page .design-context,
+.wf-page .wf-lede,
+.wf-page .wf-ds-map {
+  color: var(--wf-page-muted);
+}
+
+.wf-page a {
+  color: #1d4f91;
+}
+
+.wf-banner {
+  color: var(--wf-page-ink) !important;
+  border-color: #e0c48a !important;
+  background: #fff6e8 !important;
+}
+
+.wf-banner strong { color: var(--wf-note) !important; }
+
+.wf-toc a {
+  border-color: var(--wf-page-line) !important;
+  background: var(--wf-page-raised) !important;
+  color: var(--wf-page-ink) !important;
+}
+
+.wf-tag {
+  background: var(--wf-page-raised) !important;
+  border-color: var(--wf-page-line) !important;
+  color: var(--wf-page-muted) !important;
+}
+
+.wf-tag.pkg { border-color: #3b82f6 !important; color: #1d4f91 !important; }
+.wf-tag.portal { border-color: #d97706 !important; color: #92400e !important; }
+
+.wf-ds-chip {
+  background: var(--wf-page-raised) !important;
+  border-color: var(--wf-page-line) !important;
+  color: #1d4f91 !important;
+}
+
+/* Dark portal chrome only inside the framed mock */
+.wf-frame {
   color: var(--wf-ink);
 }
 
