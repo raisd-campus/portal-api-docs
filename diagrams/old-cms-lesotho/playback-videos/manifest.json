@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-28T20:40:06.469Z",
+  "recordedAt": "2026-10-28T20:51:06.832Z",
   "mode": "screens-only",
   "host": {
     "applicant": "https://apply.lesotho.raisd.co",
@@ -108,11 +108,11 @@
         "FM-15"
       ],
       "poster": "fac-open.poster.jpg",
-      "bytes": 57618,
+      "bytes": 60241,
       "detail": "fac-open @ /admin/applicants (case selected)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:57:52.549Z"
+      "recordedAt": "2026-10-28T20:47:45.445Z"
     },
     {
       "sceneId": "fac-rank",
@@ -123,11 +123,11 @@
         "FM-05"
       ],
       "poster": "fac-rank.poster.jpg",
-      "bytes": 56075,
+      "bytes": 62643,
       "detail": "fac-rank @ /admin/applicants (Set rank / score form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:57:58.238Z"
+      "recordedAt": "2026-10-28T20:47:51.199Z"
     },
     {
       "sceneId": "fac-rec",
@@ -138,11 +138,11 @@
         "FM-05"
       ],
       "poster": "fac-rec.poster.jpg",
-      "bytes": 65701,
+      "bytes": 68577,
       "detail": "fac-rec @ /admin/applicants (Record desk recommendation form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:58:04.497Z"
+      "recordedAt": "2026-10-28T20:47:56.890Z"
     },
     {
       "sceneId": "qa-open",
@@ -153,11 +153,11 @@
         "FM-15"
       ],
       "poster": "qa-open.poster.jpg",
-      "bytes": 52119,
+      "bytes": 58303,
       "detail": "qa-open @ document-review (case selected)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T23:58:28.739Z"
+      "recordedAt": "2026-10-28T20:48:18.157Z"
     },
     {
       "sceneId": "qa-extract",
@@ -168,11 +168,11 @@
         "FM-05"
       ],
       "poster": "qa-extract.poster.jpg",
-      "bytes": 58612,
+      "bytes": 66333,
       "detail": "qa-extract @ document-review (Extract certificate form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T23:58:34.430Z"
+      "recordedAt": "2026-10-28T20:48:23.866Z"
     },
     {
       "sceneId": "qa-verify",
@@ -183,11 +183,11 @@
         "FM-03"
       ],
       "poster": "qa-verify.poster.jpg",
-      "bytes": 62515,
+      "bytes": 66786,
       "detail": "qa-verify @ document-review (Verify eligibility form)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/document-review",
-      "recordedAt": "2026-10-27T23:58:40.673Z"
+      "recordedAt": "2026-10-28T20:48:29.544Z"
     },
     {
       "sceneId": "bur-pay",
@@ -255,11 +255,11 @@
         "FM-03"
       ],
       "poster": "reg-offer.poster.jpg",
-      "bytes": 61152,
+      "bytes": 70020,
       "detail": "registry offer desk @ /admin/applicants",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/applicants",
-      "recordedAt": "2026-10-27T23:47:43.734Z"
+      "recordedAt": "2026-10-28T20:49:59.926Z"
     },
     {
       "sceneId": "reg-queue",
@@ -283,11 +283,11 @@
         "FM-07"
       ],
       "poster": "reg-list.poster.jpg",
-      "bytes": 41470,
+      "bytes": 59834,
       "detail": "registry students list",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T00:25:03.785Z"
+      "recordedAt": "2026-10-28T20:50:02.920Z"
     },
     {
       "sceneId": "reg-file-academics",
@@ -297,11 +297,11 @@
         "FM-07"
       ],
       "poster": "reg-file-academics.poster.jpg",
-      "bytes": 62032,
+      "bytes": 64665,
       "detail": "registry student file · Academics",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T01:10:25.071Z"
+      "recordedAt": "2026-10-28T20:50:08.102Z"
     },
     {
       "sceneId": "reg-file-sponsors",
@@ -312,11 +312,11 @@
         "FM-08"
       ],
       "poster": "reg-file-sponsors.poster.jpg",
-      "bytes": 76519,
+      "bytes": 77403,
       "detail": "registry student file · Sponsors (NMDS)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T01:10:31.037Z"
+      "recordedAt": "2026-10-28T20:50:14.089Z"
     },
     {
       "sceneId": "reg-file-graduation",
@@ -327,11 +327,11 @@
         "FM-10"
       ],
       "poster": "reg-file-graduation.poster.jpg",
-      "bytes": 72040,
+      "bytes": 77284,
       "detail": "registry student file · Graduation",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T01:10:37.505Z"
+      "recordedAt": "2026-10-28T20:50:20.568Z"
     },
     {
       "sceneId": "reg-graduations",
@@ -341,11 +341,11 @@
         "FM-10"
       ],
       "poster": "reg-graduations.poster.jpg",
-      "bytes": 69811,
+      "bytes": 76467,
       "detail": "registry graduations",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/graduations",
-      "recordedAt": "2026-10-28T01:10:40.705Z"
+      "recordedAt": "2026-10-28T20:50:23.782Z"
     },
     {
       "sceneId": "reg-certificates",
@@ -355,11 +355,11 @@
         "FM-12"
       ],
       "poster": "reg-certificates.poster.jpg",
-      "bytes": 51578,
+      "bytes": 61750,
       "detail": "registry certificates",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/certificates",
-      "recordedAt": "2026-10-28T01:10:43.904Z"
+      "recordedAt": "2026-10-28T20:50:26.999Z"
     },
     {
       "sceneId": "reg-remarks",
@@ -369,11 +369,11 @@
         "FM-11"
       ],
       "poster": "reg-remarks.poster.jpg",
-      "bytes": 57213,
+      "bytes": 67219,
       "detail": "registry remarks",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/remarks",
-      "recordedAt": "2026-10-28T01:10:46.900Z"
+      "recordedAt": "2026-10-28T20:50:30.009Z"
     },
     {
       "sceneId": "reg-academic",
@@ -383,11 +383,11 @@
         "FM-16"
       ],
       "poster": "reg-academic.poster.jpg",
-      "bytes": 65946,
+      "bytes": 72998,
       "detail": "registry academic",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/academic",
-      "recordedAt": "2026-10-28T01:10:49.900Z"
+      "recordedAt": "2026-10-28T20:50:33.024Z"
     },
     {
       "sceneId": "reg-timetable",
@@ -397,11 +397,11 @@
         "FM-16"
       ],
       "poster": "reg-timetable.poster.jpg",
-      "bytes": 67339,
+      "bytes": 71669,
       "detail": "registry timetable",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/timetable",
-      "recordedAt": "2026-10-28T01:48:01.189Z"
+      "recordedAt": "2026-10-28T20:50:36.223Z"
     },
     {
       "sceneId": "reg-analytics",
@@ -411,11 +411,11 @@
         "FM-17"
       ],
       "poster": "reg-analytics.poster.jpg",
-      "bytes": 61144,
+      "bytes": 64175,
       "detail": "registry analytics",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/analytics",
-      "recordedAt": "2026-10-28T01:10:53.002Z"
+      "recordedAt": "2026-10-28T20:50:39.227Z"
     },
     {
       "sceneId": "reg-discipline",
@@ -425,11 +425,11 @@
         "FM-18"
       ],
       "poster": "reg-discipline.poster.jpg",
-      "bytes": 63289,
+      "bytes": 72076,
       "detail": "registry discipline",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/discipline",
-      "recordedAt": "2026-10-28T01:10:56.145Z"
+      "recordedAt": "2026-10-28T20:50:42.233Z"
     },
     {
       "sceneId": "yl-signin",
@@ -454,11 +454,11 @@
         "FM-07"
       ],
       "poster": "yl-list.poster.jpg",
-      "bytes": 39160,
+      "bytes": 47443,
       "detail": "year leader students list",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T00:29:40.554Z"
+      "recordedAt": "2026-10-28T20:51:01.794Z"
     },
     {
       "sceneId": "yl-file",
@@ -469,11 +469,11 @@
         "FM-15"
       ],
       "poster": "yl-file.poster.jpg",
-      "bytes": 53045,
+      "bytes": 52293,
       "detail": "year leader student file · Academics (read)",
       "error": null,
       "url": "https://staff.lesotho.raisd.co/admin/students",
-      "recordedAt": "2026-10-28T00:29:45.618Z"
+      "recordedAt": "2026-10-28T20:51:06.813Z"
     },
     {
       "sceneId": "stu-signin",
