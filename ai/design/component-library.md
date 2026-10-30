@@ -2,6 +2,10 @@
 
 `raisd-campus/design-system` owns the shared React package `@raisd-campus/design-system`. The four portal applications are separate repositories and consume released package versions. The student portal is the first consumer and the source of the initial visual patterns. `control-plane` and `portal-api-docs` do not import React components.
 
+## Polished page layouts + componentized flows
+
+Before composing a route or regenerating AI-built UI, follow [ai-ui-guidance.md](ai-ui-guidance.md): inspect polished existing pages (and Lesotho Admin wireframe captures where relevant) **and** the design-system catalogue; then **componentize** the page/flow with existing package families rather than inventing per-route layouts. Components alone are not enough layout context; layouts alone must still map to shared components.
+
 ## Ownership decision
 
 Before building a UI element, look in the package catalogue and the [published visual catalogue](https://docs.raisd.co/design-system/). Import a published component when it expresses the required visual and interaction pattern. Do not copy its source into a portal or run a component generator that creates another local copy. Extend the package when a reusable variant is needed; keep workflow and product decisions in the owning portal.

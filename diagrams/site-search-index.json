@@ -172,6 +172,81 @@
       "path": "https://docs.raisd.co/reports/database-recreation-2026-10-22/"
     },
     {
+      "title": "CMS standup updates \u00b7 30 Oct 2026",
+      "summary": "Working Group update closing 29 Oct actions \u2014 website AI guidance, Staff Admin nav/workflows, Lesotho guidance on docs.raisd.co.",
+      "section": "Reports",
+      "keywords": [
+        "standup",
+        "cms",
+        "updates",
+        "admin",
+        "navigation",
+        "lesotho",
+        "guide",
+        "ai guidance",
+        "working group"
+      ],
+      "path": "https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/"
+    },
+    {
+      "title": "Guidance \u00b7 User guidance",
+      "summary": "Lesotho Demo user guidance \u2014 hosts, journeys, and step-by-step how-tos for each Staff Admin desk screenshot.",
+      "section": "Guidance",
+      "keywords": [
+        "guidance",
+        "lesotho",
+        "user guide",
+        "demo",
+        "hosts",
+        "journeys",
+        "desks",
+        "how-to",
+        "applicants",
+        "payments",
+        "registrations"
+      ],
+      "path": "diagrams/guidance/index.html"
+    },
+    {
+      "title": "Guidance \u00b7 Website AI should",
+      "summary": "What AI agents should do on Raisd websites.",
+      "section": "Guidance",
+      "keywords": [
+        "ai",
+        "should",
+        "website",
+        "agents",
+        "design system",
+        "portal api"
+      ],
+      "path": "diagrams/guidance/website-ai-should.html"
+    },
+    {
+      "title": "Guidance \u00b7 Website AI should not",
+      "summary": "What AI agents should not do on Raisd websites.",
+      "section": "Guidance",
+      "keywords": [
+        "ai",
+        "should not",
+        "website",
+        "agents",
+        "hard stops"
+      ],
+      "path": "diagrams/guidance/website-ai-should-not.html"
+    },
+    {
+      "title": "Guidance \u00b7 Website AI decisions",
+      "summary": "Quick do/don\u2019t decision table for Raisd website AI work.",
+      "section": "Guidance",
+      "keywords": [
+        "ai",
+        "decisions",
+        "website",
+        "agents"
+      ],
+      "path": "diagrams/guidance/website-ai-decisions.html"
+    },
+    {
       "title": "E2E access control \u00b7 21 Oct 2026",
       "summary": "Control assigns campus Admin only (Members). Campus Admin grants fixed Student/Staff/Lecturer presets via Access APIs; learner presets never appear as Admin; revoke stops sign-in.",
       "section": "End to End Demo",

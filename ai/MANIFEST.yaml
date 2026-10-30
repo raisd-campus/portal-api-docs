@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-29
+updated: 2026-10-30
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,10 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-30: Guidance under LUCT CMS on docs.raisd.co — single-page Lesotho user guidance (diagrams/guidance/index.html) + website AI pages; markdown SoT frontend/lesotho-user-guide.md.
+  - 2026-10-30: Website-specific AI should/should-not guidance — website-ai-guidance.md attached from AGENTS.md read order (standup 29 Oct).
+  - 2026-10-30: Staff Admin nav/workflow review — group-hub primary + sibling sub-side; Payments/Registrations no longer stack AdmissionsWorkspace; design/2026-10-30-generated-pages-nav-workflow-review.md.
+  - 2026-10-30: AI UI guidance — polished layouts + design system, and componentize pages/flows via existing DS families (standup 29 Oct); design/ai-ui-guidance.md wired into AGENTS.md + student page skill.
   - 2026-10-29: Lesotho ingested Demo desk wireframes — diagrams/old-cms-lesotho/wireframes/ maps FM-03…FM-18 Staff Admin routes to design-system layouts (PortalShell, DataTable, DetailSectionCard, tabs).
   - 2026-10-29: Design-system 0.19.8 wireframe review pack — candidates/0.19.8 lo-fi AdminRecordFlow / FlowEditor / ChipField wireframes + AI review note; no portal pin upgrade.
   - 2026-10-29: Design-system docs synced to released GitHub Packages **0.19.8** — package-catalogue.md + admin-record-flow.md, AI install/reference pins, HTML catalogue version + portal-api-docs mirror (historical captures retain provenance).
@@ -41,7 +45,7 @@ notes:
   - 2026-10-20: Access module hierarchy with sub-modules (Academic / Classrooms trees) — contracts/access-module-hierarchy.yaml, backend/access-module-hierarchy.md, diagrams/access-module-hierarchy.html; Access UI nests grantable children.
   - 2026-10-19: Shared AuthLayout released in design-system 0.9.0; SSO pins the exact registry archive. Responsive auth, accessibility and passkeys verified locally; hosted delivery is a separate claim.
   - 2026-10-19: Faid review fixes — staff RPC requires Admin staff session (no lecturer→Registry elevation); Access grants the hosted campus; SSO smoke uses admin not retired staff roleKey; Jenkins sync updates existing jobs in place and preserves active/retired history; portal-api-docs AI mirror synced including control-portal.md.
-  - 2026-10-17: Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html.
+  - "2026-10-17: Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html."
   - 2026-10-17: Staff portal menus follow the active role. Lecturer sees Dashboard, Classrooms, and Community. Admin sees Overview, Applicants, Students, Payments, Registrations, and Access. Register copy is Register student, Register staff, or Register lecturer. Docs: backend/sso.md, frontend/lecturer-portal.md, frontend/admin-portal.md.
   - 2026-10-17: Campus Admin desks moved into the staff portal (`staff.{slug}.raisd.co/admin`, repo `lecturer-portal`). `admin.{slug}.raisd.co` 301-redirects there. `admin-portal` is no longer deployed.
   - 2026-10-16: Portal rename cutover — Raisd Admin → Control (`control.raisd.co`, `roleKey` `control`, repo `control-portal`); Staff → Campus Admin (`admin.{slug}.raisd.co`, `roleKey` `admin`, repo `admin-portal`). Legacy `admin.raisd.co` and `staff.{slug}.raisd.co` 301-redirect. Docs: microservices/vps-topology/repositories/sso + diagrams endpoints.
@@ -141,6 +145,26 @@ sibling_repos:
   - design-system
   - portal-api-docs
   - db-admin
+
+guidance:
+  - path: website-ai-guidance.md
+    topics: [ai-guidance, should-should-not, websites, portals, standup-2026-10-29]
+    related:
+      - AGENTS.md
+      - design/ai-ui-guidance.md
+      - design/2026-10-30-generated-pages-nav-workflow-review.md
+      - process/status-language.md
+    note: Standup 29 Oct — website-specific AI should/should-not; attached from AGENTS.md read order.
+  - path: frontend/lesotho-user-guide.md
+    topics: [lesotho, user-guide, demo, navigation, admissions, staff-admin, screenshots, guidance]
+    pages: ../diagrams/guidance/index.html
+    related:
+      - architecture/lesotho-pilot.md
+      - backend/lesotho-feature-modules.md
+      - frontend/keychain.md
+      - frontend/admin-portal.md
+      - website-ai-guidance.md
+    note: Published as docs.raisd.co Guidance section (submenu per topic).
 
 architecture:
   - path: architecture/overview.md
@@ -568,6 +592,10 @@ frontend:
   keychain: frontend/keychain.md
 
 design:
+  - path: design/ai-ui-guidance.md
+    topics: [ai-guidance, page-layouts, componentize, flows, design-system, polished-references, standup-2026-10-29]
+  - path: design/2026-10-30-generated-pages-nav-workflow-review.md
+    topics: [staff-admin, navigation, workflows, admissions, payments, registrations, review]
   - path: design/2026-10-13-portal-ui-ownership-audit.md
     topics: [ui-audit, shared-css, pointer, responsive, component-ownership, candidate]
   - path: design/design-system.md

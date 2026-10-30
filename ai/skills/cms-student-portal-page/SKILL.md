@@ -10,8 +10,9 @@ Build route-level pages that look and behave like they belong to the existing St
 **Canonical knowledge:** `control-plane/docs/ai/`  
 **Portal agents:** [../../frontend/student-portal/AGENTS.md](../../frontend/student-portal/AGENTS.md)  
 **Handoff:** [../../frontend/student-portal/handoff.md](../../frontend/student-portal/handoff.md)  
-**Design system:** [../../design/design-system.md](../../design/design-system.md) or [../../frontend/student-portal/design-system.md](../../frontend/student-portal/design-system.md)
-**Shared package:** [../../design/component-library.md](../../design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue ([0.2.0 online](https://github.com/raisd-campus/design-system/blob/v0.2.0/docs/components.md)). Compose route pages with `system/portal-shell`; do not duplicate its sidebar or header.
+**AI UI rule:** [../../design/ai-ui-guidance.md](../../design/ai-ui-guidance.md) — polished layouts **alongside** the design system, and **componentize** pages/flows with existing package families (standup 29 Oct 2026).  
+**Design system:** [../../design/design-system.md](../../design/design-system.md) or [../../frontend/student-portal/design-system.md](../../frontend/student-portal/design-system.md)  
+**Shared package:** [../../design/component-library.md](../../design/component-library.md) and the installed `node_modules/@raisd-campus/design-system/docs/components.md` catalogue for the **pinned** package version. Compose route pages with `system/portal-shell` and shared page/flow components; do not duplicate sidebar, header, panels, or steppers.
 
 When working from a sibling checkout, the application code is `~/src/raisd/student-portal`. Prefer the control-plane knowledge base paths above over any stale absolute Windows paths.
 
@@ -38,7 +39,7 @@ Do not invent a raw typography or spacing treatment when the references already 
 
 Identify the route identity and lazy boundary, shell owner, queries or contracts the page consumes, shared and feature-owned components, navigation state, documentation, and verification. Keep data and API layers unchanged unless the page genuinely requires a different boundary.
 
-Inventory released `@raisd-campus/design-system` components first, then local `components/system` patterns before adding a component. Import shared primitives and patterns from package subpaths rather than copying their source. Keep a pattern feature-owned until it has more than one real consumer or the product owner explicitly approves it as portal-wide. When a new shared pattern is justified, update the package, affected consumers, canonical design guidance, and focused tests together; refresh the affected [published visual catalogue](https://raisd-campus.github.io/portal-api-docs/design-system/) examples when the released UI changes.
+Classify the page with the [componentize map](../../design/ai-ui-guidance.md#componentize-pages-and-flows) first (page frame, list, record read/edit, multi-step flow, forms). Inventory released `@raisd-campus/design-system` components first, then local `components/system` patterns before adding a component. Import shared primitives and patterns from package subpaths rather than copying their source. Reuse one composition across sibling routes; do not invent a unique layout tree per menu item. Keep a pattern feature-owned until it has more than one real consumer or the product owner explicitly approves it as portal-wide. When a new shared pattern is justified, update the package, affected consumers, canonical design guidance, and focused tests together; refresh the affected [published visual catalogue](https://raisd-campus.github.io/portal-api-docs/design-system/) examples when the released UI changes.
 
 When a student-owned reusable pattern visibly changes, refresh only its affected catalogue text or mock capture and local/canonical guidance. Follow the [catalogue capture workflow](../../../design-system/README.md). An unrelated task or an internal refactor without an observable change does not trigger a catalogue edit.
 

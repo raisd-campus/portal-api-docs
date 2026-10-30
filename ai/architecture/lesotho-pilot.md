@@ -9,6 +9,7 @@
 **CMS vs Applicant flow (8 Oct 2026):** [../backend/lesotho-cms-vs-applicant-portal.md](../backend/lesotho-cms-vs-applicant-portal.md) · Pages [`cms-vs-applicant.html`](../../diagrams/old-cms-lesotho/cms-vs-applicant.html).  
 **Workflow & control proposal (28 Oct 2026):** [../backend/lesotho-workflow-control-improvements.md](../backend/lesotho-workflow-control-improvements.md) · Pages [`workflow-control-improvements.html`](../../diagrams/old-cms-lesotho/workflow-control-improvements.html).  
 **Feature modules (28 Oct 2026):** [../backend/lesotho-feature-modules.md](../backend/lesotho-feature-modules.md) · Pages [`feature-modules.html`](../../diagrams/old-cms-lesotho/feature-modules.html).  
+**User guide (30 Oct 2026):** [../frontend/lesotho-user-guide.md](../frontend/lesotho-user-guide.md) · [Guidance on docs.raisd.co](https://docs.raisd.co/diagrams/guidance/) (materials / screenshots / nav / functionality).  
 **Diagram analysis (Pages):** [`docs/diagrams/old-cms-lesotho/`](../../diagrams/old-cms-lesotho/index.html) ([`#db-gap`](../../diagrams/old-cms-lesotho/index.html#db-gap), [`#gap-x`](../../diagrams/old-cms-lesotho/index.html#gap-x)).
 
 ## Decision (emphasised)

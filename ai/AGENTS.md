@@ -9,8 +9,9 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 ## 1. Read order (any task)
 
 1. This file.
-2. [architecture/overview.md](architecture/overview.md), [architecture/microservices.md](architecture/microservices.md), and [architecture/repositories.md](architecture/repositories.md).
-3. The portal or service file that owns the change:
+2. **Website AI should / should not:** [website-ai-guidance.md](website-ai-guidance.md) (standup 29 Oct 2026 — attach point for portal product work).
+3. [architecture/overview.md](architecture/overview.md), [architecture/microservices.md](architecture/microservices.md), and [architecture/repositories.md](architecture/repositories.md).
+4. The portal or service file that owns the change:
    - Student UI → [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md)
    - Applicant UI → [frontend/applicant-portal.md](frontend/applicant-portal.md); LUCT Cyberjaya online-registration procedure capture → [backend/luct-online-registration.md](backend/luct-online-registration.md); FE gaps vs that pack → [backend/luct-online-registration-fe-gap.md](backend/luct-online-registration-fe-gap.md)
    - Lecturer UI → [frontend/lecturer-portal.md](frontend/lecturer-portal.md)
@@ -33,10 +34,10 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Cambodia LUCT CMS E2E (M5; LUCT CMS → Cambodia) → [backend/old-cms-cambodia.md](backend/old-cms-cambodia.md), Pages [`../diagrams/old-cms-cambodia/`](../diagrams/old-cms-cambodia/) · [`#cambodia`](../diagrams/old-cms/index.html#cambodia)
    - Cambodia certificate QR + Verification (CMS → qr.limkokwing.net) → Pages [`../diagrams/old-cms-cambodia/certificate-qr.html`](../diagrams/old-cms-cambodia/certificate-qr.html), [backend/cambodia-qr-system.md](backend/cambodia-qr-system.md)
    - Botswana DTEF / TEF.gov.bw scholarship sync → [backend/botswana-dtef-scholarship-sync.md](backend/botswana-dtef-scholarship-sync.md)
-4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
-5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
+5. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
+6. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
 
-For any portal UI task, also read [design/component-library.md](design/component-library.md) and the released [package catalogue](design/package-catalogue.md) (0.19.8) before creating a visual component.
+For any portal UI task, also read [design/ai-ui-guidance.md](design/ai-ui-guidance.md) (**polished existing page layouts + design system**), [design/component-library.md](design/component-library.md), and the released [package catalogue](design/package-catalogue.md) (0.19.8) before creating or regenerating pages. Website-wide should / should not remains [website-ai-guidance.md](website-ai-guidance.md).
 
 ## 2. Product boundaries (campus-wide)
 
@@ -92,6 +93,19 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 - If a request conflicts with this knowledge base or an SDD, surface the conflict and confirm before coding.
 - Never commit `.env`, CMS credentials, or live student data.
 - Do not commit or push unless the user explicitly asks.
+
+### Website-specific AI guidance (all portals)
+
+Confirmed Working Group standup **29 Oct 2026**. Agents **must** follow the website should / should not list in [website-ai-guidance.md](website-ai-guidance.md) (product, architecture, UI, docs, safety). That file is the attach point for “what the AI should and should not do” on Raisd websites.
+
+### Polished layouts + componentized flows (all portals)
+
+When composing or regenerating portal UI, agents **must**:
+
+1. Reference polished existing page layouts **alongside** the design system — not the package catalogue or a CMS menu crawl alone.
+2. **Componentize** pages and flows with existing design-system families (`PortalShell`, page panels, `DataTable` / `AdminTable`, `DetailField` / `AdminRecordFlow`, `FlowEditor`, etc.) — not one-off layouts per menu item.
+
+Full UI rule, surface→component map, and do/don’t: [design/ai-ui-guidance.md](design/ai-ui-guidance.md). Staff Admin desks also use [Lesotho Demo desk wireframes](../diagrams/old-cms-lesotho/wireframes/).
 
 ### Component-change guardrail (all portals)
 

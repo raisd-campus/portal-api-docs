@@ -9,6 +9,8 @@
 | Reader | Start here |
 |---|---|
 | Any AI agent (Cursor, Claude, Codex, Copilot, etc.) | [AGENTS.md](AGENTS.md) |
+| Website AI should / should not | [website-ai-guidance.md](website-ai-guidance.md) · [Guidance HTML](https://docs.raisd.co/diagrams/guidance/) |
+| Lesotho user guide | [frontend/lesotho-user-guide.md](frontend/lesotho-user-guide.md) · [Guidance HTML](https://docs.raisd.co/diagrams/guidance/) |
 | Machine catalog / tooling | [MANIFEST.yaml](MANIFEST.yaml) |
 | Human onboarding | This file, then [../sdd/README.md](../sdd/README.md) |
 | CAP / milestone IDs (`CAP-*`, `M1`–`M5`) | [../sdd/15-nomenclature.md](../sdd/15-nomenclature.md) |
@@ -20,12 +22,13 @@
 docs/ai/
 ├── README.md                 ← you are here
 ├── AGENTS.md                 ← campus-wide agent instructions (read first)
+├── website-ai-guidance.md    ← website should / should not (standup 29 Oct)
 ├── MANIFEST.yaml             ← machine-readable index
 ├── architecture/             ← system, microservices, repos, deployment, VPS topology
 ├── backend/                  ← Portal API, existing CMS inventory, CAP comparison
 ├── frontend/                 ← per-portal agent knowledge
 │   └── student-portal/       ← extracted from raisd-campus/student-portal
-├── design/                   ← shared design system knowledge
+├── design/                   ← shared design system knowledge (+ AI UI guidance)
 ├── process/                  ← how to generate and maintain docs
 ├── skills/                   ← reusable agent skills
 └── rules/                    ← editor/agent rule extracts

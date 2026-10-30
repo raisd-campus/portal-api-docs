@@ -63,6 +63,10 @@ targets:
   luct-ls-demo-playback: diagrams/old-cms-lesotho/demo-role-playback.html
   luct-ls-wireframes: diagrams/old-cms-lesotho/wireframes/index.html
   luct-ls-newer-cms-obsidian: diagrams/old-cms/obsidian.html
+  guidance: diagrams/guidance/index.html
+  guidance-ai-should: diagrams/guidance/website-ai-should.html
+  guidance-ai-should-not: diagrams/guidance/website-ai-should-not.html
+  guidance-ai-decisions: diagrams/guidance/website-ai-decisions.html
   ai-applicant-qr-fee: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md
   ai-campus-finance-profile: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md
   ai-campus-finance-yaml: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml
@@ -107,6 +111,7 @@ targets:
   report-e2e-learning-lms-2026-10-11: https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/
   report-e2e-access-control-2026-10-21: https://docs.raisd.co/reports/e2e-access-control-2026-10-21/
   report-database-recreation-2026-10-22: https://docs.raisd.co/reports/database-recreation-2026-10-22/
+  report-cms-standup-updates-2026-10-30: https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/
   report-e2e-access-control-2026-10-20: https://docs.raisd.co/reports/e2e-access-control-2026-10-20/
   report-e2e-access-templates-2026-10-20: https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/
 
@@ -248,6 +253,14 @@ path_rules:
     section: migration
   - match: { exact: diagrams/index.html }
     section: overview
+  - match: { prefix: diagrams/guidance/, file: website-ai-should.html }
+    section: guidance-ai-should
+  - match: { prefix: diagrams/guidance/, file: website-ai-should-not.html }
+    section: guidance-ai-should-not
+  - match: { prefix: diagrams/guidance/, file: website-ai-decisions.html }
+    section: guidance-ai-decisions
+  - match: { prefix: diagrams/guidance/ }
+    section: guidance
   - match: { prefix: ai/ }
     section: ai
   - match: { prefix: design-system/ }
@@ -372,6 +385,10 @@ menu:
       - luct-ls-demo-playback
       - luct-ls-wireframes
       - luct-ls-newer-cms-obsidian
+      - guidance
+      - guidance-ai-should
+      - guidance-ai-should-not
+      - guidance-ai-decisions
       - luct-sz
       - luct-sz-database
       - luct-kh
@@ -382,6 +399,13 @@ menu:
       - luct-sl
       - luct-sl-database
     children:
+      - label: Guidance
+        href: guidance
+        children:
+          - { label: User guidance, href: guidance }
+          - { label: AI should, href: guidance-ai-should }
+          - { label: AI should not, href: guidance-ai-should-not }
+          - { label: AI decisions, href: guidance-ai-decisions }
       - label: Lesotho (pilot)
         href: luct-ls
         children:
@@ -527,6 +551,7 @@ menu:
       - report-exec-2026-10-07
       - report-lesotho-briefing
       - report-database-recreation-2026-10-22
+      - report-cms-standup-updates-2026-10-30
       - report-e2e-enrol-2026-10-11
       - report-e2e-module-enrol-2026-10-11
       - report-e2e-learning-lms-2026-10-11
@@ -551,6 +576,7 @@ menu:
           - { label: Executive summary · 7 Oct, href: report-exec-2026-10-07 }
           - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
           - { label: "Database recreation · 22 Oct", href: report-database-recreation-2026-10-22 }
+          - { label: "CMS standup updates · 30 Oct", href: report-cms-standup-updates-2026-10-30 }
       - label: End to End Demo
         href: report-e2e-enrol-2026-10-11
         children:
@@ -657,6 +683,36 @@ search:
     section: Reports
     summary: Empty local PostgreSQL 16 database recreated with db:migrate (9 steps, 113 tables) then seeded to schema version 4 (3214 rows) and dropped.
     keywords: [database, schema, migrate, seed, postgres, recreation, demo]
+
+  - title: CMS standup updates · 30 Oct 2026
+    href: report-cms-standup-updates-2026-10-30
+    section: Reports
+    summary: Working Group update closing 29 Oct actions — website AI guidance, Staff Admin nav/workflows, Lesotho guidance on docs.raisd.co.
+    keywords: [standup, cms, updates, admin, navigation, lesotho, guide, ai guidance, working group]
+
+  - title: Guidance · User guidance
+    href: guidance
+    section: Guidance
+    summary: Lesotho Demo user guidance — hosts, journeys, and step-by-step how-tos for each Staff Admin desk screenshot.
+    keywords: [guidance, lesotho, user guide, demo, hosts, journeys, desks, how-to, applicants, payments, registrations]
+
+  - title: Guidance · Website AI should
+    href: guidance-ai-should
+    section: Guidance
+    summary: What AI agents should do on Raisd websites.
+    keywords: [ai, should, website, agents, design system, portal api]
+
+  - title: Guidance · Website AI should not
+    href: guidance-ai-should-not
+    section: Guidance
+    summary: What AI agents should not do on Raisd websites.
+    keywords: [ai, should not, website, agents, hard stops]
+
+  - title: Guidance · Website AI decisions
+    href: guidance-ai-decisions
+    section: Guidance
+    summary: Quick do/don’t decision table for Raisd website AI work.
+    keywords: [ai, decisions, website, agents]
 
   - title: E2E access control · 21 Oct 2026
     href: report-e2e-access-control-2026-10-21

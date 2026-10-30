@@ -8,7 +8,8 @@ The deployed Staff repository remains `lecturer-portal`; the retired standalone 
 **Repository:** [`raisd-campus/lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) (`src/staff-admin`)
 **SDD:** [SDD-07](../../sdd/07-admin-staff-cms.md)
 **Campus agents:** [../AGENTS.md](../AGENTS.md)
-**Demo host:** https://staff.lesotho.raisd.co/admin (other campuses: `staff.{slug}.raisd.co/admin`). `admin.{slug}.raisd.co` 301-redirects here.
+**Demo host:** https://staff.lesotho.raisd.co/admin (other campuses: `staff.{slug}.raisd.co/admin`). `admin.{slug}.raisd.co` 301-redirects here.  
+**Lesotho user guide:** [lesotho-user-guide.md](lesotho-user-guide.md) · [Guidance HTML](../../diagrams/guidance/index.html)
 
 ## Status
 
@@ -34,12 +35,14 @@ Demo ≠ Live. Offline fallback still uses `sessionStorage`. Does not write CMS.
 
 ## Agent rules
 
-1. Implement against SDD-07 and campus [AGENTS.md](../AGENTS.md).
+1. Implement against SDD-07, campus [AGENTS.md](../AGENTS.md), and [website-ai-guidance.md](../website-ai-guidance.md) (should / should not).
 2. **Build only verified gaps** — if the existing CMS already runs the workflow, do not duplicate it in admin-portal without an explicit decision.
 3. Talk only to the Portal API when Live endpoints exist. Staff tokens must not work inside student shells.
 4. Student-portal “Admin Actions” are **development-only mock commands**, not production staff UI.
 5. Install a released `@raisd-campus/design-system` version (lecturer-portal pin **0.8.0**; Control uses **0.9.1**). Existing and future Admin pages (including Access) compose shared package patterns (`DetailSectionCard`, `DetailField`, `DataTable`, `SummaryCard`, …). Follow [component ownership and setup](../design/component-library.md) — do not invent local `staff-panel` cards or copy student portal UI.
-6. When behaviour changes, update this file and [../MANIFEST.yaml](../MANIFEST.yaml).
+6. **Componentize desks** — follow [ai-ui-guidance.md](../design/ai-ui-guidance.md): polished reference layouts + map list/record/flow surfaces to existing DS families (`AdminTable` / `AdminRecordFlow` when adopting, `PagePanelLayout`, etc.). Reuse one composition across sibling Admin routes; do not invent a unique layout per menu item. Wireframe captures: [Lesotho Demo desks](../../diagrams/old-cms-lesotho/wireframes/).
+7. **Navigation IA** — Staff Admin uses `staff-admin/lib/admin-nav.ts`. Desktop primary = group hubs; sub-side = sibling desks. Do not restack AdmissionsWorkspace on Payments or Registrations. Review notes: [2026-10-30-generated-pages-nav-workflow-review.md](../design/2026-10-30-generated-pages-nav-workflow-review.md).
+8. When behaviour changes, update this file and [../MANIFEST.yaml](../MANIFEST.yaml).
 
 ## Field standard
 
