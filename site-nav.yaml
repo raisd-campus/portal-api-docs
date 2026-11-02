@@ -37,7 +37,7 @@ targets:
   lms-reference: diagrams/lms-reference/index.html
   lms-feature-steps: diagrams/lms-reference/features.html
   lms-online-class: diagrams/lms-online-class-options.html
-  lms-online-lessons-ux: diagrams/lms-reference/online-lessons.html
+  lms-online-lessons-ux: diagrams/lms-online-class-options.html#ux-pack
   dfd: diagrams/dfd.html
   luct: diagrams/old-cms/index.html
   luct-comparison: diagrams/old-cms/comparison.html
@@ -258,7 +258,7 @@ path_rules:
   - match: { file: lms-online-class-options.html }
     section: lms-online-class
   - match: { path_contains: lms-reference, file: online-lessons.html }
-    section: lms-online-lessons-ux
+    section: lms-online-class
   - match: { path_contains: lms-reference, file: features.html }
     section: lms-feature-steps
   - match: { path_contains: lms-reference }
@@ -319,7 +319,6 @@ menu:
       - { label: LMS features, href: lms-features }
       - { label: Moodle + Classroom map, href: lms-reference }
       - { label: LMS feature steps, href: lms-feature-steps }
-      - { label: Online lessons UX, href: lms-online-lessons-ux }
       - { label: Online-class options, href: lms-online-class }
       - { label: Migration, href: migration }
       - { label: Microservices, href: microservices }
@@ -328,7 +327,7 @@ menu:
 
   - label: Architecture
     href: architecture
-    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features, lms-reference, lms-feature-steps, lms-online-lessons-ux, lms-online-class]
+    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features, lms-reference, lms-feature-steps, lms-online-class]
     children:
       - { label: Architecture home, href: architecture }
       - { label: Access module hierarchy, href: access-hierarchy }
@@ -349,7 +348,6 @@ menu:
       - { label: LMS features F01–F37, href: lms-features }
       - { label: Moodle + Classroom map, href: lms-reference }
       - { label: LMS feature steps, href: lms-feature-steps }
-      - { label: Online lessons UX, href: lms-online-lessons-ux }
       - { label: Online-class options, href: lms-online-class }
       - { label: "SDD & ADR catalogue", href: "architecture#sdd" }
       - { label: "SoR / ACL", href: "architecture#acl" }
@@ -1071,14 +1069,8 @@ search:
   - title: LMS online-class options
     href: lms-online-class
     section: Architecture
-    summary: Full analysis of live-class vendors — cost calculator, hosting, integration shapes, breakouts, recordings, quizzes, self-paced unlock (standup 2 Nov 2026). Not Live.
-    keywords: [lms, live class, online class, zoom, bigbluebutton, openvidu, jitsi, whereby, daily, realtimekit, breakout, quiz, recording, self-paced, cost, cap-26, cap-24, f12, f13]
-
-  - title: LMS online lessons UX
-    href: lms-online-lessons-ux
-    section: Architecture
-    summary: Faid 7.0 Chat online-lessons design pack — lobby, live session, moderated screen-share queue, Past Class (OL-xx). Absorb behaviours, not Limkokwing chrome. Not Live.
-    keywords: [lms, online lessons, virtual classroom, lobby, screen share, request queue, roster, past class, faid, ux, cap-26, f12]
+    summary: Live-class vendors plus Faid UX design pack gallery (lobby, moderated screen-share, Past Class) — cost, hosting, integration, breakouts, quizzes (standup 2 Nov 2026). Not Live.
+    keywords: [lms, live class, online class, zoom, bigbluebutton, openvidu, jitsi, whereby, daily, realtimekit, breakout, quiz, recording, self-paced, cost, cap-26, cap-24, f12, f13, ux, lobby, screen share, faid]
 
   - title: Migration plan
     href: migration

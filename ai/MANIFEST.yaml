@@ -98,6 +98,7 @@ notes:
   - 2026-11-03: LMS online-class research (standup 2 Nov) — cost/hosting/integration matrix, self-paced + recordings + quizzes, breakout platforms; architecture/lms-online-class-options.md.
   - 2026-11-03: LMS online-class — OSS classroom feature comparison (BBB vs OpenVidu Meet vs Jitsi); OpenVidu links/cost/verdict; diagrams/lms-online-class-options.html.
   - 2026-11-03: LMS online-lesson UX requirements from Faid 7.0 Chat design pack (OL-xx); gallery diagrams/lms-reference/online-lessons/; architecture/lms-online-lesson-ux.md.
+  - 2026-11-03: Combined online-lessons UX gallery into diagrams/lms-online-class-options.html#ux-pack; old online-lessons.html redirects.
   - 2026-10-31: LMS feature steps — top-of-page Mermaid mind map of F01–F15; each step/wireframe labelled Moodle / Google Classroom / Both / Raisd-native inspiration.
   - 2026-10-31: LMS feature steps — Faid DS 0.19.8 lo-fi wireframe on every step + Mermaid syntax hardened (no ; : / {} in labels); regenerate via diagrams/lms-reference/build-features.py.
   - 2026-10-31: LMS docs-only — step-by-step features with functionality, direction of use, Raisd integration, and per-step Mermaid sequences (location STU/LEC/STA/CMS/API) at diagrams/lms-reference/features.html · architecture/lms-feature-steps.md.
@@ -223,7 +224,6 @@ architecture:
     pages:
       - ../diagrams/lms-online-class-options.html
       - ../diagrams/lms-reference/features.html
-      - ../diagrams/lms-reference/online-lessons.html
       - ../diagrams/lms.html
     related:
       - architecture/lms.md
@@ -231,17 +231,16 @@ architecture:
       - architecture/lms-moodle-classroom-map.md
       - architecture/lms-feature-steps.md
     status: proposed
-    note: Standup 2 Nov 2026 research + published cost/integration page. Not Live.
+    note: Standup 2 Nov 2026 research + published cost/integration page + UX gallery at #ux-pack. Not Live.
   - path: architecture/lms-online-lesson-ux.md
     topics: [lms, live-class, cap-26, ux, lobby, roster, screen-share, moderation, past-class, faid, design, research]
     pages:
-      - ../diagrams/lms-reference/online-lessons.html
       - ../diagrams/lms-online-class-options.html
     related:
       - architecture/lms-online-class-options.md
       - architecture/lms-feature-steps.md
     status: proposed
-    note: Faid 7.0 Chat online-lessons design pack → OL-xx requirements. Absorb behaviours, not chrome.
+    note: Faid 7.0 Chat online-lessons design pack → OL-xx requirements. Gallery lives in lms-online-class-options.html#ux-pack.
   - path: architecture/repositories.md
     topics: [repo-map, local-paths, ownership]
   - path: architecture/deployment.md

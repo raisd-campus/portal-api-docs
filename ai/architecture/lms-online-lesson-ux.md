@@ -1,7 +1,7 @@
 # Raisd LMS — online lesson UX requirements (design pack)
 
 **Source pack:** Faid / Limkokwing “7.0 Chat” `online-lessons.zip` (2 Nov 2026) — 21 curated screens under [`docs/diagrams/lms-reference/online-lessons/`](../../diagrams/lms-reference/online-lessons/).  
-**Published gallery:** [`online-lessons.html`](../../diagrams/lms-reference/online-lessons.html) · vendor research [`lms-online-class-options.md`](lms-online-class-options.md).  
+**Published gallery:** embedded in [`lms-online-class-options.html#ux-pack`](../../diagrams/lms-online-class-options.html#ux-pack) · vendor research [`lms-online-class-options.md`](lms-online-class-options.md).  
 **Status:** **Proposed / research** — absorb **behaviours**, do **not** clone Limkokwing chrome into Raisd portals ([website-ai-guidance.md](../website-ai-guidance.md)). Demo ≠ Live.  
 **Raisd anchors:** F12 / CAP-26 · CAP-12 attendance · CAP-18 materials · F13 / CAP-24 quizzes (archive tags only in this pack).
 
@@ -164,7 +164,7 @@ Community / module context
 | Topic | Path |
 |---|---|
 | Cost / vendor matrix | [lms-online-class-options.md](lms-online-class-options.md) |
-| Gallery | [online-lessons.html](../../diagrams/lms-reference/online-lessons.html) |
+| Gallery | [lms-online-class-options.html#ux-pack](../../diagrams/lms-online-class-options.html#ux-pack) |
 | Capture sources | [SOURCES.md](../../diagrams/lms-reference/online-lessons/SOURCES.md) |
 | F12 steps | [lms-feature-steps.md](lms-feature-steps.md) |
 | Classrooms Demo today | [backend/classrooms.md](../backend/classrooms.md) |

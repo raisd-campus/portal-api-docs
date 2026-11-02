@@ -30,7 +30,7 @@ Three integration shapes fit Portal API + campus portals:
 - Do not claim Live CAP-26 / CAP-24 until durable save, authz, and a named owner exist.
 
 **Published human page:** [`docs/diagrams/lms-online-class-options.html`](../../diagrams/lms-online-class-options.html) → [docs.raisd.co/diagrams/lms-online-class-options.html](https://docs.raisd.co/diagrams/lms-online-class-options.html)  
-**UX requirements (Faid design pack 2 Nov 2026):** [`lms-online-lesson-ux.md`](lms-online-lesson-ux.md) · gallery [`online-lessons.html`](../../diagrams/lms-reference/online-lessons.html)
+**UX requirements (Faid design pack 2 Nov 2026):** [`lms-online-lesson-ux.md`](lms-online-lesson-ux.md) · screens in published [`#ux-pack`](../../diagrams/lms-online-class-options.html#ux-pack)
 
 ### Cost formula
 
@@ -318,7 +318,7 @@ Aligned to design-pack journeys ([lms-online-lesson-ux.md](lms-online-lesson-ux.
 
 | Topic | Path |
 |---|---|
-| Online lesson UX requirements (OL-xx) | [lms-online-lesson-ux.md](lms-online-lesson-ux.md) · [gallery](../../diagrams/lms-reference/online-lessons.html) |
+| Online lesson UX requirements (OL-xx) | [lms-online-lesson-ux.md](lms-online-lesson-ux.md) · [#ux-pack gallery](../../diagrams/lms-online-class-options.html#ux-pack) |
 | LMS posture | [lms.md](lms.md) |
 | Moodle / Classroom map (row 13 live class, row 10 quizzes) | [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) |
 | F12 / F13 steps | [lms-feature-steps.md](lms-feature-steps.md) · [features.html](../../diagrams/lms-reference/features.html) |
