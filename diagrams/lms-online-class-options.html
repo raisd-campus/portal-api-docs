@@ -361,6 +361,7 @@
 
     <div class="jump">
       <a href="#verdict">Verdict</a>
+      <a href="#ux-pack">UX design pack</a>
       <a href="#constraints">Raisd constraints</a>
       <a href="#shapes">Integration shapes</a>
       <a href="#oss-features">OSS classroom features</a>
@@ -396,10 +397,36 @@
         <div class="card">
           <div class="n">4 · Branded product</div>
           <strong>RealtimeKit · Chime SDK · LiveKit</strong>
-          <span>Fully Raisd chrome. Chime strong on media+recording $/mo; RealtimeKit for breakout APIs; LiveKit for self-host escape. Quizzes stay Raisd-native.</span>
+          <span>Best match to Faid UX pack (lobby, roster, moderated share queue). Chime strong on $/mo; RealtimeKit for breakouts later; LiveKit for self-host escape. Quizzes stay Raisd-native.</span>
         </div>
       </div>
       <p class="note">Deprioritise as primary pilot: self-hosted BBB/OpenVidu/Jitsi on current Demo VPS; Jitsi as classroom SoT (basic features); Meet/Teams-only unless a campus already standardises on them; raw Agora unless APAC scale forces it. Self-developed OSS SFU is a later path after a Cloud/SDK spike.</p>
+    </section>
+
+    <section class="section" id="ux-pack">
+      <h2>UX design pack requirements (Faid · 2 Nov 2026)</h2>
+      <p>
+        Limkokwing “7.0 Chat” online-lessons export — absorb <strong>behaviours</strong>, do not clone chrome.
+        Full OL-xx catalogue: <a href="../ai/architecture/lms-online-lesson-ux.md"><code>lms-online-lesson-ux.md</code></a>
+        · gallery: <a href="lms-reference/online-lessons.html">online-lessons.html</a>.
+      </p>
+      <table class="data">
+        <thead><tr><th>Area</th><th>Must-have from designs</th></tr></thead>
+        <tbody>
+          <tr><td>Shell</td><td>Classroom inside Faculty portal; programme → module → week; Community rail; module chat <strong>Rejoin Call</strong></td></tr>
+          <tr><td>Lobby</td><td>Week / module / programme; Materials Download; mic/cam device pickers; Join CTA shows <strong>timetable window</strong></td></tr>
+          <tr><td>Live</td><td>Featured lecturer + grid; Full screen / Grid; toolbar mic · cam · end · share · chat · <strong>record</strong></td></tr>
+          <tr><td>Roster</td><td><strong>Present / enrolled</strong> (e.g. 13/32); Mute All; per-student mute; search</td></tr>
+          <tr class="pick"><td>Screen share</td><td>Student <strong>Request</strong> (Entire screen / Window) → host Accept / Decline / Stop + timer — not free-for-all</td></tr>
+          <tr><td>Moderation</td><td>Mute / kick confirmations; pending request badge</td></tr>
+          <tr><td>Archive</td><td>Past Class (duration + Lecture / Quiz / Assignment tags); Shared Files; chat search; optional post-class rating</td></tr>
+          <tr><td>Not in pack</td><td>Breakouts, whiteboard, in-meeting polls — covered in sections below</td></tr>
+        </tbody>
+      </table>
+      <div class="callout ok">
+        Designs raise <strong>Shape C</strong> (Raisd chrome + SDK) over Meet/Zoom link-out.
+        Moderated share queue (OL-40–43) is rarely stock vendor UX — plan Portal API + host UI even when media is BBB/OpenVidu/Whereby.
+      </div>
     </section>
 
     <section class="section" id="constraints">
@@ -1001,9 +1028,10 @@ flowchart TB
       <h2>Suggested Demo spike (not Live)</h2>
       <ol>
         <li>Portal API <code>live_class_sessions</code> — offering, window, provider, join mode.</li>
-        <li>Lecturer Start → API creates provider room as moderator; Student Join only inside window → viewer token.</li>
-        <li>Persist join/leave for attendance Demo (CAP-12).</li>
-        <li>On <code>recording.ready</code>, attach a Materials-style learning item (session-only Demo OK).</li>
+        <li>Raisd lobby (Week / module / Materials Download / mic-cam prep) → Lecturer Start or Student Join only inside window → host vs viewer token.</li>
+        <li>Persist join/leave; show roster present/enrolled (CAP-12 Demo).</li>
+        <li>On <code>recording.ready</code>, attach Past Class / Materials-style item (session-only Demo OK).</li>
+        <li>Optional stub: screen-share request toast + host Accept/Decline queue (even if v1 host-only share on provider).</li>
         <li>Provider secrets in control-plane credentials — never in portals.</li>
       </ol>
       <div class="callout ok">
@@ -1019,6 +1047,7 @@ flowchart TB
         <a href="lms-features.html"><strong>LMS features F01–F37</strong><span>Domain × CAP matrix</span></a>
         <a href="lms-reference/index.html"><strong>Moodle + Classroom map</strong><span>Capability absorb · reference shots</span></a>
         <a href="lms-reference/features.html"><strong>LMS feature steps</strong><span>F12 live class · F13 quiz sequences</span></a>
+        <a href="lms-reference/online-lessons.html"><strong>Online lessons UX pack</strong><span>Faid designs · OL-xx requirements</span></a>
         <a href="../ai/architecture/lms-online-class-options.md"><strong>Agent knowledge</strong><span>Markdown SoT for this analysis</span></a>
       </div>
     </section>

@@ -29,7 +29,8 @@ Three integration shapes fit Portal API + campus portals:
 - CMS remains SoR for enrolment; live-class attendance is a **learning event**, not a second roster SoR.
 - Do not claim Live CAP-26 / CAP-24 until durable save, authz, and a named owner exist.
 
-**Published human page:** [`docs/diagrams/lms-online-class-options.html`](../../diagrams/lms-online-class-options.html) → [docs.raisd.co/diagrams/lms-online-class-options.html](https://docs.raisd.co/diagrams/lms-online-class-options.html)
+**Published human page:** [`docs/diagrams/lms-online-class-options.html`](../../diagrams/lms-online-class-options.html) → [docs.raisd.co/diagrams/lms-online-class-options.html](https://docs.raisd.co/diagrams/lms-online-class-options.html)  
+**UX requirements (Faid design pack 2 Nov 2026):** [`lms-online-lesson-ux.md`](lms-online-lesson-ux.md) · gallery [`online-lessons.html`](../../diagrams/lms-reference/online-lessons.html)
 
 ### Cost formula
 
@@ -175,12 +176,14 @@ Student / Lecturer portal
   Recording ready → learning item / Materials link (CAP-18)
 ```
 
+**UX pack implication (see [lms-online-lesson-ux.md](lms-online-lesson-ux.md)):** the Faid online-lessons designs require Raisd chrome (lobby, roster `present/enrolled`, moderated screen-share **request queue**, Past Class). That **raises Shape C** (or Shape B wrapped in Raisd shell) over Meet/Zoom link-out. Stock vendor UIs rarely implement OL-40–43 (student Request → host Accept/Decline/Stop).
+
 **Recommended shortlist for WG (not a Live decision):**
 
-1. **Demo / pilot path:** **Whereby Embedded** or **Daily Prebuilt** — prove timetable-gated join + participant role + recording link inside Student/Lecturer shells with least infra.  
-2. **Education-feature path:** **BBB via managed host + Portal API** — strongest classroom pack among OSS peers (see §2.3): native Moodle, built-in attendance analytics, excellent teaching UX. Prefer **managed BBB** over self-host on the current Demo VPS.  
-3. **Embeddable OSS middle path:** **OpenVidu Meet Community** (+ Portal API) — good classroom features, white-label, REST/embed; Raisd still builds attendance analytics and Moodle/LMS glue. Viable if “feel integrated” beats Moodle-native depth.  
-4. **Productized Raisd path (M5+):** **Cloudflare RealtimeKit**, **Amazon Chime SDK**, or **LiveKit Cloud** — branded in-portal classroom; Chime wins on raw media+recording $/mo among AWS-friendly options; RealtimeKit if breakout APIs matter; LiveKit if self-host escape hatch is required.  
+1. **Demo / pilot path:** **Whereby Embedded** or **Daily Prebuilt** — prove timetable-gated Join CTA (OL-14), participant role, recording → Past Class, roster present count with least infra. Stub moderated share queue in Raisd UI if provider cannot gate student share.  
+2. **Education-feature path:** **BBB via managed host + Portal API** — strongest classroom pack among OSS peers (see §2.3): native Moodle, built-in attendance analytics, excellent teaching UX. Prefer **managed BBB** over self-host on the current Demo VPS. Wrap in Raisd lobby/roster chrome to match the design pack.  
+3. **Embeddable OSS middle path:** **OpenVidu Meet Community** (+ Portal API) — good classroom features, white-label, REST/embed; Raisd still builds attendance analytics, LMS glue, and share-request UX.  
+4. **Productized Raisd path (matches design pack best):** **Cloudflare RealtimeKit**, **Amazon Chime SDK**, or **LiveKit Cloud** — branded lobby + grid + host request queue; Chime strong on media+recording $/mo; RealtimeKit if breakout APIs matter later; LiveKit if self-host escape hatch is required.  
 5. **Self-developed (later):** same LiveKit APIs self-hosted on dedicated media nodes — only after a Cloud/SDK spike proves CAP-26 flows. OpenVidu Meet already sits on a LiveKit-based stack if that path is preferred as a productised SFU.
 
 **Deprioritise for Raisd pilot unless campus already standardises on them:** Google Meet-only, Teams-only, raw Agora (unless APAC scale forces it), **Jitsi as the LMS classroom** (basic classroom features; custom attendance + playback glue), self-hosting media on the shared Demo k3s node.
@@ -300,11 +303,14 @@ These are **Raisd product capabilities** (F03/F12/F13), not video-vendor feature
 
 ## 6. Suggested Demo spike (not Live)
 
+Aligned to design-pack journeys ([lms-online-lesson-ux.md](lms-online-lesson-ux.md) OL-10–14, OL-30–33, OL-22, OL-60):
+
 1. Add Portal API `live_class_sessions` (proposed) — offering id, starts/ends, provider, join mode.  
-2. Lecturer “Start class” → API creates provider room as moderator; Student “Join” only inside window → viewer token.  
-3. Persist join/leave events for attendance Demo.  
-4. On `recording.ready`, attach a Materials-style learning item (session-only Demo OK).  
-5. Document provider secrets in control-plane credentials — never in portals.
+2. Raisd **lobby** (Week / module / programme / Materials Download / mic-cam prep) → Lecturer Start or Student Join only inside window → host vs viewer token.  
+3. Persist join/leave; show roster **present/enrolled** for attendance Demo (CAP-12).  
+4. On `recording.ready`, attach Past Class / Materials-style learning item (session-only Demo OK).  
+5. Optional Demo stub: screen-share **request** toast + host Accept/Decline queue (OL-40–43) even if v1 only allows host share on the provider.  
+6. Document provider secrets in control-plane credentials — never in portals.
 
 ---
 
@@ -312,6 +318,7 @@ These are **Raisd product capabilities** (F03/F12/F13), not video-vendor feature
 
 | Topic | Path |
 |---|---|
+| Online lesson UX requirements (OL-xx) | [lms-online-lesson-ux.md](lms-online-lesson-ux.md) · [gallery](../../diagrams/lms-reference/online-lessons.html) |
 | LMS posture | [lms.md](lms.md) |
 | Moodle / Classroom map (row 13 live class, row 10 quizzes) | [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) |
 | F12 / F13 steps | [lms-feature-steps.md](lms-feature-steps.md) · [features.html](../../diagrams/lms-reference/features.html) |
