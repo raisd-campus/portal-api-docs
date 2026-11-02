@@ -3,6 +3,8 @@
 Organization: [raisd-campus](https://github.com/raisd-campus).  
 Expected local root: `~/src/raisd/` (siblings). Machine list also lives in [`repositories.yaml`](../../../repositories.yaml) at the control-plane root.
 
+Windows workspace (21 October 2026): `D:/Coding/raisd/`. The physical Student checkout retains its existing name `cms-student-portal`; `scripts/stack-config.cjs` discovers it as the fallback for the logical `student-portal` repository. `raisd.code-workspace` and `start-local.ps1` at the workspace root use relative paths. Hidden junctions at the old `D:/Coding` project paths preserve existing Codex chats and historical references; active processes use the new root. The separate `D:/Coding/cms` project and mixed branding assets remain outside this workspace. See the [relocation receipt](audits/2026-10-21-workspace-relocation.md).
+
 | Repository | Local path | Role | Primary SDD | AI knowledge |
 |---|---|---|---|---|
 | [`control-plane`](https://github.com/raisd-campus/control-plane) | `~/src/raisd/control-plane` | Campus config, identity design, Portal API + SSO + Notifications contracts, SDD, **AI knowledge base**, GitOps | SDD-02, SDD-08, SDD-12 | [`docs/ai/`](../) |

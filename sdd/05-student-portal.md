@@ -1,5 +1,14 @@
 # Student portal
 
+## Local Academic catalogue expansion — 29 October 2026
+
+Owner-approved Academic administration adds persistent Faculty, Programme and Modules, an independently reviewed curriculum University Flow, published catalogue choices for new applicants and exact-version student enrolments with staff-managed streams. Existing applications, student history, CMS and hosted deployments are preserved. This is local persistent Demo functionality; it does not establish a Live CMS write path. See [Academic catalogue](../ai/backend/academic-catalogue.md).
+
+## Cyberjaya configured admissions continuation — 21 October 2026
+
+Connected registration refreshes Staff/admissions outcomes without dropping the Student session. English evidence verified after Conditional Offer acceptance appears in Academic Profile and owned document delivery while preserving the original accepted snapshot. Bursary/Faculty review and completed-registration CAF gates remain authoritative. This does not create a second immigration workflow or alter immigration policy.
+
+
 ## Admissions clearance and CAF - 20 October 2026
 
 A configured admissions case carries its pinned policy into the immutable accepted handoff. Portal API separately refreshes current clearance and the current issued Offer from the owned case. Preparation/submission of modules is allowed; final Faculty completion requires admissions clearance after Bursary review. The legacy direct-confirm route cannot bypass the new case gate. A completed owned registration request exposes a clearly labelled Demo CAF PDF listing registered modules. Approved Registration Fee credits use the existing financial adjustment ledger with matching currency, source funds and remaining invoice balance. Existing students without a new case retain legacy behavior; schema epoch 4 and scheduling/grading rules are unchanged.
@@ -266,3 +275,13 @@ This section supersedes historical lecturer workspace/material-authoring descrip
 Local verification passed: API Classrooms scenarios, 72 Materials checks, 20 exact-offering roster checks, 46 Community checks and API local typecheck; Lecturer lint/TypeScript/build, canonical snapshot parity and 56 focused tests; Student full check:all with 808 unit/component tests, 278 Chromium cases (46 intentional skips) and 41 WebKit cases (31 intentional skips). Lecturer aggregate verification remains on hold. Paired original submission → Lecturer preview/download/mark → Student published feedback, shared attendance, private logs/drafts, revisions, conflict/reload recovery, exact bytes, authorization, browser-mock separation and HTTP failure handling passed. Responsive checks cover 375/768/1440px, Back/keyboard navigation, Community preservation and temporary URL cleanup.
 
 Current local API 8087 was restarted once after verification, and Lecturer 5173 / Student 5175 were refreshed and signed in against the shared memory Demo. API restart resets saved Demo mutations/files and sessions; local credentials and canonical sample records are retained. GRD301's sample assignment deadlines are in the past, so current submission locks remain; the complete submission/marking flow was verified using an isolated September 2026 clock. No deadline was shifted for activation. No package change/publication, migration, hosted write, commit, push or deployment. Isolated verification servers were stopped. See [Classrooms rules](../ai/backend/classrooms.md) for API, access, files and the verification/activation boundary.
+
+
+## Connected Demo learner lifecycle — 21 October 2026
+
+Same-account acceptance now replaces Applicant with Student access. Outstanding requirements continue in Student; Control owns preview/confirmed reset of registered Cyberjaya Demo journeys. Identity, one-use exchange, generation, explicit ownership and rollout boundaries are defined in the [canonical learner lifecycle](../ai/backend/learner-lifecycle.md). Existing accepted accounts are not automatically migrated; hosted rollout is separate.
+
+
+## Predefined Admissions Flow Editor (local implementation, 28 October 2026)
+
+Control configures predefined workflow template 1 in immutable versions, independently for Local/International students. Shared 0.19.0 owns linked/reorderable step presentation; Portal API owns pinned evaluation and financial/document invariants; SSO owns immediate audited campus-role reviewer bindings. Published history and existing accepted cases remain unchanged. The implementation includes guarded drafts, role coverage, quote/fixed pricing and structured text letters with synthetic previews. It does not introduce arbitrary workflow scripting or grant access through assignment. Hosted activation remains separate. Normative details: [Flow Editor](../ai/design/flow-editor.md).

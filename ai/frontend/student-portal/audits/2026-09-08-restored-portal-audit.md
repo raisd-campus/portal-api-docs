@@ -9,7 +9,7 @@ The user requested restoration of the saved portal and an audit. Restoration is 
 ## Recovery and current scope
 
 - Current branch: `codex/restored-portal-audit`, based on original `main` commit `6811e886fce1e86c366bd92d66cb74ba5ce612d2`.
-- Restored the actual working files from the private package `D:\Coding\backups\cms-student-portal\20260907T130310Z`, including the saved planning documents, supplied requirements and untracked outputs. Verified all six package artifact hashes and sizes, the Git bundle, and all 466 archived file checksums before/after restoration. The recovery package remains unchanged.
+- Restored the actual working files from the private package `D:\Coding\raisd\backups\cms-student-portal\20260907T130310Z`, including the saved planning documents, supplied requirements and untracked outputs. Verified all six package artifact hashes and sizes, the Git bundle, and all 466 archived file checksums before/after restoration. The recovery package remains unchanged.
 - The newer implementation is preserved on `codex/student-portal-completion` at `9d492643d68a6adc026b2ea88e79627696ea7837`, already present on the existing remote. Original main and the recovery checkpoint were not reset or overwritten. No force push was used.
 - Dependencies were reinstalled from the restored lockfile. The local preview on port 5173 runs the restored application.
 - This returns the project to its desktop frontend prototype: two Cyberjaya student scenarios, documented placeholder journeys, and limited isolated Services responsiveness. Full phone/tablet support and eight-campus completion are no longer the active implementation. Do not automatically resume the superseded completion task.

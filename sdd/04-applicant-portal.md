@@ -1,5 +1,18 @@
 # Applicant portal
 
+### Progress and account presentation - 26 October 2026
+
+Application progress displays Step, Reviewer and a color-coded Status pill using the configured update text, without duplicate status information or a trailing period. The account header displays the saved applicant name, with the signed-in account name as fallback. Status pills are shown only through the first pending step, while later steps remain listed without a status. Control/API wording and completion state remain the source of configured progress.
+
+### Uploaded-file review — 21 October 2026
+
+Applicant upload fields expose the shared Preview File and Download File actions for original evidence, including submitted academic/supporting files and later evidence. Download retains the filename; unavailable originals cannot produce empty downloads. Existing authorization and workflow remain unchanged.
+
+## Cyberjaya configured-journey completion — 21 October 2026
+
+The configured experience retains eligibility-first draft mode, policy-based document retention/checklists, applicable post-submission evidence tasks, visible calculated deadlines and allowed payment guidance. SSO sessions retain original-file and continuation capabilities advertised by Portal API. Existing legacy application behavior is unchanged. Verification covers isolated local/international Applicant, Staff and Student journeys; hosted deployment and Live CMS acceptance remain separate evidence.
+
+
 ## University Flows Admissions v1 - 20 October 2026
 
 New applications pin a versioned campus policy on first valid saved campus selection. Eligibility precedes Registration Fee collection; Application Fee and admissions Registration Fee are one charge. Payment uses a real catalogue/authorised quote and existing receipt routes. Conditional Offers permit outstanding English, with a calendar-year deadline from arrival. Registry verifies the signed copy of each issued Offer version; Full reissue never inherits a previous signature. Offer acceptance enables Student continuation, followed by Bursary/Faculty module registration and CAF. Existing applications retain legacy behavior. Control changes are prospective and never grant access.
@@ -190,3 +203,21 @@ Final verification - 14 October 2026: Student completed token/assets/lint, 797 u
 ## Released shared 0.7.0 adoption - 14 October 2026
 
 The owner published @raisd-campus/design-system 0.7.0 directly to GitHub Packages after hosted Actions were blocked by billing. Fresh registry metadata matches the verified release archive from shared source commit e1ddc3738c5d5b27447e1c8ae9e45719547b13a3 and tag v0.7.0. Student, Applicant and Lecturer now pin exactly 0.7.0 in their manifests and lockfiles and install the registry release; all 260 installed package files match the tested archive. Only the shared dependency entry changes; unrelated dependency pins and existing uncommitted source work are preserved. The released package includes shared Community presentation, portal-neutral patterns and global control rules, three-tab responsive scrolling, per-file action slots and frame-free read-only file fields. Save feedback remains in PageActionBar.leading; header Add actions use a primary button with its leading icon. The previous candidate/publication-pending notes describe historical preparation, not the current installed version. The three existing portal Vite servers were restarted on 5173/5174/5175 to release Windows native-module locks and activate the installed release. API/data contracts and persistence do not change. Lecturer aggregate verification remains on hold. No portal deployment, API restart or migration is included.
+
+Legacy six-step form readiness (21 October 2026): completed bank reference and payment proof display a green Ready to submit summary. This is not a paid/verified status; Bursary owns payment verification after submission.
+
+Local Demo scenario checkpoints (21 October 2026): blank new applicant, complete unsubmitted draft, submitted pending-QA application, and eligibility-verified application awaiting applicant confirmation use four distinct identities. The draft uses the current configured five-step form; payment remains a post-eligibility task. [Scenario mapping and local verification](../ai/frontend/keychain.md#distinct-applicant-scenario-accounts---21-october-2026).
+
+
+## Connected Demo learner lifecycle — 21 October 2026
+
+Same-account acceptance now replaces Applicant with Student access. Outstanding requirements continue in Student; Control owns preview/confirmed reset of registered Cyberjaya Demo journeys. Identity, one-use exchange, generation, explicit ownership and rollout boundaries are defined in the [canonical learner lifecycle](../ai/backend/learner-lifecycle.md). Existing accepted accounts are not automatically migrated; hosted rollout is separate.
+
+## Configured pending action status — 22 October 2026
+
+Applicant and Staff share the Portal API current pending action from Control wording. After QA releases Eligibility, current status is **Awaiting Applicant Confirmation**, next step **Confirm Eligibility** (Applicant). Confirmation advances to **Awaiting Bursary Review / Registration Fee**. **Eligibility Letter Released** stays in completed progress/history. This supersedes milestone labels as overall current status; internal enums and pinned versions remain unchanged. Local verification and hosted rollout are separate.
+
+
+## Predefined Admissions Flow Editor (local implementation, 28 October 2026)
+
+Control configures predefined workflow template 1 in immutable versions, independently for Local/International students. Shared 0.19.0 owns linked/reorderable step presentation; Portal API owns pinned evaluation and financial/document invariants; SSO owns immediate audited campus-role reviewer bindings. Published history and existing accepted cases remain unchanged. The implementation includes guarded drafts, role coverage, quote/fixed pricing and structured text letters with synthetic previews. It does not introduce arbitrary workflow scripting or grant access through assignment. Hosted activation remains separate. Normative details: [Flow Editor](../ai/design/flow-editor.md).

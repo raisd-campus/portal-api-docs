@@ -66,7 +66,7 @@ Before completion:
 
 1. Exercise the route at representative phone, tablet, and desktop widths, including navigation, loading/error or unavailable states where practical, and horizontal overflow. Include 1280px and 1440px in the browser gate.
 2. Run the repository change-surface audit.
-3. Run `npm run check:all` for a new page or substantial shell restructure.
+3. During local development, run focused checks for the changed routes and their dependencies. Run `npm run check:all` at the explicit pre-push checkpoint through the campus-wide verification command; retain mandatory shared-package release gates.
 4. Update canonical `handoff.md` and the `student-portal` mirror with exact results, warnings, and anything intentionally deferred.
 
 Do not commit or push unless the user explicitly requests it.

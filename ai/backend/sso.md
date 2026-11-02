@@ -1,5 +1,24 @@
 # Raisd SSO — identity, channels, and RBAC
 
+## Academic menu and curriculum reviewers — 29 October 2026
+
+The grantable Admin tree adds Academic with Faculty, Programme and Modules children (`admin.academic.faculty`, `admin.academic.programmes`, `admin.academic.modules`). Built-in Campus Admin resolves the current full tree; persisted custom roles and memberships are unchanged. Academic Study Plan reviewer targets use `flowId: academic-curriculum`, configuration/campus IDs and `stepId: curriculum-review`, without an Admissions student cohort. Existing Admissions target keys and retry receipts remain unchanged.
+
+Control saves reviewer assignments through the existing audited, revisioned SSO endpoints. Eligible roles belong to the target campus, enter Admin and have Academic Programme access. Removing the final assigned role requires a replacement. Current assignments apply to pending work and never grant portal access. Portal API enforces curriculum ownership, independent-person review and publication; SSO does not approve a curriculum.
+
+Local tooling: control-plane `npm run local:up` retains the existing SSO_STATE_FILE and service token; SSO identity storage is not moved to PostgreSQL in this increment. `scripts/local-demo-credentials.ts` adds missing public Demo Keychain/API credential entries only, preserving existing values and excluding personal Raisd accounts. See [local development](../architecture/local-development.md).
+
+## Permanent User ID — 21 October 2026
+
+SSO assigns each account an immutable numeric `userNumber`, starting at `10000001`. Existing people receive a missing number additively; opaque `personId`, email, passwords, passkeys and permissions remain intact. The single-writer `SSO_STATE_FILE` saves both assignments and a monotonic allocation counter atomically. Duplicate/invalid persisted numbers fail closed; numbers are not recycled. Durable configuration is required for retention across restarts. This number survives role changes, applicant-to-student conversion and Demo journey reset. Student/Staff numbers remain separate campus records; sign-in still uses email.
+
+`/v1/me` exposes `userNumber`; introspection also exposes all assigned `roleKeys` for display only. Portal API includes read-only `account: {userId, roles, name?}` on successful SSO exchanges and the Student conversion claim. Authorization continues to use the active role and server permissions. Headers show the name, then `10000001 · Staff, Lecturer` using the shared component. Independent mock sessions without SSO metadata show their role without inventing an ID. Existing sessions need fresh sign-in to receive the additive metadata.
+
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
 ## University Flows permissions - 20 October 2026
 
 Control roles receive the targeted flows.configure capability upgrade; persisted identities, passkeys and unrelated grants are retained. IO and SSD add desk.international_office and desk.student_services capabilities without assigning them to existing people. An active Control role is required to configure policies; active campus Admin review roles remain separate. The fixed Applicant role and upstream permission ceilings/hierarchy are unchanged. Isolated tests verify the upgrade, custom-role definition/membership retention and passkey persistence. Node HTTP/persistence suites run under npm run test:api; Playwright collects auth.e2e.ts only. npm run check runs both suites after the build. See [University Flows](university-flows.md).
@@ -107,13 +126,13 @@ Portal API exchange for `admin` creates a staff session (Bursary when that desk 
 A person may hold **multiple** role assignments (campus-scoped). After login:
 
 - **One role** → auto-select and continue to `returnUrl?code=`  
-- **Many roles** → **campus landing** portal picker (`{slug}.raisd.co/?step=roles&session=…`). Labels: Applicant, Student, Staff or Lecturer (from `lecturer` permissions), Admin (`admin`), Control. Handoff is `apply|student|staff.{slug}.raisd.co` (Admin opens `staff.{slug}.raisd.co/admin`) or `control.raisd.co`  
+- **Many roles** → **campus landing** portal picker (`{slug}.raisd.co/?step=roles&session=…`). A custom role with more than one portal counts as one choice per portal. Labels: Applicant, Student, Staff or Lecturer (from `lecturer` permissions), Admin (`admin`), Control. Handoff is `apply|student|staff.{slug}.raisd.co` (Admin opens `staff.{slug}.raisd.co/admin`) or `control.raisd.co`
 - Portals may still offer **Switch role** in-shell after an active session  
 - Control UI: `https://control.raisd.co` (legacy `admin.raisd.co` → 301)
 
 ## Admin
 
-Control portal (requires `control` role) is campus-first: list campuses, define **custom roles** (`entryRoleKey` + `permissions[]` checkbox matrix), assign or change members (`customRoleId` on the assignment), and read audit events. Built-in **Campus Admin** per campus is not deletable and includes every Admin module plus `sso.manage_learners`. Permissions resolve live from the custom role on `/v1/me` and introspect. People, audit, and campus **Members** responses for Control actors omit learner presets (`student` / `applicant` / bare `lecturer`). Only `roleKey` `admin` or assignments with a `customRoleId` appear; `memberCount` matches that filter. Student, staff, and lecturer day-to-day presets are still granted by Admin in the staff portal.
+Control portal (requires `control` role) is campus-first: list campuses, define **custom roles** (`entryRoleKeys` + `permissions[]` checkbox matrix), assign or change members (`customRoleId` on the assignment), and read audit events. A custom role may select more than one portal (Admin, Staff / Lecturer, Student). Sign-in then shows the campus portal picker, and the access token is bound to the chosen portal only. `entryRoleKey` is the first selected portal. Built-in **Campus Admin** per campus is not deletable, enters Admin only, and includes every Admin module plus `sso.manage_learners`. Permissions resolve live from the custom role on `/v1/me` and introspect. People, audit, and campus **Members** responses for Control actors omit learner presets (`student` / `applicant` / bare `lecturer`). Only `roleKey` `admin` or assignments with a `customRoleId` appear; `memberCount` matches that filter. Student, staff, and lecturer day-to-day presets are still granted by Admin in the staff portal.
 
 `GET /v1/control/audit` supports `limit` / `offset` pagination (`limit` max **200**), inclusive `from` / `to` bounds (ISO date-time or `YYYY-MM-DD` UTC), and search filters `q` (user email/name/id), `access` (`admin` | `custom` | roleKey), and `campusId`. The Control Audit page pages results and CSV export walks every matching page until the full filtered set is downloaded. Exported cells that start with `=`, `+`, `-`, or `@` are prefixed so a spreadsheet does not treat a name as a formula.
 
@@ -136,10 +155,14 @@ Never commit SMTP passwords, notify tokens, or reset/magic-link tokens.
 
 ## Integrated Demo bridge verification — 15 October 2026
 
-Portal API exchange maps only explicitly known Student/Applicant emails, allocated
-Lecturer accounts and Registry/Bursary desks. An active but unlinked identity gets
-403; unknown password-login emails get 401. No role or email can fall back to a
-different default person. Lecturer responses retain staffMemberId and recorded
+The original bridge maps explicitly known Student emails, allocated Lecturer
+accounts and Registry/Bursary desks. Since 29 October 2026, authenticated Applicants
+with `portal.applicant` instead receive a persistent person-and-assigned-campus
+principal and start empty; they do not require a Demo email-map entry. The five
+registered Demo Applicant identities retain their compatibility path and reset
+allowlist. Other active but unlinked identities get 403; unknown password-login
+emails get 401. No role or email can fall back to a different default person.
+Lecturer responses retain staffMemberId and recorded
 academicTitle, and the portal preserves its HTTP runtime/session on restore.
 
 All four portal sign-in effects share one in-flight code exchange under React
@@ -205,3 +228,18 @@ margins/borders to keep the iframe inside short viewports. See the
 ### Logo placement - 19 October 2026
 
 SSO opts into shared AuthLayout `brandingPlacement="above"` from 0.9.1: the university logo is centred outside and above the card on login, forgot password and reset password. Branding remains in a page header landmark; forms, status popups, passkeys, redirects and Keychain retain their existing behavior. No local CSS override is used.
+
+## Local Keychain routing - 21 October 2026
+
+SSO login served on the exact loopback hostnames `localhost` or `127.0.0.1` selects Keychain on the same hostname at port 5180. Other hostnames retain the hosted Keychain origin. The current return URL and existing trusted fill-message origins are retained. The local workspace launcher starts the picker; its account catalogue explicitly accepts local SSO on port 8090. No SSO restart was needed: the running service served the rebuilt UI from disk, preserving active sessions. Actual Applicant-origin login, Fill/Fill & submit and phone/desktop browser verification are recorded in the [Keychain guide](../frontend/keychain.md#local-sso-picker---21-october-2026).
+
+The distinct ready-to-submit draft Demo identity is seeded independently of the submitted applicant, using the same existing Applicant role preset. See the [four account checkpoints](../frontend/keychain.md#distinct-applicant-scenario-accounts---21-october-2026). Existing persisted identities and permissions are retained.
+
+## Mixed-role lifecycle integration — 23 October 2026
+
+Mixed custom-role sign-in choices and learner conversion coexist: introspection reports expanded portal role keys for header display, and conversion preserves active virtual Staff/Control role sessions while revoking learner credentials. Converted Applicant bookmarks select the Student portal choice using its expanded assignment ID. Seeded Demo review roles explicitly retain their single Admin entry. Isolated regressions cover mixed-role header metadata, Staff-session preservation, Applicant revocation and Student redirect; no existing account permissions or credentials are rewritten to fix Keychain.
+
+
+## Live Flow reviewer bindings
+
+Active Control plus `flows.configure` can GET/POST `/v1/control/flow-reviewers`; this does not require broad role-management access. Bindings key configuration/campus/studentType/step, contain eligible role definition IDs, expected revision and retry ID, and are immediately audited. GET `/v1/internal/flow-reviewers` requires the internal service token. Introspection carries active roleDefinitionId, campus roleDefinitionIds (including built-in Campus Admin) and current reviewer bindings/names. Do not authorize by display names or person assignment IDs. Bindings never grant portal access. See [Flow Editor](../design/flow-editor.md).

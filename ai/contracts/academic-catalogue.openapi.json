@@ -1,0 +1,4499 @@
+{
+  "AcademicAccreditation": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "authority": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "reference": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "accreditedOn": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "expiresOn": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "notes": {
+        "type": "string",
+        "maxLength": 2000
+      }
+    },
+    "required": [
+      "id",
+      "authority",
+      "reference",
+      "accreditedOn",
+      "expiresOn",
+      "notes"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicCatalogue": {
+    "type": "object",
+    "properties": {
+      "campus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "timeZone": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "timeZone"
+        ],
+        "additionalProperties": false
+      },
+      "storage": {
+        "type": "string",
+        "enum": [
+          "memory",
+          "postgres"
+        ]
+      },
+      "groups": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "status": {
+              "default": "active",
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive",
+                "deleted"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "code",
+            "name",
+            "status",
+            "id",
+            "revision",
+            "createdAt",
+            "updatedAt",
+            "updatedBy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "faculties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "shortName": {
+              "default": "",
+              "type": "string",
+              "maxLength": 2000
+            },
+            "groupId": {
+              "default": null,
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "status": {
+              "default": "active",
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive",
+                "deleted"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "code",
+            "name",
+            "shortName",
+            "groupId",
+            "status",
+            "id",
+            "revision",
+            "createdAt",
+            "updatedAt",
+            "updatedBy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "programmes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "facultyId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "shortName": {
+              "default": "",
+              "type": "string",
+              "maxLength": 2000
+            },
+            "level": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "qualification": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "awardLevel": {
+              "type": "string",
+              "enum": [
+                "certificate",
+                "diploma",
+                "bachelor",
+                "master",
+                "doctorate"
+              ]
+            },
+            "duration": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "durationUnit": {
+              "type": "string",
+              "enum": [
+                "years",
+                "months",
+                "semesters"
+              ]
+            },
+            "status": {
+              "default": "active",
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive",
+                "deleted"
+              ]
+            },
+            "creative": {
+              "default": false,
+              "type": "boolean"
+            },
+            "postgraduate": {
+              "default": false,
+              "type": "boolean"
+            },
+            "defaultStructureId": {
+              "default": null,
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "defaultStructureVersionId": {
+              "default": null,
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "accreditations": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "authority": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240
+                  },
+                  "reference": {
+                    "type": "string",
+                    "maxLength": 2000
+                  },
+                  "accreditedOn": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "expiresOn": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 2000
+                  }
+                },
+                "required": [
+                  "id",
+                  "authority",
+                  "reference",
+                  "accreditedOn",
+                  "expiresOn",
+                  "notes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "facultyId",
+            "code",
+            "name",
+            "shortName",
+            "level",
+            "qualification",
+            "awardLevel",
+            "duration",
+            "durationUnit",
+            "status",
+            "creative",
+            "postgraduate",
+            "defaultStructureId",
+            "defaultStructureVersionId",
+            "accreditations",
+            "id",
+            "revision",
+            "createdAt",
+            "updatedAt",
+            "updatedBy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "modules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "description": {
+              "default": "",
+              "type": "string",
+              "maxLength": 2000
+            },
+            "credits": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "status": {
+              "default": "active",
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive",
+                "deleted"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "code",
+            "name",
+            "description",
+            "credits",
+            "status",
+            "id",
+            "revision",
+            "createdAt",
+            "updatedAt",
+            "updatedBy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "structures": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "updatedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "programmeId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "in-review",
+                "changes-requested",
+                "published",
+                "inactive"
+              ]
+            },
+            "draft": {
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "type": "object",
+                  "properties": {
+                    "effectiveFrom": {
+                      "type": "string",
+                      "format": "date",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                    },
+                    "effectiveTo": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "totalSemesterCount": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 40
+                    },
+                    "totalCreditsRequired": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "minimumSemesterCredits": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "maximumSemesterCredits": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "minimumGraduationCgpa": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "minimumAttendancePercent": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "effectiveFrom",
+                    "effectiveTo",
+                    "totalSemesterCount",
+                    "totalCreditsRequired",
+                    "minimumSemesterCredits",
+                    "maximumSemesterCredits",
+                    "minimumGraduationCgpa",
+                    "minimumAttendancePercent"
+                  ],
+                  "additionalProperties": false
+                },
+                "semesters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "number": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      },
+                      "academicTermId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "registrationOpensAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      },
+                      "registrationClosesAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "number",
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "streams": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "code": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "code",
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "placements": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "moduleId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "semesterNumber": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "credits": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "category": {
+                        "default": "core",
+                        "type": "string",
+                        "enum": [
+                          "major",
+                          "minor",
+                          "core",
+                          "elective"
+                        ]
+                      },
+                      "requirementType": {
+                        "type": "string",
+                        "enum": [
+                          "core",
+                          "elective"
+                        ]
+                      },
+                      "streamIds": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        }
+                      },
+                      "prerequisites": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "moduleId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "minimumGrade": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "maxLength": 2000
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "moduleId",
+                            "minimumGrade"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "moduleId",
+                      "semesterNumber",
+                      "credits",
+                      "category",
+                      "requirementType",
+                      "streamIds",
+                      "prerequisites"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "rules",
+                "semesters",
+                "streams",
+                "placements"
+              ],
+              "additionalProperties": false
+            },
+            "currentPublishedVersionId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "versions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "version": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "canonicalProgrammeVersionId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "snapshot": {
+                    "type": "object",
+                    "properties": {
+                      "rules": {
+                        "type": "object",
+                        "properties": {
+                          "effectiveFrom": {
+                            "type": "string",
+                            "format": "date",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                          },
+                          "effectiveTo": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "format": "date",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "totalSemesterCount": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 40
+                          },
+                          "totalCreditsRequired": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "minimumSemesterCredits": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "maximumSemesterCredits": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "minimumGraduationCgpa": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "minimumAttendancePercent": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        },
+                        "required": [
+                          "effectiveFrom",
+                          "effectiveTo",
+                          "totalSemesterCount",
+                          "totalCreditsRequired",
+                          "minimumSemesterCredits",
+                          "maximumSemesterCredits",
+                          "minimumGraduationCgpa",
+                          "minimumAttendancePercent"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "semesters": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "number": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 240
+                            },
+                            "academicTermId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "registrationOpensAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                            },
+                            "registrationClosesAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "number",
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "streams": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "code": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 240
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 240
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "code",
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "placements": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "moduleId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "semesterNumber": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "credits": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "category": {
+                              "default": "core",
+                              "type": "string",
+                              "enum": [
+                                "major",
+                                "minor",
+                                "core",
+                                "elective"
+                              ]
+                            },
+                            "requirementType": {
+                              "type": "string",
+                              "enum": [
+                                "core",
+                                "elective"
+                              ]
+                            },
+                            "streamIds": {
+                              "default": [],
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200
+                              }
+                            },
+                            "prerequisites": {
+                              "default": [],
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "moduleId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  },
+                                  "minimumGrade": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "maxLength": 2000
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "moduleId",
+                                  "minimumGrade"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "moduleId",
+                            "semesterNumber",
+                            "credits",
+                            "category",
+                            "requirementType",
+                            "streamIds",
+                            "prerequisites"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "rules",
+                      "semesters",
+                      "streams",
+                      "placements"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "publishedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "publishedBy": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "id",
+                  "version",
+                  "canonicalProgrammeVersionId",
+                  "snapshot",
+                  "publishedAt",
+                  "publishedBy"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "submittedBy": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "submittedRevision": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "reviewPolicyVersionId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "reviewNote": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "editorIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "allowedActions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "createdAt",
+            "updatedAt",
+            "updatedBy",
+            "programmeId",
+            "name",
+            "status",
+            "draft",
+            "currentPublishedVersionId",
+            "versions",
+            "submittedBy",
+            "submittedRevision",
+            "reviewPolicyVersionId",
+            "reviewNote"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "events": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "campusId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "entityType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "actorId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "actorName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "reason": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "before": {},
+                  "after": {}
+                },
+                "required": [
+                  "path",
+                  "before",
+                  "after"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "id",
+            "campusId",
+            "entityType",
+            "entityId",
+            "action",
+            "at",
+            "actorId",
+            "actorName",
+            "reason",
+            "changes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "enrolments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "studentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "studentName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "programmeId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "programmeVersionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "structureName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "selectedStreamIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "streams": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240
+                  }
+                },
+                "required": [
+                  "id",
+                  "code",
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "id",
+            "studentId",
+            "studentName",
+            "programmeId",
+            "programmeVersionId",
+            "structureName",
+            "selectedStreamIds",
+            "streams",
+            "revision"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "academicTerms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "startsAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "endsAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "startsAt",
+            "endsAt"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "campus",
+      "storage",
+      "groups",
+      "faculties",
+      "programmes",
+      "modules",
+      "structures",
+      "events",
+      "enrolments",
+      "academicTerms"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicEnrolment": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "studentId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "studentName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "programmeId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "programmeVersionId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "structureName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "selectedStreamIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "streams": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            }
+          },
+          "required": [
+            "id",
+            "code",
+            "name"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "revision": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "id",
+      "studentId",
+      "studentName",
+      "programmeId",
+      "programmeVersionId",
+      "structureName",
+      "selectedStreamIds",
+      "streams",
+      "revision"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicEvent": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "campusId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "entityType": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "entityId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "action": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "at": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "actorId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "actorName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "reason": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "changes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "before": {},
+            "after": {}
+          },
+          "required": [
+            "path",
+            "before",
+            "after"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "id",
+      "campusId",
+      "entityType",
+      "entityId",
+      "action",
+      "at",
+      "actorId",
+      "actorName",
+      "reason",
+      "changes"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicFaculty": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "shortName": {
+        "default": "",
+        "type": "string",
+        "maxLength": 2000
+      },
+      "groupId": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      },
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "revision": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "code",
+      "name",
+      "shortName",
+      "groupId",
+      "status",
+      "id",
+      "revision",
+      "createdAt",
+      "updatedAt",
+      "updatedBy"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicFacultyValues": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "shortName": {
+        "default": "",
+        "type": "string",
+        "maxLength": 2000
+      },
+      "groupId": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      }
+    },
+    "required": [
+      "code",
+      "name",
+      "shortName",
+      "groupId",
+      "status"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicFlowConfiguration": {
+    "type": "object",
+    "properties": {
+      "flowId": {
+        "type": "string",
+        "const": "academic-curriculum"
+      },
+      "configurationId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "campusIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "revision": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "current": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "version": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "templateId": {
+                "type": "string",
+                "const": "academic-curriculum"
+              },
+              "templateVersion": {
+                "type": "number",
+                "const": 1
+              },
+              "reviewRequired": {
+                "type": "boolean",
+                "const": true
+              }
+            },
+            "required": [
+              "templateId",
+              "templateVersion",
+              "reviewRequired"
+            ],
+            "additionalProperties": false
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "publishedBy": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "settings",
+          "publishedAt",
+          "publishedBy"
+        ],
+        "additionalProperties": false
+      },
+      "draft": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "revision": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "settings": {
+                "type": "object",
+                "properties": {
+                  "templateId": {
+                    "type": "string",
+                    "const": "academic-curriculum"
+                  },
+                  "templateVersion": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "reviewRequired": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "required": [
+                  "templateId",
+                  "templateVersion",
+                  "reviewRequired"
+                ],
+                "additionalProperties": false
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              },
+              "updatedBy": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "required": [
+              "revision",
+              "settings",
+              "updatedAt",
+              "updatedBy"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "history": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "version": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "settings": {
+              "type": "object",
+              "properties": {
+                "templateId": {
+                  "type": "string",
+                  "const": "academic-curriculum"
+                },
+                "templateVersion": {
+                  "type": "number",
+                  "const": 1
+                },
+                "reviewRequired": {
+                  "type": "boolean",
+                  "const": true
+                }
+              },
+              "required": [
+                "templateId",
+                "templateVersion",
+                "reviewRequired"
+              ],
+              "additionalProperties": false
+            },
+            "publishedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "publishedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "id",
+            "version",
+            "settings",
+            "publishedAt",
+            "publishedBy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "events": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "campusId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "entityType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "actorId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "actorName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "reason": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "before": {},
+                  "after": {}
+                },
+                "required": [
+                  "path",
+                  "before",
+                  "after"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "id",
+            "campusId",
+            "entityType",
+            "entityId",
+            "action",
+            "at",
+            "actorId",
+            "actorName",
+            "reason",
+            "changes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "storage": {
+        "type": "string",
+        "enum": [
+          "memory",
+          "postgres"
+        ]
+      }
+    },
+    "required": [
+      "flowId",
+      "configurationId",
+      "name",
+      "campusIds",
+      "revision",
+      "current",
+      "draft",
+      "history",
+      "events",
+      "storage"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicFlowSettings": {
+    "type": "object",
+    "properties": {
+      "templateId": {
+        "type": "string",
+        "const": "academic-curriculum"
+      },
+      "templateVersion": {
+        "type": "number",
+        "const": 1
+      },
+      "reviewRequired": {
+        "type": "boolean",
+        "const": true
+      }
+    },
+    "required": [
+      "templateId",
+      "templateVersion",
+      "reviewRequired"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicFlowVersion": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "version": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "settings": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "const": "academic-curriculum"
+          },
+          "templateVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "reviewRequired": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "templateId",
+          "templateVersion",
+          "reviewRequired"
+        ],
+        "additionalProperties": false
+      },
+      "publishedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "publishedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "id",
+      "version",
+      "settings",
+      "publishedAt",
+      "publishedBy"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicGroup": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      },
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "revision": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "code",
+      "name",
+      "status",
+      "id",
+      "revision",
+      "createdAt",
+      "updatedAt",
+      "updatedBy"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicGroupValues": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      }
+    },
+    "required": [
+      "code",
+      "name",
+      "status"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicModule": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "description": {
+        "default": "",
+        "type": "string",
+        "maxLength": 2000
+      },
+      "credits": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      },
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "revision": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "code",
+      "name",
+      "description",
+      "credits",
+      "status",
+      "id",
+      "revision",
+      "createdAt",
+      "updatedAt",
+      "updatedBy"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicModuleValues": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "description": {
+        "default": "",
+        "type": "string",
+        "maxLength": 2000
+      },
+      "credits": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      }
+    },
+    "required": [
+      "code",
+      "name",
+      "description",
+      "credits",
+      "status"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicMutation": {
+    "type": "object",
+    "properties": {
+      "expectedRevision": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "requestId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "expectedRevision",
+      "requestId"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicPlacement": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "moduleId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "semesterNumber": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "credits": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "category": {
+        "default": "core",
+        "type": "string",
+        "enum": [
+          "major",
+          "minor",
+          "core",
+          "elective"
+        ]
+      },
+      "requirementType": {
+        "type": "string",
+        "enum": [
+          "core",
+          "elective"
+        ]
+      },
+      "streamIds": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "prerequisites": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "moduleId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "minimumGrade": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "moduleId",
+            "minimumGrade"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "id",
+      "moduleId",
+      "semesterNumber",
+      "credits",
+      "category",
+      "requirementType",
+      "streamIds",
+      "prerequisites"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicProgramme": {
+    "type": "object",
+    "properties": {
+      "facultyId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "shortName": {
+        "default": "",
+        "type": "string",
+        "maxLength": 2000
+      },
+      "level": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "qualification": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "awardLevel": {
+        "type": "string",
+        "enum": [
+          "certificate",
+          "diploma",
+          "bachelor",
+          "master",
+          "doctorate"
+        ]
+      },
+      "duration": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "durationUnit": {
+        "type": "string",
+        "enum": [
+          "years",
+          "months",
+          "semesters"
+        ]
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      },
+      "creative": {
+        "default": false,
+        "type": "boolean"
+      },
+      "postgraduate": {
+        "default": false,
+        "type": "boolean"
+      },
+      "defaultStructureId": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "defaultStructureVersionId": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "accreditations": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "authority": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "reference": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "accreditedOn": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expiresOn": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "id",
+            "authority",
+            "reference",
+            "accreditedOn",
+            "expiresOn",
+            "notes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "revision": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "facultyId",
+      "code",
+      "name",
+      "shortName",
+      "level",
+      "qualification",
+      "awardLevel",
+      "duration",
+      "durationUnit",
+      "status",
+      "creative",
+      "postgraduate",
+      "defaultStructureId",
+      "defaultStructureVersionId",
+      "accreditations",
+      "id",
+      "revision",
+      "createdAt",
+      "updatedAt",
+      "updatedBy"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicProgrammeValues": {
+    "type": "object",
+    "properties": {
+      "facultyId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "shortName": {
+        "default": "",
+        "type": "string",
+        "maxLength": 2000
+      },
+      "level": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "qualification": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "awardLevel": {
+        "type": "string",
+        "enum": [
+          "certificate",
+          "diploma",
+          "bachelor",
+          "master",
+          "doctorate"
+        ]
+      },
+      "duration": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "durationUnit": {
+        "type": "string",
+        "enum": [
+          "years",
+          "months",
+          "semesters"
+        ]
+      },
+      "status": {
+        "default": "active",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "deleted"
+        ]
+      },
+      "creative": {
+        "default": false,
+        "type": "boolean"
+      },
+      "postgraduate": {
+        "default": false,
+        "type": "boolean"
+      },
+      "defaultStructureId": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "defaultStructureVersionId": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "accreditations": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "authority": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "reference": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "accreditedOn": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expiresOn": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "id",
+            "authority",
+            "reference",
+            "accreditedOn",
+            "expiresOn",
+            "notes"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "facultyId",
+      "code",
+      "name",
+      "shortName",
+      "level",
+      "qualification",
+      "awardLevel",
+      "duration",
+      "durationUnit",
+      "status",
+      "creative",
+      "postgraduate",
+      "defaultStructureId",
+      "defaultStructureVersionId",
+      "accreditations"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicPublishedStructure": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "version": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "canonicalProgrammeVersionId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "snapshot": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "object",
+            "properties": {
+              "effectiveFrom": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+              },
+              "effectiveTo": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "totalSemesterCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 40
+              },
+              "totalCreditsRequired": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "minimumSemesterCredits": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumSemesterCredits": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "minimumGraduationCgpa": {
+                "type": "number",
+                "minimum": 0
+              },
+              "minimumAttendancePercent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "effectiveFrom",
+              "effectiveTo",
+              "totalSemesterCount",
+              "totalCreditsRequired",
+              "minimumSemesterCredits",
+              "maximumSemesterCredits",
+              "minimumGraduationCgpa",
+              "minimumAttendancePercent"
+            ],
+            "additionalProperties": false
+          },
+          "semesters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "number": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "academicTermId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "registrationOpensAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "registrationClosesAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                }
+              },
+              "required": [
+                "id",
+                "number",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "streams": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                }
+              },
+              "required": [
+                "id",
+                "code",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "placements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "moduleId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "semesterNumber": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "credits": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "category": {
+                  "default": "core",
+                  "type": "string",
+                  "enum": [
+                    "major",
+                    "minor",
+                    "core",
+                    "elective"
+                  ]
+                },
+                "requirementType": {
+                  "type": "string",
+                  "enum": [
+                    "core",
+                    "elective"
+                  ]
+                },
+                "streamIds": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "prerequisites": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "moduleId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "minimumGrade": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 2000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "moduleId",
+                      "minimumGrade"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "moduleId",
+                "semesterNumber",
+                "credits",
+                "category",
+                "requirementType",
+                "streamIds",
+                "prerequisites"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "rules",
+          "semesters",
+          "streams",
+          "placements"
+        ],
+        "additionalProperties": false
+      },
+      "publishedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "publishedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "id",
+      "version",
+      "canonicalProgrammeVersionId",
+      "snapshot",
+      "publishedAt",
+      "publishedBy"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicRules": {
+    "type": "object",
+    "properties": {
+      "effectiveFrom": {
+        "type": "string",
+        "format": "date",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+      },
+      "effectiveTo": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "totalSemesterCount": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 40
+      },
+      "totalCreditsRequired": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "minimumSemesterCredits": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "maximumSemesterCredits": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "minimumGraduationCgpa": {
+        "type": "number",
+        "minimum": 0
+      },
+      "minimumAttendancePercent": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "required": [
+      "effectiveFrom",
+      "effectiveTo",
+      "totalSemesterCount",
+      "totalCreditsRequired",
+      "minimumSemesterCredits",
+      "maximumSemesterCredits",
+      "minimumGraduationCgpa",
+      "minimumAttendancePercent"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicSelection": {
+    "type": "object",
+    "properties": {
+      "version": {
+        "type": "number",
+        "const": 1
+      },
+      "campusId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "facultyId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "facultyName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "programmeId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "programmeName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "programmeVersionId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "structureId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "structureVersionId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "intakeId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "startsOn": {
+        "type": "string",
+        "format": "date",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+      },
+      "referenceAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "expectedCompletionOn": {
+        "type": "string",
+        "format": "date",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+      },
+      "semesters": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "number": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "academicTermId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "registrationOpensAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "registrationClosesAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            }
+          },
+          "required": [
+            "number",
+            "academicTermId",
+            "registrationOpensAt",
+            "registrationClosesAt"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "version",
+      "campusId",
+      "facultyId",
+      "facultyName",
+      "programmeId",
+      "programmeName",
+      "programmeVersionId",
+      "structureId",
+      "structureVersionId",
+      "intakeId",
+      "startsOn",
+      "referenceAt",
+      "expectedCompletionOn",
+      "semesters"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicSemester": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "number": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "academicTermId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "registrationOpensAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "registrationClosesAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      }
+    },
+    "required": [
+      "id",
+      "number",
+      "name"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicStatus": {
+    "type": "string",
+    "enum": [
+      "active",
+      "inactive",
+      "deleted"
+    ]
+  },
+  "AcademicStream": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      }
+    },
+    "required": [
+      "id",
+      "code",
+      "name"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicStructure": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "revision": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+      },
+      "updatedBy": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "programmeId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "in-review",
+          "changes-requested",
+          "published",
+          "inactive"
+        ]
+      },
+      "draft": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "object",
+            "properties": {
+              "effectiveFrom": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+              },
+              "effectiveTo": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "totalSemesterCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 40
+              },
+              "totalCreditsRequired": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "minimumSemesterCredits": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumSemesterCredits": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "minimumGraduationCgpa": {
+                "type": "number",
+                "minimum": 0
+              },
+              "minimumAttendancePercent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "effectiveFrom",
+              "effectiveTo",
+              "totalSemesterCount",
+              "totalCreditsRequired",
+              "minimumSemesterCredits",
+              "maximumSemesterCredits",
+              "minimumGraduationCgpa",
+              "minimumAttendancePercent"
+            ],
+            "additionalProperties": false
+          },
+          "semesters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "number": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "academicTermId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "registrationOpensAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "registrationClosesAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                }
+              },
+              "required": [
+                "id",
+                "number",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "streams": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                }
+              },
+              "required": [
+                "id",
+                "code",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "placements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "moduleId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "semesterNumber": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "credits": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "category": {
+                  "default": "core",
+                  "type": "string",
+                  "enum": [
+                    "major",
+                    "minor",
+                    "core",
+                    "elective"
+                  ]
+                },
+                "requirementType": {
+                  "type": "string",
+                  "enum": [
+                    "core",
+                    "elective"
+                  ]
+                },
+                "streamIds": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "prerequisites": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "moduleId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "minimumGrade": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 2000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "moduleId",
+                      "minimumGrade"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "moduleId",
+                "semesterNumber",
+                "credits",
+                "category",
+                "requirementType",
+                "streamIds",
+                "prerequisites"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "rules",
+          "semesters",
+          "streams",
+          "placements"
+        ],
+        "additionalProperties": false
+      },
+      "currentPublishedVersionId": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "versions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "version": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "canonicalProgrammeVersionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "snapshot": {
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "type": "object",
+                  "properties": {
+                    "effectiveFrom": {
+                      "type": "string",
+                      "format": "date",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                    },
+                    "effectiveTo": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "totalSemesterCount": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 40
+                    },
+                    "totalCreditsRequired": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "minimumSemesterCredits": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "maximumSemesterCredits": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "minimumGraduationCgpa": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "minimumAttendancePercent": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "effectiveFrom",
+                    "effectiveTo",
+                    "totalSemesterCount",
+                    "totalCreditsRequired",
+                    "minimumSemesterCredits",
+                    "maximumSemesterCredits",
+                    "minimumGraduationCgpa",
+                    "minimumAttendancePercent"
+                  ],
+                  "additionalProperties": false
+                },
+                "semesters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "number": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      },
+                      "academicTermId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "registrationOpensAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      },
+                      "registrationClosesAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "number",
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "streams": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "code": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "code",
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "placements": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "moduleId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "semesterNumber": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "credits": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "category": {
+                        "default": "core",
+                        "type": "string",
+                        "enum": [
+                          "major",
+                          "minor",
+                          "core",
+                          "elective"
+                        ]
+                      },
+                      "requirementType": {
+                        "type": "string",
+                        "enum": [
+                          "core",
+                          "elective"
+                        ]
+                      },
+                      "streamIds": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        }
+                      },
+                      "prerequisites": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "moduleId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "minimumGrade": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "maxLength": 2000
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "moduleId",
+                            "minimumGrade"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "moduleId",
+                      "semesterNumber",
+                      "credits",
+                      "category",
+                      "requirementType",
+                      "streamIds",
+                      "prerequisites"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "rules",
+                "semesters",
+                "streams",
+                "placements"
+              ],
+              "additionalProperties": false
+            },
+            "publishedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "publishedBy": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "id",
+            "version",
+            "canonicalProgrammeVersionId",
+            "snapshot",
+            "publishedAt",
+            "publishedBy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "submittedBy": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "submittedRevision": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reviewPolicyVersionId": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reviewNote": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "editorIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "allowedActions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "revision",
+      "createdAt",
+      "updatedAt",
+      "updatedBy",
+      "programmeId",
+      "name",
+      "status",
+      "draft",
+      "currentPublishedVersionId",
+      "versions",
+      "submittedBy",
+      "submittedRevision",
+      "reviewPolicyVersionId",
+      "reviewNote"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicStructureSnapshot": {
+    "type": "object",
+    "properties": {
+      "rules": {
+        "type": "object",
+        "properties": {
+          "effectiveFrom": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          "effectiveTo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalSemesterCount": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 40
+          },
+          "totalCreditsRequired": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "minimumSemesterCredits": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "maximumSemesterCredits": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "minimumGraduationCgpa": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minimumAttendancePercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "effectiveFrom",
+          "effectiveTo",
+          "totalSemesterCount",
+          "totalCreditsRequired",
+          "minimumSemesterCredits",
+          "maximumSemesterCredits",
+          "minimumGraduationCgpa",
+          "minimumAttendancePercent"
+        ],
+        "additionalProperties": false
+      },
+      "semesters": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "number": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "academicTermId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "registrationOpensAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "registrationClosesAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            }
+          },
+          "required": [
+            "id",
+            "number",
+            "name"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "streams": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            }
+          },
+          "required": [
+            "id",
+            "code",
+            "name"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "placements": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "moduleId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "semesterNumber": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "credits": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "category": {
+              "default": "core",
+              "type": "string",
+              "enum": [
+                "major",
+                "minor",
+                "core",
+                "elective"
+              ]
+            },
+            "requirementType": {
+              "type": "string",
+              "enum": [
+                "core",
+                "elective"
+              ]
+            },
+            "streamIds": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "prerequisites": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "moduleId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "minimumGrade": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "maxLength": 2000
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "moduleId",
+                  "minimumGrade"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "id",
+            "moduleId",
+            "semesterNumber",
+            "credits",
+            "category",
+            "requirementType",
+            "streamIds",
+            "prerequisites"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "rules",
+      "semesters",
+      "streams",
+      "placements"
+    ],
+    "additionalProperties": false
+  },
+  "AcademicStructureValues": {
+    "type": "object",
+    "properties": {
+      "programmeId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "draft": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "object",
+            "properties": {
+              "effectiveFrom": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+              },
+              "effectiveTo": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "totalSemesterCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 40
+              },
+              "totalCreditsRequired": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "minimumSemesterCredits": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "maximumSemesterCredits": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "minimumGraduationCgpa": {
+                "type": "number",
+                "minimum": 0
+              },
+              "minimumAttendancePercent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "effectiveFrom",
+              "effectiveTo",
+              "totalSemesterCount",
+              "totalCreditsRequired",
+              "minimumSemesterCredits",
+              "maximumSemesterCredits",
+              "minimumGraduationCgpa",
+              "minimumAttendancePercent"
+            ],
+            "additionalProperties": false
+          },
+          "semesters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "number": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "academicTermId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "registrationOpensAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "registrationClosesAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                }
+              },
+              "required": [
+                "id",
+                "number",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "streams": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 240
+                }
+              },
+              "required": [
+                "id",
+                "code",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "placements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "moduleId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "semesterNumber": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "credits": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "category": {
+                  "default": "core",
+                  "type": "string",
+                  "enum": [
+                    "major",
+                    "minor",
+                    "core",
+                    "elective"
+                  ]
+                },
+                "requirementType": {
+                  "type": "string",
+                  "enum": [
+                    "core",
+                    "elective"
+                  ]
+                },
+                "streamIds": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "prerequisites": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "moduleId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "minimumGrade": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 2000
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "moduleId",
+                      "minimumGrade"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "moduleId",
+                "semesterNumber",
+                "credits",
+                "category",
+                "requirementType",
+                "streamIds",
+                "prerequisites"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "rules",
+          "semesters",
+          "streams",
+          "placements"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "programmeId",
+      "name",
+      "draft"
+    ],
+    "additionalProperties": false
+  }
+}

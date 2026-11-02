@@ -1,8 +1,66 @@
 # Cross-session handoff
 
+## Study Plan terminology — 30 October 2026
+
+Display terminology is **Study Plan** throughout Academic tabs, actions, breadcrumbs, review flow and feedback. Existing routes, flow/step IDs, API/schema keys, saved record names and recorded audit values are preserved. The built-in Academic Curriculum configuration name has a display-only Academic Study Plan alias; loading it does not change the stored name or create unsaved edits. Student empty-state, validation and admissions-continuation copy follow this terminology; data and handoff shapes are unchanged.
+
+## Academic catalogue delivery - 29 October 2026
+
+Implemented persistent Staff Academic (Faculty, Programme, Modules), Control Academic Curriculum review with independent publication, new SSO Applicant person/campus journeys and clean version-pinned Student enrolment/stream requirements. Shared navigation0.20.0 is published and installed in Staff. Local schema5 migration was backup-first and preserves existing records/history; API, SSO and Staff are running. Required static/unit/browser constituents, API persistence/security pipelines and mirrors are verified; initial stale test expectations/resource-loaded runs were resolved with bounded/focused retries. Exact evidence and boundaries: [Academic delivery receipt](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/audits/2026-10-29-academic-catalogue.md).
+
+No commit, push, application deployment or CMS write. Reviewer roles and campus calendar/fee setup remain explicit configuration; no other person's policies or academic/financial records are cloned. Next approved work: none pending in this delivery; hosted activation needs a separate instruction.
+
+## Shared header breadcrumbs across portals — 0.18.4
+
+Student now uses released structured PortalHeader breadcrumbs and router parent links for nested pages. The route helper preserves programme ownership and applicable module semester. Existing group labels, account/community controls, inner breadcrumbs and API/query contracts retain their ownership. The shared overflow menu is deferred until needed, retaining its label, busy/loading state, current page and focus behavior. No data/model/explorer changes belong to this header-only patch; the change-surface audit also lists unrelated pre-existing canonical-data edits, which were preserved.
+
+
+Cross-portal breadcrumb verification (0.18.4): shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff/Lecturer lint, 94 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Applicant lint, three focused header unit cases, type/production build and production-exclusion check passed (its existing unused-variable warning remains). Student lint, 15 focused breadcrumb/route unit cases, type/production build and production-exclusion checks passed. Student bundle budgets passed unchanged: eager JavaScript 194164 gzip bytes against 196608; largest chunk 373077 bytes.
+
+All 25 focused Chromium/WebKit portal cases passed: Applicant four, Student five (1280/1440 Chromium and phone/tablet/desktop WebKit), Staff six, Lecturer four and Control six. Coverage includes parent navigation, selected programme/semester scope, mobile overflow, keyboard/Escape, unsaved application/flow guards and unavailable teaching details. Test-only selectors were scoped to the header and menu dismissal was awaited; unrelated inner breadcrumbs remain intact. All 296 installed files in each of four portals match the verified 0.18.4 registry archive. Nine affected captures and both 253-capture catalogue mirrors validate. Focused portal checks were used under the owner-approved fast workflow; no full Student/Applicant regression-suite claim is made.
+
+Only Applicant, Student, Staff and Control frontends restarted. APIs, SSO, Keychain, Docker, identities, applications, drafts and policies were not reset or migrated. No hosted deployment, commit or push occurred.
+
+Further feature work remains separately user-directed.
+
+## Shared ContentSection title height — 0.10.5
+
+Applicant, Student, Staff and Control pin the same released shared component. All ContentSection title containers have a 36px minimum height, including custom headings and sidebar variants; multiline content can grow. Typography and default page/sidebar gaps remain unchanged. This is a local presentation upgrade without data, API or workflow changes.
+
+Verification: shared gate passed 44 unit, 48 Chromium and 18 phone/tablet WebKit checks. Focused computed-height checks/captures passed at 1440/768/375px. Staff (90 tests), Applicant (95) and Control (16) lint/test/build gates passed. Student passed its three focused ContentSection tests and production build; the aggregate Student run was deliberately stopped to keep this isolated visual correction focused, so no full Student regression pass is claimed. All four installed package integrities/component bytes match published 0.10.5. Only local frontends were restarted; APIs, SSO and saved Demo state remain.
+
+## Shared page spacing — 22 October 2026
+
+Owner requested a single 16px page-heading/content default across Applicant, Student and Staff. Shared design-system 0.10.2 owns the value; simple page shells compose ContentSection and named/status wrappers consume pageSectionVariants(). Existing headings, focus targets, data, workflow and internal section/card spacing are preserved. Consumer gates and responsive verification are recorded in the shared component guide; no hosted rollout or database work is included.
+
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
 Read this after `AGENTS.md` when resuming the project in a new Codex chat or on another machine. It is a short current-state record; the linked project documents remain the source of truth.
 
 ## Current baseline
+
+### Workspace moved to D:/Coding/raisd — 21 October 2026
+
+Owner-requested relocation moved all 11 Campus repositories and Student backups into D:/Coding/raisd; the separate CMS remains outside. All HEADs, working-tree changes and 2,869 source/configuration hashes were preserved before targeted path updates; recovery artifact checksums still match. Hidden compatibility junctions retain old project paths for Codex and historical scripts. Use the canonical new paths, root raisd.code-workspace and portable start-local.ps1 for new work. Student's physical folder remains cms-student-portal; Control repository discovery now accepts it. The installed personal skill and new-path Codex trust were updated; memory/chat databases were not edited.
+
+All six services were restarted from the new root and return HTTP 200. Real fresh-applicant SSO login, upload/continuation capability, four portal production builds, API type/contracts/60 isolated flows, Staff Demo parity and all editor/repository path checks passed. Existing private policy and SSO identity state were retained; sign in again after the API restart. No saved/submitted application changes were recorded in the old startup logs. QA/Faculty/IO/SSD assignment remains the next manual walkthrough prerequisite. See the [relocation receipt](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/audits/2026-10-21-workspace-relocation.md).
+
+### Interactive local walkthrough started — 21 October 2026
+
+Owner requested all local portals and APIs started after the Cyberjaya fixes. None of the six target ports was listening, so the existing ignored launcher started latest-source Staff localhost:5173, Applicant :5174, Control :5175, Student :5176, Portal API :8087 and SSO :8090. All returned HTTP 200. Existing policy path and SSO identity-state path were reused; no running process or application was reset. Added the missing local VITE_APPLICANT_PORTAL_ORIGINS allowlist to the ignored launcher for continuation.
+
+Real SSO → Applicant browser login for fresh@raisd.demo passed: zero applications, Create Application available, original-file/continuation capability enabled and no page errors. No application was created/submitted. Existing Control, Cyberjaya Admin, Registry and Bursary sign-ins/API exchanges also passed. QA, Faculty, IO and SSD desk assignments are absent in this local seed; configure those explicitly through Control before expecting a complete manual Staff walkthrough. Do not treat the full-menu Campus Admin as a reviewer for unassigned desks. Applicant should choose Cyberjaya in the new form and continue into Student through the accepted application's continuation action. Local memory application/evidence/session state still depends on the API process lifetime. Logs and readiness capture are ignored under Student logs/local-services.
+
+### Cyberjaya application configuration completion — 21 October 2026
+
+Closed the seven audited gaps: configured draft resume, document retention/submitted/checklist consistency (including clinic-only overrides), deadlines, applicable evidence tasks, allowed payment guidance and later verified English projection into Student. SSO exchange now carries the server's file/continuation capability. Connected Student registration refreshes external desk decisions on entry/focus/visible polling; Academic Profile/Documents refresh on re-entry. Accepted snapshots, schema epoch 4 and shared component sources remain unchanged. Each case retains its own campus policy; no new campus rule or global pilot change was made.
+
+Applicant final check passed 94 units/build/exclusions, 70 legacy and eight configured-policy browser cases. Eight new real-HTTP Cyberjaya local/international journeys passed at Chromium 375/768/1440 and WebKit 375: QA, Bursary, Registry, IO, SSD, Faculty, acceptance/continuation, later IELTS/original bytes, completed module registration and CAF PDF. Student check:all passed 807 units/build/assets/tokens/exclusions/bundle; its Chromium run had 277 passes, 46 expected skips and one unchanged Drop Modules keyboard-checkbox failure. The exact test passed three unchanged original-config repeats. Explicit WebKit then passed 41 cases (31 expected skips); the initial full gate's failure is retained in the receipt. Staff 73 units/build/Demo parity; API 60 flows, 73 admissions, 82 SSO assertions/type/contracts passed. Canonical, SDD, OpenAPI and affected local/public mirrors are synchronized. Existing Vite chunk/config-loader/color warnings remain. See the [completion receipt](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/audits/2026-10-21-cyberjaya-application-flow.md).
+
+This is isolated local integration evidence with synthetic identity/evidence and independent memory. No commit/push, package release, hosted deployment, current-service restart or Live CMS write occurred; existing interactive Demo records were preserved. Next: owner-directed interactive/hosted rollout and verification against the actual published Cyberjaya policy and durable storage. Do not reset the running Demo to activate changes.
 
 ### University Flows integration and source delivery — 20 October 2026
 
@@ -252,7 +310,7 @@ Full Student gate: 750 unit tests, 273 Chromium passed (41 intentional skips), 3
 ### Remote synchronization and canonical documentation recovery — 23 September 2026
 
 - `main` was fast-forwarded from `cfe1dbe` to `273b464`. The accumulated responsive work was restored from `stash@{0}`; the only merge conflict was the root `AGENTS.md`, which now retains the remote pointer to the control-plane knowledge base. All application, test, documentation and untracked files restored without conflict. The safety stash was removed after the restored worktree was verified.
-- The expected sibling `control-plane` checkout was created at `D:\Coding\control-plane`. All 23 changed local behaviour documents were three-way merged into `docs/ai/frontend/student-portal/` without conflicts, preserving the canonical CAP links. The canonical student-portal `AGENTS.md` now records responsive support from 375px through 1440px, the phone/tablet/desktop shell modes, the supported accessibility scope and the Chromium/WebKit viewport matrix.
+- The expected sibling `control-plane` checkout was created at `D:\Coding\raisd\control-plane`. All 23 changed local behaviour documents were three-way merged into `docs/ai/frontend/student-portal/` without conflicts, preserving the canonical CAP links. The canonical student-portal `AGENTS.md` now records responsive support from 375px through 1440px, the phone/tablet/desktop shell modes, the supported accessibility scope and the Chromium/WebKit viewport matrix.
 - Verification: both repositories pass `git diff --check`, the change-surface audit reports no companion-layer gaps, and a clean `$env:PLAYWRIGHT_WORKERS='2'; npm run check:all` completed successfully. It passed all 704 unit tests, the production build, production-isolation and bundle checks, 271 Chromium checks with 41 intentional project skips, and 35 WebKit checks with 31 intentional viewport skips. The stabilized native-touch test uses deterministic drawer setup and asserts meaningful reverse movement instead of exact pixel settling.
 
 ### iOS segmented tabs, keyboard recovery and Services inset — 23 September 2026
@@ -630,7 +688,7 @@ Full Student gate: 750 unit tests, 273 Chromium passed (41 intentional skips), 3
 - Focused browser verification passes **18/18 (41.0s)** in `logs/cap-51-focused-browser.log`; captures in `logs/cap-51-browser/` were reviewed for catalogue, long forms and submitted conversations with Community open/closed/resized. Coverage includes all five forms, file validation, save/send failures, keyboard/focus, confirmation/cancellation, immutable submissions, withdrawal, unread badges, direct links, history, loading/error/empty states and scenario isolation. The full gate also passes existing Finance, Profile, Community, announcement, academic and isolated Services responsive regressions. No full-portal mobile or physical-device acceptance is claimed.
 - Final review fixed queued visible-message acknowledgements, delayed case responses overwriting newer state, catalogue timezones when templates are absent, and exact visa/enrolment ownership. Ambiguous active enrolments fail closed. The initial gate exposed the eager-bundle regression; the Online Forms badge is now lazy, and the existing Announcement loading skeleton is separated from its real table module without changing appearance. Final change-surface review reports no companion-layer gaps (`logs/cap-51-change-surface.log`), all **126** checked local documentation links resolve, and `git diff --check` passes. **No quality-gate warnings remain.** The previously accepted white-on-orange IssueCard contrast exception is unchanged; no additional accessibility exclusions were introduced.
 - CAP-51 Student Frontend is **Demo** for these five samples and session-only journeys. The next work requires separately approved campus form content and backend/reviewer workflow integration; no additional templates or staff screens are implied.
-- Existing recovery package remains unchanged at `D:\Coding\backups\cms-student-portal\20260907T130310Z`. Google Drive remains unchanged. Mobile remains Not started and Backend Needs checking. Campus approval, live reviewer operations, file delivery/storage and dedicated privacy requests remain outstanding.
+- Existing recovery package remains unchanged at `D:\Coding\raisd\backups\cms-student-portal\20260907T130310Z`. Google Drive remains unchanged. Mobile remains Not started and Backend Needs checking. Campus approval, live reviewer operations, file delivery/storage and dedicated privacy requests remain outstanding.
 
 ### CAP-39 Privacy & Security — 10 September 2026
 
@@ -664,7 +722,7 @@ Full Student gate: 750 unit tests, 273 Chromium passed (41 intentional skips), 3
 ### Restored portal delivery checkpoint — 8 September 2026
 
 - This checkpoint delivers the restored-audit repairs, CAP-30 lecturer reviews, CAP-16 Announcements, the shared banner article panel, flattened Services content surface, and the final five-item Important Announcements overview. Their contracts, canonical projections, mock Portal API/query paths, route components, explorers, documentation, and regression coverage are included together on `codex/restored-portal-audit`.
-- The preserved requirements, checklist planning records, audit evidence, and verified Excel backup are included as project records. The private recovery package remains unchanged at `D:\Coding\backups\cms-student-portal\20260907T130310Z`; `codex/student-portal-completion` remains separate and is not merged into this restored desktop prototype.
+- The preserved requirements, checklist planning records, audit evidence, and verified Excel backup are included as project records. The private recovery package remains unchanged at `D:\Coding\raisd\backups\cms-student-portal\20260907T130310Z`; `codex/student-portal-completion` remains separate and is not merged into this restored desktop prototype.
 - Delivery gate: `cmd /d /c "npm run check:all -- -- --workers=2"` **exit 0**, **452 unit tests / 61 files (21.12s)** and **164 Chromium browser tests (5.4m)** at 1280/1440px. Token, Services-asset, lint, TypeScript, build (**1.18s**), production-isolation and bundle checks pass with **no warnings**. Exact log: `logs/announcement-important-flush-final-check-all.log`. The final change-surface review reports no obvious companion-layer gaps, all 29 checked current documentation links resolve, and `git diff --check` passes.
 
 ### Pinned Important Announcements — 8 September 2026
@@ -730,7 +788,7 @@ Full Student gate: 750 unit tests, 273 Chromium passed (41 intentional skips), 3
 
 ### Saved portal restored and audited — 8 September 2026
 
-- At the user's request, restored the original saved working state onto `codex/restored-portal-audit`, based on `6811e886fce1e86c366bd92d66cb74ba5ce612d2`. All six recovery-package artifacts and 466 restored files were checksum-verified. Private backup `D:\Coding\backups\cms-student-portal\20260907T130310Z` remains unchanged; its `RESTORE.md` contains independent restoration instructions. Saved planning, requirements and output files were preserved.
+- At the user's request, restored the original saved working state onto `codex/restored-portal-audit`, based on `6811e886fce1e86c366bd92d66cb74ba5ce612d2`. All six recovery-package artifacts and 466 restored files were checksum-verified. Private backup `D:\Coding\raisd\backups\cms-student-portal\20260907T130310Z` remains unchanged; its `RESTORE.md` contains independent restoration instructions. Saved planning, requirements and output files were preserved.
 - Newer work remains on `codex/student-portal-completion` at `9d492643d68a6adc026b2ea88e79627696ea7837` and its existing remote branch. No destructive reset or force push. The active preview is the restored desktop prototype, not the eight-campus/mobile completion. The rollback supersedes that implementation task; do not resume it automatically.
 - [Audit report](audits/2026-09-08-restored-portal-audit.md) records four confirmed P2 issues: timetable minute/evening placement, stale Resume save after a session reset, Materials/canonical learning inconsistencies, and positional campus configuration in module attendance. Six isolated correctness assertions reproduce them; application code remains unchanged and no fixes were applied.
 - Final `npm run check:all` with two browser workers **exit 1**: static/asset/lint/build/isolation/bundle checks and **398 units /57 files** passed; **137/138 Chromium tests passed (5.3m)**. The remaining assignment-navigation timeout has trace evidence of React Query failing to load with `net::ERR_NO_BUFFER_SPACE`. Unchanged focused rerun passes **2/2 (15.5s)**. An earlier chart timeout also passed its unchanged focused rerun **7/7**. Do not report a clean full-gate pass.

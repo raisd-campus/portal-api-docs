@@ -1,6 +1,36 @@
 # Shared platform
 
+### Local development workflow — 27 October 2026
+
+Control-plane owns a one-command local stack with dedicated PostgreSQL 18, persistent local volume, private environment settings and backup-first import of saved Demo state. Seeding adds missing Demo data and public credentials only; existing identities, applications, policies and evidence remain. Remote and the separate CMS database are unchanged. Canonical agent instructions require focused checks matched to change risk, hot reload and targeted service restarts, with full required release gates at publication checkpoints. Operational commands and recovery are in [local development](../ai/architecture/local-development.md).
+
+### Admissions editor reference - 26 October 2026
+
+The flow detail route uses shared 0.14.0 AdminRecordWorkspace titled Edit Flow, with a saved summary/list sidebar, Original Page and Close. The right column contains Affected Portals as three separate default page panels and General as a title above a page panel containing local-only Apply to and Name fields directly. Released shared 0.13.0 supplies the fixed-height searchable ChipField; edits reset on navigation and do not save or reassign campuses. The previous editor remains on a separate read-only reference route with settings, wording, previews, history and help; save, publish and restore-as-draft actions are unavailable. Stored policy versions, existing drafts, applications and API contracts are preserved while the new interface is designed.
+
+### Admissions flow/version terminology - 26 October 2026
+
+Each named Admissions Flow has multiple immutable published Versions. Control lists the latest published Version separately from the Applied Version currently effective for assigned campuses. Future-effective publication does not advance the applied version early or change existing application pins. Create Flow remains a placeholder; assignments and editor/API paths retain their existing behavior.
+
+### Default title-container height — 0.10.5
+
+All four portals adopt the shared ContentSection 36px minimum title-container height. Heading typography, default gaps and multiline growth remain. This is presentation-only local delivery.
+
+### Shared Admin record flow — 0.10.0
+
+The shared library adds an Admin table and record workspace with read-first editing, summary/list switching, guarded create/edit navigation, typed deletion, explicit save outcomes and compact mobile layouts. It uses presentation data/callbacks; querying, authorization and persistence belong to each portal/API. This library release does not upgrade portal pins or build the Staff Applicants page. See [Admin record flow](../ai/design/admin-record-flow.md).
+
+### Permanent account identity — 21 October 2026
+
+One immutable numeric SSO User ID spans all portal roles and survives learner conversion and Demo resets. Header presentation is name, then User ID · comma-separated assigned roles. Student/Staff numbers and email login remain separate. Allocation is additive in the durable single-writer SSO state; no hosted migration has been run.
+
+## Control-owned Applicant wording — 21 October 2026
+
+Control Admissions configures versioned progress labels, department names and concise updates. API preview and Applicant responses share the same display rows: Pending for unfinished steps, Complete for completed steps, and no inapplicable rows. Applicant renders the returned wording without local overrides. Existing cases retain their pinned policy version.
+
 ## Control University Flows - 20 October 2026
+
+Directory update, 23 October: University Flows uses the shared ContentSection with a clickable Admissions card and no surrounding page panel. Released shared 0.11.0 `LinkedList` panel variant gives that card the surface token and 12px page-panel radius, preserving the default variant. Control alone uses that release. Admissions now lists real reusable named configurations in AdminTable, with Global assigned to all eight local campuses. One shared editor owns independent settings and immutable revisions per configuration; publication affects new applications in assigned campuses while existing cases retain their pinned snapshots. A transactional additive import preserves distinct campus settings, scheduled changes, drafts and history. Create is inert and assignment editing is deferred. No hosted migration or portal deployment is included.
 
 Control adds an extensible University Flows registry and campus Admissions editor using released design-system 0.9.1. Existing portals keep sufficient 0.8.0 pins; shared sources are unchanged. Save draft, validate/preview and publish produce immutable effective policy versions for new applications. Reversion publishes a copy as a new version. Active Control plus flows.configure is required; policy settings never grant access. Existing identities/passkeys/grants remain intact, and review desk assignment stays a separate People operation.
 
@@ -148,3 +178,72 @@ or role grants. [Picker behavior](../ai/frontend/keychain.md#embedded-account-pi
 is owned by Keychain and uses released shared 0.9.0 components.
 
 SSO uses AuthLayout 0.9.1 with brandingPlacement="above" for login and password recovery: the logo is centred outside and above the card. The default shared placement remains inside; authentication policy and workflows are unchanged.
+
+
+## Connected Demo learner lifecycle — 21 October 2026
+
+Same-account acceptance now replaces Applicant with Student access. Outstanding requirements continue in Student; Control owns preview/confirmed reset of registered Cyberjaya Demo journeys. Identity, one-use exchange, generation, explicit ownership and rollout boundaries are defined in the [canonical learner lifecycle](../ai/backend/learner-lifecycle.md). Existing accepted accounts are not automatically migrated; hosted rollout is separate.
+
+## Local Keychain credential separation — 23 October 2026
+
+Demo Keychain supports an email-keyed SSO credential map independently of Portal API's scenario-password files. It uses that map for SSO cards, including Student aliases, while preserving account passwords, roles, passkeys and Demo records. Sources and generated modules remain ignored; infrastructure credential provisioning is separate. See [Keychain guidance](../ai/frontend/keychain.md).
+
+### Admissions General metadata saves
+
+Control's General form persists name, campus assignments and Draft/Published metadata through a guarded, retry-safe Portal API transaction. Draft changes keep the applied version active; publishing General metadata does not publish unrelated policy-setting drafts. Campus reassignment preserves exactly one active flow per campus and existing applications keep pinned snapshots. The released shared RadioField supplies compact status choices and PageActionBar supplies the full-width save footer. Reference pages remain read-only. Delivery is local only.
+
+## Responsive Control breadcrumbs — 27 October 2026
+
+Control inner pages use the shared PortalHeader breadcrumb hierarchy with router links to parent pages and a non-linked current page. Overflowing ancestry collapses into the shared dropdown menu, retaining full labels and current-page context on narrow headers. Parent navigation retains existing unsaved-change protection. This is an opt-in shared 0.18.0 presentation change adopted by Control only; permissions, account identity and persistence are unchanged.
+
+
+Shared 0.18.1 keeps compact Admin record-list values side by side with wrapping and no horizontal scrolling. Control adopts this presentation patch; directory tables, navigation guards and persistence remain unchanged.
+
+
+Shared 0.18.2 is adopted by both Staff and Control. Compact Admin record lists keep right-aligned values side by side and wrap long status text inside pills without horizontal scrolling; directory and workflow behavior are unchanged.
+
+
+Shared 0.18.3 scopes colored status-text presentation to Admin summary columns. Entry names remain left-aligned; compact-list statuses stay right-aligned and wrap. Summary/list statuses omit pill background, border and padding, while badges elsewhere remain unchanged. Staff and Control adopt the patch.
+
+
+## Cross-portal header breadcrumb rollout — 27 October 2026
+
+Applicant, Student, Staff/Lecturer and Control use released shared 0.18.4 structured header breadcrumbs. Portals supply their existing parent-page hierarchy through router links; guards, context, identity and authorization remain portal-owned. Student retains programme/semester scope. Long trails collapse into the shared menu, whose code loads only when necessary to retain the initial bundle budget. SSO and Keychain do not use this header; their authentication/tools layouts are unchanged. Delivery is local only.
+
+
+## Admissions version browsing — 27 October 2026
+
+Control lists existing published Admissions configuration history and opens URL-backed version details inside the Versions panel. Shared ContentBreadcrumb, SummaryCard and Local/International segmented tabs compose the read-only first slice; the tab bodies remain blank. Parent workspace/General edits persist during version navigation, with guards retained when leaving the flow. Version status distinguishes Applied, Scheduled, Previous and unassigned Published. No version/policy API writes, schema migration or application changes are included.
+
+
+Control Admissions Versions now shows Version, Status and Effective From (UTC), with a UI-only Create Version toolbar button. Applied version summaries retain normal title text with a success background and large solid green Applied Badge in the existing SummaryCard action slot; non-applied versions use the neutral card and large secondary Not Applied badge. Shared 0.18.5 mutes the active AdminTable page button for Staff and Control. No version creation workflow, API/schema change or policy/application mutation is introduced.
+
+
+## Predefined Admissions Flow Editor (local implementation, 28 October 2026)
+
+Control configures predefined workflow template 1 in immutable versions, independently for Local/International students. Shared 0.19.0 owns linked/reorderable step presentation; Portal API owns pinned evaluation and financial/document invariants; SSO owns immediate audited campus-role reviewer bindings. Published history and existing accepted cases remain unchanged. The implementation includes guarded drafts, role coverage, quote/fixed pricing and structured text letters with synthetic previews. It does not introduce arbitrary workflow scripting or grant access through assignment. Hosted activation remains separate. Normative details: [Flow Editor](../ai/design/flow-editor.md).
+
+
+## Admissions version application journal — 28 October 2026
+
+Control composes Version Settings and shared AuditTrail with saved drafts and immutable published versions. Applying a draft publishes and applies atomically; a published version may be reapplied immediately or scheduled with a required reason. An append-only application journal selects the version by application time, preserving future takeovers and pinned applications. Backdates, timestamp conflicts, no-op selections and uncovered campus assignments reject on the server, with role coverage, concurrency and idempotency checks. Names remain sidecar metadata, and backup-first file/PostgreSQL upgrades preserve original policy records. Local delivery does not authorize a Global application or hosted deployment. See the [University Flows contract](../ai/backend/university-flows.md).
+
+
+Admissions version refinements (28 October 2026): reasons are no longer required for publishing/applying a version; prior recorded reasons remain intact. Published display names are editable sidecar metadata with expected-name concurrency and retry receipts, while policy objects, permanent numbers, dates and pinned applications remain unchanged. Control disables Apply for Applied versions, gives History a separate panel, and adds an editable suggested name and shared Applied status pill to creation. No remote activation is included.
+
+
+## Multiple Admissions draft versions — 28 October 2026
+
+Control lists independently saved drafts with published versions and always offers Create Version. Creating is local-only; first Save Draft assigns a stable identity/permanent number under transaction locking. Per-draft revisions and exact retries prevent overwrites and duplicate numbering. Applying keeps that identity/number, removes only the chosen draft and preserves other drafts, schedules and pinned applications, including out-of-order publication. Backup-first file/PostgreSQL upgrades preserve the legacy draft and explicitly bind compatibility requests; ambiguous legacy writes reject. Flow status reflects General metadata rather than version drafts. Numeric version URLs, unsaved guards and read-only references remain supported. No real Global Apply or hosted operation is part of delivery. See [University Flows](../ai/backend/university-flows.md).
+
+
+Shared 0.19.6 restores normal Badge background, padding and radius for AdminRecordPanel summary statuses. Compact-list status text remains unchanged. Control alone adopts the patch; flow/policy state is unchanged.
+
+
+Shared 0.19.7 synchronizes pointer-drag state in SortableList. Control draft steps renumber immediately, keep linked children together and persist their actual order through Save Draft. Rejected destinations leave order intact. Existing policies/applications and other portal pins are unchanged.
+
+
+Shared 0.19.8 sizes the Admin record sidebar using the shell bottom inset rather than the section gap, aligning its bottom edge with the portal frame. Control adopts the patch without data or workflow changes.
+
+
+Admissions version audit events now record server-calculated before/after field changes atomically with draft saves and published-name changes. Control and the read-only reference use existing shared AuditTrail change rows. Legacy entries without detail remain explicit; no fabricated history, library release, migration or policy/application change is introduced.

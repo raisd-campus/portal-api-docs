@@ -25,7 +25,7 @@ The repair suite is part of the normal quality gate: 62 API/component/boundary c
 
 ## Initial audit baseline and verification
 
-- Repository: `D:\Coding\cms-student-portal`; branch `main`; HEAD `3d0663a8aeca72dedcf9531b8839edb6c2487300`; Node `v22.17.0`.
+- Repository: `D:\Coding\raisd\cms-student-portal`; branch `main`; HEAD `3d0663a8aeca72dedcf9531b8839edb6c2487300`; Node `v22.17.0`.
 - The starting tree already contained 46 modified tracked files and two untracked application files. Those changes were preserved.
 - Read the project instructions, handoff, architecture/contracts, feature documentation, implementation, and test coverage. Reviewed student ownership, repeat attempts, session mutations, date boundaries, validation, and failure handling.
 - **The existing `npm run check:all` gate passed:** token checks, warning-free lint, 289 unit tests across 49 files, TypeScript/production build, production dev-tool exclusion, bundle budgets, and all 78 Playwright runs at 1280px and 1440px.

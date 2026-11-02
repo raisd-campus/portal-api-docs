@@ -1,5 +1,17 @@
 # Portal Design System
 
+## Shared record presentation — 0.21.0
+
+Release 0.21.0 owns Button title-case visual treatment through the shared button variants, preserving original source strings and acronyms. AdminRecordActions accepts optional recordLabel for contextual Edit/Create labels and uses Save Changes; omitted recordLabel retains generic actions. AdminRecordWorkspace accepts an optional history slot after its independent content. AdminRecordHistory composes a titled panel with recorded AuditTrail entries or shared EmptyState; portals omit it for unsaved records. ContentSection titleBadge places a supplied pill beside its heading without changing heading identity. DropdownSelect label adds an associated muted label above the standard trigger; omitted labels retain existing markup. Only Staff adopts this release in the Academic follow-up.
+
+## Shared Admin record flow — 0.10.0
+
+The additive `system/admin-record-flow` family groups AdminTable, toolbar/footer and read-first record workspace/panel/actions/dialogs. It adapts the owner-provided CMS interactions to current tokens and components, without changing DataTable, portal pins or the empty Staff Applicants page. See [Admin record flow](admin-record-flow.md) for interfaces, filtering, virtual lists, dirty navigation, responsive layout and synthetic examples.
+
+## Account header — 21 October 2026
+
+Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User ID followed by ` · ` and comma-separated assigned roles second. Applicant, Student, Staff and Control use the same number. Email and campus Student/Staff numbers are not substituted. Role metadata is display-only; active-role authorization remains unchanged.
+
 > Canonical shared visual rules. For package ownership, installation, and AI usage, read [component-library.md](component-library.md). Student-specific behaviour is documented under `frontend/student-portal/`.
 
 Tokens and components exported by `@raisd-campus/design-system` are shared implementation, including the portal shell family. References below to student routes, records, the Community panel, and its resizable content are student-owned compositions around that shell.
@@ -214,3 +226,7 @@ StudentSummaryCard accepts a null semester and renders **No current semester** r
 ### Phone dashboard refinements
 
 The phone timetable uses `TabbedPagePanel` itself, including its selection indicator, navigation inset and divider. Calendar event markers remain contained within day cards: phones show compact dots for up to three events and per-category counts in matching legend colours for busier dates; the event legend aligns left. The phone account-attention control retains a 44px hit target around a 36px visible circle, matching the 36px profile avatar. Tablet and desktop keep the labelled attention button.
+
+## File tile contrast — 0.9.2
+
+FileUploadField keeps its surface-raised tile background by default. Where an enclosing card also uses surface-raised, opt into the shared fileSurface="elevated" variant. Do not globally lighten file tiles or add portal CSS overrides. Applicant submitted file values use this variant inside their raised detail cards; other controls and consumers retain their current backgrounds. The package archive is published and verified; portal hosting is separate.

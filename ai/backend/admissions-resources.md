@@ -1,5 +1,10 @@
 # Demo admissions resources and accepted Student continuation
 
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
 ## Policy task evidence - 20 October 2026
 
 Post-eligibility receipts, signed copies of the current Offer, English evidence and requested corrections use the existing owned original-file upload/chunk/pin service. Staff evidence reads require the active Admin role, the case campus and an exact evidence reference in that owned case; client filename/size/MIME/SHA-256 checks retain integrity. Conditional and Full Offers/signatures have distinct versions. Current Student Offer/clearance projections do not rewrite the accepted handoff. Storage modes for policies, application records and evidence remain separate. See [University Flows](university-flows.md).
@@ -9,7 +14,7 @@ Post-eligibility receipts, signed copies of the current Offer, English evidence 
 
 Prepared locally in portal-api, Applicant and Student; **not deployed**. No hosted migration, reseed, account walkthrough or CMS write was performed. Shared UI stays pinned to 0.6.2. Admissions snapshot v2, DEV transport v3 and v1/v2 compatibility remain unchanged. Student record schema remains 4.
 
-Enable only in Demo/stub sessions with `DEMO_ADMISSIONS_RESOURCES=true`, after explicitly applying `migrations/20261012-demo-admissions-artifacts.sql`. The default is false; Live CMS mode refuses this adapter. This separate Demo store does not replace the planned Live evidence store. Existing record-store schema-version reseeding remains unchanged and is a deployment prerequisite requiring backup/reconciliation before operational use.
+Enable only in Demo/stub sessions with `DEMO_ADMISSIONS_RESOURCES=true`, after `npm run db:migrate` or an explicit apply of `migrations/20261012-demo-admissions-artifacts.sql`. The default is false; Live CMS mode refuses this adapter. This separate Demo store does not replace the planned Live evidence store. Existing record-store schema-version reseeding remains unchanged and is a deployment prerequisite requiring backup/reconciliation before operational use.
 
 ## Store and interfaces
 
@@ -60,7 +65,7 @@ Legacy metadata-only evidence is displayed honestly as unavailable. Applicant no
 
 ## Local verification
 
-Use sibling Applicant/Student checkouts and `npm run typecheck:local`. `npm run test:admissions` exercises memory and optional disposable Postgres. `LOCAL_ADMISSIONS_TEST_DATABASE_URL` is accepted only for 127.0.0.1:55432/admission_audit, and the test resets only that database. Never point this runner or the browser fixture server at hosted data. The migration is explicit; artifact DDL is not automatically applied by the service.
+Use sibling Applicant/Student checkouts and `npm run typecheck:local`. `npm run test:admissions` exercises memory and optional disposable Postgres. `LOCAL_ADMISSIONS_TEST_DATABASE_URL` is accepted only for 127.0.0.1:55432/admission_audit, and the test resets only that database. Never point this runner or the browser fixture server at hosted data. `npm run db:migrate` applies this DDL with the rest of the Demo schema. The service still does not apply it on startup.
 
 The HTTP browser config is `student-portal/playwright.http-sync.config.ts`, using isolated local API/portal ports 4180/4184/4185. The legacy seven DEV journeys retain their existing independent config. Read the [cross-portal audit](../frontend/student-portal/audits/2026-10-12-cross-portal-sync-ui-audit.md) for exact results, remaining safeguards and hosted/physical-device limitations.
 

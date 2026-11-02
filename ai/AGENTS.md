@@ -25,7 +25,7 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Pending schema confirmations (CS-01–CS-13: Schema v3 policy Demo done; campus Live readiness) → [../diagrams/canonical-schema-confirmations.html](../diagrams/canonical-schema-confirmations.html)
    - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html)
    - LMS logical schema / ERD colours (CMS vs LMS) → [backend/lms-schema.md](backend/lms-schema.md), [../diagrams/erd.html#lms](../diagrams/erd.html#lms)
-   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md), [backend/lesotho-cap53-online-enrolment-write.md](backend/lesotho-cap53-online-enrolment-write.md), [backend/lesotho-cms-vs-applicant-portal.md](backend/lesotho-cms-vs-applicant-portal.md), [backend/applicant-qr-fee-mechanisms.md](backend/applicant-qr-fee-mechanisms.md), [backend/campus-finance-profile.md](backend/campus-finance-profile.md), [backend/dynamic-fee-calculation.md](backend/dynamic-fee-calculation.md), [backend/cross-campus-fee-amount-suggestions.md](backend/cross-campus-fee-amount-suggestions.md), [contracts/campus-finance-profiles.yaml](contracts/campus-finance-profiles.yaml) (structure · CAP-53 R1/W1 · M4 gap · CMS vs Applicant · fee/payment · finance profile · dynamic fees · cross-campus amounts)
+   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-newer-cms.md](backend/lesotho-newer-cms.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md), [backend/lesotho-cap53-online-enrolment-write.md](backend/lesotho-cap53-online-enrolment-write.md), [backend/lesotho-cms-vs-applicant-portal.md](backend/lesotho-cms-vs-applicant-portal.md), [backend/applicant-qr-fee-mechanisms.md](backend/applicant-qr-fee-mechanisms.md), [backend/campus-finance-profile.md](backend/campus-finance-profile.md), [backend/dynamic-fee-calculation.md](backend/dynamic-fee-calculation.md), [backend/cross-campus-fee-amount-suggestions.md](backend/cross-campus-fee-amount-suggestions.md), [contracts/campus-finance-profiles.yaml](contracts/campus-finance-profiles.yaml) (structure · CAP-53 R1/W1 · M4 gap · CMS vs Applicant · fee/payment · finance profile · dynamic fees · cross-campus amounts)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)
@@ -37,6 +37,8 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
 
 For any portal UI task, also read [design/component-library.md](design/component-library.md) and the package's [component catalogue](https://github.com/raisd-campus/design-system/blob/main/docs/components.md) before creating a visual component.
+
+Automatically load and apply [raisd-page-structure](skills/raisd-page-structure/SKILL.md) whenever building or restructuring a Raisd page, and for page-consistency reviews, whether or not the user mentions the skill. It supplies page archetypes and shared-component composition without requiring a legacy-system reference. Combine it with the owning portal's instructions; isolated copy fixes and backend-only work do not need this page workflow.
 
 ## 2. Product boundaries (campus-wide)
 
@@ -93,6 +95,24 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 - Never commit `.env`, CMS credentials, or live student data.
 - Do not commit or push unless the user explicitly asks.
 
+### Fast local workflow (owner-approved, 27 October 2026)
+
+- Match verification to the change. Small UI edits use shared primitives/defaults, hot reload, an affected desktop/mobile screen check and focused lint/type checks. Interaction changes also cover the changed keyboard, validation, loading and error paths. API/database changes need focused integration checks for persistence, authorization, recovery and data preservation.
+- Read the owning guidance and affected contracts; do not repeat whole-workspace audits or unrelated suites for each small edit. Keep changes narrow, run independent checks together, and repeat passed checks only when new changes, failures or unresolved risks warrant it.
+- Keep healthy services running. Restart only the changed service when necessary. Use control-plane `npm run local:up`, `local:status` and `local:restart -- <service>`. See [local development](architecture/local-development.md).
+- Group approved shared-library tweaks into an agreed release. Required release gates and consumer compatibility checks still run before publication; update only affected docs/catalogue examples. Existing authorization for a specific shared change persists through implementation and release.
+- Preserve identities, IDs, passkeys, memberships, applications, evidence, policy history and unrelated work. Setup adds missing fixtures only. Incompatible populated schemas stop with data intact instead of silently reseeding. Take private backups before imports or database maintenance.
+- Local setup constructs loopback-only API/SSO/database targets, keeps credentials ignored and separate from templates, and leaves remote and the separate CMS/Supabase stack untouched. Remote migration/deployment requires separate authorization. Process-memory teaching/chat overlays retain their documented lifetime.
+- Report checks actually performed. Distinguish local API/database evidence, browser observation and remote proof. Broad regression/release checks belong at meaningful checkpoints rather than every cosmetic edit.
+
+### Pre-push verification checkpoint (owner-approved, 2 November 2026)
+
+- Ordinary local work uses the focused checks above. Do not run the comprehensive workspace audit on each edit or local commit. Shared-package publication retains its required release gates.
+- Before an explicitly requested push, run `npm run verify:push` from control-plane, then `npm run verify:push:status`. The explicit gate checks source fingerprints and records private receipts under `.local/pre-push`; changed inputs invalidate their evidence. Use `-- --only=<check-id>` to rerun affected failed checks; status still requires the complete matrix.
+- Audit the complete changed user journeys, server authorization, persistence and boundary cases. Use isolated loopback servers, synthetic accounts and disposable databases for mutations. Existing interactive applications, policies, identities, credentials and stashes remain intact.
+- Gate receipts support the audit, but do not replace staged-file/secret review, a sanitized findings report, data-preservation proof or human review of known failures and skips. Mocked browser checks, real HTTP/PostgreSQL journeys and readiness checks are separate evidence.
+- Commit/push only when requested, to the approved branch and explicit remote ref. Failed mandatory checks or unverified critical paths block pushing. No deployment, package publication, remote migration or main-branch integration is implied.
+
 ### Component-change guardrail (all portals)
 
 This rule protects shared components and established portal-owned components and layouts across Applicant, Student, Lecturer, Admin, and Control portals.
@@ -103,6 +123,10 @@ This rule protects shared components and established portal-owned components and
 - Implement approved reusable changes in the owning shared package and follow its release process. Keep approved portal-specific changes in the owning portal.
 
 See [component ownership and application of this guardrail](design/component-library.md#component-change-guardrail).
+
+### Hosted walkthrough screenshots (while portal UI is changing)
+
+Do **not** publish or re-embed UI screenshots in `docs/reports/` walkthrough HTML while Control, Access, and related portal chrome are still moving. Keep process text, account tables, and API assertions. Capture scripts skip screenshots unless `INCLUDE_SCREENSHOTS=1`. Re-enable and re-capture after design stabilizes. Exceptions: released [design-system catalogue](../design-system/) package captures, and CMS feature-benchmark shots under `docs/diagrams/` called out in ADR-1.
 
 ## 7. Maintaining these instructions
 

@@ -1,3 +1,4 @@
+import { validateWorkflow, resolveWorkflowSettings, fixedAdmissionPrice } from "./admissions-workflow"
 import { z } from "zod"
 export { z }
 
@@ -40,8 +41,62 @@ export const flowEvidenceSchema = z
     mimeType: text,
   })
   .strict()
-export const admissionsSettingsSchema = z
+export const admissionsStageIds = ["eligibility", "eligibility-confirmation", "registration-fee", "english", "offer", "signed-offer", "tuition", "entry", "arrival", "medical", "endorsement", "international-registration", "deadlines"] as const
+/** Control-owned defaults for the current unfinished action, including older pinned policies. */
+export const defaultAdmissionsPendingStatuses: Record<typeof admissionsStageIds[number], string> = {
+  eligibility: "Awaiting {department} Review",
+  "eligibility-confirmation": "Awaiting {department} Confirmation",
+  "registration-fee": "Awaiting {department} Review",
+  english: "Awaiting {department} Review",
+  offer: "Awaiting {department} Release",
+  "signed-offer": "Awaiting {department} Verification",
+  tuition: "Awaiting {department} Clearance",
+  entry: "Awaiting {department} Approval",
+  arrival: "Awaiting {department} Arrival Confirmation",
+  medical: "Awaiting {department} Clearance",
+  endorsement: "Awaiting {department} Endorsement",
+  "international-registration": "Awaiting {department} Clearance",
+  deadlines: "Awaiting {department} Review",
+}
+export const defaultAdmissionsPresentation = {
+  statuses: { pending: "Pending", complete: "Complete", draft: "Draft", actionRequired: "Action Required", accepted: "Enrolment Accepted" },
+  departments: { qa: "QA", registry: "Registry", bursary: "Bursary", faculty: "Faculty", international_office: "International Office", student_services: "Student Services", applicant: "Applicant" },
+  stages: {
+    eligibility: { label: "Eligibility Review", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Eligibility Letter Released.", completeStatus: "Eligibility Letter Released", pendingStatus: defaultAdmissionsPendingStatuses["eligibility"] },
+    "eligibility-confirmation": { label: "Confirm Eligibility", pendingUpdate: "Awaiting applicant confirmation.", completeUpdate: "Completed.", completeStatus: "Eligibility Confirmed", pendingStatus: defaultAdmissionsPendingStatuses["eligibility-confirmation"] },
+    "registration-fee": { label: "Registration Fee", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["registration-fee"] },
+    english: { label: "English Clearance", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["english"] },
+    offer: { label: "Offer Letter", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", completeStatus: "Offer Letter Released", pendingStatus: defaultAdmissionsPendingStatuses["offer"] },
+    "signed-offer": { label: "Signed Offer", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["signed-offer"] },
+    tuition: { label: "Tuition Clearance", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["tuition"] },
+    entry: { label: "Entry Approval", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["entry"] },
+    arrival: { label: "Arrival", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["arrival"] },
+    medical: { label: "Medical Clearance", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["medical"] },
+    endorsement: { label: "Student Pass Endorsement", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["endorsement"] },
+    "international-registration": { label: "International Registration Clearance", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["international-registration"] },
+    deadlines: { label: "Registration Dates and Deadlines", pendingUpdate: "Awaiting {department} review.", completeUpdate: "Completed.", pendingStatus: defaultAdmissionsPendingStatuses["deadlines"] },
+  },
+}
+/** Additive defaults for policies published before per-step completion wording existed. */
+export const defaultAdmissionsCompletionStatuses: Partial<Record<typeof admissionsStageIds[number], string>> = {
+  eligibility: defaultAdmissionsPresentation.stages.eligibility.completeStatus,
+  "eligibility-confirmation": defaultAdmissionsPresentation.stages["eligibility-confirmation"].completeStatus,
+  offer: defaultAdmissionsPresentation.stages.offer.completeStatus,
+}
+const wording = z.string().trim().min(1).max(240)
+export const admissionsPresentationSchema = z.object({
+  statuses: z.object({pending: wording, complete: wording, draft: wording.default("Draft"), actionRequired: wording.default("Action Required"), accepted: wording.default("Enrolment Accepted")}).strict(),
+  departments: z.record(z.enum([...flowDeskSchema.options, "applicant"]), wording),
+  stages: z.record(z.enum(admissionsStageIds), z.object({label: wording, pendingUpdate: wording, completeUpdate: wording, pendingStatus: wording.optional(), completeStatus: wording.optional()}).strict()),
+}).strict()
+export const admissionsProgressRowSchema = z.object({id:z.string(),label:z.string(),department:z.string(),status:z.string(),complete:z.boolean(),update:z.string()}).strict()
+export const admissionsDisplaySchema = z.object({
+  status: z.object({label: z.string(), tone: z.enum(["neutral", "warning", "success", "destructive"])}).strict(),
+  currentStep: admissionsProgressRowSchema.nullable(),
+}).strict()
+export const admissionsBaseSettingsSchema = z
   .object({
+    presentation: admissionsPresentationSchema.default(() => structuredClone(defaultAdmissionsPresentation)),
     eligibility: z
       .object({
         required: z.boolean(),
@@ -141,17 +196,38 @@ export const admissionsSettingsSchema = z
       .max(100),
   })
   .strict()
+export const admissionStepIds = ["eligibility", "eligibility-confirmation", "registration-fee", "english", "offer", "signed-offer", "tuition", "entry", "arrival", "medical", "endorsement", "international-registration"] as const
+export const admissionGroupIds = ["eligibility", "registration-fee", "english", "offer", "tuition", "entry", "arrival", "medical", "endorsement", "international-registration"] as const
+export const admissionTemplateFields = ["applicantName", "applicationNumber", "campus", "programme", "faculty", "intake", "releaseDate", "registrationFee", "tuitionQuote", "englishRequirement"] as const
+const letterTemplate = z.object({ title: z.string().trim().min(1).max(200), body: z.string().trim().min(1).max(12000) }).strict()
+const pricingSchema = z.object({ mode: z.enum(["quote", "fixed"]), campuses: z.array(z.object({ campusId: z.enum(flowCampusIds), currency, amountMinor: z.number().int().positive().max(Number.MAX_SAFE_INTEGER), basis: z.enum(["first-year", "semester"]).optional() }).strict()).max(8) }).strict()
+export const admissionsWorkflowSchema = z.object({
+  templateId: z.literal("admissions"), templateVersion: z.literal(1),
+  cohorts: z.record(z.enum(["local", "international"]), z.object({
+    order: z.array(z.enum(admissionGroupIds)).length(admissionGroupIds.length),
+    enabled: z.record(z.enum(admissionStepIds), z.boolean()),
+    settings: admissionsBaseSettingsSchema,
+    pricing: z.object({ "registration-fee": pricingSchema, tuition: pricingSchema }).strict(),
+    documents: z.record(z.enum(["eligibility", "conditional", "full"]), letterTemplate),
+  }).strict()),
+}).strict()
+export const admissionsSettingsSchema = admissionsBaseSettingsSchema.extend({ workflow: admissionsWorkflowSchema.optional() })
+export type AdmissionsBaseSettings = z.infer<typeof admissionsBaseSettingsSchema>
+export type AdmissionsWorkflow = z.infer<typeof admissionsWorkflowSchema>
+export type AdmissionStepId = typeof admissionStepIds[number]
+export type AdmissionStudentType = "local" | "international"
 export type AdmissionsSettings = z.infer<typeof admissionsSettingsSchema>
 export const admissionsPolicyVersionSchema = z
   .object({
     id: text,
     flowId: z.literal("admissions"),
     campusId: z.enum(flowCampusIds),
+    configurationId: text.optional(),
     version: z.number().int().positive(),
     effectiveFrom: z.iso.datetime(),
     publishedAt: z.iso.datetime(),
     publishedBy: text,
-    reason: text,
+    reason: z.string().trim(),
     settings: admissionsSettingsSchema,
     source: z.enum(["owner-demo-template", "control-published"]),
   })
@@ -341,6 +417,7 @@ export const flowActionInputSchema = z
   .strict()
 export type FlowActionInput = z.infer<typeof flowActionInputSchema>
 export const defaultAdmissionsSettings: AdmissionsSettings = {
+  presentation: structuredClone(defaultAdmissionsPresentation),
   eligibility: { required: true, confirmationRequired: true, reviewDesk: "qa" },
   documents: {
     requirements: [
@@ -406,13 +483,19 @@ export function defaultAdmissionsPolicy(
 export function newAdmissionsFlow(
   policy: AdmissionsPolicyVersion,
   intakeId: string,
-  now: string
+  now: string,
+  studentType: string = "local",
+  applicationId: string = policy.id,
+  applicantType: string = "new"
 ): AdmissionsFlow {
+  const settings = resolveWorkflowSettings(policy.settings, studentType)
+  const fee = fixedAdmissionPrice(policy.settings, studentType, policy.campusId, "registration-fee")
+  const tuition = (studentType === "international" && applicantType === "new" || settings.tuition.otherStudents !== "none") ? fixedAdmissionPrice(policy.settings, studentType, policy.campusId, "tuition") : null
   return admissionsFlowSchema.parse({
-    policy,
+    policy: policy.settings.workflow ? { ...policy, settings: { ...settings, workflow: policy.settings.workflow } } : policy,
     pinnedAt: now,
     registrationOn:
-      policy.settings.registrationDates.find((d) => d.intakeId === intakeId)
+      settings.registrationDates.find((d) => d.intakeId === intakeId)
         ?.registrationOn ?? null,
     arrivalOn: null,
     englishVerifiedAt: null,
@@ -422,8 +505,8 @@ export function newAdmissionsFlow(
     internationalClearedAt: null,
     financialClearedAt: null,
     deadlineExceptionAt: null,
-    quote: null,
-    registrationCharge: null,
+    quote: tuition ? { id: `tuition:${applicationId}`, amountMinor: tuition.amountMinor, currency: tuition.currency, basis: tuition.basis!, source: `Fixed published price: ${policy.id}`, verifiedPaidMinor: 0, approvedSemesterAt: null, approvedBy: null } : null,
+    registrationCharge: fee ? { id: `registration-fee:${applicationId}`, amountMinor: fee.amountMinor, currency: fee.currency, source: `Fixed published price: ${policy.id}` } : null,
     rejectedPayments: [],
     deadlineExceptions: [],
     externalRegistrationPayment: null,
@@ -437,6 +520,12 @@ export function validateAdmissionsSettings(input: unknown): string[] {
   const parsed = admissionsSettingsSchema.safeParse(input)
   if (!parsed.success)
     return parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`)
+  if (parsed.data.workflow) {
+    const issues = validateWorkflow(parsed.data)
+    for (const studentType of ["local", "international"] as const)
+      issues.push(...validateAdmissionsSettings(resolveWorkflowSettings(parsed.data, studentType)).map(message => `${studentType}: ${message}`))
+    return issues
+  }
   const s = parsed.data,
     issues: string[] = []
   if (
@@ -512,6 +601,8 @@ export const admissionsDecisionSchema = z
     policyId: z.string(),
     policyVersion: z.number().int().positive(),
     stages: z.array(stageDecisionSchema),
+    progress: z.array(admissionsProgressRowSchema),
+    display: admissionsDisplaySchema,
     deadlines: z
       .object({
         registrationFee: z.string().nullable(),

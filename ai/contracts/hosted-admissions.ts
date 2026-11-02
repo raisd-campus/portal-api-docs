@@ -10,10 +10,7 @@ export const ownedEvidenceSchema = z
   })
   .strict()
 export const uploadEvidenceSchema = ownedEvidenceSchema
-  .extend({
-    sha256: z.string().regex(/^[a-f0-9]{64}$/),
-    purpose: z.enum(["admissions", "message"]).default("admissions"),
-  })
+  .extend({ sha256: z.string().regex(/^[a-f0-9]{64}$/),purpose:z.enum(["admissions","message"]).default("admissions") })
   .superRefine((value, context) => {
     const types: Record<string, string[]> = {
       pdf: ["application/pdf"],
@@ -23,10 +20,7 @@ export const uploadEvidenceSchema = ownedEvidenceSchema
       png: ["image/png"],
     }
     const extension = value.name.split(".").at(-1)?.toLowerCase() ?? ""
-    if (
-      value.purpose === "admissions" &&
-      !types[extension]?.includes(value.mimeType)
-    )
+    if (value.purpose === "admissions" && !types[extension]?.includes(value.mimeType))
       context.addIssue({
         code: "custom",
         path: ["mimeType"],
@@ -65,30 +59,11 @@ export const evidenceReadSchema = z
   })
   .strict()
 export type OwnedEvidence = z.infer<typeof ownedEvidenceSchema>
-export const uploadStartedSchema = z
-  .object({ id: z.string().min(1), status: z.enum(["uploading", "complete"]) })
-  .strict()
-export const continuationGrantSchema = z
-  .object({
-    grant: z.string().min(32).max(128),
-    expiresAt: z.number().int().positive(),
-  })
-  .strict()
-export const evidenceDeliveryReplySchema = z.union([
-  z
-    .object({ status: z.literal("unavailable"), reason: z.string().min(1) })
-    .strict(),
-  ownedEvidenceSchema
-    .extend({
-      status: z.literal("available"),
-      sha256: z.string().regex(/^[a-f0-9]{64}$/),
-      offset: z.number().int().nonnegative(),
-      contentBase64: z
-        .string()
-        .max(1398104)
-        .regex(/^[A-Za-z0-9+/]*={0,2}$/),
-    })
-    .strict(),
+export const uploadStartedSchema=z.object({id:z.string().min(1),status:z.enum(["uploading","complete"])}).strict()
+export const continuationGrantSchema=z.object({grant:z.string().min(32).max(128),expiresAt:z.number().int().positive()}).strict()
+export const evidenceDeliveryReplySchema=z.union([
+ z.object({status:z.literal("unavailable"),reason:z.string().min(1)}).strict(),
+ ownedEvidenceSchema.extend({status:z.literal("available"),sha256:z.string().regex(/^[a-f0-9]{64}$/),offset:z.number().int().nonnegative(),contentBase64:z.string().max(1398104).regex(/^[A-Za-z0-9+/]*={0,2}$/)}).strict(),
 ])
 export const hostedStudentSessionSchema = z
   .object({
@@ -98,3 +73,10 @@ export const hostedStudentSessionSchema = z
     programmeEnrolmentId: z.string().min(1),
   })
   .strict()
+
+/** Secure conversion is separate from Applicant RPC and the retired popup handoff. */
+export const studentConversionInputSchema = z.object({
+  command: z.object({ id: z.string().min(1), expectedRevision: z.number().int().positive(), requestId: z.string().min(8).max(200) }).strict(),
+  studentOrigin: z.string().url(), nonce: z.string().regex(/^[a-f0-9]{32}$/), recoverySecret: z.string().regex(/^[a-f0-9]{64}$/),
+}).strict()
+export const studentConversionReplySchema = z.object({ grant: z.string().min(32).max(128), expiresAt: z.number().int().positive(), nonce: z.string().regex(/^[a-f0-9]{32}$/), studentOrigin: z.string().url(), studentProfileId: z.string().min(1) }).strict()

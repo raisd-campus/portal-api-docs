@@ -1,5 +1,17 @@
 # Portal Design System
 
+## Shared header breadcrumbs — 27 October 2026
+
+Student pins shared 0.18.4 and passes its route hierarchy to PortalHeader through the existing PageBreadcrumb adapter. Nested module/material/lecturer review, portfolio create/detail/edit, announcements, services, online forms/submissions and invoices expose appropriate parent links. Existing service catalogue data supplies service labels; missing records use route-level labels without extra detail queries. Academic/Profile group labels have no invented destination. Parent links preserve selected programme ownership and applicable module semester. The shared component handles constrained widths, loading, keyboard and focus; inner feature breadcrumbs remain unchanged.
+
+## Shared ContentSection title height — 0.10.5
+
+Applicant, Student, Staff and Control pin the same released shared component. All ContentSection title containers have a 36px minimum height, including custom headings and sidebar variants; multiline content can grow. Typography and default page/sidebar gaps remain unchanged. This is a local presentation upgrade without data, API or workflow changes.
+
+## Shared page spacing — 0.10.2
+
+Page heading-to-content spacing uses the shared 16px default. Academic and Profile compose ContentSection with their existing semantic headings; Finance, Immigration, Online Forms, Announcements, Policies, Services and loading shells retain their named/status wrappers and read pageSectionVariants(). Existing Timetable, Calendar, Performance and Modules ContentSection pages inherit the same default. Keep internal card/form/group spacing, panel headers and sidebar spacing unchanged; do not add local page-gap overrides.
+
 ## Admissions clearance and CAF composition - 20 October 2026
 
 The existing Module Registration summary composes a shared ContentSection panel for a new-policy student's admissions blockers. It preserves the shared page shell, gutters, typography, fields and responsive controls. Documents reuses existing document cards/actions for an owned completed-registration CAF PDF and later issued Offer versions. No shared component source or pin changes are made; Student remains on 0.8.0.

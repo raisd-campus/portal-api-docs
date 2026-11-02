@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { demoAdmissionContextSchema } from "./demo-admissions"
+import { academicSelectionSchema } from "./academic-selection"
 
 export const calendarDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
   const date = new Date(`${value}T00:00:00Z`)
@@ -35,10 +36,11 @@ export const acceptedEnrolmentContextSchema = /* @__PURE__ */ z.object({
   status: z.literal("accepted"), reference: z.string().trim().min(1), acceptedAt: z.iso.datetime(),
   personId: z.string().min(1), studentProfileId: z.string().min(1), programmeEnrolmentId: z.string().min(1),
 })
-export const acceptanceSchema = acceptedEnrolmentContextSchema.extend({ demo: demoAdmissionContextSchema })
+export const acceptanceSchema = z.union([acceptedEnrolmentContextSchema.extend({ demo: demoAdmissionContextSchema }).strict(), acceptedEnrolmentContextSchema.extend({ academic: academicSelectionSchema, demo: z.never().optional() }).strict()])
 export const issuedLetterSchema = z.object({ id: text.min(1), kind: z.enum(["eligibility", "offer"]), department: z.enum(["Quality Assurance", "Registry"]), fileName: text.min(1), releasedAt: z.iso.datetime(), pdfBase64: z.string().min(1).max(1400000).refine(value => { try { return atob(value).startsWith("%PDF-") } catch { return false } }, "A demo PDF resource is required.") }).strict()
 export const letterWorkflowSchema = z.object({ eligibility: issuedLetterSchema.nullable(), eligibilityConfirmedAt: z.iso.datetime().nullable(), offer: issuedLetterSchema.nullable() }).strict()
 export const applicationSchema = /* @__PURE__ */ z.object({
+  academicSelection: academicSelectionSchema.optional(),
   id: z.string().min(1), applicantId: z.string().min(1), personId: z.string().min(1), revision: z.number().int().positive(), previewNumber: z.number().int().positive(), status: z.enum(["draft", "pending-review", "action-required", "approved", "accepted"]), snapshot: snapshotSchema,
   letters: letterWorkflowSchema.default({ eligibility: null, eligibilityConfirmedAt: null, offer: null }), acceptance: acceptanceSchema.nullable().default(null), catalogueReferenceAt: z.iso.datetime().default(() => new Date().toISOString()),
   submittedAt: z.iso.datetime().nullable(), updatedAt: z.iso.datetime(), reviewStage: z.enum(["payment", "documents"]), verification: verificationSchema.default({ paymentVerifiedAt: null, documentsVerifiedAt: null }), messages: z.array(messageSchema), readThroughSequence: z.number().int().nonnegative(), repliedThroughSequence: z.number().int().nonnegative(),
@@ -104,7 +106,14 @@ export const admissionsHandoffV2Schema = z.object({ ...admissionsHandoffV1Schema
   if (!w.eligibility || !w.offer || w.eligibility.id !== `${handoff.applicationId}:eligibility` || w.offer.id !== `${handoff.applicationId}:offer` || !w.eligibilityConfirmedAt || w.eligibility.kind !== "eligibility" || w.offer.kind !== "offer" || w.eligibility.department !== "Quality Assurance" || w.offer.department !== "Registry" || w.eligibility.releasedAt < handoff.submittedAt || w.eligibilityConfirmedAt < w.eligibility.releasedAt || w.offer.releasedAt < w.eligibilityConfirmedAt || handoff.acceptedContext.acceptedAt < w.offer.releasedAt) context.addIssue({ code: "custom", path: ["letters"], message: "Released letters and confirmations must follow the admissions sequence." })
   }
 })
-export const admissionsHandoffSchema = z.union([admissionsHandoffV2Schema, admissionsHandoffV1Schema])
+export const admissionsHandoffV3Schema = z.object({ ...admissionsHandoffV2Schema.shape, version: z.literal(3), academicSelection: academicSelectionSchema }).superRefine((handoff, context) => {
+  const previous = admissionsHandoffV2Schema.safeParse({ ...handoff, version: 2 })
+  if (!previous.success) for (const issue of previous.error.issues) context.addIssue({ code: "custom", path: issue.path, message: issue.message })
+  const first = handoff.snapshot.studyPreferences.preferences[0], selection = handoff.academicSelection
+  if (handoff.snapshot.studyPreferences.campusId !== selection.campusId || first.facultyId !== selection.facultyId || first.courseId !== selection.programmeId || first.intakeId !== selection.intakeId) context.addIssue({ code: "custom", path: ["academicSelection"], message: "The published study plan must match the submitted programme, faculty, campus and intake." })
+  if (Date.parse(selection.referenceAt) > Date.parse(handoff.submittedAt)) context.addIssue({ code: "custom", path: ["academicSelection", "referenceAt"], message: "The study plan reference must not follow submission." })
+})
+export const admissionsHandoffSchema = z.union([admissionsHandoffV3Schema, admissionsHandoffV2Schema, admissionsHandoffV1Schema])
 export type AdmissionsHandoff = z.infer<typeof admissionsHandoffSchema>
 export type AcceptedEnrolmentContext = z.infer<typeof acceptedEnrolmentContextSchema>
 

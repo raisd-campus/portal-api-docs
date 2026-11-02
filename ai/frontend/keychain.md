@@ -1,5 +1,10 @@
 # Demo Keychain — agent knowledge
 
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](../backend/learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
 **Repository:** [`raisd-campus/keychain`](https://github.com/raisd-campus/keychain)  
 **Demo host:** https://keychain.raisd.co  
 **Docs:** Canonical Control Plane docs are https://docs.raisd.co/ (same VPS). Keychain **Open filled** and the docs top-right embed use the same `postMessage` protocol against the docs site gate (`site-auth.js`) → https://docs.raisd.co/diagrams/index.html?keychain=1 (credentials from gitignored `control-plane/.credentials/docs-site`).
@@ -124,3 +129,38 @@ normal iframe navigations revalidate and discover changed bundle filenames.
 Existing static-asset caching and frame-ancestors policy remain in place. SSO sends
 explicit `campus=all` for its global/local-return case; this also moves existing
 clients off the older unversioned embed URL during the filter rollout.
+
+## Local SSO picker - 21 October 2026
+
+The Windows workspace launcher now includes Keychain on `http://localhost:5180` alongside the four portals, Portal API and SSO. It starts the Vite server on loopback with a strict port and leaves existing listeners alone. Local SSO at `http://localhost:8090` embeds that local picker; hosted SSO keeps its hosted picker. The hosted iframe policy is unchanged.
+
+Keychain accepts exactly `http://localhost:8090` and `http://127.0.0.1:8090` as additional embed parents and resolves them to the SSO account catalogue. Other ports and lookalike hosts are not implicitly trusted. The existing fresh applicant card uses an injected Demo value when present, otherwise its existing public SSO Demo seed value; it remains one account card. No identity, role or permission is created or changed.
+
+For a new local application, open the Applicant portal on port 5174, open Keychain on the redirected SSO login, unlock using the existing Demo instructions and search for the fresh applicant. Fill populates the form; Fill & submit signs in. Cyberjaya/Applicant filters retain that account. The existing return URL is preserved; choose Cyberjaya in the application form.
+
+Verification: Keychain lint, 18 unit tests and production build passed; 14 isolated Chromium/WebKit embed checks passed during this change. SSO's complete build/API/authentication gate passed with 51 browser checks and one unsupported WebKit virtual-authenticator skip. Actual running-stack walks passed at Chromium 375/1440px and WebKit 375px: unlock, Cyberjaya/Applicant filtering, Fill without a login request, Lock/unlock, Fill & submit, HTTP 200 password login/token exchange and Applicant My Applications with zero applications. All three walks had no page errors or failed requests; no application was created. Four host-routing assertions also cover hosted SSO and a loopback lookalike. These are local Demo results, not hosted deployment or Live CMS proof.
+
+The draft and verified-application cards also fall back to their existing public SSO Demo seed values when the optional local applicant credential map is absent. Injected values still take precedence; enabling a picker action does not grant permissions or verify an application.
+
+## Distinct Applicant scenario accounts - 21 October 2026
+
+The owner confirmed four independent local Demo checkpoints. Keychain no longer presents two scenario labels for the same completed-applicant identity.
+
+| Keychain scenario | SSO identity | Initial application state | Intended next action |
+|---|---|---|---|
+| New applicant | fresh@raisd.demo | No applications | Create an application |
+| Draft ready to submit | draft@raisd.demo | Fully filled, unsubmitted Cyberjaya draft | Review the five completed steps and submit |
+| Applicant completed | completed@raisd.demo | Submitted; eligibility review pending | Await staff QA review |
+| Verified application | approved@raisd.demo | Eligibility verified; Eligibility Letter released and unconfirmed | Confirm Eligibility |
+
+The latter three fixtures use the current resolved Cyberjaya policy. They have distinct application/person/evidence identifiers and matching applicant names/emails. No initial Registration Fee receipt, payment verification, Offer, signature or acceptance is fabricated. Policy-disabled English/international stages are not required for these local Malaysian examples. Seed evidence has actual synthetic PDF/PNG bytes, available only to its owner; first-login seeding is serialized so concurrent catalogue/application requests cannot race. Existing persisted application records are retained rather than migrated or overwritten. The local memory stack was activated after a read-only account audit and confirmation that no saved workflow mutations existed; existing campus policy was preserved.
+
+Keychain's sequential walkthrough stays on the same draft account as it progresses. The submitted/verified accounts are separate checkpoints. The guide now follows eligibility review, applicant confirmation, quoted Registration Fee/payment verification, Offer, signed acceptance and continuation from that same accepted application. Staff accounts still need the corresponding desk permission; Registry alone does not imply QA access.
+
+Verification: each of the four Keychain entries signed in and opened its intended actual Applicant page on Chromium; the ready draft also passed on 375px WebKit. All seeded file reads were available, with no page errors or failed requests. An isolated API suite passed 130 scenario/ownership/original-file/next-action assertions, SSO exchange passed 84, existing legacy admissions continuation passed 73 and configured flows passed 60. Applicant lint, 95 tests, build and production exclusions passed; Keychain lint/tests/build and Staff build passed. SSO build/API gate passed; its browser suite initially had 50 passes, one unsupported virtual-authenticator skip and one WebKit page-load timeout before the Keychain button appeared. The unchanged isolated repeat passed. No hosted deployment, CMS write or existing role expansion is claimed.
+
+## Local SSO credential source — 23 October 2026
+
+Local Keychain reads the ignored `control-plane/.credentials/demo-sso.json` map keyed by SSO email, or `DEMO_KEYCHAIN_SECRETS.sso`. These credentials take precedence for SSO cards and determine their enabled state. They are separate from Portal API's scenario-keyed `demo-students.json` and `demo-applicants.json`; a portal-local password must not be assumed to authenticate the same account through SSO. Existing injected/fallback behavior remains when no email override exists.
+
+The local Demo SSO map was populated from existing Demo seed credentials, and the missing applicant scenario map restored. Existing Student/API credentials, SSO hashes, roles, passkeys and application state were retained. All application-flow accounts use the same login before/after conversion; Keychain does not reset passwords or grant roles. Startup/build regenerates the ignored secrets module. Infrastructure logins (DB Admin/docs/Jenkins/Argo) remain separate optional secrets and are not fabricated.

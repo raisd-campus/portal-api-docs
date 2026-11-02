@@ -1,5 +1,90 @@
 # Staff portal — current agent knowledge
 
+## Academic administration — 29 October 2026
+
+The Admin sign-in exposes Academic → Faculty, Programme and Modules through the shared tiered menu in package 0.20.0. Teaching Classrooms and its legacy `/modules` redirect remain separate. Academic composes shared directories, record workspaces, tabs, fields and popups. Its PostgreSQL catalogue and independent curriculum review feed future Applicant selections and Student requirements; historical enrolments remain pinned. Staff Students adds API enrolment stream assignment when Student and Programme permissions are present. Details: [Academic catalogue](../backend/academic-catalogue.md).
+
+Study Plan semester sections use the shared titled InnerSection and standard DataTable. The title and blue credit pill sit above an edge-to-edge divider; contained table rows and their hover background reach the section edges while cell text retains its inset. The preview identity uses SummaryCard. Semester module placements show all applicable rows without AdminTable search, sort/filter controls or pagination. Module links, stream filtering, published-version scope and Add Module/Edit Semester/placement editing remain. Directory, record-picker and Versions tables continue to use AdminTable.
+
+Academic uses shared component-level record actions and persistent history from design-system 0.21.0. Button labels render in Title Case, with entity-specific Edit/Create actions. Existing Faculty, Programme, Module and Study Plan workspaces show a separate History panel after the active page panel, displaying recorded before/after changes through AuditTrail or EmptyState. History is absent from unsaved records and is no longer a tab. Faculty Groups administration, Faculty Short Name and Faculty Group fields/columns are removed from the Staff UI; existing stored values and group records remain intact. Faculty directories use a single AdminTable without category tabs. Programme create mode omits Study Plan/default-curriculum controls; Creative and Postgraduate fields use ordinary detail rows. Create Accreditation is a primary table-toolbar action and can save directly from a read-mode Programme with expected revision and a stable retry ID; failed saves retain the popup, while create/edit-mode accreditation remains part of the parent draft.
+
+Study Plan Stream uses the shared top-label DropdownSelect without an InnerSection. Semester title pills show credits for the currently displayed applicable placements. DataTable rows use the shared row hover, pointer and keyboard selection for module details or placement editing. Empty review action bars are omitted; history remains independent of tab selection. Shared release adoption is limited to Staff; other portal pins are unchanged.
+
+Shared 0.22.0 presents audit changes in labelled Field, Before and After columns, stacking them on narrow screens. Academic history expands recorded nested values and uses readable field labels; technical identity/revision/update stamps are omitted from the comparison while the recorded actor and event time remain. It never reconstructs an event from the current record. Successful catalogue, accreditation, curriculum and review actions use the shared bottom-right toast, which dismisses automatically after four seconds and pauses while hovered or focused. The toast provider survives record creation navigation. Failed saves retain their draft and existing error feedback.
+
+Shared toast variants use success (green, the default), error (red), info (blue) and warning (amber) surfaces, borders and icons. The compact layout centers the message, icon and dismiss button without card-sized vertical padding. Academic compact-list status labels retain their component-level transparent, unpadded text treatment with the appropriate semantic colour; summary pills and directory status pills retain their existing presentation. AdminTableToolbar omits the empty actions container, preventing an extra wrapped flex row above search in narrow record lists.
+
+## Academic record navigation
+
+Academic admin record workspaces use the existing header breadcrumb and Close action, without an additional in-content breadcrumb. Record tabs, curriculum preview versions and stream filters are URL-backed. Faculty Programme links, Programme Structure links and Module Study Plan links retain campus and source-tab context through Close, header parent links, browser Back and reload. A direct Structure link returns to its owning Programme Study Plan tab. A Structure opened from Module Study Plan keeps Modules active and opens the exact published version referenced by that row; the Version column, preview label, read-only rules and summary totals identify that snapshot. Edit returns to the current working draft. Same-record view changes retain edits; owner, campus and parent navigation retain the shared unsaved-change guard. Return destinations are restricted to same-campus Academic routes, without changing server permissions.
+
+Academic and Applicants directories omit the campus selector. Existing hosted-campus resolution, Academic URL scope, authorized-campus defaults, request cancellation and server ownership checks remain. Applicants direct-record ownership still resolves its authorized campus for the retained queue.
+
+
+Display terminology is **Study Plan** throughout Academic tabs, actions, breadcrumbs, review flow and feedback. Existing routes, flow/step IDs, API/schema keys, saved record names and recorded audit values are preserved. The built-in Academic Curriculum configuration name has a display-only Academic Study Plan alias; loading it does not change the stored name or create unsaved edits.
+
+## Shared header breadcrumbs — 27 October 2026
+
+Staff/Lecturer pins shared 0.18.4. Teaching routes expose Classrooms → Classroom Details → Material Details, adding Add Material/Edit Material where those routes are active; existing redirects are preserved. Router parent links retain exact offering/material identities. Admin routes expose Applicants → Applicant Details and existing desk roots. Shared overflow, loading, keyboard and focus behavior apply to both modes; Community/account controls and permissions are unchanged.
+
+## Compact Admin record lists - 0.18.3
+
+Staff now pins shared 0.18.5. Compact AdminTable record-list cells stay side by side and share the available width. Entry names/links are left-aligned and status text is right-aligned with sentence wrapping. Summary-column statuses in both summary and list views retain their semantic color without pill background, border or padding. Badges elsewhere are unchanged. Directory tables retain their column layout. Staff and Control adopt the same shared patch without local CSS overrides, workflow changes or data changes.
+
+## Admin summary scrolling - 0.11.1
+
+Staff uses the shared full-height sticky desktop summary column. The summary/list switch stays visible while only its content scrolls, without transparent effects. Narrow layouts retain a compact panel above the form. No review controls, data or workflow behavior change.
+
+## Applicants status tabs and pills — 22 October 2026
+
+The status tabs are ordered Pending Review, Approved, then All, using the supplied status order and shared quick-scope allPosition="last". Ordering does not change the selected filter. The directory, compact picker and summary all compose the existing shared Badge: warning/amber for pending-review, success/green for approved or accepted, destructive/red for action-required, and secondary/neutral for draft or unknown states. Labels remain visible alongside color; no custom pill styling is introduced.
+
+## Applicants Step column — 22 October 2026
+
+The Staff Applicants directory includes a searchable, sortable and filterable Step column between Programme and Status. It displays the first unfinished applicable row from the API decision.progress collection, preserving the pinned Control policy label. If every returned step is complete, it displays the API-provided completion status; absent progress displays an em dash. No workflow state is inferred from the application status or changed by this column.
+
+## Shared ContentSection title height — 0.10.5
+
+Applicant, Student, Staff and Control pin the same released shared component. All ContentSection title containers have a 36px minimum height, including custom headings and sidebar variants; multiline content can grow. Typography and default page/sidebar gaps remain unchanged. This is a local presentation upgrade without data, API or workflow changes.
+
+## Admin summary presentation — 0.10.4
+
+Applicants now uses the shared 96px passport-photo slot with authenticated evidence bytes, centered summary fields, natural-height sticky desktop sidebar, bounded overflow and transparent edge masks. Narrow layouts keep a bounded summary above content. Workspace titles use the standard page size. Review/reload footer buttons are temporarily removed at the owner's request while this UI is refined; summary/list switching, original document preview/download and read-only case/history content remain. The existing review API/controller is preserved without automatic actions. Shared action buttons are full width when supplied. Only Staff adopts this shared patch.
+
+## Applicant record review — 22 October 2026
+
+Staff `/admin/applicants/:applicationId` opens a submitted application read-only in shared AdminRecordWorkspace 0.10.3. Linked rows support keyboard/new-tab navigation; Close restores directory filters and pagination. The summary/list panel uses the complete authorized campus queue with a bounded, virtualized list. Shared workspace layout stacks the panel above the form on phones/tablets, with actions below; desktop uses two columns. Section rhythm uses shared page defaults, without component overrides.
+
+Submitted fields remain read-only. Supporting documents and case-owned message attachments use shared file fields and authenticated original-byte Preview/Download. Delivery checks metadata, bounds and SHA-256; credentials never appear in file URLs. Issued Eligibility/Offer PDFs and review history are available. Preview failures remain visible and retryable.
+
+Review Application offers only API-returned actions: Release Eligibility Letter or Request Corrections. QA enters a review note, saves and explicitly confirms. The existing verify-documents action verifies eligibility and generates/releases the letter together. Every write carries its loaded revision, Demo generation and a stable request ID reused for identical failed/lost responses. Confirmed success returns to read mode and refreshes the queue. Validation, permission, stale-revision and server failures retain the draft. No Add/Delete or applicant-field editing is added.
+
+Summary/list and detail-tab switches retain the draft. The shared controller provides Save/Keep editing/Discard, before-unload protection and action errors. Router blockers connect Close, record selection and browser navigation to it. Dismissing confirmation keeps the review. Pending saves prevent duplicates and hold navigation until the result is known. Campus/desk permissions remain server-owned.
+
+Verification: Staff lint, 97 tests and production build; isolated API University Flows suite (65 checks); synthetic Chromium 1440px and WebKit 375/768px checks for keyboard row activation, document preview/download, virtual picker, dirty guards, tab preservation, failed save/retry, confirmed release and contained layout. Read-only local SSO/API smoke confirms Cyberjaya QA can review the completed case, the approved case already has a letter, and original transcript hashes match. Current Demo applications were not reviewed/reset. Browser coverage uses a synthetic fixture, not the authenticated Staff portal. No package change, migration or hosted deployment.
+
+## AdminTable feedback inset — 0.10.3
+
+Applicants consumes shared AdminTable 0.10.3. Empty, no-match and error feedback has a shared 16px side inset aligned with the toolbar/footer. This is a presentation correction; an expired SSO session still requires sign-in and does not produce a fabricated empty queue. Other portal pins, authentication and admissions data are unchanged.
+
+## Shared page spacing — 0.10.2
+
+Staff consumes the shared 16px page ContentSection default. Applicants inherits it directly; registration, legacy student/payment screens and other simple heading shells use ContentSection. Access, admissions review and classroom detail shells retain their wrappers and use pageSectionVariants(). Keep workspace grids, inner section rhythm, actions and permissions unchanged. Applicant and Student adopt the same release; Control stays pinned.
+
+## Admin navigation preparation — 21 October 2026
+
+Applicants visual correction uses design-system 0.10.1: `ContentSection type="page" plain` owns the page heading and title/content spacing. A campus selector appears only on an unpinned host with multiple assigned campuses. AdminTable status scopes use the shared TabbedPagePanel with its divider; advanced filters and remove-rule controls use standard 36px icon buttons. Other portal pins, admissions permissions and record actions are unchanged.
+
+Overview is removed from Admin navigation. `/admin` opens the first permitted module. Applicants now uses released design-system 0.10.1 `AdminTable` over the complete authorized campus submitted-application queue. Columns are Applicant, Programme, Status and Last Updated, with readable labels and campus-timezone dates; search, status scopes, advanced filters, sorting and shared 10/20/50-row pagination are available. Hosted campus scope intersects server assignments; localhost defaults to Cyberjaya when assigned, otherwise the first assigned campus. Campus changes cancel requests and reset table state. Shared components provide loading, empty, no-match and retryable error states. That initial table-only stage is superseded by the Applicant record review section above. Existing APIs, case workspace code, permissions and stored cases are preserved. A role with no remaining module stays at the empty Admin route without redirect loops. Only Staff upgrades its package pin; local preparation is not a hosted deployment.
+
+### Applicants verification — 21 October 2026
+
+Staff lint, 79 tests (including six page integration cases) and production build passed. Synthetic composition checks passed in desktop Chromium and phone/tablet WebKit at 1440/375/768px, including search/scopes/filters/pagination, dialog focus return, long labels and contained horizontal scrolling. The existing Staff Vite server loaded the released component through dependency optimization and hot reload. The live smoke test exposed an API lock leak on cancelled requests; handler-complete cleanup now prevents the stall without releasing running writes (see learner lifecycle verification). After loading that fix through the existing local launcher without resetting Demo data, the Demo QA identity read two distinct Cyberjaya submitted applications (approved and pending review); Lesotho returned 403 and health remained 200 after repeated cancelled reads. This is local API proof and synthetic browser coverage, not a hosted or full Staff record-review walkthrough.
+
+## Account header — 21 October 2026
+
+Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User ID followed by ` · ` and comma-separated assigned roles second. Applicant, Student, Staff and Control use the same number. Email and campus Student/Staff numbers are not substituted. Role metadata is display-only; active-role authorization remains unchanged.
+
 ## Staff Admissions - 20 October 2026
 
 The Admin Applicants page and overview now read the Portal API campus admissions queue using stable application/person IDs. Payments and Registrations expose the same new-policy case reviews; old independent Applicant tracker data is no longer the admissions source. The active Admin role, assigned campus and explicit review desk govern every read/write. Teaching menus/permission hierarchy and the fixed Applicant Access preset remain. IO/SSD desk capabilities are available without automatic assignment. Shared 0.8.0 compositions include evidence delivery, messages, protected review drafts and audit. See [University Flows](../backend/university-flows.md).
@@ -16,7 +101,7 @@ The shell shows one group for the role chosen at sign-in. See [SSO roles and men
 | Sign-in | Navigation | Community |
 |---|---|---|
 | Staff or Lecturer (`roleKey` `lecturer`) | **Staff Portal:** Dashboard, Classrooms | Docked on desktop, overlay on smaller screens |
-| Campus Admin (`roleKey` `admin`) | **Admin:** Overview, Applicants, Students, Payments, Registrations, Access | Not shown. A direct teaching URL redirects to `/admin` |
+| Campus Admin (`roleKey` `admin`) | **Admin:** Applicants, Students, Payments, Registrations, Access | Not shown. A direct teaching URL redirects to `/admin` |
 
 A Staff or Lecturer sign-in that opens `/admin` is sent back to Dashboard. Access is only on the Admin sign-in and uses that Admin SSO token. Register copy follows the preset: Register student, Register staff, or Register lecturer. Detail: [admin desks](admin-portal.md).
 
@@ -453,3 +538,27 @@ login with explicit Demo identity binding and a single StrictMode code exchange.
 See the [campus integration receipt](student-portal/audits/2026-10-16-campus-integration-publication.md)
 for per-repository gates, canonical mirrors and Jenkins/Argo delivery boundaries.
 No manual hosted rollout or local user-service reset is included.
+
+## Admissions pending action projection — 22 October 2026
+
+Admin directory, compact list, summary and status scopes consume Control-owned `decision.display.status`, representing the **current pending action**. After Eligibility Letter release this is **Awaiting Applicant Confirmation** (amber), with **Confirm Eligibility · Applicant** next. Confirmation advances to **Awaiting Bursary Review / Registration Fee**. The completed review remains **Eligibility Letter Released** in progress/history. Both portals share this API projection; Staff does not infer labels from raw approved state. Pending QA scopes stay first and All stays last; shared Badge supplies colors.
+
+
+0.18.2 verification: shared typecheck, 64 unit cases, consumer production build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff lint, 92 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Six Staff Chromium/WebKit cases at 375/768/1440px verify side-by-side columns, wrapped long pills, right-aligned text, contained scrolling and accessibility; two Control summary/list cases passed. Staff adds a screen-reader-only details heading so hiding the summary does not skip heading levels. All 293 installed package files in each portal match the verified registry archive. Three refreshed list captures and both catalogue mirrors validate. Only Staff and Control restarted; no API/data/policy changes or hosted deployment occurred.
+
+
+0.18.3 verification: shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff lint, 92 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Eight focused Chromium/WebKit portal cases verify left-aligned entry names, right-aligned wrapping statuses, transparent/unpadded summary/list statuses, selected navigation and accessibility. All 293 installed package files in each portal match the verified registry archive. Six affected captures and both 250-capture catalogue mirrors validate. Only Staff and Control restarted; no API/data/policy changes or hosted deployment occurred.
+
+
+Cross-portal breadcrumb verification (0.18.4): shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff/Lecturer lint, 94 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Applicant lint, three focused header unit cases, type/production build and production-exclusion check passed (its existing unused-variable warning remains). Student lint, 15 focused breadcrumb/route unit cases, type/production build and production-exclusion checks passed. Student bundle budgets passed unchanged: eager JavaScript 194164 gzip bytes against 196608; largest chunk 373077 bytes.
+
+All 25 focused Chromium/WebKit portal cases passed: Applicant four, Student five (1280/1440 Chromium and phone/tablet/desktop WebKit), Staff six, Lecturer four and Control six. Coverage includes parent navigation, selected programme/semester scope, mobile overflow, keyboard/Escape, unsaved application/flow guards and unavailable teaching details. Test-only selectors were scoped to the header and menu dismissal was awaited; unrelated inner breadcrumbs remain intact. All 296 installed files in each of four portals match the verified 0.18.4 registry archive. Nine affected captures and both 253-capture catalogue mirrors validate. Focused portal checks were used under the owner-approved fast workflow; no full Student/Applicant regression-suite claim is made.
+
+Only Applicant, Student, Staff and Control frontends restarted. APIs, SSO, Keychain, Docker, identities, applications, drafts and policies were not reset or migrated. No hosted deployment, commit or push occurred.
+
+
+Shared 0.18.5 mutes the active AdminTable pagination page through the existing secondary Button variant. Page labels, keyboard/focus, disabled states and current-page semantics are unchanged. Staff and Control adopt the same patch without portal CSS overrides or data/workflow changes.
+
+Academic schema mirrors are checked with `node scripts/sync-academic-contract.mjs --check` in lecturer-portal; regenerate with the same command without `--check`. This development-only helper has no cross-repository runtime import.
+
+Academic tabs consistently include a visible ContentSection heading. Table tabs use the documented no-inset panel content, with a standard-inset heading above the flush AdminTable. Empty history and unconfigured-semester views use shared EmptyState. Create and Add actions include a leading Plus icon. Faculty, Programme and Module record pickers stack the code in muted label typography above the linked name; search still matches both fields. These are Staff compositions of existing released components, with no shared package or workflow change.

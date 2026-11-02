@@ -1,5 +1,10 @@
 # Accepted admissions handoff and Student schema v4
 
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
 ## Configured-policy continuation - 20 October 2026
 
 Handoff v1/v2 and transport envelope v3 remain readable. An additive admissionsPolicy reference identifies configured cases; their fee/eligibility requirements follow the pinned settings instead of unconditional legacy proof gates. Legacy handoffs still require their original payment/photo/letter sequence. The accepted handoff remains immutable; Portal API refreshes current admissions clearance and current issued Offer in separate Student projections from the owning accepted case. Final Faculty registration is blocked until that evaluator clears it, then CAF becomes downloadable. No record schema epoch/reset is introduced. See [University Flows](university-flows.md). Earlier local-only statements below describe historical boundaries.
@@ -88,3 +93,8 @@ Admissions snapshot v2 remains unchanged. DEV envelope v3 adds an owned file man
 ## Applicant–Student synchronization — 12 October 2026
 
 The 12 October local preparation supersedes earlier statements that original HTTP file delivery and applicant-specific continuation are wholly unimplemented. [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) defines the separate Demo artifact adapter, one-time authenticated continuation, capability gating, ownership and local verification. It is **not deployed**; Live storage/CMS provisioning and hosted migration remain pending. Shared UI remains 0.6.2; admissions v2, DEV transport v3 and Student schema 4 are preserved. The existing Bursary shortcut remains On hold.
+
+
+## Workflow template 1
+
+Handoff and Student requirements use the cohort projection pinned at application creation, retaining charge/Offer identity, signed-current-Offer rules and post-arrival/English/finance gates. Reviewer bindings are operational SSO state, not student permissions. New policy publication never reopens or repins accepted cases. See [Flow Editor](../design/flow-editor.md).

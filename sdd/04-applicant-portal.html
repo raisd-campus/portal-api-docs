@@ -150,6 +150,9 @@
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="../diagrams/old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
               <div class="nav-sub-menu" role="menu">
+              <a href="../diagrams/old-cms-lesotho/newer-cms.html">Newer CMS mind map</a>
+              <a href="../diagrams/old-cms-lesotho/newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="../diagrams/old-cms-lesotho/newer-cms-gap.html">Newer CMS gap vs Raisd</a>
               <a href="../diagrams/old-cms-lesotho/index.html">Feature analysis</a>
               <a href="../diagrams/old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
               <a href="../diagrams/old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
@@ -265,6 +268,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="../diagrams/old-cms-lesotho/newer-cms-manual.html">Lesotho newer CMS manual</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
@@ -340,7 +344,12 @@
     </div>
   </header>
   <main class="sdd-doc">
+<h2 id="cyberjaya-configuration-20261021">Cyberjaya configured-journey completion — 21 October 2026</h2>
+<p>The configured experience retains eligibility-first draft mode, policy-based document retention/checklists, applicable post-submission evidence tasks, visible calculated deadlines and allowed payment guidance. SSO sessions retain original-file and continuation capabilities advertised by Portal API. Existing legacy application behavior is unchanged. Verification covers isolated local/international Applicant, Staff and Student journeys; hosted deployment and Live CMS acceptance remain separate evidence.</p>
+
 <h1 id="applicant-portal">Applicant portal</h1>
+<h2>Uploaded-file review — 21 October 2026</h2><p>Applicant upload fields expose shared Preview File and Download File actions for original evidence, including submitted academic/supporting files and later evidence. Downloads retain their filenames; unavailable originals cannot produce empty downloads. Authorization and workflow remain unchanged.</p>
+
 <h2 id="university-flows-admissions-v1-20-october-2026">University Flows Admissions v1 - 20 October 2026</h2>
 <p>New applications pin a versioned campus policy on first valid saved campus selection. Eligibility precedes Registration Fee collection; Application Fee and admissions Registration Fee are one charge. Payment uses a real catalogue/authorised quote and existing receipt routes. Conditional Offers permit outstanding English, with a calendar-year deadline from arrival. Registry verifies the signed copy of each issued Offer version; Full reissue never inherits a previous signature. Offer acceptance enables Student continuation, followed by Bursary/Faculty module registration and CAF. Existing applications retain legacy behavior. Control changes are prospective and never grant access.</p>
 <p>The same eight-campus starting template is an owner-selected Demo default. Unconfirmed local/returning requirements, missing dates/prices and fee-credit decisions stay manual. Details and provenance: <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a>. This is verified local source work, not hosted deployment or Live CMS acceptance.</p>
@@ -935,7 +944,9 @@ Windows native-module locks and activate the installed release. API/data
 contracts and persistence do not change. Lecturer aggregate verification
 remains on hold. No portal deployment, API restart or migration is
 included.</p>
-  </main>
+    <section id="configured-eligibility-release"><h2>Configured pending action status — 22 October 2026</h2><p>Applicant and Staff use the same current pending action from Control through Portal API: <strong>Awaiting Applicant Confirmation</strong> after Eligibility release, with <strong>Confirm Eligibility · Applicant</strong> next. Confirmation advances to <strong>Awaiting Bursary Review / Registration Fee</strong>. <strong>Eligibility Letter Released</strong> remains in completed progress/history. Internal workflow enums, pinned versions and application data remain unchanged.</p></section>
+  <section><h2>Predefined Admissions Flow Editor — local implementation, 28 October 2026</h2><p>Control edits predefined template 1 with independent Local/International settings and immutable versions. Shared 0.19.0 owns linked step presentation; Portal API owns pinned evaluation, prices and letters; SSO owns immediate audited reviewer bindings. Existing accepted cases remain pinned. Hosted activation is separate. See <a href="../ai/design/flow-editor.md">Flow Editor contract</a>.</p></section>
+</main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -971,6 +982,7 @@ included.</p>
       wrap.appendChild(table);
     });
   </script>
+<section><h2>Connected Demo learner lifecycle — 21 October 2026</h2><p>Accept Enrolment replaces Applicant with Student access for the same SSO identity. Outstanding evidence continues in Student; Control can preview and reset only registered Cyberjaya Demo journeys. See the <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/learner-lifecycle.md">canonical lifecycle, ownership rules and verification boundary</a>. Hosted rollout is separate; existing accepted accounts are not automatically migrated.</p></section>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
   <script src="../diagrams/keychain-access.js" defer></script>

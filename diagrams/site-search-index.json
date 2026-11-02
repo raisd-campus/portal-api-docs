@@ -345,6 +345,54 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md"
     },
     {
+      "title": "Lesotho newer CMS mind map",
+      "summary": "23 Oct 2026 Admin walk \u2014 sign-in, shell, role counts, and the sidebar mind map for the Lesotho staging portal.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "newer-cms",
+        "mind-map",
+        "admin",
+        "dev-login",
+        "registry",
+        "luct"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms.html"
+    },
+    {
+      "title": "Lesotho newer CMS user manual",
+      "summary": "Section-by-section Admin manual for Registry, Academic, Finance, Admissions, HR, Library, Website, Analytics, and Mail.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "user-manual",
+        "registry",
+        "admissions",
+        "finance",
+        "fees",
+        "nmds",
+        "positions"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-manual.html"
+    },
+    {
+      "title": "Lesotho newer CMS gap vs Raisd",
+      "summary": "Gap between the 23 Oct 2026 Lesotho staging Admin and the Raisd portals still in Demo.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "gap",
+        "raisd",
+        "demo",
+        "m4",
+        "admissions",
+        "registration",
+        "fees",
+        "positions"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-gap.html"
+    },
+    {
       "title": "Lesotho CMS pilot feature analysis",
       "summary": "Screenshot-based feature and flow analysis for the Lesotho pilot \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
       "section": "LUCT CMS",

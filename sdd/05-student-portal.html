@@ -150,6 +150,9 @@
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="../diagrams/old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
               <div class="nav-sub-menu" role="menu">
+              <a href="../diagrams/old-cms-lesotho/newer-cms.html">Newer CMS mind map</a>
+              <a href="../diagrams/old-cms-lesotho/newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="../diagrams/old-cms-lesotho/newer-cms-gap.html">Newer CMS gap vs Raisd</a>
               <a href="../diagrams/old-cms-lesotho/index.html">Feature analysis</a>
               <a href="../diagrams/old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
               <a href="../diagrams/old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
@@ -265,6 +268,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="../diagrams/old-cms-lesotho/newer-cms-manual.html">Lesotho newer CMS manual</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
@@ -340,7 +344,13 @@
     </div>
   </header>
   <main class="sdd-doc">
+<h2 id="cyberjaya-configuration-20261021">Cyberjaya configured admissions continuation — 21 October 2026</h2>
+<p>Connected registration refreshes Staff/admissions outcomes without dropping the Student session. English evidence verified after Conditional Offer acceptance appears in Academic Profile and owned document delivery while preserving the original accepted snapshot. Bursary/Faculty review and completed-registration CAF gates remain authoritative. This does not create a second immigration workflow or alter immigration policy.</p>
+
 <h1 id="student-portal">Student portal</h1>
+<h2 id="local-academic-catalogue-expansion-29-october-2026">Local Academic catalogue expansion — 29 October 2026</h2>
+<p>Owner-approved Academic administration adds persistent Faculty, Programme and Modules, an independently reviewed curriculum University Flow, published catalogue choices for new applicants and exact-version student enrolments with staff-managed streams. Existing applications, student history, CMS and hosted deployments are preserved. This is local persistent Demo functionality; it does not establish a Live CMS write path. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/academic-catalogue.md">Academic catalogue</a>.</p>
+
 <h2 id="admissions-clearance-and-caf-20-october-2026">Admissions clearance and CAF - 20 October 2026</h2>
 <p>A configured admissions case carries its pinned policy into the immutable accepted handoff. Portal API separately refreshes current clearance and the current issued Offer from the owned case. Preparation/submission of modules is allowed; final Faculty completion requires admissions clearance after Bursary review. The legacy direct-confirm route cannot bypass the new case gate. A completed owned registration request exposes a clearly labelled Demo CAF PDF listing registered modules. Approved Registration Fee credits use the existing financial adjustment ledger with matching currency, source funds and remaining invoice balance. Existing students without a new case retain legacy behavior; schema epoch 4 and scheduling/grading rules are unchanged.</p>
 <p>See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a>. Policy persistence is separate from existing Student/evidence storage; local source verification does not establish hosted or Live readiness.</p>
@@ -1141,7 +1151,8 @@ for activation. No package change/publication, migration, hosted write,
 commit, push or deployment. Isolated verification servers were stopped.
 See <a href="../ai/backend/classrooms.html">Classrooms rules</a> for
 API, access, files and the verification/activation boundary.</p>
-  </main>
+  <section><h2>Predefined Admissions Flow Editor — local implementation, 28 October 2026</h2><p>Control edits predefined template 1 with independent Local/International settings and immutable versions. Shared 0.19.0 owns linked step presentation; Portal API owns pinned evaluation, prices and letters; SSO owns immediate audited reviewer bindings. Existing accepted cases remain pinned. Hosted activation is separate. See <a href="../ai/design/flow-editor.md">Flow Editor contract</a>.</p></section>
+</main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -1177,6 +1188,7 @@ API, access, files and the verification/activation boundary.</p>
       wrap.appendChild(table);
     });
   </script>
+<section><h2>Connected Demo learner lifecycle — 21 October 2026</h2><p>Accept Enrolment replaces Applicant with Student access for the same SSO identity. Outstanding evidence continues in Student; Control can preview and reset only registered Cyberjaya Demo journeys. See the <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/learner-lifecycle.md">canonical lifecycle, ownership rules and verification boundary</a>. Hosted rollout is separate; existing accepted accounts are not automatically migrated.</p></section>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
   <script src="../diagrams/keychain-access.js" defer></script>

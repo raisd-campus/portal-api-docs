@@ -1,5 +1,142 @@
 # Shared component library
 
+## Semantic confirmations and balanced toolbars - 0.22.1
+
+Toast accepts optional success/error/info/warning variants (success by default), with an opaque semantic tint, border and matching icon. Centered controls and compact padding produce a 44–46px one-line card that grows naturally for wrapping. ToastProvider/useToast expiry, keyboard dismissal, pause and navigation retention remain unchanged. Search-only AdminTableToolbar omits its empty actions wrapper, removing the extra narrow-layout top gap while preserving real-action layouts. Compact record-list Badge statuses retain semantic text color with transparent backgrounds and zero padding, as before. Staff adopts this patch; no other consumer pin changes.
+
+## Record feedback and inner section tables - 0.22.0
+
+AuditTrail renders recorded changes in responsive Field / Before / After comparisons with wrapped values and stacked phone labels. Actor and event time appear once; adapters supply readable field labels and recorded business values rather than technical revision stamps. InnerSection accepts title, titleBadge and actions; its title header has a full-width bottom divider, while contained default DataTable rows extend to its horizontal edges with 12px cell insets. Titleless content and other table contexts retain their presentation.
+
+ToastProvider/useToast from system/toast own transient bottom-right confirmations: toast(message), default 4000ms expiry, keyboard close, and paused expiry during hover or focus. Mount the provider around the portal shell to retain notifications after navigation. Form errors remain in the owning form. Curriculum previews compose existing SummaryCard and default blue Badge. Only Staff adopts the exact released 0.22.0 package for this follow-up.
+
+## Shared record presentation — 0.21.0
+
+Release 0.21.0 owns Button title-case visual treatment through the shared button variants, preserving original source strings and acronyms. AdminRecordActions accepts optional recordLabel for contextual Edit/Create labels and uses Save Changes; omitted recordLabel retains generic actions. AdminRecordWorkspace accepts an optional history slot after its independent content. AdminRecordHistory composes a titled panel with recorded AuditTrail entries or shared EmptyState; portals omit it for unsaved records. ContentSection titleBadge places a supplied pill beside its heading without changing heading identity. DropdownSelect label adds an associated muted label above the standard trigger; omitted labels retain existing markup. Only Staff adopts this release in the Academic follow-up.
+
+## Shared tiered navigation - 0.20.0
+
+PortalNavBranch in system/portal-shell shares the established Student tiered menu style with Staff. Portals supply an icon, label and items (id, label, active, disabled and onSelect); route selection and permission filtering remain portal-owned. Active children expand desktop/phone branches. Tablet rails show the selected parent and open an elevated child menu with keyboard navigation, outside/Escape dismissal and focus return. Empty branches are omitted. Existing PortalNavItem, PortalNavGroup and shell defaults are unchanged. Student keeps its current composition in this release; Staff adopts the new shared branch.
+
+The exact 0.20.0 archive was installed in the synthetic consumer before publication and verified in GitHub Packages. Typecheck, 71 unit cases, consumer build and 72 Chromium / 64 WebKit cases passed, including focused retries after fixture reload and asynchronous focus assertions were corrected; two existing phone-pointer cases remain skipped. Three responsive synthetic captures document the released branch. Student compatibility bundling succeeds with only 50 extra eager gzip bytes versus the 0.19.8 baseline; both current Student-source builds exceed its existing bundle budget, so no Student upgrade or full Student gate is claimed. Existing shell defaults and 298 unaffected compiled files remain byte-identical to the verified 0.19.8 archive. No application deployment or data change is included.
+
+
+## Admin workspace bottom alignment — 0.19.8
+
+AdminRecordWorkspace measures the PortalPageContent bottom inset when sizing the sticky desktop summary/list column. It now aligns with the shell bottom gutter rather than using the larger section gap. The column remains sticky with content-only scrolling; smaller layouts remain compact. Only Control upgrades. No typography, stylesheet, workflow or data behavior changes.
+
+## Pointer reorder state — 0.19.7
+
+SortableList commits the dragged sortable item final index instead of comparing the optimistic drop target identity. FlowEditor immediately recalculates sequential step numbers, including linked children, and consumers receive the actual new order for saving. Disallowed moves are blocked before optimistic DOM sorting. Alt+Up/Down, linked groups, fixed positions and read-only behavior remain unchanged. Control alone upgrades.
+
+## Summary status pills — 0.19.6
+
+AdminRecordPanel preserves the supplied Badge background, padding, border and radius in its summary status slot. This restores the normal color-coded status pill beneath the record name. Compact record-list statuses retain their existing right-aligned, wrapping colored text without pill background or padding. Only Control upgrades; other pins remain unchanged.
+
+## Muted AdminTable pagination — 0.18.5
+
+AdminTableFooter uses the existing secondary Button for the current page, replacing the primary blue fill with a neutral outline. Other pages and previous/next controls retain ghost styling. aria-current, focus, disabled states and behavior are unchanged. Staff and Control adopt this patch; other portal pins remain unchanged. SummaryCard status pills continue to use its existing action slot with shared Badge size="lg". Card background variant and primary-value tone are independent; omit tone when the title should keep its normal color. No new SummaryCard prop is added.
+
+## Cross-portal breadcrumb adoption — 0.18.4
+
+Applicant, Student, Staff/Lecturer and Control all use PortalHeader structured breadcrumbs with router Links. Portals own the route hierarchy and preserve existing navigation guards; Student also retains programme/semester context in parent URLs. Non-routable Academic/Profile group labels remain informational. SSO authentication and Keychain have no PortalHeader page trail and require no header/package changes. No account, access or API rules change.
+
+The overflow menu loads only when the trail needs to collapse; a same-size disabled ellipsis control retains its accessible label and aria-busy until ready. This keeps menu dependencies out of Student's initial graph and preserves the existing bundle budget. The visible trail, menu, keyboard interaction and focus return retain their shared design.
+
+## Summary-column status text — 0.18.3
+
+Compact record lists keep entry names and links left-aligned; status cells remain right-aligned with sentence wrapping. In the AdminRecordPanel status slot and compact list only, badges keep their semantic color but lose background, border and padding. Summary metadata alignment and badges outside this pattern remain unchanged. Staff and Control adopt the same patch.
+
+## Right-aligned compact record lists — 0.18.2
+
+Compact record-list cells share the available row width and stay side by side. Cell, link and pill text is right-aligned; long status sentences wrap inside their pill within the allocated column. Horizontal scrolling remains disabled only for the compact list. Staff and Control adopt the same verified registry release; directory tables and other portal pins remain unchanged.
+
+## Compact record-list rows — 0.18.1
+
+Compact AdminTable record-list values sit side by side, with wrapping when space is limited. The first value uses remaining row space; long names and status pills wrap inside the panel without horizontal scrolling. Vertical virtualization, full-row navigation, search, selection and directory tables are unchanged. Control alone upgrades.
+
+## Responsive header breadcrumbs — 0.18.0
+
+PortalHeader accepts structured breadcrumbs and an optional router link renderer. Shared PortalBreadcrumb displays clickable ancestors and a nonlinked current page. It measures available container space and collapses overflowing ancestors into an ellipsis DropdownMenu, preserving the current page and exposing full labels in the menu. Resize/font changes are observed; keyboard focus and Escape dismissal use shared controls. Existing custom breadcrumb slots/layout stay unchanged. Control alone upgrades, supplying its route hierarchy without additional API reads; other portal pins remain unchanged.
+
+
+## Wrapping ChipField — 0.17.0
+
+ChipField now wraps selected chips and grows from its 36px minimum height instead of scrolling horizontally. Long labels remain contained. There is no chevron; a full-field native button handles opening/toggling and keyboard focus, with removal buttons as separate sibling controls. The searchable multi-select picker retains existing DropdownMenu styles, selection behavior and focus return. Control alone upgrades and uses the General Settings heading. Other portal pins remain unchanged.
+
+
+## RadioField — 0.16.0
+
+`ui/radio-field` is the compact form radio component: 16px outlined indicators, shared body labels and 36px interaction targets. Choices stack on phones and appear inline from sm. It is controlled via value/options/onValueChange with labelled native group semantics, keyboard navigation, disabled/invalid states and focus indication. Existing SurveyChoiceGroup card behavior is unchanged. Control uses RadioField for General Draft / Published and PageActionBar edgeToEdge for the full-width Save changes divider. Only Control upgrades.
+
+
+## ContentSection subheading - 0.15.0
+
+Use optional titleVariant="subheading" for the shared 16px medium type-title heading. Existing default page headings remain 18px, and custom heading content retains ownership of its typography. No section gaps, padding, 36px minimum title containers or other defaults change. Control adopts this for Affected Portals and General; all other portal pins and headings remain unchanged. Applied Campuses in its sidebar now shows the count only, without repeating campus names already available in the form.
+
+Verification: shared typecheck, 58 unit cases, consumer build, 59 Chromium and 40 phone/tablet WebKit cases passed. Control lint, 16 unit cases, production/type build and 14 focused Chromium/WebKit cases passed. Checks cover opt-in 16px headings, unchanged default 18px headings, 36px minimum headers, default spacing, responsive form/navigation and count-only campus summary. All 287 installed package files match the verified 0.15.0 registry archive. Only Control adopts and refreshes this release; no API/data/policy changes or hosted deployment are included.
+
+## Admin workspace title actions and entity icons - 0.14.0
+
+AdminRecordWorkspace accepts optional titleActions before its existing Close action. AdminRecordPanel accepts optional iconLabel for a supplied entity icon without photo semantics. Omitted props preserve existing consumers, layout, photo fallbacks and sidebar actions. Control adopts the release for the Admissions Edit Flow summary/list workspace; other pins remain unchanged. Its right column composes Affected Portals and General with default ContentSection/pageSectionVariants spacing and PagePanelLayout cards. No library/API persistence, permission or campus rules are introduced.
+
+Verification: shared 0.14.0 passed typecheck, 56 unit cases, consumer build, 58 Chromium and 38 phone/tablet WebKit cases. Control lint, 16 unit cases and production/type build passed, followed by 50 workflow browser cases plus focused layout/view-switch and aborted-request checks (52 unique Chromium/WebKit cases overall). The final layout checks verified default 16px section spacing, desktop sticky sidebar, contained phone stacking and three independent portal panels. Saved metadata, scheduled/unassigned versions, local-edit retention/reset, summary read errors/retry, permissions and reference navigation passed. All 287 installed package files match the verified registry archive. No API/policy/application mutation or hosted deployment is included.
+
+## ChipField dropdown presentation - 0.13.1
+
+ChipField directly reuses the existing DropdownMenu content and selectable-row style definitions. The shared elevated surface, 8px radius, 4px menu inset, shadow/ring, item padding, trailing check position, disabled styling and motion now have one owner. Existing DropdownMenu appearance and interactions are preserved; ChipField retains its searchable multi-select listbox and Popover focus/positioning behavior. Picker width follows the anchored field, subject to the existing menu minimum and viewport limit. The entire field surface (including chip labels and empty space) opens the picker. Chip removal buttons retain removal-only behavior, while the chevron toggles the picker. The 36px chip field and horizontal scrolling remain unchanged. Control alone adopts this patch.
+
+Verification: shared type/unit/build and consumer build passed (53 unit cases); all 57 Chromium cases passed after focused retries corrected animation/click-position assumptions, and all 36 phone/tablet WebKit cases passed. Computed surface/row styles match the existing dropdown, and the original DropdownMenu content class set is preserved exactly. Control lint, 16 unit cases, production/type build and 10 focused Chromium/WebKit cases passed. All 287 installed files match the exact verified 0.13.1 registry archive. Only Control Vite was refreshed; API, SSO and saved policies/applications remain unchanged.
+
+## ChipField - 0.13.0
+
+The shared `ui/chip-field` (also exported from the package root) is a controlled, option-only multi-select with a fixed 36px height. Selected removable chips scroll horizontally; its separate picker button remains visible. A searchable Radix popover supports persistent multi-selection, no-match feedback, keyboard navigation and focus return. It uses shared surfaces, badges, field typography and disabled/invalid states. Consumers supply options, current values, accessible labels/descriptions and change callbacks; the package owns no campus or persistence rules. Keyboard removal uses Delete/Backspace; arrows navigate results and Alt+Home/End select endpoints.
+
+Control adopts 0.13.0 only for the General panel below Affected Portals. Campus IDs and flow name initialise page-local edits. No save/publish requests or access/assignment changes are performed; leaving discards edits. Other portal pins remain unchanged.
+
+Verification: 53 shared unit cases, consumer build, all 55 Chromium cases (one unrelated fixture-load failure passed its targeted retry) and 32 phone/tablet WebKit cases passed. Control lint, 16 unit cases, production/type build and 42 Chromium/WebKit cases passed; browser checks reject flow write requests. All 284 installed package files match the verified 0.13.0 registry archive. Only Control Vite was restarted; API, SSO, saved policies and applications remain unchanged.
+
+## ContentSection label - 0.12.0
+
+ContentSection accepts an optional label slot above the title/custom heading, using type-label-normal and muted text. Page, panel and sidebar variants support it. Its existing 36px minimum header height is retained, with natural growth for labels and multiline content. Unlabeled sections retain their existing markup and appearance. Control adopts the shared release for the blank Admissions flow page: label Admissions, title from the API-provided flow name. The read-only reference retains its original heading; other portal pins are unchanged. Verification passed 49 shared unit cases, 52 Chromium and 26 phone/tablet WebKit checks, plus the consumer build. Control lint, 16 unit cases, production/type build and 28 focused Chromium/WebKit cases passed. All 281 installed package files match the verified 0.12.0 registry archive; only Control Vite was restarted.
+
+## Browser document titles - 26 October 2026
+
+Browser titles consistently use Raisd followed by a middle dot and the portal name: Raisd · Applicant Portal, Raisd · Student Portal, Raisd · Staff Portal, Raisd · Control Portal, Raisd · Keychain and Raisd · SSO. Each portal owns its document title; SSO keeps the same title on login and password recovery. In-page headings and breadcrumbs retain their route-specific labels. No shared-package change or release is required.
+
+## Compact Admin record lists - 0.11.2
+
+Shared AdminTable record-list entries stack their supplied fields vertically and wrap names/status badges inside the sidebar. Directory tables keep their column layout. Staff adopts this shared patch without portal CSS overrides, workflow changes or data changes. Verification passed 44 shared unit cases, 50 Chromium and 22 phone/tablet WebKit cases, plus consumer build. Staff lint, 92 tests and production build passed against the registry release; all 281 installed files match the verified archive. Only Staff Vite was restarted.
+
+## Admin record sidebar scrolling - 0.11.1
+
+The desktop sidebar fills available PortalMain height and stays sticky. Its summary/list switch and optional actions remain fixed while summary content or list rows scroll. Transparent masks are removed. Phone/tablet panels remain compact above the form. Staff adopts this focused patch; other portals retain their existing pins. Shared verification passed 44 unit, 49 Chromium and 20 phone/tablet WebKit checks, plus the standalone consumer build. Staff lint, 92 tests and production build passed against the registry package; all 281 installed files match the verified archive. Only Staff Vite was restarted; APIs and saved Demo data were preserved.
+
+## LinkedList panel variant — released 0.11.0
+
+`LinkedList variant="panel"` uses `bg-surface` and PagePanelLayout's 12px radius for standalone clickable cards. Its default variant retains the existing raised surface and radius; interaction, focus and spacing are unchanged. GitHub Packages provides the exact verified 0.11.0 archive. Only Control upgrades its registry pin and uses the variant on University Flows; other portal pins remain unchanged. The release archive differs from 0.10.6 only in LinkedList runtime/types/map, package version and component guidance. Shared release checks passed 44 unit, 48 Chromium and 18 WebKit cases, plus consumer builds; the focused card capture checks passed at 1440/768/375px. Control's registry installation passed lint and production/type build. Three synthetic catalogue captures document the variant. Package publication does not deploy portals or change data.
+
+## ContentSection title height — 0.10.5
+
+Every title container uses a 36px minimum height by default, including page, sidebar, panel and custom-heading variants. Content and multiline headings can grow above it. Typography, the 16px page gap and 12px sidebar gap are preserved. Applicant, Student, Staff and Control adopt the same release. This is shared presentation only; no portal-specific header overrides, API, record or workflow changes.
+
+Verification: shared gate passed 44 unit, 48 Chromium and 18 phone/tablet WebKit checks. Focused computed-height checks/captures passed at 1440/768/375px. Staff (90 tests), Applicant (95) and Control (16) lint/test/build gates passed. Student passed its three focused ContentSection tests and production build; the aggregate Student run was deliberately stopped to keep this isolated visual correction focused, so no full Student regression pass is claimed. All four installed package integrities/component bytes match published 0.10.5. Only local frontends were restarted; APIs, SSO and saved Demo state remain.
+
+## Default page spacing — 0.10.2
+
+Default page ContentSection spacing is 16px, owned by pageSectionVariants(). Applicant, Student and Staff consume the same released default. Prefer ContentSection type="page" plain; route shells retaining status roles, named slots or custom wrappers use pageSectionVariants() instead of a local gap. Preserve heading semantics, sidebar/panel geometry, internal section spacing and portal-shell gutters. Control is outside this consumer upgrade.
+
+Local verification (22 October 2026): exact 0.10.2 archive published and registry integrity checked. Shared gate passed 44 unit, 47 Chromium and 16 WebKit checks; all three consumer check gates passed. Computed browser gaps are 16px for page/panel defaults and 12px for sidebar at 1440/768/375px, without page overflow. Canonical catalogue captures were refreshed. Restarted only local Applicant/Student/Staff frontends; Control, APIs, saved data and hosted deployments are unchanged.
+
+
+## Shared Admin record flow — 0.10.0
+
+The additive `system/admin-record-flow` family groups AdminTable, toolbar/footer and read-first record workspace/panel/actions/dialogs. It adapts the owner-provided CMS interactions to current tokens and components, without changing DataTable, portal pins or the empty Staff Applicants page. See [Admin record flow](admin-record-flow.md) for interfaces, filtering, virtual lists, dirty navigation, responsive layout and synthetic examples.
+
+## Account header — 21 October 2026
+
+Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User ID followed by ` · ` and comma-separated assigned roles second. Applicant, Student, Staff and Control use the same number. Email and campus Student/Staff numbers are not substituted. Role metadata is display-only; active-role authorization remains unchanged.
+
 `raisd-campus/design-system` owns the shared React package `@raisd-campus/design-system`. The four portal applications are separate repositories and consume released package versions. The student portal is the first consumer and the source of the initial visual patterns. `control-plane` and `portal-api-docs` do not import React components.
 
 ## Ownership decision
@@ -320,3 +457,62 @@ SSO consumes the released 0.9.0 package. Existing shared controls and tokens rem
 ## Authentication branding placement - 0.9.1
 
 The owner requested moving SSO branding above the auth card and was informed before changing the shared component. AuthLayout adds optional `brandingPlacement: "inside" | "above"`; the default remains `"inside"`. The `"above"` variant renders the same branding slot in a page header outside the main card, within the existing viewport scroller and with the existing spacing tokens. SSO opts in for login and password recovery. Other consumers retain their placement and package pins.
+
+## File tile contrast — 0.9.2
+
+FileUploadField keeps its surface-raised tile background by default. Where an enclosing card also uses surface-raised, opt into the shared fileSurface="elevated" variant. Do not globally lighten file tiles or add portal CSS overrides. Applicant submitted file values use this variant inside their raised detail cards; other controls and consumers retain their current backgrounds. The package archive is published and verified; portal hosting is separate.
+
+
+0.18.0 verification: shared typecheck, 64 unit cases, consumer production build, 63 Chromium and 48 phone/tablet WebKit cases passed. Control lint, 19 unit cases, type/production build and six focused Chromium/WebKit breadcrumb cases passed, including directory/reference navigation and unsaved-edit guards at 375px and 1543px. All 293 installed package files match the verified registry archive. Six affected captures and both 250-capture catalogue mirrors validate. Only Control restarted; no API, policy, database or hosted portal deployment changed.
+
+
+0.18.1 verification: shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Compact-list coverage verifies side-by-side short values, wrapped long values, contained widths and scrolling to the final virtualized row. Control lint, 19 unit cases, type/production build and two focused summary/list Chromium/WebKit cases passed. All 293 installed package files match the verified registry archive. Three refreshed list captures and both 250-capture catalogue mirrors validate. Only Control restarted; no API/data/policy changes or hosted portal deployment occurred.
+
+
+0.18.2 verification: shared typecheck, 64 unit cases, consumer production build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff lint, 92 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Six Staff Chromium/WebKit cases at 375/768/1440px verify side-by-side columns, wrapped long pills, right-aligned text, contained scrolling and accessibility; two Control summary/list cases passed. Staff adds a screen-reader-only details heading so hiding the summary does not skip heading levels. All 293 installed package files in each portal match the verified registry archive. Three refreshed list captures and both catalogue mirrors validate. Only Staff and Control restarted; no API/data/policy changes or hosted deployment occurred.
+
+
+0.18.3 verification: shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff lint, 92 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Eight focused Chromium/WebKit portal cases verify left-aligned entry names, right-aligned wrapping statuses, transparent/unpadded summary/list statuses, selected navigation and accessibility. All 293 installed package files in each portal match the verified registry archive. Six affected captures and both 250-capture catalogue mirrors validate. Only Staff and Control restarted; no API/data/policy changes or hosted deployment occurred.
+
+
+Cross-portal breadcrumb verification (0.18.4): shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff/Lecturer lint, 94 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Applicant lint, three focused header unit cases, type/production build and production-exclusion check passed (its existing unused-variable warning remains). Student lint, 15 focused breadcrumb/route unit cases, type/production build and production-exclusion checks passed. Student bundle budgets passed unchanged: eager JavaScript 194164 gzip bytes against 196608; largest chunk 373077 bytes.
+
+All 25 focused Chromium/WebKit portal cases passed: Applicant four, Student five (1280/1440 Chromium and phone/tablet/desktop WebKit), Staff six, Lecturer four and Control six. Coverage includes parent navigation, selected programme/semester scope, mobile overflow, keyboard/Escape, unsaved application/flow guards and unavailable teaching details. Test-only selectors were scoped to the header and menu dismissal was awaited; unrelated inner breadcrumbs remain intact. All 296 installed files in each of four portals match the verified 0.18.4 registry archive. Nine affected captures and both 253-capture catalogue mirrors validate. Focused portal checks were used under the owner-approved fast workflow; no full Student/Applicant regression-suite claim is made.
+
+Only Applicant, Student, Staff and Control frontends restarted. APIs, SSO, Keychain, Docker, identities, applications, drafts and policies were not reset or migrated. No hosted deployment, commit or push occurred.
+
+
+## Flow editor family — shared 0.19.0
+
+`ui/switch`, `system/sortable-list` and `system/flow-editor` are controlled, portal-neutral primitives for predefined configurable flows. Linked groups move together; handles are external, keyboard alternatives and announcements are provided, and caller constraints are authoritative. Released 0.19.0 is installed in Control only. See [Flow Editor](flow-editor.md) for complete ownership, settings mapping, runtime compatibility, failure behavior and onboarding requirements. Three synthetic desktop/tablet/phone captures are included; unrelated capture provenance is preserved.
+
+
+Shared 0.19.1 refines FlowEditor: display-order numbers, dot-separated colored category names, centered linked connectors and toggle-before-chevron ordering. Reorder controls remain disabled on read-only flows; editable drafts retain drag and keyboard/tap arrows. Control alone upgrades and hides international-only cards from Local while preserving their saved settings/order slots. No API, policy or application state changes. See [Flow Editor](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/design/flow-editor.md).
+
+
+0.19.1 verification: required shared release checks passed (67 unit, 68 Chromium and 57 WebKit cases with one phone-pointer skip); the final card refinement additionally passed five focused Chromium and nine phone/tablet WebKit cases. Control lint (existing sso.ts warning), 23 units and type/production build passed. All 18 focused Control browser cases are covered by 17 passes plus a successful WebKit navigation retry. Checks cover Local visibility, retained hidden settings, reorder numbering, card/toggle isolation and wrapping. All 305 Control package files match the released registry archive; both 256-capture catalogues validate. Only Control restarted; no policy/application/backend state changed.
+
+
+### Flow card refinements — shared 0.19.2
+
+FlowEditor omits visible up/down buttons. External handles support dragging and Alt+Up/Down keyboard reordering with screen-reader instructions and announcements. Number badges are 32px blue circles with white text. Applicant Action uses a semantic purple token. Other SortableList consumers retain their default move buttons through `showMoveButtons`.
+
+ContentSection adds optional `description` below its title inside the header, with standard body typography, muted color and 4px separation. Its 36px minimum header grows as needed; omitted descriptions preserve existing consumers. Control uses the slot for the published Flow Steps notice instead of a separate small caption. Only Control upgrades; no policy/API/application changes.
+
+
+0.19.2 verification: 68 shared units, consumer build, 68 Chromium and 57 WebKit cases passed (one phone-pointer skip). Control lint (existing warning), 23 units and type/production build passed. Ten focused Control browser cases are covered by nine initial passes and a successful isolated WebKit navigation retry. All 305 installed files match the released archive; both 256-capture catalogues validate. Control cache was rebuilt and its served modules verified. No settings, policies or applications changed.
+
+
+### Shared FlowEditor 0.19.3
+
+Step numbers use white text on the shared black background token. All category names end in Step, retaining their existing semantic colors and dot separators. Parent-to-child spacing is 12px, matching the parent-group gap. Step cards use the shared surface-hover background on hover. Only Control upgrades; no configuration, policy, application or backend changes.
+
+
+### Mandatory/fixed steps — shared 0.19.4
+
+Mandatory steps omit their enable toggle and visible required caption. Control marks Offer and International tuition mandatory using the existing template rules; this does not alter policy validation or applicability. Fixed-order steps display a lock in the external handle slot instead of inside the card. Handles and locks center against the parent card, including linked groups and wrapped labels. Shared SortableList `renderChildren` keeps linked content in a separate grid row so it cannot shift the handle. Only Control upgrades; existing settings, reviewer bindings and application state are unchanged.
+
+
+### Minimal category labels — shared 0.19.5
+
+FlowEditor categories now use one muted gray treatment with concise labels (Review, Payment, Document release, Applicant action), separated by middle dots. The repeated Step suffix is removed. Black number circles and white step names retain the hierarchy; colors remain on controls/status. Existing mandatory/fixed behavior, spacing, hover, interactions and policies are unchanged. Only Control upgrades.

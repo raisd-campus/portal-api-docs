@@ -1,5 +1,15 @@
 # Profile Documents
 
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
+## Later verified admissions evidence — 21 October 2026
+
+The API projects English results verified after Conditional Offer acceptance from the exact accepted application into the existing English Proficiency records. Academic Profile and Documents refresh on connected route entry. The corresponding certificate uses the same owned original-byte delivery and current accepted identity checks. Repeated projections deduplicate stable application/result IDs; the accepted handoff and unrelated academic records remain immutable.
+
+
 Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
 
 ## Current behaviour

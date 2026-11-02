@@ -163,3 +163,10 @@ Never commit kubeconfigs, server passwords, or connection strings (see [architec
 ## Prepared Demo artifact configuration — 12 October 2026
 
 [Demo admissions resources](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/admissions-resources.md) is prepared locally only. `DEMO_ADMISSIONS_RESOURCES` defaults to false and is forbidden for Live CMS mode. Explicitly apply the Demo-only artifact/chunk migration before enabling it; do not change the existing record schema/reseed policy. `ADMISSIONS_STUDENT_ORIGINS` is an exact comma-separated allowlist. Configure both portals' origins in CORS. Physical orphan cleanup in serverless hosting requires a deployment-owned schedule. No hosted migration, schedule or rollout is authorized by this increment.
+
+
+## Demo lifecycle environment
+
+Local development uses control-plane `local/compose.yaml` and ignored `.local/dev.env`, with generated private credentials, loopback PostgreSQL on port 55432 and LOCAL_PRESERVE_DATA=true. Saved Demo state is backed up and imported once. These settings do not alter hosted deployment configuration. See [local development](../architecture/local-development.md).
+
+`DEMO_FLOW_ENABLED=true` opts in to registered Cyberjaya resets only with `DEMO_ADMISSIONS_RESOURCES=true` and `CMS_MODE=stub`; Live is rejected. Local `DEMO_STATE_DIRECTORY` enables atomic single-writer record/journal/files; hosted Demo uses existing PostgreSQL record and artifact tables. SSO needs durable writable `SSO_STATE_FILE`, the same trusted service token and the coordinated learner transition release. See [learner lifecycle and rollout](learner-lifecycle.md).

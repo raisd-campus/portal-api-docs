@@ -1,5 +1,14 @@
 # Frontend Logical Data Model
 
+## Academic schema 5 — 29 October 2026
+
+Programme Stream records belong to an exact Programme Version. Curriculum Module `streamIds` and Programme Enrolment `selectedStreamIds` are optional for legacy compatibility; missing/empty arrays mean common membership and common-only selection. Validate distinct, same-version references. Schema 4-to-5 uses an explicit additive database migration preserving IDs, epoch and all populated histories; no schema-mismatch reseeding is permitted. The explorer registers the new record and relationship. Stream-aware Study Plan additionally returns applicable curriculum credits separately from the programme graduation-credit requirement.
+
+## Current verified admissions projection — 21 October 2026
+
+English Proficiency retains its existing record schema. After the owning accepted case verifies later English evidence, the API adds stable admissions:<applicationId>:english:<resultId> read projections to that student's English records. It never replaces the accepted handoff, another student's records or unrelated later staff academic data. Current Offer/clearance and verified certificate delivery remain separately resolved from the accepted case. Record schema epoch remains 4; no migration is introduced.
+
+
 ## What this model is
 
 The data model is a version-controlled description of information required by the frontend. It is intentionally independent of database technology. The future backend may use one database, several databases, existing CMS tables, or service calls as long as the Portal API fulfils these contracts.

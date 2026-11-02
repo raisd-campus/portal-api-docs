@@ -1,5 +1,14 @@
 # Academic Modules behaviour
 
+## Published curricula and streams — 29 October 2026
+
+Schema 5 retains one immutable Programme Version per approved structure and version-owned Programme Streams. Study Plan, registration candidates/server validation, completion and current receiving-credit targets use common modules plus the union of the exact enrolment's selected streams, without duplicate modules. Missing selections mean common-only; legacy modules are all common. Staff reassignment changes future requirements without rewriting historical registrations/results. The programme graduation-credit threshold remains distinct from applicable curriculum credits. Existing enrolments and submitted admissions retain their pinned version. See [Academic catalogue](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/academic-catalogue.md).
+
+## Connected admissions refresh — 21 October 2026
+
+Connected Module Registration re-reads on route entry/window focus and polls every five seconds while visible and awaiting an admissions clearance or under-review request. Staff outcomes therefore become visible without discarding the accepted Student session. Final Faculty approval remains server-authorised and revalidates the owning case; polling never approves or registers anything. Independent mock scenarios keep their existing cache/session behavior.
+
+
 ## New-policy admissions clearance - 20 October 2026
 
 Module registration shows outstanding admissions blockers from the API and still permits preparation/submission. Final Faculty approval re-resolves the owning accepted case and enforces its pinned international/tuition/deadline/current-signature requirements. Existing students retain their prior immigration rules. Module completion generates the owned CAF; accepting an Offer alone does not. No scheduling/grading policy changes are included. See [University Flows](../../backend/university-flows.md).

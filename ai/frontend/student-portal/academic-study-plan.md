@@ -1,5 +1,13 @@
 # Academic Study Plan behaviour
 
+## Study Plan terminology — 30 October 2026
+
+Display terminology is **Study Plan** throughout Academic tabs, actions, breadcrumbs, review flow and feedback. Existing routes, flow/step IDs, API/schema keys, saved record names and recorded audit values are preserved. The built-in Academic Curriculum configuration name has a display-only Academic Study Plan alias; loading it does not change the stored name or create unsaved edits. Student empty-state, validation and admissions-continuation copy follow this terminology; data and handoff shapes are unchanged.
+
+## Accepted published curriculum — 29 October 2026
+
+Admission handoff v3 carries the exact server-selected published ProgrammeVersion, structure version and campus semester calendar. Acceptance creates a new owned Programme Enrolment bound to that version. Its first timeline period is current with academic status pending so registration can open before classes start; later periods are planned/pending. No module registrations, results, prior invoices or other students' history are copied. Subsequent default curriculum publication does not rebind the enrolment. Existing Demo handoff v1/v2 remains supported, and imported v3 evidence/issued letters use the same owned document delivery.
+
 Current source-form, departmental registration and document delivery rules: [8 October local workflow baseline](student-workflows.md). This newer baseline replaces earlier prototype-only statements about immediate registration, separate Accessibility requests and unavailable standard document delivery below.
 
 The Academic Study Plan route is a frontend-only, read-only programme journey backed by `PortalApi.getAcademicStudyPlan()`. Its response is derived from the canonical Portal record graph; the page does not calculate official results, maintain a second fixture set, or connect to a live student-record system.

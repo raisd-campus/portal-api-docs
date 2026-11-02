@@ -19,7 +19,7 @@ The all-campus template is an owner-selected Demo starting point. Team-confirmed
 
 ## Verification commands and evidence
 
-Evidence logs and browser captures are under the ignored local directory `D:/Coding/cms-student-portal/logs/university-flows-20261020/`; Responsive Control/Staff/Applicant screenshots are archived in its `captures` subdirectory; Playwright also retains current captures under each consumer's test-results. Logs contain fixture data only. These checks use independent records, clocks, HTTP services and stores.
+Evidence logs and browser captures are under the ignored local directory `D:/Coding/raisd/cms-student-portal/logs/university-flows-20261020/`; Responsive Control/Staff/Applicant screenshots are archived in its `captures` subdirectory; Playwright also retains current captures under each consumer's test-results. Logs contain fixture data only. These checks use independent records, clocks, HTTP services and stores.
 
 | Area | Commands and result |
 |---|---|

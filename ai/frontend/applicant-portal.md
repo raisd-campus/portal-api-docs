@@ -1,5 +1,52 @@
 # Applicant portal — agent knowledge
 
+## Published Academic catalogue and accepted curriculum — 29 October 2026
+
+HTTP applications use the Portal API catalogue of active campus faculties and programmes with a usable approved default structure and semester calendar. Intake/faculty/course choices and server submission validation use the same campus/intake catalogue; switching campus clears previous choices. Programme document requirements come from that catalogue. Drafts and submitted applications retain their catalogue labels, while submission pins the exact published ProgrammeVersion and structure version in `academicSelection`.
+
+Acceptance preserves that selection in the Academic acceptance variant and emits admission handoff v3. The owned Student continuation creates the selected programme enrolment with its first period current/pending and later periods planned/pending, retains the same SSO person, and copies no existing student's registrations, results or invoices. Existing Demo acceptance and handoff v1/v2 remain valid. Published curriculum changes affect subsequent submissions, not archived applications or existing enrolments. `MockApplicantPortalApi` accepts an optional catalogue/selection integration for paired Portal API use; standalone scenarios retain their established catalogue.
+
+Accepted SSO sessions retain the server-owned principal string returned as `scenarioId`; new applicants use an isolated person-and-campus principal rather than a Demo scenario. Campus-host exchanges pass the existing hosted campus ID, and the API validates that scope. An unscoped host lets the server resolve a single assigned campus. Multiple campus identities must enter through the intended campus host. New owned journeys begin empty, and their catalogue and submitted campus remain server-scoped. Raw Demo credential login and development scenario pickers retain their five existing identifiers. Submission checks the catalogue revision before pinning selection so a concurrent curriculum publication requires current choices to be retried.
+
+Display terminology is **Study Plan** throughout Academic tabs, actions, breadcrumbs, review flow and feedback. Existing routes, flow/step IDs, API/schema keys, saved record names and recorded audit values are preserved. The built-in Academic Curriculum configuration name has a display-only Academic Study Plan alias; loading it does not change the stored name or create unsaved edits.
+
+
+## Shared header breadcrumbs — 27 October 2026
+
+Applicant pins shared 0.18.4 and passes its existing owned route hierarchy into PortalHeader. My Applications is the root; Create Application, Edit Application and Application Details link back to it. Documents Checklist remains its own root. Router links retain the existing Leave application guard and account-name/ID data. Long trails use the shared responsive menu, including keyboard and loading states.
+
+## Application progress status pills - 26 October 2026
+
+Submitted application progress shows Step, Reviewer and Status. Status displays the configured progress update using the existing shared Badge with success for completed milestones and warning for pending actions. Its displayed text omits trailing periods; the duplicate raw-status column is removed. Configured applications still render the API-projected Control wording without changing pinned policy text or workflow state. Legacy progress uses the same presentation. Status pills appear only through the first unfinished step; later steps stay listed with empty status cells, avoiding the appearance of concurrent reviews. Once every step completes, all milestone statuses are shown. Control-provided reviewer names and wording remain unchanged.
+
+## Shared ContentSection title height — 0.10.5
+
+Applicant, Student, Staff and Control pin the same released shared component. All ContentSection title containers have a 36px minimum height, including custom headings and sidebar variants; multiline content can grow. Typography and default page/sidebar gaps remain unchanged. This is a local presentation upgrade without data, API or workflow changes.
+
+## Shared page spacing — 0.10.2
+
+Applicant pages consume released design-system 0.10.2. Applications, create/edit, submitted/unavailable and Documents Checklist use the shared default page ContentSection (16px), preserving existing headings and focus targets. Internal step panels, cards, validation, conversation and workflow spacing remain unchanged. No local page-heading gap replaces the shared default.
+
+## Uploaded-file actions — 21 October 2026
+
+Every Applicant FileUploadField composes the existing shared per-file action slot with DocumentActions: Preview File and Download File. This covers editable academic qualifications, English evidence, identity/supporting documents, fee proof, later admissions evidence/signatures and read-only submitted documents. Original bytes remain owned by the browser session and existing authenticated file-delivery adapter. Preview opens the original resource in a new tab; download retains its original filename. Temporary URLs are revoked on replacement/unmount. Metadata-only unavailable files show disabled actions and a recovery message instead of delivering empty bytes. Existing field variants, backgrounds, validation, selection/removal and permissions are unchanged; no shared package release is needed.
+
+## Account header — 21 October 2026
+
+The header name comes from the saved applicant name on the selected owned application, or the most recently updated named application on listing/checklist/new routes. Until a saved applicant name is available, it falls back to the SSO account name and then Applicant. It uses the existing application query without additional requests or identity changes.
+
+Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User ID followed by ` · ` and comma-separated assigned roles second. Applicant, Student, Staff and Control use the same number. Email and campus Student/Staff numbers are not substituted. Role metadata is display-only; active-role authorization remains unchanged. The 26 October cross-portal source audit confirmed Control uses the signed-in SSO displayName, Staff uses its signed-in staff identity/profile, and Student uses the owned student profile. Stored Demo names such as SSO Admin (Demo) are valid identity data and are retained; portals must not replace them with guessed names.
+
+## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
+
+Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](../backend/learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.
+
+
+## Cyberjaya configuration fixes — 21 October 2026
+
+Configured draft mode is preserved before the first campus selection and when resuming; campus changes resolve their matching policy. Document retention, submitted documents and the campus-selected checklist consume the policy overrides. Tasks show actual fee/tuition/English/Offer deadlines, permitted payment instructions and only applicable later evidence actions. SSO sessions retain the API-advertised original-file/continuation capability. Existing legacy cases and immutable accepted snapshots are preserved. The new test:e2e:campus suite exercises actual Applicant → Staff → Student API-backed local/international journeys in isolated memory. See [University Flows](../backend/university-flows.md).
+
+
 ## Current Admissions policy flow - 20 October 2026
 
 New applications pin the campus policy at first valid saved campus selection. Eligibility precedes Registration Fee collection; Application Fee and admissions Registration Fee are one charge. The new five-step submission has no upfront payment step. Post-submission tasks collect the quoted fee, exact-version signed Offer, English evidence and requested corrections through existing owned-file routes. Policy-disabled stages are explicitly not required; missing data displays Not provided/manual review. Conditional acceptance enables Student continuation, followed by Bursary/Faculty registration and CAF. Legacy cases retain the earlier flow described in historical notes below. Shared package stays 0.8.0. See [University Flows](../backend/university-flows.md); local verified source does not establish hosted or Live CMS delivery.
@@ -177,3 +224,47 @@ login with explicit Demo identity binding and a single StrictMode code exchange.
 See the [campus integration receipt](student-portal/audits/2026-10-16-campus-integration-publication.md)
 for per-repository gates, canonical mirrors and Jenkins/Argo delivery boundaries.
 No manual hosted rollout or local user-service reset is included.
+
+## Legacy fee-step readiness - 21 October 2026
+
+In the legacy six-step form, a non-blank bank reference and selected proof turn the fee summary green with Ready to submit. Missing either value restores the incomplete warning. This describes form readiness only; Bursary still verifies payment after submission. The configured five-step flow and its later Registration Fee task are unchanged.
+
+## Local scenario checkpoints - 21 October 2026
+
+Keychain now separates a blank new applicant, a complete unsubmitted draft, a submitted application awaiting QA, and an eligibility-verified application awaiting applicant confirmation. The ready draft has its own SSO identity and five completed configured steps; the submitted and verified cases cannot edit/resubmit their original forms. All three populated local Cyberjaya fixtures have matching personal emails and actual owned synthetic PDF/PNG resources. Registration Fee payment is a later task and is not pre-verified. Existing persisted records and historical dev-only legacy examples remain separate. See the [account mapping and verification](keychain.md#distinct-applicant-scenario-accounts---21-october-2026).
+
+## Submitted application cards — 21 October 2026
+
+The Applicant details page omits the separate Application requirements, Dates and deadlines and Registration Fee cards. The existing summary card, Application Progress, submitted information, Offer/evidence tasks and other interactions retain their behavior. Server policy and payment routes remain unchanged.
+
+The empty Admissions requirements heading and standalone Reload status bar are removed; Offer/evidence forms still appear when available. Application Progress hides not-required rows, uses title casing for steps and statuses and proper desk names (including QA), and displays all unfinished steps consistently as Pending. The summary card and remaining page are preserved.
+
+## Control-owned progress wording — 21 October 2026
+
+Configured Application Progress consumes the `progress` rows returned by Portal API with each owned application. Applicant does not override step/department names, statuses or updates. Control Admissions → Applicant wording owns those strings in versioned `settings.presentation`; its preview consumes the same evaluator output. Raw pending/manual decisions both display the configured Pending status, completed rows use Complete, and not-required rows are excluded. Default updates use one short sentence: Awaiting {department} review (or applicant confirmation); completed updates say Completed. The department placeholder resolves from the assigned desk and configured names. Rules, clearances and raw manual decisions remain distinct internally. Existing pinned policy versions retain their wording; new publications apply to new applications/reset journeys. Older records receive compatible defaults without resetting data. Offline mock sessions evaluate the same settings locally; connected sessions fetch API rows.
+
+## Submitted file tile contrast — 0.9.2
+
+Applicant pins published design-system 0.9.2. Submitted read-only file values opt into FileUploadField fileSurface="elevated" inside their matching surface-raised detail cards. The shared default background remains unchanged for forms, the document checklist and other consumers. No portal CSS override is used. Shared package checks, responsive consumer checks, live transcript contrast and Applicant build were verified locally; portal hosting is not deployed.
+
+## Empty application conversation — 21 October 2026
+
+When Application Messages has no messages, compose the existing shared EmptyState inside the message content with No messages yet and the existing reviewer/applicant guidance as its description. Do not duplicate that description below the section heading. Existing conversations and the composer retain their behavior. No shared component change is introduced.
+
+Configured applications omit the fee accordion from Submitted Application because the initial form ends with Documents. Registration Fee remains a later Application Progress stage. Legacy applications retain their submitted fee details.
+
+## Configured admissions status — 22 October 2026
+
+The summary and badge use Portal API's Control-owned **current pending action**, while progress retains completed milestones. A released Eligibility Letter leaves overall status **Awaiting Applicant Confirmation** and next action **Confirm Eligibility** (Applicant). After confirmation, status is **Awaiting Bursary Review**, next step **Registration Fee**. Completed Eligibility Review remains **Eligibility Letter Released**. Configured text comes from `admissionsDisplay`/`progress`; no portal formats internal approved/complete enums into current status. Legacy presentation remains unchanged. See [University Flows](../backend/university-flows.md).
+
+
+Cross-portal breadcrumb verification (0.18.4): shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff/Lecturer lint, 94 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Applicant lint, three focused header unit cases, type/production build and production-exclusion check passed (its existing unused-variable warning remains). Student lint, 15 focused breadcrumb/route unit cases, type/production build and production-exclusion checks passed. Student bundle budgets passed unchanged: eager JavaScript 194164 gzip bytes against 196608; largest chunk 373077 bytes.
+
+All 25 focused Chromium/WebKit portal cases passed: Applicant four, Student five (1280/1440 Chromium and phone/tablet/desktop WebKit), Staff six, Lecturer four and Control six. Coverage includes parent navigation, selected programme/semester scope, mobile overflow, keyboard/Escape, unsaved application/flow guards and unavailable teaching details. Test-only selectors were scoped to the header and menu dismissal was awaited; unrelated inner breadcrumbs remain intact. All 296 installed files in each of four portals match the verified 0.18.4 registry archive. Nine affected captures and both 253-capture catalogue mirrors validate. Focused portal checks were used under the owner-approved fast workflow; no full Student/Applicant regression-suite claim is made.
+
+Only Applicant, Student, Staff and Control frontends restarted. APIs, SSO, Keychain, Docker, identities, applications, drafts and policies were not reset or migrated. No hosted deployment, commit or push occurred.
+
+
+## Admissions workflow template compatibility
+
+The API may resolve workflow template 1 into the case's pinned Local/International settings, order, exact campus prices and structured letters. Applicant HTTP draft/submit clients advertise template support. Progress and current action continue using policy/SSO presentation; no portal-hardcoded role authority is added. Existing applications and issued files remain pinned. See [Flow Editor](../design/flow-editor.md). Unsupported PDF glyphs fail explicitly rather than corrupting issued names.

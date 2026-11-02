@@ -1,5 +1,10 @@
 # Applicant mock Portal API
 
+## Configured flow acceptance — 21 October 2026
+
+The configuration regressions cover blank-campus draft resume, policy-controlled document retention and submitted evidence, optional medical preparation, applicable later evidence actions, real deadline presentation, method-specific instructions and SSO capability propagation. The isolated multi-portal test:e2e:campus suite uses actual HTTP handlers/frontends with separate synthetic records and SSO identities; existing test:handoff remains legacy compatibility coverage. No interactive or hosted Demo is reset.
+
+
 ## Policy-aware mock and HTTP parity - 20 October 2026
 
 The new-case mock uses the same policy contract/evaluator as Portal API. Historical golden/browser fixtures explicitly select a legacy resolver; production does not expose that fixture switch. New-policy browser tests run separately against the five-step eligibility-first flow. getAdmissionsPolicy, submitRegistrationFee, submitSignedOffer and submitAdmissionsEvidence are advertised HTTP methods; unsupported methods fail instead of silently falling back. Existing revision, ownership, retry and acceptance guards remain. See [University Flows](../../backend/university-flows.md).

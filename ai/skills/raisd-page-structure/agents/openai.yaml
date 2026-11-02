@@ -1,0 +1,6 @@
+interface:
+  display_name: "Raisd Page Structure"
+  short_description: "Build cohesive Raisd pages with shared UI patterns"
+
+policy:
+  allow_implicit_invocation: true

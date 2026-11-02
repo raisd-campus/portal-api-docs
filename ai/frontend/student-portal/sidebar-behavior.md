@@ -1,5 +1,13 @@
 # Community and chat behaviour
 
+## Shared header breadcrumbs — 27 October 2026
+
+The header now uses shared structured breadcrumbs consistently with Applicant, Staff/Lecturer and Control. Real parent pages use router Links; Academic/Profile grouping labels remain informational. Nested route parents retain programme ownership and module semester. Overflowing ancestry moves into the shared menu with full labels; current-page context remains visible. Main scrolling, sidebar selection, Community layers and account actions are unchanged.
+
+## Account header — 21 October 2026
+
+Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User ID followed by ` · ` and comma-separated assigned roles second. Applicant, Student, Staff and Control use the same number. Email and campus Student/Staff numbers are not substituted. Role metadata is display-only; active-role authorization remains unchanged.
+
 The frame, responsive phone drawer, tablet rail, desktop sidebar, navigation row styling, logo/footer placement, header, avatar sizing, and page gutters come from `@raisd-campus/design-system@0.2.0` `system/portal-shell`. Student route selection, nested menus, availability rules, Community data remains here; desktop resizing comes from the shared Community package. Change a shared shell behavior in the package and update this document only when the student composition changes observably.
 
 Community presentation now comes from the locally packed design-system **0.7.0 candidate** (`system/community`, `system/community-message-list`), preserving Student appearance and responsive interactions. Student retains its adapter, selected-enrolment rules, drafts, scroll state, services and meetups. The tracked released pin remains 0.6.2 until publication/pinning approval.

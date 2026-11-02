@@ -1,0 +1,6 @@
+import { z } from "zod"
+export const admissionsRequirementSchema = z.object({ field: z.enum(["english", "medicalReport", "signature"]), label: z.string(), status: z.enum(["not-required", "pending", "awaiting-verification", "verified"]), canUpload: z.boolean(), instruction: z.string(), fileName: z.string().nullable() })
+export const admissionsRequirementsSchema = z.object({ enabled: z.boolean(), applicationId: z.string().nullable(), revision: z.number().int(), generation: z.number().int().nullable(), offerId: z.string().nullable(), requirements: z.array(admissionsRequirementSchema), blockers: z.array(z.object({ id: z.string(), label: z.string(), actor: z.string(), status: z.string(), reason: z.string() })) })
+export type AdmissionsRequirements = z.infer<typeof admissionsRequirementsSchema>
+export type SubmitAdmissionsRequirement = { field: "english" | "medicalReport" | "signature"; expectedRevision: number; requestId: string; offerId?: string; qualificationName?: string; score?: string; examinedOn?: string; file: File }
+export const emptyAdmissionsRequirements: AdmissionsRequirements = { enabled: false, applicationId: null, revision: 0, generation: null, offerId: null, requirements: [], blockers: [] }

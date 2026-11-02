@@ -387,6 +387,107 @@ paths:
         "204":
           description: Logged out
 
+  /v1/control/flow-reviewers:
+    get:
+      tags:
+      - Admin
+      operationId: listFlowReviewers
+      summary: List live bindings and campus roles; active Control plus flows.configure
+        required
+      security:
+      - bearerAuth: []
+      parameters:
+      - in: query
+        name: configurationId
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Confirmed result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowReviewerDirectory'
+        '403':
+          description: Active Control and flows.configure required
+    post:
+      tags:
+      - Admin
+      operationId: saveFlowReviewers
+      summary: Save immediate audited reviewer roles with revision and retry safeguards
+      description: Eligible campus Admin Applicants role definitions only. Ordinary
+        last-reviewer removal is rejected. Does not grant access. Security revocation
+        remains possible.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/FlowReviewerTarget'
+              - type: object
+                required:
+                - roleIds
+                - expectedRevision
+                - requestId
+                properties:
+                  roleIds:
+                    type: array
+                    uniqueItems: true
+                    maxItems: 100
+                    items:
+                      type: string
+                      minLength: 1
+                  expectedRevision:
+                    type: integer
+                    minimum: 0
+                  requestId:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+      responses:
+        '200':
+          description: Confirmed result
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - binding
+                properties:
+                  binding:
+                    $ref: '#/components/schemas/FlowReviewerBinding'
+        '400':
+          description: Invalid typed input
+        '403':
+          description: Active Control and flows.configure required
+        '409':
+          description: Stale revision
+        '422':
+          description: Invalid role, empty coverage or conflicting retry
+  /v1/internal/flow-reviewers:
+    get:
+      operationId: internalFlowReviewers
+      summary: Service-only live reviewer directory
+      security: []
+      parameters:
+      - in: header
+        name: X-SSO-Service-Token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Confirmed result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowReviewerDirectory'
+        '401':
+          description: Invalid service token
+
   /v1/control/campuses:
     get:
       tags: [Admin]
@@ -453,13 +554,23 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, entryRoleKey, permissions]
+              required: [name, permissions]
+              description: Provide entryRoleKeys, or entryRoleKey when the role enters one portal.
               properties:
                 name: { type: string }
                 description: { type: string }
                 entryRoleKey:
                   type: string
                   enum: [admin, lecturer, student]
+                  description: Single portal. Ignored when entryRoleKeys is set.
+                entryRoleKeys:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  description: Portals this role may enter. At least one of entryRoleKey or entryRoleKeys is required.
+                  items:
+                    type: string
+                    enum: [admin, lecturer, student]
                 permissions:
                   type: array
                   items: { type: string }
@@ -536,6 +647,15 @@ paths:
                 entryRoleKey:
                   type: string
                   enum: [admin, lecturer, student]
+                  description: Replaces the portal list with this single portal. Ignored when entryRoleKeys is set.
+                entryRoleKeys:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  description: Portals this role may enter.
+                  items:
+                    type: string
+                    enum: [admin, lecturer, student]
                 permissions:
                   type: array
                   items: { type: string }
@@ -1006,6 +1126,57 @@ paths:
         "404":
           description: None or disabled in production
 
+  /v1/internal/learners/transition:
+    post:
+      summary: Durable learner role transition
+      description: Trusted service only. Bind to immutable SSO person ID. Replace Applicant
+        with Student; preserve Staff/Control and passwords; revoke learner sessions/codes.
+        Reset requires a registered unlinked Cyberjaya Demo identity and next generation.
+        Persistence failure is not success.
+      parameters:
+      - in: header
+        name: x-sso-service-token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                personId:
+                  type: string
+                operationId:
+                  type: string
+                applicationId:
+                  type: string
+                campusId:
+                  type: string
+                generation:
+                  type: integer
+                  minimum: 1
+                reset:
+                  type: boolean
+                dryRun:
+                  type: boolean
+                  description: Validate registered Demo reset eligibility without changing identity, sessions or generation.
+              required:
+              - personId
+              - operationId
+              - applicationId
+              - campusId
+              - generation
+      responses:
+        '200':
+          description: Durable transition confirmed
+        '401':
+          description: Invalid trusted service credential
+        '409':
+          description: Identity/generation conflict or persistence failure
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1043,16 +1214,124 @@ components:
         active_role:
           $ref: "#/components/schemas/RoleAssignment"
 
+    FlowReviewerTarget:
+      oneOf:
+      - $ref: '#/components/schemas/AdmissionsFlowReviewerTarget'
+      - $ref: '#/components/schemas/AcademicFlowReviewerTarget'
+    AcademicFlowReviewerTarget:
+      type: object
+      required: [flowId, configurationId, campusId, stepId]
+      properties:
+        flowId: {type: string, const: academic-curriculum}
+        configurationId: {type: string, pattern: '^[a-zA-Z0-9:_-]{1,160}$'}
+        campusId: {type: string, pattern: '^campus-[a-z-]+$'}
+        stepId: {type: string, const: curriculum-review}
+    AdmissionsFlowReviewerTarget:
+      type: object
+      required:
+      - configurationId
+      - campusId
+      - studentType
+      - stepId
+      properties:
+        configurationId:
+          type: string
+          pattern: ^[a-zA-Z0-9:_-]{1,160}$
+        campusId:
+          type: string
+          pattern: ^campus-[a-z-]+$
+        studentType:
+          type: string
+          enum:
+          - local
+          - international
+        stepId:
+          type: string
+          enum:
+          - eligibility
+          - registration-fee
+          - english
+          - offer
+          - signed-offer
+          - tuition
+          - entry
+          - arrival
+          - medical
+          - endorsement
+          - international-registration
+          - deadlines
+    FlowReviewerBinding:
+      allOf:
+      - $ref: '#/components/schemas/FlowReviewerTarget'
+      - type: object
+        required:
+        - roleIds
+        - revision
+        - updatedAt
+        - updatedBy
+        properties:
+          roleIds:
+            type: array
+            uniqueItems: true
+            maxItems: 100
+            items:
+              type: string
+              minLength: 1
+          roleNames:
+            type: array
+            items:
+              type: string
+            description: Current names for presentation only
+          revision:
+            type: integer
+            minimum: 1
+          updatedAt:
+            type: string
+            format: date-time
+          updatedBy:
+            type: string
+    FlowReviewerDirectory:
+      type: object
+      required:
+      - bindings
+      - roles
+      properties:
+        bindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowReviewerBinding'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomRole'
+
     Introspection:
       type: object
       required: [active]
       properties:
         active: { type: boolean }
         personId: { type: string }
+        userNumber:
+          type: string
+          pattern: '^[1-9]\d{7,14}$'
+          readOnly: true
+          description: Permanent SSO-assigned numeric User ID, retained across portal roles and Demo resets.
         email: { type: string }
         displayName: { type: string }
+        roleKeys:
+          type: array
+          items: { type: string }
+          description: All assigned role keys for account display only; authorization uses the active role.
         roleKey: { type: string }
         roleAssignmentId: { type: string }
+        roleDefinitionId: {type: string, description: Stable custom role definition}
+        roleDefinitionIds:
+          type: object
+          additionalProperties: {type: string}
+          description: Active campus role definitions including built-in Campus Admin
+        reviewerBindings:
+          type: array
+          items: {$ref: '#/components/schemas/FlowReviewerBinding'}
         campusIds:
           type: array
           items: { type: string }
@@ -1077,6 +1356,12 @@ components:
           type: array
           items: { $ref: "#/components/schemas/DeskTag" }
         customRoleId: { type: string }
+        entryRoleKeys:
+          type: array
+          description: Portals a custom role may enter. Sign-in offers one choice per portal.
+          items:
+            type: string
+            enum: [admin, lecturer, student]
         permissions:
           type: array
           items: { type: string }
@@ -1094,7 +1379,7 @@ components:
 
     CustomRole:
       type: object
-      required: [id, campusId, name, entryRoleKey, permissions]
+      required: [id, campusId, name, entryRoleKey, entryRoleKeys, permissions]
       properties:
         id: { type: string }
         campusId: { type: string }
@@ -1103,6 +1388,15 @@ components:
         entryRoleKey:
           type: string
           enum: [admin, lecturer, student]
+          description: First portal in entryRoleKeys. Kept for older clients.
+        entryRoleKeys:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          description: Portals this role may enter. More than one is mixed access.
+          items:
+            type: string
+            enum: [admin, lecturer, student]
         permissions:
           type: array
           items: { type: string }
@@ -1164,12 +1458,27 @@ components:
       required: [personId, email, displayName, cmsPersonRef, roles]
       properties:
         personId: { type: string }
+        userNumber:
+          type: string
+          pattern: '^[1-9]\d{7,14}$'
+          readOnly: true
+          description: Permanent SSO-assigned numeric User ID, retained across portal roles and Demo resets.
         email: { type: string, format: email }
         displayName: { type: string }
         cmsPersonRef: { type: ["string", "null"] }
         roles:
           type: array
           items: { $ref: "#/components/schemas/RoleAssignment" }
+
+        learnerTransition:
+          type: object
+          required: [campusId, generation, operationId, applicationId, state]
+          properties:
+            campusId: { type: string }
+            generation: { type: integer, minimum: 1 }
+            operationId: { type: string }
+            applicationId: { type: [string, 'null'] }
+            state: { type: string, enum: [applicant, student] }
 
     PersonSummary:
       type: object

@@ -150,6 +150,9 @@
             <div class="nav-sub">
               <a class="nav-sub-trigger" href="../diagrams/old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
               <div class="nav-sub-menu" role="menu">
+              <a href="../diagrams/old-cms-lesotho/newer-cms.html">Newer CMS mind map</a>
+              <a href="../diagrams/old-cms-lesotho/newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="../diagrams/old-cms-lesotho/newer-cms-gap.html">Newer CMS gap vs Raisd</a>
               <a href="../diagrams/old-cms-lesotho/index.html">Feature analysis</a>
               <a href="../diagrams/old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
               <a href="../diagrams/old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
@@ -265,6 +268,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="../diagrams/old-cms-lesotho/newer-cms-manual.html">Lesotho newer CMS manual</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
@@ -341,7 +345,16 @@
   </header>
   <main class="sdd-doc">
 <h1 id="shared-platform">Shared platform</h1>
+<p>26 October: Admissions flow details use shared 0.14.0 AdminRecordWorkspace titled Edit Flow, with a saved summary/list sidebar, Original Page and Close. The right column contains three separate Affected Portals page panels and General above a direct form panel, without an inner section. Shared 0.13.0 supplies the fixed-height searchable ChipField; edits reset on navigation without saving or reassigning campuses. The previous editor remains on a separate read-only reference route with previews, history and help; saving, publishing and restoring as draft are unavailable. Stored policies, drafts, applications and API contracts are preserved.</p>
+<p>26 October: each named Admissions Flow has immutable published Versions. Control lists the latest published Version separately from the Applied Version currently effective for assigned campuses. Scheduled versions do not take effect early, existing application pins are retained, and Create Flow remains inactive.</p>
+<h2>Default title-container height — 0.10.5</h2><p>All four portals adopt the shared ContentSection 36px minimum title-container height, retaining heading typography, default gaps and multiline growth. This is presentation-only local delivery.</p>
+<h2>Shared Admin record flow — 0.10.0</h2><p>The shared library adds an Admin table and record workspace with read-first editing, summary/list switching, guarded create/edit navigation, typed deletion, explicit save outcomes and compact mobile layouts. Portals retain querying, authorization and persistence. Portal pins and Staff Applicants UI remain unchanged.</p>
+
+<h2>Permanent account identity — 21 October 2026</h2>
+<p>One immutable numeric SSO User ID spans all portal roles and survives conversion and Demo resets. Headers show the name, then User ID &middot; comma-separated assigned roles. Email sign-in and campus Student/Staff numbers remain separate. Local validation only; no hosted migration has been run.</p>
+
 <h2 id="control-university-flows-20-october-2026">Control University Flows - 20 October 2026</h2>
+<p>Directory update, 23 October: University Flows uses the shared ContentSection with a clickable Admissions card and no surrounding page panel. Released shared 0.11.0 <code>LinkedList</code> panel variant gives that card the surface token and 12px page-panel radius, preserving the default variant. Control alone uses that release. Admissions now lists real reusable named configurations in AdminTable, with Global assigned to all eight local campuses. One shared editor owns independent settings and immutable revisions per configuration; publication affects new applications in assigned campuses while existing cases retain their pinned snapshots. A transactional additive import preserves distinct campus settings, scheduled changes, drafts and history. Create is inert and assignment editing is deferred. No hosted migration or portal deployment is included.</p>
 <p>Control adds an extensible University Flows registry and campus Admissions editor using released design-system 0.9.1. Existing portals keep sufficient 0.8.0 pins; shared sources are unchanged. Save draft, validate/preview and publish produce immutable effective policy versions for new applications. Reversion publishes a copy as a new version. Active Control plus flows.configure is required; policy settings never grant access. Existing identities/passkeys/grants remain intact, and review desk assignment stays a separate People operation.</p>
 <p>Portal API validates inputs/outputs and owns one policy evaluator across affected mutations. Additive PostgreSQL state persists versions/drafts/audit/retries; local memory Demo uses a private atomic policy file with cross-process locking. Existing application/Student/evidence persistence and schema epoch remain unchanged. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a> and canonical OpenAPI. Hosted deployment/publication/production migrations are outside this delivery.</p>
 
@@ -707,7 +720,9 @@ components.</p>
 and password recovery: the logo is centred outside and above the card.
 The default shared placement remains inside; authentication policy and
 workflows are unchanged.</p>
-  </main>
+    <section id="local-keychain-sso-credentials"><h2>Local Keychain credentials — 23 October 2026</h2><p>Demo SSO email credentials are injected separately from Portal API scenario-password files. Student and Applicant cards use the SSO credential for their login target, preserving existing identity passwords, roles, passkeys and application data. Credential maps and generated modules stay ignored. Infrastructure logins remain independent.</p></section>
+  <section><h2>Predefined Admissions Flow Editor — local implementation, 28 October 2026</h2><p>Control edits predefined template 1 with independent Local/International settings and immutable versions. Shared 0.19.0 owns linked step presentation; Portal API owns pinned evaluation, prices and letters; SSO owns immediate audited reviewer bindings. Existing accepted cases remain pinned. Hosted activation is separate. See <a href="../ai/design/flow-editor.md">Flow Editor contract</a>.</p></section>
+</main>
   <p class="footer">Source Markdown in <a href="https://github.com/raisd-campus/control-plane/tree/main/docs/sdd">control-plane/docs/sdd</a> · Nomenclature <a href="./15-nomenclature.html">SDD-15</a></p>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -743,6 +758,14 @@ workflows are unchanged.</p>
       wrap.appendChild(table);
     });
   </script>
+<section><h2>Connected Demo learner lifecycle — 21 October 2026</h2><p>Accept Enrolment replaces Applicant with Student access for the same SSO identity. Outstanding evidence continues in Student; Control can preview and reset only registered Cyberjaya Demo journeys. See the <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/learner-lifecycle.md">canonical lifecycle, ownership rules and verification boundary</a>. Hosted rollout is separate; existing accepted accounts are not automatically migrated.</p></section>
+<section><h2>Admissions version settings and application journal — 28 October 2026</h2><p>Control uses shared Version Settings, PageActionBar and AuditTrail for saved drafts and immutable published versions. Apply Version can publish a saved draft or reapply a published version now or at a future UTC time, with a required reason. An append-only journal selects by application time while preserving future takeovers and pinned applications. Backdates, conflicts, no-op selections, missing role coverage and uncovered campus assignments are rejected atomically. Backup-first local file/PostgreSQL upgrades preserve original records. No Global application or hosted deployment is performed during implementation. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a>.</p></section>
+<section><h2>Admissions version refinements — 28 October 2026</h2><p>Reasons are no longer required for publishing or applying a version. Published display names are editable sidecar metadata with optimistic concurrency; original policies, dates, numbers, history and pinned applications remain intact. Control disables Apply for Applied versions, puts History in its own panel, and adds editable suggested names and shared Applied pills during creation. Delivery remains local.</p></section>
+<section><h2>Multiple Admissions draft versions — 28 October 2026</h2><p>Control lists independent saved drafts with published versions and keeps Create Version available. Creation is local until first Save Draft reserves a permanent identity and number. Independent revisions, exact retries and atomic publication preserve other drafts, schedules and pinned applications, including out-of-order publication. Backup-first upgrades preserve legacy data and bind compatibility writes explicitly. Flow status belongs to General metadata. Numeric links and guarded navigation remain supported. No real Global Apply or hosted operation is included. See <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/university-flows.md">University Flows</a>.</p></section>
+<section><h2>Summary status pills — shared 0.19.6</h2><p>AdminRecordPanel summary statuses retain normal Badge background, padding and radius. Compact-list status text is unchanged. Control alone adopts the patch; no flow or policy data changes.</p></section>
+<section><h2>Flow reorder synchronization — shared 0.19.7</h2><p>Control draft steps commit the final pointer-sort index, renumber linked steps immediately and save their actual order. Disallowed destinations retain existing order. No existing policy or application is changed during rollout.</p></section>
+<section><h2>Admin workspace bottom alignment — shared 0.19.8</h2><p>The Admin record sidebar measures the shell bottom inset rather than reusing the section gap. Control adopts the alignment patch; workflow and data are unchanged.</p></section>
+<section><h2>Recorded version changes</h2><p>Portal API records before/after field changes atomically with draft saves and published-name changes. Control reuses shared AuditTrail change rows, including in the read-only reference. Missing historical detail remains explicit; no history backfill, library release or policy/application change is performed.</p></section>
   <script src="../diagrams/nav-dropdown.js" defer></script>
   <script src="../diagrams/site-search.js" defer></script>
   <script src="../diagrams/keychain-access.js" defer></script>
