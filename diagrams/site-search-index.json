@@ -1102,6 +1102,66 @@
       "path": "diagrams/lms-features.html"
     },
     {
+      "title": "Moodle + Classroom map",
+      "summary": "Docs-only capability absorb of Moodle and Google Classroom into Raisd CAP/F01\u2013F37 with labelled reference screenshots.",
+      "section": "Architecture",
+      "keywords": [
+        "lms",
+        "moodle",
+        "google classroom",
+        "reference",
+        "screenshots",
+        "capability map",
+        "cap",
+        "f01",
+        "f37"
+      ],
+      "path": "diagrams/lms-reference/index.html"
+    },
+    {
+      "title": "LMS feature steps",
+      "summary": "Step-by-step LMS features with functionality, direction of use, Raisd integration, and per-step sequence diagrams showing location.",
+      "section": "Architecture",
+      "keywords": [
+        "lms",
+        "features",
+        "steps",
+        "sequence",
+        "student",
+        "lecturer",
+        "staff",
+        "portal-api",
+        "classrooms",
+        "materials"
+      ],
+      "path": "diagrams/lms-reference/features.html"
+    },
+    {
+      "title": "LMS online-class options",
+      "summary": "Full analysis of live-class vendors \u2014 cost calculator, hosting, integration shapes, breakouts, recordings, quizzes, self-paced unlock (standup 2 Nov 2026). Not Live.",
+      "section": "Architecture",
+      "keywords": [
+        "lms",
+        "live class",
+        "online class",
+        "zoom",
+        "bigbluebutton",
+        "whereby",
+        "daily",
+        "realtimekit",
+        "breakout",
+        "quiz",
+        "recording",
+        "self-paced",
+        "cost",
+        "cap-26",
+        "cap-24",
+        "f12",
+        "f13"
+      ],
+      "path": "diagrams/lms-online-class-options.html"
+    },
+    {
       "title": "Migration plan",
       "summary": "M1\u2013M5 delivery sequence, hosting stages, and critical path for campus launch.",
       "section": "Architecture",

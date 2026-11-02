@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd LMS — online-class options (cost, integration, breakouts)</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .callout { margin:12px 0; padding:12px 14px; border-radius:10px; border-left:4px solid var(--accent); background:var(--accent-soft); font-size:.92rem; }
+    .callout.warn { border-left-color:var(--warn); background:var(--warn-bg); }
+    .callout.ok { border-left-color:var(--ok); background:var(--ok-bg); }
+    .tag { display:inline-block; font-size:.72rem; font-weight:700; padding:.12rem .45rem; border-radius:4px; margin:0 4px 4px 0; }
+    .tag.demo { background:#dcfce7; color:#166534; }
+    .tag.gap { background:#fee2e2; color:#991b1b; }
+    .tag.prop { background:#e0e7ff; color:#3730a3; }
+    .tag.rec { background:#fff6e8; color:#9a6418; }
+    table.data { width:100%; border-collapse:collapse; font-size:.88rem; margin:10px 0 16px; }
+    table.data th, table.data td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+    table.data th { background:var(--accent-soft); }
+    table.data td.num, table.data th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    table.data tr.pick td { background:#f0fdf4; }
+    .jump { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+    .jump a { font-size:.88rem; }
+    .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:12px 0; }
+    .card { padding:14px 16px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+    .card .n { font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+    .card strong { display:block; margin:4px 0 6px; }
+    .card span { color:var(--muted); font-size:.88rem; line-height:1.4; }
+    .formula { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.84rem; background:var(--accent-soft); padding:10px 12px; border-radius:8px; overflow-x:auto; }
+    .mermaid { margin:14px 0; padding:12px; border:1px solid var(--line); border-radius:10px; background:var(--surface); overflow-x:auto; }
+    .note { color:var(--muted); font-size:.86rem; }
+  </style>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+  </script>
+  <script src="site-auth.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="index.html">Diagrams hub</a>
+            <a href="index.html#progress">Project progress</a>
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="index.html#endpoints">Public endpoints</a>
+            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="lms.html">LMS research</a>
+            <a href="lms-architecture.html">LMS architecture</a>
+            <a href="lms-features.html">LMS features</a>
+            <a href="lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="lms-reference/features.html">LMS feature steps</a>
+            <a href="lms-online-class-options.html">Online-class options</a>
+            <a href="migration.html">Migration</a>
+            <a href="architecture.html#services">Microservices</a>
+            <a href="architecture.html#vps">VPS topology</a>
+            <a href="architecture.html#cicd">CI/CD pipeline</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="architecture.html">Architecture home</a>
+            <a href="access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="campus-configurability.html">Campus configurability help</a>
+            <a href="architecture.html#services">Microservices</a>
+            <a href="architecture.html#vps">VPS topology</a>
+            <a href="architecture.html#cicd">CI/CD pipeline</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="distributed-cms-architecture.html">Target architecture</a>
+              <a href="distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="lms.html">LMS research posture</a>
+            <a href="lms-architecture.html">LMS architecture</a>
+            <a href="lms-features.html">LMS features F01–F37</a>
+            <a href="lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="lms-reference/features.html">LMS feature steps</a>
+            <a href="lms-online-class-options.html">Online-class options</a>
+            <a href="architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="architecture.html#acl">SoR / ACL</a>
+            <a href="architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="migration.html">Plan overview</a>
+              <a href="migration.html#sequence">Milestone sequence</a>
+              <a href="distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="migration.html#m1">M1–M5 detail</a>
+              <a href="migration.html#hosting">Hosting stages</a>
+              <a href="migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="raisd-cms/student-portal.html">Student portal</a>
+            <a href="raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="erd.html">ERD</a>
+            <a href="canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="guidance/index.html" aria-haspopup="true" aria-expanded="false">Guidance</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="guidance/index.html">User guidance</a>
+              <a href="guidance/website-ai-should.html">AI should</a>
+              <a href="guidance/website-ai-should-not.html">AI should not</a>
+              <a href="guidance/website-ai-decisions.html">AI decisions</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms-lesotho/newer-cms.html">Newer CMS mind map</a>
+              <a href="old-cms-lesotho/newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="old-cms-lesotho/newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="old-cms-lesotho/workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="old-cms-lesotho/feature-modules.html">Feature modules</a>
+              <a href="old-cms-lesotho/demo-role-playback.html">Demo role playback</a>
+              <a href="old-cms-lesotho/wireframes/index.html">Demo desk wireframes</a>
+              <a href="old-cms-lesotho/newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="old-cms-lesotho/newer-cms-exports.html">Newer CMS exports</a>
+              <a href="old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
+              <a href="old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="old-cms-lesotho/campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="old-cms-lesotho/cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="old-cms-lesotho/dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
+              <a href="old-cms-lesotho/index.html#admissions">Flows</a>
+              <a href="old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="old-cms-lesotho/index.html#cap">CAP seed</a>
+              <a href="old-cms-lesotho/index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms/index.html">E2E hub</a>
+              <a href="old-cms/online-registration.html">Online registration</a>
+              <a href="old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="old-cms/fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="old-cms/index.html#fsd">FSD</a>
+              <a href="old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="old-cms/index.html#flows">Flows</a>
+              <a href="old-cms/index.html#erd">ERD</a>
+              <a href="old-cms/index.html#database">Database</a>
+              <a href="old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms-eswatini/index.html">E2E hub</a>
+              <a href="old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms-cambodia/index.html">E2E hub</a>
+              <a href="old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms-botswana/index.html">E2E hub</a>
+              <a href="old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="old-cms-botswana/index.html#flows">Flows</a>
+              <a href="old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="old-cms-botswana/index.html#erd">ERD</a>
+              <a href="old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../design-system/index.html">Design system hub</a>
+            <a href="../design-system/email-templates.html">Email templates</a>
+            <a href="../design-system/foundations.html">Foundations</a>
+            <a href="../design-system/shared-controls.html">Shared controls</a>
+            <a href="../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md">LMS online-class options</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="old-cms-lesotho/newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="old-cms-lesotho/newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="old-cms-lesotho/newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              <a href="https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/" target="_blank" rel="noopener noreferrer">CMS standup updates · 30 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-21/" target="_blank" rel="noopener noreferrer">E2E access control · 21 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../sdd/index.html">SDD hub</a>
+            <a href="../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="eyebrow">LMS research · Standup 2 Nov 2026 · CAP-26 / CAP-24 / F12 / F13</p>
+    <h1>Online-class options — full analysis</h1>
+    <p class="lead">
+      Cost models, hosting, integration shapes, breakout support, recordings, quizzes, and self-paced unlock —
+      for Raisd portals via Portal API. <span class="tag prop">Proposed</span>
+      <span class="tag gap">Not Live</span>
+      Demo ≠ Live.
+    </p>
+
+    <div class="callout warn">
+      <strong>Indicative pricing only</strong> (public list rates, late 2025–Nov 2026 USD/EUR).
+      Re-quote before procurement. This page does <em>not</em> authorise a Live CAP-26 vendor.
+      Knowledge SoT: <code>docs/ai/architecture/lms-online-class-options.md</code>.
+    </div>
+
+    <div class="jump">
+      <a href="#verdict">Verdict</a>
+      <a href="#constraints">Raisd constraints</a>
+      <a href="#shapes">Integration shapes</a>
+      <a href="#matrix">Platform matrix</a>
+      <a href="#cost">Cost calculator</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#breakouts">Breakouts</a>
+      <a href="#selfpaced">Self-paced · recordings · quizzes</a>
+      <a href="#spike">Demo spike</a>
+      <a href="#related">Related</a>
+    </div>
+
+    <section class="section" id="verdict">
+      <h2>Working Group verdict (research)</h2>
+      <div class="grid3">
+        <div class="card">
+          <div class="n">1 · Demo spike</div>
+          <strong>Whereby Embedded or Daily Prebuilt</strong>
+          <span>Prove timetable-gated join, participant role, recording link, attendance webhook inside Student/Lecturer shells. Lowest ops on UltaHost k3s.</span>
+        </div>
+        <div class="card">
+          <div class="n">2 · Education pack</div>
+          <strong>Managed BigBlueButton + Portal API</strong>
+          <span>Whiteboards, polls, breakouts, recording hooks without building a classroom UI. Prefer managed host — do not self-host media on the Demo node.</span>
+        </div>
+        <div class="card">
+          <div class="n">3 · Branded product</div>
+          <strong>Cloudflare RealtimeKit (or LiveKit)</strong>
+          <span>Fully Raisd chrome + programmable breakouts. Higher build cost; quizzes/self-paced stay Raisd-native.</span>
+        </div>
+      </div>
+      <p class="note">Deprioritise as primary pilot: self-hosted BBB/Jitsi on current Demo VPS; Meet/Teams-only unless a campus already standardises on them; raw Agora unless APAC scale forces it.</p>
+    </section>
+
+    <section class="section" id="constraints">
+      <h2>Raisd constraints (from standup + architecture)</h2>
+      <ul>
+        <li>Classroom must <strong>feel integrated</strong> — not a separate product chrome break.</li>
+        <li>Students join as <strong>participants</strong>; lecturers/moderators host.</li>
+        <li>Join access gated by <strong>class timetable</strong>.</li>
+        <li>Join/leave events feed <strong>attendance</strong> (late arrivals).</li>
+        <li>Recordings available when students miss live.</li>
+        <li>Quizzes attach at <strong>module / study-planner</strong> setup; self-paced unlock may differ from teaching-week release.</li>
+        <li>Portals talk only to <strong>Portal API</strong> (+ SSO). Meeting tokens minted server-side.</li>
+        <li>CMS remains SoR for enrolment; live attendance is a learning event, not a second roster SoR.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="shapes">
+      <h2>Integration shapes</h2>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Shape</th>
+            <th>Raisd owns</th>
+            <th>Vendor owns</th>
+            <th>“Integrated” fit</th>
+            <th>Build effort</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A · Link-out / LTI</strong><br/><span class="note">Meet, Zoom, Teams</span></td>
+            <td>Session metadata, Join button, attendance hooks</td>
+            <td>Full meeting UI</td>
+            <td>Weakest chrome continuity</td>
+            <td>Days</td>
+          </tr>
+          <tr class="pick">
+            <td><strong>B · Education classroom API</strong><br/><span class="note">BigBlueButton</span></td>
+            <td>Create/join URLs, role map, recording catalogue</td>
+            <td>Classroom UI + media + breakouts</td>
+            <td>Strong teaching features; iframe or redirect</td>
+            <td>1–3 weeks Demo</td>
+          </tr>
+          <tr class="pick">
+            <td><strong>C · Embedded media SDK</strong><br/><span class="note">Whereby, Daily, RealtimeKit, LiveKit</span></td>
+            <td>Full Raisd shell + scheduling + attendance UX</td>
+            <td>SFU / recording</td>
+            <td>Strongest “same product”</td>
+            <td>Weeks–months</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mermaid">
+flowchart TB
+  STU[Student portal]
+  LEC[Lecturer portal]
+  API[Portal API]
+  SSO[SSO]
+  PROV[Meeting provider]
+  ATT[Attendance CAP-12]
+  REC[Recording item CAP-18]
+  STU --> API
+  LEC --> API
+  API --> SSO
+  API -->|"mint host vs viewer token"| PROV
+  PROV -->|"webhooks join/leave"| API
+  API --> ATT
+  PROV -->|"recording.ready"| API
+  API --> REC
+      </div>
+      <p class="note">Shape A redirects to vendor UI after token mint. Shapes B/C return an embed URL or SDK room id into the portal route.</p>
+    </section>
+
+    <section class="section" id="matrix">
+      <h2>Platform comparison matrix</h2>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Cost model</th>
+            <th>Hosting</th>
+            <th>Integration</th>
+            <th>Breakouts</th>
+            <th>Recordings</th>
+            <th>Pros</th>
+            <th>Cons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Meet</td>
+            <td>Workspace / Classroom Edu seats</td>
+            <td>Google SaaS</td>
+            <td>Calendar / Classroom link</td>
+            <td>Limited</td>
+            <td>Drive</td>
+            <td>Familiar, low ops</td>
+            <td>Weak embed/API; tenancy politics</td>
+          </tr>
+          <tr>
+            <td>Zoom Meetings / Edu</td>
+            <td>~$10–18 / host / mo; Video SDK ~$0.0035 / session-min</td>
+            <td>Zoom SaaS</td>
+            <td>LTI / SDK / plugins</td>
+            <td>Yes (temporary)</td>
+            <td>Cloud (paid)</td>
+            <td>Reliability; procurement</td>
+            <td>Seat maths; Zoom chrome</td>
+          </tr>
+          <tr>
+            <td>Microsoft Teams</td>
+            <td>Often in M365 Education</td>
+            <td>Microsoft SaaS</td>
+            <td>Graph + LMS connectors</td>
+            <td>Yes (temporary)</td>
+            <td>Stream / OneDrive</td>
+            <td>Licence leverage</td>
+            <td>Raisd not M365-first</td>
+          </tr>
+          <tr class="pick">
+            <td>BigBlueButton</td>
+            <td>Licence $0; managed ~$12.50–$90+/mo or ~€65–199+ university</td>
+            <td>Self-host <em>or</em> managed</td>
+            <td>REST API + LTI 1.3</td>
+            <td>Yes (education)</td>
+            <td>Built-in + webhooks</td>
+            <td>Whiteboard, polls, teaching UX</td>
+            <td>Self-host heavy; use managed</td>
+          </tr>
+          <tr>
+            <td>Jitsi Meet</td>
+            <td>Infra only</td>
+            <td>Self-host / 8x8</td>
+            <td>DIY iframe + JWT</td>
+            <td>DIY</td>
+            <td>Jibri (ops-heavy)</td>
+            <td>Cheap, private</td>
+            <td>Not a classroom product</td>
+          </tr>
+          <tr class="pick">
+            <td>Whereby Embedded</td>
+            <td>$10.99/mo + ~$0.0042 / part-min; rec ~$0.01/min</td>
+            <td>Whereby SaaS</td>
+            <td>iframe / web component</td>
+            <td><strong>Breakout groups</strong></td>
+            <td>Add-on</td>
+            <td>Fast embed; Raisd shell</td>
+            <td>Metered; thinner classroom depth</td>
+          </tr>
+          <tr class="pick">
+            <td>Daily</td>
+            <td>10k free min; then ~$0.004 / part-min</td>
+            <td>Daily SaaS</td>
+            <td>Prebuilt / React</td>
+            <td>DIY rooms</td>
+            <td>Add-on</td>
+            <td>Fastest prototype</td>
+            <td>No native whiteboard</td>
+          </tr>
+          <tr>
+            <td>Agora</td>
+            <td>~$0.004 / HD min; whiteboard separate</td>
+            <td>Global network</td>
+            <td>Full custom SDK</td>
+            <td>DIY</td>
+            <td>Cloud recording</td>
+            <td>Scale / regions</td>
+            <td>Build everything</td>
+          </tr>
+          <tr>
+            <td>LiveKit</td>
+            <td>Cloud from free / $50; ~$0.0005/min + BW; or self-host</td>
+            <td>Cloud or k8s</td>
+            <td>Custom UI</td>
+            <td>DIY</td>
+            <td>Egress</td>
+            <td>OSS escape hatch</td>
+            <td>No classroom chrome</td>
+          </tr>
+          <tr class="pick">
+            <td>Cloudflare RealtimeKit</td>
+            <td>10k free; then <strong>$0.002</strong>/min; export $0.01/min</td>
+            <td>Cloudflare edge</td>
+            <td>UI Kit + SDKs</td>
+            <td><strong>Breakouts (beta)</strong></td>
+            <td>Per-room</td>
+            <td>Brandable; competitive rate</td>
+            <td>Beta / acquisition risk</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="cost">
+      <h2>Cost calculator</h2>
+      <p>SDK / minute-priced vendors:</p>
+      <div class="formula">
+        participant_minutes / month<br/>
+        = concurrent_classes × students_per_class × hours_per_week × 60 × weeks_per_month<br/><br/>
+        media_cost ≈ participant_minutes × rate_per_participant_minute<br/><br/>
+        recording_minutes ≈ concurrent_classes × record_fraction × hours_per_week × 60 × weeks_per_month<br/>
+        recording_cost ≈ recording_minutes × export_rate
+      </div>
+      <p>Seat-priced vendors (Zoom Edu / Teams):</p>
+      <div class="formula">
+        seat_cost ≈ licensed_hosts × price_per_host_month<br/>
+        (+ Large Meeting / webinar add-ons if needed)
+      </div>
+      <p class="note">Concurrent classes ≠ total modules. Use peak simultaneous live sessions in the timetable.</p>
+
+      <h3>Unit rates used in scenarios</h3>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Vendor</th>
+            <th class="num">AV participant-min</th>
+            <th class="num">Recording / export</th>
+            <th class="num">Fixed / mo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Whereby Build</td><td class="num">$0.0042</td><td class="num">$0.01</td><td class="num">$10.99</td></tr>
+          <tr><td>Daily</td><td class="num">$0.0040</td><td class="num">~$0.01 (typical)</td><td class="num">$0 (PAYG)</td></tr>
+          <tr><td>RealtimeKit</td><td class="num">$0.0020</td><td class="num">$0.01</td><td class="num">$0 (after free tier)</td></tr>
+          <tr><td>Agora HD</td><td class="num">~$0.0040</td><td class="num">vendor SKU</td><td class="num">$0</td></tr>
+          <tr><td>LiveKit Cloud (approx)</td><td class="num">~$0.0005 + BW</td><td class="num">egress SKU</td><td class="num">$0–$50+</td></tr>
+          <tr><td>Zoom Edu host</td><td class="num">n/a (seats)</td><td class="num">cloud storage add-on</td><td class="num">~$14 / host</td></tr>
+          <tr><td>BBB managed (small)</td><td class="num">n/a (capacity plan)</td><td class="num">included GB tier</td><td class="num">~$15–$90</td></tr>
+          <tr><td>BBB university managed</td><td class="num">n/a</td><td class="num">included / cluster</td><td class="num">~€199+</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="scenarios">
+      <h2>Cost scenarios (illustrative monthly)</h2>
+      <p>Assumptions common to all rows: <strong>4 weeks/month</strong>, <strong>50% of sessions recorded</strong> (main room only).</p>
+
+      <h3>S1 — Lesotho pilot</h3>
+      <p class="formula">8 concurrent × 25 students × 2 h/week → <strong>96 000</strong> participant-min · recording <strong>1 920</strong> min</p>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th class="num">Media</th>
+            <th class="num">Recording</th>
+            <th class="num">Fixed</th>
+            <th class="num">Total / mo</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Whereby</td><td class="num">$403</td><td class="num">$19</td><td class="num">$11</td><td class="num"><strong>$433</strong></td><td>Good Demo embed</td></tr>
+          <tr><td>Daily</td><td class="num">$384</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$403</strong></td><td>No native whiteboard</td></tr>
+          <tr class="pick"><td>RealtimeKit</td><td class="num">$192</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$211</strong></td><td>Best SDK $/min; breakouts beta</td></tr>
+          <tr><td>Zoom Edu (10 hosts)</td><td class="num">—</td><td class="num">TBC</td><td class="num">~$140</td><td class="num"><strong>~$140+</strong></td><td>If campus already licensed, near $0 incremental</td></tr>
+          <tr class="pick"><td>BBB managed ~50–100 seats</td><td class="num">—</td><td class="num">incl.</td><td class="num">~$45–90</td><td class="num"><strong>~$45–90</strong></td><td>Education feature pack</td></tr>
+        </tbody>
+      </table>
+
+      <h3>S2 — Multi-campus growth</h3>
+      <p class="formula">40 concurrent × 30 students × 3 h/week → <strong>864 000</strong> participant-min · recording <strong>14 400</strong> min</p>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th class="num">Media</th>
+            <th class="num">Recording</th>
+            <th class="num">Fixed</th>
+            <th class="num">Total / mo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Whereby</td><td class="num">$3 629</td><td class="num">$144</td><td class="num">$11</td><td class="num"><strong>$3 784</strong></td></tr>
+          <tr><td>Daily</td><td class="num">$3 456</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$3 600</strong></td></tr>
+          <tr class="pick"><td>RealtimeKit</td><td class="num">$1 728</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$1 872</strong></td></tr>
+          <tr><td>Zoom Edu (40 hosts)</td><td class="num">—</td><td class="num">TBC</td><td class="num">~$560</td><td class="num"><strong>~$560+</strong></td></tr>
+          <tr class="pick"><td>BBB university managed / cluster</td><td class="num">—</td><td class="num">incl.</td><td class="num">~€199–399+</td><td class="num"><strong>~$220–440+</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3>S3 — Full Raisd peak</h3>
+      <p class="formula">100 concurrent × 40 students × 3 h/week → <strong>2 880 000</strong> participant-min · recording <strong>36 000</strong> min</p>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th class="num">Media</th>
+            <th class="num">Recording</th>
+            <th class="num">Fixed</th>
+            <th class="num">Total / mo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Whereby</td><td class="num">$12 096</td><td class="num">$360</td><td class="num">$11</td><td class="num"><strong>$12 467</strong></td></tr>
+          <tr><td>Daily</td><td class="num">$11 520</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$11 880</strong></td></tr>
+          <tr class="pick"><td>RealtimeKit</td><td class="num">$5 760</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$6 120</strong></td></tr>
+          <tr><td>Zoom Edu (100 hosts)</td><td class="num">—</td><td class="num">TBC</td><td class="num">~$1 400</td><td class="num"><strong>~$1 400+</strong></td></tr>
+          <tr class="pick"><td>BBB Scalelite cluster</td><td class="num">—</td><td class="num">ops</td><td class="num">quote</td><td class="num"><strong>custom</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Reading the numbers.</strong>
+        At pilot scale, <em>managed BBB</em> or <em>existing Zoom/M365 seats</em> beat pure minute billing.
+        At growth/full scale, seat licences stay cheaper <em>if</em> hosts are few — but Raisd-branded embed forces SDK spend.
+        RealtimeKit undercuts Whereby/Daily by ~2× on media. Always add engineering: Shape A days, Shape B weeks, Shape C months.
+      </div>
+
+      <h3>Engineering / ops (order of magnitude)</h3>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Work</th>
+            <th>Shape A</th>
+            <th>Shape B (BBB)</th>
+            <th>Shape C (SDK)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Portal API session + tokens</td><td>S</td><td>M</td><td>M</td></tr>
+          <tr><td>Portal Join UX</td><td>S (redirect)</td><td>S–M (iframe)</td><td>L (in-shell)</td></tr>
+          <tr><td>Attendance webhooks</td><td>S–M</td><td>M</td><td>M</td></tr>
+          <tr><td>Recording → Materials item</td><td>M</td><td>M</td><td>M</td></tr>
+          <tr><td>Breakout host UX</td><td>vendor UI</td><td>vendor UI</td><td>L (RealtimeKit APIs help)</td></tr>
+          <tr><td>Infra / SRE</td><td>Low</td><td>Low if managed; High if self-host</td><td>Low (SaaS) / High (LiveKit self-host)</td></tr>
+        </tbody>
+      </table>
+      <p class="note">S ≈ days · M ≈ 1–2 weeks · L ≈ multi-week. Not Live until durable storage + authz + named owner.</p>
+    </section>
+
+    <section class="section" id="breakouts">
+      <h2>Breakout rooms</h2>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Model</th>
+            <th>Raisd notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Zoom / Teams</td><td>Temporary host-managed rooms</td><td>Familiar; not persistent LMS groups</td></tr>
+          <tr><td>BigBlueButton</td><td>Education breakouts in moderator UI</td><td>Strong teaching fit; UX inside BBB</td></tr>
+          <tr><td>Whereby Embedded</td><td>Breakout groups</td><td>Good for embed path without room-graph build</td></tr>
+          <tr class="pick"><td>Cloudflare RealtimeKit</td><td>Connected meetings — each breakout is a <strong>child meeting</strong> (beta)</td><td>Best documented programmable breakouts for Raisd UI</td></tr>
+          <tr><td>Daily / LiveKit / Agora</td><td>DIY multi-room</td><td>Raisd builds host UX, permissions, recording policy</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Only lecturer/moderator may open breakouts.</li>
+        <li>Students remain participants (no host escalation).</li>
+        <li>MVP: record <strong>main room only</strong>.</li>
+        <li>Breakouts are session-scoped — not a second CMS group SoR.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="selfpaced">
+      <h2>Self-paced learning, recordings, quizzes</h2>
+      <p>These are <strong>Raisd product capabilities</strong> (F03 / F12 / F13). Video vendors supply media only.</p>
+
+      <h3>Self-paced unlock</h3>
+      <table class="data">
+        <thead>
+          <tr><th>Policy</th><th>Behaviour</th><th>Use when</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>cohort_week</code></td><td>Unlock with teaching week (default today)</td><td>Synchronised cohorts</td></tr>
+          <tr><td><code>sequential_unlock</code></td><td>Next topic after previous complete</td><td>Self-paced programmes</td></tr>
+          <tr><td><code>open_from</code></td><td>Absolute datetime, independent of week</td><td>Rolling intake</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Live-class join windows stay timetable-gated even when materials are self-paced.</p>
+
+      <h3>Recordings</h3>
+      <ul>
+        <li>Vendor captures; Portal API stores metadata (session, ready_at, duration, URL).</li>
+        <li>Live: prefer export into Raisd file store + enrolment authz.</li>
+        <li>Demo: deep-link vendor URL with expiry is acceptable if labelled Demo.</li>
+        <li>Phase 1 attendance = live join/leave; playback analytics later if required.</li>
+      </ul>
+
+      <h3>Quizzes (CAP-24)</h3>
+      <table class="data">
+        <thead>
+          <tr><th>Approach</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pick"><td>Raisd-native quiz items on module / study planner</td><td><strong>Preferred</strong> — authz, audit, campus policy</td></tr>
+          <tr><td>Google / Microsoft Forms link-out</td><td>Demo stopgap only</td></tr>
+          <tr><td>Moodle quiz via LTI</td><td>Avoid as primary (second LMS SoR)</td></tr>
+          <tr><td>BBB 3.0 in-meeting quiz</td><td>Formative live polls only — not exam of record</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="spike">
+      <h2>Suggested Demo spike (not Live)</h2>
+      <ol>
+        <li>Portal API <code>live_class_sessions</code> — offering, window, provider, join mode.</li>
+        <li>Lecturer Start → API creates provider room as moderator; Student Join only inside window → viewer token.</li>
+        <li>Persist join/leave for attendance Demo (CAP-12).</li>
+        <li>On <code>recording.ready</code>, attach a Materials-style learning item (session-only Demo OK).</li>
+        <li>Provider secrets in control-plane credentials — never in portals.</li>
+      </ol>
+      <div class="callout ok">
+        Align spike choice with Faid’s online-class requirements summary to Manna before locking a Live vendor.
+      </div>
+    </section>
+
+    <section class="section" id="related">
+      <h2>Related</h2>
+      <div class="toc">
+        <a href="lms.html"><strong>LMS research posture</strong><span>CAP detail · Q37 Option 1</span></a>
+        <a href="lms-architecture.html"><strong>LMS architecture</strong><span>Role surfaces on Portal API</span></a>
+        <a href="lms-features.html"><strong>LMS features F01–F37</strong><span>Domain × CAP matrix</span></a>
+        <a href="lms-reference/index.html"><strong>Moodle + Classroom map</strong><span>Capability absorb · reference shots</span></a>
+        <a href="lms-reference/features.html"><strong>LMS feature steps</strong><span>F12 live class · F13 quiz sequences</span></a>
+        <a href="../ai/architecture/lms-online-class-options.md"><strong>Agent knowledge</strong><span>Markdown SoT for this analysis</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Raisd Documentation · Online-class research 3 Nov 2026 · Not Live policy</p>
+    </div>
+  </footer>
+  <script src="nav-dropdown.js" defer></script>
+  <script src="site-search.js" defer></script>
+  <script src="keychain-access.js" defer></script>
+</body>
+</html>
