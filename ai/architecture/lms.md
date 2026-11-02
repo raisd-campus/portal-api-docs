@@ -4,6 +4,9 @@
 - Hub: [`docs/diagrams/lms.html`](../../diagrams/lms.html) (Moodle map + **CAP capability detail**)  
 - Architecture: [`docs/diagrams/lms-architecture.html`](../../diagrams/lms-architecture.html)  
 - Features: [`docs/diagrams/lms-features.html`](../../diagrams/lms-features.html)  
+- Moodle + Classroom reference map: [`docs/diagrams/lms-reference/`](../../diagrams/lms-reference/index.html) · knowledge [`lms-moodle-classroom-map.md`](lms-moodle-classroom-map.md)  
+- Step-by-step features + sequences: [`features.html`](../../diagrams/lms-reference/features.html) · [`lms-feature-steps.md`](lms-feature-steps.md)  
+- Online-class options (cost / hosting / breakouts / quizzes / self-paced; OSS BBB vs OpenVidu Meet vs Jitsi): [`lms-online-class-options.md`](lms-online-class-options.md) · published [`lms-online-class-options.html`](../../diagrams/lms-online-class-options.html) (standup 2 Nov 2026)  
 
 **Binding product baseline:** [SDD-05](../../sdd/05-student-portal.md), [SDD-06](../../sdd/06-lecturer-portal.md), [SDD-09](../../sdd/09-requirements-traceability.md) (BASE-44), [SDD-11](../../sdd/11-capability-catalog.md) learning CAPs.
 
@@ -50,6 +53,7 @@ Full domain × CAP × Demo × milestone: [lms-features.html](../../diagrams/lms-
 - Do not present F01–F37 as government mandates ([SDD-09](../../sdd/09-requirements-traceability.md)).
 - Do not imply Raisd is Moodle or Moodle feature parity is the delivery contract.
 - Demo ≠ Live for assignments, quizzes, live class, and file delivery.
+- Do not treat [lms-online-class-options.md](lms-online-class-options.md) vendor shortlists as a Live CAP-26 decision until WG / Faid / Manna confirm.
 
 ## Related
 
@@ -58,6 +62,9 @@ Full domain × CAP × Demo × milestone: [lms-features.html](../../diagrams/lms-
 | Hub + capabilities | [lms.html](../../diagrams/lms.html) |
 | Architecture page | [lms-architecture.html](../../diagrams/lms-architecture.html) |
 | Features page | [lms-features.html](../../diagrams/lms-features.html) |
+| Moodle + Classroom map | [lms-reference/](../../diagrams/lms-reference/index.html), [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) |
+| Feature steps + sequences | [features.html](../../diagrams/lms-reference/features.html), [lms-feature-steps.md](lms-feature-steps.md) |
+| Online-class / recordings / quizzes / breakouts research | [lms-online-class-options.md](lms-online-class-options.md) |
 | LMS schema / ERD | [lms-schema.md](../backend/lms-schema.md), [erd.html#lms](../../diagrams/erd.html#lms) |
 | Capability catalogue | [SDD-11](../../sdd/11-capability-catalog.md) |
 | Student / lecturer SDD | [SDD-05](../../sdd/05-student-portal.md), [SDD-06](../../sdd/06-lecturer-portal.md) |

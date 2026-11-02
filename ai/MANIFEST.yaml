@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-10-30
+updated: 2026-10-31
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,7 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-10-31: Academic guidance expanded vs CMS screenshots (Modules · Assessments · Schools · Curriculum · Calendar) — docs only; Desk Demo `/admin/academic` unchanged (standup 30 Oct action); guidance/index.html + lesotho-user-guide.md + FM-16 cross-link.
   - 2026-10-30: Guidance under LUCT CMS on docs.raisd.co — single-page Lesotho user guidance (diagrams/guidance/index.html) + website AI pages; markdown SoT frontend/lesotho-user-guide.md.
   - 2026-10-30: Website-specific AI should/should-not guidance — website-ai-guidance.md attached from AGENTS.md read order (standup 29 Oct).
   - 2026-10-30: Staff Admin nav/workflow review — group-hub primary + sibling sub-side; Payments/Registrations no longer stack AdmissionsWorkspace; design/2026-10-30-generated-pages-nav-workflow-review.md.
@@ -94,6 +95,12 @@ notes:
   - 2026-10-01: Schema v3 campus policy layer implemented (status mapping, academic-status / credit / CGPA / document / adjustment policies; university-default seeds; projections + SQL views). See canonical-schema-luct-readiness.md §0.1 / §7.
   - 2026-10-01: Campus policy surfaced in published ERD, Data Model Explorer, OpenAPI `/v1/meta.schemaVersion`, and db-admin IRREGULAR map.
   - 2026-10-01: "Architecture review confirmed Schema v3 good to proceed; CS-01–CS-11 = campus go-Live policy validation (Demo defaults not authoritative LUCT policy). Neon Demo reseeded to schema_version 3 (95 collections); physical verification checklist passed. Production Vercel portal-api redeployed — `/v1/meta` returns `schemaVersion: 3`."
+  - 2026-11-03: LMS online-class research (standup 2 Nov) — cost/hosting/integration matrix, self-paced + recordings + quizzes, breakout platforms; architecture/lms-online-class-options.md.
+  - 2026-11-03: LMS online-class — OSS classroom feature comparison (BBB vs OpenVidu Meet vs Jitsi); OpenVidu links/cost/verdict; diagrams/lms-online-class-options.html.
+  - 2026-10-31: LMS feature steps — top-of-page Mermaid mind map of F01–F15; each step/wireframe labelled Moodle / Google Classroom / Both / Raisd-native inspiration.
+  - 2026-10-31: LMS feature steps — Faid DS 0.19.8 lo-fi wireframe on every step + Mermaid syntax hardened (no ; : / {} in labels); regenerate via diagrams/lms-reference/build-features.py.
+  - 2026-10-31: LMS docs-only — step-by-step features with functionality, direction of use, Raisd integration, and per-step Mermaid sequences (location STU/LEC/STA/CMS/API) at diagrams/lms-reference/features.html · architecture/lms-feature-steps.md.
+  - 2026-10-31: LMS docs-only — Moodle + Google Classroom capability map (architecture/lms-moodle-classroom-map.md) + labelled reference gallery diagrams/lms-reference/; wired into LMS hub / site-nav / MANIFEST. Not product build; Demo ≠ Live.
   - 2026-10-01: LMS Q37 Option 1 — published lms-architecture.html + lms-features.html (F01–F37 × CAP) from Raisd sources; hub Moodle-like student map; no PPA comparison.
   - 2026-10-02: LMS logical database tables + ERD CMS/LMS/shared/proposed colour legend (erd.html §10); agent schema at backend/lms-schema.md.
   - 2026-10-02: db-admin ERD tab colours CMS / LMS / shared domains, domain filter, and LMS IRREGULAR stems (aligned with lms-schema.md).
@@ -182,15 +189,46 @@ architecture:
     topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state, lesotho]
     pages: ../diagrams/distributed-cms-architecture.html
   - path: architecture/lms.md
-    topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle, schema, erd]
+    topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle, classroom, schema, erd]
     pages:
       - ../diagrams/lms.html
       - ../diagrams/lms-architecture.html
       - ../diagrams/lms-features.html
+      - ../diagrams/lms-reference/index.html
       - ../diagrams/erd.html
     related: backend/lms-schema.md
     status: proposed
     note: Q37 Option 1 published; research posture only — not Live LMS. ERD §10 catalogues LMS tables with CMS colour legend.
+  - path: architecture/lms-moodle-classroom-map.md
+    topics: [lms, moodle, google-classroom, capability-map, cap, f01-f37, research, reference-screenshots]
+    pages:
+      - ../diagrams/lms-reference/index.html
+      - ../diagrams/lms-reference/features.html
+      - ../diagrams/lms.html
+      - ../diagrams/lms-features.html
+    related: architecture/lms.md
+    status: proposed
+    note: Docs-only absorb of Moodle + Classroom capabilities into Raisd CAP; screenshots labelled Reference — not Raisd.
+  - path: architecture/lms-feature-steps.md
+    topics: [lms, features, steps, sequence, classrooms, materials, portal-api, student, lecturer, staff]
+    pages:
+      - ../diagrams/lms-reference/features.html
+      - ../diagrams/lms-reference/index.html
+    related: architecture/lms-moodle-classroom-map.md
+    status: proposed
+    note: Step-by-step LMS features with per-step sequences and location (STU/LEC/STA/CMS/API).
+  - path: architecture/lms-online-class-options.md
+    topics: [lms, live-class, cap-26, cap-24, quiz, recording, self-paced, breakout, bbb, zoom, whereby, daily, realtimekit, research, cost]
+    pages:
+      - ../diagrams/lms-online-class-options.html
+      - ../diagrams/lms-reference/features.html
+      - ../diagrams/lms.html
+    related:
+      - architecture/lms.md
+      - architecture/lms-moodle-classroom-map.md
+      - architecture/lms-feature-steps.md
+    status: proposed
+    note: Standup 2 Nov 2026 research + published cost/integration page. Not Live.
   - path: architecture/repositories.md
     topics: [repo-map, local-paths, ownership]
   - path: architecture/deployment.md
@@ -491,6 +529,10 @@ diagrams:
     topics: [lms, architecture, portal-api, role-surfaces, file-store]
   - path: ../diagrams/lms-features.html
     topics: [lms, f01-f37, features, cap-matrix, research]
+  - path: ../diagrams/lms-reference/index.html
+    topics: [lms, moodle, google-classroom, reference-screenshots, capability-map, research]
+  - path: ../diagrams/lms-reference/features.html
+    topics: [lms, features, steps, sequence-diagrams, classrooms, materials, integration]
   - path: ../diagrams/migration.html
     topics: [milestones, m1-m5, hosting-stages]
   - path: ../diagrams/architecture.html

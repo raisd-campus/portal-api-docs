@@ -1,6 +1,6 @@
 # Lesotho user guide (Demo)
 
-**As of:** 30 October 2026  
+**As of:** 31 October 2026  
 **Demo ≠ Live.** Sample / session data only. No Live CMS writes from these portals.
 
 **Browse (docs.raisd.co):** [User guidance (one page)](https://docs.raisd.co/diagrams/guidance/) under LUCT CMS → Guidance  
@@ -150,10 +150,12 @@ Banks, debtors, and full payment plans remain later (not Live).
 
 ### Teaching & oversight
 
+CMS Academic screenshot how-tos (Lecturers · Assessments · Attendance · Modules · Schools · Curriculum · Calendar · Timetable): [guidance `#desk-academic`](../../diagrams/guidance/index.html#desk-academic) · [`#desk-timetable`](../../diagrams/guidance/index.html#desk-timetable).
+
 | Desk | You can | Module |
 |---|---|---|
-| **Academic** | Attendance / gradebook Demo | FM-16 |
-| **Timetable** | Sessions / venues / generator Demo (not Live solver) | FM-16 |
+| **Academic** | **CMS map:** Lecturers · Assessments · Attendance · Modules · Schools · Curriculum (+ Academic Calendar later). **Raisd Demo today** (`/admin/academic`): attendance rollup + gradebook only — deepen later (FM-16). Not a full CMS Academic clone. | FM-16 |
+| **Timetable** | CMS Generator · Allocations · Venues · Venue Types. **Raisd Demo** (`/admin/timetable`): sessions / venues / generator Demo (not Live solver). | FM-16 |
 | **Overview** | Admin home + admissions count cards | — |
 | **Analytics** | Demo summary cards (enrolments, admissions, …) | FM-17 |
 | **Discipline** | Dishonesty / suspension / blocked Demo lists | FM-18 |

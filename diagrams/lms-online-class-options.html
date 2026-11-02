@@ -363,6 +363,7 @@
       <a href="#verdict">Verdict</a>
       <a href="#constraints">Raisd constraints</a>
       <a href="#shapes">Integration shapes</a>
+      <a href="#oss-features">OSS classroom features</a>
       <a href="#matrix">Platform matrix</a>
       <a href="#links">Platform links</a>
       <a href="#rates">Unit rates</a>
@@ -385,15 +386,20 @@
         <div class="card">
           <div class="n">2 · Education pack</div>
           <strong>Managed BigBlueButton + Portal API</strong>
-          <span>Whiteboards, polls, breakouts, recording hooks without building a classroom UI. Prefer managed host — do not self-host media on the Demo node.</span>
+          <span>Best OSS classroom depth: excellent teaching UX, native Moodle, built-in attendance analytics. Prefer managed host — do not self-host media on the Demo node.</span>
         </div>
         <div class="card">
-          <div class="n">3 · Branded product</div>
+          <div class="n">3 · OSS embed alt</div>
+          <strong>OpenVidu Meet Community + Portal API</strong>
+          <span>Good classroom features, white-label, REST/embed. Raisd builds attendance analytics and LMS glue. Dedicated media VPS — not Demo k3s.</span>
+        </div>
+        <div class="card">
+          <div class="n">4 · Branded product</div>
           <strong>RealtimeKit · Chime SDK · LiveKit</strong>
           <span>Fully Raisd chrome. Chime strong on media+recording $/mo; RealtimeKit for breakout APIs; LiveKit for self-host escape. Quizzes stay Raisd-native.</span>
         </div>
       </div>
-      <p class="note">Deprioritise as primary pilot: self-hosted BBB/Jitsi on current Demo VPS; Meet/Teams-only unless a campus already standardises on them; raw Agora unless APAC scale forces it. Self-developed OSS SFU is a later path after a Cloud/SDK spike.</p>
+      <p class="note">Deprioritise as primary pilot: self-hosted BBB/OpenVidu/Jitsi on current Demo VPS; Jitsi as classroom SoT (basic features); Meet/Teams-only unless a campus already standardises on them; raw Agora unless APAC scale forces it. Self-developed OSS SFU is a later path after a Cloud/SDK spike.</p>
     </section>
 
     <section class="section" id="constraints">
@@ -431,7 +437,7 @@
             <td>Days</td>
           </tr>
           <tr class="pick">
-            <td><strong>B · Education classroom API</strong><br/><span class="note">BigBlueButton</span></td>
+            <td><strong>B · Education classroom API</strong><br/><span class="note">BigBlueButton · OpenVidu Meet</span></td>
             <td>Create/join URLs, role map, recording catalogue</td>
             <td>Classroom UI + media + breakouts</td>
             <td>Strong teaching features; iframe or redirect</td>
@@ -466,6 +472,85 @@ flowchart TB
   API --> REC
       </div>
       <p class="note">Shape A redirects to vendor UI after token mint. Shapes B/C return an embed URL or SDK room id into the portal route.</p>
+    </section>
+
+    <section class="section" id="oss-features">
+      <h2>Open-source classroom feature comparison</h2>
+      <p>
+        Self-hosted Shape B shortlist. Comparison assumes a
+        <strong>properly configured self-hosted deployment</strong>, not free public hosting tiers.
+      </p>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th>BigBlueButton</th>
+            <th>OpenVidu Meet</th>
+            <th>Jitsi Meet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>White-label</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Automatic recording</td>
+            <td>Configurable</td>
+            <td>Via API / configuration</td>
+            <td>Via Jibri automation</td>
+          </tr>
+          <tr>
+            <td>Playback later</td>
+            <td>Built-in</td>
+            <td>Yes</td>
+            <td>Requires storage / player integration</td>
+          </tr>
+          <tr class="pick">
+            <td>Moodle integration</td>
+            <td><strong>Native</strong></td>
+            <td>Custom integration</td>
+            <td>Plugin / custom</td>
+          </tr>
+          <tr>
+            <td>Custom LMS integration</td>
+            <td>API</td>
+            <td>API / embedding</td>
+            <td>API / embedding</td>
+          </tr>
+          <tr class="pick">
+            <td>Classroom features</td>
+            <td><strong>Excellent</strong></td>
+            <td>Good</td>
+            <td>Basic</td>
+          </tr>
+          <tr class="pick">
+            <td>Student attendance analytics</td>
+            <td><strong>Built-in features</strong></td>
+            <td>Custom development</td>
+            <td>Custom development</td>
+          </tr>
+          <tr>
+            <td>Self-hosted</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Software licence cost</td>
+            <td>Free</td>
+            <td>Free Community <span class="note">(PRO paid)</span></td>
+            <td>Free</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout ok">
+        <strong>Raisd reading:</strong> BBB stays the preferred education pack (native Moodle + attendance + deepest classroom UX).
+        OpenVidu Meet is the strongest OSS alternative when white-label / API embed matters more than Moodle-native depth.
+        Jitsi remains a media POC — not CAP-26 classroom SoT.
+      </div>
     </section>
 
     <section class="section" id="matrix">
@@ -518,21 +603,31 @@ flowchart TB
             <td>BigBlueButton</td>
             <td>Licence $0; managed ~$12.50–$90+/mo or ~€65–199+ university</td>
             <td>Self-host <em>or</em> managed</td>
-            <td>REST API + LTI 1.3</td>
+            <td>REST API + LTI 1.3; <strong>native Moodle</strong></td>
             <td>Yes (education)</td>
-            <td>Built-in + webhooks</td>
-            <td>Whiteboard, polls, teaching UX</td>
+            <td>Built-in playback + webhooks</td>
+            <td><strong>Excellent</strong> classroom UX; built-in attendance analytics</td>
             <td>Self-host heavy; use managed</td>
+          </tr>
+          <tr class="pick">
+            <td>OpenVidu Meet</td>
+            <td>Community free; PRO $0.0006 / core-min</td>
+            <td>Self-host Community <em>or</em> PRO elastic/HA</td>
+            <td>REST API + embed web component + webhooks; Moodle = custom</td>
+            <td>Breakout groups (roadmap)</td>
+            <td>API/config capture; built-in playback</td>
+            <td><strong>Good</strong> classroom features; white-label; embed-friendly</td>
+            <td>Attendance analytics custom; dedicated media VPS</td>
           </tr>
           <tr>
             <td>Jitsi Meet</td>
             <td>Infra only</td>
             <td>Self-host / 8x8</td>
-            <td>DIY iframe + JWT</td>
+            <td>DIY iframe + JWT; Moodle = plugin/custom</td>
             <td>DIY</td>
-            <td>Jibri (ops-heavy)</td>
-            <td>Cheap, private</td>
-            <td>Not a classroom product</td>
+            <td>Jibri; playback needs storage/player glue</td>
+            <td>Cheap, private; white-label possible</td>
+            <td><strong>Basic</strong> classroom features — not a classroom product</td>
           </tr>
           <tr class="pick">
             <td>Whereby Embedded</td>
@@ -620,6 +715,7 @@ flowchart TB
           <tr><td>Zoom Video SDK</td><td><a href="https://developers.zoom.us/docs/video-sdk/" rel="noopener noreferrer" target="_blank">developers.zoom.us/docs/video-sdk</a></td><td><a href="https://developers.zoom.us/docs/video-sdk/developer-accounts/" rel="noopener noreferrer" target="_blank">Developer / credits</a></td></tr>
           <tr><td>Microsoft Teams</td><td><a href="https://www.microsoft.com/en-us/education/products/teams" rel="noopener noreferrer" target="_blank">Teams for Education</a></td><td><a href="https://www.microsoft.com/en-us/microsoft-365/education" rel="noopener noreferrer" target="_blank">M365 Education</a></td></tr>
           <tr><td>BigBlueButton</td><td><a href="https://bigbluebutton.org/" rel="noopener noreferrer" target="_blank">bigbluebutton.org</a> · <a href="https://docs.bigbluebutton.org/" rel="noopener noreferrer" target="_blank">API docs</a></td><td>Licence $0 · <a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">commercial hosts</a></td></tr>
+          <tr><td>OpenVidu Meet</td><td><a href="https://openvidu.io/latest/meet/" rel="noopener noreferrer" target="_blank">openvidu.io/meet</a> · <a href="https://openvidu.io/latest/meet/embedded/reference/rest-api/" rel="noopener noreferrer" target="_blank">REST API</a></td><td><a href="https://openvidu.io/pricing/" rel="noopener noreferrer" target="_blank">Community free · PRO $0.0006/core-min</a></td></tr>
           <tr><td>Jitsi Meet</td><td><a href="https://jitsi.org/" rel="noopener noreferrer" target="_blank">jitsi.org</a></td><td>Self-host / 8x8</td></tr>
           <tr><td>Whereby Embedded</td><td><a href="https://whereby.com/information/embedded/" rel="noopener noreferrer" target="_blank">whereby.com/embedded</a></td><td><a href="https://whereby.com/information/embedded/pricing" rel="noopener noreferrer" target="_blank">Embedded pricing</a></td></tr>
           <tr><td>Daily</td><td><a href="https://www.daily.co/" rel="noopener noreferrer" target="_blank">daily.co</a></td><td><a href="https://www.daily.co/pricing" rel="noopener noreferrer" target="_blank">daily.co/pricing</a></td></tr>
@@ -670,6 +766,7 @@ flowchart TB
           <tr><td><a href="https://aws.amazon.com/chime/chime-sdk/pricing/" rel="noopener noreferrer" target="_blank">Amazon Chime SDK</a></td><td class="num">$0.0017</td><td class="num">$0.0145</td><td class="num">$0</td><td>1080p composite $0.0125 + concat $0.002; <strong>S3 extra</strong></td></tr>
           <tr><td><a href="https://www.zoom.com/en/education/" rel="noopener noreferrer" target="_blank">Zoom Education seats</a></td><td class="num">n/a</td><td class="num">plan / storage</td><td class="num">~$14 / host</td><td>Often included with Edu; confirm storage caps</td></tr>
           <tr><td><a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">BBB managed</a></td><td class="num">n/a</td><td class="num">included GB tier</td><td class="num">~$15–€399+</td><td>Recording storage in plan; export optional</td></tr>
+          <tr><td><a href="https://openvidu.io/pricing/" rel="noopener noreferrer" target="_blank">OpenVidu Meet Community</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>PRO = $0.0006 / core-min (elastic/HA)</td></tr>
           <tr><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">Self-developed (OSS SFU)</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>Disk or S3-compatible; eng + SRE dominate</td></tr>
         </tbody>
       </table>
@@ -705,7 +802,8 @@ flowchart TB
           <tr class="pick"><td><a href="https://aws.amazon.com/chime/chime-sdk/pricing/" rel="noopener noreferrer" target="_blank">Amazon Chime SDK</a></td><td class="num">$170</td><td class="num">$28</td><td class="num">$0</td><td class="num"><strong>$198</strong></td><td>Capture $24 + concat $4; S3 extra</td></tr>
           <tr class="pick"><td><a href="https://livekit.io/pricing" rel="noopener noreferrer" target="_blank">LiveKit Cloud</a> (Build)</td><td class="num">$50</td><td class="num">$10</td><td class="num">$0</td><td class="num"><strong>$60</strong></td><td>+ bandwidth; optimistic egress</td></tr>
           <tr><td><a href="https://www.zoom.com/en/education/" rel="noopener noreferrer" target="_blank">Zoom Education</a> (10 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$140</td><td class="num"><strong>$140+</strong></td><td>Confirm cloud-recording storage</td></tr>
-          <tr class="pick"><td><a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">BBB managed</a></td><td class="num">—</td><td class="num">incl.</td><td class="num">$45–90</td><td class="num"><strong>$45–90</strong></td><td>Education feature pack</td></tr>
+          <tr class="pick"><td><a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">BBB managed</a></td><td class="num">—</td><td class="num">incl.</td><td class="num">$45–90</td><td class="num"><strong>$45–90</strong></td><td>Best OSS classroom depth</td></tr>
+          <tr class="pick"><td><a href="https://openvidu.io/latest/meet/" rel="noopener noreferrer" target="_blank">OpenVidu Meet</a> Community</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>Good classroom + white-label; attendance custom</td></tr>
           <tr><td><a href="#selfdev">Self-developed</a> (LiveKit OSS)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>See self-developed section</td></tr>
         </tbody>
       </table>
@@ -735,6 +833,7 @@ flowchart TB
           <tr class="pick"><td>LiveKit Cloud (Ship)</td><td class="num">$446</td><td class="num">$72</td><td class="num">$50</td><td class="num"><strong>$568</strong></td></tr>
           <tr><td>Zoom Education (40 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$560</td><td class="num"><strong>$560+</strong></td></tr>
           <tr class="pick"><td>BBB university managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">~$220–440</td><td class="num"><strong>~$220–440</strong></td></tr>
+          <tr class="pick"><td>OpenVidu Meet (Community / PRO)</td><td class="num">$0 or core-min</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> / PRO quote</td></tr>
           <tr><td>Self-developed (OSS SFU)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td></tr>
         </tbody>
       </table>
@@ -764,6 +863,7 @@ flowchart TB
           <tr class="pick"><td>LiveKit Cloud (Ship)</td><td class="num">$1 476</td><td class="num">$180</td><td class="num">$50</td><td class="num"><strong>$1 706</strong></td></tr>
           <tr><td>Zoom Education (100 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 400</td><td class="num"><strong>$1 400+</strong></td></tr>
           <tr class="pick"><td>BBB Scalelite cluster</td><td class="num">—</td><td class="num">ops</td><td class="num">quote</td><td class="num"><strong>custom</strong></td></tr>
+          <tr class="pick"><td>OpenVidu Meet PRO cluster</td><td class="num">core-min</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td></tr>
           <tr><td>Self-developed (OSS SFU cluster)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$1 200+</td><td class="num"><strong>~$1 200+</strong> eng/SRE</td></tr>
         </tbody>
       </table>
@@ -844,6 +944,7 @@ flowchart TB
         <tbody>
           <tr><td>Zoom / Teams</td><td>Temporary host-managed rooms</td><td>Familiar; not persistent LMS groups</td></tr>
           <tr><td>BigBlueButton</td><td>Education breakouts in moderator UI</td><td>Strong teaching fit; UX inside BBB</td></tr>
+          <tr><td>OpenVidu Meet</td><td>Breakout groups (product roadmap)</td><td>Confirm GA before Live; API/embed strong for main room</td></tr>
           <tr><td>Whereby Embedded</td><td>Breakout groups</td><td>Good for embed path without room-graph build</td></tr>
           <tr class="pick"><td>Cloudflare RealtimeKit</td><td>Connected meetings — each breakout is a <strong>child meeting</strong> (beta)</td><td>Best documented programmable breakouts for Raisd UI</td></tr>
           <tr><td>Daily / LiveKit / Agora</td><td>DIY multi-room</td><td>Raisd builds host UX, permissions, recording policy</td></tr>

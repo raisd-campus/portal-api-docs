@@ -78,6 +78,8 @@ Maps every **in-scope** Admin sidebar item (and Raisd Demo surface) to a module.
 
 ### Academic (excluding Fortinet / Five Days)
 
+Screenshot how-tos (CMS only; Raisd Desk Demo surface unchanged 31 Oct): [guidance Academic](../../diagrams/guidance/index.html#desk-academic) · [Timetable](../../diagrams/guidance/index.html#desk-timetable).
+
 | Newer CMS item | Module | Phase |
 |---|---|---|
 | Lecturers · Modules · Schools · Curriculum | **FM-16** | After admissions/registry P0 |
@@ -146,7 +148,7 @@ Status: **Existing** · **Partial** · **Missing**.
 | **FM-13** | Notifications | Existing | Outbound email (`notify`) — replaces need for Mail | FM-01 |
 | **FM-14** | Campus landing & hosts | Existing | `*.lesotho.raisd.co` | FM-01 |
 | **FM-15** | Control position seeds | Existing (Demo W1) | Five `lesotho-*` SSO custom roles + desk tags + Keychain | FM-01, FM-05 |
-| **FM-16** | Academic deepen | Existing (Demo) | `/admin/academic` attendance + gradebook; `/admin/timetable` generator / venues / allocations (Demo, not Live solver) | After P0/P1 |
+| **FM-16** | Academic deepen | Existing (Demo) | `/admin/academic` attendance + gradebook; `/admin/timetable` generator / venues / allocations (Demo, not Live solver). **CMS screenshot map → Raisd:** guidance [Academic flows](../../diagrams/guidance/index.html#desk-academic) (Lecturers · Assessments · Modules · Schools · Curriculum · Calendar) + [Timetable](../../diagrams/guidance/index.html#desk-timetable); Desk Demo surface unchanged 31 Oct docs pass (standup 30 Oct) | After P0/P1 |
 | **FM-17** | Analytics (campus reports) | Existing (Demo) | `/admin/analytics` Demo count cards (enrolments, admissions, registrations, graduations, sponsors) — no HR/Library | After W2–W3 |
 | **FM-18** | Discipline | Existing (Demo) | `/admin/discipline` dishonesty / suspension / blocked list | Late |
 | **FM-X** | Excluded | — | **HRMS · LMS · Website · Library · Mail** | No M4 capacity |

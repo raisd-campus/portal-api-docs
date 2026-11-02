@@ -1138,7 +1138,7 @@
     },
     {
       "title": "LMS online-class options",
-      "summary": "Full analysis of live-class vendors \u2014 cost calculator, hosting, integration shapes, breakouts, recordings, quizzes, self-paced unlock (standup 2 Nov 2026). Not Live.",
+      "summary": "Full analysis of live-class vendors \u2014 OSS classroom feature comparison (BBB vs OpenVidu Meet vs Jitsi), cost calculator, hosting, integration shapes, breakouts, recordings, quizzes, self-paced unlock (standup 2 Nov 2026). Not Live.",
       "section": "Architecture",
       "keywords": [
         "lms",
@@ -1146,9 +1146,12 @@
         "online class",
         "zoom",
         "bigbluebutton",
+        "openvidu",
+        "jitsi",
         "whereby",
         "daily",
         "realtimekit",
+        "chime",
         "breakout",
         "quiz",
         "recording",
