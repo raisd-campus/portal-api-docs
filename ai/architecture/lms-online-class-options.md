@@ -167,19 +167,31 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 
 ### 2.2 Integration patterns that match Raisd
 
+Published page draws shapes **and** breakouts / self-paced / recordings / quizzes together: [`#shapes`](../../diagrams/lms-online-class-options.html#shapes).
+
+| Shape | Breakouts | Recordings | Quizzes / self-paced |
+|---|---|---|---|
+| **A** Link-out (Meet / Zoom / Teams) | Vendor temporary rooms | Vendor cloud; Raisd metadata + Demo deep-link | Always Raisd-native (F03 / CAP-24) |
+| **B** Education API (BBB / OpenVidu) | BBB education UI · OpenVidu groups (confirm GA) | Built-in playback; prefer export to Raisd store for Live | Always Raisd-native |
+| **C** Embed SDK (Whereby / Daily / RealtimeKit / LiveKit / …) | Whereby / RealtimeKit native · else DIY multi-room | Egress → Raisd Past Class | Always Raisd-native |
+
 ```text
 Student / Lecturer portal
         │  HTTPS
         ▼
-   Portal API  ── mints join token / signed URL (host vs viewer)
+   Portal API
+        ├─ timetable gate → mint host vs viewer token
+        ├─ self-paced unlock (cohort_week | sequential_unlock | open_from)
+        ├─ quiz items CAP-24 (module / study planner)
+        ├─ breakout policy (moderator-only · participants · main-room record MVP · session-scoped)
         │
         ├─ Shape A: redirect or popup to Meet/Zoom/Teams
-        ├─ Shape B: BBB or OpenVidu Meet create+join (moderator=lecturer, viewer=student)
+        ├─ Shape B: BBB or OpenVidu Meet create+join
         └─ Shape C: embed SDK room inside portal route
         │
         ▼
-  Webhooks / poll → attendance (join/leave, late) → CAP-12 event
-  Recording ready → learning item / Materials link (CAP-18)
+  Webhooks join/leave → CAP-12 attendance
+  recording.ready → CAP-18 Past Class / Materials (+ Live file-store export)
 ```
 
 **UX pack implication (see [lms-online-lesson-ux.md](lms-online-lesson-ux.md)):** the Faid online-lessons designs require Raisd chrome (lobby, roster `present/enrolled`, moderated screen-share **request queue**, Past Class). That **raises Shape C** (or Shape B wrapped in Raisd shell) over Meet/Zoom link-out. Stock vendor UIs rarely implement OL-40–43 (student Request → host Accept/Decline/Stop).

@@ -398,6 +398,8 @@
       <a href="#ux-context">UX screens</a>
       <a href="#constraints">Raisd constraints</a>
       <a href="#shapes">Integration shapes</a>
+      <a href="#breakouts">Breakouts</a>
+      <a href="#selfpaced">Self-paced · recordings · quizzes</a>
       <a href="#oss-features">OSS classroom features</a>
       <a href="#oss-req">OSS vs requirements</a>
       <a href="#feature-compare">Feature-by-feature</a>
@@ -406,8 +408,6 @@
       <a href="#rates">Unit rates</a>
       <a href="#breakdown">Cost breakdown</a>
       <a href="#selfdev">Self-developed</a>
-      <a href="#breakouts">Breakouts</a>
-      <a href="#selfpaced">Self-paced · quizzes</a>
       <a href="#spike">Demo spike</a>
       <a href="#related">Related</a>
     </div>
@@ -637,6 +637,11 @@
 
     <section class="section" id="shapes">
       <h2>Integration shapes</h2>
+      <p>
+        Three ways portals talk to a meeting provider. Raisd hard rules apply to every shape:
+        browsers talk only to <strong>Portal API</strong> / SSO; join tokens minted server-side;
+        timetable gate; students = participants; CMS remains roster SoR.
+      </p>
       <table class="data">
         <thead>
           <tr>
@@ -644,53 +649,156 @@
             <th>Raisd owns</th>
             <th>Vendor owns</th>
             <th>“Integrated” fit</th>
+            <th>Breakouts</th>
+            <th>Recordings</th>
+            <th>Quizzes / self-paced</th>
             <th>Build effort</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>A · Link-out / LTI</strong><span class="shape-vendors">Meet, Zoom, Teams</span></td>
-            <td>Session metadata, Join button, attendance hooks</td>
+            <td>Session metadata, Join CTA, attendance hooks</td>
             <td>Full meeting UI</td>
             <td>Weakest chrome continuity</td>
+            <td>Vendor temporary rooms (Zoom/Teams)</td>
+            <td>Vendor cloud; Raisd metadata + Demo deep-link</td>
+            <td rowspan="3">Always <strong>Raisd-native</strong> (F03 / CAP-24) — vendor polls ≠ exam of record; unlock policies on Portal API</td>
             <td>Days</td>
           </tr>
           <tr class="pick">
             <td><strong>B · Education classroom API</strong><span class="shape-vendors">BigBlueButton · OpenVidu Meet</span></td>
-            <td>Create/join URLs, role map, recording catalogue</td>
-            <td>Classroom UI + media + breakouts</td>
+            <td>Create/join URLs, role map, recording catalogue, Raisd lobby wrap</td>
+            <td>Classroom UI + media + education breakouts</td>
             <td>Strong teaching features; iframe or redirect</td>
+            <td>BBB education UI · OpenVidu groups (confirm GA)</td>
+            <td>Built-in playback; prefer export to Raisd store for Live</td>
             <td>1–3 weeks Demo</td>
           </tr>
           <tr class="pick">
-            <td><strong>C · Embedded media SDK</strong><span class="shape-vendors">Whereby, Daily, RealtimeKit, LiveKit</span></td>
-            <td>Full Raisd shell + scheduling + attendance UX</td>
-            <td>SFU / recording</td>
+            <td><strong>C · Embedded media SDK</strong><span class="shape-vendors">Whereby, Daily, RealtimeKit, LiveKit, Chime, Agora</span></td>
+            <td>Full Raisd shell + scheduling + attendance + share queue + Past Class</td>
+            <td>SFU / recording bytes</td>
             <td>Strongest “same product”</td>
+            <td>Whereby / RealtimeKit native · else DIY multi-room</td>
+            <td>Egress / cloud record → Raisd Past Class</td>
             <td>Weeks–months</td>
           </tr>
         </tbody>
       </table>
 
+      <h3>Requirements flow (all shapes)</h3>
       <div class="mermaid">
 flowchart TB
-  STU[Student portal]
-  LEC[Lecturer portal]
-  API[Portal API]
-  SSO[SSO]
-  PROV[Meeting provider]
-  ATT[Attendance CAP-12]
-  REC[Recording item CAP-18]
+  subgraph portals["Campus portals"]
+    STU["Student portal"]
+    LEC["Lecturer portal"]
+  end
+
+  subgraph raisd["Raisd owns"]
+    API["Portal API"]
+    SSO["SSO"]
+    TT["Timetable gate"]
+    UNLOCK["Self-paced unlock<br/>cohort_week · sequential_unlock · open_from"]
+    QUIZ["Quiz items CAP-24 / F13<br/>module · study planner"]
+    ATT["Attendance CAP-12<br/>join / leave"]
+    REC["Recording metadata CAP-18<br/>Past Class / Materials"]
+    STORE["Raisd file store<br/>Live export + authz"]
+    BRKPOL["Breakout policy<br/>moderator-only · participants<br/>main-room record MVP<br/>session-scoped"]
+  end
+
+  subgraph vendor["Meeting provider"]
+    PROV["Shape A link-out · B classroom API · C embed SDK"]
+    MEDIA["Live media + optional breakout rooms"]
+    VREC["Vendor capture / egress"]
+  end
+
   STU --> API
   LEC --> API
   API --> SSO
-  API -->|"mint host vs viewer token"| PROV
-  PROV -->|"webhooks join/leave"| API
+  API --> TT
+  TT -->|"mint host vs viewer token"| PROV
+  PROV --> MEDIA
+  MEDIA -->|"webhooks join/leave"| API
   API --> ATT
-  PROV -->|"recording.ready"| API
+  MEDIA --> VREC
+  VREC -->|"recording.ready"| API
   API --> REC
+  REC --> STORE
+  API --> BRKPOL
+  BRKPOL -.->|"open / assign rooms"| MEDIA
+  API --> UNLOCK
+  UNLOCK -->|"materials ≠ live join window"| STU
+  API --> QUIZ
+  QUIZ -->|"attempts · mark"| STU
+  LEC --> QUIZ
       </div>
-      <p class="note">Shape A redirects to vendor UI after token mint. Shapes B/C return an embed URL or SDK room id into the portal route.</p>
+      <p class="note">
+        Shape A redirects to vendor UI after token mint. Shapes B/C return an embed URL or SDK room id into the portal route.
+        Breakouts, self-paced unlock, and CAP-24 quizzes are drawn here because they are Raisd product rules — vendors supply media only.
+      </p>
+
+      <h3 id="breakouts">Breakout rooms</h3>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Model</th>
+            <th>Raisd notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Zoom / Teams</td><td>Temporary host-managed rooms</td><td>Familiar; not persistent LMS groups</td></tr>
+          <tr><td>BigBlueButton</td><td>Education breakouts in moderator UI</td><td>Strong teaching fit; UX inside BBB</td></tr>
+          <tr><td>OpenVidu Meet</td><td>Breakout groups (product roadmap)</td><td>Confirm GA before Live; API/embed strong for main room</td></tr>
+          <tr><td>Whereby Embedded</td><td>Breakout groups</td><td>Good for embed path without room-graph build</td></tr>
+          <tr class="pick"><td>Cloudflare RealtimeKit</td><td>Connected meetings — each breakout is a <strong>child meeting</strong> (beta)</td><td>Best documented programmable breakouts for Raisd UI</td></tr>
+          <tr><td>Daily / LiveKit / Agora</td><td>DIY multi-room</td><td>Raisd builds host UX, permissions, recording policy</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Only lecturer/moderator may open breakouts.</li>
+        <li>Students remain participants (no host escalation).</li>
+        <li>MVP: record <strong>main room only</strong>.</li>
+        <li>Breakouts are session-scoped — not a second CMS group SoR.</li>
+      </ul>
+
+      <h3 id="selfpaced">Self-paced learning, recordings, quizzes</h3>
+      <p>These are <strong>Raisd product capabilities</strong> (F03 / F12 / F13). Video vendors supply media only.</p>
+
+      <h4>Self-paced unlock</h4>
+      <table class="data">
+        <thead>
+          <tr><th>Policy</th><th>Behaviour</th><th>Use when</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>cohort_week</code></td><td>Unlock with teaching week (default today)</td><td>Synchronised cohorts</td></tr>
+          <tr><td><code>sequential_unlock</code></td><td>Next topic after previous complete</td><td>Self-paced programmes</td></tr>
+          <tr><td><code>open_from</code></td><td>Absolute datetime, independent of week</td><td>Rolling intake</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Live-class join windows stay timetable-gated even when materials are self-paced.</p>
+
+      <h4>Recordings</h4>
+      <ul>
+        <li>Vendor captures; Portal API stores metadata (session, ready_at, duration, URL).</li>
+        <li>Live: prefer export into Raisd file store + enrolment authz.</li>
+        <li>Demo: deep-link vendor URL with expiry is acceptable if labelled Demo.</li>
+        <li>Phase 1 attendance = live join/leave; playback analytics later if required.</li>
+      </ul>
+
+      <h4>Quizzes (CAP-24)</h4>
+      <table class="data">
+        <thead>
+          <tr><th>Approach</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pick"><td>Raisd-native quiz items on module / study planner</td><td><strong>Preferred</strong> — authz, audit, campus policy</td></tr>
+          <tr><td>Google / Microsoft Forms link-out</td><td>Demo stopgap only</td></tr>
+          <tr><td>Moodle quiz via LTI</td><td>Avoid as primary (second LMS SoR)</td></tr>
+          <tr><td>BBB 3.0 in-meeting quiz</td><td>Formative live polls only — not exam of record</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="section" id="oss-features">
@@ -1330,72 +1438,6 @@ flowchart TB
       <div class="callout warn">
         Do <strong>not</strong> self-host media on the current shared Demo k3s node. Media SFUs need isolated CPU/RAM and separate capacity planning from Portal API / portals.
       </div>
-    </section>
-
-    <section class="section" id="breakouts">
-      <h2>Breakout rooms</h2>
-      <table class="data">
-        <thead>
-          <tr>
-            <th>Platform</th>
-            <th>Model</th>
-            <th>Raisd notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Zoom / Teams</td><td>Temporary host-managed rooms</td><td>Familiar; not persistent LMS groups</td></tr>
-          <tr><td>BigBlueButton</td><td>Education breakouts in moderator UI</td><td>Strong teaching fit; UX inside BBB</td></tr>
-          <tr><td>OpenVidu Meet</td><td>Breakout groups (product roadmap)</td><td>Confirm GA before Live; API/embed strong for main room</td></tr>
-          <tr><td>Whereby Embedded</td><td>Breakout groups</td><td>Good for embed path without room-graph build</td></tr>
-          <tr class="pick"><td>Cloudflare RealtimeKit</td><td>Connected meetings — each breakout is a <strong>child meeting</strong> (beta)</td><td>Best documented programmable breakouts for Raisd UI</td></tr>
-          <tr><td>Daily / LiveKit / Agora</td><td>DIY multi-room</td><td>Raisd builds host UX, permissions, recording policy</td></tr>
-        </tbody>
-      </table>
-      <ul>
-        <li>Only lecturer/moderator may open breakouts.</li>
-        <li>Students remain participants (no host escalation).</li>
-        <li>MVP: record <strong>main room only</strong>.</li>
-        <li>Breakouts are session-scoped — not a second CMS group SoR.</li>
-      </ul>
-    </section>
-
-    <section class="section" id="selfpaced">
-      <h2>Self-paced learning, recordings, quizzes</h2>
-      <p>These are <strong>Raisd product capabilities</strong> (F03 / F12 / F13). Video vendors supply media only.</p>
-
-      <h3>Self-paced unlock</h3>
-      <table class="data">
-        <thead>
-          <tr><th>Policy</th><th>Behaviour</th><th>Use when</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>cohort_week</code></td><td>Unlock with teaching week (default today)</td><td>Synchronised cohorts</td></tr>
-          <tr><td><code>sequential_unlock</code></td><td>Next topic after previous complete</td><td>Self-paced programmes</td></tr>
-          <tr><td><code>open_from</code></td><td>Absolute datetime, independent of week</td><td>Rolling intake</td></tr>
-        </tbody>
-      </table>
-      <p class="note">Live-class join windows stay timetable-gated even when materials are self-paced.</p>
-
-      <h3>Recordings</h3>
-      <ul>
-        <li>Vendor captures; Portal API stores metadata (session, ready_at, duration, URL).</li>
-        <li>Live: prefer export into Raisd file store + enrolment authz.</li>
-        <li>Demo: deep-link vendor URL with expiry is acceptable if labelled Demo.</li>
-        <li>Phase 1 attendance = live join/leave; playback analytics later if required.</li>
-      </ul>
-
-      <h3>Quizzes (CAP-24)</h3>
-      <table class="data">
-        <thead>
-          <tr><th>Approach</th><th>Verdict</th></tr>
-        </thead>
-        <tbody>
-          <tr class="pick"><td>Raisd-native quiz items on module / study planner</td><td><strong>Preferred</strong> — authz, audit, campus policy</td></tr>
-          <tr><td>Google / Microsoft Forms link-out</td><td>Demo stopgap only</td></tr>
-          <tr><td>Moodle quiz via LTI</td><td>Avoid as primary (second LMS SoR)</td></tr>
-          <tr><td>BBB 3.0 in-meeting quiz</td><td>Formative live polls only — not exam of record</td></tr>
-        </tbody>
-      </table>
     </section>
 
     <section class="section" id="spike">
