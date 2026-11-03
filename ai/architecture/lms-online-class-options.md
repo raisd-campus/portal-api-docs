@@ -50,7 +50,9 @@ recording_cost ≈ recording_minutes × recording_rate
   (Chime: $0.0125 capture + $0.002 concat per session-min; S3 extra)
 ```
 
-Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + storage + eng (no per-min licence).
+Seat vendors: `licensed_hosts × price_per_host_month`.  
+**Self-developed:** `$0` software licence ≠ cheap — bill = dedicated media infra (VPS/TURN/storage) **+ loaded eng/SRE/on-call**.  
+**Aslam planning ceiling (3 Nov):** self-developed can run **up to ~$40k / mo** at multi-campus / full-peak scale. Use that as the S3 high band, not the VPS-only line.
 
 ### Platform links
 
@@ -75,7 +77,7 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | LiveKit | [livekit.io](https://livekit.io/) · [OSS](https://github.com/livekit/livekit) | [Cloud](https://livekit.io/pricing) · [self-host](https://docs.livekit.io/home/self-hosting/) |
 | Cloudflare RealtimeKit | [Docs](https://developers.cloudflare.com/realtime/realtimekit/) | [Pricing](https://developers.cloudflare.com/realtime/realtimekit/platform/pricing/) |
 | Amazon Chime SDK | [Chime SDK](https://aws.amazon.com/chime/chime-sdk/) | [Pricing](https://aws.amazon.com/chime/chime-sdk/pricing/) |
-| Self-developed | [LiveKit self-host](https://docs.livekit.io/home/self-hosting/) · [mediasoup](https://mediasoup.org/) · [Janus](https://janus.conf.meetecho.com/) · [Ion SFU](https://github.com/pion/ion-sfu) | VPS + storage only |
+| Self-developed | [LiveKit self-host](https://docs.livekit.io/home/self-hosting/) · [mediasoup](https://mediasoup.org/) · [Janus](https://janus.conf.meetecho.com/) · [Ion SFU](https://github.com/pion/ion-sfu) | Infra + eng/SRE — **up to ~$40k/mo** (Aslam) |
 
 ### Unit rates (media / recording) — all platforms
 
@@ -98,7 +100,7 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Jitsi Meet | $0 licence | Jibri + storage | VPS / ops |
 | edumeet / Galène / MiroTalk | $0 licence | DIY / storage | VPS / ops |
 | Nextcloud Talk | $0 (Talk) | NC storage | Nextcloud ops |
-| Self-developed OSS | $0 licence | your storage | VPS / ops |
+| Self-developed OSS | $0 licence | your storage | Infra + eng/SRE → **~$8k–40k/mo** by scale |
 
 \*Meet/Teams host seats are modelling only — treat as **$0 incremental** when the campus already pays Workspace / M365 Edu.
 
@@ -125,11 +127,12 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Galène | $0 | storage | ~$60 VPS | **~$60+ eng** |
 | MiroTalk SFU | $0 | storage | ~$80 VPS | **~$80+ eng** |
 | Nextcloud Talk | $0* | NC* | NC host* | **NC ops*** |
-| Self-developed (OSS) | $0 | storage | ~$120 VPS | **~$120+ eng** |
+| **Self-developed (OSS)** | $0 | storage | ~$200 VPS + eng/SRE | **~$8k–12k** |
 | LiveKit Cloud (Build) | $50 | $10 | $0 | **$60** |
 | BBB managed | — | incl. | $45–90 | **$45–90** |
 
-\*Nextcloud Talk only models if campus already runs Nextcloud — otherwise add full NC stack cost.
+\*Nextcloud Talk only models if campus already runs Nextcloud — otherwise add full NC stack cost.  
+**Self-developed note:** media licence is $0; the total is **loaded eng/SRE + on-call + infra**. Pilot still expensive because people dominate — do not compare to BBB’s $45–90 managed line as if they are the same cost class.
 
 ### S2 Multi-campus — all platforms
 
@@ -150,7 +153,7 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | OpenVidu Meet (Community / PRO) | $0 or core-min | storage | ~$400 VPS | **~$400+ / PRO** |
 | plugNmeet | $0 | storage | ~$400 VPS | **~$400+ eng** |
 | Apache OpenMeetings | $0 | storage | ~$450 VPS | **~$450+ eng** |
-| Self-developed | $0 | storage | ~$400 VPS | **~$400+ eng** |
+| **Self-developed** | $0 | storage | ~$2–5k infra + eng/SRE | **~$18k–30k** |
 | edumeet / MiroTalk | $0 | storage | ~$350 VPS | **~$350+ eng** |
 | Jitsi Meet | $0 | Jibri | ~$350 VPS | **~$350+ eng** |
 | Galène | $0 | storage | ~$200 VPS | **~$200+ eng** |
@@ -172,14 +175,16 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Microsoft Teams (100)* | — | incl* | $1 500 | **$1 500+** |
 | Zoom Edu (100) | — | incl* | $1 400 | **$1 400+** |
 | Google Meet (100)* | — | Drive* | $1 200 | **$1 200+** |
-| Self-developed cluster | $0 | storage | ~$1 200+ | **~$1 200+ eng/SRE** |
+| **Self-developed cluster** | $0 | storage | ~$5–12k infra + eng/SRE | **~$25k–40k** |
 | plugNmeet / edumeet cluster | $0 | storage | quote | **custom** |
 | Jitsi Meet cluster | $0 | Jibri | quote | **custom** |
 | OpenVidu Meet PRO cluster | core-min | storage | quote | **custom** |
 | Apache OpenMeetings cluster | $0 | storage | quote | **custom** |
 | BBB Scalelite | — | ops | quote | **custom** |
 
-**Reading:** All matrix platforms are costed. Meet/Teams = $0 incremental when already licensed. Chime recording is a larger share (~12–14%) because composite capture is $0.0125/min. Seat/BBB plans often include recording. Jitsi/OpenVidu/self-developed look cheap until VPS, Jibri/egress, and eng/SRE. Do not self-host media on the shared Demo k3s node.
+**Self-developed (Aslam):** planning ceiling **up to ~$40k / mo** at full peak / multi-campus — SFU licence $0 is not the bill; eng/SRE/on-call + media fleet dominate. S1 ≈ $8–12k · S2 ≈ $18–30k · S3 ≈ $25–40k (indicative loaded OpEx, not a procurement quote).
+
+**Reading:** All matrix platforms are costed. Meet/Teams = $0 incremental when already licensed. Chime recording is a larger share (~12–14%) because composite capture is $0.0125/min. Seat/BBB plans often include recording. Jitsi/OpenVidu look cheap until VPS/Jibri; **self-developed is in a different cost class** once people are counted (up to ~$40k/mo). Do not self-host media on the shared Demo k3s node.
 
 ---
 
@@ -207,7 +212,7 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | **LiveKit** | Cloud from free / $50 Ship; ~$0.0005/min + bandwidth; or self-host | LiveKit Cloud or k8s | Custom UI | DIY rooms | Egress agents | Open source escape hatch; cheap media | No classroom chrome; you build breakouts/whiteboard |
 | **Cloudflare RealtimeKit** (ex-Dyte) | 10k AV min free; then **$0.002**/min; export **$0.01**/min | Cloudflare edge | UI Kit + SDKs | **Breakout rooms (beta)** — each breakout = child meeting | Per-room recording | Strong “same product” embed; competitive minute price; classroom-oriented kit | Beta / acquisition churn; confirm feature freeze before Live |
 | **Amazon Chime SDK** | **$0.0017**/attendee-min; 1080p capture **$0.0125**/min + concat **$0.002**/min | AWS | Full custom UI; Media Capture → S3 | DIY rooms | Media Capture Pipeline | Low media rate; AWS procurement; published LMS pricing example | Build classroom UX; S3/transfer extra; no education chrome |
-| **Self-developed platform** | Infra + eng (no vendor media fee) | Raisd VPS / k8s (LiveKit OSS, mediasoup, Janus) | Raisd owns SFU + UI + recording | Build yourself | Own object store | Full control; no per-min lock-in | Highest eng + SRE; isolate media from Demo k3s |
+| **Self-developed platform** | Infra + eng/SRE — **~$8k → ~$40k/mo** by scale (Aslam ceiling ~$40k) | Raisd VPS / k8s (LiveKit OSS, mediasoup, Janus) | Raisd owns SFU + UI + recording | Build yourself | Own object store | Full control; no per-min lock-in | Highest eng + SRE OpEx; isolate media from Demo k3s; not “free OSS” |
 
 ### 2.2 Integration patterns that match Raisd
 

@@ -2192,15 +2192,15 @@ flowchart TB
             <td>Low media rate; AWS procurement; LMS example on AWS pricing page</td>
             <td>Build classroom UX; S3/transfer extra; no education chrome</td>
           </tr>
-          <tr>
+          <tr class="pick">
             <td>Self-developed platform</td>
-            <td>Infra + engineering (no vendor media fee)</td>
+            <td><strong>~$8k → ~$40k/mo</strong> (Aslam ceiling ~$40k); $0 SFU licence</td>
             <td>Raisd VPS / k8s (LiveKit OSS, mediasoup, Janus, …)</td>
             <td>Raisd owns SFU, UI, recording pipeline</td>
             <td>Build yourself</td>
             <td>Own object store / disk</td>
             <td>Full product control; no per-min lock-in</td>
-            <td>Highest eng + SRE; media capacity planning on UltaHost-class nodes</td>
+            <td>Highest eng + SRE OpEx; not “free OSS”; isolate media from Demo k3s</td>
           </tr>
         </tbody>
       </table>
@@ -2232,7 +2232,7 @@ flowchart TB
           <tr><td>LiveKit</td><td><a href="https://livekit.io/" rel="noopener noreferrer" target="_blank">livekit.io</a> · <a href="https://github.com/livekit/livekit" rel="noopener noreferrer" target="_blank">OSS GitHub</a></td><td><a href="https://livekit.io/pricing" rel="noopener noreferrer" target="_blank">LiveKit Cloud pricing</a></td></tr>
           <tr><td>Cloudflare RealtimeKit</td><td><a href="https://developers.cloudflare.com/realtime/realtimekit/" rel="noopener noreferrer" target="_blank">RealtimeKit docs</a></td><td><a href="https://developers.cloudflare.com/realtime/realtimekit/platform/pricing/" rel="noopener noreferrer" target="_blank">RealtimeKit pricing</a></td></tr>
           <tr><td>Amazon Chime SDK</td><td><a href="https://aws.amazon.com/chime/chime-sdk/" rel="noopener noreferrer" target="_blank">aws.amazon.com/chime/chime-sdk</a></td><td><a href="https://aws.amazon.com/chime/chime-sdk/pricing/" rel="noopener noreferrer" target="_blank">Chime SDK pricing</a></td></tr>
-          <tr><td>Self-developed (SFU stacks)</td><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">LiveKit self-host</a> · <a href="https://mediasoup.org/" rel="noopener noreferrer" target="_blank">mediasoup</a> · <a href="https://janus.conf.meetecho.com/" rel="noopener noreferrer" target="_blank">Janus</a></td><td>Your VPS / object storage only</td></tr>
+          <tr><td>Self-developed (SFU stacks)</td><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">LiveKit self-host</a> · <a href="https://mediasoup.org/" rel="noopener noreferrer" target="_blank">mediasoup</a> · <a href="https://janus.conf.meetecho.com/" rel="noopener noreferrer" target="_blank">Janus</a></td><td>Infra + eng/SRE — <strong>up to ~$40k/mo</strong> (Aslam)</td></tr>
         </tbody>
       </table>
     </section>
@@ -2289,7 +2289,7 @@ flowchart TB
           <tr><td><a href="https://jitsi.org/" rel="noopener noreferrer" target="_blank">Jitsi Meet</a></td><td class="num">$0 licence</td><td class="num">Jibri + storage</td><td class="num">VPS / ops</td><td>Jibri bots dominate ops; 8x8 SaaS optional</td></tr>
           <tr><td><a href="https://edumeet.org/" rel="noopener noreferrer" target="_blank">edumeet</a> / <a href="https://galene.org/" rel="noopener noreferrer" target="_blank">Galène</a> / <a href="https://mirotalk.com/" rel="noopener noreferrer" target="_blank">MiroTalk</a></td><td class="num">$0 licence</td><td class="num">DIY / storage</td><td class="num">VPS / ops</td><td>POC / watch list — not CAP-26 SoT</td></tr>
           <tr><td><a href="https://nextcloud.com/talk/" rel="noopener noreferrer" target="_blank">Nextcloud Talk</a></td><td class="num">$0 (Talk)</td><td class="num">NC storage</td><td class="num">Nextcloud ops</td><td>Only if campus already runs NC</td></tr>
-          <tr><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">Self-developed (OSS SFU)</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>LiveKit / mediasoup / Janus; eng + SRE dominate</td></tr>
+          <tr class="pick"><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">Self-developed (OSS SFU)</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">Infra + eng/SRE</td><td><strong>Aslam ceiling ~$40k/mo</strong> at full peak — people + fleet, not licence</td></tr>
         </tbody>
       </table>
       <p class="note">Indicative public list (late 2025–Nov 2026). Re-quote before procurement. Attendee minutes below include <strong>+1 lecturer per class</strong>. Host counts for seat/suite rows = concurrent classes (one lecturer host per class).</p>
@@ -2334,7 +2334,7 @@ flowchart TB
           <tr><td>Galène</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$60 VPS</td><td class="num"><strong>~$60+</strong> eng</td><td>Light POC only</td></tr>
           <tr><td>MiroTalk SFU</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$80 VPS</td><td class="num"><strong>~$80+</strong> eng</td><td>POC; confirm licence</td></tr>
           <tr><td>Nextcloud Talk</td><td class="num">$0*</td><td class="num">NC*</td><td class="num">NC host*</td><td class="num"><strong>NC ops*</strong></td><td>Only if campus already runs NC</td></tr>
-          <tr><td>Self-developed (LiveKit OSS)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>See self-developed section</td></tr>
+          <tr class="pick"><td>Self-developed (LiveKit OSS)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$200 VPS + eng/SRE</td><td class="num"><strong>~$8k–12k</strong></td><td>Loaded eng/SRE dominate; not comparable to BBB $45–90</td></tr>
           <tr class="pick"><td>LiveKit Cloud (Build)</td><td class="num">$50</td><td class="num">$10</td><td class="num">$0</td><td class="num"><strong>$60</strong></td><td>+ bandwidth; optimistic egress</td></tr>
           <tr class="pick"><td>BBB managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">$45–90</td><td class="num"><strong>$45–90</strong></td><td>Best OSS classroom depth</td></tr>
         </tbody>
@@ -2372,7 +2372,7 @@ flowchart TB
           <tr class="pick"><td>OpenVidu Meet (Community / PRO)</td><td class="num">$0 or core-min</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> / PRO</td><td>PRO quote when elastic needed</td></tr>
           <tr class="pick"><td>plugNmeet</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td><td>LiveKit classroom scale</td></tr>
           <tr><td>Apache OpenMeetings</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$450 VPS</td><td class="num"><strong>~$450+</strong> eng</td><td>Java cluster ops</td></tr>
-          <tr><td>Self-developed (OSS SFU)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td><td></td></tr>
+          <tr class="pick"><td>Self-developed (OSS SFU)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$2–5k infra + eng/SRE</td><td class="num"><strong>~$18k–30k</strong></td><td>Multi-campus eng/SRE + media fleet</td></tr>
           <tr><td>edumeet / MiroTalk</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$350 VPS</td><td class="num"><strong>~$350+</strong> eng</td><td>Watch list / POC</td></tr>
           <tr><td>Jitsi Meet (self-host)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">~$350 VPS</td><td class="num"><strong>~$350+</strong> eng</td><td>JVB + Jibri scale</td></tr>
           <tr><td>Galène</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$200 VPS</td><td class="num"><strong>~$200+</strong> eng</td><td>Light SFU; thin classroom</td></tr>
@@ -2409,7 +2409,7 @@ flowchart TB
           <tr><td>Microsoft Teams (100 hosts)*</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 500</td><td class="num"><strong>$1 500+</strong></td><td>$0 if M365 Edu already paid</td></tr>
           <tr><td>Zoom Education (100 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 400</td><td class="num"><strong>$1 400+</strong></td><td></td></tr>
           <tr><td>Google Meet (100 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$1 200</td><td class="num"><strong>$1 200+</strong></td><td>$0 if Workspace already paid</td></tr>
-          <tr><td>Self-developed (OSS SFU cluster)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$1 200+</td><td class="num"><strong>~$1 200+</strong> eng/SRE</td><td></td></tr>
+          <tr class="pick"><td>Self-developed (OSS SFU cluster)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$5–12k infra + eng/SRE</td><td class="num"><strong>~$25k–40k</strong></td><td>Aslam planning ceiling up to ~$40k/mo</td></tr>
           <tr><td>plugNmeet / edumeet cluster</td><td class="num">$0</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td>Dedicated media fleet</td></tr>
           <tr><td>Jitsi Meet (cluster)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td>JVB shard + Jibri fleet</td></tr>
           <tr class="pick"><td>OpenVidu Meet PRO cluster</td><td class="num">core-min</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td></td></tr>
@@ -2426,7 +2426,8 @@ flowchart TB
         On Whereby/Daily/RealtimeKit, recording is smaller (~4–9%) at $0.01/session-min.
         Seat products (Zoom Edu) and managed BBB often fold recording into the plan — confirm storage caps.
         LiveKit Cloud looks cheapest among programmable SDKs but needs bandwidth/egress validation.
-        Jitsi / OpenVidu / self-developed look cheap on licence until VPS, Jibri/egress, and on-call are counted.
+        Jitsi / OpenVidu look cheap on licence until VPS, Jibri/egress, and on-call are counted.
+        <strong>Self-developed is a different cost class:</strong> Aslam’s planning signal is <strong>up to ~$40k / mo</strong> at full peak (S1 ≈ $8–12k · S2 ≈ $18–30k · S3 ≈ $25–40k) — loaded eng/SRE + media fleet, not the $0 SFU licence.
         Do not self-host media on the shared Demo k3s node.
       </div>
 
@@ -2465,13 +2466,13 @@ flowchart TB
       <div class="grid3">
         <div class="card">
           <div class="n">Cost shape</div>
-          <strong>CapEx / OpEx, not per-min</strong>
-          <span>Dedicated media nodes (~$120 → $1 200+/mo by scale), TURN, object storage for recordings, monitoring. No vendor attendee-minute bill.</span>
+          <strong>Up to ~$40k / mo (Aslam)</strong>
+          <span>S1 ≈ $8–12k · S2 ≈ $18–30k · S3 ≈ $25–40k. Infra (VPS/TURN/storage) is the small slice; loaded eng/SRE/on-call dominate. No vendor attendee-minute bill — people are the bill.</span>
         </div>
         <div class="card">
           <div class="n">Build</div>
           <strong>Highest engineering</strong>
-          <span>Classroom chrome, whiteboard/polls (or omit), breakout room graph, recording compose, failover. Months, not a Demo spike.</span>
+          <span>Classroom chrome, whiteboard/polls (or omit), breakout room graph, recording compose, failover. Months, not a Demo spike — that eng load is already in the $8k–40k band.</span>
         </div>
         <div class="card">
           <div class="n">Fit</div>
@@ -2480,7 +2481,9 @@ flowchart TB
         </div>
       </div>
       <div class="callout warn">
-        Do <strong>not</strong> self-host media on the current shared Demo k3s node. Media SFUs need isolated CPU/RAM and separate capacity planning from Portal API / portals.
+        <strong>Do not treat OSS SFU as “~$120 VPS.”</strong>
+        Aslam’s leadership ceiling for self-developed is <strong>up to ~$40k / month</strong> at multi-campus / full-peak scale.
+        Do <strong>not</strong> self-host media on the current shared Demo k3s node — media SFUs need isolated CPU/RAM and separate capacity planning from Portal API / portals.
       </div>
     </section>
 

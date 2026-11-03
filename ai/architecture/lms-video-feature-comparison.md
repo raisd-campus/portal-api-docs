@@ -159,6 +159,7 @@ Columns = shortlist platforms (full set would be unreadable on one slide — ext
 | **~$45–140** | Managed BBB small · Zoom Edu ~10 hosts · LiveKit Cloud Build |
 | **~$120–220** | OpenVidu Community VPS+eng · RealtimeKit · Chime |
 | **~$350–450** | Whereby · Daily · Agora · Zoom Video SDK |
+| **~$8k–12k (S1)** | **Self-developed** (loaded eng/SRE — not VPS-only); grows to **~$25–40k** at S3 (Aslam ceiling ~$40k) |
 | **Seat / suite** | Meet/Teams — “included” only if campus already pays Workspace/M365 |
 
 Full S1–S3 tables: [lms-online-class-options.md](lms-online-class-options.md).
@@ -197,7 +198,7 @@ Full S1–S3 tables: [lms-online-class-options.md](lms-online-class-options.md).
 |---|---|---|---|---|
 | R1 / R12 control | Y | Y | Y | Y |
 | Classroom chrome | Build | Build | Build | Build |
-| S1 media $ | ~$198 | ~$60 | ~$120+ eng | ~$417 |
+| S1 / S3 OpEx | ~$198 / ~$5.5k | ~$60 / ~$1.7k | **~$8–12k / ~$25–40k** (Aslam ≤~$40k) | ~$417 / ~$12k |
 | Escape hatch | Weak | Strong | Strongest | Weak |
 | Speed risk (3 Nov) | High eng | High eng | Highest | High eng |
 

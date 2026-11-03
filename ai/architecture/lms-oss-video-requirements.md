@@ -198,7 +198,7 @@ Lecturer / Student portal
 | **Matches meeting lean** | 3 Nov preliminary preference for self-dev (lowest opex) **if** speed allows — speed is the stated risk |
 | **R8 transcription** | Natural fit: Egress audio → async STT worker owned by Raisd |
 | **R9 quizzes** | Unrelated to LiveKit; Raisd-native only |
-| **Scale** | Horizontal SFU + egress nodes; no per-min licence; eng/SRE becomes the bill (see S1–S3 “~$120 / ~$400 / ~$1 200+ eng” on cost page) |
+| **Scale** | Horizontal SFU + egress nodes; no per-min licence; eng/SRE becomes the bill (see S1–S3 **~$8–12k / ~$18–30k / ~$25–40k** on cost page — Aslam ceiling **~$40k/mo**) |
 | **Limitation** | Delivers **media**, not an LMS classroom. Weeks of UI before OL-xx parity |
 | **Verdict** | **Phase-2 product path** after a Cloud LiveKit or OpenVidu spike proves CAP-26 flows — not the fastest Demo |
 
@@ -240,7 +240,8 @@ Only if LiveKit is rejected for licence/architecture reasons. Higher DIY for the
 | Data residency / AG | Self-host or choose host region | Same | Same | Same | Same |
 | Transcription accuracy / cost | External STT either way | Same | Same | Same | Same |
 
-**Multi-campus reading (S2/S3):** “OSS = free” is false once 40–100 concurrent classrooms run. The bill moves to **VPS/GPU, storage, SRE, or OpenVidu PRO**. Aslam’s 3 Nov rough hosting range ($40k–$90k / mo across eight campuses) is a **capacity planning** signal, not a vendor price list — treat as leadership context, not as a BBB quote.
+**Multi-campus reading (S2/S3):** “OSS = free” is false once 40–100 concurrent classrooms run. The bill moves to **VPS/GPU, storage, SRE, or OpenVidu PRO**.  
+**Self-developed (Aslam):** planning ceiling **up to ~$40k / mo** at full peak — loaded eng/SRE + media fleet (S1 ≈ $8–12k · S2 ≈ $18–30k · S3 ≈ $25–40k). Separate from Aslam’s broader eight-campus hosting range ($40k–$90k / mo) used as capacity-planning context, not a BBB quote.
 
 ---
 
