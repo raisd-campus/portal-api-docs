@@ -10,7 +10,7 @@
 **Status:** **Proposed / research** — not Live. Demo ≠ Live.  
 **Published human page:** [`docs/diagrams/lms-online-class-options.html#oss-req`](../../diagrams/lms-online-class-options.html#oss-req)
 
-Pricing and infra figures are **indicative** (Nov 2026). Re-quote before procurement. Do not claim Live CAP-26 until durable save, server authz, and a named owner exist.
+Pricing and infra figures are **indicative USD** (Nov 2026) unless another currency is explicitly marked. Re-quote before procurement. Do not claim Live CAP-26 until durable save, server authz, and a named owner exist.
 
 ---
 

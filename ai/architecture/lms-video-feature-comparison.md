@@ -13,7 +13,7 @@
 
 Legend: **Y** = meets · **P** = partial / Raisd must finish · **N** = no / poor fit · **R** = Raisd owns (vendor irrelevant) · **—** = not applicable
 
-Indicative detail only (Nov 2026). Re-quote before procurement.
+Indicative detail only (Nov 2026). **All costs are USD** unless another currency is explicitly marked. Re-quote before procurement.
 
 ---
 

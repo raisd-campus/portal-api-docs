@@ -15,7 +15,7 @@
 **Status:** **Proposed / research** — not Live. Demo ≠ Live for live class, quizzes, and recording delivery.  
 **Meeting constraints to honour:** feel integrated (not a separate product); **portal SSO**; students join as **participants**; access gated by **timetable**; join/leave for **attendance**; **automatic recording** + later playback; **transcription** expected (Raisd or add-on pipeline); quizzes attach at module / study-planner setup (Raisd-native SoT); self-paced unlock may differ from teaching-week release; Faid → Manna requirements summary still expected.
 
-Pricing below is **indicative public list** (USD/EUR, late 2025–Nov 2026). Always re-quote before procurement.
+**All costs on this page are in US dollars (USD)** unless a row explicitly shows another currency (e.g. BBB university € list). Pricing is **indicative public list** (late 2025–Nov 2026). Always re-quote before procurement.
 
 ---
 
@@ -39,6 +39,8 @@ Three integration shapes fit Portal API + campus portals:
 **UX requirements (Faid design pack 2 Nov 2026):** [`lms-online-lesson-ux.md`](lms-online-lesson-ux.md) · screens in published [`#ux-pack`](../../diagrams/lms-online-class-options.html#ux-pack)
 
 ### Cost formula
+
+All calculated totals below are **USD**.
 
 ```text
 attendee_minutes / month
