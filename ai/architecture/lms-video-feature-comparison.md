@@ -25,9 +25,15 @@ Indicative detail only (Nov 2026). Re-quote before procurement.
 |---|---|---|---|---|
 | **BigBlueButton** | Virtual classroom product | Managed host **or** self-host + Scalelite | **B** (+ Raisd wrap) | Apache-2.0; $0 software; paid hosting/support |
 | **OpenVidu Meet** | Classroom on LiveKit stack | Community single-node **or** PRO elastic | **B** → **C** embed | Community free; PRO **$0.0006 / core-min** |
+| **plugNmeet** | LiveKit classroom product | Self-host (API, whiteboard, recording, breakout) | **B** → **C** embed | MIT / Apache components; $0 software |
+| **Apache OpenMeetings** | Apache virtual classroom | Self-host Java stack | **B** | Apache-2.0; heavier ops than BBB managed |
 | **Jitsi Meet** | General WebRTC meeting | Self-host or 8x8 SaaS | Thin **B** / POC | Apache-2.0; Jibri for recording |
+| **edumeet** | mediasoup multiparty meeting | Self-host | Thin **B** / Shape **C** base | MIT-family; education lean |
+| **Galène** | Lightweight SFU | Self-host | Thin **B** / POC | AGPL-3.0; small ops footprint |
+| **Nextcloud Talk** | Calls inside Nextcloud | Nextcloud + Talk app | **A**/**B** if NC-mandated | AGPL Talk; needs NC ops |
+| **MiroTalk SFU** | Open WebRTC conference | Self-host SFU | Thin **B** / POC | Confirm licence before Live |
 | **LiveKit** | Media SFU + Egress | Cloud metered **or** OSS self-host | **C** | Apache-2.0; Cloud ~$0.0005/min + egress |
-| **Self-dev (mediasoup / Janus)** | Raw SFU / gateway | Raisd builds all UI + recorder | **C** | Permissive OSS; highest eng |
+| **Self-dev (mediasoup / Janus / Ion)** | Raw SFU / gateway | Raisd builds all UI + recorder | **C** | Permissive / GPL mix; highest eng |
 
 ### 1.2 Commercial seats / suite
 
@@ -115,9 +121,15 @@ Columns = shortlist platforms (full set would be unreadable on one slide — ext
 |---|---|---|---|
 | **BBB** | Deepest classroom (whiteboard, breakouts, attendance, Moodle API). Maps cleanly to CAP-26 teaching mental model. | Chrome is still BBB unless wrapped. Self-host heavy; use **managed**. OL-40 usually Raisd overlay. | Education-feature path / government LMS optics |
 | **OpenVidu Meet** | Embed + white-label; LiveKit lineage; recording/API; Community $0 entry | Attendance custom; breakouts confirm GA; Community → PRO/cluster at scale | Same-product feel without building SFU UI |
+| **plugNmeet** | LiveKit classroom pack (API + whiteboard + recording + breakout) without OpenVidu PRO | Community maturity / support thinner than BBB managed; CAP-12 Raisd | Co-equal OSS embed alt with OpenVidu |
+| **OpenMeetings** | Broad classroom features; Apache-2.0 | Java / heavier ops | Watch list if Apache optics matter |
 | **Jitsi** | Cheap privacy POC; JWT SSO | Basic classroom; Jibri ops; weak attendance/playback | Spike only — not SoT |
+| **edumeet** | mediasoup education-lean meeting | Not managed classroom SoT | Shape C reference / DIY base |
+| **Galène** | Lightest SFU ops | Thin teaching features | Internal POC only |
+| **Nextcloud Talk** | Bundled if campus already on NC | Weak Raisd brand; NC ops coupling | Only if NC-mandated |
+| **MiroTalk SFU** | Fast conference self-host | Licence + hardening | POC only |
 | **LiveKit** | Full R1/R12 control; cheap media; OSS escape hatch | **No** classroom pack — Raisd builds lobby/roster/share/Past Class | After SDK spike; productised Raisd path |
-| **mediasoup / Janus** | Absolute control | Slowest path; no product kit | Only if LiveKit rejected |
+| **mediasoup / Janus / Ion** | Absolute control | Slowest path; no product kit | Only if LiveKit rejected |
 
 ### 3.2 Commercial seats — strengths / gaps vs Raisd
 
@@ -168,14 +180,16 @@ Full S1–S3 tables: [lms-online-class-options.md](lms-online-class-options.md).
 
 ### Pack B — “Education classroom (OSS)”
 
-| | Managed BBB | OpenVidu Meet | Jitsi |
-|---|---|---|---|
-| Classroom depth | Excellent | Good | Basic |
-| Attendance built-in | Y | N (Raisd) | N |
-| Embed / white-label | Wrap | Native strength | Partial |
-| Licence $ | $0 software | $0 → PRO | $0 |
-| Ops | Managed preferred | Dedicated VPS | Jibri heavy |
-| Fit to 3 Nov OSS ask | **Primary** | **Alt embed** | POC only |
+| | Managed BBB | OpenVidu Meet | plugNmeet | Jitsi |
+|---|---|---|---|---|
+| Classroom depth | Excellent | Good | Good | Basic |
+| Attendance built-in | Y | N (Raisd) | N (Raisd) | N |
+| Embed / white-label | Wrap | Native strength | Native strength | Partial |
+| Licence $ | $0 software | $0 → PRO | $0 | $0 |
+| Ops | Managed preferred | Dedicated VPS | Dedicated VPS | Jibri heavy |
+| Fit to 3 Nov OSS ask | **Primary** | **Alt embed** | **Alt embed** | POC only |
+
+**Pack B watch list:** Apache OpenMeetings (classroom depth, heavier Java ops) · edumeet · Galène · MiroTalk (POC / reference only).
 
 ### Pack C — “Raisd-owned media (commercial SDK or OSS SFU)”
 
@@ -204,10 +218,11 @@ Full S1–S3 tables: [lms-online-class-options.md](lms-online-class-options.md).
 |---|---|---|
 | **Demo now** | **Whereby** or **Daily** | Prove R2–R7 glue inside portals; stub R12 |
 | **OSS classroom** | **Managed BBB** | Best feature score on teaching + attendance among OSS |
-| **OSS embed** | **OpenVidu Meet** | Best OSS score on R1 + embed without full SFU UI |
+| **OSS embed** | **OpenVidu Meet** or **plugNmeet** | Best OSS score on R1 + embed without full SFU UI |
+| **OSS watch list** | OpenMeetings · edumeet · Galène · MiroTalk | Spike only if shortlist rejected |
 | **Branded Live path** | **RealtimeKit** or **Chime** or **LiveKit Cloud** | Best R1+R12; pick by breakouts vs $/mo vs OSS escape |
 | **Self-host later** | LiveKit OSS (after Cloud spike) | Matches 3 Nov self-dev lean without starting from mediasoup |
-| **Do not primary** | Jitsi SoT · Meet/Teams/Zoom link-out · Agora unless APAC · any media on Demo k3s | Fail R1 and/or classroom depth and/or ops |
+| **Do not primary** | Jitsi SoT · Nextcloud Talk unless NC-mandated · Meet/Teams/Zoom link-out · Agora unless APAC · any media on Demo k3s | Fail R1 and/or classroom depth and/or ops |
 
 **Raisd always owns:** R3 timetable, R9 CAP-24 quizzes/self-paced, CAP-12 persistence policy, recording authz, R8 transcript pipeline, OL-40 queue if vendor UX insufficient.
 

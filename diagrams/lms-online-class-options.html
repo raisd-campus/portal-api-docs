@@ -535,7 +535,7 @@
         </div>
         <div class="card">
           <div class="n">3 · OSS embed alt</div>
-          <strong>OpenVidu Meet Community + Portal API</strong>
+          <strong>OpenVidu Meet or plugNmeet + Portal API</strong>
           <span>Good classroom features, white-label, REST/embed. Raisd builds attendance analytics and LMS glue. Dedicated media VPS — not Demo k3s.</span>
         </div>
         <div class="card">
@@ -544,7 +544,7 @@
           <span>Best match to Faid UX pack (lobby, roster, moderated share queue). Chime strong on $/mo; RealtimeKit for breakouts later; LiveKit for self-host escape. Quizzes stay Raisd-native.</span>
         </div>
       </div>
-      <p class="note">Deprioritise as primary pilot: self-hosted BBB/OpenVidu/Jitsi on current Demo VPS; Jitsi as classroom SoT (basic features); Meet/Teams-only unless a campus already standardises on them; raw Agora unless APAC scale forces it. Self-developed OSS SFU is a later path after a Cloud/SDK spike.</p>
+      <p class="note">Watch list: Apache OpenMeetings · edumeet · Galène · MiroTalk. Deprioritise as primary pilot: self-hosted media on current Demo VPS; Jitsi / Nextcloud Talk as classroom SoT; Meet/Teams-only unless a campus already standardises on them; raw Agora unless APAC scale forces it. Self-developed OSS SFU is a later path after a Cloud/SDK spike.</p>
     </section>
 
     <section class="section" id="ux-pack">
@@ -775,7 +775,7 @@
             <td>Days</td>
           </tr>
           <tr class="pick">
-            <td><strong>B · Education classroom API</strong><span class="shape-vendors">BigBlueButton · OpenVidu Meet</span></td>
+            <td><strong>B · Education classroom API</strong><span class="shape-vendors">BigBlueButton · OpenVidu Meet · plugNmeet</span></td>
             <td>Create/join URLs, role map, recording catalogue, Raisd lobby wrap</td>
             <td>Classroom UI + media + education breakouts</td>
             <td>Strong teaching features; iframe or redirect</td>
@@ -912,15 +912,18 @@ flowchart TB
     <section class="section" id="oss-features">
       <h2>Open-source classroom feature comparison</h2>
       <p>
-        Self-hosted Shape B shortlist. Comparison assumes a
+        Self-hosted Shape B shortlist plus additional OSS options. Comparison assumes a
         <strong>properly configured self-hosted deployment</strong>, not free public hosting tiers.
       </p>
+      <h3>Primary shortlist</h3>
+      <div class="table-scroll">
       <table class="data">
         <thead>
           <tr>
             <th>Requirement</th>
             <th>BigBlueButton</th>
             <th>OpenVidu Meet</th>
+            <th>plugNmeet</th>
             <th>Jitsi Meet</th>
           </tr>
         </thead>
@@ -930,23 +933,27 @@ flowchart TB
             <td>Yes</td>
             <td>Yes</td>
             <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
             <td>Automatic recording</td>
             <td>Configurable</td>
             <td>Via API / configuration</td>
+            <td>Via API</td>
             <td>Via Jibri automation</td>
           </tr>
           <tr>
             <td>Playback later</td>
             <td>Built-in</td>
             <td>Yes</td>
+            <td>Yes <span class="note">(export preferred)</span></td>
             <td>Requires storage / player integration</td>
           </tr>
           <tr class="pick">
             <td>Moodle integration</td>
             <td><strong>Native</strong></td>
             <td>Custom integration</td>
+            <td>Custom</td>
             <td>Plugin / custom</td>
           </tr>
           <tr>
@@ -954,21 +961,32 @@ flowchart TB
             <td>API</td>
             <td>API / embedding</td>
             <td>API / embedding</td>
+            <td>API / embedding</td>
           </tr>
           <tr class="pick">
             <td>Classroom features</td>
             <td><strong>Excellent</strong></td>
             <td>Good</td>
+            <td>Good</td>
             <td>Basic</td>
+          </tr>
+          <tr>
+            <td>Breakouts / whiteboard</td>
+            <td><strong>Yes / Yes</strong></td>
+            <td>Partial / Good</td>
+            <td><strong>Yes / Yes</strong></td>
+            <td>Partial / Basic</td>
           </tr>
           <tr class="pick">
             <td>Student attendance analytics</td>
             <td><strong>Built-in features</strong></td>
             <td>Custom development</td>
             <td>Custom development</td>
+            <td>Custom development</td>
           </tr>
           <tr>
             <td>Self-hosted</td>
+            <td>Yes</td>
             <td>Yes</td>
             <td>Yes</td>
             <td>Yes</td>
@@ -978,13 +996,112 @@ flowchart TB
             <td>Free</td>
             <td>Free Community <span class="note">(PRO paid)</span></td>
             <td>Free</td>
+            <td>Free</td>
+          </tr>
+          <tr>
+            <td>Stack note</td>
+            <td>Classic education SFU</td>
+            <td>LiveKit-based</td>
+            <td>LiveKit-based</td>
+            <td>JVB + Jibri</td>
           </tr>
         </tbody>
       </table>
+      </div>
+      <h3>Additional OSS options</h3>
+      <div class="table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th>Apache OpenMeetings</th>
+            <th>edumeet</th>
+            <th>Galène</th>
+            <th>Nextcloud Talk</th>
+            <th>MiroTalk SFU</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>White-label</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>Weak <span class="note">(NC chrome)</span></td>
+            <td>Partial</td>
+          </tr>
+          <tr>
+            <td>Automatic recording</td>
+            <td>Yes</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>Partial</td>
+          </tr>
+          <tr>
+            <td>Playback later</td>
+            <td>Built-in</td>
+            <td>DIY / partial</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>Partial</td>
+          </tr>
+          <tr>
+            <td>Moodle / custom LMS</td>
+            <td>Custom</td>
+            <td>Custom</td>
+            <td>Custom</td>
+            <td>Via Nextcloud</td>
+            <td>Custom</td>
+          </tr>
+          <tr>
+            <td>Classroom features</td>
+            <td>Good</td>
+            <td>Basic–Good</td>
+            <td>Basic</td>
+            <td>Basic</td>
+            <td>Basic</td>
+          </tr>
+          <tr>
+            <td>Attendance analytics</td>
+            <td>Partial</td>
+            <td>Custom</td>
+            <td>DIY</td>
+            <td>Partial</td>
+            <td>DIY</td>
+          </tr>
+          <tr>
+            <td>Self-hosted</td>
+            <td>Yes <span class="note">(Java)</span></td>
+            <td>Yes <span class="note">(mediasoup)</span></td>
+            <td>Yes <span class="note">(light)</span></td>
+            <td>Needs Nextcloud</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Software licence</td>
+            <td>Free <span class="note">(Apache-2.0)</span></td>
+            <td>Free</td>
+            <td>Free <span class="note">(AGPL)</span></td>
+            <td>Free w/ NC</td>
+            <td>Confirm licence</td>
+          </tr>
+          <tr>
+            <td>Raisd note</td>
+            <td>Heavier ops · watch list</td>
+            <td>Shape C reference</td>
+            <td>Internal POC</td>
+            <td>NC-mandated only</td>
+            <td>POC · harden before Live</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
       <div class="callout ok">
         <strong>Raisd reading:</strong> BBB stays the preferred education pack (native Moodle + attendance + deepest classroom UX).
-        OpenVidu Meet is the strongest OSS alternative when white-label / API embed matters more than Moodle-native depth.
-        Jitsi remains a media POC — not CAP-26 classroom SoT.
+        OpenVidu Meet and plugNmeet are the strongest OSS alternatives when white-label / LiveKit lineage matter more than Moodle-native depth.
+        OpenMeetings is watch-list if Apache optics matter. Jitsi / Galène / MiroTalk / edumeet stay POCs — not CAP-26 classroom SoT.
+        Nextcloud Talk only if the campus already runs Nextcloud.
       </div>
     </section>
 
@@ -1048,13 +1165,13 @@ flowchart TB
         </div>
         <div class="card">
           <div class="n">2 · Embed OSS</div>
-          <strong>OpenVidu Meet Community</strong>
+          <strong>OpenVidu Meet or plugNmeet</strong>
           <span>Best R1 embed on dedicated media VPS. Raisd owns attendance + OL-40. LiveKit lineage keeps self-dev open.</span>
         </div>
         <div class="card">
           <div class="n">3 · Later product</div>
           <strong>LiveKit Cloud → OSS self-host</strong>
-          <span>Full R1/R12 control. Highest eng — matches 3 Nov “cheap opex / slow build” trade-off. Jitsi / raw mediasoup deprioritised.</span>
+          <span>Full R1/R12 control. Highest eng — matches 3 Nov “cheap opex / slow build” trade-off. Watch list: OpenMeetings · edumeet · Galène · MiroTalk. Jitsi / Nextcloud Talk / raw mediasoup deprioritised.</span>
         </div>
       </div>
       <div class="callout warn">
@@ -1076,8 +1193,8 @@ flowchart TB
       <div class="grid3">
         <div class="card">
           <div class="n">Open-source</div>
-          <strong>BBB · OpenVidu · Jitsi · LiveKit</strong>
-          <span>$0 software (OpenVidu PRO metered). Classroom depth vs eng trade-off. Not on Demo k3s.</span>
+          <strong>BBB · OpenVidu · plugNmeet · LiveKit + watch list</strong>
+          <span>$0 software (OpenVidu PRO metered). Also OpenMeetings · edumeet · Galène · MiroTalk · NC Talk. Not on Demo k3s.</span>
         </div>
         <div class="card">
           <div class="n">Commercial seats</div>
@@ -1150,8 +1267,8 @@ flowchart TB
         </div>
         <div class="card">
           <div class="n">B · Education OSS</div>
-          <strong>Managed BBB · OpenVidu alt</strong>
-          <span>Best teaching + attendance (BBB). Best OSS embed (OpenVidu). Jitsi = POC only.</span>
+          <strong>Managed BBB · OpenVidu / plugNmeet</strong>
+          <span>Best teaching + attendance (BBB). Best OSS embed (OpenVidu / plugNmeet). Watch list: OpenMeetings. Jitsi = POC only.</span>
         </div>
         <div class="card">
           <div class="n">C · Raisd media</div>
@@ -1236,6 +1353,26 @@ flowchart TB
             <td><strong>Good</strong> classroom features; white-label; embed-friendly</td>
             <td>Attendance analytics custom; dedicated media VPS</td>
           </tr>
+          <tr class="pick">
+            <td>plugNmeet</td>
+            <td>Licence ~$0; infra only</td>
+            <td>Self-host (LiveKit-based)</td>
+            <td>REST/API + embed; Moodle = custom</td>
+            <td>Yes (product)</td>
+            <td>API recording</td>
+            <td>LiveKit classroom pack (whiteboard, breakout, recording)</td>
+            <td>Community support thinner than BBB managed; CAP-12 Raisd</td>
+          </tr>
+          <tr>
+            <td>Apache OpenMeetings</td>
+            <td>Licence $0 (Apache-2.0)</td>
+            <td>Self-host (Java)</td>
+            <td>REST / SOAP LMS glue</td>
+            <td>Yes</td>
+            <td>Built-in recording / playback</td>
+            <td>Broad classroom feature set; Apache optics</td>
+            <td>Heavier Java ops — watch list</td>
+          </tr>
           <tr>
             <td>Jitsi Meet</td>
             <td>Infra only</td>
@@ -1245,6 +1382,46 @@ flowchart TB
             <td>Jibri; playback needs storage/player glue</td>
             <td>Cheap, private; white-label possible</td>
             <td><strong>Basic</strong> classroom features — not a classroom product</td>
+          </tr>
+          <tr>
+            <td>edumeet</td>
+            <td>Licence $0</td>
+            <td>Self-host (mediasoup)</td>
+            <td>Custom / embed</td>
+            <td>DIY rooms</td>
+            <td>Partial / DIY</td>
+            <td>Education-lean multiparty; mediasoup reference</td>
+            <td>Not managed classroom SoT</td>
+          </tr>
+          <tr>
+            <td>Galène</td>
+            <td>AGPL-3.0</td>
+            <td>Self-host (lightweight SFU)</td>
+            <td>Simple groups / API</td>
+            <td>Basic</td>
+            <td>Partial</td>
+            <td>Smallest ops footprint for internal pilots</td>
+            <td>Thin teaching features — not CAP-26 SoT</td>
+          </tr>
+          <tr>
+            <td>Nextcloud Talk</td>
+            <td>$0 with Nextcloud</td>
+            <td>Nextcloud host</td>
+            <td>NC app embed</td>
+            <td>Limited</td>
+            <td>Partial</td>
+            <td>Only if campus already runs Nextcloud</td>
+            <td>NC ops coupling; weak Raisd brand</td>
+          </tr>
+          <tr>
+            <td>MiroTalk SFU</td>
+            <td>Confirm licence</td>
+            <td>Self-host</td>
+            <td>Web UI / API</td>
+            <td>Basic</td>
+            <td>Partial</td>
+            <td>Fast WebRTC conference POC</td>
+            <td>Licence + hardening before Live</td>
           </tr>
           <tr class="pick">
             <td>Whereby Embedded</td>
@@ -1333,7 +1510,13 @@ flowchart TB
           <tr><td>Microsoft Teams</td><td><a href="https://www.microsoft.com/en-us/education/products/teams" rel="noopener noreferrer" target="_blank">Teams for Education</a></td><td><a href="https://www.microsoft.com/en-us/microsoft-365/education" rel="noopener noreferrer" target="_blank">M365 Education</a></td></tr>
           <tr><td>BigBlueButton</td><td><a href="https://bigbluebutton.org/" rel="noopener noreferrer" target="_blank">bigbluebutton.org</a> · <a href="https://docs.bigbluebutton.org/" rel="noopener noreferrer" target="_blank">API docs</a></td><td>Licence $0 · <a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">commercial hosts</a></td></tr>
           <tr><td>OpenVidu Meet</td><td><a href="https://openvidu.io/latest/meet/" rel="noopener noreferrer" target="_blank">openvidu.io/meet</a> · <a href="https://openvidu.io/latest/meet/embedded/reference/rest-api/" rel="noopener noreferrer" target="_blank">REST API</a></td><td><a href="https://openvidu.io/pricing/" rel="noopener noreferrer" target="_blank">Community free · PRO $0.0006/core-min</a></td></tr>
+          <tr><td>plugNmeet</td><td><a href="https://www.plugnmeet.org/" rel="noopener noreferrer" target="_blank">plugnmeet.org</a> · <a href="https://github.com/mynaparrot/plugNmeet-server" rel="noopener noreferrer" target="_blank">GitHub</a></td><td>Self-host (LiveKit-based)</td></tr>
+          <tr><td>Apache OpenMeetings</td><td><a href="https://openmeetings.apache.org/" rel="noopener noreferrer" target="_blank">openmeetings.apache.org</a></td><td>Apache-2.0 · self-host</td></tr>
           <tr><td>Jitsi Meet</td><td><a href="https://jitsi.org/" rel="noopener noreferrer" target="_blank">jitsi.org</a></td><td>Self-host / 8x8</td></tr>
+          <tr><td>edumeet</td><td><a href="https://edumeet.org/" rel="noopener noreferrer" target="_blank">edumeet.org</a> · <a href="https://github.com/edumeet" rel="noopener noreferrer" target="_blank">GitHub</a></td><td>Self-host (mediasoup)</td></tr>
+          <tr><td>Galène</td><td><a href="https://galene.org/" rel="noopener noreferrer" target="_blank">galene.org</a></td><td>AGPL · self-host</td></tr>
+          <tr><td>Nextcloud Talk</td><td><a href="https://nextcloud.com/talk/" rel="noopener noreferrer" target="_blank">nextcloud.com/talk</a></td><td>Needs Nextcloud</td></tr>
+          <tr><td>MiroTalk SFU</td><td><a href="https://mirotalk.com/" rel="noopener noreferrer" target="_blank">mirotalk.com</a> · <a href="https://github.com/miroslavpejic85/mirotalksfu" rel="noopener noreferrer" target="_blank">SFU GitHub</a></td><td>Self-host · confirm licence</td></tr>
           <tr><td>Whereby Embedded</td><td><a href="https://whereby.com/information/embedded/" rel="noopener noreferrer" target="_blank">whereby.com/embedded</a></td><td><a href="https://whereby.com/information/embedded/pricing" rel="noopener noreferrer" target="_blank">Embedded pricing</a></td></tr>
           <tr><td>Daily</td><td><a href="https://www.daily.co/" rel="noopener noreferrer" target="_blank">daily.co</a></td><td><a href="https://www.daily.co/pricing" rel="noopener noreferrer" target="_blank">daily.co/pricing</a></td></tr>
           <tr><td>Agora</td><td><a href="https://www.agora.io/" rel="noopener noreferrer" target="_blank">agora.io</a></td><td><a href="https://www.agora.io/en/pricing/" rel="noopener noreferrer" target="_blank">agora.io/pricing</a></td></tr>
@@ -1392,7 +1575,11 @@ flowchart TB
           <tr><td><a href="https://livekit.io/pricing" rel="noopener noreferrer" target="_blank">LiveKit Cloud</a></td><td class="num">~$0.0005</td><td class="num">~$0.005</td><td class="num">$0–$50+</td><td>Egress + bandwidth; Ship plan ~$50 for growth</td></tr>
           <tr><td><a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">BBB managed</a></td><td class="num">n/a</td><td class="num">included GB tier</td><td class="num">~$15–€399+</td><td>Recording storage in plan; export optional</td></tr>
           <tr><td><a href="https://openvidu.io/pricing/" rel="noopener noreferrer" target="_blank">OpenVidu Meet</a></td><td class="num">$0 / PRO core-min</td><td class="num">your storage</td><td class="num">VPS / PRO</td><td>Community free; PRO $0.0006 / core-min elastic/HA</td></tr>
+          <tr><td><a href="https://www.plugnmeet.org/" rel="noopener noreferrer" target="_blank">plugNmeet</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>LiveKit-based classroom; dedicated media VPS</td></tr>
+          <tr><td><a href="https://openmeetings.apache.org/" rel="noopener noreferrer" target="_blank">Apache OpenMeetings</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>Java stack; heavier ops</td></tr>
           <tr><td><a href="https://jitsi.org/" rel="noopener noreferrer" target="_blank">Jitsi Meet</a></td><td class="num">$0 licence</td><td class="num">Jibri + storage</td><td class="num">VPS / ops</td><td>Jibri bots dominate ops; 8x8 SaaS optional</td></tr>
+          <tr><td><a href="https://edumeet.org/" rel="noopener noreferrer" target="_blank">edumeet</a> / <a href="https://galene.org/" rel="noopener noreferrer" target="_blank">Galène</a> / <a href="https://mirotalk.com/" rel="noopener noreferrer" target="_blank">MiroTalk</a></td><td class="num">$0 licence</td><td class="num">DIY / storage</td><td class="num">VPS / ops</td><td>POC / watch list — not CAP-26 SoT</td></tr>
+          <tr><td><a href="https://nextcloud.com/talk/" rel="noopener noreferrer" target="_blank">Nextcloud Talk</a></td><td class="num">$0 (Talk)</td><td class="num">NC storage</td><td class="num">Nextcloud ops</td><td>Only if campus already runs NC</td></tr>
           <tr><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">Self-developed (OSS SFU)</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>LiveKit / mediasoup / Janus; eng + SRE dominate</td></tr>
         </tbody>
       </table>
@@ -1431,7 +1618,13 @@ flowchart TB
           <tr><td>Google Meet (8 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$96</td><td class="num"><strong>$96+</strong></td><td>$0 if campus already on Workspace</td></tr>
           <tr><td>Zoom Education (8 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$112</td><td class="num"><strong>$112+</strong></td><td>Confirm cloud-recording storage</td></tr>
           <tr class="pick"><td>OpenVidu Meet Community</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>White-label / embed; attendance custom</td></tr>
+          <tr class="pick"><td>plugNmeet</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>LiveKit classroom pack</td></tr>
+          <tr><td>Apache OpenMeetings</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$140 VPS</td><td class="num"><strong>~$140+</strong> eng</td><td>Java ops; watch list</td></tr>
           <tr><td>Jitsi Meet (self-host)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">~$100 VPS</td><td class="num"><strong>~$100+</strong> eng</td><td>Basic classroom; Jibri ops</td></tr>
+          <tr><td>edumeet</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$110 VPS</td><td class="num"><strong>~$110+</strong> eng</td><td>mediasoup reference</td></tr>
+          <tr><td>Galène</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$60 VPS</td><td class="num"><strong>~$60+</strong> eng</td><td>Light POC only</td></tr>
+          <tr><td>MiroTalk SFU</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$80 VPS</td><td class="num"><strong>~$80+</strong> eng</td><td>POC; confirm licence</td></tr>
+          <tr><td>Nextcloud Talk</td><td class="num">$0*</td><td class="num">NC*</td><td class="num">NC host*</td><td class="num"><strong>NC ops*</strong></td><td>Only if campus already runs NC</td></tr>
           <tr><td>Self-developed (LiveKit OSS)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>See self-developed section</td></tr>
           <tr class="pick"><td>LiveKit Cloud (Build)</td><td class="num">$50</td><td class="num">$10</td><td class="num">$0</td><td class="num"><strong>$60</strong></td><td>+ bandwidth; optimistic egress</td></tr>
           <tr class="pick"><td>BBB managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">$45–90</td><td class="num"><strong>$45–90</strong></td><td>Best OSS classroom depth</td></tr>
@@ -1468,8 +1661,12 @@ flowchart TB
           <tr class="pick"><td>LiveKit Cloud (Ship)</td><td class="num">$446</td><td class="num">$72</td><td class="num">$50</td><td class="num"><strong>$568</strong></td><td></td></tr>
           <tr><td>Google Meet (40 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$480</td><td class="num"><strong>$480+</strong></td><td>$0 if Workspace already paid</td></tr>
           <tr class="pick"><td>OpenVidu Meet (Community / PRO)</td><td class="num">$0 or core-min</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> / PRO</td><td>PRO quote when elastic needed</td></tr>
+          <tr class="pick"><td>plugNmeet</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td><td>LiveKit classroom scale</td></tr>
+          <tr><td>Apache OpenMeetings</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$450 VPS</td><td class="num"><strong>~$450+</strong> eng</td><td>Java cluster ops</td></tr>
           <tr><td>Self-developed (OSS SFU)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td><td></td></tr>
+          <tr><td>edumeet / MiroTalk</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$350 VPS</td><td class="num"><strong>~$350+</strong> eng</td><td>Watch list / POC</td></tr>
           <tr><td>Jitsi Meet (self-host)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">~$350 VPS</td><td class="num"><strong>~$350+</strong> eng</td><td>JVB + Jibri scale</td></tr>
+          <tr><td>Galène</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$200 VPS</td><td class="num"><strong>~$200+</strong> eng</td><td>Light SFU; thin classroom</td></tr>
           <tr class="pick"><td>BBB university managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">~$220–440</td><td class="num"><strong>~$220–440</strong></td><td></td></tr>
         </tbody>
       </table>
@@ -1504,8 +1701,10 @@ flowchart TB
           <tr><td>Zoom Education (100 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 400</td><td class="num"><strong>$1 400+</strong></td><td></td></tr>
           <tr><td>Google Meet (100 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$1 200</td><td class="num"><strong>$1 200+</strong></td><td>$0 if Workspace already paid</td></tr>
           <tr><td>Self-developed (OSS SFU cluster)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$1 200+</td><td class="num"><strong>~$1 200+</strong> eng/SRE</td><td></td></tr>
+          <tr><td>plugNmeet / edumeet cluster</td><td class="num">$0</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td>Dedicated media fleet</td></tr>
           <tr><td>Jitsi Meet (cluster)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td>JVB shard + Jibri fleet</td></tr>
           <tr class="pick"><td>OpenVidu Meet PRO cluster</td><td class="num">core-min</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td></td></tr>
+          <tr><td>Apache OpenMeetings cluster</td><td class="num">$0</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td>Java ops</td></tr>
           <tr class="pick"><td>BBB Scalelite cluster</td><td class="num">—</td><td class="num">ops</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td></td></tr>
         </tbody>
       </table>

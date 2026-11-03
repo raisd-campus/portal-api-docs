@@ -59,15 +59,30 @@ Same scenarios as the cost page (USD, indicative):
 
 ## 2. Open-source options in scope
 
+### 2.1 Classroom / meeting products
+
 | Option | What it is | Licence posture | Raisd shape |
 |---|---|---|---|
 | **BigBlueButton (BBB)** | Full virtual classroom product | Apache-2.0; $0 software; managed hosts paid | **B** (classroom API) |
 | **OpenVidu Meet** | Classroom product on LiveKit-based stack | Community free; PRO metered ($0.0006 / core-min) | **B** (embed/API) → path to **C** |
+| **plugNmeet** | LiveKit-based open classroom (API, whiteboard, recording, breakout) | MIT / Apache components; self-host | **B** → **C** embed |
+| **Apache OpenMeetings** | Apache virtual classroom (rooms, recording, whiteboard, moderation) | Apache-2.0 | **B** (heavier Java stack) |
 | **Jitsi Meet** | General WebRTC meeting UI | Apache-2.0; $0 software; 8x8 SaaS optional | Thin **B** / POC |
-| **LiveKit (OSS SFU)** | Media SFU + Egress; **no** classroom chrome | Apache-2.0; Cloud metered or self-host | **C** (Raisd builds UI) |
-| **mediasoup / Janus** | Raw SFU / gateway | Permissive OSS | **C** (highest DIY) |
+| **edumeet** | mediasoup-based multiparty meeting aimed at education | MIT-family; self-host | Thin **B** / Shape **C** base |
+| **Galène** | Lightweight SFU (simple groups, low ops footprint) | AGPL-3.0 | Thin **B** / POC |
+| **Nextcloud Talk** | WebRTC calls inside Nextcloud | AGPL (Talk); needs Nextcloud | **A**/**B** only if campus already runs NC |
+| **MiroTalk SFU** | Open WebRTC conference (SFU) | AGPL / project licence — confirm before Live | Thin **B** / POC |
 
-Commercial seats/SDKs (Zoom, Meet, Teams, Whereby, Daily, Chime, RealtimeKit, Agora) are **out of scope** here except as contrast — see [lms-online-class-options.md](lms-online-class-options.md).
+### 2.2 Media building blocks (Shape C DIY)
+
+| Option | What it is | Licence posture | Raisd shape |
+|---|---|---|---|
+| **LiveKit (OSS SFU)** | Media SFU + Egress; **no** classroom chrome | Apache-2.0; Cloud metered or self-host | **C** (Raisd builds UI) |
+| **mediasoup** | Node SFU library (powers edumeet and others) | ISC | **C** (highest DIY) |
+| **Janus Gateway** | General WebRTC gateway / SFU plugins | GPLv3 | **C** (highest DIY) |
+| **Ion SFU** (pion) | Go SFU (Pion WebRTC) | MIT | **C** (experimental DIY) |
+
+Commercial seats/SDKs (Zoom, Meet, Teams, Whereby, Daily, Chime, RealtimeKit, Agora) are **out of scope** here except as contrast — see [lms-online-class-options.md](lms-online-class-options.md) and [lms-video-feature-comparison.md](lms-video-feature-comparison.md).
 
 ---
 
@@ -98,9 +113,26 @@ Legend: **Yes** = meets with config/API · **Partial** = needs Raisd work or gap
 |---|---|---|---|
 | **BBB (managed preferred)** | Best **classroom** coverage of R4–R7, R10; R1/R12 need Raisd shell | Medium | Low if managed; **High** if self-host |
 | **OpenVidu Meet** | Best **embed** OSS path for R1 + R2 + R6–R7; R5/R12 Raisd-built | Medium–High | Medium (dedicated VPS) |
+| **plugNmeet** | Strong LiveKit classroom pack (API + whiteboard + recording); Raisd still owns CAP-12 analytics / OL-40 | Medium–High | Medium (dedicated VPS) |
+| **Apache OpenMeetings** | Broad classroom feature set; older Java ops profile | High | High |
 | **Jitsi** | Cheap media POC; weak classroom / attendance / playback | High for product | Medium–High (Jibri) |
+| **edumeet** | mediasoup meeting shell closer to Shape C than BBB | High | Medium–High |
+| **Galène** | Smallest ops SFU for internal pilots; thin education features | Medium | Low–Medium |
+| **Nextcloud Talk** | Only if campus already standardises on Nextcloud | Medium | Tied to NC ops |
+| **MiroTalk SFU** | Fast self-host conference POC; confirm licence + hardening | Medium | Medium |
 | **LiveKit OSS** | Best long-term R1 + R12 control; **zero** classroom pack | **Highest** | High (SFU + egress + SRE) |
-| **mediasoup / Janus** | Escape hatch only; slower than LiveKit for Raisd team velocity | Highest+ | Highest |
+| **mediasoup / Janus / Ion** | Escape hatch only; slower than LiveKit for Raisd team velocity | Highest+ | Highest |
+
+### Additional OSS vs core requirements (compact)
+
+| Option | R1 brand | R5 attendance | R6–R7 record/play | Classroom depth | Raisd note |
+|---|---|---|---|---|---|
+| **plugNmeet** | Strong (embed) | Partial (Raisd) | Yes (API) | Good | Best “BBB alternative on LiveKit” |
+| **OpenMeetings** | Partial | Partial | Yes | Good | Heavier ops than BBB managed |
+| **edumeet** | Partial | Partial | Partial | Basic–Good | mediasoup reference meeting |
+| **Galène** | Partial | DIY | Partial | Basic | Light POC / internal only |
+| **Nextcloud Talk** | Weak (NC chrome) | Partial | Partial | Basic | Bundle opportunism only |
+| **MiroTalk SFU** | Partial | DIY | Partial | Basic | POC; licence check before Live |
 
 ---
 
@@ -170,7 +202,27 @@ Lecturer / Student portal
 | **Limitation** | Delivers **media**, not an LMS classroom. Weeks of UI before OL-xx parity |
 | **Verdict** | **Phase-2 product path** after a Cloud LiveKit or OpenVidu spike proves CAP-26 flows — not the fastest Demo |
 
-### 4.6 mediasoup / Janus
+### 4.6 plugNmeet
+
+| Topic | Analysis |
+|---|---|
+| **API surface** | Room create/join API, whiteboard, recording, breakout — LiveKit under the hood |
+| **Raisd work** | Embed + CAP-12 from events; recording export; OL-40 in Raisd UI (same pattern as OpenVidu) |
+| **Stack note** | Closest “BBB-like classroom on LiveKit” without OpenVidu PRO metering |
+| **Limitation** | Ops on dedicated VPS; community maturity / support thinner than BBB managed hosts |
+| **Verdict** | **Co-equal embed OSS alt** with OpenVidu Meet — spike both if Shape B embed is preferred |
+
+### 4.7 Apache OpenMeetings · edumeet · Galène · MiroTalk · Nextcloud Talk
+
+| Option | Analysis |
+|---|---|
+| **OpenMeetings** | Broad classroom feature set (rooms, whiteboard, recording) but **Java / heavier ops**. Prefer only if procurement wants Apache trademark optics and rejects BBB managed |
+| **edumeet** | mediasoup multiparty meeting with education lean — useful as a **Shape C reference UI**, not as managed classroom SoT |
+| **Galène** | Smallest ops footprint for internal pilots; thin teaching features — **not** CAP-26 SoT |
+| **MiroTalk SFU** | Fast conference self-host; confirm AGPL/licence + hardening before any Live path |
+| **Nextcloud Talk** | Only if campus already runs Nextcloud as collaboration SoT — otherwise pull NC ops into video decision |
+
+### 4.8 mediasoup / Janus / Ion SFU
 
 Only if LiveKit is rejected for licence/architecture reasons. Higher DIY for the same Raisd UI burden. **Deprioritise.**
 
@@ -178,15 +230,15 @@ Only if LiveKit is rejected for licence/architecture reasons. Higher DIY for the
 
 ## 5. Open-source limitations under realistic usage
 
-| Risk | BBB | OpenVidu | Jitsi | LiveKit OSS |
-|---|---|---|---|---|
-| Concurrent class fan-out | Needs Scalelite / managed | Community ceiling → PRO/cluster | JVB shard + ops | SFU autoscaling design |
-| Recording durability | Built-in; still export for Raisd authz | Same | Jibri failure = lost class | Egress misconfig = lost class |
-| Licence surprise | Rare (Apache) | **PRO metering** if elastic | Rare | Rare (Cloud if not self-host) |
-| Education feature gap | Low | Medium (attendance custom) | **High** | **Total** (build all) |
-| Time-to-Demo | Fastest OSS classroom | Fast embed | Fast iframe, slow product | Slowest |
-| Data residency / AG | Self-host or choose host region | Same | Same | Same |
-| Transcription accuracy / cost | External STT either way | Same | Same | Same |
+| Risk | BBB | OpenVidu / plugNmeet | Jitsi / MiroTalk | OpenMeetings | LiveKit OSS |
+|---|---|---|---|---|---|
+| Concurrent class fan-out | Needs Scalelite / managed | Community ceiling → cluster / PRO | JVB / SFU shard + ops | Java cluster ops | SFU autoscaling design |
+| Recording durability | Built-in; still export for Raisd authz | API / LiveKit egress | Jibri or DIY | Built-in; still export | Egress misconfig = lost class |
+| Licence surprise | Rare (Apache) | OpenVidu **PRO**; plugNmeet rare | Rare / confirm MiroTalk | Rare (Apache) | Rare (Cloud if not self-host) |
+| Education feature gap | Low | Medium (attendance custom) | **High** | Low–Medium | **Total** (build all) |
+| Time-to-Demo | Fastest OSS classroom | Fast embed | Fast iframe, slow product | Medium | Slowest |
+| Data residency / AG | Self-host or choose host region | Same | Same | Same | Same |
+| Transcription accuracy / cost | External STT either way | Same | Same | Same | Same |
 
 **Multi-campus reading (S2/S3):** “OSS = free” is false once 40–100 concurrent classrooms run. The bill moves to **VPS/GPU, storage, SRE, or OpenVidu PRO**. Aslam’s 3 Nov rough hosting range ($40k–$90k / mo across eight campuses) is a **capacity planning** signal, not a vendor price list — treat as leadership context, not as a BBB quote.
 
@@ -197,9 +249,10 @@ Only if LiveKit is rejected for licence/architecture reasons. Higher DIY for the
 | Priority | Choice | Why vs stated requirements |
 |---|---|---|
 | **1 · Pilot classroom OSS** | **Managed BigBlueButton** behind Portal API | Strongest match to R4–R7, R10, S2; R1/R12 via Raisd wrap; avoids Demo-node self-host |
-| **2 · Pilot embed OSS** | **OpenVidu Meet Community** on **dedicated** media VPS | Strongest R1 + embed; R5/R8/R12 Raisd-owned; LiveKit lineage keeps S4 open |
+| **2 · Pilot embed OSS** | **OpenVidu Meet Community** or **plugNmeet** on **dedicated** media VPS | Strongest R1 + embed on LiveKit lineage; R5/R8/R12 Raisd-owned; keeps S4 open |
 | **3 · Productised Raisd media (later)** | **LiveKit** (Cloud first → OSS self-host) | Full R1/R12 control; accept eng cost called out 3 Nov |
-| **Avoid as SoT** | Jitsi classroom; mediasoup/Janus first; any OSS media on shared Demo k3s | Fails classroom depth or ops rules |
+| **Watch list** | Apache OpenMeetings · edumeet · Galène · MiroTalk | Feature or ops trade-offs; spike only if BBB/OpenVidu/plugNmeet rejected |
+| **Avoid as SoT** | Jitsi classroom; Nextcloud Talk unless NC-mandated; mediasoup/Janus/Ion first; any OSS media on shared Demo k3s | Fails classroom depth or ops rules |
 
 **Raisd always owns (regardless of OSS pick):** R3 timetable gate, R9 quizzes/self-paced, CAP-12 attendance persistence policy, recording **authz** via Portal API, OL-40–43 share queue if provider UX is insufficient, R8 transcript pipeline until a provider ships a trusted campus-grade STT.
 
@@ -212,7 +265,7 @@ Only if LiveKit is rejected for licence/architecture reasons. Higher DIY for the
 Use this file + the cost page as the OSS half of the leadership brief:
 
 1. Requirements table §1 (R1–R12) — what “good” means.  
-2. Matrix §3 — BBB vs OpenVidu vs Jitsi vs LiveKit.  
+2. Matrix §3 + additional OSS compact table — BBB vs OpenVidu vs plugNmeet vs watch-list vs LiveKit.  
 3. Implementation §4 — Portal API sequence (no browser secrets).  
 4. Cost scenarios in [lms-online-class-options.md](lms-online-class-options.md) S1–S3 — opex vs eng.  
 5. Clear line: **OSS software ≠ free operations**; Demo ≠ Live.

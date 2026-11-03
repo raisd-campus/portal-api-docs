@@ -62,14 +62,20 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Microsoft Teams | [Teams Edu](https://www.microsoft.com/en-us/education/products/teams) | [M365 Edu](https://www.microsoft.com/en-us/microsoft-365/education) |
 | BigBlueButton | [BBB](https://bigbluebutton.org/) · [API](https://docs.bigbluebutton.org/) | $0 + [hosts](https://bigbluebutton.org/commercial-support/) |
 | OpenVidu Meet | [Meet](https://openvidu.io/latest/meet/) · [REST API](https://openvidu.io/latest/meet/embedded/reference/rest-api/) | [Community free](https://openvidu.io/pricing/) · PRO $0.0006 / core-min |
+| plugNmeet | [plugnmeet.org](https://www.plugnmeet.org/) · [GitHub](https://github.com/mynaparrot/plugNmeet-server) | Self-host (LiveKit-based) |
+| Apache OpenMeetings | [openmeetings.apache.org](https://openmeetings.apache.org/) | Apache-2.0 · self-host |
 | Jitsi | [jitsi.org](https://jitsi.org/) | Self-host / 8x8 |
+| edumeet | [edumeet.org](https://edumeet.org/) · [GitHub](https://github.com/edumeet) | Self-host (mediasoup) |
+| Galène | [galene.org](https://galene.org/) | AGPL · self-host |
+| Nextcloud Talk | [Nextcloud Talk](https://nextcloud.com/talk/) | Needs Nextcloud |
+| MiroTalk SFU | [mirotalk.com](https://mirotalk.com/) · [SFU GitHub](https://github.com/miroslavpejic85/mirotalksfu) | Self-host · confirm licence |
 | Whereby Embedded | [Embedded](https://whereby.com/information/embedded/) | [Pricing](https://whereby.com/information/embedded/pricing) |
 | Daily | [daily.co](https://www.daily.co/) | [Pricing](https://www.daily.co/pricing) |
 | Agora | [agora.io](https://www.agora.io/) | [Pricing](https://www.agora.io/en/pricing/) |
 | LiveKit | [livekit.io](https://livekit.io/) · [OSS](https://github.com/livekit/livekit) | [Cloud](https://livekit.io/pricing) · [self-host](https://docs.livekit.io/home/self-hosting/) |
 | Cloudflare RealtimeKit | [Docs](https://developers.cloudflare.com/realtime/realtimekit/) | [Pricing](https://developers.cloudflare.com/realtime/realtimekit/platform/pricing/) |
 | Amazon Chime SDK | [Chime SDK](https://aws.amazon.com/chime/chime-sdk/) | [Pricing](https://aws.amazon.com/chime/chime-sdk/pricing/) |
-| Self-developed | [LiveKit self-host](https://docs.livekit.io/home/self-hosting/) · [mediasoup](https://mediasoup.org/) · [Janus](https://janus.conf.meetecho.com/) | VPS + storage only |
+| Self-developed | [LiveKit self-host](https://docs.livekit.io/home/self-hosting/) · [mediasoup](https://mediasoup.org/) · [Janus](https://janus.conf.meetecho.com/) · [Ion SFU](https://github.com/pion/ion-sfu) | VPS + storage only |
 
 ### Unit rates (media / recording) — all platforms
 
@@ -87,7 +93,11 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | LiveKit Cloud | ~$0.0005 | ~$0.005 | $0–$50+ |
 | BBB managed | n/a | included GB | ~$15–€399+ |
 | OpenVidu Meet | $0 / PRO core-min | your storage | VPS / PRO |
+| plugNmeet | $0 licence | your storage | VPS / ops |
+| Apache OpenMeetings | $0 licence | your storage | VPS / ops |
 | Jitsi Meet | $0 licence | Jibri + storage | VPS / ops |
+| edumeet / Galène / MiroTalk | $0 licence | DIY / storage | VPS / ops |
+| Nextcloud Talk | $0 (Talk) | NC storage | Nextcloud ops |
 | Self-developed OSS | $0 licence | your storage | VPS / ops |
 
 \*Meet/Teams host seats are modelling only — treat as **$0 incremental** when the campus already pays Workspace / M365 Edu.
@@ -108,10 +118,18 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Google Meet (8)* | — | Drive* | $96 | **$96+** |
 | Zoom Edu (8) | — | incl* | $112 | **$112+** |
 | OpenVidu Meet Community | $0 | storage | ~$120 VPS | **~$120+ eng** |
+| plugNmeet | $0 | storage | ~$120 VPS | **~$120+ eng** |
+| Apache OpenMeetings | $0 | storage | ~$140 VPS | **~$140+ eng** |
 | Jitsi Meet | $0 | Jibri | ~$100 VPS | **~$100+ eng** |
+| edumeet | $0 | storage | ~$110 VPS | **~$110+ eng** |
+| Galène | $0 | storage | ~$60 VPS | **~$60+ eng** |
+| MiroTalk SFU | $0 | storage | ~$80 VPS | **~$80+ eng** |
+| Nextcloud Talk | $0* | NC* | NC host* | **NC ops*** |
 | Self-developed (OSS) | $0 | storage | ~$120 VPS | **~$120+ eng** |
 | LiveKit Cloud (Build) | $50 | $10 | $0 | **$60** |
 | BBB managed | — | incl. | $45–90 | **$45–90** |
+
+\*Nextcloud Talk only models if campus already runs Nextcloud — otherwise add full NC stack cost.
 
 ### S2 Multi-campus — all platforms
 
@@ -130,8 +148,12 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | LiveKit Cloud (Ship) | $446 | $72 | $50 | **$568** |
 | Google Meet (40)* | — | Drive* | $480 | **$480+** |
 | OpenVidu Meet (Community / PRO) | $0 or core-min | storage | ~$400 VPS | **~$400+ / PRO** |
+| plugNmeet | $0 | storage | ~$400 VPS | **~$400+ eng** |
+| Apache OpenMeetings | $0 | storage | ~$450 VPS | **~$450+ eng** |
 | Self-developed | $0 | storage | ~$400 VPS | **~$400+ eng** |
+| edumeet / MiroTalk | $0 | storage | ~$350 VPS | **~$350+ eng** |
 | Jitsi Meet | $0 | Jibri | ~$350 VPS | **~$350+ eng** |
+| Galène | $0 | storage | ~$200 VPS | **~$200+ eng** |
 | BBB uni managed | — | incl. | ~$220–440 | **~$220–440** |
 
 ### S3 Full peak — all platforms
@@ -151,8 +173,10 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Zoom Edu (100) | — | incl* | $1 400 | **$1 400+** |
 | Google Meet (100)* | — | Drive* | $1 200 | **$1 200+** |
 | Self-developed cluster | $0 | storage | ~$1 200+ | **~$1 200+ eng/SRE** |
+| plugNmeet / edumeet cluster | $0 | storage | quote | **custom** |
 | Jitsi Meet cluster | $0 | Jibri | quote | **custom** |
 | OpenVidu Meet PRO cluster | core-min | storage | quote | **custom** |
+| Apache OpenMeetings cluster | $0 | storage | quote | **custom** |
 | BBB Scalelite | — | ops | quote | **custom** |
 
 **Reading:** All matrix platforms are costed. Meet/Teams = $0 incremental when already licensed. Chime recording is a larger share (~12–14%) because composite capture is $0.0125/min. Seat/BBB plans often include recording. Jitsi/OpenVidu/self-developed look cheap until VPS, Jibri/egress, and eng/SRE. Do not self-host media on the shared Demo k3s node.
@@ -170,7 +194,13 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | **Microsoft Teams** | Often bundled in M365 Education A1/A3/A5 | Microsoft SaaS | Graph + LMS connectors; class Teams | Yes (temporary) | Stream / OneDrive | Licence leverage if campus already on M365 | Meeting-first UX; Raisd already not M365-first; hybrid identity risk |
 | **BigBlueButton (BBB)** | Licence **$0**; managed ~$12.50–$90+/mo small; university managed ~€199+/mo | Self-host (heavy) **or** commercial BBB host | **Native REST API** (`create` / `join` / recordings / hooks); LTI 1.1/1.3; **native Moodle** | Yes (education-native) | Built-in playback + webhooks | **Excellent** classroom features; built-in attendance analytics; Moodle-grade LMS pattern maps to CAP-26 | Self-host CPU/RAM heavy on UltaHost-class nodes; partner ops or extra VPS; breakouts not “persistent LMS groups” |
 | **OpenVidu Meet** | **Community free**; PRO **$0.0006 / core-min** | Self-host (Community single-node) **or** PRO elastic / HA | REST API + embed web component + webhooks; Moodle = **custom** | Breakout groups (product roadmap / coming) | API/config capture; built-in playback | **Good** classroom features; white-label; embed-friendly “same product” path; LiveKit-based stack | Attendance analytics need custom Raisd work; not Moodle-native; self-host still needs dedicated media capacity |
+| **plugNmeet** | Licence ~$0; infra only | Self-host (LiveKit-based) | REST/API + embed; Moodle = custom | Yes (product) | API recording | LiveKit classroom pack (whiteboard, breakout, recording) without OpenVidu PRO | Community support thinner than BBB managed; CAP-12 still Raisd |
+| **Apache OpenMeetings** | Licence $0 (Apache-2.0) | Self-host (Java) | REST / SOAP style LMS glue | Yes | Built-in recording / playback | Broad classroom feature set; Apache trademark optics | Heavier Java ops; prefer only if BBB managed rejected |
 | **Jitsi Meet** | Licence $0; infra only | Self-host or 8x8 | DIY iframe + JWT; Moodle = plugin/custom | Partial / DIY | Jibri automation; playback needs storage/player glue | Cheap privacy-friendly POC; white-label possible | **Basic** classroom features; attendance/custom LMS glue DIY; not a virtual classroom product |
+| **edumeet** | Licence $0 | Self-host (mediasoup) | Custom / embed | DIY rooms | Partial / DIY | Education-lean multiparty meeting; mediasoup reference | Not a managed classroom SoT; Raisd builds attendance + Past Class |
+| **Galène** | Licence AGPL-3.0 | Self-host (lightweight SFU) | Simple groups / API | Basic | Partial | Smallest ops footprint for internal pilots | Thin teaching features; not CAP-26 SoT |
+| **Nextcloud Talk** | Included with Nextcloud | Nextcloud host | NC app embed | Limited | Partial | Only if campus already standardises on Nextcloud | Pulls NC ops into video decision; weak Raisd brand |
+| **MiroTalk SFU** | Licence check (often AGPL) | Self-host | Web UI / API | Basic | Partial | Fast WebRTC conference POC | Confirm licence + hardening before Live |
 | **Whereby Embedded** | Build $10.99/mo + ~$0.0042 / participant-min; recording ~$0.01/min | Whereby SaaS | iframe / web component | **Breakout groups** on Embedded | Cloud recording add-on | Fast embed; Raisd shell stays; 200 cap | Metered cost; classroom depth thinner than BBB |
 | **Daily** | 10k free min/mo; then ~$0.004 / participant-min | Daily SaaS | Prebuilt iframe or custom React | Via rooms / DIY | Recording add-on | Fastest prototype | No native whiteboard; large lectures → HLS delay |
 | **Agora** | ~$0.004 / HD min; whiteboard separate | Agora global network | Full custom UI SDK | DIY / products on top | Cloud recording | Scale + regional reach | Build everything; whiteboard extra SKU |
@@ -214,29 +244,49 @@ Student / Lecturer portal
 
 1. **Demo / pilot path:** **Whereby Embedded** or **Daily Prebuilt** — prove timetable-gated Join CTA (OL-14), participant role, recording → Past Class, roster present count with least infra. Stub moderated share queue in Raisd UI if provider cannot gate student share.  
 2. **Education-feature path:** **BBB via managed host + Portal API** — strongest classroom pack among OSS peers (see §2.3): native Moodle, built-in attendance analytics, excellent teaching UX. Prefer **managed BBB** over self-host on the current Demo VPS. Wrap in Raisd lobby/roster chrome to match the design pack.  
-3. **Embeddable OSS middle path:** **OpenVidu Meet Community** (+ Portal API) — good classroom features, white-label, REST/embed; Raisd still builds attendance analytics, LMS glue, and share-request UX.  
+3. **Embeddable OSS middle path:** **OpenVidu Meet Community** or **plugNmeet** (+ Portal API) — good classroom features on LiveKit lineage, white-label, REST/embed; Raisd still builds attendance analytics, LMS glue, and share-request UX.  
 4. **Productized Raisd path (matches design pack best):** **Cloudflare RealtimeKit**, **Amazon Chime SDK**, or **LiveKit Cloud** — branded lobby + grid + host request queue; Chime strong on media+recording $/mo; RealtimeKit if breakout APIs matter later; LiveKit if self-host escape hatch is required.  
-5. **Self-developed (later):** same LiveKit APIs self-hosted on dedicated media nodes — only after a Cloud/SDK spike proves CAP-26 flows. OpenVidu Meet already sits on a LiveKit-based stack if that path is preferred as a productised SFU.
+5. **Self-developed (later):** same LiveKit APIs self-hosted on dedicated media nodes — only after a Cloud/SDK spike proves CAP-26 flows. OpenVidu Meet / plugNmeet already sit on LiveKit-based stacks if that path is preferred as a productised SFU.
 
-**Deprioritise for Raisd pilot unless campus already standardises on them:** Google Meet-only, Teams-only, raw Agora (unless APAC scale forces it), **Jitsi as the LMS classroom** (basic classroom features; custom attendance + playback glue), self-hosting media on the shared Demo k3s node.
+**Watch list (spike only if shortlist rejected):** Apache OpenMeetings · edumeet · Galène · MiroTalk SFU.
+
+**Deprioritise for Raisd pilot unless campus already standardises on them:** Google Meet-only, Teams-only, raw Agora (unless APAC scale forces it), **Jitsi as the LMS classroom**, **Nextcloud Talk** (unless NC-mandated), self-hosting media on the shared Demo k3s node.
 
 ### 2.3 Open-source classroom feature comparison (self-hosted)
 
 Assumes a **properly configured self-hosted deployment**, not free public hosting tiers (meet.jit.si / public BBB demos).
 
-| Requirement | BigBlueButton | OpenVidu Meet | Jitsi Meet |
-|---|---|---|---|
-| White-label | Yes | Yes | Yes |
-| Automatic recording | Configurable | Via API / configuration | Via Jibri automation |
-| Playback later | Built-in | Yes | Requires storage / player integration |
-| Moodle integration | **Native** | Custom integration | Plugin / custom |
-| Custom LMS integration | API | API / embedding | API / embedding |
-| Classroom features | **Excellent** | Good | Basic |
-| Student attendance analytics | **Built-in features** | Custom development | Custom development |
-| Self-hosted | Yes | Yes | Yes |
-| Software licence cost | Free | Free Community (PRO paid) | Free |
+#### Primary shortlist
 
-**Raisd reading:** BBB remains the preferred Shape B education pack (native Moodle + attendance + deepest classroom UX). OpenVidu Meet is the strongest OSS alternative when embed/white-label and API/embedding matter more than Moodle-native depth. Jitsi stays a media POC, not CAP-26 classroom SoT.
+| Requirement | BigBlueButton | OpenVidu Meet | plugNmeet | Jitsi Meet |
+|---|---|---|---|---|
+| White-label | Yes | Yes | Yes | Yes |
+| Automatic recording | Configurable | Via API / configuration | Via API | Via Jibri automation |
+| Playback later | Built-in | Yes | Yes (export preferred) | Requires storage / player integration |
+| Moodle integration | **Native** | Custom integration | Custom | Plugin / custom |
+| Custom LMS integration | API | API / embedding | API / embedding | API / embedding |
+| Classroom features | **Excellent** | Good | Good | Basic |
+| Breakouts / whiteboard | **Yes / Yes** | Partial / Good | **Yes / Yes** | Partial / Basic |
+| Student attendance analytics | **Built-in features** | Custom development | Custom development | Custom development |
+| Self-hosted | Yes | Yes | Yes | Yes |
+| Software licence cost | Free | Free Community (PRO paid) | Free | Free |
+| Stack note | Classic education SFU | LiveKit-based | LiveKit-based | JVB + Jibri |
+
+#### Additional OSS options
+
+| Requirement | Apache OpenMeetings | edumeet | Galène | Nextcloud Talk | MiroTalk SFU |
+|---|---|---|---|---|---|
+| White-label | Partial | Partial | Partial | Weak (NC chrome) | Partial |
+| Automatic recording | Yes | Partial | Partial | Partial | Partial |
+| Playback later | Built-in | DIY / partial | Partial | Partial | Partial |
+| Moodle / custom LMS | Custom | Custom | Custom | Via Nextcloud | Custom |
+| Classroom features | Good | Basic–Good | Basic | Basic | Basic |
+| Student attendance analytics | Partial | Custom | DIY | Partial | DIY |
+| Self-hosted | Yes (Java) | Yes (mediasoup) | Yes (light) | Needs Nextcloud | Yes |
+| Software licence cost | Free (Apache-2.0) | Free | Free (AGPL) | Free w/ NC | Confirm licence |
+| Raisd note | Heavier ops | Shape C reference | Internal POC | NC-mandated only | POC; harden before Live |
+
+**Raisd reading:** BBB remains the preferred Shape B education pack (native Moodle + attendance + deepest classroom UX). OpenVidu Meet and plugNmeet are the strongest OSS alternatives when embed/white-label and LiveKit lineage matter more than Moodle-native depth. OpenMeetings is a watch-list classroom if Apache optics matter. Jitsi / Galène / MiroTalk / edumeet stay media or reference POCs — not CAP-26 classroom SoT. Nextcloud Talk only if the campus already runs Nextcloud.
 
 **Full OSS vs stated requirements (3 Nov R1–R12), including LiveKit / mediasoup implementation analysis:** [lms-oss-video-requirements.md](lms-oss-video-requirements.md) · published [`#oss-req`](../../diagrams/lms-online-class-options.html#oss-req).
 
@@ -323,7 +373,8 @@ These are **Raisd product capabilities** (F03/F12/F13), not video-vendor feature
 |---|---|---|
 | **Now (research → Demo spike)** | Portal API session object + **Whereby** or **Daily** embed | Validates timetable gate, participant role, recording link, attendance webhook with minimal ops on UltaHost |
 | **Preferred education feature pack** | **Managed BigBlueButton** behind Portal API | Best OSS classroom depth (excellent features, native Moodle, built-in attendance) without self-hosting media on the Demo node |
-| **OSS embed alternative** | **OpenVidu Meet Community** behind Portal API | Good classroom features + white-label/API embed; Raisd builds attendance analytics + LMS glue |
+| **OSS embed alternative** | **OpenVidu Meet Community** or **plugNmeet** behind Portal API | Good classroom features + white-label/API embed on LiveKit; Raisd builds attendance analytics + LMS glue |
+| **OSS watch list** | OpenMeetings · edumeet · Galène · MiroTalk | Spike only if BBB / OpenVidu / plugNmeet rejected |
 | **If “must feel like Raisd”** | **Cloudflare RealtimeKit** (confirm breakout beta → GA) | Embed + programmable breakouts + $0.002/min; still build quiz/self-paced in Raisd |
 | **Quizzes / self-paced** | **Raisd-native** items + unlock policy | Do not outsource exam of record to Forms or BBB live quiz |
 | **Avoid as primary pilot** | Self-host BBB/OpenVidu/Jitsi on current k3s Demo node; Jitsi as classroom SoT; Teams/Meet-only unless campus mandate | Ops and chrome conflicts |
