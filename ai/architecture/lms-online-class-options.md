@@ -71,25 +71,30 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Amazon Chime SDK | [Chime SDK](https://aws.amazon.com/chime/chime-sdk/) | [Pricing](https://aws.amazon.com/chime/chime-sdk/pricing/) |
 | Self-developed | [LiveKit self-host](https://docs.livekit.io/home/self-hosting/) · [mediasoup](https://mediasoup.org/) · [Janus](https://janus.conf.meetecho.com/) | VPS + storage only |
 
-### Unit rates (media / recording)
+### Unit rates (media / recording) — all platforms
 
 | Platform | Media / attendee-min | Recording / session-min | Fixed / mo |
 |---|---:|---:|---:|
+| Google Meet (Workspace) | n/a | Drive / plan | ~$12 / host* |
+| Microsoft Teams (M365 Edu) | n/a | Stream / OneDrive | ~$15 / host* |
+| Zoom Edu seats | n/a | plan / storage | ~$14 / host |
+| Zoom Video SDK | ~$0.0035 | ~$0.01 | $0 |
 | Whereby Embedded | $0.0042 | $0.01 | $10.99 |
 | Daily | $0.0040 | $0.01 | $0 |
-| RealtimeKit | $0.0020 | $0.01 | $0 |
 | Agora HD | ~$0.0040 | ~$0.009 | $0 |
-| LiveKit Cloud | ~$0.0005 | ~$0.005 | $0–$50+ |
-| Zoom Video SDK | ~$0.0035 | ~$0.01 | $0 |
+| RealtimeKit | $0.0020 | $0.01 | $0 |
 | **Amazon Chime SDK** | **$0.0017** | **$0.0145** (0.0125+0.002) | $0 (+S3) |
-| Zoom Edu seats | n/a | plan / storage | ~$14 / host |
+| LiveKit Cloud | ~$0.0005 | ~$0.005 | $0–$50+ |
 | BBB managed | n/a | included GB | ~$15–€399+ |
-| OpenVidu Meet Community | $0 licence | your storage | VPS / ops |
+| OpenVidu Meet | $0 / PRO core-min | your storage | VPS / PRO |
+| Jitsi Meet | $0 licence | Jibri + storage | VPS / ops |
 | Self-developed OSS | $0 licence | your storage | VPS / ops |
 
-### S1 Lesotho pilot — per-platform breakdown
+\*Meet/Teams host seats are modelling only — treat as **$0 incremental** when the campus already pays Workspace / M365 Edu.
 
-8×(25+1)×2h → **99 840** attendee-min · **1 920** recording-min (50% recorded)
+### S1 Lesotho pilot — all platforms
+
+8×(25+1)×2h → **99 840** attendee-min · **1 920** recording-min · **8** hosts
 
 | Platform | Media | Recording | Fixed | **Total / mo** |
 |---|---:|---:|---:|---:|
@@ -99,15 +104,18 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Zoom Video SDK | $349 | $19 | $0 | **$369** |
 | Cloudflare RealtimeKit | $200 | $19 | $0 | **$219** |
 | **Amazon Chime SDK** | $170 | $28 | $0 | **$198** |
-| LiveKit Cloud (Build) | $50 | $10 | $0 | **$60** |
-| Zoom Edu (10 hosts) | — | incl* | $140 | **$140+** |
-| BBB managed | — | incl. | $45–90 | **$45–90** |
+| Microsoft Teams (8)* | — | incl* | $120 | **$120+** |
+| Google Meet (8)* | — | Drive* | $96 | **$96+** |
+| Zoom Edu (8) | — | incl* | $112 | **$112+** |
 | OpenVidu Meet Community | $0 | storage | ~$120 VPS | **~$120+ eng** |
+| Jitsi Meet | $0 | Jibri | ~$100 VPS | **~$100+ eng** |
 | Self-developed (OSS) | $0 | storage | ~$120 VPS | **~$120+ eng** |
+| LiveKit Cloud (Build) | $50 | $10 | $0 | **$60** |
+| BBB managed | — | incl. | $45–90 | **$45–90** |
 
-### S2 Multi-campus — per-platform breakdown
+### S2 Multi-campus — all platforms
 
-40×(30+1)×3h → **892 800** attendee-min · **14 400** recording-min
+40×(30+1)×3h → **892 800** attendee-min · **14 400** recording-min · **40** hosts
 
 | Platform | Media | Recording | Fixed | **Total / mo** |
 |---|---:|---:|---:|---:|
@@ -117,15 +125,18 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | Zoom Video SDK | $3 125 | $144 | $0 | **$3 269** |
 | RealtimeKit | $1 786 | $144 | $0 | **$1 930** |
 | **Chime SDK** | $1 518 | $209 | $0 | **$1 727** |
-| LiveKit Cloud (Ship) | $446 | $72 | $50 | **$568** |
+| Microsoft Teams (40)* | — | incl* | $600 | **$600+** |
 | Zoom Edu (40) | — | incl* | $560 | **$560+** |
-| BBB uni managed | — | incl. | ~$220–440 | **~$220–440** |
-| OpenVidu Meet (Community / PRO) | $0 or core-min | storage | ~$400 VPS | **~$400+ / PRO quote** |
+| LiveKit Cloud (Ship) | $446 | $72 | $50 | **$568** |
+| Google Meet (40)* | — | Drive* | $480 | **$480+** |
+| OpenVidu Meet (Community / PRO) | $0 or core-min | storage | ~$400 VPS | **~$400+ / PRO** |
 | Self-developed | $0 | storage | ~$400 VPS | **~$400+ eng** |
+| Jitsi Meet | $0 | Jibri | ~$350 VPS | **~$350+ eng** |
+| BBB uni managed | — | incl. | ~$220–440 | **~$220–440** |
 
-### S3 Full peak — per-platform breakdown
+### S3 Full peak — all platforms
 
-100×(40+1)×3h → **2 952 000** attendee-min · **36 000** recording-min
+100×(40+1)×3h → **2 952 000** attendee-min · **36 000** recording-min · **100** hosts
 
 | Platform | Media | Recording | Fixed | **Total / mo** |
 |---|---:|---:|---:|---:|
@@ -136,12 +147,15 @@ Seat vendors: `licensed_hosts × price_per_host_month`. Self-developed: VPS + st
 | RealtimeKit | $5 904 | $360 | $0 | **$6 264** |
 | **Chime SDK** | $5 018 | $522 | $0 | **$5 540** |
 | LiveKit Cloud | $1 476 | $180 | $50 | **$1 706** |
+| Microsoft Teams (100)* | — | incl* | $1 500 | **$1 500+** |
 | Zoom Edu (100) | — | incl* | $1 400 | **$1 400+** |
-| BBB Scalelite | — | ops | quote | **custom** |
-| OpenVidu Meet PRO cluster | core-min | storage | quote | **custom** |
+| Google Meet (100)* | — | Drive* | $1 200 | **$1 200+** |
 | Self-developed cluster | $0 | storage | ~$1 200+ | **~$1 200+ eng/SRE** |
+| Jitsi Meet cluster | $0 | Jibri | quote | **custom** |
+| OpenVidu Meet PRO cluster | core-min | storage | quote | **custom** |
+| BBB Scalelite | — | ops | quote | **custom** |
 
-**Reading:** Chime recording is a larger share (~12–14%) because composite capture is $0.0125/min. Seat/BBB plans often include recording. Self-developed looks cheap until eng/SRE. Do not self-host media on the shared Demo k3s node.
+**Reading:** All matrix platforms are costed. Meet/Teams = $0 incremental when already licensed. Chime recording is a larger share (~12–14%) because composite capture is $0.0125/min. Seat/BBB plans often include recording. Jitsi/OpenVidu/self-developed look cheap until VPS, Jibri/egress, and eng/SRE. Do not self-host media on the shared Demo k3s node.
 
 ---
 

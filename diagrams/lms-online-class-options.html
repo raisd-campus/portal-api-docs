@@ -1362,7 +1362,13 @@ flowchart TB
         (+ Large Meeting / webinar / cloud-recording storage add-ons if needed)
       </div>
 
-      <h3 id="unit-rates">Unit rates used below</h3>
+      <p>Suite / bundled vendors (Meet / Teams):</p>
+      <div class="formula">
+        suite_cost ≈ 0 if campus already pays Workspace / M365 Edu<br/>
+        else ≈ licensed_hosts × indicative_per_host_month (modelling only — campus contract wins)
+      </div>
+
+      <h3 id="unit-rates">Unit rates used below (all platforms)</h3>
       <table class="data">
         <thead>
           <tr>
@@ -1374,31 +1380,35 @@ flowchart TB
           </tr>
         </thead>
         <tbody>
+          <tr><td><a href="https://workspace.google.com/pricing.html" rel="noopener noreferrer" target="_blank">Google Meet</a> (Workspace)</td><td class="num">n/a</td><td class="num">Drive / plan</td><td class="num">~$12 / host*</td><td>Usually bundled; *model host seats only if campus has no Workspace yet</td></tr>
+          <tr><td><a href="https://www.microsoft.com/en-us/microsoft-365/education" rel="noopener noreferrer" target="_blank">Microsoft Teams</a> (M365 Edu)</td><td class="num">n/a</td><td class="num">Stream / OneDrive</td><td class="num">~$15 / host*</td><td>Often A1/A3 bundle; *staff-seat model if bare</td></tr>
+          <tr><td><a href="https://www.zoom.com/en/education/" rel="noopener noreferrer" target="_blank">Zoom Education seats</a></td><td class="num">n/a</td><td class="num">plan / storage</td><td class="num">~$14 / host</td><td>Often included with Edu; confirm storage caps</td></tr>
+          <tr><td><a href="https://developers.zoom.us/docs/video-sdk/" rel="noopener noreferrer" target="_blank">Zoom Video SDK</a></td><td class="num">~$0.0035</td><td class="num">~$0.01</td><td class="num">$0</td><td>Credits model; + storage</td></tr>
           <tr><td><a href="https://whereby.com/information/embedded/pricing" rel="noopener noreferrer" target="_blank">Whereby Embedded</a></td><td class="num">$0.0042</td><td class="num">$0.01</td><td class="num">$10.99</td><td>Cloud recording add-on; storage GB-day extra</td></tr>
           <tr><td><a href="https://www.daily.co/pricing" rel="noopener noreferrer" target="_blank">Daily</a></td><td class="num">$0.0040</td><td class="num">$0.01</td><td class="num">$0</td><td>Cloud recording / export (typical list)</td></tr>
-          <tr><td><a href="https://developers.cloudflare.com/realtime/realtimekit/platform/pricing/" rel="noopener noreferrer" target="_blank">Cloudflare RealtimeKit</a></td><td class="num">$0.0020</td><td class="num">$0.01</td><td class="num">$0</td><td>Export (recording / RTMP / HLS)</td></tr>
           <tr><td><a href="https://www.agora.io/en/pricing/" rel="noopener noreferrer" target="_blank">Agora HD</a></td><td class="num">~$0.0040</td><td class="num">~$0.009</td><td class="num">$0</td><td>Cloud Recording SKU (approx composite)</td></tr>
-          <tr><td><a href="https://livekit.io/pricing" rel="noopener noreferrer" target="_blank">LiveKit Cloud</a></td><td class="num">~$0.0005</td><td class="num">~$0.005</td><td class="num">$0–$50+</td><td>Egress + bandwidth; Ship plan ~$50 for growth</td></tr>
-          <tr><td><a href="https://developers.zoom.us/docs/video-sdk/" rel="noopener noreferrer" target="_blank">Zoom Video SDK</a></td><td class="num">~$0.0035</td><td class="num">~$0.01</td><td class="num">$0</td><td>Credits model; + storage</td></tr>
+          <tr><td><a href="https://developers.cloudflare.com/realtime/realtimekit/platform/pricing/" rel="noopener noreferrer" target="_blank">Cloudflare RealtimeKit</a></td><td class="num">$0.0020</td><td class="num">$0.01</td><td class="num">$0</td><td>Export (recording / RTMP / HLS)</td></tr>
           <tr><td><a href="https://aws.amazon.com/chime/chime-sdk/pricing/" rel="noopener noreferrer" target="_blank">Amazon Chime SDK</a></td><td class="num">$0.0017</td><td class="num">$0.0145</td><td class="num">$0</td><td>1080p composite $0.0125 + concat $0.002; <strong>S3 extra</strong></td></tr>
-          <tr><td><a href="https://www.zoom.com/en/education/" rel="noopener noreferrer" target="_blank">Zoom Education seats</a></td><td class="num">n/a</td><td class="num">plan / storage</td><td class="num">~$14 / host</td><td>Often included with Edu; confirm storage caps</td></tr>
+          <tr><td><a href="https://livekit.io/pricing" rel="noopener noreferrer" target="_blank">LiveKit Cloud</a></td><td class="num">~$0.0005</td><td class="num">~$0.005</td><td class="num">$0–$50+</td><td>Egress + bandwidth; Ship plan ~$50 for growth</td></tr>
           <tr><td><a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">BBB managed</a></td><td class="num">n/a</td><td class="num">included GB tier</td><td class="num">~$15–€399+</td><td>Recording storage in plan; export optional</td></tr>
-          <tr><td><a href="https://openvidu.io/pricing/" rel="noopener noreferrer" target="_blank">OpenVidu Meet Community</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>PRO = $0.0006 / core-min (elastic/HA)</td></tr>
-          <tr><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">Self-developed (OSS SFU)</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>Disk or S3-compatible; eng + SRE dominate</td></tr>
+          <tr><td><a href="https://openvidu.io/pricing/" rel="noopener noreferrer" target="_blank">OpenVidu Meet</a></td><td class="num">$0 / PRO core-min</td><td class="num">your storage</td><td class="num">VPS / PRO</td><td>Community free; PRO $0.0006 / core-min elastic/HA</td></tr>
+          <tr><td><a href="https://jitsi.org/" rel="noopener noreferrer" target="_blank">Jitsi Meet</a></td><td class="num">$0 licence</td><td class="num">Jibri + storage</td><td class="num">VPS / ops</td><td>Jibri bots dominate ops; 8x8 SaaS optional</td></tr>
+          <tr><td><a href="https://docs.livekit.io/home/self-hosting/" rel="noopener noreferrer" target="_blank">Self-developed (OSS SFU)</a></td><td class="num">$0 licence</td><td class="num">your storage</td><td class="num">VPS / ops</td><td>LiveKit / mediasoup / Janus; eng + SRE dominate</td></tr>
         </tbody>
       </table>
-      <p class="note">Indicative public list (late 2025–Nov 2026). Re-quote before procurement. Attendee minutes below include <strong>+1 lecturer per class</strong>.</p>
+      <p class="note">Indicative public list (late 2025–Nov 2026). Re-quote before procurement. Attendee minutes below include <strong>+1 lecturer per class</strong>. Host counts for seat/suite rows = concurrent classes (one lecturer host per class).</p>
     </section>
 
     <section class="section" id="breakdown">
       <h2>Cost breakdown per platform (media + recording)</h2>
       <p>Common assumptions: <strong>4 weeks/month</strong>, <strong>50% of sessions recorded</strong> (main room only), lecturer counted in media.</p>
 
-      <h3>S1 — Lesotho pilot</h3>
+      <h3>S1 — Lesotho pilot <span class="note">(all platforms)</span></h3>
       <p class="formula">
         8 concurrent × (25 students + 1 lecturer) × 2 h/week<br/>
-        → <strong>99 840</strong> attendee-min · recording <strong>1 920</strong> session-min
+        → <strong>99 840</strong> attendee-min · recording <strong>1 920</strong> session-min · <strong>8</strong> host seats
       </p>
+      <div class="table-scroll">
       <table class="data">
         <thead>
           <tr>
@@ -1411,25 +1421,30 @@ flowchart TB
           </tr>
         </thead>
         <tbody>
-          <tr><td><a href="https://whereby.com/information/embedded/pricing" rel="noopener noreferrer" target="_blank">Whereby Embedded</a></td><td class="num">$419</td><td class="num">$19</td><td class="num">$11</td><td class="num"><strong>$450</strong></td><td>Fast Demo embed</td></tr>
-          <tr><td><a href="https://www.daily.co/pricing" rel="noopener noreferrer" target="_blank">Daily</a></td><td class="num">$399</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$419</strong></td><td>No native whiteboard</td></tr>
-          <tr><td><a href="https://www.agora.io/en/pricing/" rel="noopener noreferrer" target="_blank">Agora HD</a></td><td class="num">$399</td><td class="num">$17</td><td class="num">$0</td><td class="num"><strong>$417</strong></td><td>Whiteboard separate SKU</td></tr>
-          <tr><td><a href="https://developers.zoom.us/docs/video-sdk/" rel="noopener noreferrer" target="_blank">Zoom Video SDK</a></td><td class="num">$349</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$369</strong></td><td>Credits + storage</td></tr>
-          <tr class="pick"><td><a href="https://developers.cloudflare.com/realtime/realtimekit/platform/pricing/" rel="noopener noreferrer" target="_blank">Cloudflare RealtimeKit</a></td><td class="num">$200</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$219</strong></td><td>Breakouts beta</td></tr>
-          <tr class="pick"><td><a href="https://aws.amazon.com/chime/chime-sdk/pricing/" rel="noopener noreferrer" target="_blank">Amazon Chime SDK</a></td><td class="num">$170</td><td class="num">$28</td><td class="num">$0</td><td class="num"><strong>$198</strong></td><td>Capture $24 + concat $4; S3 extra</td></tr>
-          <tr class="pick"><td><a href="https://livekit.io/pricing" rel="noopener noreferrer" target="_blank">LiveKit Cloud</a> (Build)</td><td class="num">$50</td><td class="num">$10</td><td class="num">$0</td><td class="num"><strong>$60</strong></td><td>+ bandwidth; optimistic egress</td></tr>
-          <tr><td><a href="https://www.zoom.com/en/education/" rel="noopener noreferrer" target="_blank">Zoom Education</a> (10 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$140</td><td class="num"><strong>$140+</strong></td><td>Confirm cloud-recording storage</td></tr>
-          <tr class="pick"><td><a href="https://bigbluebutton.org/commercial-support/" rel="noopener noreferrer" target="_blank">BBB managed</a></td><td class="num">—</td><td class="num">incl.</td><td class="num">$45–90</td><td class="num"><strong>$45–90</strong></td><td>Best OSS classroom depth</td></tr>
-          <tr class="pick"><td><a href="https://openvidu.io/latest/meet/" rel="noopener noreferrer" target="_blank">OpenVidu Meet</a> Community</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>Good classroom + white-label; attendance custom</td></tr>
-          <tr><td><a href="#selfdev">Self-developed</a> (LiveKit OSS)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>See self-developed section</td></tr>
+          <tr><td>Whereby Embedded</td><td class="num">$419</td><td class="num">$19</td><td class="num">$11</td><td class="num"><strong>$450</strong></td><td>Fast Demo embed</td></tr>
+          <tr><td>Daily</td><td class="num">$399</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$419</strong></td><td>No native whiteboard</td></tr>
+          <tr><td>Agora HD</td><td class="num">$399</td><td class="num">$17</td><td class="num">$0</td><td class="num"><strong>$417</strong></td><td>Whiteboard separate SKU</td></tr>
+          <tr><td>Zoom Video SDK</td><td class="num">$349</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$369</strong></td><td>Credits + storage</td></tr>
+          <tr class="pick"><td>Cloudflare RealtimeKit</td><td class="num">$200</td><td class="num">$19</td><td class="num">$0</td><td class="num"><strong>$219</strong></td><td>Breakouts beta</td></tr>
+          <tr class="pick"><td>Amazon Chime SDK</td><td class="num">$170</td><td class="num">$28</td><td class="num">$0</td><td class="num"><strong>$198</strong></td><td>Capture $24 + concat $4; S3 extra</td></tr>
+          <tr><td>Microsoft Teams (8 hosts)*</td><td class="num">—</td><td class="num">incl*</td><td class="num">$120</td><td class="num"><strong>$120+</strong></td><td>$0 if campus already on M365 Edu</td></tr>
+          <tr><td>Google Meet (8 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$96</td><td class="num"><strong>$96+</strong></td><td>$0 if campus already on Workspace</td></tr>
+          <tr><td>Zoom Education (8 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$112</td><td class="num"><strong>$112+</strong></td><td>Confirm cloud-recording storage</td></tr>
+          <tr class="pick"><td>OpenVidu Meet Community</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>White-label / embed; attendance custom</td></tr>
+          <tr><td>Jitsi Meet (self-host)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">~$100 VPS</td><td class="num"><strong>~$100+</strong> eng</td><td>Basic classroom; Jibri ops</td></tr>
+          <tr><td>Self-developed (LiveKit OSS)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$120 VPS</td><td class="num"><strong>~$120+</strong> eng</td><td>See self-developed section</td></tr>
+          <tr class="pick"><td>LiveKit Cloud (Build)</td><td class="num">$50</td><td class="num">$10</td><td class="num">$0</td><td class="num"><strong>$60</strong></td><td>+ bandwidth; optimistic egress</td></tr>
+          <tr class="pick"><td>BBB managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">$45–90</td><td class="num"><strong>$45–90</strong></td><td>Best OSS classroom depth</td></tr>
         </tbody>
       </table>
+      </div>
 
-      <h3>S2 — Multi-campus growth</h3>
+      <h3>S2 — Multi-campus growth <span class="note">(all platforms)</span></h3>
       <p class="formula">
         40 concurrent × (30 + 1) × 3 h/week<br/>
-        → <strong>892 800</strong> attendee-min · recording <strong>14 400</strong> session-min
+        → <strong>892 800</strong> attendee-min · recording <strong>14 400</strong> session-min · <strong>40</strong> host seats
       </p>
+      <div class="table-scroll">
       <table class="data">
         <thead>
           <tr>
@@ -1438,28 +1453,34 @@ flowchart TB
             <th class="num">Recording</th>
             <th class="num">Fixed</th>
             <th class="num">Total / mo</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Whereby Embedded</td><td class="num">$3 750</td><td class="num">$144</td><td class="num">$11</td><td class="num"><strong>$3 905</strong></td></tr>
-          <tr><td>Daily</td><td class="num">$3 571</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$3 715</strong></td></tr>
-          <tr><td>Agora HD</td><td class="num">$3 571</td><td class="num">$130</td><td class="num">$0</td><td class="num"><strong>$3 701</strong></td></tr>
-          <tr><td>Zoom Video SDK</td><td class="num">$3 125</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$3 269</strong></td></tr>
-          <tr class="pick"><td>Cloudflare RealtimeKit</td><td class="num">$1 786</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$1 930</strong></td></tr>
-          <tr class="pick"><td>Amazon Chime SDK</td><td class="num">$1 518</td><td class="num">$209</td><td class="num">$0</td><td class="num"><strong>$1 727</strong></td></tr>
-          <tr class="pick"><td>LiveKit Cloud (Ship)</td><td class="num">$446</td><td class="num">$72</td><td class="num">$50</td><td class="num"><strong>$568</strong></td></tr>
-          <tr><td>Zoom Education (40 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$560</td><td class="num"><strong>$560+</strong></td></tr>
-          <tr class="pick"><td>BBB university managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">~$220–440</td><td class="num"><strong>~$220–440</strong></td></tr>
-          <tr class="pick"><td>OpenVidu Meet (Community / PRO)</td><td class="num">$0 or core-min</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> / PRO quote</td></tr>
-          <tr><td>Self-developed (OSS SFU)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td></tr>
+          <tr><td>Whereby Embedded</td><td class="num">$3 750</td><td class="num">$144</td><td class="num">$11</td><td class="num"><strong>$3 905</strong></td><td></td></tr>
+          <tr><td>Daily</td><td class="num">$3 571</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$3 715</strong></td><td></td></tr>
+          <tr><td>Agora HD</td><td class="num">$3 571</td><td class="num">$130</td><td class="num">$0</td><td class="num"><strong>$3 701</strong></td><td></td></tr>
+          <tr><td>Zoom Video SDK</td><td class="num">$3 125</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$3 269</strong></td><td></td></tr>
+          <tr class="pick"><td>Cloudflare RealtimeKit</td><td class="num">$1 786</td><td class="num">$144</td><td class="num">$0</td><td class="num"><strong>$1 930</strong></td><td></td></tr>
+          <tr class="pick"><td>Amazon Chime SDK</td><td class="num">$1 518</td><td class="num">$209</td><td class="num">$0</td><td class="num"><strong>$1 727</strong></td><td>S3 extra</td></tr>
+          <tr><td>Microsoft Teams (40 hosts)*</td><td class="num">—</td><td class="num">incl*</td><td class="num">$600</td><td class="num"><strong>$600+</strong></td><td>$0 if M365 Edu already paid</td></tr>
+          <tr><td>Zoom Education (40 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$560</td><td class="num"><strong>$560+</strong></td><td></td></tr>
+          <tr class="pick"><td>LiveKit Cloud (Ship)</td><td class="num">$446</td><td class="num">$72</td><td class="num">$50</td><td class="num"><strong>$568</strong></td><td></td></tr>
+          <tr><td>Google Meet (40 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$480</td><td class="num"><strong>$480+</strong></td><td>$0 if Workspace already paid</td></tr>
+          <tr class="pick"><td>OpenVidu Meet (Community / PRO)</td><td class="num">$0 or core-min</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> / PRO</td><td>PRO quote when elastic needed</td></tr>
+          <tr><td>Self-developed (OSS SFU)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$400 VPS</td><td class="num"><strong>~$400+</strong> eng</td><td></td></tr>
+          <tr><td>Jitsi Meet (self-host)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">~$350 VPS</td><td class="num"><strong>~$350+</strong> eng</td><td>JVB + Jibri scale</td></tr>
+          <tr class="pick"><td>BBB university managed</td><td class="num">—</td><td class="num">incl.</td><td class="num">~$220–440</td><td class="num"><strong>~$220–440</strong></td><td></td></tr>
         </tbody>
       </table>
+      </div>
 
-      <h3>S3 — Full Raisd peak</h3>
+      <h3>S3 — Full Raisd peak <span class="note">(all platforms)</span></h3>
       <p class="formula">
         100 concurrent × (40 + 1) × 3 h/week<br/>
-        → <strong>2 952 000</strong> attendee-min · recording <strong>36 000</strong> session-min
+        → <strong>2 952 000</strong> attendee-min · recording <strong>36 000</strong> session-min · <strong>100</strong> host seats
       </p>
+      <div class="table-scroll">
       <table class="data">
         <thead>
           <tr>
@@ -1468,30 +1489,37 @@ flowchart TB
             <th class="num">Recording</th>
             <th class="num">Fixed</th>
             <th class="num">Total / mo</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Whereby Embedded</td><td class="num">$12 398</td><td class="num">$360</td><td class="num">$11</td><td class="num"><strong>$12 769</strong></td></tr>
-          <tr><td>Daily</td><td class="num">$11 808</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$12 168</strong></td></tr>
-          <tr><td>Agora HD</td><td class="num">$11 808</td><td class="num">$324</td><td class="num">$0</td><td class="num"><strong>$12 132</strong></td></tr>
-          <tr><td>Zoom Video SDK</td><td class="num">$10 332</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$10 692</strong></td></tr>
-          <tr class="pick"><td>Cloudflare RealtimeKit</td><td class="num">$5 904</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$6 264</strong></td></tr>
-          <tr class="pick"><td>Amazon Chime SDK</td><td class="num">$5 018</td><td class="num">$522</td><td class="num">$0</td><td class="num"><strong>$5 540</strong></td></tr>
-          <tr class="pick"><td>LiveKit Cloud (Ship)</td><td class="num">$1 476</td><td class="num">$180</td><td class="num">$50</td><td class="num"><strong>$1 706</strong></td></tr>
-          <tr><td>Zoom Education (100 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 400</td><td class="num"><strong>$1 400+</strong></td></tr>
-          <tr class="pick"><td>BBB Scalelite cluster</td><td class="num">—</td><td class="num">ops</td><td class="num">quote</td><td class="num"><strong>custom</strong></td></tr>
-          <tr class="pick"><td>OpenVidu Meet PRO cluster</td><td class="num">core-min</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td></tr>
-          <tr><td>Self-developed (OSS SFU cluster)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$1 200+</td><td class="num"><strong>~$1 200+</strong> eng/SRE</td></tr>
+          <tr><td>Whereby Embedded</td><td class="num">$12 398</td><td class="num">$360</td><td class="num">$11</td><td class="num"><strong>$12 769</strong></td><td></td></tr>
+          <tr><td>Daily</td><td class="num">$11 808</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$12 168</strong></td><td></td></tr>
+          <tr><td>Agora HD</td><td class="num">$11 808</td><td class="num">$324</td><td class="num">$0</td><td class="num"><strong>$12 132</strong></td><td></td></tr>
+          <tr><td>Zoom Video SDK</td><td class="num">$10 332</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$10 692</strong></td><td></td></tr>
+          <tr class="pick"><td>Cloudflare RealtimeKit</td><td class="num">$5 904</td><td class="num">$360</td><td class="num">$0</td><td class="num"><strong>$6 264</strong></td><td></td></tr>
+          <tr class="pick"><td>Amazon Chime SDK</td><td class="num">$5 018</td><td class="num">$522</td><td class="num">$0</td><td class="num"><strong>$5 540</strong></td><td>S3 extra</td></tr>
+          <tr class="pick"><td>LiveKit Cloud</td><td class="num">$1 476</td><td class="num">$180</td><td class="num">$50</td><td class="num"><strong>$1 706</strong></td><td></td></tr>
+          <tr><td>Microsoft Teams (100 hosts)*</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 500</td><td class="num"><strong>$1 500+</strong></td><td>$0 if M365 Edu already paid</td></tr>
+          <tr><td>Zoom Education (100 hosts)</td><td class="num">—</td><td class="num">incl*</td><td class="num">$1 400</td><td class="num"><strong>$1 400+</strong></td><td></td></tr>
+          <tr><td>Google Meet (100 hosts)*</td><td class="num">—</td><td class="num">Drive*</td><td class="num">$1 200</td><td class="num"><strong>$1 200+</strong></td><td>$0 if Workspace already paid</td></tr>
+          <tr><td>Self-developed (OSS SFU cluster)</td><td class="num">$0</td><td class="num">storage</td><td class="num">~$1 200+</td><td class="num"><strong>~$1 200+</strong> eng/SRE</td><td></td></tr>
+          <tr><td>Jitsi Meet (cluster)</td><td class="num">$0</td><td class="num">Jibri</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td>JVB shard + Jibri fleet</td></tr>
+          <tr class="pick"><td>OpenVidu Meet PRO cluster</td><td class="num">core-min</td><td class="num">storage</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td></td></tr>
+          <tr class="pick"><td>BBB Scalelite cluster</td><td class="num">—</td><td class="num">ops</td><td class="num">quote</td><td class="num"><strong>custom</strong></td><td></td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="callout">
         <strong>Reading the numbers.</strong>
+        All matrix platforms appear above. Meet/Teams rows are <em>modelling seats</em> — treat as <strong>$0 incremental</strong> when the campus already pays Workspace / M365 Edu.
         Recording is a material share of Chime (~14% at S1, ~12% at S3) because composite capture is $0.0125/min.
         On Whereby/Daily/RealtimeKit, recording is smaller (~4–9%) at $0.01/session-min.
         Seat products (Zoom Edu) and managed BBB often fold recording into the plan — confirm storage caps.
         LiveKit Cloud looks cheapest among programmable SDKs but needs bandwidth/egress validation.
-        Self-developed looks cheap on paper until engineering and on-call are counted.
+        Jitsi / OpenVidu / self-developed look cheap on licence until VPS, Jibri/egress, and on-call are counted.
+        Do not self-host media on the shared Demo k3s node.
       </div>
 
       <h3>Engineering / ops (order of magnitude)</h3>
