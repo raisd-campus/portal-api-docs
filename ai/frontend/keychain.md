@@ -47,7 +47,9 @@ Documented in the keychain repo README (GitHub): **`raisdKeychain2026`**. Sessio
 | Master | Public WG password in keychain README + `src/lib/master.ts` |
 | Staff | Public Demo emails + passwords (`registry@raisd.demo` / `registry2026`, `bursary@raisd.demo` / `bursary2026`, and one campus Admin per campus: `admin.{slug}@raisd.demo` / `{slug}2026`, Sierra Leone `sierraleone2026`) in keychain catalog |
 | SSO | Public Demo emails on `sso.raisd.co` (`alya@raisd.demo` / `alya2026`, `multi@raisd.demo` / `multi2026`, `iman.suherman@gmail.com` / `raisd2026` for Control plus Lesotho staff and student, …) — Open filled into SSO email+password |
-| Student / applicant | Build-injected from gitignored `control-plane/.credentials/demo-students.json` and `demo-applicants.json`, or env `DEMO_KEYCHAIN_SECRETS` |
+| Student | Build-injected from gitignored `control-plane/.credentials/demo-students.json`, or env `DEMO_KEYCHAIN_SECRETS` (SSO override via `demo-sso.json` / `DEMO_KEYCHAIN_SECRETS.sso`) |
+| Applicant SSO cards | Public SSO Demo passwords in the catalog (`fresh2026`, `draft2026`, `completed2026`, `approved2026`, `international2026`) — not portal-api `demo-applicants.json` scenario secrets |
+| Applicant portal-api scenarios | Gitignored `demo-applicants.json` / `DEMO_KEYCHAIN_SECRETS.applicants` for legacy portal-local scenario login only |
 | DB Admin | Build-injected from gitignored `control-plane/.credentials/db-admin.json` `login` (or `DEMO_KEYCHAIN_SECRETS.dbAdmin`) |
 | Docs (Pages) | Build-injected from gitignored `control-plane/.credentials/docs-site` (or `DEMO_KEYCHAIN_SECRETS.docsSite`) |
 

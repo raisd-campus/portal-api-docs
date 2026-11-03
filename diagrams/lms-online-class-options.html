@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raisd LMS — online-class options (cost, integration, breakouts)</title>
+  <title>Raisd LMS — online-class options (cost, features, breakouts)</title>
   <link rel="stylesheet" href="./styles.css" />
   <style>
     .callout { margin:12px 0; padding:12px 14px; border-radius:10px; border-left:4px solid var(--accent); background:var(--accent-soft); font-size:.92rem; }
@@ -51,6 +51,15 @@
     .shot .lab { font-size:.7rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#9a6418; margin:10px 12px 0; }
     .ux-jump { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 14px; }
     .ux-jump a { font-size:.86rem; }
+    .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:10px 0 16px; }
+    .table-scroll table.data { margin:0; min-width:720px; }
+    .table-scroll table.data th:first-child,
+    .table-scroll table.data td:first-child { position:sticky; left:0; background:var(--surface); z-index:1; }
+    .table-scroll table.data th:first-child { background:var(--accent-soft); }
+    .cell-y { color:#166534; font-weight:700; }
+    .cell-p { color:#9a6418; font-weight:600; }
+    .cell-n { color:#991b1b; }
+    .cell-r { color:var(--muted); font-style:italic; }
   </style>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -365,10 +374,11 @@
   </header>
 
   <main class="wrap">
-    <p class="eyebrow">LMS research · Standup 2 Nov 2026 · CAP-26 / CAP-24 / F12 / F13</p>
+    <p class="eyebrow">LMS research · Standup 2–3 Nov 2026 · CAP-26 / CAP-24 / F12 / F13</p>
     <h1>Online-class options — full analysis</h1>
     <p class="lead">
-      Cost models, hosting, integration shapes, breakout support, recordings, quizzes, and self-paced unlock —
+      Cost models, hosting, integration shapes, breakout support, recordings, quizzes, self-paced unlock,
+      and open-source options vs stated requirements —
       for Raisd portals via Portal API. <span class="tag prop">Proposed</span>
       <span class="tag gap">Not Live</span>
       Demo ≠ Live.
@@ -377,7 +387,9 @@
     <div class="callout warn">
       <strong>Indicative pricing only</strong> (public list rates, late 2025–Nov 2026 USD/EUR).
       Re-quote before procurement. This page does <em>not</em> authorise a Live CAP-26 vendor.
-      Knowledge SoT: <code>docs/ai/architecture/lms-online-class-options.md</code>.
+      Knowledge SoT: <code>docs/ai/architecture/lms-online-class-options.md</code>
+      · OSS depth: <code>docs/ai/architecture/lms-oss-video-requirements.md</code>
+      · Feature review: <code>docs/ai/architecture/lms-video-feature-comparison.md</code>.
     </div>
 
     <div class="jump">
@@ -387,6 +399,8 @@
       <a href="#constraints">Raisd constraints</a>
       <a href="#shapes">Integration shapes</a>
       <a href="#oss-features">OSS classroom features</a>
+      <a href="#oss-req">OSS vs requirements</a>
+      <a href="#feature-compare">Feature-by-feature</a>
       <a href="#matrix">Platform matrix</a>
       <a href="#links">Platform links</a>
       <a href="#rates">Unit rates</a>
@@ -755,6 +769,188 @@ flowchart TB
         <strong>Raisd reading:</strong> BBB stays the preferred education pack (native Moodle + attendance + deepest classroom UX).
         OpenVidu Meet is the strongest OSS alternative when white-label / API embed matters more than Moodle-native depth.
         Jitsi remains a media POC — not CAP-26 classroom SoT.
+      </div>
+    </section>
+
+    <section class="section" id="oss-req">
+      <h2>OSS vs stated requirements (standup 3 Nov 2026)</h2>
+      <p>
+        Action item: detailed comparison and implementation analysis of open-source video options against the stated requirements.
+        Full write-up: <a href="../ai/architecture/lms-oss-video-requirements.md"><code>lms-oss-video-requirements.md</code></a>.
+        Commercial / seat / SDK cost matrix remains in sections below.
+      </p>
+      <h3>Must-have (R1–R12)</h3>
+      <table class="data">
+        <thead><tr><th>ID</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr><td>R1</td><td>Feel integrated — university-branded, not a separate Meet/Zoom product</td></tr>
+          <tr><td>R2</td><td>Portal-based SSO; join tokens minted server-side via Portal API</td></tr>
+          <tr><td>R3</td><td>Timetable-gated join</td></tr>
+          <tr><td>R4</td><td>Students = participants; lecturer = host</td></tr>
+          <tr><td>R5</td><td>Join/leave tracking for attendance (CAP-12)</td></tr>
+          <tr><td>R6</td><td>Automatic recording</td></tr>
+          <tr><td>R7</td><td>Playback later (Past Class / Materials)</td></tr>
+          <tr><td>R8</td><td>Transcription (provider or Raisd STT pipeline)</td></tr>
+          <tr><td>R9</td><td>Quizzes at module / study-planner — Raisd-native exam SoT</td></tr>
+          <tr><td>R10</td><td>Custom LMS / portal integration</td></tr>
+          <tr><td>R11</td><td>Scale under multi-campus usage without licence cliffs</td></tr>
+          <tr class="pick"><td>R12</td><td>Moderated screen-share request → Accept / Decline / Stop (OL-40–43)</td></tr>
+        </tbody>
+      </table>
+      <h3>Requirement matrix (OSS)</h3>
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Req</th>
+            <th>BBB</th>
+            <th>OpenVidu Meet</th>
+            <th>Jitsi</th>
+            <th>LiveKit OSS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>R1 Integrated</td><td>Partial (wrap)</td><td><strong>Yes</strong> (embed)</td><td>Partial</td><td><strong>Yes</strong> (Raisd UI)</td></tr>
+          <tr><td>R2 Portal SSO</td><td><strong>Yes</strong></td><td><strong>Yes</strong></td><td><strong>Yes</strong></td><td><strong>Yes</strong></td></tr>
+          <tr><td>R3 Timetable</td><td colspan="4">Raisd Portal API (all)</td></tr>
+          <tr><td>R4 Roles</td><td><strong>Yes</strong></td><td><strong>Yes</strong></td><td>Partial</td><td>Partial (Raisd)</td></tr>
+          <tr class="pick"><td>R5 Attendance</td><td><strong>Yes</strong> (built-in)</td><td>Partial (Raisd)</td><td>Partial</td><td>Partial</td></tr>
+          <tr><td>R6 Recording</td><td><strong>Yes</strong></td><td><strong>Yes</strong></td><td>Partial (Jibri)</td><td><strong>Yes</strong> (Egress)</td></tr>
+          <tr><td>R7 Playback</td><td><strong>Yes</strong></td><td><strong>Yes</strong></td><td>Partial</td><td>Partial (Raisd player)</td></tr>
+          <tr><td>R8 Transcript</td><td colspan="4">Partial — Raisd STT / add-on (none is campus SoT alone)</td></tr>
+          <tr><td>R9 Quizzes</td><td colspan="4">Raisd-native CAP-24 (vendor polls ≠ exam SoT)</td></tr>
+          <tr class="pick"><td>R10 LMS glue</td><td><strong>Yes</strong> (+ Moodle native)</td><td><strong>Yes</strong> (API/embed)</td><td>Partial</td><td>Raisd builds</td></tr>
+          <tr><td>R11 Scale cliff</td><td>Infra / managed</td><td>Community → PRO</td><td>Jibri/JVB</td><td>SFU/SRE or Cloud $</td></tr>
+          <tr><td>R12 Share queue</td><td>Partial (Raisd overlay)</td><td>Partial</td><td>Partial</td><td><strong>Yes</strong> if Raisd builds</td></tr>
+        </tbody>
+      </table>
+      <h3>Implementation verdict (OSS only)</h3>
+      <div class="grid3">
+        <div class="card">
+          <div class="n">1 · Classroom OSS</div>
+          <strong>Managed BigBlueButton + Portal API</strong>
+          <span>Best R4–R7 / R10. Wrap for R1 / R12. Do not self-host on Demo k3s.</span>
+        </div>
+        <div class="card">
+          <div class="n">2 · Embed OSS</div>
+          <strong>OpenVidu Meet Community</strong>
+          <span>Best R1 embed on dedicated media VPS. Raisd owns attendance + OL-40. LiveKit lineage keeps self-dev open.</span>
+        </div>
+        <div class="card">
+          <div class="n">3 · Later product</div>
+          <strong>LiveKit Cloud → OSS self-host</strong>
+          <span>Full R1/R12 control. Highest eng — matches 3 Nov “cheap opex / slow build” trade-off. Jitsi / raw mediasoup deprioritised.</span>
+        </div>
+      </div>
+      <div class="callout warn">
+        <strong>OSS software ≠ free operations.</strong>
+        Under S2/S3 concurrent load the bill moves to VPS, storage, SRE, or OpenVidu PRO — not a per-seat Zoom line item.
+        Transcription (R8) and quizzes (R9) stay Raisd-owned pipelines regardless of media pick.
+      </div>
+    </section>
+
+    <section class="section" id="feature-compare">
+      <h2>Feature-by-feature — open-source + commercial (review)</h2>
+      <p>
+        Standup 3 Nov action: add details on open-source and commercial options and prepare a feature-by-feature comparison for review.
+        Full write-up: <a href="../ai/architecture/lms-video-feature-comparison.md"><code>lms-video-feature-comparison.md</code></a>.
+        Legend: <span class="cell-y">Y</span> meets · <span class="cell-p">P</span> partial / Raisd finishes · <span class="cell-n">N</span> poor fit · <span class="cell-r">R</span> Raisd owns.
+      </p>
+
+      <h3>Option groups</h3>
+      <div class="grid3">
+        <div class="card">
+          <div class="n">Open-source</div>
+          <strong>BBB · OpenVidu · Jitsi · LiveKit</strong>
+          <span>$0 software (OpenVidu PRO metered). Classroom depth vs eng trade-off. Not on Demo k3s.</span>
+        </div>
+        <div class="card">
+          <div class="n">Commercial seats</div>
+          <strong>Zoom Edu · Meet · Teams</strong>
+          <span>Familiar teaching tools. Fail R1 (separate product) unless campus mandates Shape A link-out.</span>
+        </div>
+        <div class="card">
+          <div class="n">Commercial embed / SDK</div>
+          <strong>Whereby · Daily · RealtimeKit · Chime · Agora</strong>
+          <span>Best R1 branded path. Metered media; Raisd builds classroom chrome for SDKs.</span>
+        </div>
+      </div>
+
+      <h3>R1–R12 stated requirements</h3>
+      <div class="table-scroll">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Req</th>
+              <th>BBB</th><th>OpenVidu</th><th>Jitsi</th><th>LiveKit</th>
+              <th>Zoom</th><th>Meet</th><th>Teams</th>
+              <th>Whereby</th><th>Daily</th><th>RTK</th><th>Chime</th><th>Agora</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>R1 Integrated</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+            <tr><td>R2 Portal SSO</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+            <tr><td>R3 Timetable</td><td class="cell-r" colspan="12">R — Portal API for all</td></tr>
+            <tr><td>R4 Host / participant</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td></tr>
+            <tr class="pick"><td>R5 Attendance</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td></tr>
+            <tr><td>R6 Auto record</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+            <tr><td>R7 Playback / Past Class</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td></tr>
+            <tr><td>R8 Transcription</td><td class="cell-p" colspan="12">P — Raisd STT / add-on (vendor captions ≠ campus SoT)</td></tr>
+            <tr><td>R9 Quizzes (exam SoT)</td><td class="cell-r" colspan="12">R — Raisd CAP-24 (vendor polls ≠ exam of record)</td></tr>
+            <tr><td>R10 LMS / portal glue</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+            <tr><td>R11 Scale / licence cliff</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td></tr>
+            <tr class="pick"><td>R12 Share request queue</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Classroom features</h3>
+      <div class="table-scroll">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>BBB</th><th>OpenVidu</th><th>Jitsi</th><th>LiveKit</th>
+              <th>Zoom</th><th>Meet</th><th>Teams</th>
+              <th>Whereby</th><th>Daily</th><th>RTK</th><th>Chime</th><th>Agora</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pick"><td>Virtual classroom depth</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-n">N</td></tr>
+            <tr><td>Whiteboard</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-p">P</td></tr>
+            <tr><td>Breakouts</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-p">P</td></tr>
+            <tr><td>Attendance analytics</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td></tr>
+            <tr><td>White-label / embed</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+            <tr><td>OL lobby + roster</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-n">N</td><td class="cell-y">Y</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-n">N</td><td class="cell-p">P</td><td class="cell-p">P</td><td class="cell-y">Y</td><td class="cell-y">Y</td><td class="cell-y">Y</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Review packs</h3>
+      <div class="grid3">
+        <div class="card">
+          <div class="n">A · Fast Demo</div>
+          <strong>Whereby or Daily</strong>
+          <span>Prove R2–R7 inside portals; stub R12. Lowest eng on UltaHost.</span>
+        </div>
+        <div class="card">
+          <div class="n">B · Education OSS</div>
+          <strong>Managed BBB · OpenVidu alt</strong>
+          <span>Best teaching + attendance (BBB). Best OSS embed (OpenVidu). Jitsi = POC only.</span>
+        </div>
+        <div class="card">
+          <div class="n">C · Raisd media</div>
+          <strong>RealtimeKit · Chime · LiveKit</strong>
+          <span>Best R1+R12. Pick by breakouts vs $/mo vs OSS escape. Agora only if APAC forces.</span>
+        </div>
+        <div class="card">
+          <div class="n">D · Suite mandate</div>
+          <strong>Zoom · Meet · Teams</strong>
+          <span>Accept R1 failure. Use only if a campus already standardises and forces Shape A.</span>
+        </div>
+      </div>
+      <div class="callout ok">
+        <strong>For leadership review:</strong> print the R1–R12 + classroom matrices, packs A–C, and S1–S3 cost tables below.
+        Commercial suites fail the “seamless university-branded” requirement unless Raisd accepts link-out.
       </div>
     </section>
 
@@ -1225,14 +1421,16 @@ flowchart TB
         <a href="lms-features.html"><strong>LMS features F01–F37</strong><span>Domain × CAP matrix</span></a>
         <a href="lms-reference/index.html"><strong>Moodle + Classroom map</strong><span>Capability absorb · reference shots</span></a>
         <a href="lms-reference/features.html"><strong>LMS feature steps</strong><span>F12 live class · F13 quiz sequences</span></a>
-        <a href="../ai/architecture/lms-online-class-options.md"><strong>Agent knowledge</strong><span>Markdown SoT for this analysis</span></a>
+        <a href="../ai/architecture/lms-online-class-options.md"><strong>Agent knowledge</strong><span>Markdown SoT for cost / vendors</span></a>
+        <a href="../ai/architecture/lms-oss-video-requirements.md"><strong>OSS vs requirements</strong><span>3 Nov R1–R12 + implementation</span></a>
+        <a href="../ai/architecture/lms-video-feature-comparison.md"><strong>Feature-by-feature review</strong><span>OSS + commercial · leadership pack</span></a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Raisd Documentation · Online-class research 3 Nov 2026 · Not Live policy</p>
+      <p>Raisd Documentation · Online-class research 4 Nov 2026 · Not Live policy</p>
     </div>
   </footer>
   <script src="nav-dropdown.js" defer></script>

@@ -5,9 +5,15 @@
 - *Iman will research features for self-paced learning, recordings, and quizzes.*  
 - *Iman will research platforms that support breakout rooms.*
 
+**Standup actions (Read.ai 3 Nov 2026):**  
+- *Iman Suherman will provide a detailed comparison and implementation analysis of open-source video options against the stated requirements.* → **[lms-oss-video-requirements.md](lms-oss-video-requirements.md)** · published [`#oss-req`](../../diagrams/lms-online-class-options.html#oss-req)  
+- *Iman Suherman will add details on open-source and commercial options and prepare a feature-by-feature comparison for review.* → **[lms-video-feature-comparison.md](lms-video-feature-comparison.md)** · published [`#feature-compare`](../../diagrams/lms-online-class-options.html#feature-compare) (this file keeps cost/hosting detail)  
+- *Faid Zamin will test scenarios for how the flow behaves when a review step is disabled.* (UNIFC — not LMS)  
+- *Mohammad Aslam Khan will compile Iman’s materials and present them to the boss.*
+
 **Raisd anchors:** [lms.md](lms.md) · [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) · F12 / CAP-26 · F13 / CAP-24 · [SDD-11](../../sdd/11-capability-catalog.md)  
 **Status:** **Proposed / research** — not Live. Demo ≠ Live for live class, quizzes, and recording delivery.  
-**Meeting constraints to honour:** feel integrated (not a separate product); students join as **participants**; access gated by **timetable**; join/leave for **attendance**; recordings for missed sessions; quizzes attach at module / study-planner setup; self-paced unlock may differ from teaching-week release; Faid → Manna requirements summary still expected.
+**Meeting constraints to honour:** feel integrated (not a separate product); **portal SSO**; students join as **participants**; access gated by **timetable**; join/leave for **attendance**; **automatic recording** + later playback; **transcription** expected (Raisd or add-on pipeline); quizzes attach at module / study-planner setup (Raisd-native SoT); self-paced unlock may differ from teaching-week release; Faid → Manna requirements summary still expected.
 
 Pricing below is **indicative public list** (USD/EUR, late 2025–Nov 2026). Always re-quote before procurement.
 
@@ -206,6 +212,10 @@ Assumes a **properly configured self-hosted deployment**, not free public hostin
 
 **Raisd reading:** BBB remains the preferred Shape B education pack (native Moodle + attendance + deepest classroom UX). OpenVidu Meet is the strongest OSS alternative when embed/white-label and API/embedding matter more than Moodle-native depth. Jitsi stays a media POC, not CAP-26 classroom SoT.
 
+**Full OSS vs stated requirements (3 Nov R1–R12), including LiveKit / mediasoup implementation analysis:** [lms-oss-video-requirements.md](lms-oss-video-requirements.md) · published [`#oss-req`](../../diagrams/lms-online-class-options.html#oss-req).
+
+**Open-source + commercial feature-by-feature review pack (3 Nov):** [lms-video-feature-comparison.md](lms-video-feature-comparison.md) · published [`#feature-compare`](../../diagrams/lms-online-class-options.html#feature-compare).
+
 ---
 
 ## 3. Self-paced learning, recordings, and quizzes
@@ -318,6 +328,8 @@ Aligned to design-pack journeys ([lms-online-lesson-ux.md](lms-online-lesson-ux.
 
 | Topic | Path |
 |---|---|
+| OSS vs stated requirements (3 Nov) | [lms-oss-video-requirements.md](lms-oss-video-requirements.md) · [#oss-req](../../diagrams/lms-online-class-options.html#oss-req) |
+| OSS + commercial feature-by-feature (review) | [lms-video-feature-comparison.md](lms-video-feature-comparison.md) · [#feature-compare](../../diagrams/lms-online-class-options.html#feature-compare) |
 | Online lesson UX requirements (OL-xx) | [lms-online-lesson-ux.md](lms-online-lesson-ux.md) · [#ux-pack gallery](../../diagrams/lms-online-class-options.html#ux-pack) |
 | LMS posture | [lms.md](lms.md) |
 | Moodle / Classroom map (row 13 live class, row 10 quizzes) | [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) |

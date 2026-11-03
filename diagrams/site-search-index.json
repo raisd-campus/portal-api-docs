@@ -1138,7 +1138,7 @@
     },
     {
       "title": "LMS online-class options",
-      "summary": "Live-class vendors plus Faid UX design pack gallery (lobby, moderated screen-share, Past Class, OL-xx) \u2014 OSS BBB/OpenVidu/Jitsi, cost, hosting, breakouts, quizzes (standup 2 Nov 2026). Not Live.",
+      "summary": "Live-class vendors, Faid UX pack, OSS vs requirements, and OSS+commercial feature-by-feature review (standup 2\u20133 Nov 2026). Not Live.",
       "section": "Architecture",
       "keywords": [
         "lms",

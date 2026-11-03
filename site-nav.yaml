@@ -127,6 +127,7 @@ external:
   ai-lesotho-pilot: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md
   ai-lms: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md
   ai-lms-online-class: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md
+  ai-lms-video-features: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-video-feature-comparison.md
   ai-lms-online-lesson-ux: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-lesson-ux.md
   ai-portal-api: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md
   ai-portal-api-plan: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md
@@ -534,6 +535,7 @@ menu:
       - { label: Distributed CMS target, href: ai-distributed }
       - { label: LMS research posture, href: ai-lms }
       - { label: LMS online-class options, href: ai-lms-online-class }
+      - { label: LMS video feature comparison, href: ai-lms-video-features }
       - { label: LMS online-lesson UX, href: ai-lms-online-lesson-ux }
       - { label: Portal API, href: ai-portal-api }
       - { label: Portal API plan, href: ai-portal-api-plan }
@@ -1069,8 +1071,8 @@ search:
   - title: LMS online-class options
     href: lms-online-class
     section: Architecture
-    summary: Live-class vendors plus Faid UX design pack gallery (lobby, moderated screen-share, Past Class) — cost, hosting, integration, breakouts, quizzes (standup 2 Nov 2026). Not Live.
-    keywords: [lms, live class, online class, zoom, bigbluebutton, openvidu, jitsi, whereby, daily, realtimekit, breakout, quiz, recording, self-paced, cost, cap-26, cap-24, f12, f13, ux, lobby, screen share, faid]
+    summary: Live-class vendors, Faid UX pack, OSS vs requirements, and OSS+commercial feature-by-feature review (standup 2–3 Nov 2026). Not Live.
+    keywords: [lms, live class, online class, zoom, bigbluebutton, openvidu, jitsi, livekit, whereby, daily, realtimekit, chime, breakout, quiz, recording, self-paced, cost, cap-26, cap-24, f12, f13, ux, lobby, screen share, faid, oss, feature comparison]
 
   - title: Migration plan
     href: migration
