@@ -61,6 +61,114 @@
     .cell-n { color:#991b1b; }
     .cell-r { color:var(--muted); font-style:italic; }
 
+    /* Hypothetical per-platform implementation wireframes */
+    .wf-jump { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px; }
+    .wf-jump a { font-size:.84rem; }
+    .wf-plat {
+      margin:0 0 22px;
+      padding:14px 16px 16px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:var(--surface);
+    }
+    .wf-plat > header {
+      display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 10px;
+      margin:0 0 8px;
+    }
+    .wf-plat > header h3 { margin:0; font-size:1.05rem; }
+    .wf-plat .wf-meta { margin:0 0 12px; color:var(--muted); font-size:.86rem; line-height:1.45; }
+    .wf-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
+    .wf {
+      border:1.5px dashed #94a3b8;
+      border-radius:10px;
+      background:#f8fafc;
+      overflow:hidden;
+      font-size:.72rem;
+      line-height:1.25;
+      color:#334155;
+    }
+    .wf .wf-label {
+      padding:5px 8px;
+      background:#e2e8f0;
+      font-weight:700;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      font-size:.65rem;
+      color:#475569;
+    }
+    .wf .wf-chrome {
+      display:flex; gap:6px; align-items:center;
+      padding:6px 8px;
+      border-bottom:1px solid #cbd5e1;
+      background:#fff;
+      font-weight:600;
+    }
+    .wf .wf-chrome .dot { width:7px; height:7px; border-radius:50%; background:#94a3b8; }
+    .wf .wf-body { display:grid; grid-template-columns:72px 1fr; min-height:118px; }
+    .wf .wf-body.solo { grid-template-columns:1fr; }
+    .wf .wf-rail {
+      padding:6px;
+      border-right:1px solid #cbd5e1;
+      background:#f1f5f9;
+      font-size:.65rem;
+    }
+    .wf .wf-rail .pill {
+      display:block; margin:0 0 4px; padding:3px 4px;
+      border:1px solid #cbd5e1; border-radius:4px; background:#fff;
+    }
+    .wf .wf-stage { padding:8px; position:relative; }
+    .wf .tile {
+      border:1px solid #94a3b8; border-radius:6px; background:#fff;
+      padding:6px; text-align:center; margin:0 0 6px;
+    }
+    .wf .tile.hero { min-height:44px; font-weight:700; }
+    .wf .grid4 {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:4px;
+    }
+    .wf .grid4 .tile { margin:0; min-height:22px; padding:3px; font-size:.6rem; }
+    .wf .vendor {
+      border:1.5px solid #6366f1;
+      background:#eef2ff;
+      color:#3730a3;
+      border-radius:6px;
+      padding:8px;
+      min-height:70px;
+    }
+    .wf .vendor.external {
+      border-color:#b45309;
+      background:#fff7ed;
+      color:#9a3412;
+    }
+    .wf .vendor.oss {
+      border-color:#0f766e;
+      background:#f0fdfa;
+      color:#115e59;
+    }
+    .wf .wf-bar {
+      display:flex; flex-wrap:wrap; gap:4px;
+      padding:6px 8px;
+      border-top:1px solid #cbd5e1;
+      background:#fff;
+    }
+    .wf .btn {
+      display:inline-block; padding:2px 6px;
+      border:1px solid #94a3b8; border-radius:4px; background:#fff;
+      font-size:.65rem;
+    }
+    .wf .btn.pri { background:#0f766e; color:#fff; border-color:#0f766e; }
+    .wf .btn.warn { background:#fee2e2; border-color:#fca5a5; color:#991b1b; }
+    .wf .overlay {
+      position:absolute; right:10px; top:10px;
+      border:1px dashed #b45309; background:#fffbeb;
+      color:#92400e; padding:5px 6px; border-radius:5px;
+      font-size:.62rem; max-width:46%;
+    }
+    .wf-gaps {
+      margin:10px 0 0; padding-left:1.1rem;
+      font-size:.84rem; color:var(--muted);
+    }
+    .wf-gaps li { margin:2px 0; }
+
     /* Hanging on-page side navigation (guidance pattern) */
     main.wrap.guide-page { max-width: min(1460px, 98vw); }
     .guide-shell {
@@ -485,6 +593,7 @@
       <a href="#oss-features">OSS features</a>
       <a href="#oss-req">OSS vs requirements</a>
       <a href="#feature-compare">Feature-by-feature</a>
+      <a href="#wireframes">Wireframes</a>
       <a href="#matrix">Platform matrix</a>
       <a href="#breakdown">Cost</a>
       <a href="#selfdev">Self-developed</a>
@@ -508,6 +617,12 @@
       <a href="#oss-features">OSS classroom features</a>
       <a href="#oss-req">OSS vs requirements</a>
       <a href="#feature-compare">Feature-by-feature</a>
+      <p class="hang-group">Wireframes</p>
+      <a href="#wireframes">If implemented</a>
+      <a href="#wf-shape-a">Shape A suites</a>
+      <a href="#wf-shape-b">Shape B classroom</a>
+      <a href="#wf-shape-b-watch">Shape B watch / POC</a>
+      <a href="#wf-shape-c">Shape C embed / SDK</a>
       <p class="hang-group">Cost &amp; platforms</p>
       <a href="#matrix">Platform matrix</a>
       <a href="#links">Platform links</a>
@@ -1287,6 +1402,600 @@ flowchart TB
       </div>
     </section>
 
+    <section class="section" id="wireframes">
+      <h2>Implementation wireframes (hypothetical)</h2>
+      <p>
+        Low-fidelity screens for <strong>how each platform would look if Raisd implemented it</strong> behind Portal API.
+        Not Live · not Demo · research only. Raisd chrome = grey dashed; vendor surface = coloured panel.
+        Target behaviours from the Faid pack (lobby, present/enrolled, moderated share queue, Past Class) stay Raisd-owned unless the vendor already supplies them.
+      </p>
+      <div class="callout warn">
+        <strong>Wireframes ≠ product commitment.</strong> They show integration shape and chrome ownership so WG can compare “same product” feel (R1) before picking a spike.
+      </div>
+      <nav class="wf-jump" aria-label="Wireframe platforms">
+        <a href="#wf-shape-a">Shape A</a>
+        <a href="#wf-meet">Meet</a>
+        <a href="#wf-zoom">Zoom Edu</a>
+        <a href="#wf-teams">Teams</a>
+        <a href="#wf-shape-b">Shape B</a>
+        <a href="#wf-bbb">BBB</a>
+        <a href="#wf-openvidu">OpenVidu</a>
+        <a href="#wf-plugnmeet">plugNmeet</a>
+        <a href="#wf-openmeetings">OpenMeetings</a>
+        <a href="#wf-shape-b-watch">Watch / POC</a>
+        <a href="#wf-jitsi">Jitsi</a>
+        <a href="#wf-edumeet">edumeet</a>
+        <a href="#wf-galene">Galène</a>
+        <a href="#wf-nctalk">NC Talk</a>
+        <a href="#wf-mirotalk">MiroTalk</a>
+        <a href="#wf-shape-c">Shape C</a>
+        <a href="#wf-whereby">Whereby</a>
+        <a href="#wf-daily">Daily</a>
+        <a href="#wf-realtimekit">RealtimeKit</a>
+        <a href="#wf-chime">Chime</a>
+        <a href="#wf-agora">Agora</a>
+        <a href="#wf-zoomsdk">Zoom SDK</a>
+        <a href="#wf-livekit">LiveKit</a>
+        <a href="#wf-selfdev">Self-dev</a>
+      </nav>
+
+      <h3 id="wf-shape-a">Shape A — campus suite link-out</h3>
+      <p class="note">Raisd owns lobby + timetable gate. Live UI is the vendor product (fails R1 “same product” unless campus mandates).</p>
+
+      <article class="wf-plat" id="wf-meet">
+        <header>
+          <h3>Google Meet</h3>
+          <span class="tag gap">Shape A</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Portal API mints Calendar/Meet join URL after timetable check → browser opens Meet. Attendance via thin APIs; Past Class deep-links Drive recording.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Raisd lobby (student)</div>
+            <div class="wf-chrome"><span class="dot"></span> Faculty · Classroom · Week 7</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile hero">Design Principles · lobby</div>
+                <div>Mic · Cam · Materials Download</div>
+                <div class="wf-bar" style="border:0;padding:8px 0 0"><span class="btn pri">Join 10:00–12:00 → Meet</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Live (vendor chrome)</div>
+            <div class="wf-chrome"><span class="dot"></span> meet.google.com — not Raisd</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor external">Google Meet UI<br/>grid · captions · Meet recording<br/>No Raisd roster / OL-40 queue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Gap: R1 branded shell · OL-40 share queue · present/enrolled roster</li>
+        </ul>
+      </article>
+
+      <article class="wf-plat" id="wf-zoom">
+        <header>
+          <h3>Zoom Education</h3>
+          <span class="tag gap">Shape A</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Same lobby pattern; join launches Zoom client/web. Strong attendance/polls inside Zoom; Raisd still wraps timetable + Past Class metadata.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Raisd lobby (lecturer)</div>
+            <div class="wf-chrome"><span class="dot"></span> Faculty · Classroom · Host</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile hero">Start class · Zoom host</div>
+                <div class="wf-bar" style="border:0;padding:8px 0 0"><span class="btn pri">Start → Zoom Meetings</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Live (vendor chrome)</div>
+            <div class="wf-chrome"><span class="dot"></span> zoom.us — not Raisd</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor external">Zoom Meetings UI<br/>breakouts · polls · cloud recording<br/>“You are in Zoom” — fails R1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Gap: university-branded live chrome · moderated share request queue as designed</li>
+        </ul>
+      </article>
+
+      <article class="wf-plat" id="wf-teams">
+        <header>
+          <h3>Microsoft Teams</h3>
+          <span class="tag gap">Shape A</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Lobby CTA opens class Team meeting. Only if campus is M365-first; Raisd identity hybrid risk remains.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Raisd lobby</div>
+            <div class="wf-chrome"><span class="dot"></span> Faculty · Classroom</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile hero">Join window CTA</div>
+                <div class="wf-bar" style="border:0;padding:8px 0 0"><span class="btn pri">Open in Teams</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Live (vendor chrome)</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor external">Teams meeting · Stream recording<br/>Class Team chrome — not Raisd Faculty IA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Gap: R1 · Raisd not M365-first · OL pack overlays unlikely</li>
+        </ul>
+      </article>
+
+      <h3 id="wf-shape-b">Shape B — education classroom API (primary OSS)</h3>
+      <p class="note">Raisd lobby + roster wrap; classroom product chrome runs in-frame or redirect. Prefer managed BBB; OpenVidu / plugNmeet for embed feel.</p>
+
+      <article class="wf-plat" id="wf-bbb">
+        <header>
+          <h3>BigBlueButton</h3>
+          <span class="tag demo">Shape B</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Portal API <code>create</code>/<code>join</code> signed URLs. Raisd shell keeps programme → module → week; BBB supplies whiteboard, breakouts, attendance analytics, playback.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Lobby + join</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd Faculty · Classroom</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">Week 7</span><span class="pill">Materials</span><span class="pill">Past Class</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Virtual Classroom lobby</div>
+                <div>Mic · Cam · device pickers</div>
+                <div class="wf-bar" style="border:0;padding:8px 0 0"><span class="btn pri">Join as student</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Live session</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd chrome · BBB room inside</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">13/32</span><span class="pill">Mute all</span><span class="pill">Search</span></div>
+              <div class="wf-stage">
+                <div class="vendor oss">BBB classroom<br/>whiteboard · presentation · breakouts<br/>built-in attendance</div>
+                <div class="overlay">OL-40 share queue<br/>Raisd overlay if needed</div>
+                <div class="wf-bar" style="border:0;margin-top:6px;padding:0"><span class="btn">End</span> <span class="btn">Chat</span> <span class="btn">Record</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Still BBB-looking inside the frame — wrap lobby/roster for R1; export recording for Live authz</li>
+        </ul>
+      </article>
+
+      <article class="wf-plat" id="wf-openvidu">
+        <header>
+          <h3>OpenVidu Meet</h3>
+          <span class="tag demo">Shape B→C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">REST + web component embed. Strongest OSS “same product” feel; Raisd builds CAP-12 analytics and OL-40.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Lobby</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd Faculty · Classroom</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile hero">Lobby · timetable CTA</div>
+                <div class="wf-bar" style="border:0;padding:8px 0 0"><span class="btn pri">Enter classroom</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Live (embedded)</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd route · OpenVidu Meet component</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">13/32</span><span class="pill">Raisd roster</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Lecturer featured</div>
+                <div class="grid4"><div class="tile">S1</div><div class="tile">S2</div><div class="tile">S3</div><div class="tile">S4</div></div>
+                <div class="vendor oss" style="margin-top:6px;min-height:36px">OpenVidu Meet embed · white-label</div>
+                <div class="overlay">Share request<br/>Accept / Decline</div>
+              </div>
+            </div>
+            <div class="wf-bar"><span class="btn">Mic</span><span class="btn">Cam</span><span class="btn warn">End</span><span class="btn">Share</span><span class="btn">Record</span></div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Attendance + Moodle-depth tools thinner than BBB — Raisd finishes R5 / R12</li>
+        </ul>
+      </article>
+
+      <article class="wf-plat" id="wf-plugnmeet">
+        <header>
+          <h3>plugNmeet</h3>
+          <span class="tag demo">Shape B→C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">LiveKit classroom pack (whiteboard, breakout, recording API) embedded like OpenVidu — co-equal OSS embed alt.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live (embedded)</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd · plugNmeet room</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">Roster</span><span class="pill">Breakouts</span></div>
+              <div class="wf-stage">
+                <div class="vendor oss">plugNmeet UI<br/>whiteboard · recording · breakout<br/>LiveKit under the hood</div>
+                <div class="overlay">Raisd OL-40</div>
+              </div>
+            </div>
+            <div class="wf-bar"><span class="btn">Mic</span><span class="btn">Cam</span><span class="btn">WB</span><span class="btn">Record</span></div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">After class</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd Past Class</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile">Week 7 lecture · 1h52 · Lecture tag</div>
+                <div class="tile">Recording from plugNmeet → Raisd store</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>CAP-12 analytics Raisd-owned; community ops thinner than managed BBB</li>
+        </ul>
+      </article>
+
+      <article class="wf-plat" id="wf-openmeetings">
+        <header>
+          <h3>Apache OpenMeetings</h3>
+          <span class="tag rec">Shape B · watch</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Broad classroom (rooms, whiteboard, recording) behind Raisd lobby; Java ops heavier than managed BBB.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd wrap · OpenMeetings room</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor oss">OpenMeetings classroom<br/>moderation · whiteboard · recording</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Spike only if Apache optics required and BBB managed rejected</li>
+        </ul>
+      </article>
+
+      <h3 id="wf-shape-b-watch">Shape B watch list / POC OSS</h3>
+      <p class="note">Useful for spikes or internal pilots — not recommended as CAP-26 classroom SoT.</p>
+
+      <article class="wf-plat" id="wf-jitsi">
+        <header>
+          <h3>Jitsi Meet</h3>
+          <span class="tag gap">POC</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">iframe + JWT. Fast media POC; Raisd must build attendance, Past Class player, share queue, classroom depth.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd · Jitsi iframe</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor oss">Jitsi Meet chrome<br/>basic meeting · Jibri recording off-box</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="wf-gaps">
+          <li>Basic classroom · Jibri ops dominate · not SoT</li>
+        </ul>
+      </article>
+
+      <article class="wf-plat" id="wf-edumeet">
+        <header>
+          <h3>edumeet</h3>
+          <span class="tag rec">Watch</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">mediasoup multiparty meeting as Shape C reference UI inside Raisd route — Raisd still owns OL pack.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor oss">edumeet grid · mediasoup SFU<br/>Raisd toolbar / roster / Past Class around it</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-galene">
+        <header>
+          <h3>Galène</h3>
+          <span class="tag rec">POC</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Lightweight SFU groups for internal pilots; thin teaching chrome.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor oss">Galène simple group call<br/>Raisd lobby only — little classroom depth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-nctalk">
+        <header>
+          <h3>Nextcloud Talk</h3>
+          <span class="tag gap">Conditional</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Only if campus already runs Nextcloud — call opens in NC chrome or NC embed; weak Raisd brand.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor external">Nextcloud Talk UI<br/>NC sidebar · files · Talk call</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-mirotalk">
+        <header>
+          <h3>MiroTalk SFU</h3>
+          <span class="tag rec">POC</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Fast self-host conference embed; confirm licence + harden before any Live path.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="vendor oss">MiroTalk SFU conference<br/>Raisd lobby gate · DIY attendance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <h3 id="wf-shape-c">Shape C — Raisd chrome + embed / SDK</h3>
+      <p class="note">Best match to Faid pack: Raisd owns lobby, featured lecturer, roster present/enrolled, OL-40 queue, Past Class. Vendor supplies media (and sometimes breakouts).</p>
+
+      <article class="wf-plat" id="wf-whereby">
+        <header>
+          <h3>Whereby Embedded</h3>
+          <span class="tag demo">Shape C · Demo spike</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">iframe / web component inside Faculty Classroom route. Fastest Demo for timetable join + recording → Past Class; stub OL-40 if needed.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Lobby</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd Faculty · Classroom</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">Modules</span><span class="pill">Chat</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Week 7 · Join 10:00–12:00</div>
+                <div class="wf-bar" style="border:0;padding:8px 0 0"><span class="btn pri">Join class</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd shell · Whereby room</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">13/32</span><span class="pill">Mute</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Lecturer</div>
+                <div class="grid4"><div class="tile">·</div><div class="tile">·</div><div class="tile">·</div><div class="tile">·</div></div>
+                <div class="vendor" style="margin-top:6px;min-height:32px">Whereby Embedded media</div>
+                <div class="overlay">Request share → host</div>
+              </div>
+            </div>
+            <div class="wf-bar"><span class="btn">Mic</span><span class="btn">Cam</span><span class="btn warn">End</span><span class="btn">Share</span><span class="btn">Chat</span><span class="btn">Record</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-daily">
+        <header>
+          <h3>Daily</h3>
+          <span class="tag demo">Shape C · Demo spike</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Prebuilt iframe or custom React — same Raisd shell as Whereby; no native whiteboard.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd · Daily Prebuilt / custom</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">13/32</span></div>
+              <div class="wf-stage">
+                <div class="vendor">Daily media grid</div>
+                <div class="overlay">Raisd OL-40 stub</div>
+              </div>
+            </div>
+            <div class="wf-bar"><span class="btn">Mic</span><span class="btn">Cam</span><span class="btn warn">End</span><span class="btn">Record</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-realtimekit">
+        <header>
+          <h3>Cloudflare RealtimeKit</h3>
+          <span class="tag demo">Shape C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">UI kit + breakout child meetings. Closest commercial kit to branded classroom; freeze features before Live.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live + breakouts</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd · RealtimeKit UI kit</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">Main</span><span class="pill">Room A</span><span class="pill">Room B</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Main room</div>
+                <div class="vendor">RealtimeKit tiles + host controls</div>
+                <div class="overlay">Breakout = child meeting</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-chime">
+        <header>
+          <h3>Amazon Chime SDK</h3>
+          <span class="tag demo">Shape C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">100% Raisd UI on Chime media; Media Capture → S3 → Past Class. Strong $/mo; build all education chrome.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live (Raisd-owned UI)</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd Faculty Classroom</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">13/32</span><span class="pill">Requests · 2</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Lecturer featured</div>
+                <div class="grid4"><div class="tile">S</div><div class="tile">S</div><div class="tile">S</div><div class="tile">S</div></div>
+                <div class="vendor" style="margin-top:6px;min-height:28px">Chime audio/video only (invisible)</div>
+                <div class="overlay">Accept / Decline / Stop</div>
+              </div>
+            </div>
+            <div class="wf-bar"><span class="btn">Mic</span><span class="btn">Cam</span><span class="btn warn">End</span><span class="btn">Share</span><span class="btn">Chat</span><span class="btn pri">Record</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-agora">
+        <header>
+          <h3>Agora</h3>
+          <span class="tag rec">Shape C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Same Raisd UI as Chime; Agora RTC (+ optional whiteboard SKU). Prefer when APAC scale forces it.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">Roster</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Raisd grid</div>
+                <div class="vendor">Agora RTC · optional WB SKU</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-zoomsdk">
+        <header>
+          <h3>Zoom Video SDK</h3>
+          <span class="tag rec">Shape C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Raisd shell on Zoom media (not Meetings chrome) — Zoom reliability without Shape A product jump.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd · Video SDK session</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile hero">Raisd lobby → Raisd live UI</div>
+                <div class="vendor">Zoom Video SDK media plane</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-livekit">
+        <header>
+          <h3>LiveKit (Cloud or OSS)</h3>
+          <span class="tag demo">Shape C</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Full Raisd UI on LiveKit rooms + Egress. Best long-term R1/R12 control; highest eng. OpenVidu/plugNmeet are productised cousins on the same lineage.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live (Raisd-built)</div>
+            <div class="wf-chrome"><span class="dot"></span> Raisd Classroom · LiveKit room</div>
+            <div class="wf-body">
+              <div class="wf-rail"><span class="pill">13/32</span><span class="pill">OL-40 queue</span><span class="pill">Files</span></div>
+              <div class="wf-stage">
+                <div class="tile hero">Featured lecturer</div>
+                <div class="grid4"><div class="tile">·</div><div class="tile">·</div><div class="tile">·</div><div class="tile">·</div></div>
+                <div class="vendor oss" style="margin-top:6px;min-height:28px">LiveKit SFU + Egress (no classroom chrome)</div>
+                <div class="overlay">Raisd owns all OL-xx</div>
+              </div>
+            </div>
+            <div class="wf-bar"><span class="btn">Mic</span><span class="btn">Cam</span><span class="btn warn">End</span><span class="btn">Share</span><span class="btn">Chat</span><span class="btn pri">Record</span></div>
+          </div>
+          <div class="wf">
+            <div class="wf-label">Past Class</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile">Egress file → Raisd player</div>
+                <div class="tile">Transcript job (R8) optional</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-plat" id="wf-selfdev">
+        <header>
+          <h3>Self-developed (mediasoup / Janus / Ion)</h3>
+          <span class="tag gap">Shape C · later</span>
+          <span class="tag prop">Hypothetical</span>
+        </header>
+        <p class="wf-meta">Same Raisd UI wireframe as LiveKit — different SFU. Only if LiveKit rejected; slower path.</p>
+        <div class="wf-grid">
+          <div class="wf">
+            <div class="wf-label">Live</div>
+            <div class="wf-body solo">
+              <div class="wf-stage">
+                <div class="tile hero">Identical Raisd chrome to LiveKit path</div>
+                <div class="vendor oss">mediasoup / Janus / Ion SFU<br/>Raisd recorder + object store</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="callout ok">
+        <strong>Reading the wireframes:</strong>
+        Shape A = Raisd lobby only.
+        Shape B = Raisd wrap + education product inside.
+        Shape C = Raisd owns the live chrome; vendor is media.
+        Prefer wireframes that keep Faculty IA visible through the live session when scoring R1.
+      </div>
+    </section>
+
     <section class="section" id="matrix">
       <h2>Platform comparison matrix</h2>
       <table class="data">
@@ -1801,6 +2510,7 @@ flowchart TB
         <a href="../ai/architecture/lms-online-class-options.md"><strong>Agent knowledge</strong><span>Markdown SoT for cost / vendors</span></a>
         <a href="../ai/architecture/lms-oss-video-requirements.md"><strong>OSS vs requirements</strong><span>3 Nov R1–R12 + implementation</span></a>
         <a href="../ai/architecture/lms-video-feature-comparison.md"><strong>Feature-by-feature review</strong><span>OSS + commercial · leadership pack</span></a>
+        <a href="#wireframes"><strong>Implementation wireframes</strong><span>Hypothetical UI per platform · Shapes A/B/C</span></a>
       </div>
     </section>
 

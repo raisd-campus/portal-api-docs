@@ -99,6 +99,7 @@ notes:
   - 2026-11-03: LMS online-class — OSS classroom feature comparison (BBB vs OpenVidu Meet vs Jitsi); OpenVidu links/cost/verdict; diagrams/lms-online-class-options.html.
   - 2026-11-03: LMS online-lesson UX requirements from Faid 7.0 Chat design pack (OL-xx); gallery diagrams/lms-reference/online-lessons/; architecture/lms-online-lesson-ux.md.
   - 2026-11-03: Combined online-lessons UX gallery into diagrams/lms-online-class-options.html#ux-pack; old online-lessons.html redirects.
+  - 2026-11-04: Hypothetical per-platform implementation wireframes on diagrams/lms-online-class-options.html#wireframes (Shapes A/B/C · all matrix platforms) + options.md §2.4.
   - 2026-11-04: Expanded OSS video catalogue — plugNmeet, Apache OpenMeetings, edumeet, Galène, Nextcloud Talk, MiroTalk SFU (+ Ion DIY) across lms-oss-video-requirements.md, lms-online-class-options.md/.html, lms-video-feature-comparison.md.
   - 2026-11-04: OSS video vs stated requirements (standup 3 Nov R1–R12) — architecture/lms-oss-video-requirements.md; diagrams/lms-online-class-options.html#oss-req (BBB / OpenVidu / Jitsi / LiveKit implementation).
   - 2026-11-04: OSS + commercial feature-by-feature comparison for review — architecture/lms-video-feature-comparison.md; diagrams/lms-online-class-options.html#feature-compare.

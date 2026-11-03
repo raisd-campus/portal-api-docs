@@ -292,6 +292,19 @@ Assumes a **properly configured self-hosted deployment**, not free public hostin
 
 **Open-source + commercial feature-by-feature review pack (3 Nov):** [lms-video-feature-comparison.md](lms-video-feature-comparison.md) · published [`#feature-compare`](../../diagrams/lms-online-class-options.html#feature-compare).
 
+### 2.4 Implementation wireframes (hypothetical)
+
+Low-fidelity “if Raisd implemented this platform” screens — **research only**, not Demo/Live. Published gallery: [`#wireframes`](../../diagrams/lms-online-class-options.html#wireframes).
+
+| Shape | Platforms wired | What the student sees |
+|---|---|---|
+| **A** Link-out | Meet · Zoom Edu · Teams | Raisd lobby → vendor product chrome (fails R1 unless campus mandates) |
+| **B** Classroom API | BBB · OpenVidu · plugNmeet · OpenMeetings | Raisd lobby/roster wrap · education UI inside frame |
+| **B watch / POC** | Jitsi · edumeet · Galène · NC Talk · MiroTalk | Thin meeting chrome; Raisd must finish OL pack |
+| **C** Embed / SDK | Whereby · Daily · RealtimeKit · Chime · Agora · Zoom Video SDK · LiveKit · self-dev | Raisd owns live chrome; vendor is media plane |
+
+**Raisd always drawn:** timetable-gated lobby, present/enrolled roster, OL-40 share queue overlay (when vendor lacks it), Past Class entry after recording.
+
 ---
 
 ## 3. Self-paced learning, recordings, and quizzes
@@ -407,6 +420,7 @@ Aligned to design-pack journeys ([lms-online-lesson-ux.md](lms-online-lesson-ux.
 |---|---|
 | OSS vs stated requirements (3 Nov) | [lms-oss-video-requirements.md](lms-oss-video-requirements.md) · [#oss-req](../../diagrams/lms-online-class-options.html#oss-req) |
 | OSS + commercial feature-by-feature (review) | [lms-video-feature-comparison.md](lms-video-feature-comparison.md) · [#feature-compare](../../diagrams/lms-online-class-options.html#feature-compare) |
+| Per-platform implementation wireframes | [#wireframes](../../diagrams/lms-online-class-options.html#wireframes) · §2.4 above |
 | Online lesson UX requirements (OL-xx) | [lms-online-lesson-ux.md](lms-online-lesson-ux.md) · [#ux-pack gallery](../../diagrams/lms-online-class-options.html#ux-pack) |
 | LMS posture | [lms.md](lms.md) |
 | Moodle / Classroom map (row 13 live class, row 10 quizzes) | [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) |
