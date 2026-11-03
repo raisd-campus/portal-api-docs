@@ -60,6 +60,89 @@
     .cell-p { color:#9a6418; font-weight:600; }
     .cell-n { color:#991b1b; }
     .cell-r { color:var(--muted); font-style:italic; }
+
+    /* Hanging on-page side navigation (guidance pattern) */
+    main.wrap.guide-page { max-width: min(1460px, 98vw); }
+    .guide-shell {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .guide-hang {
+      position: sticky;
+      top: 4.75rem;
+      z-index: 20;
+      max-height: calc(100vh - 5.5rem);
+      overflow: auto;
+      padding: .75rem .7rem .85rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 0 rgba(0,0,0,.04);
+      -webkit-overflow-scrolling: touch;
+    }
+    .guide-hang .hang-title {
+      margin: 0 0 .55rem;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .guide-hang .hang-group {
+      margin: .65rem 0 .25rem;
+      padding: 0 .35rem;
+      font-size: .68rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .guide-hang .hang-group:first-of-type { margin-top: .15rem; }
+    .guide-hang a {
+      display: block;
+      padding: .32rem .45rem;
+      margin: 0 0 1px;
+      border-radius: 8px;
+      font-size: .84rem;
+      line-height: 1.3;
+      color: var(--ink);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      overflow-wrap: anywhere;
+    }
+    .guide-hang a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .guide-hang a.is-active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 650;
+      border-left-color: var(--accent);
+    }
+    .guide-main { min-width: 0; }
+    .guide-subnav-mobile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .guide-subnav-mobile a { font-size: .88rem; }
+    @media (min-width: 1100px) {
+      .guide-shell {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 1.5rem;
+      }
+      .guide-subnav-mobile { display: none; }
+      .guide-hang { display: block; }
+    }
+    @media (max-width: 1099px) {
+      .guide-hang { display: none; }
+    }
   </style>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -373,7 +456,7 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap guide-page">
     <p class="eyebrow">LMS research · Standup 2–3 Nov 2026 · CAP-26 / CAP-24 / F12 / F13</p>
     <h1>Online-class options — full analysis</h1>
     <p class="lead">
@@ -392,25 +475,50 @@
       · Feature review: <code>docs/ai/architecture/lms-video-feature-comparison.md</code>.
     </div>
 
-    <div class="jump">
+    <nav class="jump guide-subnav-mobile" aria-label="On this page (mobile)">
+      <a href="#verdict">Verdict</a>
+      <a href="#ux-pack">UX design pack</a>
+      <a href="#constraints">Raisd constraints</a>
+      <a href="#shapes">Integration shapes</a>
+      <a href="#breakouts">Breakouts</a>
+      <a href="#selfpaced">Self-paced · quizzes</a>
+      <a href="#oss-features">OSS features</a>
+      <a href="#oss-req">OSS vs requirements</a>
+      <a href="#feature-compare">Feature-by-feature</a>
+      <a href="#matrix">Platform matrix</a>
+      <a href="#breakdown">Cost</a>
+      <a href="#selfdev">Self-developed</a>
+      <a href="#spike">Demo spike</a>
+      <a href="#related">Related</a>
+    </nav>
+
+    <div class="guide-shell">
+    <aside class="guide-hang" aria-label="On this page">
+      <p class="hang-title">On this page</p>
+      <p class="hang-group">Start</p>
       <a href="#verdict">Verdict</a>
       <a href="#ux-pack">UX design pack</a>
       <a href="#ux-context">UX screens</a>
       <a href="#constraints">Raisd constraints</a>
+      <p class="hang-group">Integration</p>
       <a href="#shapes">Integration shapes</a>
-      <a href="#breakouts">Breakouts</a>
+      <a href="#breakouts">Breakout rooms</a>
       <a href="#selfpaced">Self-paced · recordings · quizzes</a>
+      <p class="hang-group">OSS &amp; review</p>
       <a href="#oss-features">OSS classroom features</a>
       <a href="#oss-req">OSS vs requirements</a>
       <a href="#feature-compare">Feature-by-feature</a>
+      <p class="hang-group">Cost &amp; platforms</p>
       <a href="#matrix">Platform matrix</a>
       <a href="#links">Platform links</a>
       <a href="#rates">Unit rates</a>
       <a href="#breakdown">Cost breakdown</a>
       <a href="#selfdev">Self-developed</a>
+      <p class="hang-group">Next</p>
       <a href="#spike">Demo spike</a>
       <a href="#related">Related</a>
-    </div>
+    </aside>
+    <div class="guide-main">
 
     <section class="section" id="verdict">
       <h2>Working Group verdict (research)</h2>
@@ -1468,6 +1576,9 @@ flowchart TB
         <a href="../ai/architecture/lms-video-feature-comparison.md"><strong>Feature-by-feature review</strong><span>OSS + commercial · leadership pack</span></a>
       </div>
     </section>
+
+    </div><!-- /guide-main -->
+    </div><!-- /guide-shell -->
   </main>
 
   <footer class="site-footer">
@@ -1478,5 +1589,46 @@ flowchart TB
   <script src="nav-dropdown.js" defer></script>
   <script src="site-search.js" defer></script>
   <script src="keychain-access.js" defer></script>
+  <script>
+  (function () {
+    var rail = document.querySelector(".guide-hang");
+    if (!rail) return;
+    var links = Array.prototype.slice.call(rail.querySelectorAll('a[href^="#"]'));
+    var map = {};
+    links.forEach(function (a) {
+      var id = a.getAttribute("href").slice(1);
+      var el = document.getElementById(id);
+      if (el) map[id] = a;
+    });
+    var ids = Object.keys(map);
+    if (!ids.length || !("IntersectionObserver" in window)) return;
+
+    var current = null;
+    function setActive(id) {
+      if (current === id) return;
+      current = id;
+      links.forEach(function (a) {
+        a.classList.toggle("is-active", a.getAttribute("href") === "#" + id);
+      });
+      var active = map[id];
+      if (active && active.scrollIntoView) {
+        var r = rail.getBoundingClientRect();
+        var ar = active.getBoundingClientRect();
+        if (ar.top < r.top + 8 || ar.bottom > r.bottom - 8) {
+          active.scrollIntoView({ block: "nearest" });
+        }
+      }
+    }
+
+    var obs = new IntersectionObserver(function (entries) {
+      var visible = entries
+        .filter(function (e) { return e.isIntersecting; })
+        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+      if (visible[0]) setActive(visible[0].target.id);
+    }, { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.1, 0.25] });
+
+    ids.forEach(function (id) { obs.observe(document.getElementById(id)); });
+  })();
+  </script>
 </body>
 </html>
