@@ -1,5 +1,9 @@
 # Raisd SSO — identity, channels, and RBAC
 
+## Shared field consistency — 0.26.0
+
+The SSO sign-in UI pins the exact released `@raisd-campus/design-system` 0.26.0 registry package. Shared text fields use measured truncation tooltips; normal field dimensions and existing page compositions remain owned by the shared defaults. The optional `DetailField.description` and `labelWidth="wide"` APIs are available when a form needs them; this upgrade adds no local field overrides or data behavior changes.
+
 ## Academic menu and curriculum reviewers — 29 October 2026
 
 The grantable Admin tree adds Academic with Faculty, Programme and Modules children (`admin.academic.faculty`, `admin.academic.programmes`, `admin.academic.modules`). Built-in Campus Admin resolves the current full tree; persisted custom roles and memberships are unchanged. Academic Study Plan reviewer targets use `flowId: academic-curriculum`, configuration/campus IDs and `stepId: curriculum-review`, without an Admissions student cohort. Existing Admissions target keys and retry receipts remain unchanged.

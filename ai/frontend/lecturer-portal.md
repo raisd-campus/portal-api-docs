@@ -1,5 +1,13 @@
 # Staff portal — current agent knowledge
 
+## Shared field consistency — 0.26.0
+
+Staff pins the exact released `@raisd-campus/design-system` 0.26.0 registry package. Shared text fields use measured truncation tooltips; normal field dimensions and existing page compositions remain owned by the shared defaults. The optional `DetailField.description` and `labelWidth="wide"` APIs are available when a form needs them; this upgrade adds no local field overrides or data behavior changes.
+
+## Classrooms alignment correction — 2 November 2026
+
+The selector uses `pageSectionVariants()` for the standard 16px heading-to-panel gap, restoring alignment with the desktop Choose a classroom panel. Commit `efabd18` had removed that gap from the selector while the right column retained it. Lint, six focused classroom composition tests and the production build pass; the running page has matching desktop panel tops and retains phone classroom switching and tablet containment at 375/768px. The existing large-chunk build warning remains. No shared package, API or data changes are involved.
+
 ## Academic administration — 29 October 2026
 
 The Admin sign-in exposes Academic → Faculty, Programme and Modules through the shared tiered menu in package 0.20.0. Teaching Classrooms and its legacy `/modules` redirect remain separate. Academic composes shared directories, record workspaces, tabs, fields and popups. Its PostgreSQL catalogue and independent curriculum review feed future Applicant selections and Student requirements; historical enrolments remain pinned. Staff Students adds API enrolment stream assignment when Student and Programme permissions are present. Details: [Academic catalogue](../backend/academic-catalogue.md).
@@ -562,3 +570,7 @@ Shared 0.18.5 mutes the active AdminTable pagination page through the existing s
 Academic schema mirrors are checked with `node scripts/sync-academic-contract.mjs --check` in lecturer-portal; regenerate with the same command without `--check`. This development-only helper has no cross-repository runtime import.
 
 Academic tabs consistently include a visible ContentSection heading. Table tabs use the documented no-inset panel content, with a standard-inset heading above the flush AdminTable. Empty history and unconfigured-semester views use shared EmptyState. Create and Add actions include a leading Plus icon. Faculty, Programme and Module record pickers stack the code in muted label typography above the linked name; search still matches both fields. These are Staff compositions of existing released components, with no shared package or workflow change.
+
+### Admissions semester payments (3 November 2026)
+
+Programme → Fees maintains explicit semester tuition totals for each published Programme Version and cohort, with the existing record editing/unsaved guard, campus scope, Finance currency, audit and optimistic retries. Applicants reviewers can inspect separate tuition receipts and verify/reject the selected pending receipt. Verification reaching the configured Partial/Full minimum completes tuition clearance; the full semester total and outstanding balance remain distinct. Protected legacy tuition keeps its existing action path.

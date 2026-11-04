@@ -1,139 +1,114 @@
-# Predefined University Flow editor
+# University Flow editor standard
 
-Owner-approved implementation, 28 October 2026. Local implementation uses shared package 0.19.5. This is the reusable contract; hosted activation is a separate release decision.
+## Admissions registration window — 3 November 2026
 
-## Ownership
+Admissions Version Settings owns optional `settings.registrationWindow` with date-only `startDate` and `closingDate`, outside cohort overrides. Drafts may omit either date; every new Apply requires both and closing on or after opening. Same-day windows are valid. The current Control workflow activates immediately; legacy application timestamps and future takeovers remain intact. Registration dates do not alter Applied/Published status and a closed version never falls back to an older one.
 
-The design system owns Switch, SortableList and FlowEditor presentation. Flow templates are developer-authored, versioned code: operators cannot add tasks, alter dependencies, execute scripts or invent capabilities. Control edits policy drafts. Portal API validates and executes pinned policy. SSO owns immediate, audited reviewer bindings; assigning responsibility never grants portal access.
+Open at the start of the opening day and close after the closing day in each campus timezone, for all intakes and student types. `getAdmissionsAvailability(campusId)` returns the current applied window, timezone, server-local today, availability and upcoming/closed guidance. The authenticated read is campus-scoped. New draft creation, destination-campus changes and final submission check that same current window, including submission of older pinned drafts; successful exact retries remain replayable after closing. Same-campus draft edits and submitted-case progression continue. No automatic rejection, deletion or restart occurs.
 
-Capabilities are Review, Payment, Document Release and Applicant Action. A step may combine them. Local and International have separate settings/order. New/returning/transfer restrictions remain business predicates, not extra interchangeable student types.
+Legacy applied policies without a window remain unrestricted. Do not infer two dates from an intake registration date. Legacy published versions without a window must be copied to a draft before a new Apply. Stored intake dates, payment Due Days, snapshots, audit values and reviewer bindings remain compatibility data; no migration or policy rewrite is performed. Payment deadlines, blank Due Days and missing payment registration-date Registry gates are inert for all applications. English/Offer deadlines, evidence checks, exceptions and reviewer permissions remain enforced.
 
-## Admissions template 1
+The version table shows Registration Start Date and Registration Closing Date. Shared DatePicker controls replace activation timing in draft Version Settings; published dates are read-only. The old dates/deadlines popup and payment Due Days controls, including the reference controls, are removed. Activation history still records UTC instants separately. Academic programme semester-registration calendars are a separate domain and remain unchanged.
 
-Stable parent order begins eligibility, registration-fee, english, offer, tuition, entry, arrival, medical, endorsement, international-registration. Eligibility owns eligibility-confirmation; offer owns signed-offer. Children follow their parent and cannot be dragged separately. International registration is the fixed final task. Dates/deadlines and application evidence are fixed flow settings, not reorderable tasks.
+
+Current standard, 2 November 2026. This guide describes the maintained UI and behavior, superseding the earlier incremental presentation notes. Consult the consumer's installed design-system catalogue and declarations; Control currently uses released 0.24.0. Hosted activation is a separate decision.
+
+## Ownership and common composition
+
+The design system owns FlowEditor, FlowStepCard, SortableList, Switch, Popup and PopupSection. Control owns the common `UniversityFlowSteps` and `FlowStepPopup` composition in `src/components/university-flow-steps.tsx`. Both Admissions and Academic Study Plan use that composition; future University Flows reuse it rather than assembling a separate step list or popup. Domain adapters supply definitions, settings, prerequisites, eligible roles and persistence. Do not put campus APIs or business rules in the design system.
+
+The page hierarchy is: AdminRecordWorkspace with summary/list sidebar; Affected Modules cards; General Settings; Versions directory; selected-version details with internal breadcrumb/return, SummaryCard and supported version settings; optional applicability/cohort tabs; Flow Steps; completion actions; independent History panel using AuditTrail. Keep General mounted while browsing versions. Use only capabilities supported by the flow's API: this hierarchy does not authorize new metadata fields, cohorts, scheduling, creation or persistence behavior. History and relationships requiring a saved record are omitted for unsaved records.
+
+Use shared ContentSection title/description slots and default panel spacing. The directory uses AdminTable's own insets, search, sorting, filters, feedback and pagination. Summary/list selection, exact version identity and supported cohort state use established route/query navigation and guards. Flow summary status describes saved flow-level state, not the selected version or unsaved form. Preserve each flow's API-defined status semantics.
+
+## Current step presentation
+
+Use UniversityFlowSteps, which wraps ContentSection and the released FlowEditor. Each step has a stable ID, registered name, capabilities, enabled state and explicit required/fixed constraints. Capabilities are Review, Payment, Document release and Applicant action; combined steps list their distinct categories in muted text separated by middle dots. Do not invent free-text categories or status wording.
+
+Display-order numbers, including linked children, are consecutive white text in black 32px circles. They recalculate after accepted reorders and never become persistent identity. Cards use shared hover/focus styling; card selection opens configuration. Toggles are separate controls before the chevron. Required steps omit the toggle and redundant required caption. Fixed steps use the external lock; movable parents use external drag handles with Alt+Up/Down instructions and announcements, without visible move buttons. Linked children are indented with centered connectors, travel with their parent and have the same 12px spacing as parent groups. Read-only steps with configuration remain inspectable. Templates set `configurable: false` for steps with no operational fields, document configuration or reviewer assignments. Such cards are static: no popup trigger/tab stop, chevron or card hover; any independently permitted enable toggle and linked ordering remain. Do not infer configurability from read-only or enabled state.
+
+Templates own applicability, prerequisites, allowed moves and enable/disable validation. A parent becoming ineffective retains its child's saved preference. Rejected moves preserve form state. Do not copy Admissions restrictions into other templates or infer business prerequisites from visual order.
+
+## Configuration popup and live reviewers
+
+Use FlowStepPopup at a 600px desktop maximum (phone gutters retained), which owns section composition, Apply/Cancel actions, duplicate-action protection, pending dismissal locks and close-after-success. Template callbacks own validation, persistence and local operational edits. With no editable operation, use Close only. The Popup uses `contentLayout="sections"`: PopupSection owns 16px within groups, 32px between groups and decorative divider lines between adjacent sections. There is no leading/trailing divider. Preserve existing titles or omit them; omit empty sections entirely. Do not add portal-local gaps or borders. Other non-migrated popups retain their defaults.
+
+Operational controls use untitled PopupSections unless there is a meaningful existing subgroup. Document sections remain titled where supported. Render Reviewers only for steps with staff responsibility, using the common titled section and this generic description: “Reviewers assess submissions and complete the required action for this step at their campus.” Do not name Applicant or another portal in reusable responsibility copy.
+
+The common FlowReviewerField places Campus DropdownSelect and Roles ChipField side by side, stacking on phones. Show saved assigned campuses only. Switching campus retains all unapplied selections. `useFlowReviewers` receives a stable flow adapter for target identity and role eligibility, plus a callback for confirmed directory updates. Existing adapters live in `src/lib/flow-reviewer-adapters.ts`: Admissions uses cohort-scoped bindings and `admin.applicants`; Academic uses `flowId=academic-curriculum`, no cohort, and `admin.academic.programmes`. Both require the matching campus and Staff Admin entry. Backend authorization remains authoritative.
+
+Apply validates operational changes before saving changed live assignments; only successful assignment saves allow local operational changes to be accepted and the popup to close. Operational changes still need the flow's normal Save Draft/Apply Version path. Assignment saves apply immediately and grant no portal access. Published settings remain read-only, while independently permitted reviewer changes remain editable. Cancel/Escape before Apply sends no writes and reopening loads saved assignments. A partial save cannot be undone by Cancel: retain confirmed campus revisions, notify parent coverage state and reuse request IDs for unresolved retries. Errors stay in the popup with selections retained; block duplicate Apply and dismissal during saves. Directory failures disable Apply and offer Retry roles.
+
+## Flow-specific contracts
+
+| Flow | Steps and applicability | Existing version and assignment behavior |
+| --- | --- | --- |
+| Admissions | Predefined multi-capability steps; Local/International cohorts with linked children | Multiple independent saved drafts, immutable settings, application journal and scheduling; cohort-specific reviewer bindings |
+| Academic Study Plan | One mandatory, fixed Study Plan Review step with Review capability; no student-type tabs | Existing single saved draft/publication API; live campus-level reviewer bindings and independent author/reviewer checks |
+
+Academic retains display-only Study Plan terminology and existing `academic-curriculum` / `curriculum-review` identities. Its step popup contains Reviewers only, with no empty settings group. UI alignment does not add Admissions lifecycle features or change Academic's required-review rule.
+
+### Admissions template 1
+
+Stable parent order begins eligibility, registration-fee, english, offer, tuition, entry, arrival, medical, endorsement, international-registration. Eligibility owns eligibility-confirmation; offer owns signed-offer. Children cannot be dragged separately. Evidence rules are fixed settings; registration windows belong to version settings, not reorderable tasks.
 
 | ID | Capabilities | Required constraints |
-|---|---|---|
-| eligibility | review, document-release | Existing evidence/correction validation; complete only with issued Eligibility Letter |
-| eligibility-confirmation | applicant-action | Child of eligibility; cannot be effective without it |
-| registration-fee | payment, review | Enabled eligibility/confirmation precede collection; collection differs from applicability and settlement |
-| english | applicant-action, review | Evidence may arrive later; Conditional Offers remain possible; arrival anchors deadline, not initial evidence review |
-| offer | document-release | Mandatory; eligibility/confirmation, fee milestone and conditional-English predicates preserved |
-| signed-offer | applicant-action, review | Child of offer; signature belongs to exact current Offer ID |
-| tuition | payment, review | New international clearance cannot be disabled; first-year/approved-semester rules preserved |
+| --- | --- | --- |
+| eligibility | review, document-release | Fixed first, even when disabled; evidence validation; completes with issued Eligibility Letter |
+| eligibility-confirmation | applicant-action | Linked child; cannot be effective without eligibility |
+| registration-fee | payment, review | Eligibility/confirmation precede collection; collection differs from applicability and settlement |
+| english | applicant-action, review | Later evidence and Conditional Offers remain possible; arrival anchors deadline |
+| offer | document-release | Mandatory; eligibility/confirmation, fee and conditional-English predicates preserved |
+| signed-offer | applicant-action, review | Linked child; signature belongs to the exact current Offer ID |
+| tuition | payment, review | New international clearance mandatory; first-year/approved-semester rules preserved |
 | entry | review | International only |
 | arrival | review | International only; actual non-future campus-local date |
-| medical | review | International only; enabled arrival required |
+| medical | review | International only; enabled arrival prerequisite |
 | endorsement | review | International only; configured arrival and medical prerequisites |
-| international-registration | review | International only; fixed last; configured clearance gate preserved |
+| international-registration | review | International only; fixed last; configured clearance gate |
 
-Permitted movements preserve eligibility before fee/offer, fee before Offer when requiredBefore=offer, and enabled arrival before medical/endorsement plus enabled medical before endorsement. The final registration task stays last. Invalid moves are rejected in UI and server validation. Order prioritizes ready work; it never replaces explicit business prerequisites. Parent disable retains child preference but makes the child ineffective.
+Local hides international-only cards. Reordering visible cards merges into the full stored order, preserving hidden settings. Registration Fee may move before or after Offer; its enabled state and position govern payment gates. Validation still keeps arrival before medical/endorsement plus medical before endorsement when enabled. Older editable draft copies repair Eligibility's first position locally; only Save Draft persists it. Published settings and pinned application order are not rewritten.
 
-## Immutable versions and operational assignments
+`documents.correctionsRequired` is deprecated and inert for every policy, including older pinned applications. Unanswered messages never gate eligibility approval or letter release. Reviewers decide evidence acceptability; validation and authorization remain mandatory. Messaging, unread/reply tracking, stored flags, snapshots and historical audit values are preserved. Eligibility Review's popup contains Reviewers only; document configuration remains hidden and its stored templates remain available for release.
 
-Published versions are read-only. Create Version opens a local unsaved copy of a published version; first Save Draft gives it a permanent identity and number. Multiple saved drafts are independent and appear alongside published versions. Popup Apply edits local draft; Save draft persists; validated Publish creates a numbered version. General metadata save does not publish settings. Reviewer changes use a separate explicit save and apply immediately. Legacy policies and accepted snapshots are not rewritten.
+### Admissions settings and lifecycle
 
-Each flow/campus/student-type/step binding selects eligible SSO role definition IDs, never display names or person assignment IDs. Any selected active role may complete the step. Flow and Roles screens share the same binding store. Legacy desk authorization remains until explicitly replaced. No new-template publication without required reviewer coverage. Security revocation remains possible and fails closed with repair feedback.
+Registration Fee uses the common Fee Settings section with fixed campus/cohort prices and payment methods. Registration Fee Credit Treatment appears independently in each Local/International Fee Settings section, before Methods, with the shared info tooltip. Collection Enabled and Required Before are removed from both the step popup and reference editor. English retains fulfilment years; Offer retains conditional permission, acceptance duration and Conditional/Full document templates. New tuition requirements use programme-sourced semester totals, Partial/Full coverage and independent payment methods. Payment-linked legacy tuition retains its original basis/approval rules. International tasks retain their operational gates and live assignments. Application Requirements retains evidence/cohort/required-optional-hidden rules. Registration windows are version-wide; English/Offer exceptions retain their existing permissions. No free-text labels, statuses, updates or department names are exposed.
 
-## Pricing and documents
+Create Version starts an unsaved copy of a published version; first Save Draft allocates a permanent identity/number. Saved drafts remain independent and appear beside published versions. Save Draft never activates settings. Apply Version validates and publishes a saved draft or reapplies immutable published settings through the application journal, preserving future takeovers and pinned applications. Published display names are separately editable metadata; published policy contents are immutable. General saves do not publish a version. Do not require an application/change reason where the current UI/API no longer requires one.
 
-Payment settings select Bursary quote or authoritative fixed campus price. Fixed amounts are positive currency-correct minor units, with a tuition first-year/semester basis; price source and policy identity remain pinned. No implicit zero, conversion, tax, refund or automatic credit. Quotes/payments already recorded are never repriced by publication.
+Version Settings precedes supported cohort tabs; switching tabs preserves edits. Leaving a dirty version, including returning to its table, uses Save/Keep editing/Discard. General remains mounted and independent. History uses the separate panel with server-recorded changes, actor, time and before/after values. Never reconstruct missing historical differences from today's editor. Keep flow status separate from selected-version status.
 
-Eligibility, Conditional Offer and Full Offer support structured title/body and approved placeholders only. No HTML/scripts or resource loading. PDF previews are synthetic. Demo marking and required system instructions remain. Issued document identity/bytes and prior signatures are immutable; a new Offer requires a new signature.
+Fixed campus prices use positive currency-correct minor units and authoritative sources; ordinary publication never reprices recorded quotes/payments. The explicit backup-first local conversion is the separately approved exception for untouched charges. Structured document title/body supports approved placeholders only, without HTML/scripts/resource loading. Previews are synthetic. Issued bytes/identities and prior signatures are immutable; a new Offer requires a new signature.
 
-## Future flow onboarding
+### Fixed Admissions presentation and compatibility
 
-Define a stable template identity/version, supported steps/capabilities, settings schema, dependencies, allowed moves, applicability and completion adapters. Add migration/legacy fixtures, role coverage and failure tests. Compose the shared FlowEditor without embedding campus APIs in the library. Document every setting and its effect before publication support. Do not infer new operational policy from UI labels.
+The typed catalogue beside Admissions contracts owns registered step names and category/action statuses. Pending text follows the actual action: Awaiting {assigned roles} Review / Quote / Release, Awaiting Payment, or Awaiting Applicant Confirmation / Submission. Completion uses Reviewed, Payment Verified, Confirmed or Submitted, with fixed Eligibility Letter Released, Eligibility Confirmed and Offer Letter Released milestones. Draft, Action Required and Enrolment Accepted remain fixed; publication statuses are separate. Future flows register their own subjects/actions rather than importing Applicant-specific text.
 
-## Acceptance and recovery
+Resolve current role names by configuration, campus, cohort and stable step; preserve casing, deduplicate and join with commas. Missing staff assignments show Unassigned / Awaiting Reviewer Assignment. The compatible `department` wire key carries the reviewer label. Legacy presentation settings remain stored but inert, including pinned policies and audit history. Directory failures remain retryable and fail closed.
 
-Cover legacy parity, both student types/new-returning-transfer, every move boundary, child restoration, conditional/full letters, stale signatures, corrections, delayed English, arrival/medical, partial/external payments, currencies, draft conflicts, scheduled publication, role revocation, outages and retries. Use isolated records and PostgreSQL state. Back up local data before activation; never reset a shared Demo journey for verification. Changes remain local until separately authorized for hosted release.
+Absent `settings.workflow` means legacy policy. Template-aware clients advertise `X-Raisd-Workflow-Template: 1`; unsupported writes receive `409 WORKFLOW_CLIENT_UPDATE_REQUIRED`. Reviewer bindings/receipts remain SSO-owned with existing file/PostgreSQL persistence. Expected revisions and retry fingerprints prevent silent overwrites. Publication coverage, role revocation and security repair remain server decisions. No UI refactor changes authorization, immutable snapshots or storage formats.
 
+## New-flow implementation checklist
 
-## Component and application interfaces
-
-`FlowEditor` accepts controlled stable steps, `readOnly`, `canMove`, `onOrderChange`, `onEnabledChange` and `onStepSelect`. A FlowStep carries ID, label, capability array, enabled state, optional children, locked/toggleDisabled flags and explanation. Switch is controlled and labelled. SortableList owns pointer/keyboard presentation, external handles, Move Up/Down alternatives and announcements. Locked items and children cannot be moved independently. No component imports a router, identity client or business schema.
-
-Control opens `?version=new` before first save and `?version=N` for saved drafts or published versions. The legacy draft query resolves only an explicitly bound migrated draft. General edits survive query navigation, and one leaving blocker protects General/version drafts. Popup Apply changes the local version draft. Cancel/dismiss discards only popup edits. Reviewer Save is explicitly immediate and separate from Apply/Save draft/Publish. Form submission cannot publish accidentally. Intakes use the supplied API catalogue; no arbitrary intake identifiers are required from operators.
-
-## Settings-to-card map
-
-| Surface | Existing settings and additional controls |
-|---|---|
-| Eligibility | Correction reply requirement; label, pending/completion wording; structured Eligibility Letter; live QA/role binding |
-| Confirmation child | Applicant confirmation preference and wording; no reviewer role |
-| Registration Fee | Collection methods, applicability/milestone, deadlines, credit treatment; quote/fixed campus pricing and reviewer binding |
-| English | Fulfilment years, evidence and configured wording; live reviewer binding |
-| Offer / signature child | Conditional permission, acceptance duration, signature requirement; separate Conditional/Full templates and signature reviewer |
-| Tuition | New international and other-student basis, approved semester arrangement, due days; quote/fixed campus pricing |
-| Entry / arrival / medical / endorsement / final clearance | Cohort-enabled predicates, wording and individual reviewer binding; final registration gate |
-| Application Requirements | Existing document field/cohort/required-optional-hidden rules, status/department wording |
-| Registration Dates and Deadlines | Catalogue intake and registration date rows, extensions/exceptions, live Registry binding |
-
-Disabling a parent projects the child off without destroying the saved child preference. Re-enabling restores it. Case runtime resolves the pinned cohort; changing a configuration never rewrites accepted records. A fixed fee is not a payment: verified funds, permitted arrangements and independent registration clearance still apply.
-
-## Compatibility, storage and failures
-
-The optional `settings.workflow` schema contains `templateId=admissions`, `templateVersion=1`, both cohort definitions and complete legacy settings in each cohort. Absent workflow means legacy policy. Unsupported template versions fail schema validation. New-template Applicant draft/submit clients send `X-Raisd-Workflow-Template: 1`; API advertises the supported version and rejects incompatible new-template writes with `409 WORKFLOW_CLIENT_UPDATE_REQUIRED`. CORS explicitly allows the header. Legacy pinned applications remain usable.
-
-SSO stores bindings and retry receipts additively in its existing file/PostgreSQL identity state. Expected revisions, operation fingerprints and audited saves prevent silent last-writer overwrites; confirmed campuses remain confirmed after a partial multi-campus failure. Referenced roles cannot be deleted, ordinary last-reviewer removal is blocked, and security access revocation remains possible. Revoked/missing access is shown as needing repair; action authorization uses fresh claims and fails closed. Built-in Campus Admin resolves to its stable campus role definition rather than a person assignment ID. Legacy imported policy lineage is resolved through retained policy IDs without changing the case.
-
-`/v1/control/flows/admissions/document-preview` renders synthetic PDF bytes without writes. Template validation permits only approved placeholders and plain text. The current PDF font supports its standard Latin character set; unsupported glyphs cause an explicit validation/release error, never replacement characters or partial saved letters. Multilingual embedded fonts are a future extension. Existing issued bytes remain retained.
-
-## Local activation and rollback
-
-Back up through `npm run local:backup` before activating a changed runtime. No new physical database table is required: workflow settings live in existing version JSON and reviewer state is additive to identity JSON. Keep immutable history, requests and imported IDs. Roll back binaries only while no new-template policy has been published; after new-template publication, retain a compatible evaluator/client or forward-fix. Never remove workflow fields or reset identity/application state to make an old client work. An SSO directory outage blocks new-template presentation/authorization rather than inventing reviewer ownership. Legacy reads retain pinned wording as an outage fallback; when the live directory is configured, explicit bindings supply the same role names in Applicant and Staff. Restore from a reviewed backup only through a separate data-recovery action.
+- Define stable template/version identity, registered step names/categories, applicability, prerequisites, required/fixed steps and eligible reviewer targets before implementation.
+- Map supported API operations to the shared page hierarchy; document unsupported capabilities and justified differences instead of inventing a second layout or expanding the backend.
+- Reuse UniversityFlowSteps, FlowStepPopup and FlowReviewerField; add a domain adapter rather than copying Admissions or Academic JSX/controller logic.
+- Keep flow metadata, version settings, live responsibility assignment and runtime authorization separate; document each setting's effect and when changes become active.
+- Cover desktop/phone/tablet containment, keyboard/focus, category/number/lock/toggle structure, no empty popup sections, campus selection retention, Apply/Cancel, pending locks, failures, revision conflicts and partial retries.
+- Use isolated fixtures for writes; assert browsing/cancellation never saves or publishes. Preserve domain invariants and existing applications. Run proportionate local gates; comprehensive regression is reserved for pushing and required shared publication checks.
 
 
-## Step-card presentation — shared 0.19.1
+### Registration Fee order and enablement — 2 November 2026
 
-Steps use consecutive display-order numbers, including linked child steps. Reordering recalculates the displayed numbers; stable task IDs, prerequisites and persisted settings never use these numbers as identity. Category names appear above the step label in semantic colors, separated by middle dots. Toggles sit before the chevron as independent sibling controls; the card and chevron open configuration. Linked connectors are vertically centered.
+Enabled Registration Fee is required. Its position governs quotations, receipt submission/review, external settlement and blocking of later step actions. Before Offer, settlement blocks Offer release and acceptance; after Offer, release remains available and payment waits for preceding enabled steps, including the linked Signed Offer when required. A disabled fee is skipped without erasing charges, receipts or history. Final registration still requires every applicable fee to be settled. English clearance may retain the existing Conditional Offer deferral, preventing a cycle with later arrival-related evidence; ordering does not remove domain prerequisites or exceptions.
 
-Move Up/Down arrows provide keyboard and tap alternatives to dragging. Published/read-only flows retain the disabled controls; configuration remains inspectable. Control filters international-only tasks out of Local rather than displaying inapplicable disabled cards. Its visible reorder is merged into the full stored order, retaining hidden task settings and fixed boundaries. International still displays those tasks, including intentionally disabled ones. This is presentation only; it does not republish policies or change application evaluation.
+`registrationFee.collectionEnabled` and `registrationFee.requiredBefore` remain deprecated, inert compatibility fields. These runtime rules apply to all existing and new applications, including older pinned policies; stored settings, policy versions, snapshots, already issued letters/payments and audit values are not rewritten. Templates use their saved cohort order, while pre-template policies use the standard order. The collection route becomes available when the step is ready, a charge exists and a permitted payment method is configured. Existing receipts remain reviewable even if the old policy has no portal methods. With no portal method, authorized staff can still verify exact external settlement; removing portal methods never waives the fee. Quotation and settlement cannot bypass preceding steps, role authorization, amount/currency matching or retry/revision checks.
 
+## Reusable payment settings — 3 November 2026
 
-### Flow card refinements — shared 0.19.2
+Control's `renderFlowPaymentSettings` returns direct PopupSection children, preserving shared gaps and dividers. A normal payment step uses one **Fee Settings** section with a general description. Admissions supplies **Fee Settings (Local Applicant)** and **Fee Settings (International Applicant)**, each with a relevant description, independent Campus selector, currency/amount controls, optional Partial/Full coverage, optional cohort Credit Treatment with an info tooltip before Bank Transfer / Counter checkboxes. Method options sit side by side on desktop and stack on phones. Campus selections are independent and switching retains all edits. Admissions uses Local and International sections in both payment popups; future flows supply their own applicability rather than inheriting those cohorts. Desktop fields are side by side; phones stack with visible labels. No shared package change is required.
 
-FlowEditor omits visible up/down buttons. External handles support dragging and Alt+Up/Down keyboard reordering with screen-reader instructions and announcements. Number badges are 32px blue circles with white text. Applicant Action uses a semantic purple token. Other SortableList consumers retain their default move buttons through `showMoveButtons`.
+Registration Fee has no pricing-mode selector. Approved initial rates are Cyberjaya MYR 500 Local/MYR 1,000 International and Lesotho LSL 300 for both. Other campuses remain unconfigured and prevent applying an enabled fixed-price version until completed. Popup Apply updates both cohort payment settings but does not publish; live reviewer saves retain their independent semantics.
 
-ContentSection adds optional `description` below its title inside the header, with standard body typography, muted color and 4px separation. Its 36px minimum header grows as needed; omitted descriptions preserve existing consumers. Control uses the slot for the published Flow Steps notice instead of a separate small caption. Only Control upgrades; no policy/API/application changes.
-
-
-### Shared FlowEditor 0.19.3
-
-Step numbers use white text on the shared black background token. All category names end in Step, retaining their existing semantic colors and dot separators. Parent-to-child spacing is 12px, matching the parent-group gap. Step cards use the shared surface-hover background on hover. Only Control upgrades; no configuration, policy, application or backend changes.
-
-
-### Mandatory/fixed steps — shared 0.19.4
-
-Mandatory steps omit their enable toggle and visible required caption. Control marks Offer and International tuition mandatory using the existing template rules; this does not alter policy validation or applicability. Fixed-order steps display a lock in the external handle slot instead of inside the card. Handles and locks center against the parent card, including linked groups and wrapped labels. Shared SortableList `renderChildren` keeps linked content in a separate grid row so it cannot shift the handle. Only Control upgrades; existing settings, reviewer bindings and application state are unchanged.
-
-
-### Minimal category labels — shared 0.19.5
-
-FlowEditor categories now use one muted gray treatment with concise labels (Review, Payment, Document release, Applicant action), separated by middle dots. The repeated Step suffix is removed. Black number circles and white step names retain the hierarchy; colors remain on controls/status. Existing mandatory/fixed behavior, spacing, hover, interactions and policies are unchanged. Only Control upgrades.
-
-
-## Version lifetime and audit ownership
-
-Control now composes Version Settings before cohort tabs, PageActionBar at the version-panel footer and AuditTrail below Flow Steps. Save Draft persists both cohorts without activation. Apply Version publishes a saved draft or reapplies an immutable published policy using the configuration application journal. Settings become read-only after publication; published display names remain separately editable metadata. Reapplication supplies a separate application date and retains future takeovers; no new reason is required. API owns coverage, chronology, concurrency, immutable snapshots and atomic receipts. The reusable FlowEditor still owns step interaction only; no component release is needed. See [University Flows](../backend/university-flows.md#version-metadata-and-application-journal--28-october-2026).
-
-
-### Independent saved-draft lifetime
-
-The editor owns local form values and guard composition; Portal API owns saved draft identities, permanent numbering, per-draft optimistic revisions, retry receipts and immutable publication. Save Draft never applies a version. First save allocates a number transactionally; publishing retains it, even when drafts publish out of order. Both cohorts share the version's metadata and save together. Switching cohorts does not reset edits; selecting another version or returning to the table resolves dirty edits first. General stays mounted and is not saved by same-flow version navigation. History lives in a separate shared AuditTrail panel and links new draft events by stable version identity. Flow summary status belongs to General and is independent of draft-version status. No reusable component change or package release is required.
-
-
-### Independent saved-draft lifetime
-
-The editor owns local form values and guard composition; Portal API owns saved draft identities, permanent numbering, per-draft optimistic revisions, retry receipts and immutable publication. Save Draft never applies a version. First save allocates a number transactionally; publishing retains it, even when drafts publish out of order. Both cohorts share the version metadata and save together. Switching cohorts does not reset edits; selecting another version or returning to the table resolves dirty edits first. General stays mounted and is not saved by same-flow version navigation. History lives in a separate shared AuditTrail panel and links new draft events by stable version identity. Flow summary status belongs to General and is independent of draft-version status. No reusable component change or package release is required.
-
-
-### Pointer reorder synchronization — shared 0.19.7
-
-Accepted pointer drops commit the final sortable index into consumer-owned order. Display-order numbers are recalculated immediately for every visible parent and linked child; toggles and later draft saves keep that same order. Disallowed destinations are blocked before optimistic DOM changes. This fixes cards that moved visually while retaining their former numbers/order in the draft. Control alone adopts the patch; no workflow or policy invariant changes.
-
-Implementation reference: [dnd-kit sortable state management](https://dndkit.com/react/guides/sortable-state-management/) explains why optimistic sorting uses the source final index rather than source/target identity. Keep React order as the source of truth after drop.
-
-
-Version audit differences are captured on the server at save time and passed to shared AuditTrail changes rows. The component already supports labelled before/after values and remains generic; policy paths/labels, both cohorts, saved baselines and persistence belong to API/Control. Missing legacy differences are labelled, never reconstructed from the current editor.
+Tuition's Partial/Full selector precedes currency and fee. Full displays Programme currency/Programme semester total read-only because programmes within a campus can differ. Partial specifies a positive fixed minimum below the exact semester total in the same currency. Independent cohort methods follow. The Programme Fee Plan, not a module-fee sum or a flow-wide tuition total, supplies the authoritative semester amount. Historical first-year/approved-semester rules remain only for protected legacy obligations.

@@ -1,4 +1,5 @@
 import { validateWorkflow, resolveWorkflowSettings, fixedAdmissionPrice } from "./admissions-workflow"
+import { registrationTariffs, currencyDigits } from "./admissions-payments"
 import { z } from "zod"
 export { z }
 
@@ -84,6 +85,31 @@ export const defaultAdmissionsCompletionStatuses: Partial<Record<typeof admissio
   offer: defaultAdmissionsPresentation.stages.offer.completeStatus,
 }
 const wording = z.string().trim().min(1).max(240)
+export type AdmissionsStageId = typeof admissionsStageIds[number]
+export type AdmissionsPendingAction = "review" | "quote" | "payment" | "release" | "confirmation" | "submission"
+/** Fixed product copy. Persisted presentation overrides are legacy data, not authoring controls. */
+export const admissionsPresentationCatalogue = {
+  statuses: defaultAdmissionsPresentation.statuses,
+  programmeFeeUnavailable: "Programme Fee Unavailable",
+  pending: {
+    review: "Awaiting {roles} Review", quote: "Awaiting {roles} Quote",
+    payment: "Awaiting Payment", release: "Awaiting {roles} Release",
+    confirmation: "Awaiting Applicant Confirmation", submission: "Awaiting Applicant Submission",
+  } satisfies Record<AdmissionsPendingAction, string>,
+  unassigned: "Awaiting Reviewer Assignment",
+  stages: Object.fromEntries(admissionsStageIds.map(id => [id, {
+    label: defaultAdmissionsPresentation.stages[id].label,
+    complete: id === "eligibility" ? "Eligibility Letter Released"
+      : id === "eligibility-confirmation" ? "Eligibility Confirmed"
+      : id === "offer" ? "Offer Letter Released"
+      : id === "registration-fee" || id === "tuition" ? "Payment Verified" : "Reviewed",
+  }])) as Record<AdmissionsStageId, { label: string; complete: string }>,
+}
+export function admissionsPendingLabel(action: AdmissionsPendingAction, roles: string) {
+  if (["review", "quote", "release"].includes(action) && !roles.trim()) return admissionsPresentationCatalogue.unassigned
+  return admissionsPresentationCatalogue.pending[action].replaceAll("{roles}", roles)
+}
+/** @deprecated Accepted for old clients and immutable snapshots; display uses the fixed catalogue. */
 export const admissionsPresentationSchema = z.object({
   statuses: z.object({pending: wording, complete: wording, draft: wording.default("Draft"), actionRequired: wording.default("Action Required"), accepted: wording.default("Enrolment Accepted")}).strict(),
   departments: z.record(z.enum([...flowDeskSchema.options, "applicant"]), wording),
@@ -132,14 +158,17 @@ export const admissionsBaseSettingsSchema = z
               .strict()
           )
           .max(40),
+        /** @deprecated Inert compatibility field; unanswered messages never gate eligibility approval. */
         correctionsRequired: z.boolean(),
       })
       .strict(),
     registrationFee: z
       .object({
         applies: z.boolean(),
+        /** @deprecated Inert; readiness and payment methods control submission. */
         collectionEnabled: z.boolean(),
         methods: z.array(z.enum(["bank-transfer", "counter"])).max(2),
+        /** @deprecated Inert; enabled state and step order control payment gates. */
         requiredBefore: z.enum([
           "offer",
           "acceptance",
@@ -200,7 +229,14 @@ export const admissionStepIds = ["eligibility", "eligibility-confirmation", "reg
 export const admissionGroupIds = ["eligibility", "registration-fee", "english", "offer", "tuition", "entry", "arrival", "medical", "endorsement", "international-registration"] as const
 export const admissionTemplateFields = ["applicantName", "applicationNumber", "campus", "programme", "faculty", "intake", "releaseDate", "registrationFee", "tuitionQuote", "englishRequirement"] as const
 const letterTemplate = z.object({ title: z.string().trim().min(1).max(200), body: z.string().trim().min(1).max(12000) }).strict()
-const pricingSchema = z.object({ mode: z.enum(["quote", "fixed"]), campuses: z.array(z.object({ campusId: z.enum(flowCampusIds), currency, amountMinor: z.number().int().positive().max(Number.MAX_SAFE_INTEGER), basis: z.enum(["first-year", "semester"]).optional() }).strict()).max(8) }).strict()
+const pricingSchema = z.object({ mode: z.enum(["quote", "fixed", "programme-semester"]), campuses: z.array(z.object({ campusId: z.enum(flowCampusIds), currency: z.union([currency, z.literal("")]), amountMinor: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER), coverage: z.enum(["partial", "full"]).optional(), basis: z.enum(["first-year", "semester"]).optional() }).strict()).max(8), methods: z.array(z.enum(["bank-transfer", "counter"])).max(2).optional() }).strict().superRefine((price, context) => {
+  price.campuses.forEach((row, index) => {
+    if (price.mode !== "programme-semester" || row.coverage === "partial") {
+      if (row.amountMinor <= 0) context.addIssue({ code: "custom", path: ["campuses", index, "amountMinor"], message: "Enter a positive fee amount." })
+      try { currencyDigits(row.currency) } catch { context.addIssue({ code: "custom", path: ["campuses", index, "currency"], message: "Select a supported ISO currency." }) }
+    }
+  })
+})
 export const admissionsWorkflowSchema = z.object({
   templateId: z.literal("admissions"), templateVersion: z.literal(1),
   cohorts: z.record(z.enum(["local", "international"]), z.object({
@@ -211,12 +247,42 @@ export const admissionsWorkflowSchema = z.object({
     documents: z.record(z.enum(["eligibility", "conditional", "full"]), letterTemplate),
   }).strict()),
 }).strict()
-export const admissionsSettingsSchema = admissionsBaseSettingsSchema.extend({ workflow: admissionsWorkflowSchema.optional() })
+export const admissionsRegistrationWindowSchema = z.object({
+  startDate: z.iso.date().optional(),
+  closingDate: z.iso.date().optional(),
+}).strict()
+// Version-wide, deliberately outside the Local/International operational overrides.
+export const admissionsSettingsSchema = admissionsBaseSettingsSchema.extend({ workflow: admissionsWorkflowSchema.optional(), registrationWindow: admissionsRegistrationWindowSchema.optional() })
 export type AdmissionsBaseSettings = z.infer<typeof admissionsBaseSettingsSchema>
 export type AdmissionsWorkflow = z.infer<typeof admissionsWorkflowSchema>
 export type AdmissionStepId = typeof admissionStepIds[number]
 export type AdmissionStudentType = "local" | "international"
 export type AdmissionsSettings = z.infer<typeof admissionsSettingsSchema>
+export function validateRegistrationWindow(settings: AdmissionsSettings): string[] {
+  const window = settings.registrationWindow
+  if (!window?.startDate || !window.closingDate) return ["Registration Start Date and Registration Closing Date are required before applying a version. Copy legacy published versions into a draft to add them."]
+  return window.closingDate < window.startDate ? ["Registration Closing Date must be on or after Registration Start Date."] : []
+}
+export const admissionsCampusTimeZones: Record<typeof flowCampusIds[number], string> = {
+  "campus-lesotho": "Africa/Maseru", "campus-cyberjaya": "Asia/Kuala_Lumpur", "campus-botswana": "Africa/Gaborone",
+  "campus-eswatini": "Africa/Mbabane", "campus-sierra-leone": "Africa/Freetown", "campus-cambodia": "Asia/Phnom_Penh",
+  "campus-uganda": "Africa/Kampala", "campus-namibia": "Africa/Windhoek",
+}
+export const admissionsAvailabilitySchema = z.object({
+  campusId: z.enum(flowCampusIds), timeZone: z.string(), today: z.iso.date(), policyId: z.string().nullable(),
+  window: admissionsRegistrationWindowSchema.nullable(),
+  status: z.enum(["unrestricted", "open", "upcoming", "closed", "unavailable"]), available: z.boolean(), message: z.string(),
+}).strict()
+export type AdmissionsAvailability = z.infer<typeof admissionsAvailabilitySchema>
+export function admissionsAvailability(campusId: string, policy: AdmissionsPolicyVersion | null, now: Date): AdmissionsAvailability {
+  const campus = z.enum(flowCampusIds).parse(campusId), timeZone = admissionsCampusTimeZones[campus]
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(now)
+  const part = (type: string) => parts.find(p => p.type === type)!.value
+  const today = `${part("year")}-${part("month")}-${part("day")}`, window = policy?.settings.registrationWindow ?? null
+  const status = !window ? "unrestricted" : validateRegistrationWindow(policy!.settings).length ? "unavailable" : today < window.startDate! ? "upcoming" : today > window.closingDate! ? "closed" : "open"
+  const message = status === "upcoming" ? `Applications open on ${window!.startDate} (${timeZone}).` : status === "closed" ? `Applications closed after ${window!.closingDate} (${timeZone}). Existing drafts remain saved and editable.` : status === "unavailable" ? "Applications are unavailable. Contact the campus or try again later." : "Applications are open."
+  return { campusId: campus, timeZone, today, policyId: policy?.id ?? null, window, status, available: status === "open" || status === "unrestricted", message }
+}
 export const admissionsPolicyVersionSchema = z
   .object({
     id: text,
@@ -277,6 +343,11 @@ export const admissionsFlowSchema = z
     financialClearedAt: z.iso.datetime().nullable(),
     deadlineExceptionAt: z.iso.datetime().nullable(),
     quote: flowQuoteSchema.nullable(),
+    /** Versioned fee source snapshot. Never recalculated after payment evidence exists. */
+    tuitionRequirement: z.object({ feePlanId: text, feePlanRevision: z.number().int().positive(), programmeVersionId: text, semesterNumber: z.number().int().positive(), currency, totalMinor: z.number().int().positive(), requiredMinor: z.number().int().positive(), coverage: z.enum(["partial", "full"]) }).strict().refine(v => v.requiredMinor <= v.totalMinor && (v.coverage === "full" ? v.requiredMinor === v.totalMinor : v.requiredMinor < v.totalMinor), "Invalid semester tuition requirement.").optional(),
+    tuitionPricingPending: z.boolean().optional(),
+    tuitionPayments: z.array(z.object({ id: text, evidence: flowEvidenceSchema, bankReference: text, method: z.enum(["bank-transfer", "counter"]), amountMinor: z.number().int().positive(), currency, submittedAt: z.iso.datetime(), status: z.enum(["pending", "verified", "rejected"]), reviewedAt: z.iso.datetime().nullable(), reviewedBy: z.string().nullable(), reason: z.string() }).strict()).optional(),
+    pricingConversion: z.literal("semester-payments-v1").optional(),
     registrationCharge: z
       .object({
         id: text,
@@ -394,6 +465,8 @@ export const flowActionInputSchema = z
       "clear-international",
       "quote-tuition",
       "verify-tuition",
+      "verify-tuition-receipt",
+      "reject-tuition-receipt",
       "approve-semester",
       "clear-finance",
       "deadline-exception",
@@ -412,6 +485,7 @@ export const flowActionInputSchema = z
     date: z.iso.date().optional(),
     amountMinor: z.number().int().positive().optional(),
     currency: currency.optional(),
+    paymentId: text.optional(),
     basis: z.enum(["first-year", "semester"]).optional(),
   })
   .strict()
@@ -489,7 +563,8 @@ export function newAdmissionsFlow(
   applicantType: string = "new"
 ): AdmissionsFlow {
   const settings = resolveWorkflowSettings(policy.settings, studentType)
-  const fee = fixedAdmissionPrice(policy.settings, studentType, policy.campusId, "registration-fee")
+  const fixedFee = fixedAdmissionPrice(policy.settings, studentType, policy.campusId, "registration-fee")
+  const fee = fixedFee ?? (settings.registrationFee.applies ? registrationTariffs[policy.campusId]?.[studentType === "international" ? "international" : "local"] : null)
   const tuition = (studentType === "international" && applicantType === "new" || settings.tuition.otherStudents !== "none") ? fixedAdmissionPrice(policy.settings, studentType, policy.campusId, "tuition") : null
   return admissionsFlowSchema.parse({
     policy: policy.settings.workflow ? { ...policy, settings: { ...settings, workflow: policy.settings.workflow } } : policy,
@@ -505,8 +580,9 @@ export function newAdmissionsFlow(
     internationalClearedAt: null,
     financialClearedAt: null,
     deadlineExceptionAt: null,
+    ...(settings.workflow?.cohorts[studentType === "international" ? "international" : "local"].enabled.tuition && settings.workflow.cohorts[studentType === "international" ? "international" : "local"].pricing.tuition.mode === "programme-semester" ? { tuitionPricingPending: true } : {}),
     quote: tuition ? { id: `tuition:${applicationId}`, amountMinor: tuition.amountMinor, currency: tuition.currency, basis: tuition.basis!, source: `Fixed published price: ${policy.id}`, verifiedPaidMinor: 0, approvedSemesterAt: null, approvedBy: null } : null,
-    registrationCharge: fee ? { id: `registration-fee:${applicationId}`, amountMinor: fee.amountMinor, currency: fee.currency, source: `Fixed published price: ${policy.id}` } : null,
+    registrationCharge: fee ? { id: `registration-fee:${applicationId}`, amountMinor: fee.amountMinor, currency: fee.currency, source: fixedFee ? `Fixed published price: ${policy.id}` : "Approved campus tariff: semester-payments-v1" } : null,
     rejectedPayments: [],
     deadlineExceptions: [],
     externalRegistrationPayment: null,
@@ -528,15 +604,6 @@ export function validateAdmissionsSettings(input: unknown): string[] {
   }
   const s = parsed.data,
     issues: string[] = []
-  if (
-    s.registrationFee.applies &&
-    s.registrationFee.requiredBefore !== "never" &&
-    s.registrationFee.requiredBefore !== "manual" &&
-    (!s.registrationFee.collectionEnabled || !s.registrationFee.methods.length)
-  )
-    issues.push(
-      "A required Registration Fee needs an enabled collection route; choose manual clearance if collection is handled separately."
-    )
   if (s.eligibility.confirmationRequired && !s.eligibility.required)
     issues.push("Eligibility confirmation requires an eligibility review.")
   if (
@@ -579,11 +646,7 @@ export function validateAdmissionsSettings(input: unknown): string[] {
     new Set(s.registrationFee.methods).size !== s.registrationFee.methods.length
   )
     issues.push("Collection methods must be distinct.")
-  if (
-    new Set(s.registrationDates.map((d) => d.intakeId)).size !==
-    s.registrationDates.length
-  )
-    issues.push("Each intake must have one registration date.")
+  // Historical intake dates are compatibility data; the version window owns availability.
   return issues
 }
 

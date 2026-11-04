@@ -1,5 +1,9 @@
 # Demo Keychain — agent knowledge
 
+## Shared field consistency — 0.26.0
+
+Keychain pins the exact released `@raisd-campus/design-system` 0.26.0 registry package. Shared text fields use measured truncation tooltips; normal field dimensions and existing page compositions remain owned by the shared defaults. The optional `DetailField.description` and `labelWidth="wide"` APIs are available when a form needs them; this upgrade adds no local field overrides or data behavior changes.
+
 ## Learner conversion and reusable Cyberjaya Demo flow — 21 October 2026
 
 Accept Enrolment replaces Applicant access with Student access for the same SSO identity, using durable retry/recovery and a one-use Student exchange. Student continues outstanding admissions evidence; Control can preview/reset only a registered Demo journey. The [current lifecycle contract, ownership/reset rules, account checkpoints and verification](../backend/learner-lifecycle.md) supersedes earlier Applicant-session handoff/reset descriptions below. Hosted rollout remains a separate coordinated release.

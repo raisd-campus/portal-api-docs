@@ -4495,5 +4495,245 @@
       "draft"
     ],
     "additionalProperties": false
+  },
+  "ProgrammeFeeInput": {
+    "type": "object",
+    "properties": {
+      "expectedRevision": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "requestId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "campusId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "programmeVersionId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "currencyCode": {
+        "type": "string",
+        "pattern": "^[A-Z]{3}$"
+      },
+      "totals": {
+        "maxItems": 80,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "studentType": {
+              "type": "string",
+              "enum": [
+                "local",
+                "international"
+              ]
+            },
+            "semesterNumber": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "totalMinor": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "studentType",
+            "semesterNumber",
+            "totalMinor"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "expectedRevision",
+      "requestId",
+      "campusId",
+      "programmeVersionId",
+      "currencyCode",
+      "totals"
+    ],
+    "additionalProperties": false
+  },
+  "ProgrammeFeePlan": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "programmeVersionId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "currencyCode": {
+        "type": "string",
+        "pattern": "^[A-Z]{3}$"
+      },
+      "revision": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+      },
+      "admissionsSemesterTotals": {
+        "maxItems": 80,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "studentType": {
+              "type": "string",
+              "enum": [
+                "local",
+                "international"
+              ]
+            },
+            "semesterNumber": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "totalMinor": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "studentType",
+            "semesterNumber",
+            "totalMinor"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "id",
+      "programmeVersionId",
+      "currencyCode"
+    ],
+    "additionalProperties": false
+  },
+  "ProgrammeFees": {
+    "type": "object",
+    "properties": {
+      "versions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 240
+            },
+            "semesters": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "semesters"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "plans": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "programmeVersionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "currencyCode": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "admissionsSemesterTotals": {
+              "maxItems": 80,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "studentType": {
+                    "type": "string",
+                    "enum": [
+                      "local",
+                      "international"
+                    ]
+                  },
+                  "semesterNumber": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "totalMinor": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "studentType",
+                  "semesterNumber",
+                  "totalMinor"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "id",
+            "programmeVersionId",
+            "currencyCode"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "currency": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "versions",
+      "plans",
+      "currency"
+    ],
+    "additionalProperties": false
   }
 }

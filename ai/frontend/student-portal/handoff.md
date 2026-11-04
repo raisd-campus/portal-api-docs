@@ -1492,3 +1492,13 @@ Current local API 8087 was restarted once after verification, and Lecturer 5173 
 ## Hosted Admissions delivery - 20 October 2026
 
 The subsequent owner-requested hosted verification is recorded in [the canonical deployment receipt](https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/audits/2026-10-20-application-flow-deployment.md). Student aaada64 is deployed through a verified artifact after the native host-memory guard refused the build; every served file matches. Control browser CORS was repaired without changing Student source or shared components. Hosted reads/previews do not replace the isolated lifecycle tests or establish Live CMS persistence. Interactive local services and Demo records were preserved.
+
+## Admissions semester tuition source and Finance handoff — 3 November 2026
+
+FeePlan now accepts optional optimistic revision and explicit Local/International semester tuition totals, maintained by Staff Programme permissions through Portal API. Existing FeePlan records remain compatible. Admissions snapshots the exact source and minimum; verified tuition receipts replay to the accepted enrolment's Finance Account using stable source IDs, preserving invoice, tax and allocation rules. Partial clearance leaves the unpaid semester balance. No Student page redesign or package change occurred.
+
+Student lint/build and 13 focused fee-contract/Finance/Academic checks passed; the existing dynamic-import warning remains. Isolated API/HTTP/PostgreSQL payment checks verify one-credit replay and protected legacy data. Local conversion and preservation evidence, known missing fee sources and the distinction between synthetic browser tests and live-user verification are recorded in [University Flows](../../backend/university-flows.md#reusable-payment-settings-and-semester-tuition--3-november-2026). Real programme totals and unsupported campus prices still require authorised configuration; none were seeded or guessed. Comprehensive pre-push regression remains a separate gate.
+
+## Registration Fee credit treatment — 3 November 2026
+
+Portal API now automatically reconciles Tuition/Resource Registration Fee credits for the accepted enrolment, including later invoices; Manual remains Bursary-only. Credits use append-only source-linked ledger entries with CAS/replay protection and existing currency/tax/ownership rules. Student Finance refresh persists reconciliation; prior snapshots and credit entries remain unchanged. Focused API/HTTP/PostgreSQL, existing Admissions/flow checks and Control popup checks passed; the detailed receipt is in [University Flows](../../backend/university-flows.md#automatic-registration-fee-credit--3-november-2026). Student frontend source and package pin were unchanged.

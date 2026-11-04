@@ -88,6 +88,8 @@ Auditable existing records compose an independent `history` slot after the activ
 
 Use current `Input`, `DropdownSelect`, `DatePicker`, `Textarea`, `ChipField`, `RadioField` and file components as the task requires. Use `DetailField`'s documented read-only/editable variants; use `editableUndivided` only when the form deliberately groups rows without dividers. Supply persistent labels, IDs, errors and appropriate disabled/read-only semantics. A placeholder is not the label.
 
+On shared 0.26.0+, use `DetailField.description` for field helper text so it aligns with the control/value; provide `descriptionId` and the same control `aria-describedby`. Opt into `labelWidth="wide"` for long labels, applying it consistently within the form group. Keep the default width for other groups and let narrow-container stacking work. Text-like Input values handle clipped text through shared ellipsis/tooltip behavior; do not add local overflow wrappers or expose password values.
+
 Standalone selectors may use `DropdownSelect.label` above the trigger. A single Stream dropdown does not need another InnerSection. Ordinary flags can remain normal detail rows. Introduce a subgroup when its meaning, not just its field count, justifies one.
 
 Use original files and authorized preview/download URLs with the shared file components. Components do not supply upload persistence or permissions. Do not invent values, descriptions, academic rules, fees or approval policy from another record.
@@ -112,6 +114,10 @@ PageActionBar can extend its divider through the documented `edgeToEdge` option 
 ### Popup boundaries
 
 Use `Popup` for a bounded related action, short form, confirmation or detail. A large navigable/versioned workspace usually belongs on a route. Use its documented width, scrolling, dismiss and focus-return behavior. Pending writes must not dismiss midway and leave the outcome ambiguous.
+
+On shared 0.23.1+, compose new popup bodies with `contentLayout="sections"` and `PopupSection` from `system/popup-section`. Each related control group is a section, with optional `title` and `description`; a plain untitled section has no header or reserved header space. The shared Popup owns a 32px section gap and PopupSection owns 16px internal spacing. Keep existing untitled controls untitled. Default Popup bodies preserve their old markup/spacing, so migrate only the popups requested by the user. Opted-in unsectioned child groups are safely wrapped in a plain section. Do not use portal gap overrides to reproduce this layout or import it from an older package pin.
+
+From shared 0.23.2, section dividers use the semantic border token and sit within that same 32px gap. Use the built-in separators; do not add local borders, rules or extra spacing between PopupSections. Default popup bodies stay unchanged.
 
 Popup's default dismiss copy is not appropriate to every task: provide Cancel for edits/confirmations and Close for read-only information. `footer` appears before the dismiss control; `footerAfterDismiss` places a trailing primary action after Cancel. Do not hand-build another footer or duplicate dismiss controls.
 
@@ -143,7 +149,7 @@ Use the existing Control University Flows archetype when applicable: a configura
 
 Affected Modules lists actual top-level modules grouped by portal. Programme Selection, New Enrolments and a specific approval action are capabilities, not automatically module names. Preserve the real navigation taxonomy.
 
-Use the current FlowEditor/FlowStepCard/SortableList APIs when their behavior matches the task. Do not copy Academic's mandatory independent review into an unrelated workflow. Required steps, reorder rules, assignments, publish rights and applicability come from its contract. Configuration/role assignment does not itself grant access.
+For University Flows, read [university-flows.md](university-flows.md) and use Control's UniversityFlowSteps / FlowStepPopup composition over the released FlowEditor APIs. Do not assemble a separate step-card/reviewer popup template. Do not copy Academic's mandatory independent review into an unrelated workflow. Required steps, reorder rules, assignments, publish rights and applicability come from its contract. Configuration/role assignment does not itself grant access.
 
 ## Review examples and common mistakes
 

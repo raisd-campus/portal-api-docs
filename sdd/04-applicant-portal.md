@@ -221,3 +221,17 @@ Applicant and Staff share the Portal API current pending action from Control wor
 ## Predefined Admissions Flow Editor (local implementation, 28 October 2026)
 
 Control configures predefined workflow template 1 in immutable versions, independently for Local/International students. Shared 0.19.0 owns linked/reorderable step presentation; Portal API owns pinned evaluation and financial/document invariants; SSO owns immediate audited campus-role reviewer bindings. Published history and existing accepted cases remain unchanged. The implementation includes guarded drafts, role coverage, quote/fixed pricing and structured text letters with synthetic previews. It does not introduce arbitrary workflow scripting or grant access through assignment. Hosted activation remains separate. Normative details: [Flow Editor](../ai/design/flow-editor.md).
+
+### Admissions presentation convention — 2 November 2026
+
+Configured Admissions uses fixed registered step names and action templates, with current assigned reviewer role names shared by Control preview, Applicant and Staff API projections. Legacy presentation settings remain stored but inert. Actual pending quote/payment/review/release/confirmation/submission determines the status; completion milestones remain in progress. No workflow gating, authorization, pinned policy or historical audit rewrite is implied. See [Flow Editor](../ai/design/flow-editor.md).
+
+New/edited workflow templates keep Eligibility Review fixed first, with Applicant confirmation linked beneath it. Published versions and pinned application snapshots remain unchanged. Unanswered reviewer messages no longer gate eligibility approval or letter release, including for older pinned policies. The Corrections Required controls are removed and `documents.correctionsRequired` remains deprecated and inert. Evidence validation, reviewer permissions, messaging, unread/reply tracking and historical values remain unchanged.
+
+### Local semester-payment configuration — 3 November 2026
+
+Control payment steps share campus/cohort fee settings. Registration Fee uses approved fixed tariffs; Tuition Clearance uses explicit Programme semester totals and a Partial/Full requirement with separate owned receipts and assigned review. Reaching a partial threshold clears that Admissions milestone, not the remaining semester debt. Exact fee-plan revisions and immutable evidence remain pinned; verified tuition funds transfer once into the accepted enrolment's Finance account. Missing prices/academic selections block the affected action. The explicit local compatibility conversion preserves payment-linked obligations and does not imply Live CMS or remote activation.
+
+### Version-wide admission availability (3 November 2026)
+
+Admissions versions define Registration Start Date / Registration Closing Date in campus-local calendar days. Apply activates immediately; windows independently govern new starts, campus changes and final submission. Closed windows preserve editable drafts and submitted journeys. Legacy policies without windows remain unrestricted; new Apply requires both dates. Historical payment Due Days and missing-payment-date Registry gates are inert; English/Offer deadlines and financial/evidence permissions remain enforced. No existing policy or application is rewritten.

@@ -1,3 +1,15 @@
+# Field layout release 0.26.0
+
+Three synthetic FieldLayoutFixture captures show 192px opt-in labels, input-aligned helper copy, narrow-panel stacking and text-input ellipsis. Pointer hover and read-only keyboard focus reveal clipped text; editable focus preserves existing typing and Escape behavior. Capture with node capture-field-layout.mjs from the consumer fixture on 4184. Only Control adopts; historical captures retain their original provenance.
+
+# Popup section dividers release 0.23.2
+
+Three refreshed synthetic captures show semantic divider lines inside the existing section gap. Default popup bodies retain their layout. Only Control adopts. Capture with node capture-popup-sections.mjs from the consumer fixture on 4184.
+
+# Popup section release 0.23.1
+
+Three synthetic captures show opt-in PopupSection grouping at desktop Chromium and tablet/phone WebKit widths. Popup defaults retain existing spacing; only Control Admissions step popups migrate. Capture with node capture-popup-sections.mjs from the consumer fixture on 4184. New entries record the exact verified archive; historical captures retain their provenance.
+
 # Semantic confirmation release 0.22.1
 
 The refreshed Record feedback consumer captures show compact semantic Toast surfaces and centered controls at desktop Chromium and tablet/phone WebKit widths. The patch also removes the empty AdminTableToolbar action wrapper to balance search-only spacing, retaining transparent/unpadded colored compact status text. Capture with CAPTURE_RECORD_FEEDBACK=1 on record-feedback.e2e.ts. Staff alone adopts the exact patch.
@@ -144,3 +156,8 @@ Release 0.19.7 fixes pointer-sort state synchronization and automatic display nu
 
 
 Release 0.19.8 aligns the Admin sidebar with the PortalPageContent bottom inset, preserving content-only scrolling and compact narrow layouts. Run capture-admin-bottom.mjs for three affected summary captures without footer actions; desktop capture asserts shell/summary bottom alignment. Only Control upgrades.
+
+
+Release 0.24.0 adds optional FlowStep.configurable. Non-configurable cards have no popup trigger, chevron or card hover, while independent toggles and linked order remain. Three refreshed Flow editor captures use the synthetic consumer and capture-flow-editor.mjs. Control alone adopts this release; other capture provenance and portal pins remain unchanged.
+
+Release 0.25.0 adds shared Checkbox. Three synthetic captures from `?checkbox` show desktop inline and phone stacked method composition; source is the uncommitted working tree captured in the exact published archive. Control alone upgrades. Existing components and historical captures retain their original provenance.

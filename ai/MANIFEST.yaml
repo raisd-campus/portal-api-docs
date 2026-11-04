@@ -199,6 +199,8 @@ backend:
     note: Stand-up 19 Oct — review of Admin Applicants tracker vs SSO Applicant role.
   - path: contracts/admissions-policy.ts
     topics: [admissions-policy, typed-settings, clearance]
+  - path: contracts/admissions-payments.ts
+    topics: [admissions, fixed-campus-fees, currency-precision, semester-fee-source]
   - path: contracts/university-flows.openapi.json
     topics: [admissions, zod, openapi, generated-contract]
   - path: backend/university-flows.md
@@ -540,8 +542,9 @@ skills:
     references:
       - skills/raisd-page-structure/references/page-patterns.md
       - skills/raisd-page-structure/references/source-map.md
+      - skills/raisd-page-structure/references/university-flows.md
     interface: skills/raisd-page-structure/agents/openai.yaml
-    topics: [page-structure, page-archetypes, shared-components, tables, forms, navigation, feedback]
+    topics: [page-structure, page-archetypes, shared-components, tables, forms, navigation, feedback, university-flows, flow-editor, reviewer-popups]
 
 design:
   - path: design/2026-10-13-portal-ui-ownership-audit.md

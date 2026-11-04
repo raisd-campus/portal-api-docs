@@ -26,6 +26,8 @@ Produce a compact composition decision: shell owner; page identity; panel/tabs; 
 
 Use [page-patterns.md](references/page-patterns.md) for the relevant archetype and component decisions. It covers tables and insets, record lifecycle, forms/popups, navigation, status, audit and feedback.
 
+For any University Flow page, step or configuration popup, also read [university-flows.md](references/university-flows.md). Reuse Control's common step/popup composition and follow the current canonical flow standard; do not use an independently assembled older editor as the template. Keep each flow's business rules and supported lifecycle separate from its shared UI.
+
 ## Compose the hierarchy
 
 - Reuse the existing `PortalShell`, shared header/sidebar, `PortalMain` and `PortalPageContent`. They own gutters, scroller, responsive drawer/rail and account presentation. Tiered navigation uses the released `PortalNavBranch` family.
@@ -53,6 +55,8 @@ Horizontal action rows place secondary/dismiss actions before the primary comple
 
 Use real labels, field IDs, validation messages, pending/disabled states and documented read-only/editable field variants. A lone selector can use `DropdownSelect.label`; ordinary flags do not automatically need another boxed subgroup. Do not require a parent-wide Edit before an independently permitted child operation when the API supports a focused popup save.
 
+For new popups on shared 0.23.1+, use `Popup contentLayout="sections"` with `PopupSection` groups. The shared layout owns 32px between groups and 16px within; omit optional section titles/descriptions where none are needed. Existing popups keep their current layout unless their migration is explicitly requested. Preserve the pinned-package boundary; never widen all popup gaps through a local wrapper or global override.
+
 Preserve the source module, parent record/tab, campus, exact version and relevant filter/stream selection through nested navigation, Close, Back and reload. Keep view state in the URL when established. Guard actual dirty departures, including router/history and native unload, without treating tab or summary/list switches as record departures. Do not add redundant campus selectors when host/context already supplies the authorized scope.
 
 ## Implement within ownership
@@ -62,6 +66,8 @@ Prefer released defaults and documented slots over portal CSS, copied component 
 Composition within the requested task can proceed. A shared/established component redesign requires the specific authorization in campus guidance; existing explicit authorization persists. Approved shared changes belong in `design-system`, with the required release/consumer checks. This skill itself grants no publication, deployment or unrelated mutation authority.
 
 Keep UI terminology separate from stable IDs, contracts and authored values. “Study Plan” is the current Academic display term; that did not rename technical `curriculum` routes or rewrite saved names/history. Follow server permissions and record lifecycle; do not copy domain rules, approval steps or data from another feature just because its page looks similar.
+
+University Flows use registered step names and fixed category/action status templates from their typed contract catalogue. Do not add free-text step/status/update/department settings. Choose pending copy from the actual action and current assigned reviewer roles, preserving role-name casing; Applicant actions name Applicant and missing staff assignments show Unassigned. Keep authored flow/version names and document content distinct. See the [source map](references/source-map.md) for the canonical flow editor guide.
 
 ## Verify proportionately
 

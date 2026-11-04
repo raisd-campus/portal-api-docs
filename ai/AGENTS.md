@@ -40,6 +40,8 @@ For any portal UI task, also read [design/component-library.md](design/component
 
 Automatically load and apply [raisd-page-structure](skills/raisd-page-structure/SKILL.md) whenever building or restructuring a Raisd page, and for page-consistency reviews, whether or not the user mentions the skill. It supplies page archetypes and shared-component composition without requiring a legacy-system reference. Combine it with the owning portal's instructions; isolated copy fixes and backend-only work do not need this page workflow.
 
+University Flow page, step and configuration-popup work also requires the skill's [University Flow reference](skills/raisd-page-structure/references/university-flows.md) and the [current Flow Editor standard](design/flow-editor.md). Reuse Control's common step/popup composition; domain-specific settings and lifecycle differences do not establish a separate UI template.
+
 ## 2. Product boundaries (campus-wide)
 
 - **Campus portals + Control.** Applicant, Student, and the **Staff portal** talk only to the **Portal API**. The Staff portal (`staff.{slug}.raisd.co`, repo `lecturer-portal`) shows teaching menus for `roleKey` `lecturer` and Admin menus at `/admin` for `roleKey` `admin`. **Control** (`control.raisd.co`) manages campus-scoped custom roles and memberships through SSO, and University Flows policies through Portal API. Flow configuration never grants portal access. Portals never write directly to Postgres or the existing CMS. Menu hiding follows the active role; SSO and Portal API still enforce the permission.

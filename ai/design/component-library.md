@@ -1,3 +1,7 @@
+## Field alignment and input overflow — 0.26.0
+
+DetailField adds optional description/descriptionId helper slots aligned with the input/value and labelWidth="wide" (192px); defaults retain 160px labels and narrow-container stacking. Align a whole form group with the same width. Text-like Input values/placeholders use ellipsis and measured overflow tooltips: hover reveals clipped content, read-only focus provides keyboard guidance, and editable focus suppresses tooltips so editing and picker/popup Escape remain unchanged. Password, file, number and date input values never appear in overflow tooltips. Native disabled/read-only/ref/form behavior is preserved. Control uses this exact registry release for Version Settings and payment popup fields. Applicant, Student, Staff, Keychain and the SSO sign-in UI now also pin the released 0.26.0 package; the retired Staff checkout remains unchanged. Adoption uses shared field defaults without portal overrides or unrelated layout changes.
+
 # Shared component library
 
 ## Semantic confirmations and balanced toolbars - 0.22.1
@@ -140,6 +144,12 @@ Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User
 `raisd-campus/design-system` owns the shared React package `@raisd-campus/design-system`. The four portal applications are separate repositories and consume released package versions. The student portal is the first consumer and the source of the initial visual patterns. `control-plane` and `portal-api-docs` do not import React components.
 
 ## Ownership decision
+
+### Popup section layout — 0.23.1
+
+Patch 0.23.2 adds decorative semantic dividers between opted-in sections, centred in the existing 32px gap. First/last outer edges and default popup body spacing stay unchanged; no portal border overrides are needed. Control alone adopts the patch.
+
+For new popup bodies, use `Popup contentLayout="sections"` and `PopupSection` from `system/popup-section`. Section title and description are optional; plain groups keep no header space. Popup owns 32px between groups; PopupSection owns 16px within each group. Default Popup bodies preserve their existing markup and spacing. Migrate only requested popups, keeping existing untitled controls untitled. Header/footer, focus return, scrolling and pending-dismissal locks remain shared. Control's Admissions step popups opt in; other portals and existing default popups retain their layouts.
 
 Before building a UI element, look in the package catalogue and the [published visual catalogue](https://docs.raisd.co/design-system/). Import a published component when it expresses the required visual and interaction pattern. Do not copy its source into a portal or run a component generator that creates another local copy. Extend the package when a reusable variant is needed; keep workflow and product decisions in the owning portal.
 
@@ -516,3 +526,16 @@ Mandatory steps omit their enable toggle and visible required caption. Control m
 ### Minimal category labels — shared 0.19.5
 
 FlowEditor categories now use one muted gray treatment with concise labels (Review, Payment, Document release, Applicant action), separated by middle dots. The repeated Step suffix is removed. Black number circles and white step names retain the hierarchy; colors remain on controls/status. Existing mandatory/fixed behavior, spacing, hover, interactions and policies are unchanged. Only Control upgrades.
+
+
+## Non-configurable flow cards — 0.24.0
+
+FlowStep.configurable defaults to true. Templates set it false when no operational settings, document configuration or reviewer assignment exists. Shared FlowEditor then renders static content without a configuration button, chevron or card hover; enable switches remain independent and ordering/linked children retain their rules. Published or disabled steps with actual settings remain inspectable. Control adopts the exact registry release and marks Confirm Eligibility static. No workflow policy or authorization changes occur.
+
+## Checkbox — 0.25.0
+
+Use Checkbox from ui/checkbox or the package root for independent boolean selections. It owns the 16px indicator, minimum 36px labelled target, native keyboard/form behavior, visible focus and disabled/invalid states. Portals own labelled groups, responsive arrangement and domain selection rules. Control payment popups use Bank Transfer / Counter, inline from sm and stacked on phones. No other portal package pin changes.
+
+The required shared gate passed 81 units, consumer build, 80 Chromium and 80 WebKit cases (two pre-existing phone-pointer skips). A Student compatibility bundle built against the candidate without changing its package pin or installation; existing dynamic-import warning remains. Three synthetic captures document the new component. The exact 0.25.0 archive is verified in GitHub Packages.
+
+Control registry pin/lock now use 0.25.0; all 317 installed archive files match the verified release. Control lint/type/build passed with its existing SSO and bundle warnings. Six responsive payment-popup browser cases passed, including a focused retry of one Chromium case after a Vite dependency-reload interruption. Local Control restarted; API, policies and payment records were not changed by this shared-component follow-up.

@@ -1,5 +1,20 @@
 # Applicant portal — agent knowledge
 
+## Shared field consistency — 0.26.0
+
+Applicant pins the exact released `@raisd-campus/design-system` 0.26.0 registry package. Shared text fields use measured truncation tooltips; normal field dimensions and existing page compositions remain owned by the shared defaults. The optional `DetailField.description` and `labelWidth="wide"` APIs are available when a form needs them; this upgrade adds no local field overrides or data behavior changes.
+
+## Admissions registration window — 3 November 2026
+
+Admissions Version Settings owns optional `settings.registrationWindow` with date-only `startDate` and `closingDate`, outside cohort overrides. Drafts may omit either date; every new Apply requires both and closing on or after opening. Same-day windows are valid. The current Control workflow activates immediately; legacy application timestamps and future takeovers remain intact. Registration dates do not alter Applied/Published status and a closed version never falls back to an older one.
+
+Open at the start of the opening day and close after the closing day in each campus timezone, for all intakes and student types. `getAdmissionsAvailability(campusId)` returns the current applied window, timezone, server-local today, availability and upcoming/closed guidance. The authenticated read is campus-scoped. The directory and new form use the authenticated campus identity; registered Cyberjaya Demo accounts retain their known campus scope even when their catalogue lists multiple campuses. New draft creation, destination-campus changes and final submission check that same current window, including submission of older pinned drafts; successful exact retries remain replayable after closing. Same-campus draft edits and submitted-case progression continue. No automatic rejection, deletion or restart occurs.
+
+Legacy applied policies without a window remain unrestricted. Do not infer two dates from an intake registration date. Legacy published versions without a window must be copied to a draft before a new Apply. Stored intake dates, payment Due Days, snapshots, audit values and reviewer bindings remain compatibility data; no migration or policy rewrite is performed. Payment deadlines, blank Due Days and missing payment registration-date Registry gates are inert for all applications. English/Offer deadlines, evidence checks, exceptions and reviewer permissions remain enforced.
+
+The version table shows Registration Start Date and Registration Closing Date. Shared DatePicker controls replace activation timing in draft Version Settings; published dates are read-only. The old dates/deadlines popup and payment Due Days controls, including the reference controls, are removed. Activation history still records UTC instants separately. Academic programme semester-registration calendars are a separate domain and remain unchanged.
+
+
 ## Published Academic catalogue and accepted curriculum — 29 October 2026
 
 HTTP applications use the Portal API catalogue of active campus faculties and programmes with a usable approved default structure and semester calendar. Intake/faculty/course choices and server submission validation use the same campus/intake catalogue; switching campus clears previous choices. Programme document requirements come from that catalogue. Drafts and submitted applications retain their catalogue labels, while submission pins the exact published ProgrammeVersion and structure version in `academicSelection`.
@@ -241,7 +256,7 @@ The empty Admissions requirements heading and standalone Reload status bar are r
 
 ## Control-owned progress wording — 21 October 2026
 
-Configured Application Progress consumes the `progress` rows returned by Portal API with each owned application. Applicant does not override step/department names, statuses or updates. Control Admissions → Applicant wording owns those strings in versioned `settings.presentation`; its preview consumes the same evaluator output. Raw pending/manual decisions both display the configured Pending status, completed rows use Complete, and not-required rows are excluded. Default updates use one short sentence: Awaiting {department} review (or applicant confirmation); completed updates say Completed. The department placeholder resolves from the assigned desk and configured names. Rules, clearances and raw manual decisions remain distinct internally. Existing pinned policy versions retain their wording; new publications apply to new applications/reset journeys. Older records receive compatible defaults without resetting data. Offline mock sessions evaluate the same settings locally; connected sessions fetch API rows.
+Superseded on 2 November 2026: Application Progress consumes fixed catalogue labels and current assigned reviewer role names from API `progress`. Local Demo sessions share the same evaluator. The legacy `department` response key remains under Reviewer; stored custom wording is inert for existing and new flow applications. See Fixed Admissions display below.
 
 ## Submitted file tile contrast — 0.9.2
 
@@ -255,7 +270,7 @@ Configured applications omit the fee accordion from Submitted Application becaus
 
 ## Configured admissions status — 22 October 2026
 
-The summary and badge use Portal API's Control-owned **current pending action**, while progress retains completed milestones. A released Eligibility Letter leaves overall status **Awaiting Applicant Confirmation** and next action **Confirm Eligibility** (Applicant). After confirmation, status is **Awaiting Bursary Review**, next step **Registration Fee**. Completed Eligibility Review remains **Eligibility Letter Released**. Configured text comes from `admissionsDisplay`/`progress`; no portal formats internal approved/complete enums into current status. Legacy presentation remains unchanged. See [University Flows](../backend/university-flows.md).
+The summary and badge use Portal API's Control-owned **current pending action**, while progress retains completed milestones. A released Eligibility Letter leaves overall status **Awaiting Applicant Confirmation** and next action **Confirm Eligibility** (Applicant). After confirmation, Registration Fee displays the actual pending quotation, payment or review action using its assigned roles. Completed Eligibility Review remains **Eligibility Letter Released**. Fixed catalogue text comes from `admissionsDisplay`/`progress`; no portal formats internal approved/complete enums into current status. Legacy stored presentation is preserved but inert for display. See [University Flows](../backend/university-flows.md).
 
 
 Cross-portal breadcrumb verification (0.18.4): shared typecheck, 64 unit cases, consumer build, 63 Chromium and 48 phone/tablet WebKit cases passed. Staff/Lecturer lint, 94 unit cases and type/production build passed; Control lint, 19 unit cases and type/production build passed. Applicant lint, three focused header unit cases, type/production build and production-exclusion check passed (its existing unused-variable warning remains). Student lint, 15 focused breadcrumb/route unit cases, type/production build and production-exclusion checks passed. Student bundle budgets passed unchanged: eager JavaScript 194164 gzip bytes against 196608; largest chunk 373077 bytes.
@@ -267,4 +282,17 @@ Only Applicant, Student, Staff and Control frontends restarted. APIs, SSO, Keych
 
 ## Admissions workflow template compatibility
 
-The API may resolve workflow template 1 into the case's pinned Local/International settings, order, exact campus prices and structured letters. Applicant HTTP draft/submit clients advertise template support. Progress and current action continue using policy/SSO presentation; no portal-hardcoded role authority is added. Existing applications and issued files remain pinned. See [Flow Editor](../design/flow-editor.md). Unsupported PDF glyphs fail explicitly rather than corrupting issued names.
+The API may resolve workflow template 1 into the case's pinned Local/International settings, order, exact campus prices and structured letters. Applicant HTTP draft/submit clients advertise template support. Progress and current action use the fixed Admissions catalogue and current SSO reviewer role names; no portal-hardcoded role authority is added. Existing applications and issued files remain pinned. See [Flow Editor](../design/flow-editor.md). Unsupported PDF glyphs fail explicitly rather than corrupting issued names.
+
+## Fixed Admissions display — 2 November 2026
+
+Step names and punctuation-free action statuses come from the shared typed Admissions catalogue via API `progress` and `admissionsDisplay`; the local Demo evaluator shares that source. Pending staff tasks use assigned role names, preserving casing and comma-joining distinct names, not department names. Applicant payment, confirmation and submission name Applicant. Missing staff assignments show Awaiting Reviewer Assignment / Unassigned. The compatible `department` field is rendered under Reviewer. Existing flow records also use fixed copy; saved policies, snapshots and raw audit values are not rewritten. Completion milestones remain in progress, while the summary follows the current pending action. See [Flow Editor](../design/flow-editor.md).
+
+
+### Registration Fee progression by step order
+
+Existing and new applications use the pinned template order and fee enablement, with the standard order for older pre-template policies. Enabled fees block later actions until settlement; disabled fees are skipped. Receipt submission opens when preceding applicable steps are complete, the amount exists and a payment method is configured. A fee after Offer does not block releasing that Offer, but waits for the preceding Offer group, including a required verified signed copy. Existing Conditional Offer English deferral remains. Collection Enabled / Required Before fields are deprecated and inert; no policies, evidence, completed milestones or audit values are rewritten. Shared formatter and API predicates supply consistent readiness and status across Applicant and Staff.
+
+### Fixed fees and tuition receipts (3 November 2026)
+
+The current Registration Fee task shows the server charge and allowed transfer/counter instructions; it no longer depends on a per-case quotation for known campus tariffs. Tuition displays the pinned semester total, required Partial/Full amount and verified amount at its current stage, with independent methods, amount/reference entry and receipt upload. Pending receipts wait for review; rejected receipts retain their reasons and original files. Reload hydrates original evidence bytes for preview/download. Missing programme fee data has a fixed unavailable state and explicit Retry Programme Fee action. A Partial clearance does not claim full tuition settlement.

@@ -1,4 +1,5 @@
 import type { AdmissionsSettings, AdmissionsWorkflow, AdmissionStepId } from "./admissions-policy"
+import { currencyDigits } from "./admissions-payments"
 
 export const admissionGroups = ["eligibility", "registration-fee", "english", "offer", "tuition", "entry", "arrival", "medical", "endorsement", "international-registration"] as const
 export const admissionChildren: Partial<Record<AdmissionStepId, AdmissionStepId>> = { eligibility: "eligibility-confirmation", offer: "signed-offer" }
@@ -41,8 +42,18 @@ export function workflowOrder(settings: AdmissionsSettings, studentType: string)
   const cohort = workflowCohort(settings, studentType)
   return cohort ? [...cohort.order.flatMap(id => admissionChildren[id] ? [id, admissionChildren[id]!] : [id]), "deadlines"] : null
 }
+/** Legacy policies use the standard order without rewriting their pinned settings. */
+export function effectiveAdmissionsOrder(settings: AdmissionsSettings, studentType: string): string[] {
+  return workflowOrder(settings, studentType) ?? [...admissionGroups.flatMap(id => admissionChildren[id] ? [id, admissionChildren[id]!] : [id]), "deadlines"]
+}
+export function registrationFeePrecedes(settings: AdmissionsSettings, studentType: string, stepId: string): boolean {
+  // Eligibility remains a hard prerequisite even for older, noncanonical orders.
+  if (stepId === "eligibility" || stepId === "eligibility-confirmation") return false
+  const order = effectiveAdmissionsOrder(settings, studentType)
+  return order.indexOf(stepId) > order.indexOf("registration-fee")
+}
 export function createAdmissionsWorkflow(settings: AdmissionsSettings): AdmissionsWorkflow {
-  const { workflow: _workflow, ...base } = structuredClone(settings)
+  const { workflow: _workflow, registrationWindow: _window, ...base } = structuredClone(settings)
   const makeCohort = (type: "local" | "international"): AdmissionsWorkflow["cohorts"]["local"] => {
     const international = type === "international"
     return { order: [...admissionGroups], settings: structuredClone(base), enabled: {
@@ -68,6 +79,7 @@ export function validateWorkflow(settings: AdmissionsSettings, campuses?: readon
     const c = settings.workflow.cohorts[type], e = c.enabled
     const problem = (message: string) => issues.push(`${type}: ${message}`)
     if (new Set(c.order).size !== admissionGroups.length || admissionGroups.some(id => !c.order.includes(id))) problem("Each predefined group must occur exactly once.")
+    if (c.order[0] !== "eligibility") problem("Eligibility Review must retain its fixed first position.")
     if (c.order.at(-1) !== "international-registration") problem("International registration must retain its fixed final position.")
     if (!e.offer) problem("Offer Letter is mandatory.")
     if (type === "international" && !e.tuition) problem("New international tuition clearance is mandatory.")
@@ -76,16 +88,25 @@ export function validateWorkflow(settings: AdmissionsSettings, campuses?: readon
       if (e[a] && e[b] && c.order.indexOf(a) >= c.order.indexOf(b)) problem(`${a} must precede ${b}.`)
     }
     before("eligibility", "registration-fee"); before("eligibility", "offer")
-    if (c.settings.registrationFee.requiredBefore === "offer") before("registration-fee", "offer")
     before("arrival", "medical"); before("arrival", "endorsement"); before("medical", "endorsement")
     for (const kind of ["registration-fee", "tuition"] as const) {
       const price = c.pricing[kind]
+      if (kind === "registration-fee" && price.mode === "programme-semester") problem("Registration Fee requires fixed campus pricing.")
+      if (price.methods && new Set(price.methods).size !== price.methods.length) problem(`${kind}: payment methods must be distinct.`)
       if (new Set(price.campuses.map(row => row.campusId)).size !== price.campuses.length) problem(`${kind}: duplicate campus prices.`)
       if (price.mode === "fixed" && e[kind]) {
+        if (price.campuses.some(row => row.amountMinor <= 0)) problem(`${kind}: fixed prices must be positive.`)
+        for (const row of price.campuses) { try { currencyDigits(row.currency) } catch { problem(`${kind}: select a supported ISO currency for ${row.campusId}.`) } }
         for (const campus of campuses ?? []) if (!price.campuses.some(row => row.campusId === campus)) problem(`${kind}: missing fixed price for ${campus}.`)
         if (!price.campuses.length) problem(`${kind}: configure at least one campus price.`)
         if (kind === "tuition" && price.campuses.some(row => !row.basis)) problem("Fixed tuition requires an explicit payment basis.")
         if (kind === "tuition" && type === "international" && c.settings.tuition.newInternational === "first-year" && price.campuses.some(row => row.basis !== "first-year") && !c.settings.tuition.approvedSemesterAllowed) problem("Semester pricing cannot bypass first-year tuition requirements.")
+      }
+      if (kind === "tuition" && price.mode === "programme-semester" && e[kind]) {
+        if (price.methods && !price.methods.length) problem("tuition: select at least one payment method.")
+        for (const campus of campuses ?? []) if (!price.campuses.some(row => row.campusId === campus)) problem(`tuition: configure semester payment for ${campus}.`)
+        if (price.campuses.some(row => !row.coverage || row.coverage === "partial" && row.amountMinor <= 0)) problem("tuition: select Full or a positive Partial amount.")
+        for (const row of price.campuses.filter(row => row.coverage === "partial")) { try { currencyDigits(row.currency) } catch { problem(`tuition: select a supported ISO currency for ${row.campusId}.`) } }
       }
     }
     for (const template of Object.values(c.documents)) for (const message of templateIssues(template)) problem(message)

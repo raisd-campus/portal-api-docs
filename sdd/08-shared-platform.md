@@ -1,5 +1,11 @@
 # Shared platform
 
+### Opt-in popup sections — 2 November 2026
+
+Shared 0.23.0 adds PopupSection with optional title/description, 16px internal spacing and opt-in Popup contentLayout="sections" with 32px between groups. Existing default Popup bodies retain their original layout. Control Admissions step popups adopt the layout; Eligibility Review hides document configuration without changing saved templates or letter-release behavior. New popup guidance uses sections by convention; existing popups migrate only when requested. See the [component guide](../ai/design/component-library.md).
+
+Patch 0.23.2 adds semantic divider lines between opted-in sections inside the existing spacing. Default popup bodies retain their layouts; Control alone upgrades.
+
 ### Local development workflow — 27 October 2026
 
 Control-plane owns a one-command local stack with dedicated PostgreSQL 18, persistent local volume, private environment settings and backup-first import of saved Demo state. Seeding adds missing Demo data and public credentials only; existing identities, applications, policies and evidence remain. Remote and the separate CMS database are unchanged. Canonical agent instructions require focused checks matched to change risk, hot reload and targeted service restarts, with full required release gates at publication checkpoints. Operational commands and recovery are in [local development](../ai/architecture/local-development.md).

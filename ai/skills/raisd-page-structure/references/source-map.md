@@ -12,6 +12,7 @@ Use the actual workspace and sibling checkout layout. A common local root is `D:
 | `design-system/docs/components.md`, `src/components/` | Current package implementation; may be newer than a consumer's installed release |
 | `control-plane/docs/ai/design/design-system.md` | Cross-portal tokens, shell and page patterns; read release context around historical notes |
 | `control-plane/docs/ai/design/admin-record-flow.md` | Admin directory/workspace controller and routing responsibilities |
+| `control-plane/docs/ai/design/flow-editor.md` | Registered University Flow steps, fixed action wording, reviewer roles and compatibility |
 | `control-plane/docs/ai/frontend/lecturer-portal.md`, `frontend/admin-portal.md` | Active Staff Admin composition and scope |
 | `control-plane/docs/ai/frontend/student-portal/AGENTS.md`, `design-system.md`, affected feature guide | Student-specific identity, nested panels, route states and required gates |
 | `control-plane/docs/ai/skills/cms-student-portal-page/SKILL.md` | Additional Student new-page/substantial-route workflow |
@@ -33,7 +34,8 @@ Consult a relevant example when its composition or state behavior is unclear. Th
 | Existing shell/tiered navigation/toast-provider composition | `lecturer-portal/src/pages/shell.tsx` |
 | Student Academic/Profile | Discover active route components from Student's router; consult the owning `academic-study-plan.md`, `academic-modules.md`, and `personal-profile.md` first |
 | Applicant field and form behavior | Discover current route/form components in `applicant-portal/src/`; use its owning guide rather than assuming file names |
-| Control General/Versions/step details | `control-portal/src/pages/academic-flow.tsx` and current Admissions workspace; the latter is the broader versioned-flow reference |
+| University Flow step/popup composition | `control-portal/src/components/university-flow-steps.tsx`, `flow-reviewer-field.tsx` and `src/lib/flow-reviewer-adapters.ts`; use the current flow standard and [University Flow reference](university-flows.md) |
+| Control domain-specific General/Versions behavior | Admissions workspace and `control-portal/src/pages/academic-flow.tsx`; these supply different lifecycle adapters, not competing UI templates |
 
 ## Version-aware lessons from the Academic work
 
@@ -53,3 +55,5 @@ Edit the canonical directory `control-plane/docs/ai/skills/raisd-page-structure/
 For a confirmed new convention, record the decision and where it applies in the appropriate section, with a maintained source here if needed. If it is specific to one domain, page state or user request, label that scope. Keep examples illustrative; do not turn one-off screenshots into required policy. Supersede conflicting rules rather than appending another ambiguous rule.
 
 Register added/removed knowledge files in `control-plane/docs/ai/MANIFEST.yaml` and use the existing public-AI sync/check workflow when the canonical tree changes. Validate each skill copy with skill-creator's `scripts/quick_validate.py`, verify relative skill links and mirror identity, and forward-test substantial new guidance against a realistic unrelated page brief without changing an application. Use the current installed skill-creator instructions for its script location.
+
+Payment flow composition: `control-portal/src/components/flow-payment-settings.tsx`; Admissions payment catalogue: `applicant-portal/src/contracts/admissions-payments.ts`; maintained semantics: canonical Flow Editor and University Flows guides.

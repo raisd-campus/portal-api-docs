@@ -1,5 +1,9 @@
 # Portal Design System
 
+## Shared field consistency — 0.26.0
+
+Student pins the exact released `@raisd-campus/design-system` 0.26.0 registry package. Shared text fields use measured truncation tooltips; normal field dimensions and existing page compositions remain owned by the shared defaults. The optional `DetailField.description` and `labelWidth="wide"` APIs are available when a form needs them; this upgrade adds no local field overrides or data behavior changes.
+
 ## Shared header breadcrumbs — 27 October 2026
 
 Student pins shared 0.18.4 and passes its route hierarchy to PortalHeader through the existing PageBreadcrumb adapter. Nested module/material/lecturer review, portfolio create/detail/edit, announcements, services, online forms/submissions and invoices expose appropriate parent links. Existing service catalogue data supplies service labels; missing records use route-level labels without extra detail queries. Academic/Profile group labels have no invented destination. Parent links preserve selected programme ownership and applicable module semester. The shared component handles constrained widths, loading, keyboard and focus; inner feature breadcrumbs remain unchanged.

@@ -37,3 +37,7 @@ Staff Students provides Change Academic Streams for the exact API enrolment, req
 ## Delivery boundaries
 
 The shared package release is authorized independently of hosted application deployment. Preserve dirty worktrees and local data; do not pull/reset, commit, push or deploy applications as part of this delivery. Restart only changed local services. Verify API persistence, authorization and migration separately from browser presentation and production readiness.
+
+## Programme semester tuition
+
+Staff Programme records include a Fees tab using the existing read/edit/save/unsaved guard. The selected exact published Programme Version has explicit Local/International semester totals in the campus Finance currency. Saving uses the existing academic transaction, expected Fee Plan revision, request IDs and before/after audit; partial confirmed saves remain known on retry. Empty totals are unconfigured, not zero or waived. Admissions uses semester 1 and pins the resolved Fee Plan revision; editing programme fees never silently updates existing Admissions charges. Existing module Fee Items, invoice calculations and study-plan publication remain independent.

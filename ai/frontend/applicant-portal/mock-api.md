@@ -7,7 +7,7 @@ The configuration regressions cover blank-campus draft resume, policy-controlled
 
 ## Policy-aware mock and HTTP parity - 20 October 2026
 
-The new-case mock uses the same policy contract/evaluator as Portal API. Historical golden/browser fixtures explicitly select a legacy resolver; production does not expose that fixture switch. New-policy browser tests run separately against the five-step eligibility-first flow. getAdmissionsPolicy, submitRegistrationFee, submitSignedOffer and submitAdmissionsEvidence are advertised HTTP methods; unsupported methods fail instead of silently falling back. Existing revision, ownership, retry and acceptance guards remain. See [University Flows](../../backend/university-flows.md).
+The new-case mock uses the same policy contract/evaluator as Portal API. Historical golden/browser fixtures explicitly select a legacy resolver; production does not expose that fixture switch. New-policy browser tests run separately against the five-step eligibility-first flow. getAdmissionsPolicy, getAdmissionsAvailability, submitRegistrationFee, submitSignedOffer and submitAdmissionsEvidence are advertised HTTP methods; unsupported methods fail instead of silently falling back. Existing revision, ownership, retry and acceptance guards remain. See [University Flows](../../backend/university-flows.md).
 
 
 ## Status and boundaries
@@ -150,3 +150,5 @@ The 12 October local preparation supersedes earlier statements that original HTT
 Both uninterrupted full gates passed. Applicant: 65 unit/component tests and 70 browser checks. Student: 788 unit tests, 278 Chromium checks (46 intentional skips), 41 WebKit checks (31 intentional skips), plus lint/build/production/bundle gates and seven focused byte-delivery checks. All seven DEV handoffs and five local HTTP journeys passed. Portal API: portable typecheck/build, 96 memory/disposable-Postgres checks and npm-start/smoke passed. Shared package: 13 unit and 14 consumer browser checks. Documentation/contracts/catalogue/navigation/OpenAPI validate; 14 unused OpenAPI component warnings remain. The phone/tablet main scrollWidth finding was corrected using actual clipped viewport bounds and keyboard access, without an editor redesign.
 
 The user authorized normal main commits/pushes. Deployment remains separate: Vercel Git deployment is disabled and portal CI deploys only on explicit manual deploy=true. Shared components stay 0.6.2, with no tag/package release. No hosted migration, reseed or account walkthrough; deployed/physical-device behavior remains unverified. Previously held department shortcuts and Staff/Lecturer redesigns remain On hold.
+
+Availability reads and mutations share the current applied campus policy and injected clock. Successful request receipts replay before window checks. In-progress new creation/submission rechecks before commit; same-campus draft edits do not require an open window.
