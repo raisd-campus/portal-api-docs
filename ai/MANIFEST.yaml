@@ -866,3 +866,7 @@ academic_catalogue_delivery:
 pre_push_audit_2026_11_02:
   - path: architecture/audits/2026-11-02-pre-push.md
     topics: [pre-push, admissions, academic, regression, data-preservation, source-fingerprint]
+
+main_integration_2026_11_04:
+  - path: architecture/audits/2026-11-04-main-integration.md
+    topics: [main, merge, integration, regression, source-fingerprint, data-preservation]
