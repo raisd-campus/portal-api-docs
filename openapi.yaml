@@ -8833,6 +8833,11 @@ components:
             - getAcademicModuleDetail
             - getAcademicModuleAttendance
             - getAcademicTimetable
+            - listLiveClassSessions
+            - startLiveClass
+            - joinLiveClass
+            - leaveLiveClass
+            - endLiveClass
         caps:
           type: array
           items:
@@ -8861,7 +8866,6 @@ components:
           enum:
             - startQuizAttempt
             - submitQuizAttempt
-            - getLiveClassJoin
             - postForumMessage
             - getForumThread
             - publishAssessmentFeedback
