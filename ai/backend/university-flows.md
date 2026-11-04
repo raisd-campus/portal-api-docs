@@ -1,5 +1,11 @@
 # University Flows - Admissions v1
 
+## Main integration — 4 November 2026
+
+Global uses the canonical shared defaults when importing unconfigured stores. Campus-specific Lesotho review/catalogue settings remain a separate configuration; previously assigned flows and immutable application policies retain their identities. Synthetic all-campus migration fixtures explicitly use identical shared settings, while distinct-campus fixtures verify isolation.
+
+Staff preserves the Academic catalogue directories alongside the remote attendance/gradebook overview at `/admin/academic/overview`, and preserves Admissions record review alongside the additional desks. Student read projections retain later Admissions clearance, Offer and verified English updates without rewriting the accepted handoff or recording a new change for timestamps alone. Regression checks use approved fixed Registration Fee tariffs rather than the retired staff quotation operation.
+
 ## Admissions registration window — 3 November 2026
 
 Admissions Version Settings owns optional `settings.registrationWindow` with date-only `startDate` and `closingDate`, outside cohort overrides. Drafts may omit either date; every new Apply requires both and closing on or after opening. Same-day windows are valid. The current Control workflow activates immediately; legacy application timestamps and future takeovers remain intact. Registration dates do not alter Applied/Published status and a closed version never falls back to an older one.
