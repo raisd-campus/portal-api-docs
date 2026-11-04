@@ -223,6 +223,82 @@ export const admissionsBaseSettingsSchema = z
         z.object({ intakeId: text, registrationOn: z.iso.date() }).strict()
       )
       .max(100),
+    /** Lesotho / desk-chain review options (FM-05). Off by default; on for campus-lesotho demo. */
+    review: z
+      .object({
+        showRankScore: z.boolean(),
+        extractRequired: z.boolean(),
+        /** Ordered desks that must record a recommendation (e.g. faculty → qa → registry). */
+        reviewStepsRequired: z.array(flowDeskSchema).max(5),
+      })
+      .strict()
+      .default({
+        showRankScore: false,
+        extractRequired: false,
+        reviewStepsRequired: [],
+      }),
+    /**
+     * FM-05 Admissions Settings catalogues (Demo). Live Lesotho CMS catalogues are not
+     * synced; Control edits these Demo lists for intake / certificate / subject / school / entry rules.
+     */
+    catalogues: z
+      .object({
+        intakePeriods: z
+          .array(
+            z
+              .object({
+                id: text,
+                label: text,
+                startsOn: z.iso.date().nullable(),
+              })
+              .strict()
+          )
+          .max(50),
+        certificateTypes: z
+          .array(z.object({ id: text, label: text }).strict())
+          .max(50),
+        subjects: z
+          .array(
+            z
+              .object({
+                id: text,
+                label: text,
+                code: z.string().trim().min(1).max(32).optional(),
+              })
+              .strict()
+          )
+          .max(100),
+        recognizedSchools: z
+          .array(
+            z
+              .object({
+                id: text,
+                name: text,
+                countryCode: z.string().length(2).optional(),
+              })
+              .strict()
+          )
+          .max(200),
+        entryRequirements: z
+          .array(
+            z
+              .object({
+                id: text,
+                programmeHint: text,
+                ruleSummary: text,
+              })
+              .strict()
+          )
+          .max(100),
+      })
+      .strict()
+      .default({
+        intakePeriods: [],
+        certificateTypes: [],
+        subjects: [],
+        recognizedSchools: [],
+        entryRequirements: [],
+      }),
   })
   .strict()
 export const admissionStepIds = ["eligibility", "eligibility-confirmation", "registration-fee", "english", "offer", "signed-offer", "tuition", "entry", "arrival", "medical", "endorsement", "international-registration"] as const
@@ -440,6 +516,51 @@ export const admissionsFlowSchema = z
         .strict()
     ),
     events: z.array(flowEventSchema),
+    /** FM-03: optional rank/score for Lesotho desk queue. */
+    reviewMetrics: z
+      .object({
+        rank: z.number().int().positive().nullable(),
+        score: z.number().nullable(),
+      })
+      .strict()
+      .nullable()
+      .default(null),
+    /** FM-03: desk recommendation chain (n/required). */
+    reviewSteps: z
+      .array(
+        z
+          .object({
+            desk: flowDeskSchema,
+            outcome: z.enum(["recommended", "not-recommended"]),
+            reason: text,
+            at: z.iso.datetime(),
+            actorId: text,
+          })
+          .strict()
+      )
+      .default([]),
+    /** FM-04: LGCSE / certificate extract recorded by Document review desk. */
+    documentExtract: z
+      .object({
+        status: z.enum(["pending", "extracted", "verified"]),
+        certificateNumber: z.string().nullable(),
+        institution: z.string().nullable(),
+        subjects: z
+          .array(
+            z
+              .object({
+                subject: text,
+                grade: text,
+              })
+              .strict()
+          )
+          .default([]),
+        extractedAt: z.iso.datetime().nullable(),
+        extractedBy: z.string().nullable(),
+      })
+      .strict()
+      .nullable()
+      .default(null),
   })
   .strict()
 export type AdmissionsFlow = z.infer<typeof admissionsFlowSchema>
@@ -471,6 +592,9 @@ export const flowActionInputSchema = z
       "clear-finance",
       "deadline-exception",
       "reviewer-message",
+      "record-desk-recommendation",
+      "set-review-metrics",
+      "extract-document",
     ]),
     note: z.string().trim().max(10000).default(""),
     deadlineKind: z
@@ -487,6 +611,24 @@ export const flowActionInputSchema = z
     currency: currency.optional(),
     paymentId: text.optional(),
     basis: z.enum(["first-year", "semester"]).optional(),
+    recommendationOutcome: z
+      .enum(["recommended", "not-recommended"])
+      .optional(),
+    rank: z.number().int().positive().optional(),
+    score: z.number().optional(),
+    certificateNumber: z.string().trim().max(200).optional(),
+    institution: z.string().trim().max(400).optional(),
+    subjects: z
+      .array(
+        z
+          .object({
+            subject: text,
+            grade: text,
+          })
+          .strict()
+      )
+      .max(40)
+      .optional(),
   })
   .strict()
 export type FlowActionInput = z.infer<typeof flowActionInputSchema>
@@ -536,10 +678,69 @@ export const defaultAdmissionsSettings: AdmissionsSettings = {
     registrationGate: "manual",
   },
   registrationDates: [],
+  review: {
+    showRankScore: false,
+    extractRequired: false,
+    reviewStepsRequired: [],
+  },
+  catalogues: {
+    intakePeriods: [],
+    certificateTypes: [],
+    subjects: [],
+    recognizedSchools: [],
+    entryRequirements: [],
+  },
 }
 export function defaultAdmissionsPolicy(
   campusId: string
 ): AdmissionsPolicyVersion {
+  const settings = structuredClone(defaultAdmissionsSettings)
+  if (campusId === "campus-lesotho") {
+    settings.review = {
+      showRankScore: true,
+      extractRequired: true,
+      reviewStepsRequired: ["faculty", "qa", "registry"],
+    }
+    settings.catalogues = {
+      intakePeriods: [
+        {
+          id: "demo-first-intake",
+          label: "Demo first intake",
+          startsOn: "2026-02-01",
+        },
+        {
+          id: "ls-2026-07",
+          label: "2026-07",
+          startsOn: "2026-07-01",
+        },
+      ],
+      certificateTypes: [
+        { id: "lgcse", label: "LGCSE" },
+        { id: "cosc", label: "COSC" },
+        { id: "other", label: "Other secondary certificate" },
+      ],
+      subjects: [
+        { id: "eng", label: "English Language", code: "ENG" },
+        { id: "math", label: "Mathematics", code: "MATH" },
+        { id: "sesotho", label: "Sesotho", code: "SES" },
+      ],
+      recognizedSchools: [
+        {
+          id: "ls-demo-high",
+          name: "Demo High School (Maseru)",
+          countryCode: "LS",
+        },
+      ],
+      entryRequirements: [
+        {
+          id: "ls-design-demo",
+          programmeHint: "Design (Demo)",
+          ruleSummary:
+            "Demo rule — LGCSE/COSC English + Maths; not Live Lesotho entry policy.",
+        },
+      ],
+    }
+  }
   return admissionsPolicyVersionSchema.parse({
     id: `admissions:${campusId}:1`,
     flowId: "admissions",
@@ -550,7 +751,7 @@ export function defaultAdmissionsPolicy(
     publishedBy: "owner-demo-template",
     reason:
       "Owner-selected starting template; jurisdictional and unresolved rules require operational confirmation.",
-    settings: structuredClone(defaultAdmissionsSettings),
+    settings,
     source: "owner-demo-template",
   })
 }
@@ -590,6 +791,18 @@ export function newAdmissionsFlow(
     offerHistory: [],
     credits: [],
     events: [],
+    reviewMetrics: null,
+    reviewSteps: [],
+    documentExtract: policy.settings.review.extractRequired
+      ? {
+          status: "pending",
+          certificateNumber: null,
+          institution: null,
+          subjects: [],
+          extractedAt: null,
+          extractedBy: null,
+        }
+      : null,
   })
 }
 export function validateAdmissionsSettings(input: unknown): string[] {

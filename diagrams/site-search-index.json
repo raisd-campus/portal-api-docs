@@ -172,6 +172,81 @@
       "path": "https://docs.raisd.co/reports/database-recreation-2026-10-22/"
     },
     {
+      "title": "CMS standup updates \u00b7 30 Oct 2026",
+      "summary": "Working Group update closing 29 Oct actions \u2014 website AI guidance, Staff Admin nav/workflows, Lesotho guidance on docs.raisd.co.",
+      "section": "Reports",
+      "keywords": [
+        "standup",
+        "cms",
+        "updates",
+        "admin",
+        "navigation",
+        "lesotho",
+        "guide",
+        "ai guidance",
+        "working group"
+      ],
+      "path": "https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/"
+    },
+    {
+      "title": "Guidance \u00b7 User guidance",
+      "summary": "Lesotho Demo user guidance \u2014 hosts, journeys, and step-by-step how-tos for each Staff Admin desk screenshot.",
+      "section": "Guidance",
+      "keywords": [
+        "guidance",
+        "lesotho",
+        "user guide",
+        "demo",
+        "hosts",
+        "journeys",
+        "desks",
+        "how-to",
+        "applicants",
+        "payments",
+        "registrations"
+      ],
+      "path": "diagrams/guidance/index.html"
+    },
+    {
+      "title": "Guidance \u00b7 Website AI should",
+      "summary": "What AI agents should do on Raisd websites.",
+      "section": "Guidance",
+      "keywords": [
+        "ai",
+        "should",
+        "website",
+        "agents",
+        "design system",
+        "portal api"
+      ],
+      "path": "diagrams/guidance/website-ai-should.html"
+    },
+    {
+      "title": "Guidance \u00b7 Website AI should not",
+      "summary": "What AI agents should not do on Raisd websites.",
+      "section": "Guidance",
+      "keywords": [
+        "ai",
+        "should not",
+        "website",
+        "agents",
+        "hard stops"
+      ],
+      "path": "diagrams/guidance/website-ai-should-not.html"
+    },
+    {
+      "title": "Guidance \u00b7 Website AI decisions",
+      "summary": "Quick do/don\u2019t decision table for Raisd website AI work.",
+      "section": "Guidance",
+      "keywords": [
+        "ai",
+        "decisions",
+        "website",
+        "agents"
+      ],
+      "path": "diagrams/guidance/website-ai-decisions.html"
+    },
+    {
       "title": "E2E access control \u00b7 21 Oct 2026",
       "summary": "Control assigns campus Admin only (Members). Campus Admin grants fixed Student/Staff/Lecturer presets via Access APIs; learner presets never appear as Admin; revoke stops sign-in.",
       "section": "End to End Demo",
@@ -346,14 +421,16 @@
     },
     {
       "title": "Lesotho newer CMS mind map",
-      "summary": "23 Oct 2026 Admin walk \u2014 sign-in, shell, role counts, and the sidebar mind map for the Lesotho staging portal.",
+      "summary": "Mermaid sign-in flow and Admin Portal sidebar mind map with legend. Matching Obsidian 3D graph under LUCT CMS.",
       "section": "LUCT CMS",
       "keywords": [
         "lesotho",
         "newer-cms",
         "mind-map",
+        "mermaid",
+        "legend",
+        "obsidian",
         "admin",
-        "dev-login",
         "registry",
         "luct"
       ],
@@ -374,6 +451,37 @@
         "positions"
       ],
       "path": "diagrams/old-cms-lesotho/newer-cms-manual.html"
+    },
+    {
+      "title": "Lesotho newer CMS screenshots",
+      "summary": "278 Admin screens from the 23\u201326 Oct 2026 Lesotho staging walk, grouped by menu section.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "screenshots",
+        "newer-cms",
+        "registry",
+        "admissions",
+        "finance",
+        "gallery"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-screenshots.html"
+    },
+    {
+      "title": "Lesotho newer CMS exports",
+      "summary": "Seven 26 Oct 2026 staging downloads \u2014 graduation list, name tags, certificate batch, and registration and graduation reports. Counts and layout only.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "lesotho",
+        "exports",
+        "graduation",
+        "certificates",
+        "name-tags",
+        "registration",
+        "enrollment",
+        "analytics"
+      ],
+      "path": "diagrams/old-cms-lesotho/newer-cms-exports.html"
     },
     {
       "title": "Lesotho newer CMS gap vs Raisd",
@@ -876,8 +984,8 @@
       "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md"
     },
     {
-      "title": "Obsidian 3D FSD \u2014 Lesotho",
-      "summary": "Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) \u2014 admissions, registry, NMDS, graduation, student portal, CAP seed.",
+      "title": "Newer CMS Obsidian 3D \u2014 Lesotho Admin Portal",
+      "summary": "Interactive 3D Admin Portal mind map for the Lesotho newer CMS \u2014 Registry through Mail, matching the Mermaid mind map.",
       "section": "LUCT CMS",
       "keywords": [
         "obsidian",
@@ -886,11 +994,30 @@
         "3d",
         "lesotho",
         "pilot",
+        "admin-portal",
+        "mind-map",
+        "newer-cms",
+        "registry",
+        "admissions"
+      ],
+      "path": "diagrams/old-cms/obsidian.html?campus=lesotho"
+    },
+    {
+      "title": "Obsidian 3D screenshot FSD \u2014 Lesotho",
+      "summary": "Interactive 3D knowledge graph from the 3 Oct Lesotho screenshot SoT \u2014 admissions, registry, NMDS, graduation, CAP seed.",
+      "section": "LUCT CMS",
+      "keywords": [
+        "obsidian",
+        "fsd",
+        "graph",
+        "3d",
+        "lesotho",
+        "screenshot",
         "nmds",
         "lgcse",
         "m4"
       ],
-      "path": "diagrams/old-cms/obsidian.html?campus=lesotho"
+      "path": "diagrams/old-cms/obsidian.html?campus=lesotho-screenshot"
     },
     {
       "title": "Architecture",
@@ -973,6 +1100,75 @@
         "cap"
       ],
       "path": "diagrams/lms-features.html"
+    },
+    {
+      "title": "Moodle + Classroom map",
+      "summary": "Docs-only capability absorb of Moodle and Google Classroom into Raisd CAP/F01\u2013F37 with labelled reference screenshots.",
+      "section": "Architecture",
+      "keywords": [
+        "lms",
+        "moodle",
+        "google classroom",
+        "reference",
+        "screenshots",
+        "capability map",
+        "cap",
+        "f01",
+        "f37"
+      ],
+      "path": "diagrams/lms-reference/index.html"
+    },
+    {
+      "title": "LMS feature steps",
+      "summary": "Step-by-step LMS features with functionality, direction of use, Raisd integration, and per-step sequence diagrams showing location.",
+      "section": "Architecture",
+      "keywords": [
+        "lms",
+        "features",
+        "steps",
+        "sequence",
+        "student",
+        "lecturer",
+        "staff",
+        "portal-api",
+        "classrooms",
+        "materials"
+      ],
+      "path": "diagrams/lms-reference/features.html"
+    },
+    {
+      "title": "LMS online-class options",
+      "summary": "Live-class vendors, Faid UX pack, OSS vs requirements, and OSS+commercial feature-by-feature review (standup 2\u20133 Nov 2026). Not Live.",
+      "section": "Architecture",
+      "keywords": [
+        "lms",
+        "live class",
+        "online class",
+        "online lessons",
+        "zoom",
+        "bigbluebutton",
+        "openvidu",
+        "jitsi",
+        "whereby",
+        "daily",
+        "realtimekit",
+        "chime",
+        "breakout",
+        "quiz",
+        "recording",
+        "self-paced",
+        "cost",
+        "lobby",
+        "screen share",
+        "request queue",
+        "faid",
+        "ux",
+        "cap-26",
+        "cap-24",
+        "f12",
+        "f13"
+      ],
+      "path": "diagrams/lms-online-class-options.html"
     },
     {
       "title": "Migration plan",

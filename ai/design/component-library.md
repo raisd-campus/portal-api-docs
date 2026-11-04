@@ -143,6 +143,10 @@ Headers use shared `PortalAccount` 0.9.3: name first, permanent SSO numeric User
 
 `raisd-campus/design-system` owns the shared React package `@raisd-campus/design-system`. The four portal applications are separate repositories and consume released package versions. The student portal is the first consumer and the source of the initial visual patterns. `control-plane` and `portal-api-docs` do not import React components.
 
+## Polished page layouts + componentized flows
+
+Before composing a route or regenerating AI-built UI, follow [ai-ui-guidance.md](ai-ui-guidance.md): inspect polished existing pages (and Lesotho Admin wireframe captures where relevant) **and** the design-system catalogue; then **componentize** the page/flow with existing package families rather than inventing per-route layouts. Components alone are not enough layout context; layouts alone must still map to shared components.
+
 ## Ownership decision
 
 ### Popup section layout — 0.23.1
@@ -155,8 +159,8 @@ Before building a UI element, look in the package catalogue and the [published v
 
 | Layer | Owner | Examples |
 | --- | --- | --- |
-| Tokens, type, primitives | `design-system` | Colours, spacing, `Button`, `Badge`, `Input`, `Dialog` |
-| Portal-neutral patterns | `design-system` | `PortalShell`, `PortalSidebar`, `PortalHeader`, `PortalAccount`, `SummaryCard`, `RecordSummaryCard`, `DataTable`, `PagePanelLayout` |
+| Tokens, type, primitives | `design-system` | Colours, spacing, `Button`, `Badge`, `Input`, `Dialog`, `ChipField`, `RadioField`, `Switch` |
+| Portal-neutral patterns | `design-system` | `PortalShell`, `PortalSidebar`, `PortalHeader`, `PortalBreadcrumb`, `PortalAccount`, `SummaryCard`, `RecordSummaryCard`, `DataTable`, `PagePanelLayout`, `AdminRecordFlow`, `FlowEditor`, `SortableList`, `AuditTrail`, `AuthLayout` |
 | Transactional email | `design-system/email/` + `notifications` | `password_reset`, `magic_link`, `applicant_submitted`, `enrolment_accepted`, `learner_access_granted` — send via `notify.raisd.co` |
 | Portal-specific composition | Each portal | Student enrolment context, student profile issues, route selection, Community draft and attachment policy |
 | Campus data and rules | `control-plane` / Portal API | Identity, records, authorisation, CMS integration |
@@ -231,7 +235,7 @@ steps:
 ```
 
 ```powershell
-npm install --save-exact @raisd-campus/design-system@0.9.0
+npm install --save-exact @raisd-campus/design-system@0.19.8
 ```
 
 Import the stylesheet once in the portal's entry CSS. Tailwind v4 ignores `node_modules` by default, so register the installed package as a source. For a portal stylesheet under `src/`, the setup is:
@@ -247,7 +251,7 @@ import { Button } from "@raisd-campus/design-system/ui/button"
 import { SummaryCard } from "@raisd-campus/design-system/system/summary-card"
 ```
 
-Import individual `ui/<component>` or `system/<component>` subpaths to keep unused components out of the portal's eager bundle. Do not import `dist` internals or use the root barrel for application code. A consumer should read `node_modules/@raisd-campus/design-system/docs/components.md` and the emitted declarations from its **pinned version** for exact props, states, and examples. The [0.9.0 catalogue](https://github.com/raisd-campus/design-system/blob/v0.9.0/docs/components.md) is the stable online reference; `main` may have newer APIs. The [portal design rules](design-system.md) define token meaning and responsive behaviour. Keep dark-only styling until a cross-portal theming decision is approved. Phone, tablet, and desktop layouts must remain usable.
+Import individual `ui/<component>` or `system/<component>` subpaths to keep unused components out of the portal's eager bundle. Do not import `dist` internals or use the root barrel for application code. A consumer should read `node_modules/@raisd-campus/design-system/docs/components.md` and the emitted declarations from its **pinned version** for exact props, states, and examples. The [0.19.8 package catalogue](package-catalogue.md) mirrors the published GitHub Packages archive (git tags currently stop at `v0.9.1`). The [portal design rules](design-system.md) define token meaning and responsive behaviour. Keep dark-only styling until a cross-portal theming decision is approved. Phone, tablet, and desktop layouts must remain usable. Portals upgrade deliberately; existing pins below 0.19.8 remain valid until each app upgrades.
 
 `RecordSummaryCard` presents the reference as a labelled row before the other values, followed by an edge-to-edge status footer. `referenceLabel` defaults to "Reference" and can be tailored by the portal. The portal supplies values, status text and tone, and an optional selection action; it owns reference issuance, dates and record workflow.
 
@@ -461,10 +465,10 @@ token/type system, constrains content width and owns a viewport-height scroller
 that remains usable on short phones. Consumers supply existing shared controls,
 explicit field labels, validation, focus/error/busy handling and auth workflows.
 
-SSO consumes the released 0.9.0 package. Existing shared controls and tokens remain unchanged; other portal pins remain at 0.8.0. The released HTML catalogue and public mirror include the shared auth fixture at phone, tablet and desktop widths. Acceptance is recorded in
+SSO first consumed the released 0.9.0 package. Existing shared controls and tokens remain unchanged; Applicant/Student/Lecturer pins may remain on earlier releases until deliberately upgraded. The released HTML catalogue and public mirror include the shared auth fixture at phone, tablet and desktop widths. Acceptance is recorded in
 [the auth migration receipt](../architecture/audits/2026-10-19-shared-auth-ui.md).
 
-## Authentication branding placement - 0.9.1
+## Authentication branding placement — released 0.9.1
 
 The owner requested moving SSO branding above the auth card and was informed before changing the shared component. AuthLayout adds optional `brandingPlacement: "inside" | "above"`; the default remains `"inside"`. The `"above"` variant renders the same branding slot in a page header outside the main card, within the existing viewport scroller and with the existing spacing tokens. SSO opts in for login and password recovery. Other consumers retain their placement and package pins.
 
@@ -539,3 +543,44 @@ Use Checkbox from ui/checkbox or the package root for independent boolean select
 The required shared gate passed 81 units, consumer build, 80 Chromium and 80 WebKit cases (two pre-existing phone-pointer skips). A Student compatibility bundle built against the candidate without changing its package pin or installation; existing dynamic-import warning remains. Three synthetic captures document the new component. The exact 0.25.0 archive is verified in GitHub Packages.
 
 Control registry pin/lock now use 0.25.0; all 317 installed archive files match the verified release. Control lint/type/build passed with its existing SSO and bundle warnings. Six responsive payment-popup browser cases passed, including a focused retry of one Chromium case after a Vite dependency-reload interruption. Local Control restarted; API, policies and payment records were not changed by this shared-component follow-up.
+
+AuthLayout adds optional `brandingPlacement: "inside" | "above"`; the default remains `"inside"`. The `"above"` variant renders the same branding slot in a page header outside the main card, within the existing viewport scroller and with the existing spacing tokens. SSO pins **0.9.1** and opts in for login, forgot password and reset password. Other consumers retain their placement and package pins until upgraded. The published catalogue groups the inside-card (0.9.0) and branding-above (0.9.1) fixture captures under Authentication layout.
+
+## Released package 0.19.8 — designs since 0.9.1
+
+GitHub Packages publishes **0.19.8** (2026-10-28). The full prop catalogue is [package-catalogue.md](package-catalogue.md). Admin workspace detail is [admin-record-flow.md](admin-record-flow.md). Summary of designs added after 0.9.1:
+
+| Range | Designs |
+| --- | --- |
+| 0.9.2–0.9.3 | `FileUploadField.fileSurface="elevated"`; `PortalAccount` optional `userId` / `roles` |
+| 0.10.x–0.11.x | `AdminRecordFlow` family; sticky desktop sidebars; `ContentSection` 16px page gap, 36px title min-height; `LinkedList variant="panel"` |
+| 0.12.0–0.15.0 | `ContentSection.label`; `ChipField`; `AdminRecordWorkspace.titleActions` / `AdminRecordPanel.iconLabel`; `ContentSection titleVariant="subheading"` |
+| 0.17.0 | ChipField 36px min-height, full-field toggle, no chevron |
+| 0.18.x | `PortalHeader.breadcrumbs` + `PortalBreadcrumb` overflow menu; compact record-list alignment; lazy breadcrumb menu chunk; secondary current-page footer button |
+| 0.19.x | `Switch`, `SortableList`, `FlowEditor` (predefined flow steps); category/number presentation refinements; required/fixed steps; drop-index reorder; AdminRecordWorkspace shell-gutter sidebar measurement |
+
+### File tile contrast — 0.9.2
+
+`FileUploadField` keeps `surface-raised` tiles by default. Set `fileSurface="elevated"` only when the enclosing card already uses `surface-raised`.
+
+### Portal account identity — 0.9.3
+
+`PortalAccount` accepts optional `userId` and `roles`, showing `user ID · Role` under the name (admin → Staff; deduplicated). Portals supply authenticated identity.
+
+### ChipField — 0.13.0 / 0.17.0
+
+Import from `ui/chip-field`. Controlled `value: readonly string[]`, `options`, `onValueChange`. Searchable multi-select popover; from 0.17.0 the full field toggles the picker (no chevron) at 36px minimum height with wrapping chips.
+
+### RadioField
+
+Import from `ui/radio-field`. Compact controlled radios (16px indicators, 36px targets); stack on phone, inline from `sm`. Use inside `DetailField` for simple choices such as Draft / Published. `SurveyChoiceGroup` is unchanged.
+
+### Portal breadcrumbs — 0.18.0+
+
+`PortalHeader` accepts optional structured `breadcrumbs` and `renderBreadcrumbLink`. `PortalBreadcrumb` overflows into an ellipsis menu; from 0.18.4 the menu chunk loads only when needed.
+
+### Flow editor — 0.19.0–0.19.8
+
+`system/flow-editor` composes `FlowEditor`, `FlowStepCard`, `FlowStepGroup` with `ui/switch` and `system/sortable-list`. Consumers supply step IDs, labels, linked children and callbacks; flow rules, validation, reviewer assignment, auth and persistence stay in the portal. Latest presentation: muted category labels (Review, Payment, Document release, Applicant action), black number circles, required/fixed steps, Alt+Up/Down reorder, drop commits final index (0.19.7), AdminRecordWorkspace gutter alignment (0.19.8).
+
+Portals pin and upgrade deliberately. Historical HTML captures retain their source package versions; new visual captures for post-0.9.1 fixtures require the package consumer examples when those sources are available.

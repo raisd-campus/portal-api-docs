@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "updated": "2026-10-28",
+  "status": "demo-loaded",
+  "note": "Generated from control-plane docs/ai/contracts/campus-finance-profiles.yaml for Demo load (FM-09). Not Live CMS amounts. Catalogue preview includes Fees & Fines staging seeds from Lesotho newer-CMS walk + FM Application/Acceptance/Registration amounts.",
+  "profiles": [
+    {
+      "campusId": "campus-lesotho",
+      "campusKey": "LESOTHO",
+      "pilot": true,
+      "currencyCode": "LSL",
+      "cmsPaymentCurrency": "M",
+      "applicationFee": {
+        "applies": true,
+        "amountMinor": 30000,
+        "currencyCode": "LSL",
+        "label": "Application fee",
+        "proofRequired": true,
+        "verifiedByRole": "bursary"
+      },
+      "feeCases": {
+        "C3": { "enabled": true, "title": "Semester catalogue fee" },
+        "C4": { "enabled": true, "title": "Modular sum of module fees" }
+      },
+      "cataloguePreview": [
+        {
+          "id": "application-fee",
+          "currencyCode": "LSL",
+          "label": "Application fee",
+          "amountMinor": 30000,
+          "note": "Fees & Fines / Admissions — Demo seed (FM-09)"
+        },
+        {
+          "id": "acceptance-fee",
+          "currencyCode": "LSL",
+          "label": "AcceptanceFee",
+          "amountMinor": 55000,
+          "note": "Fees & Fines staging seed — confirm Live with Faid"
+        },
+        {
+          "id": "registration-fee",
+          "currencyCode": "LSL",
+          "label": "Registration Fee",
+          "amountMinor": 55000,
+          "note": "Fees & Fines staging seed — confirm Live with Faid"
+        },
+        {
+          "id": "late-registration-fee",
+          "currencyCode": "LSL",
+          "label": "Late Registration Fee",
+          "amountMinor": 45000,
+          "note": "From newer-CMS Fees & Fines walk — Demo preview only"
+        },
+        {
+          "id": "re-assessment",
+          "currencyCode": "LSL",
+          "label": "Re-assessment",
+          "amountMinor": 35000,
+          "note": "From newer-CMS Fees & Fines walk — Demo preview only"
+        },
+        {
+          "id": "C3",
+          "currencyCode": "LSL",
+          "label": "Semester catalogue fee (demo)",
+          "amountMinor": null,
+          "note": "Stub preview for Bursary — full C1–C10 engine not in this slice"
+        },
+        {
+          "id": "C4",
+          "currencyCode": "LSL",
+          "label": "Modular module fees (demo)",
+          "amountMinor": null,
+          "note": "Stub preview for Bursary — full C1–C10 engine not in this slice"
+        }
+      ]
+    },
+    {
+      "campusId": "campus-cyberjaya",
+      "campusKey": "CYBERJAYA",
+      "pilot": false,
+      "currencyCode": "MYR",
+      "applicationFee": {
+        "applies": true,
+        "amountMinor": 50000,
+        "currencyCode": "MYR",
+        "label": "Application fee (local)",
+        "proofRequired": true,
+        "verifiedByRole": "bursary",
+        "internationalAmountMinor": 100000
+      },
+      "feeCases": {},
+      "cataloguePreview": []
+    }
+  ]
+}

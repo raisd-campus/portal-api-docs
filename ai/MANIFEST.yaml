@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-11-02
+updated: 2026-11-04
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -10,6 +10,24 @@ decision:
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
   - 2026-10-27: Local Raisd PostgreSQL and one-command stack, backup-first preserved import, missing-only Demo seed and focused agent verification. See architecture/local-development.md.
+
+  - 2026-10-31: Academic guidance expanded vs CMS screenshots (Modules · Assessments · Schools · Curriculum · Calendar) — docs only; Desk Demo `/admin/academic` unchanged (standup 30 Oct action); guidance/index.html + lesotho-user-guide.md + FM-16 cross-link.
+  - 2026-10-30: Guidance under LUCT CMS on docs.raisd.co — single-page Lesotho user guidance (diagrams/guidance/index.html) + website AI pages; markdown SoT frontend/lesotho-user-guide.md.
+  - 2026-10-30: Website-specific AI should/should-not guidance — website-ai-guidance.md attached from AGENTS.md read order (standup 29 Oct).
+  - 2026-10-30: Staff Admin nav/workflow review — group-hub primary + sibling sub-side; Payments/Registrations no longer stack AdmissionsWorkspace; design/2026-10-30-generated-pages-nav-workflow-review.md.
+  - 2026-10-30: AI UI guidance — polished layouts + design system, and componentize pages/flows via existing DS families (standup 29 Oct); design/ai-ui-guidance.md wired into AGENTS.md + student page skill.
+  - 2026-10-29: Lesotho ingested Demo desk wireframes — diagrams/old-cms-lesotho/wireframes/ maps FM-03…FM-18 Staff Admin routes to design-system layouts (PortalShell, DataTable, DetailSectionCard, tabs).
+  - 2026-10-29: Design-system 0.19.8 wireframe review pack — candidates/0.19.8 lo-fi AdminRecordFlow / FlowEditor / ChipField wireframes + AI review note; no portal pin upgrade.
+  - 2026-10-29: Design-system docs synced to released GitHub Packages **0.19.8** — package-catalogue.md + admin-record-flow.md, AI install/reference pins, HTML catalogue version + portal-api-docs mirror (historical captures retain provenance).
+  - 2026-10-28: Lesotho Demo role playback — step-by-step screenshots + FM feature index (diagrams/old-cms-lesotho/demo-role-playback.html · playback-videos/*.poster.jpg).
+  - 2026-10-28: Lesotho Demo role-by-role screenshot storyboard (W1–W3) — diagrams/old-cms-lesotho/demo-role-playback.html.
+  - 2026-10-28: Lesotho W3 Demo — FM-07 12-tab registry file; FM-05 catalogues; FM-09 Fees & Fines preview; FM-08 sponsor/borrower on file (lesotho-feature-modules.md).
+  - 2026-10-28: Lesotho screenshot gap → modules still to develop (post W1+W2) — FM-07/09/05 next; deepen FM-08/03/04; W4+ FM-10–12/11/16–18; FM-X leave-outs locked (lesotho-feature-modules.md).
+  - 2026-10-28: Lesotho W1+W2 Demo — FM-15 SSO/Keychain position seeds; FM-05 review flags; FM-03 n/3 rank/score desks; FM-04 LGCSE extract + Document review; FM-09 finance profile JSON loader; FM-08 NMDS borrower on registration (Demo only, no Live CMS writes).
+  - 2026-10-27: Lesotho newer CMS exports — seven 26 Oct staging downloads (graduation list, name tags, certificate batch, registration and graduation reports). Counts and layout only. No student roster.
+  - 2026-10-28: Lesotho modules organized — FM-01…FM-18 map every in-scope newer-CMS menu; leave out HRMS/LMS/Website/Library/Mail (lesotho-feature-modules.md + feature-modules.html).
+  - 2026-10-28: Lesotho feature modules FM-01…FM-16 — backend/lesotho-feature-modules.md + diagrams/old-cms-lesotho/feature-modules.html (standup 27 Oct divide existing/missing into independent modules).
+  - 2026-10-28: Lesotho feature gaps → workflow & control proposal for Faid — backend/lesotho-workflow-control-improvements.md + diagrams/old-cms-lesotho/workflow-control-improvements.html (standup 27 Oct action).
   - 2026-10-23: Lesotho newer CMS Admin walk — backend/lesotho-newer-cms.md (mind map, section manual, Raisd gap). Staging Google sign-in and Dev Login. No PII.
   - 2026-10-22: "ContentSection 0.10.5 uses a 36px minimum title container; Applicant, Student, Staff and Control adopt the release. Docs: design/component-library.md."
   - 2026-10-22: "Shared Admin summary 0.10.4 adds portrait/centered fields and natural-height sticky scrolling with transparent fades; Staff omits footer actions temporarily. Docs: design/admin-record-flow.md, frontend/lecturer-portal.md."
@@ -25,6 +43,7 @@ notes:
   - 2026-10-21: Multi-access display — landing picker labels Staff vs Lecturer from permissions; Access/SSO keep one lecturer-slot preset; revoke by assignment id.
   - 2026-10-21: Separated Control vs Campus Access assignment APIs — /v1/access/people* for fixed learner presets; /v1/control/people* for admin/custom roles only; Access UI drops module toggles.
   - 2026-10-21: Control Members list no longer treats learner presets as Admin — SSO filters campus members/memberCount to admin|customRoleId; Control badge no longer defaults unknown roles to "Admin".
+  - 2026-10-29: Design-system docs refreshed to released package 0.9.1 — AuthLayout branding-above captures grouped in the HTML catalogue, AI install/reference pins, and portal-api-docs mirror sync (including password_reset email catalogue). Superseded the same day by the 0.19.8 catalogue sync above.
   - 2026-10-20: University Flows source integration preserves upstream custom roles and hosted Demo overlays; full verification receipt includes the recovered Chromium resource-load failure and unchanged interactive services.
   - 2026-10-20: Control campus-first custom roles (Contentful-style) — openapi-sso campuses/roles/members; access-module-hierarchy v3 grantable admin.*; Staff Admin menus gate on admin.*.
 
@@ -37,6 +56,9 @@ notes:
   - 2026-10-19: Faid review fixes — staff RPC requires Admin staff session (no lecturer→Registry elevation); Access grants the hosted campus; SSO smoke uses admin not retired staff roleKey; Jenkins sync updates existing jobs in place and preserves active/retired history; portal-api-docs AI mirror synced including control-portal.md.
   - 2026-10-17: "Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html."
   - 2026-10-17: "Staff portal menus follow the active role. Lecturer sees Dashboard, Classrooms, and Community. Admin sees Overview, Applicants, Students, Payments, Registrations, and Access. Register copy is Register student, Register staff, or Register lecturer. Docs: backend/sso.md, frontend/lecturer-portal.md, frontend/admin-portal.md."
+
+  - "2026-10-17: Docs overview progress marks the hosted Demo live (SSO, Staff portal, Community, eight campuses). CMS checklist stays 0%. Diagrams: docs/diagrams/index.html."
+  - 2026-10-17: Staff portal menus follow the active role. Lecturer sees Dashboard, Classrooms, and Community. Admin sees Overview, Applicants, Students, Payments, Registrations, and Access. Register copy is Register student, Register staff, or Register lecturer. Docs: backend/sso.md, frontend/lecturer-portal.md, frontend/admin-portal.md.
   - 2026-10-17: Campus Admin desks moved into the staff portal (`staff.{slug}.raisd.co/admin`, repo `lecturer-portal`). `admin.{slug}.raisd.co` 301-redirects there. `admin-portal` is no longer deployed.
   - 2026-10-16: "Portal rename cutover — Raisd Admin → Control (`control.raisd.co`, `roleKey` `control`, repo `control-portal`); Staff → Campus Admin (`admin.{slug}.raisd.co`, `roleKey` `admin`, repo `admin-portal`). Legacy `admin.raisd.co` and `staff.{slug}.raisd.co` 301-redirect. Docs: microservices/vps-topology/repositories/sso + diagrams endpoints."
   - 2026-10-16: "Jenkins hostPath jobs synced for lecturer/admin/control; legacy `raisd-staff-portal` deleted; raisd-root Argo drift cleared. Docs: architecture/cicd.md + audits/2026-10-16-jenkins-delivery-verification.md."
@@ -84,6 +106,23 @@ notes:
   - 2026-10-01: Schema v3 campus policy layer implemented (status mapping, academic-status / credit / CGPA / document / adjustment policies; university-default seeds; projections + SQL views). See canonical-schema-luct-readiness.md §0.1 / §7.
   - 2026-10-01: Campus policy surfaced in published ERD, Data Model Explorer, OpenAPI `/v1/meta.schemaVersion`, and db-admin IRREGULAR map.
   - 2026-10-01: "\"Architecture review confirmed Schema v3 good to proceed; CS-01–CS-11 = campus go-Live policy validation (Demo defaults not authoritative LUCT policy). Neon Demo reseeded to schema_version 3 (95 collections); physical verification checklist passed. Production Vercel portal-api redeployed — `/v1/meta` returns `schemaVersion: 3`.\""
+
+  - 2026-10-01: "Architecture review confirmed Schema v3 good to proceed; CS-01–CS-11 = campus go-Live policy validation (Demo defaults not authoritative LUCT policy). Neon Demo reseeded to schema_version 3 (95 collections); physical verification checklist passed. Production Vercel portal-api redeployed — `/v1/meta` returns `schemaVersion: 3`."
+  - 2026-11-03: LMS online-class research (standup 2 Nov) — cost/hosting/integration matrix, self-paced + recordings + quizzes, breakout platforms; architecture/lms-online-class-options.md.
+  - 2026-11-03: LMS online-class — OSS classroom feature comparison (BBB vs OpenVidu Meet vs Jitsi); OpenVidu links/cost/verdict; diagrams/lms-online-class-options.html.
+  - 2026-11-03: LMS online-lesson UX requirements from Faid 7.0 Chat design pack (OL-xx); gallery diagrams/lms-reference/online-lessons/; architecture/lms-online-lesson-ux.md.
+  - 2026-11-03: Combined online-lessons UX gallery into diagrams/lms-online-class-options.html#ux-pack; old online-lessons.html redirects.
+  - 2026-11-04: Self-developed cost bands raised to Aslam ceiling (~$8–12k / ~$18–30k / ~$25–40k/mo S1–S3; up to ~$40k) on options.md/.html, oss-requirements, feature-comparison.
+  - 2026-11-04: Hypothetical per-platform implementation wireframes on diagrams/lms-online-class-options.html#wireframes (Shapes A/B/C · all matrix platforms) + options.md §2.4.
+  - 2026-11-04: Expanded OSS video catalogue — plugNmeet, Apache OpenMeetings, edumeet, Galène, Nextcloud Talk, MiroTalk SFU (+ Ion DIY) across lms-oss-video-requirements.md, lms-online-class-options.md/.html, lms-video-feature-comparison.md.
+  - 2026-11-04: OSS video vs stated requirements (standup 3 Nov R1–R12) — architecture/lms-oss-video-requirements.md; diagrams/lms-online-class-options.html#oss-req (BBB / OpenVidu / Jitsi / LiveKit implementation).
+  - 2026-11-04: OSS + commercial feature-by-feature comparison for review — architecture/lms-video-feature-comparison.md; diagrams/lms-online-class-options.html#feature-compare.
+  - 2026-11-04: Word/PDF export on the LMS online-class report and the 31 Oct CMS standup note (diagrams/report-export.js). PDF uses the browser print dialog.
+  - 2026-11-04: Word export embeds screenshots as a single-file document so Word shows the reference images.
+  - 2026-10-31: LMS feature steps — top-of-page Mermaid mind map of F01–F15; each step/wireframe labelled Moodle / Google Classroom / Both / Raisd-native inspiration.
+  - 2026-10-31: LMS feature steps — Faid DS 0.19.8 lo-fi wireframe on every step + Mermaid syntax hardened (no ; : / {} in labels); regenerate via diagrams/lms-reference/build-features.py.
+  - 2026-10-31: LMS docs-only — step-by-step features with functionality, direction of use, Raisd integration, and per-step Mermaid sequences (location STU/LEC/STA/CMS/API) at diagrams/lms-reference/features.html · architecture/lms-feature-steps.md.
+  - 2026-10-31: LMS docs-only — Moodle + Google Classroom capability map (architecture/lms-moodle-classroom-map.md) + labelled reference gallery diagrams/lms-reference/; wired into LMS hub / site-nav / MANIFEST. Not product build; Demo ≠ Live.
   - 2026-10-01: LMS Q37 Option 1 — published lms-architecture.html + lms-features.html (F01–F37 × CAP) from Raisd sources; hub Moodle-like student map; no PPA comparison.
   - 2026-10-02: LMS logical database tables + ERD CMS/LMS/shared/proposed colour legend (erd.html §10); agent schema at backend/lms-schema.md.
   - 2026-10-02: db-admin ERD tab colours CMS / LMS / shared domains, domain filter, and LMS IRREGULAR stems (aligned with lms-schema.md).
@@ -136,6 +175,26 @@ sibling_repos:
   - portal-api-docs
   - db-admin
 
+guidance:
+  - path: website-ai-guidance.md
+    topics: [ai-guidance, should-should-not, websites, portals, standup-2026-10-29]
+    related:
+      - AGENTS.md
+      - design/ai-ui-guidance.md
+      - design/2026-10-30-generated-pages-nav-workflow-review.md
+      - process/status-language.md
+    note: Standup 29 Oct — website-specific AI should/should-not; attached from AGENTS.md read order.
+  - path: frontend/lesotho-user-guide.md
+    topics: [lesotho, user-guide, demo, navigation, admissions, staff-admin, screenshots, guidance]
+    pages: ../diagrams/guidance/index.html
+    related:
+      - architecture/lesotho-pilot.md
+      - backend/lesotho-feature-modules.md
+      - frontend/keychain.md
+      - frontend/admin-portal.md
+      - website-ai-guidance.md
+    note: Published as docs.raisd.co Guidance section (submenu per topic).
+
 architecture:
   - path: architecture/local-development.md
     topics: [local, docker, postgres, startup, seed, environment, backup, focused-verification]
@@ -154,15 +213,82 @@ architecture:
     topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state, lesotho]
     pages: ../diagrams/distributed-cms-architecture.html
   - path: architecture/lms.md
-    topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle, schema, erd]
+    topics: [lms, learning, f01-f37, cap-44, base-44, materials, ppa-lms, research, moodle, classroom, schema, erd]
     pages:
       - ../diagrams/lms.html
       - ../diagrams/lms-architecture.html
       - ../diagrams/lms-features.html
+      - ../diagrams/lms-reference/index.html
       - ../diagrams/erd.html
     related: backend/lms-schema.md
     status: proposed
     note: Q37 Option 1 published; research posture only — not Live LMS. ERD §10 catalogues LMS tables with CMS colour legend.
+  - path: architecture/lms-moodle-classroom-map.md
+    topics: [lms, moodle, google-classroom, capability-map, cap, f01-f37, research, reference-screenshots]
+    pages:
+      - ../diagrams/lms-reference/index.html
+      - ../diagrams/lms-reference/features.html
+      - ../diagrams/lms.html
+      - ../diagrams/lms-features.html
+    related: architecture/lms.md
+    status: proposed
+    note: Docs-only absorb of Moodle + Classroom capabilities into Raisd CAP; screenshots labelled Reference — not Raisd.
+  - path: architecture/lms-feature-steps.md
+    topics: [lms, features, steps, sequence, classrooms, materials, portal-api, student, lecturer, staff]
+    pages:
+      - ../diagrams/lms-reference/features.html
+      - ../diagrams/lms-reference/index.html
+    related: architecture/lms-moodle-classroom-map.md
+    status: proposed
+    note: Step-by-step LMS features with per-step sequences and location (STU/LEC/STA/CMS/API).
+  - path: architecture/lms-online-class-options.md
+    topics: [lms, live-class, cap-26, cap-24, quiz, recording, self-paced, breakout, bbb, zoom, whereby, daily, realtimekit, research, cost]
+    pages:
+      - ../diagrams/lms-online-class-options.html
+      - ../diagrams/lms-reference/features.html
+      - ../diagrams/lms.html
+    related:
+      - architecture/lms.md
+      - architecture/lms-oss-video-requirements.md
+      - architecture/lms-video-feature-comparison.md
+      - architecture/lms-online-lesson-ux.md
+      - architecture/lms-moodle-classroom-map.md
+      - architecture/lms-feature-steps.md
+    status: proposed
+    note: Standup 2–3 Nov 2026 research + published cost/integration page + UX gallery at #ux-pack. Not Live.
+  - path: architecture/lms-oss-video-requirements.md
+    topics: [lms, live-class, cap-26, oss, bbb, openvidu, jitsi, livekit, requirements, implementation, research]
+    pages:
+      - ../diagrams/lms-online-class-options.html
+    related:
+      - architecture/lms-online-class-options.md
+      - architecture/lms-video-feature-comparison.md
+      - architecture/lms-online-lesson-ux.md
+      - architecture/lms.md
+    status: proposed
+    note: Standup 3 Nov 2026 — OSS options vs R1–R12 stated requirements + Portal API implementation. Not Live.
+  - path: architecture/lms-video-feature-comparison.md
+    topics: [lms, live-class, cap-26, feature-comparison, oss, commercial, zoom, meet, teams, whereby, chime, realtimekit, review, research]
+    pages:
+      - ../diagrams/lms-online-class-options.html
+    related:
+      - architecture/lms-online-class-options.md
+      - architecture/lms-oss-video-requirements.md
+      - architecture/lms-online-lesson-ux.md
+      - architecture/lms.md
+    status: proposed
+    note: Standup 3 Nov 2026 — OSS + commercial feature-by-feature review pack for leadership. Not Live.
+  - path: architecture/lms-online-lesson-ux.md
+    topics: [lms, live-class, cap-26, ux, lobby, roster, screen-share, moderation, past-class, faid, design, research]
+    pages:
+      - ../diagrams/lms-online-class-options.html
+    related:
+      - architecture/lms-online-class-options.md
+      - architecture/lms-oss-video-requirements.md
+      - architecture/lms-video-feature-comparison.md
+      - architecture/lms-feature-steps.md
+    status: proposed
+    note: Faid 7.0 Chat online-lessons design pack → OL-xx requirements. Gallery lives in lms-online-class-options.html#ux-pack.
   - path: architecture/repositories.md
     topics: [repo-map, local-paths, ownership]
   - path: architecture/deployment.md
@@ -254,10 +380,38 @@ backend:
       - architecture/lesotho-pilot.md
       - backend/old-cms-lesotho.md
       - backend/lesotho-db-gap.md
+      - backend/lesotho-workflow-control-improvements.md
+      - backend/lesotho-feature-modules.md
       - frontend/admin-portal.md
       - frontend/applicant-portal.md
     pages: ../diagrams/old-cms-lesotho/newer-cms.html
-    note: 23 Oct 2026 Admin walk of the staging portal. Published mind map, section manual, and gap vs Raisd Demo. No PII.
+    note: 23 Oct 2026 Admin walk of the staging portal. Published mind map, section manual, and gap vs Raisd Demo. 26 Oct exports (graduation, certificates, registration reports) are the newer-cms-export pages. No student roster.
+  - path: backend/lesotho-workflow-control-improvements.md
+    topics: [lesotho, pilot, m4, gap, workflow, university-flows, control, rbac, faid, standup, admissions, registration, nmds]
+    related:
+      - architecture/lesotho-pilot.md
+      - backend/lesotho-newer-cms.md
+      - backend/lesotho-feature-modules.md
+      - backend/lesotho-db-gap.md
+      - backend/lesotho-cms-vs-applicant-portal.md
+      - backend/university-flows.md
+      - backend/access-module-hierarchy.md
+      - backend/campus-finance-profile.md
+      - frontend/control-portal.md
+    pages: ../diagrams/old-cms-lesotho/workflow-control-improvements.html
+    note: 28 Oct 2026 — standup 27 Oct action for Faid. Scope cut excludes HRMS/LMS/Library. Proposes W1–W4 workflows and C1–C3 Control seeds. Not Live.
+  - path: backend/lesotho-feature-modules.md
+    topics: [lesotho, pilot, m4, modules, gap, faid, standup, admissions, registry, finance, nmds, cap-53]
+    related:
+      - architecture/lesotho-pilot.md
+      - backend/lesotho-workflow-control-improvements.md
+      - backend/lesotho-newer-cms.md
+      - backend/lesotho-db-gap.md
+      - backend/lesotho-cap53-read-adapter.md
+      - backend/campus-finance-profile.md
+      - backend/university-flows.md
+    pages: ../diagrams/old-cms-lesotho/feature-modules.html
+    note: 28 Oct 2026 — standup 27 Oct actions. FM-01…FM-18 organize agreed newer-CMS functionality; FM-X leave-out HRMS/LMS/Website/Library/Mail; waves W0–W6. Not Live. Demo role playback: ../diagrams/old-cms-lesotho/demo-role-playback.html (W1–W3 screenshot steps, FM-tracked).
   - path: backend/lesotho-db-gap.md
     topics: [lesotho, pilot, m4, database, gap, nmds, lgcse, schema, botswana, cyberjaya, cap-48, cap-53]
     related:
@@ -437,6 +591,10 @@ diagrams:
     topics: [lms, architecture, portal-api, role-surfaces, file-store]
   - path: ../diagrams/lms-features.html
     topics: [lms, f01-f37, features, cap-matrix, research]
+  - path: ../diagrams/lms-reference/index.html
+    topics: [lms, moodle, google-classroom, reference-screenshots, capability-map, research]
+  - path: ../diagrams/lms-reference/features.html
+    topics: [lms, features, steps, sequence-diagrams, classrooms, materials, integration]
   - path: ../diagrams/migration.html
     topics: [milestones, m1-m5, hosting-stages]
   - path: ../diagrams/architecture.html
@@ -547,12 +705,22 @@ skills:
     topics: [page-structure, page-archetypes, shared-components, tables, forms, navigation, feedback, university-flows, flow-editor, reviewer-popups]
 
 design:
+  - path: design/ai-ui-guidance.md
+    topics: [ai-guidance, page-layouts, componentize, flows, design-system, polished-references, standup-2026-10-29]
+  - path: design/2026-10-30-generated-pages-nav-workflow-review.md
+    topics: [staff-admin, navigation, workflows, admissions, payments, registrations, review]
   - path: design/2026-10-13-portal-ui-ownership-audit.md
     topics: [ui-audit, shared-css, pointer, responsive, component-ownership, candidate]
   - path: design/design-system.md
     topics: [tokens, components, dark-theme, summary-card]
   - path: design/component-library.md
     topics: [design-system, package, component-ownership, installation]
+  - path: design/package-catalogue.md
+    topics: [design-system, package, catalogue, 0.19.8, ChipField, FlowEditor, AdminRecordFlow]
+  - path: design/admin-record-flow.md
+    topics: [design-system, admin-record-flow, AdminTable, workspace]
+  - path: design/2026-10-29-design-system-0198-review.md
+    topics: [design-system, 0.19.8, wireframes, review, AdminRecordFlow, FlowEditor]
 
 process:
   - path: process/generate-documentation.md

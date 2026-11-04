@@ -9,8 +9,9 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
 ## 1. Read order (any task)
 
 1. This file.
-2. [architecture/overview.md](architecture/overview.md), [architecture/microservices.md](architecture/microservices.md), and [architecture/repositories.md](architecture/repositories.md).
-3. The portal or service file that owns the change:
+2. **Website AI should / should not:** [website-ai-guidance.md](website-ai-guidance.md) (standup 29 Oct 2026 — attach point for portal product work).
+3. [architecture/overview.md](architecture/overview.md), [architecture/microservices.md](architecture/microservices.md), and [architecture/repositories.md](architecture/repositories.md).
+4. The portal or service file that owns the change:
    - Student UI → [frontend/student-portal/AGENTS.md](frontend/student-portal/AGENTS.md)
    - Applicant UI → [frontend/applicant-portal.md](frontend/applicant-portal.md); LUCT Cyberjaya online-registration procedure capture → [backend/luct-online-registration.md](backend/luct-online-registration.md); FE gaps vs that pack → [backend/luct-online-registration-fe-gap.md](backend/luct-online-registration-fe-gap.md)
    - Lecturer UI → [frontend/lecturer-portal.md](frontend/lecturer-portal.md)
@@ -23,9 +24,9 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - CI/CD (Jenkins main-only trigger + Argo GitOps) → [architecture/cicd.md](architecture/cicd.md), [architecture/argocd.md](architecture/argocd.md), tree [`gitops/`](../../gitops/), [`ci/Jenkinsfile`](../../ci/Jenkinsfile)
    - Canonical record schema / ERD (LUCT readiness — Schema v3 campus policy Demo done; see §7) → [backend/canonical-schema-luct-readiness.md](backend/canonical-schema-luct-readiness.md)
    - Pending schema confirmations (CS-01–CS-13: Schema v3 policy Demo done; campus Live readiness) → [../diagrams/canonical-schema-confirmations.html](../diagrams/canonical-schema-confirmations.html)
-   - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html)
+   - LMS research posture (Raisd CAP + F01–F37; no PPA LMS inventory here) → [architecture/lms.md](architecture/lms.md), [../diagrams/lms.html](../diagrams/lms.html); Moodle + Classroom capability absorb → [architecture/lms-moodle-classroom-map.md](architecture/lms-moodle-classroom-map.md), [../diagrams/lms-reference/](../diagrams/lms-reference/index.html); online-class / quizzes / breakouts research → [architecture/lms-online-class-options.md](architecture/lms-online-class-options.md); OSS vs stated requirements (3 Nov) → [architecture/lms-oss-video-requirements.md](architecture/lms-oss-video-requirements.md); OSS + commercial feature comparison → [architecture/lms-video-feature-comparison.md](architecture/lms-video-feature-comparison.md)
    - LMS logical schema / ERD colours (CMS vs LMS) → [backend/lms-schema.md](backend/lms-schema.md), [../diagrams/erd.html#lms](../diagrams/erd.html#lms)
-   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-newer-cms.md](backend/lesotho-newer-cms.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md), [backend/lesotho-cap53-online-enrolment-write.md](backend/lesotho-cap53-online-enrolment-write.md), [backend/lesotho-cms-vs-applicant-portal.md](backend/lesotho-cms-vs-applicant-portal.md), [backend/applicant-qr-fee-mechanisms.md](backend/applicant-qr-fee-mechanisms.md), [backend/campus-finance-profile.md](backend/campus-finance-profile.md), [backend/dynamic-fee-calculation.md](backend/dynamic-fee-calculation.md), [backend/cross-campus-fee-amount-suggestions.md](backend/cross-campus-fee-amount-suggestions.md), [contracts/campus-finance-profiles.yaml](contracts/campus-finance-profiles.yaml) (structure · CAP-53 R1/W1 · M4 gap · CMS vs Applicant · fee/payment · finance profile · dynamic fees · cross-campus amounts)
+   - Lesotho pilot approach (first acceptance campus, 3 Oct 2026) → [architecture/lesotho-pilot.md](architecture/lesotho-pilot.md), [backend/old-cms-lesotho.md](backend/old-cms-lesotho.md), [backend/lesotho-newer-cms.md](backend/lesotho-newer-cms.md), [backend/lesotho-workflow-control-improvements.md](backend/lesotho-workflow-control-improvements.md), [backend/lesotho-feature-modules.md](backend/lesotho-feature-modules.md), [backend/lesotho-db-gap.md](backend/lesotho-db-gap.md), [backend/lesotho-cap53-read-adapter.md](backend/lesotho-cap53-read-adapter.md), [backend/lesotho-cap53-online-enrolment-write.md](backend/lesotho-cap53-online-enrolment-write.md), [backend/lesotho-cms-vs-applicant-portal.md](backend/lesotho-cms-vs-applicant-portal.md), [backend/applicant-qr-fee-mechanisms.md](backend/applicant-qr-fee-mechanisms.md), [backend/campus-finance-profile.md](backend/campus-finance-profile.md), [backend/dynamic-fee-calculation.md](backend/dynamic-fee-calculation.md), [backend/cross-campus-fee-amount-suggestions.md](backend/cross-campus-fee-amount-suggestions.md), [contracts/campus-finance-profiles.yaml](contracts/campus-finance-profiles.yaml) (structure · CAP-53 R1/W1 · M4 gap · workflow/control · feature modules · CMS vs Applicant · fee/payment · finance profile · dynamic fees · cross-campus amounts)
    - Existing Cyberjaya CMS inventory / CAP comparison → [backend/old-cms-cyberjaya.md](backend/old-cms-cyberjaya.md), [backend/cms-feature-comparison.md](backend/cms-feature-comparison.md)
    - Sierra Leone CMS inventory (M5 pattern) → [backend/old-cms-sierra-leone.md](backend/old-cms-sierra-leone.md)
    - Botswana CMS inventory (M5 pattern) → [backend/old-cms-botswana.md](backend/old-cms-botswana.md)
@@ -33,10 +34,10 @@ These instructions apply to **every** repository under `raisd-campus` unless a p
    - Cambodia LUCT CMS E2E (M5; LUCT CMS → Cambodia) → [backend/old-cms-cambodia.md](backend/old-cms-cambodia.md), Pages [`../diagrams/old-cms-cambodia/`](../diagrams/old-cms-cambodia/) · [`#cambodia`](../diagrams/old-cms/index.html#cambodia)
    - Cambodia certificate QR + Verification (CMS → qr.limkokwing.net) → Pages [`../diagrams/old-cms-cambodia/certificate-qr.html`](../diagrams/old-cms-cambodia/certificate-qr.html), [backend/cambodia-qr-system.md](backend/cambodia-qr-system.md)
    - Botswana DTEF / TEF.gov.bw scholarship sync → [backend/botswana-dtef-scholarship-sync.md](backend/botswana-dtef-scholarship-sync.md)
-4. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
-5. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
+5. Matching SDD (`docs/sdd/04`–`08`, `12`, `14`) for the delivery contract. Jump any `CAP-*` / `M*` via [SDD-15 nomenclature](../sdd/15-nomenclature.md).
+6. [MANIFEST.yaml](MANIFEST.yaml) if you need to discover related documents.
 
-For any portal UI task, also read [design/component-library.md](design/component-library.md) and the package's [component catalogue](https://github.com/raisd-campus/design-system/blob/main/docs/components.md) before creating a visual component.
+For any portal UI task, also read [design/ai-ui-guidance.md](design/ai-ui-guidance.md) (**polished existing page layouts + design system**), [design/component-library.md](design/component-library.md), and the released [package catalogue](design/package-catalogue.md) (0.19.8) before creating or regenerating pages. Website-wide should / should not remains [website-ai-guidance.md](website-ai-guidance.md).
 
 Automatically load and apply [raisd-page-structure](skills/raisd-page-structure/SKILL.md) whenever building or restructuring a Raisd page, and for page-consistency reviews, whether or not the user mentions the skill. It supplies page archetypes and shared-component composition without requiring a legacy-system reference. Combine it with the owning portal's instructions; isolated copy fixes and backend-only work do not need this page workflow.
 
@@ -114,6 +115,19 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 - Audit the complete changed user journeys, server authorization, persistence and boundary cases. Use isolated loopback servers, synthetic accounts and disposable databases for mutations. Existing interactive applications, policies, identities, credentials and stashes remain intact.
 - Gate receipts support the audit, but do not replace staged-file/secret review, a sanitized findings report, data-preservation proof or human review of known failures and skips. Mocked browser checks, real HTTP/PostgreSQL journeys and readiness checks are separate evidence.
 - Commit/push only when requested, to the approved branch and explicit remote ref. Failed mandatory checks or unverified critical paths block pushing. No deployment, package publication, remote migration or main-branch integration is implied.
+
+### Website-specific AI guidance (all portals)
+
+Confirmed Working Group standup **29 Oct 2026**. Agents **must** follow the website should / should not list in [website-ai-guidance.md](website-ai-guidance.md) (product, architecture, UI, docs, safety). That file is the attach point for “what the AI should and should not do” on Raisd websites.
+
+### Polished layouts + componentized flows (all portals)
+
+When composing or regenerating portal UI, agents **must**:
+
+1. Reference polished existing page layouts **alongside** the design system — not the package catalogue or a CMS menu crawl alone.
+2. **Componentize** pages and flows with existing design-system families (`PortalShell`, page panels, `DataTable` / `AdminTable`, `DetailField` / `AdminRecordFlow`, `FlowEditor`, etc.) — not one-off layouts per menu item.
+
+Full UI rule, surface→component map, and do/don’t: [design/ai-ui-guidance.md](design/ai-ui-guidance.md). Staff Admin desks also use [Lesotho Demo desk wireframes](../diagrams/old-cms-lesotho/wireframes/).
 
 ### Component-change guardrail (all portals)
 

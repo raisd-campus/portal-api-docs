@@ -34,6 +34,10 @@ targets:
   lms: diagrams/lms.html
   lms-architecture: diagrams/lms-architecture.html
   lms-features: diagrams/lms-features.html
+  lms-reference: diagrams/lms-reference/index.html
+  lms-feature-steps: diagrams/lms-reference/features.html
+  lms-online-class: diagrams/lms-online-class-options.html
+  lms-online-lessons-ux: diagrams/lms-online-class-options.html#ux-pack
   dfd: diagrams/dfd.html
   luct: diagrams/old-cms/index.html
   luct-comparison: diagrams/old-cms/comparison.html
@@ -56,6 +60,17 @@ targets:
   luct-ls-newer-cms: diagrams/old-cms-lesotho/newer-cms.html
   luct-ls-newer-cms-manual: diagrams/old-cms-lesotho/newer-cms-manual.html
   luct-ls-newer-cms-gap: diagrams/old-cms-lesotho/newer-cms-gap.html
+  luct-ls-newer-cms-shots: diagrams/old-cms-lesotho/newer-cms-screenshots.html
+  luct-ls-newer-cms-exports: diagrams/old-cms-lesotho/newer-cms-exports.html
+  luct-ls-feature-modules: diagrams/old-cms-lesotho/feature-modules.html
+  luct-ls-workflow-control: diagrams/old-cms-lesotho/workflow-control-improvements.html
+  luct-ls-demo-playback: diagrams/old-cms-lesotho/demo-role-playback.html
+  luct-ls-wireframes: diagrams/old-cms-lesotho/wireframes/index.html
+  luct-ls-newer-cms-obsidian: diagrams/old-cms/obsidian.html
+  guidance: diagrams/guidance/index.html
+  guidance-ai-should: diagrams/guidance/website-ai-should.html
+  guidance-ai-should-not: diagrams/guidance/website-ai-should-not.html
+  guidance-ai-decisions: diagrams/guidance/website-ai-decisions.html
   ai-applicant-qr-fee: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/applicant-qr-fee-mechanisms.md
   ai-campus-finance-profile: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/campus-finance-profile.md
   ai-campus-finance-yaml: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/contracts/campus-finance-profiles.yaml
@@ -100,6 +115,7 @@ targets:
   report-e2e-learning-lms-2026-10-11: https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/
   report-e2e-access-control-2026-10-21: https://docs.raisd.co/reports/e2e-access-control-2026-10-21/
   report-database-recreation-2026-10-22: https://docs.raisd.co/reports/database-recreation-2026-10-22/
+  report-cms-standup-updates-2026-10-30: https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/
   report-e2e-access-control-2026-10-20: https://docs.raisd.co/reports/e2e-access-control-2026-10-20/
   report-e2e-access-templates-2026-10-20: https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/
 
@@ -110,6 +126,9 @@ external:
   ai-distributed: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md
   ai-lesotho-pilot: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md
   ai-lms: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md
+  ai-lms-online-class: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md
+  ai-lms-video-features: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-video-feature-comparison.md
+  ai-lms-online-lesson-ux: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-lesson-ux.md
   ai-portal-api: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md
   ai-portal-api-plan: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md
   ai-portal-api-deploy: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md
@@ -155,6 +174,18 @@ path_rules:
     section: luct-ls-newer-cms-manual
   - match: { prefix: diagrams/old-cms-lesotho/, file: newer-cms-gap.html }
     section: luct-ls-newer-cms-gap
+  - match: { prefix: diagrams/old-cms-lesotho/, file: newer-cms-screenshots.html }
+    section: luct-ls-newer-cms-shots
+  - match: { prefix: diagrams/old-cms-lesotho/, name_contains: newer-cms-export }
+    section: luct-ls-newer-cms-exports
+  - match: { prefix: diagrams/old-cms-lesotho/, file: feature-modules.html }
+    section: luct-ls-feature-modules
+  - match: { prefix: diagrams/old-cms-lesotho/, file: workflow-control-improvements.html }
+    section: luct-ls-workflow-control
+  - match: { prefix: diagrams/old-cms-lesotho/, file: demo-role-playback.html }
+    section: luct-ls-demo-playback
+  - match: { prefix: diagrams/old-cms-lesotho/wireframes/ }
+    section: luct-ls-wireframes
   - match: { prefix: diagrams/old-cms-lesotho/ }
     section: luct-ls
   - match: { prefix: diagrams/old-cms-eswatini/, file: database.html }
@@ -225,10 +256,26 @@ path_rules:
     section: lms-architecture
   - match: { file: lms-features.html }
     section: lms-features
+  - match: { file: lms-online-class-options.html }
+    section: lms-online-class
+  - match: { path_contains: lms-reference, file: online-lessons.html }
+    section: lms-online-class
+  - match: { path_contains: lms-reference, file: features.html }
+    section: lms-feature-steps
+  - match: { path_contains: lms-reference }
+    section: lms-reference
   - match: { file: migration.html }
     section: migration
   - match: { exact: diagrams/index.html }
     section: overview
+  - match: { prefix: diagrams/guidance/, file: website-ai-should.html }
+    section: guidance-ai-should
+  - match: { prefix: diagrams/guidance/, file: website-ai-should-not.html }
+    section: guidance-ai-should-not
+  - match: { prefix: diagrams/guidance/, file: website-ai-decisions.html }
+    section: guidance-ai-decisions
+  - match: { prefix: diagrams/guidance/ }
+    section: guidance
   - match: { prefix: ai/ }
     section: ai
   - match: { prefix: design-system/ }
@@ -271,6 +318,9 @@ menu:
       - { label: LMS research, href: lms }
       - { label: LMS architecture, href: lms-architecture }
       - { label: LMS features, href: lms-features }
+      - { label: Moodle + Classroom map, href: lms-reference }
+      - { label: LMS feature steps, href: lms-feature-steps }
+      - { label: Online-class options, href: lms-online-class }
       - { label: Migration, href: migration }
       - { label: Microservices, href: microservices }
       - { label: "VPS topology", href: vps-topology }
@@ -278,7 +328,7 @@ menu:
 
   - label: Architecture
     href: architecture
-    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features]
+    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features, lms-reference, lms-feature-steps, lms-online-class]
     children:
       - { label: Architecture home, href: architecture }
       - { label: Access module hierarchy, href: access-hierarchy }
@@ -297,6 +347,9 @@ menu:
       - { label: LMS research posture, href: lms }
       - { label: LMS architecture, href: lms-architecture }
       - { label: LMS features F01–F37, href: lms-features }
+      - { label: Moodle + Classroom map, href: lms-reference }
+      - { label: LMS feature steps, href: lms-feature-steps }
+      - { label: Online-class options, href: lms-online-class }
       - { label: "SDD & ADR catalogue", href: "architecture#sdd" }
       - { label: "SoR / ACL", href: "architecture#acl" }
       - { label: Academic model, href: "architecture#academic" }
@@ -346,6 +399,17 @@ menu:
       - luct-ls-newer-cms
       - luct-ls-newer-cms-manual
       - luct-ls-newer-cms-gap
+      - luct-ls-newer-cms-shots
+      - luct-ls-newer-cms-exports
+      - luct-ls-feature-modules
+      - luct-ls-workflow-control
+      - luct-ls-demo-playback
+      - luct-ls-wireframes
+      - luct-ls-newer-cms-obsidian
+      - guidance
+      - guidance-ai-should
+      - guidance-ai-should-not
+      - guidance-ai-decisions
       - luct-sz
       - luct-sz-database
       - luct-kh
@@ -356,19 +420,33 @@ menu:
       - luct-sl
       - luct-sl-database
     children:
+      - label: Guidance
+        href: guidance
+        children:
+          - { label: User guidance, href: guidance }
+          - { label: AI should, href: guidance-ai-should }
+          - { label: AI should not, href: guidance-ai-should-not }
+          - { label: AI decisions, href: guidance-ai-decisions }
       - label: Lesotho (pilot)
         href: luct-ls
         children:
           - { label: Newer CMS mind map, href: luct-ls-newer-cms }
           - { label: Newer CMS user manual, href: luct-ls-newer-cms-manual }
           - { label: Newer CMS gap vs Raisd, href: luct-ls-newer-cms-gap }
+          - { label: Workflow & control (Faid), href: luct-ls-workflow-control }
+          - { label: Feature modules, href: luct-ls-feature-modules }
+          - { label: Demo role playback, href: luct-ls-demo-playback }
+          - { label: Demo desk wireframes, href: luct-ls-wireframes }
+          - { label: Newer CMS screenshots, href: luct-ls-newer-cms-shots }
+          - { label: Newer CMS exports, href: luct-ls-newer-cms-exports }
+          - { label: Newer CMS Obsidian 3D, href: "luct-ls-newer-cms-obsidian?campus=lesotho" }
           - { label: Feature analysis, href: luct-ls }
           - { label: CMS vs Applicant, href: luct-ls-cms-applicant }
           - { label: Fee / payment SPs, href: luct-ls-fee-sps }
           - { label: Finance profile (Faid), href: luct-ls-finance-profile }
           - { label: CAP-53 online-enrol, href: luct-ls-cap53-enrol }
           - { label: Dynamic fee calc, href: luct-ls-dynamic-fee }
-          - { label: Obsidian 3D, href: "luct-obsidian?campus=lesotho" }
+          - { label: Obsidian 3D screenshot FSD, href: "luct-obsidian?campus=lesotho-screenshot" }
           - { label: Flows, href: "luct-ls#admissions" }
           - { label: Why pilot, href: "luct-ls#why" }
           - { label: Admissions, href: "luct-ls#admissions" }
@@ -456,6 +534,9 @@ menu:
       - { label: Lesotho pilot approach, href: ai-lesotho-pilot }
       - { label: Distributed CMS target, href: ai-distributed }
       - { label: LMS research posture, href: ai-lms }
+      - { label: LMS online-class options, href: ai-lms-online-class }
+      - { label: LMS video feature comparison, href: ai-lms-video-features }
+      - { label: LMS online-lesson UX, href: ai-lms-online-lesson-ux }
       - { label: Portal API, href: ai-portal-api }
       - { label: Portal API plan, href: ai-portal-api-plan }
       - { label: Portal API deployment, href: ai-portal-api-deploy }
@@ -466,6 +547,9 @@ menu:
       - { label: LUCT online registration, href: ai-luct-online-reg }
       - { label: Registration FE gaps, href: ai-luct-online-reg-gap }
       - { label: Lesotho newer CMS manual, href: luct-ls-newer-cms-manual }
+      - { label: Lesotho newer CMS screenshots, href: luct-ls-newer-cms-shots }
+      - { label: Lesotho newer CMS exports, href: luct-ls-newer-cms-exports }
+      - { label: Lesotho newer CMS Obsidian 3D, href: "luct-ls-newer-cms-obsidian?campus=lesotho" }
       - { label: Lesotho CMS inventory, href: ai-old-cms-lesotho }
       - { label: Lesotho DB gap, href: ai-lesotho-db-gap }
       - { label: Lesotho CMS vs Applicant, href: ai-lesotho-cms-applicant }
@@ -491,6 +575,7 @@ menu:
       - report-exec-2026-10-07
       - report-lesotho-briefing
       - report-database-recreation-2026-10-22
+      - report-cms-standup-updates-2026-10-30
       - report-e2e-enrol-2026-10-11
       - report-e2e-module-enrol-2026-10-11
       - report-e2e-learning-lms-2026-10-11
@@ -515,6 +600,7 @@ menu:
           - { label: Executive summary · 7 Oct, href: report-exec-2026-10-07 }
           - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
           - { label: "Database recreation · 22 Oct", href: report-database-recreation-2026-10-22 }
+          - { label: "CMS standup updates · 30 Oct", href: report-cms-standup-updates-2026-10-30 }
       - label: End to End Demo
         href: report-e2e-enrol-2026-10-11
         children:
@@ -622,6 +708,36 @@ search:
     summary: Empty local PostgreSQL 16 database recreated with db:migrate (9 steps, 113 tables) then seeded to schema version 4 (3214 rows) and dropped.
     keywords: [database, schema, migrate, seed, postgres, recreation, demo]
 
+  - title: CMS standup updates · 30 Oct 2026
+    href: report-cms-standup-updates-2026-10-30
+    section: Reports
+    summary: Working Group update closing 29 Oct actions — website AI guidance, Staff Admin nav/workflows, Lesotho guidance on docs.raisd.co.
+    keywords: [standup, cms, updates, admin, navigation, lesotho, guide, ai guidance, working group]
+
+  - title: Guidance · User guidance
+    href: guidance
+    section: Guidance
+    summary: Lesotho Demo user guidance — hosts, journeys, and step-by-step how-tos for each Staff Admin desk screenshot.
+    keywords: [guidance, lesotho, user guide, demo, hosts, journeys, desks, how-to, applicants, payments, registrations]
+
+  - title: Guidance · Website AI should
+    href: guidance-ai-should
+    section: Guidance
+    summary: What AI agents should do on Raisd websites.
+    keywords: [ai, should, website, agents, design system, portal api]
+
+  - title: Guidance · Website AI should not
+    href: guidance-ai-should-not
+    section: Guidance
+    summary: What AI agents should not do on Raisd websites.
+    keywords: [ai, should not, website, agents, hard stops]
+
+  - title: Guidance · Website AI decisions
+    href: guidance-ai-decisions
+    section: Guidance
+    summary: Quick do/don’t decision table for Raisd website AI work.
+    keywords: [ai, decisions, website, agents]
+
   - title: E2E access control · 21 Oct 2026
     href: report-e2e-access-control-2026-10-21
     section: End to End Demo
@@ -691,14 +807,26 @@ search:
   - title: Lesotho newer CMS mind map
     href: luct-ls-newer-cms
     section: LUCT CMS
-    summary: 23 Oct 2026 Admin walk — sign-in, shell, role counts, and the sidebar mind map for the Lesotho staging portal.
-    keywords: [lesotho, newer-cms, mind-map, admin, dev-login, registry, luct]
+    summary: Mermaid sign-in flow and Admin Portal sidebar mind map with legend. Matching Obsidian 3D graph under LUCT CMS.
+    keywords: [lesotho, newer-cms, mind-map, mermaid, legend, obsidian, admin, registry, luct]
 
   - title: Lesotho newer CMS user manual
     href: luct-ls-newer-cms-manual
     section: LUCT CMS
     summary: Section-by-section Admin manual for Registry, Academic, Finance, Admissions, HR, Library, Website, Analytics, and Mail.
     keywords: [lesotho, user-manual, registry, admissions, finance, fees, nmds, positions]
+
+  - title: Lesotho newer CMS screenshots
+    href: luct-ls-newer-cms-shots
+    section: LUCT CMS
+    summary: 278 Admin screens from the 23–26 Oct 2026 Lesotho staging walk, grouped by menu section.
+    keywords: [lesotho, screenshots, newer-cms, registry, admissions, finance, gallery]
+
+  - title: Lesotho newer CMS exports
+    href: luct-ls-newer-cms-exports
+    section: LUCT CMS
+    summary: Seven 26 Oct 2026 staging downloads — graduation list, name tags, certificate batch, and registration and graduation reports. Counts and layout only.
+    keywords: [lesotho, exports, graduation, certificates, name-tags, registration, enrollment, analytics]
 
   - title: Lesotho newer CMS gap vs Raisd
     href: luct-ls-newer-cms-gap
@@ -886,11 +1014,17 @@ search:
     summary: Full Sierra Leone ICA EMS inventory — ems_sierraleone desks, ac_* admissions, integrations, no TEF.
     keywords: [sierra-leone, ica, ems, cms, inventory, cap-53, m5]
 
-  - title: Obsidian 3D FSD — Lesotho
-    href: "luct-obsidian?campus=lesotho"
+  - title: Newer CMS Obsidian 3D — Lesotho Admin Portal
+    href: "luct-ls-newer-cms-obsidian?campus=lesotho"
     section: LUCT CMS
-    summary: Interactive 3D knowledge graph of the Lesotho newer CMS (screenshot SoT) — admissions, registry, NMDS, graduation, student portal, CAP seed.
-    keywords: [obsidian, fsd, graph, 3d, lesotho, pilot, nmds, lgcse, m4]
+    summary: Interactive 3D Admin Portal mind map for the Lesotho newer CMS — Registry through Mail, matching the Mermaid mind map.
+    keywords: [obsidian, fsd, graph, 3d, lesotho, pilot, admin-portal, mind-map, newer-cms, registry, admissions]
+
+  - title: Obsidian 3D screenshot FSD — Lesotho
+    href: "luct-obsidian?campus=lesotho-screenshot"
+    section: LUCT CMS
+    summary: Interactive 3D knowledge graph from the 3 Oct Lesotho screenshot SoT — admissions, registry, NMDS, graduation, CAP seed.
+    keywords: [obsidian, fsd, graph, 3d, lesotho, screenshot, nmds, lgcse, m4]
 
   - title: Architecture
     href: architecture
@@ -921,6 +1055,24 @@ search:
     section: Architecture
     summary: Research domain matrix INPUT-F01–F37 mapped to CAP Demo status and milestones.
     keywords: [lms, f01, f37, features, matrix, research, cap]
+
+  - title: Moodle + Classroom map
+    href: lms-reference
+    section: Architecture
+    summary: Docs-only capability absorb of Moodle and Google Classroom into Raisd CAP/F01–F37 with labelled reference screenshots.
+    keywords: [lms, moodle, google classroom, reference, screenshots, capability map, cap, f01, f37]
+
+  - title: LMS feature steps
+    href: lms-feature-steps
+    section: Architecture
+    summary: Step-by-step LMS features with functionality, direction of use, Raisd integration, and per-step sequence diagrams showing location.
+    keywords: [lms, features, steps, sequence, student, lecturer, staff, portal-api, classrooms, materials]
+
+  - title: LMS online-class options
+    href: lms-online-class
+    section: Architecture
+    summary: Live-class vendors, Faid UX pack, OSS vs requirements, and OSS+commercial feature-by-feature review (standup 2–3 Nov 2026). Not Live.
+    keywords: [lms, live class, online class, zoom, bigbluebutton, openvidu, jitsi, livekit, whereby, daily, realtimekit, chime, breakout, quiz, recording, self-paced, cost, cap-26, cap-24, f12, f13, ux, lobby, screen share, faid, oss, feature comparison]
 
   - title: Migration plan
     href: migration

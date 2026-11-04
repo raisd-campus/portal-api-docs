@@ -14,7 +14,12 @@
     .tag-out { background: #eef1f5; border-color: var(--line); color: var(--muted); }
   </style>
   <style>
-    pre.tree { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; overflow-x: auto; font-size: 13px; line-height: 1.45; }
+    .map-diagram { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; overflow-x: auto; margin: 0 0 16px; }
+    .map-legend { margin: 0 0 20px; }
+    .map-legend h3 { margin: 0 0 10px; font-size: 1rem; }
+    .map-legend .obsidian-legend { margin-top: 0; }
+    .map-legend .legend { margin-top: 12px; }
+    .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
     a.chip { text-decoration: none; color: inherit; }
     .jump { display: flex; flex-wrap: wrap; gap: 8px; }
   </style>
@@ -42,6 +47,9 @@
             <a href="../lms.html">LMS research</a>
             <a href="../lms-architecture.html">LMS architecture</a>
             <a href="../lms-features.html">LMS features</a>
+            <a href="../lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="../lms-reference/features.html">LMS feature steps</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
             <a href="../migration.html">Migration</a>
             <a href="../architecture.html#services">Microservices</a>
             <a href="../architecture.html#vps">VPS topology</a>
@@ -70,6 +78,9 @@
             <a href="../lms.html">LMS research posture</a>
             <a href="../lms-architecture.html">LMS architecture</a>
             <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="../lms-reference/features.html">LMS feature steps</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
             <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
             <a href="../architecture.html#acl">SoR / ACL</a>
             <a href="../architecture.html#academic">Academic model</a>
@@ -103,18 +114,34 @@
           <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
           <div class="nav-dd-menu" role="menu">
             <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../guidance/index.html" aria-haspopup="true" aria-expanded="false">Guidance</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../guidance/index.html">User guidance</a>
+              <a href="../guidance/website-ai-should.html">AI should</a>
+              <a href="../guidance/website-ai-should-not.html">AI should not</a>
+              <a href="../guidance/website-ai-decisions.html">AI decisions</a>
+              </div>
+            </div>
+            <div class="nav-sub">
               <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
               <div class="nav-sub-menu" role="menu">
               <a href="newer-cms.html">Newer CMS mind map</a>
               <a href="newer-cms-manual.html">Newer CMS user manual</a>
               <a href="newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="feature-modules.html">Feature modules</a>
+              <a href="demo-role-playback.html">Demo role playback</a>
+              <a href="wireframes/index.html">Demo desk wireframes</a>
+              <a href="newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="newer-cms-exports.html">Newer CMS exports</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
               <a href="index.html">Feature analysis</a>
               <a href="cms-vs-applicant.html">CMS vs Applicant</a>
               <a href="fee-payment-sps.html">Fee / payment SPs</a>
               <a href="campus-finance-profile.html">Finance profile (Faid)</a>
               <a href="cap53-online-enrolment.html">CAP-53 online-enrol</a>
               <a href="dynamic-fee-calculation.html">Dynamic fee calc</a>
-              <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
               <a href="index.html#admissions">Flows</a>
               <a href="index.html#why">Why pilot</a>
               <a href="index.html#admissions">Admissions</a>
@@ -214,6 +241,7 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md">LMS online-class options</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
@@ -224,6 +252,9 @@
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
             <a href="newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="../old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
             <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
@@ -263,6 +294,7 @@
               <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
               <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
               <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              <a href="https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/" target="_blank" rel="noopener noreferrer">CMS standup updates · 30 Oct</a>
               </div>
             </div>
             <div class="nav-sub">
@@ -305,9 +337,9 @@
       <p class="eyebrow">Lesotho pilot · newer CMS · 23 Oct 2026</p>
       <h1>Lesotho newer CMS — mind map</h1>
       <p class="lead">Mind map, sign-in, and shell. Staging Admin at <code>luct.vercel.app</code>. Active term <strong>2026-07</strong>. This is the campus benchmark. Raisd portals stay Demo until a campus accepts them.</p>
-      <p class="jump"><span class="chip">Mind map</span> <a class="chip" href="newer-cms-manual.html">User manual</a> <a class="chip" href="newer-cms-gap.html">Gap vs Raisd</a></p>
+      <p class="jump"><span class="chip">Mind map</span> <a class="chip" href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D</a> <a class="chip" href="newer-cms-manual.html">User manual</a> <a class="chip" href="newer-cms-gap.html">Gap vs Raisd</a> <a class="chip" href="workflow-control-improvements.html">Workflow &amp; control</a> <a class="chip" href="feature-modules.html">Feature modules</a> <a class="chip" href="newer-cms-screenshots.html">Screenshots</a> <a class="chip" href="newer-cms-exports.html">Exports</a></p>
     </section>
-    <nav class="toc" aria-label="On this page"><a href="#evidence-boundary">Evidence boundary</a><a href="#mind-map">Mind map</a><a href="#1-sign-in">1. Sign in</a><a href="#2-shell">2. Shell</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#evidence-boundary">Evidence boundary</a><a href="#mind-map">Mind map</a><a href="#legend">Legend</a><a href="#1-sign-in">1. Sign in</a><a href="#2-shell">2. Shell</a></nav>
     <div class="note warn">
       <strong>No personal records.</strong>
       Counts, menus, routes, statuses, and fee names only. Names, emails, student numbers, marks, and documents stay out of this site.
@@ -324,40 +356,178 @@
 <p>The internal system admin account in Dev Login is <strong>banned</strong> and does not open the portal. Use a campus Admin account.</p>
 </section>
 <section class="section" id="mind-map"><h2>Mind map</h2>
-<pre class="tree">Sign in with Google
-        |
-        +-- Email already linked --&gt; role home
-        |
-        +-- Email not linked
-                |-- I am a Student
-                |-- I am a New Applicant
-                +-- Dev Login (orange control)
-                        |-- Role --&gt; optional Position --&gt; User
-                        +-- Admin --&gt; Admin Portal
-                                |
-                                +-- Registry -------- students, documents, registration,
-                                |                     graduations, certificates, status,
-                                |                     remarks, referrals, notes, letters,
-                                |                     blocked students, terms
-                                +-- Discipline ------ academic dishonesty, suspensions
-                                +-- Admin ----------- calendar, users, positions,
-                                |                     notifications, activity, settings,
-                                |                     tools, bulk
-                                +-- Academic -------- lecturers, assessments, attendance,
-                                |                     gradebook, modules, schools,
-                                |                     curriculum, FiveDays LMS, Fortinet,
-                                |                     timetable
-                                +-- Finance --------- sponsors, banks, debtors, pricing
-                                +-- Admissions ------ review, applicants, payments,
-                                |                     document review, settings
-                                +-- Human Resource -- employees, contracts, positions,
-                                |                     unit heads, vacancies, appraisals
-                                +-- Library --------- catalog, loans, books, fines,
-                                |                     e-library, publications, papers
-                                +-- Website --------- pages, articles, enquiries, events
-                                +-- Analytics ------- reports
-                                +-- Mail ------------ compose, inbox, accounts, queue</pre>
-<p>Sidebar groups, in order: <strong>Registry, Discipline, Admin, Academic, Five Days, Finance, Admissions, Human Resource, Library, Website, Analytics, Mail</strong>. A menu item is shown only when the signed-in user has that item’s <strong>resource + action</strong> (the action that reveals the item is <code>read</code>, except where a screen says otherwise).</p>
+<p>Sign-in, then the Admin Portal sidebar in menu order. A menu item is shown only when the signed-in user has that item’s <strong>resource + action</strong> (the action that reveals the item is <code>read</code>, except where a screen says otherwise). The same Admin Portal tree is also an interactive <a href="../old-cms/obsidian.html?campus=lesotho">Obsidian 3D graph</a>.</p>
+<div class="map-legend" id="legend">
+  <h3>Legend</h3>
+  <div class="legend" aria-label="Diagram shapes">
+    <div class="legend-item"><strong>Sign-in flowchart</strong><span>Rectangles are screens. The diamond is the linked-email decision. Arrows are the next step.</span></div>
+    <div class="legend-item"><strong>Admin Portal centre</strong><span>The hub is the Admin shell after sign-in. Work starts from the sidebar, not dashboard widgets.</span></div>
+    <div class="legend-item"><strong>First ring</strong><span>Sidebar groups, in menu order: Registry through Mail.</span></div>
+    <div class="legend-item"><strong>Outer nodes</strong><span>Menu items and nested desks under that group.</span></div>
+  </div>
+  <div class="obsidian-legend" aria-label="Sidebar group colours">
+    <span class="obs-legend-item"><i style="background:#e0af68"></i>Registry</span>
+    <span class="obs-legend-item"><i style="background:#f7768e"></i>Discipline</span>
+    <span class="obs-legend-item"><i style="background:#bb9af7"></i>Admin</span>
+    <span class="obs-legend-item"><i style="background:#ff9e64"></i>Academic</span>
+    <span class="obs-legend-item"><i style="background:#9ece6a"></i>Five Days</span>
+    <span class="obs-legend-item"><i style="background:#db4b4b"></i>Finance</span>
+    <span class="obs-legend-item"><i style="background:#2ac3de"></i>Admissions</span>
+    <span class="obs-legend-item"><i style="background:#73daca"></i>Human Resource</span>
+    <span class="obs-legend-item"><i style="background:#7dcfff"></i>Library</span>
+    <span class="obs-legend-item"><i style="background:#b4f9f8"></i>Website</span>
+    <span class="obs-legend-item"><i style="background:#7aa2f7"></i>Analytics</span>
+    <span class="obs-legend-item"><i style="background:#c0caf5"></i>Mail</span>
+    <span class="obs-legend-item"><i style="background:#c0caf5"></i>Sign in</span>
+  </div>
+</div>
+<h3>Sign in</h3>
+<pre class="mermaid map-diagram">flowchart TD
+  google[Sign in with Google]
+  google --&gt; linked{Email linked?}
+  linked --&gt;|Yes| home[Role home]
+  linked --&gt;|No| account[Link your account]
+  account --&gt; student[I am a Student]
+  account --&gt; applicant[I am a New Applicant]
+  account --&gt; dev[Dev Login]
+  dev --&gt; role[Role]
+  role --&gt; position[Position, optional]
+  position --&gt; user[User]
+  user --&gt; portal[Admin Portal]</pre>
+<h3>Admin Portal</h3>
+<pre class="mermaid map-diagram">mindmap
+  root((Admin Portal))
+    Registry
+      Students
+      Documents
+      Registration
+      Graduations
+        Graduation Dates
+        Hoods
+        Name tags
+      Certificates
+        Print batches
+        Collections
+        Stock
+      Student Status
+      Remark Requests
+      Student Referrals
+      Notes
+      Letters
+        Generate
+        Templates
+      Blocked Students
+      Terms
+    Discipline
+      Academic Dishonesty
+      Suspensions
+    Admin
+      Calendar
+      Academic Calendar
+      Users
+      Positions
+      Notifications
+        Templates
+        Broadcast
+      Activity Tracker
+      Settings
+      Tools
+        Simulator
+        Grade Finder
+        AI Query
+      Bulk
+        Export Transcript
+        Student Cards
+        Student Photos
+    Academic
+      Lecturers
+      Assessments
+      Assessment Types
+      Attendance
+      Gradebook
+      Modules
+      Schools
+      Curriculum
+      Fortinet
+      Timetable
+        Generator
+        Allocations
+        Venues
+        Venue Types
+    Five Days
+      LMS courses
+    Finance
+      Sponsors
+      Banks
+      Debtors
+      Pricing
+        Repeat Modules
+        Fees and Fines
+        Payment Plans
+    Admissions
+      Review
+      Applicants
+      Admissions Payments
+      Document Review
+      Settings
+        Intake Periods
+        Certificate Types
+        Subjects
+        Recognized Schools
+        Entry Requirements
+    Human Resource
+      Employees
+      Contracts
+      Positions
+      Unit Heads
+      Vacancies
+      Appraisals
+        Academic
+        Support
+        Teaching Observations
+        Student Feedback
+        Settings
+    Library
+      Catalog
+      Loans
+      Books
+      Fines
+      E-Library
+      Publications
+      Question Papers
+      Authorities
+        Authors
+        Subjects
+    Website
+      Pages
+      Articles
+      Categories
+      Featured Programs
+      Enquiries
+      Campus Sites
+      Alumni
+      Media
+      Events
+    Analytics
+      Course Summary
+      Attendance
+      Appraisals
+      Board of Examination
+      Senate Report
+      Student Enrollments
+      Graduations
+      Admissions
+      Sponsor Reports
+      Portal Usage
+      Library
+    Mail
+      Compose
+      Inbox
+      Accounts
+      Templates
+      Drafts
+      Sent
+      Queue</pre>
 </section>
 <section class="section" id="1-sign-in"><h2>1. Sign in</h2>
 <ol><li>Open the staging host. The login page is Limkokwing University of Creative Technology, Lesotho. The only sign-in control is <strong>Sign in with Google</strong>. Assistance is <strong>Contact Registry</strong>.</li><li>Google may ask for a device prompt (this walk used the YouTube app on a phone).</li><li>If that Google email is not linked to a campus user, the next screen is <strong>Link your account</strong>. It shows the email and three ways forward:</li></ol>
@@ -377,6 +547,24 @@
     Raisd · newer CMS walk 23 Oct 2026 · staging Admin · no student or staff records ·
     <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-newer-cms.md">source markdown</a>
   </p>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "loose",
+      themeVariables: {
+        primaryColor: "#e8f0f8",
+        primaryTextColor: "#152033",
+        primaryBorderColor: "#1a4f8b",
+        lineColor: "#5a6a7e",
+        secondaryColor: "#e8f6ee",
+        tertiaryColor: "#fff6e8",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", htmlLabels: true },
+    });
+  </script>
   <script src="../abbr-tooltips.js" defer></script>
   <script src="../nav-dropdown.js" defer></script>
   <script src="../site-search.js" defer></script>

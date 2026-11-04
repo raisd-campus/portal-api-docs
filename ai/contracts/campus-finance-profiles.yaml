@@ -1,7 +1,8 @@
 # Raisd — campus finance profiles (review seed)
 # Standup 8 Oct 2026 · published 9 Oct 2026
 # Status: proposed — Faid / Finance / Registry Accept|Change|Defer
-# Not Live CMS amounts. Not loaded by Portal API yet.
+# Demo load: Portal API reads docs/ai/contracts/campus-finance-profiles.json
+# (and portal-api/src/data/campus-finance-profiles.json). Not Live CMS amounts.
 # Human review: docs/diagrams/old-cms-lesotho/campus-finance-profile.html
 # Narrative: docs/ai/backend/campus-finance-profile.md
 # SP evidence: docs/ai/backend/applicant-qr-fee-mechanisms.md

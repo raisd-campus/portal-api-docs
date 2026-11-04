@@ -4,7 +4,7 @@
 **Product:** staging Admin portal (dark UI, `DEBUG` ribbon). Host used for this walk: `https://luct.vercel.app`.  
 **Walked:** 23 October 2026, signed in as a campus **Admin** whose position is **Registry Manager**. Active term on the dashboard: **2026-07**.  
 **This file:** user manual and gap analysis for that portal. It does not copy student or staff records.  
-**Published:** [mind map](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms.html) · [user manual](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-manual.html) · [gap vs Raisd](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-gap.html).  
+**Published:** [mind map](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms.html) · [Obsidian 3D](https://docs.raisd.co/diagrams/old-cms/obsidian.html?campus=lesotho) · [user manual](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-manual.html) · [gap vs Raisd](https://docs.raisd.co/diagrams/old-cms-lesotho/newer-cms-gap.html) · [workflow & control (Faid)](https://docs.raisd.co/diagrams/old-cms-lesotho/workflow-control-improvements.html) · [feature modules](https://docs.raisd.co/diagrams/old-cms-lesotho/feature-modules.html) · [screenshots](../../diagrams/old-cms-lesotho/newer-cms-screenshots.html) (278 Admin screens, 23–26 Oct 2026) · [exports](../../diagrams/old-cms-lesotho/newer-cms-exports.html) (seven downloads, 26 Oct 2026).  
 **Older inventories:** screenshot seed [old-cms-lesotho.md](old-cms-lesotho.md) (3 and 5 Oct 2026). Structure of the **old** LUCT CMS remains [lesotho-db-gap.md](lesotho-db-gap.md). Pilot framing: [lesotho-pilot.md](../architecture/lesotho-pilot.md).
 
 This portal is the campus feature benchmark (ADR-1). It is **not** the Raisd system of record. Raisd portals still go through the Portal API. Nothing in this file is Raisd Live.
@@ -21,43 +21,170 @@ The internal system admin account in Dev Login is **banned** and does not open t
 
 ## Mind map
 
-```text
-Sign in with Google
-        |
-        +-- Email already linked --> role home
-        |
-        +-- Email not linked
-                |-- I am a Student
-                |-- I am a New Applicant
-                +-- Dev Login (orange control)
-                        |-- Role --> optional Position --> User
-                        +-- Admin --> Admin Portal
-                                |
-                                +-- Registry -------- students, documents, registration,
-                                |                     graduations, certificates, status,
-                                |                     remarks, referrals, notes, letters,
-                                |                     blocked students, terms
-                                +-- Discipline ------ academic dishonesty, suspensions
-                                +-- Admin ----------- calendar, users, positions,
-                                |                     notifications, activity, settings,
-                                |                     tools, bulk
-                                +-- Academic -------- lecturers, assessments, attendance,
-                                |                     gradebook, modules, schools,
-                                |                     curriculum, FiveDays LMS, Fortinet,
-                                |                     timetable
-                                +-- Finance --------- sponsors, banks, debtors, pricing
-                                +-- Admissions ------ review, applicants, payments,
-                                |                     document review, settings
-                                +-- Human Resource -- employees, contracts, positions,
-                                |                     unit heads, vacancies, appraisals
-                                +-- Library --------- catalog, loans, books, fines,
-                                |                     e-library, publications, papers
-                                +-- Website --------- pages, articles, enquiries, events
-                                +-- Analytics ------- reports
-                                +-- Mail ------------ compose, inbox, accounts, queue
+Sign-in, then the Admin Portal sidebar in menu order. A menu item is shown only when the signed-in user has that item’s **resource + action** (the action that reveals the item is `read`, except where a screen says otherwise).
+
+### Legend
+
+| Element | Meaning |
+|---|---|
+| Sign-in flowchart rectangles | Screens |
+| Diamond | Linked-email decision |
+| Admin Portal centre | Admin shell after sign-in |
+| First ring | Sidebar groups (Registry → Mail) |
+| Outer nodes | Menu items and nested desks |
+
+Sidebar group colours match the Obsidian 3D graph: Registry, Discipline, Admin, Academic, Five Days, Finance, Admissions, Human Resource, Library, Website, Analytics, Mail.
+
+```mermaid
+flowchart TD
+  google[Sign in with Google]
+  google --> linked{Email linked?}
+  linked -->|Yes| home[Role home]
+  linked -->|No| account[Link your account]
+  account --> student[I am a Student]
+  account --> applicant[I am a New Applicant]
+  account --> dev[Dev Login]
+  dev --> role[Role]
+  role --> position[Position, optional]
+  position --> user[User]
+  user --> portal[Admin Portal]
 ```
 
-Sidebar groups, in order: **Registry, Discipline, Admin, Academic, Five Days, Finance, Admissions, Human Resource, Library, Website, Analytics, Mail**. A menu item is shown only when the signed-in user has that item’s **resource + action** (the action that reveals the item is `read`, except where a screen says otherwise).
+```mermaid
+mindmap
+  root((Admin Portal))
+    Registry
+      Students
+      Documents
+      Registration
+      Graduations
+        Graduation Dates
+        Hoods
+        Name tags
+      Certificates
+        Print batches
+        Collections
+        Stock
+      Student Status
+      Remark Requests
+      Student Referrals
+      Notes
+      Letters
+        Generate
+        Templates
+      Blocked Students
+      Terms
+    Discipline
+      Academic Dishonesty
+      Suspensions
+    Admin
+      Calendar
+      Academic Calendar
+      Users
+      Positions
+      Notifications
+        Templates
+        Broadcast
+      Activity Tracker
+      Settings
+      Tools
+        Simulator
+        Grade Finder
+        AI Query
+      Bulk
+        Export Transcript
+        Student Cards
+        Student Photos
+    Academic
+      Lecturers
+      Assessments
+      Assessment Types
+      Attendance
+      Gradebook
+      Modules
+      Schools
+      Curriculum
+      Fortinet
+      Timetable
+        Generator
+        Allocations
+        Venues
+        Venue Types
+    Five Days
+      LMS courses
+    Finance
+      Sponsors
+      Banks
+      Debtors
+      Pricing
+        Repeat Modules
+        Fees and Fines
+        Payment Plans
+    Admissions
+      Review
+      Applicants
+      Admissions Payments
+      Document Review
+      Settings
+        Intake Periods
+        Certificate Types
+        Subjects
+        Recognized Schools
+        Entry Requirements
+    Human Resource
+      Employees
+      Contracts
+      Positions
+      Unit Heads
+      Vacancies
+      Appraisals
+        Academic
+        Support
+        Teaching Observations
+        Student Feedback
+        Settings
+    Library
+      Catalog
+      Loans
+      Books
+      Fines
+      E-Library
+      Publications
+      Question Papers
+      Authorities
+        Authors
+        Subjects
+    Website
+      Pages
+      Articles
+      Categories
+      Featured Programs
+      Enquiries
+      Campus Sites
+      Alumni
+      Media
+      Events
+    Analytics
+      Course Summary
+      Attendance
+      Appraisals
+      Board of Examination
+      Senate Report
+      Student Enrollments
+      Graduations
+      Admissions
+      Sponsor Reports
+      Portal Usage
+      Library
+    Mail
+      Compose
+      Inbox
+      Accounts
+      Templates
+      Drafts
+      Sent
+      Queue
+```
 
 ## 1. Sign in
 
@@ -535,13 +662,38 @@ If M4 acceptance is “at least the campus portal for admissions and the enrolle
 
 HR, library, website, mail, appraisals, FiveDays, Fortinet, and the report pack are real menus. They are a wider parity list than the current Raisd milestone set.
 
+## 16. Exports saved 26 Oct 2026
+
+Seven downloads from the staging Admin. Pages list columns, ceremony totals, and report totals. Student names, student numbers, and certificate references that contain a student number are not copied.
+
+| Download | Page |
+|---|---|
+| Graduation list, 17 September 2026, 1,047 students, two sessions | [graduation list](../../diagrams/old-cms-lesotho/newer-cms-export-graduation-list.html) |
+| Name-tag PDF, 173 A4 pages, Pass or Merit | [name tags](../../diagrams/old-cms-lesotho/newer-cms-export-name-tags.html) |
+| Certificate batch manifest, 9 rows, `first_issue` | [manifest](../../diagrams/old-cms-lesotho/newer-cms-export-certificate-manifest.html) |
+| Certificate PDF, 9 pages, one graduate each, QR per page | [certificate batch](../../diagrams/old-cms-lesotho/newer-cms-export-certificate-batch.html) |
+| Registration report, term 2026-07, 4,641 students | [registered students](../../diagrams/old-cms-lesotho/newer-cms-export-registered-students.html) |
+| Registry Word enrollment summary, same 4,641 | [enrollment summary](../../diagrams/old-cms-lesotho/newer-cms-export-enrollment-summary.html) |
+| Registry Word graduation summary, Graduation Date 2026-09, 35 graduates | [graduation summary](../../diagrams/old-cms-lesotho/newer-cms-export-graduation-summary.html) |
+
+Index: [newer-cms-exports.html](../../diagrams/old-cms-lesotho/newer-cms-exports.html).
+
+The ceremony list and the Analytics graduation summary are different reports. The list is 1,047 students on 17 September 2026. The summary for 2026-09 is 35 graduates, all Diploma in Architecture Technology. The name-tag PDF has 1,027 tickets (Pass 550, Merit 477), 20 short of the ceremony list.
+
+Faculty labels also differ. The ceremony list and the certificate manifest keep Faculty of Communication and Media, Faculty of Film, Television & Broadcasting, Faculty of Design and Innovation, and Faculty of Fashion and Lifestyle Design. The 26 Oct registration report and the enrollment summary use Faculty of Communication, Media and Broadcasting and Faculty of Design.
+
+Certificate references use `LSO` + a programme code + the student number. Codes on this batch: BEN, CMK, CITM, DTM, CGD, CPA, DBIT, DIT. The certificate spells entrepreneurship as Bachelor of Business in Entrepreneurship. The printed date on every certificate and every name tag is 17 September 2026. Signatures on the certificate template are the Vice Chancellor and the Registrar.
+
 ## Related
 
 | Topic | Path |
 |---|---|
+| 26 Oct exports | [newer-cms-exports.html](../../diagrams/old-cms-lesotho/newer-cms-exports.html) |
 | Pilot decision | [lesotho-pilot.md](../architecture/lesotho-pilot.md) |
 | Screenshot inventory (3 Oct) | [old-cms-lesotho.md](old-cms-lesotho.md) |
 | Old CMS structure and M4 gap | [lesotho-db-gap.md](lesotho-db-gap.md) |
 | Applicant comparison | [lesotho-cms-vs-applicant-portal.md](lesotho-cms-vs-applicant-portal.md) |
+| Workflow & control proposal (28 Oct) | [lesotho-workflow-control-improvements.md](lesotho-workflow-control-improvements.md) · [workflow-control-improvements.html](../../diagrams/old-cms-lesotho/workflow-control-improvements.html) |
+| Feature modules FM-01…FM-18 (28 Oct; leave out HRMS/LMS/Website/Library/Mail) | [lesotho-feature-modules.md](lesotho-feature-modules.md) · [feature-modules.html](../../diagrams/old-cms-lesotho/feature-modules.html) |
 | Raisd Admin desks | [admin-portal.md](../frontend/admin-portal.md) |
 | Raisd Applicant | [applicant-portal.md](../frontend/applicant-portal.md) |

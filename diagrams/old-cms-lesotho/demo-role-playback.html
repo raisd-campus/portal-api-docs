@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Lesotho Demo role playback</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .tag { display: inline-block; margin: 0 4px 4px 0; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .tag-gap { background: #fff6e8; border-color: #e0c48a; color: var(--warn); }
+    .tag-mismatch { background: #f3e8fd; border-color: #c9b0e8; color: #5a2a8a; }
+    .tag-partial { background: var(--accent-soft); border-color: #b7c9de; color: var(--accent); }
+    .tag-out { background: #eef1f5; border-color: var(--line); color: var(--muted); }
+  </style>
+  
+  <style>
+    .playback { display: grid; grid-template-columns: minmax(200px, 260px) 1fr; gap: 20px; align-items: start; margin: 20px 0 40px; }
+    @media (max-width: 960px) { .playback { grid-template-columns: 1fr; } }
+    .side-stack { display: flex; flex-direction: column; gap: 18px; max-height: min(78vh, 820px); overflow: auto; padding-right: 4px; }
+    .role-list, .fm-list { display: flex; flex-direction: column; gap: 8px; }
+    .role-item, .fm-item {
+      display: flex; gap: 10px; align-items: flex-start; text-align: left; width: 100%;
+      padding: 10px 12px; border-radius: var(--radius); background: var(--surface);
+      cursor: pointer; color: inherit; font: inherit;
+      border: 3px solid #6ea0d4; transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    /* Match flow / screenshot legend: blue = all baseline · green = any deepened today */
+    .role-item[data-era="baseline"], .fm-item[data-era="baseline"] {
+      border-color: #5b8fc9;
+      box-shadow: inset 0 0 0 1px rgba(61, 106, 158, .25);
+    }
+    .role-item[data-era="today"], .fm-item[data-era="today"] {
+      border-color: #1f8a76;
+      box-shadow: inset 0 0 0 1px rgba(15, 107, 93, .28);
+    }
+    .role-item:hover, .fm-item:hover { filter: brightness(0.98); }
+    /* Highlight = background only — keep era border colour intact */
+    .role-item[aria-current="true"], .fm-item[aria-current="true"] {
+      background: var(--accent-soft);
+    }
+    .role-item[data-era="baseline"][aria-current="true"], .fm-item[data-era="baseline"][aria-current="true"] {
+      border-color: #5b8fc9;
+      box-shadow: inset 0 0 0 1px rgba(61, 106, 158, .25);
+    }
+    .role-item[data-era="today"][aria-current="true"], .fm-item[data-era="today"][aria-current="true"] {
+      border-color: #1f8a76;
+      box-shadow: inset 0 0 0 1px rgba(15, 107, 93, .28);
+    }
+    .role-ord, .fm-code { flex: 0 0 auto; min-width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--line); padding: 0 6px; color: #fff; }
+    .fm-code { border-radius: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    /* Navigation numbers follow flow legend: blue = existing · green = new / deepened */
+    .role-item[data-era="baseline"] .role-ord, .fm-item[data-era="baseline"] .fm-code { background: #3d6a9e; }
+    .role-item[data-era="today"] .role-ord, .fm-item[data-era="today"] .fm-code { background: #0f6b5d; }
+    .role-item[aria-current="true"][data-era="baseline"] .role-ord,
+    .fm-item[aria-current="true"][data-era="baseline"] .fm-code { background: #5b8fc9; }
+    .role-item[aria-current="true"][data-era="today"] .role-ord,
+    .fm-item[aria-current="true"][data-era="today"] .fm-code { background: #1f8a76; }
+    .role-meta, .fm-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .role-meta strong, .fm-meta strong { font-size: 14px; }
+    .role-meta span, .fm-meta span { font-size: 12px; color: var(--muted); line-height: 1.35; }
+    .side-heading { margin: 0 0 4px; font-size: 1rem; }
+    .side-era-hint { margin: 0 0 8px; font-size: 11px; color: var(--muted); line-height: 1.35; }
+    .stage {
+      border: 1px solid var(--line); border-radius: var(--radius); background:
+        radial-gradient(1200px 400px at 10% 0%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
+        linear-gradient(160deg, #0f141a 0%, #1a2430 55%, #12181f 100%);
+      color: #e8eef5; min-height: 360px; padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .stage-top { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 13px; opacity: .92; }
+    .stage-badge { font-weight: 700; letter-spacing: .02em; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); }
+    .step-progress {
+      display: grid; gap: 10px; padding: 12px 14px; border-radius: 10px;
+      background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.1);
+    }
+    .step-progress-head {
+      display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between;
+    }
+    .step-progress-head strong { font-size: 13px; color: #fff; letter-spacing: .02em; }
+    .step-progress-head span { font-size: 12px; color: #9db0c0; }
+    .step-progress-track {
+      list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0; align-items: stretch;
+    }
+    .step-progress-track > li {
+      flex: 1 1 0; min-width: 96px; display: flex; align-items: stretch; position: relative;
+    }
+    .step-progress-track > li:not(:last-child)::after {
+      content: ""; position: absolute; top: 14px; left: calc(50% + 16px); right: -2px; height: 2px;
+      background: rgba(255,255,255,.16); z-index: 0;
+    }
+    .step-progress-track > li[data-state="done"]:not(:last-child)::after,
+    .step-progress-track > li[data-state="current"]:not(:last-child)::after {
+      background: color-mix(in oklab, var(--accent, #0f6b5d) 70%, #7eb6ff);
+    }
+    .step-progress-track button {
+      position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; align-items: center;
+      gap: 6px; padding: 0 6px 2px; border: 0; background: transparent; color: #9db0c0;
+      cursor: pointer; font: inherit; text-align: center;
+    }
+    .step-progress-track button:hover .step-ord { color: #fff; }
+    .step-progress-track li[data-era="baseline"] button:hover .step-ord { border-color: #7eb6ff; }
+    .step-progress-track li[data-era="today"] button:hover .step-ord { border-color: #3dcaa8; }
+    .step-ord {
+      width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center;
+      font-size: 12px; font-weight: 700; border: 2px solid rgba(255,255,255,.22);
+      background: #18222c; color: #e8eef5;
+    }
+    /* Step numbers: blue = existing Demo · green = new / deepened today */
+    .step-progress-track li[data-era="baseline"] .step-ord {
+      border-color: #5b8fc9; color: #cfe0f5; background: #1a2838;
+    }
+    .step-progress-track li[data-era="today"] .step-ord {
+      border-color: #1f8a76; color: #c8ebe0; background: #142822;
+    }
+    .step-label {
+      font-size: 11px; line-height: 1.3; color: inherit; max-width: 9.5rem;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .step-progress-track li[data-era="baseline"][data-state="done"] .step-ord {
+      background: #3d6a9e; border-color: transparent; color: #fff;
+    }
+    .step-progress-track li[data-era="today"][data-state="done"] .step-ord {
+      background: #0f6b5d; border-color: transparent; color: #fff;
+    }
+    .step-progress-track li[data-state="done"] button { color: #c5d0dc; }
+    .step-progress-track li[data-era="baseline"][data-state="current"] .step-ord {
+      background: #7eb6ff; border-color: transparent; color: #0b1016;
+      box-shadow: 0 0 0 3px rgba(126, 182, 255, .28);
+    }
+    .step-progress-track li[data-era="today"][data-state="current"] .step-ord {
+      background: #3dcaa8; border-color: transparent; color: #0a3d36;
+      box-shadow: 0 0 0 3px rgba(61, 202, 168, .28);
+    }
+    .step-progress-track li[data-state="current"] button { color: #fff; font-weight: 600; }
+    .step-progress-track li[data-state="current"] .step-label { color: #fff; }
+    .step-progress-track > li[data-era="baseline"][data-state="done"]:not(:last-child)::after,
+    .step-progress-track > li[data-era="baseline"][data-state="current"]:not(:last-child)::after {
+      background: color-mix(in oklab, #5b8fc9 75%, #7eb6ff);
+    }
+    .step-progress-track > li[data-era="today"][data-state="done"]:not(:last-child)::after,
+    .step-progress-track > li[data-era="today"][data-state="current"]:not(:last-child)::after {
+      background: color-mix(in oklab, #0f6b5d 70%, #3dcaa8);
+    }
+    .section-progress {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 0;
+    }
+    .section-progress button {
+      font: inherit; font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); color: #9db0c0;
+      cursor: pointer;
+    }
+    .section-progress button[data-era="baseline"] {
+      border-color: rgba(91, 143, 201, .55); color: #c5d4e6;
+    }
+    .section-progress button[data-era="today"] {
+      border-color: rgba(31, 138, 118, .6); color: #c5e6de;
+    }
+    .section-progress button:hover { color: #e8eef5; }
+    .section-progress button[data-era="baseline"]:hover { border-color: #7eb6ff; }
+    .section-progress button[data-era="today"]:hover { border-color: #3dcaa8; }
+    .section-progress button[data-era="baseline"][aria-current="true"] {
+      background: rgba(126, 182, 255, .22); border-color: #7eb6ff; color: #fff;
+    }
+    .section-progress button[data-era="today"][aria-current="true"] {
+      background: rgba(61, 202, 168, .22); border-color: #3dcaa8; color: #fff;
+    }
+    .section-progress button[data-era="baseline"][data-done="true"]:not([aria-current="true"]) {
+      color: #c5d0dc; border-color: rgba(61, 106, 158, .7);
+    }
+    .section-progress button[data-era="today"][data-done="true"]:not([aria-current="true"]) {
+      color: #c5d0dc; border-color: rgba(15, 107, 93, .7);
+    }
+    @media (max-width: 720px) {
+      .step-progress-track > li { flex: 1 1 calc(50% - 4px); min-width: 0; }
+      .step-progress-track > li:not(:last-child)::after { display: none; }
+    }
+    .stage-narration h2 { margin: 0; font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.25; color: #fff; }
+    .stage-route { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; opacity: .85; }
+    .stage-body { margin: 0; font-size: .98rem; line-height: 1.45; color: #d7e0ea; }
+    .stage-detail {
+      margin: 0; font-size: .92rem; line-height: 1.55; color: #b7c4d2;
+      max-width: 62ch;
+    }
+    .stage-detail:empty { display: none; }
+    .scene-journey {
+      margin-top: 4px; padding: 12px 14px; border-radius: 10px;
+      background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.1);
+      display: grid; gap: 10px;
+    }
+    .journey-head {
+      display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between;
+    }
+    .journey-head strong {
+      font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #9ec5ff;
+    }
+    .journey-here {
+      margin: 0; font-size: 12px; color: #c8ebe0; font-weight: 600;
+    }
+    .journey-chips {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 0;
+    }
+    .journey-chip {
+      display: inline-flex; align-items: center; gap: 6px; max-width: 100%;
+      font: inherit; font-size: 11px; font-weight: 600; padding: 4px 8px 4px 4px;
+      border-radius: 999px; border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05); color: #9db0c0; cursor: pointer; text-align: left;
+    }
+    .journey-chip[data-era="baseline"] { border-color: rgba(91, 143, 201, .45); }
+    .journey-chip[data-era="today"] { border-color: rgba(31, 138, 118, .5); }
+    .journey-chip:hover { color: #e8eef5; border-color: #7eb6ff; }
+    .journey-chip[data-active="true"] {
+      color: #0a3d36; background: #3dcaa8; border-color: transparent;
+      box-shadow: 0 0 0 3px rgba(61, 202, 168, .28);
+    }
+    .journey-chip-ord {
+      width: 18px; height: 18px; border-radius: 999px; display: grid; place-items: center;
+      font-size: 10px; font-weight: 800; background: rgba(0,0,0,.28); color: inherit; flex: 0 0 auto;
+    }
+    .journey-chip[data-active="true"] .journey-chip-ord { background: rgba(10, 61, 54, .2); }
+    .journey-chip-label {
+      display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .journey-mermaid-wrap {
+      margin: 0; padding: 10px 12px; border-radius: 8px;
+      background: #f7f9fb; border: 1px solid rgba(255,255,255,.12); overflow-x: auto;
+    }
+    .journey-mermaid-wrap .mermaid { margin: 0; }
+    .flow-compare {
+      margin: 22px 0 28px; padding: 18px 18px 14px; border-radius: var(--radius);
+      border: 1px solid var(--line); background: var(--surface);
+    }
+    .flow-compare h2 { margin: 0 0 6px; font-size: 1.2rem; }
+    .flow-compare .flow-lede { margin: 0 0 14px; color: var(--muted); font-size: .95rem; line-height: 1.45; max-width: 72ch; }
+    .flow-legend {
+      display: flex; flex-wrap: wrap; gap: 10px 16px; margin: 0 0 16px; padding: 0; list-style: none;
+    }
+    .flow-legend li {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink);
+    }
+    .flow-swatch {
+      width: 14px; height: 14px; border-radius: 4px; border: 1px solid transparent; flex: 0 0 auto;
+    }
+    .flow-swatch.baseline { background: #d6e4f5; border-color: #3d6a9e; }
+    .flow-swatch.today { background: #c8ebe0; border-color: #0f6b5d; }
+    .flow-swatch.gap { background: #fde8d8; border-color: #c45c26; }
+    .flow-swatch.out { background: #eceff3; border-color: #8a93a0; }
+    .flow-compare .mermaid {
+      margin: 0 0 18px; padding: 12px; border-radius: 10px; background: #fafbfc; border: 1px solid var(--line);
+      overflow-x: auto;
+    }
+    .flow-compare h3 { margin: 0 0 8px; font-size: 1rem; }
+    .flow-note { margin: 0 0 12px; font-size: 13px; color: var(--muted); line-height: 1.4; }
+    .flow-gap-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 0 0 4px;
+    }
+    .flow-gap-card {
+      padding: 10px 12px; border-radius: 8px; border: 1px solid #e0c48a; background: #fff8ef; font-size: 13px; line-height: 1.4;
+    }
+    .flow-gap-card strong { display: block; margin-bottom: 4px; color: #8a4b12; }
+    .flow-gap-card span { color: #5c4630; }
+    .stage-account { margin: 0; font-size: 12px; opacity: .88; }
+    .stage-portal { color: #9ec5ff; text-decoration: underline; text-underline-offset: 2px; }
+    .stage-portal:not([href]) { color: inherit; text-decoration: none; }
+    .exec-panel { margin-top: 2px; padding: 12px 14px; border-radius: 10px; background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.1); }
+    .exec-heading { margin: 0 0 8px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #9ec5ff; }
+    .exec-steps { margin: 0; padding-left: 1.25rem; display: grid; gap: 6px; }
+    .exec-steps li { color: #c5d0dc; line-height: 1.4; font-size: 13px; transition: color .2s ease, transform .2s ease; }
+    .exec-steps li[data-active="true"] { color: #fff; transform: translateX(2px); }
+    .stage-fm { padding-top: 2px; }
+    .stage .tag { color: #1a2430; background: #e8eef5; border-color: transparent; cursor: pointer; font: inherit; }
+    .stage .tag-partial { background: #cfe0f5; }
+    .stage .tag-out { background: #dfe3e8; color: #445; cursor: default; }
+    .stage .tag[data-active="true"] { outline: 2px solid #9ec5ff; }
+    .stage-narration { display: grid; gap: 8px; }
+    .screen-shell {
+      position: relative; border-radius: 12px; overflow: hidden;
+      border: 3px solid #6ea0d4; background: #0b1016;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(61, 106, 158, .35);
+      min-height: 280px;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    /* Match flow legend: baseline light blue · today/deepened green */
+    .screen-shell[data-era="baseline"] {
+      border-color: #6ea0d4;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(61, 106, 158, .45);
+    }
+    .screen-shell[data-era="today"] {
+      border-color: #2f9e8a;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(15, 107, 93, .55);
+    }
+    .screen-era-legend {
+      display: flex; flex-wrap: wrap; gap: 10px 14px; margin: 0 0 8px;
+      padding: 0; list-style: none; font-size: 12px; color: #9db0c0;
+    }
+    .screen-era-legend li { display: inline-flex; align-items: center; gap: 7px; }
+    .screen-era-swatch {
+      width: 14px; height: 14px; border-radius: 3px; border: 2px solid; flex: 0 0 auto;
+    }
+    .screen-era-swatch.baseline { background: #d6e4f5; border-color: #6ea0d4; }
+    .screen-era-swatch.today { background: #c8ebe0; border-color: #2f9e8a; }
+    .screen-shell img {
+      display: block; width: 100%; max-height: min(68vh, 640px); object-fit: contain; background: #0b1016; vertical-align: top;
+      opacity: 1; transition: opacity .15s ease;
+    }
+    .screen-shell[data-loading="true"] img { opacity: .35; }
+    .screen-loading {
+      position: absolute; inset: 0; z-index: 4; display: none; place-items: center; gap: 12px;
+      flex-direction: column; background: rgba(8, 12, 18, .55); color: #e8eef5; font-size: 14px;
+      pointer-events: none;
+    }
+    .screen-shell[data-loading="true"] .screen-loading { display: flex; }
+    .screen-spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.22); border-top-color: #9ec5ff;
+      animation: screen-spin .7s linear infinite;
+    }
+    @keyframes screen-spin { to { transform: rotate(360deg); } }
+    .screen-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 5; width: 44px; height: 72px; margin: 0; padding: 0;
+      border: 1px solid rgba(255,255,255,.22); border-radius: 10px;
+      background: rgba(10, 16, 22, .72); color: #fff; font: 700 28px/1 system-ui, sans-serif;
+      cursor: pointer; backdrop-filter: blur(6px);
+    }
+    .screen-nav:hover:not(:disabled) { background: rgba(15, 107, 93, .88); border-color: transparent; }
+    .screen-nav:disabled { opacity: .28; cursor: not-allowed; }
+    .screen-nav-prev { left: 10px; }
+    .screen-nav-next { right: 10px; }
+    .screen-missing {
+      display: none; place-items: center; gap: 8px; min-height: 320px; padding: 24px;
+      background: #101820; color: #c5d0dc; text-align: center; position: relative; z-index: 2;
+    }
+    .screen-missing:not([hidden]) { display: grid; }
+    .screen-missing strong { color: #fff; font-size: 1.05rem; }
+    .screen-missing code { color: #9ec5ff; }
+    .screen-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+    .screen-toolbar a, .screen-toolbar button.linkish {
+      font-size: 12px; color: #9ec5ff; text-decoration: underline; text-underline-offset: 2px;
+      background: none; border: 0; padding: 0; cursor: pointer; font: inherit;
+    }
+    .player-modal {
+      border: 0; padding: 0; margin: 0; width: 100vw; max-width: 100vw; height: 100vh; max-height: 100vh;
+      background: #0b1016; color: #e8eef5;
+    }
+    .player-modal::backdrop { background: rgba(0, 0, 0, .72); }
+    .player-modal[open] { display: flex; flex-direction: column; }
+    .player-modal-chrome {
+      flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.12);
+      background: #121820;
+    }
+    .player-modal-chrome strong { font-size: 14px; }
+    .player-modal-chrome button {
+      font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.08); color: #fff; padding: 8px 12px;
+    }
+    .player-modal-body {
+      flex: 1 1 auto; min-height: 0; overflow: auto; padding: 16px 18px 24px;
+    }
+    .player-modal-body .playback {
+      margin: 0; max-width: none; grid-template-columns: minmax(220px, 280px) 1fr;
+    }
+    .player-modal-body .screen-shell img {
+      max-height: min(78vh, 920px);
+    }
+    .player-modal-body .stage {
+      min-height: auto;
+    }
+    /* Fullscreen dialog sits on the light docs page — force dark side panel tokens */
+    dialog.player-modal,
+    dialog.player-modal .player-modal-body {
+      color: #e8eef5;
+      --surface: #18222c;
+      --line: rgba(255,255,255,.16);
+      --muted: #9db0c0;
+      --accent-soft: #243445;
+      background: #0f141a;
+    }
+    dialog.player-modal .player-modal-body .side-heading { color: #e8eef5; }
+    dialog.player-modal .player-modal-body .role-item,
+    dialog.player-modal .player-modal-body .fm-item {
+      background: #18222c;
+      color: #e8eef5;
+      /* keep 3px era border from base rules — do not reset to 1px */
+    }
+    dialog.player-modal .player-modal-body .role-item[data-era="baseline"],
+    dialog.player-modal .player-modal-body .fm-item[data-era="baseline"] {
+      border-color: #5b8fc9;
+      box-shadow: inset 0 0 0 1px rgba(61, 106, 158, .25);
+    }
+    dialog.player-modal .player-modal-body .role-item[data-era="today"],
+    dialog.player-modal .player-modal-body .fm-item[data-era="today"] {
+      border-color: #1f8a76;
+      box-shadow: inset 0 0 0 1px rgba(15, 107, 93, .28);
+    }
+    dialog.player-modal .player-modal-body .role-item:hover,
+    dialog.player-modal .player-modal-body .fm-item:hover {
+      background: #1e2a36;
+    }
+    dialog.player-modal .player-modal-body .role-item[aria-current="true"],
+    dialog.player-modal .player-modal-body .fm-item[aria-current="true"] {
+      background: #243445;
+    }
+    dialog.player-modal .player-modal-body .role-ord,
+    dialog.player-modal .player-modal-body .fm-code {
+      background: #2a3644;
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .role-item[aria-current="true"] .role-ord,
+    dialog.player-modal .player-modal-body .fm-item[aria-current="true"] .fm-code {
+      background: var(--accent, #0f6b5d);
+      color: #fff;
+    }
+    dialog.player-modal .player-modal-body .role-meta strong,
+    dialog.player-modal .player-modal-body .fm-meta strong {
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .role-meta span,
+    dialog.player-modal .player-modal-body .fm-meta span {
+      color: #9db0c0;
+    }
+    dialog.player-modal .player-modal-body .bars .bar-label,
+    dialog.player-modal .player-modal-body .status-line,
+    dialog.player-modal .player-modal-body .kbd {
+      color: #9db0c0;
+    }
+    dialog.player-modal .player-modal-body .stage-body { color: #d7e0ea; }
+    dialog.player-modal .player-modal-body .stage-detail { color: #b7c4d2; }
+    dialog.player-modal .player-modal-body .controls button {
+      background: #1a2430;
+      border-color: rgba(255,255,255,.18);
+      color: #e8eef5;
+    }
+    dialog.player-modal .player-modal-body .controls button.primary {
+      background: var(--accent, #0f6b5d);
+      border-color: transparent;
+      color: #fff;
+    }
+    dialog.player-modal .player-modal-body .bar { background: rgba(255,255,255,.12); }
+    body.player-modal-open { overflow: hidden; }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
+    .controls button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; }
+    .controls button:disabled { opacity: .45; cursor: not-allowed; }
+    .controls button.primary { background: var(--accent); color: #fff; border-color: transparent; }
+    .bars { display: grid; gap: 6px; margin-top: 12px; }
+    .bar-label { font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
+    .bar { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+    .bar > span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s ease; }
+    .status-line { font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .kbd { font-size: 12px; color: var(--muted); }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="../lms-reference/features.html">LMS feature steps</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../campus-configurability.html">Campus configurability help</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../distributed-cms-architecture.html">Target architecture</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="../migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="../lms-reference/features.html">LMS feature steps</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../guidance/index.html" aria-haspopup="true" aria-expanded="false">Guidance</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../guidance/index.html">User guidance</a>
+              <a href="../guidance/website-ai-should.html">AI should</a>
+              <a href="../guidance/website-ai-should-not.html">AI should not</a>
+              <a href="../guidance/website-ai-decisions.html">AI decisions</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="newer-cms.html">Newer CMS mind map</a>
+              <a href="newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="feature-modules.html">Feature modules</a>
+              <a href="demo-role-playback.html">Demo role playback</a>
+              <a href="wireframes/index.html">Demo desk wireframes</a>
+              <a href="newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="newer-cms-exports.html">Newer CMS exports</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
+              <a href="index.html">Feature analysis</a>
+              <a href="cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
+              <a href="index.html#admissions">Flows</a>
+              <a href="index.html#why">Why pilot</a>
+              <a href="index.html#admissions">Admissions</a>
+              <a href="index.html#registry">Registry / NMDS</a>
+              <a href="index.html#cap">CAP seed</a>
+              <a href="index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="../old-cms/fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/email-templates.html">Email templates</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md">LMS online-class options</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="../old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              <a href="https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/" target="_blank" rel="noopener noreferrer">CMS standup updates · 30 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-21/" target="_blank" rel="noopener noreferrer">E2E access control · 21 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+
+<main class="wrap">
+  <p class="eyebrow">Lesotho pilot · Raisd Demo deepen · step-by-step screens</p>
+  <h1>Demo role playback</h1>
+  <p class="lede">
+    Prev / Next walks <strong>Demo portal screenshots</strong> step by step
+    (Applicant → Faculty → QA → Bursary → Registry → Year Leader → Student → Control),
+    tracked by feature module — including Sponsorship master, graduations, certificates,
+    remarks, academic, analytics, and discipline desks. Catalogue:
+    <a href="feature-modules.html">feature-modules.html</a>
+    · Markdown
+    <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-feature-modules.md">lesotho-feature-modules.md</a>.
+  </p>
+
+  <div class="banner">
+    Screenshot storyboard · feature-tracked by FM-01…FM-18.
+    Deep-link <code>?scene=bur-sponsors</code>, <code>?fm=FM-10</code>, <code>?role=registry</code>, or <code>?scene=reg-analytics</code>.
+    Keyboard: ← → previous/next step · Space auto-advance. Use <strong>Open portal</strong> for the live Demo host.
+  </div>
+
+  <section class="flow-compare" aria-labelledby="flow-compare-title">
+    <h2 id="flow-compare-title">Raisd Demo vs newer Lesotho CMS — system flow</h2>
+    <p class="flow-lede">
+      End-to-end admissions → offer → enrolment → registration → ceremony / academic / analytics path.
+      Colours mark what Raisd already Demo’d <strong>before the deepen wave</strong>,
+      what was <strong>enabled or deepened (28 Oct 2026)</strong>,
+      and what remains <strong>Live later or out of M4</strong>. Detail:
+      <a href="feature-modules.html">feature modules</a> ·
+      <a href="newer-cms-gap.html">newer CMS gap</a> ·
+      <a href="workflow-control-improvements.html">workflow &amp; control</a>.
+    </p>
+    <ul class="flow-legend" aria-label="Colour legend">
+      <li><span class="flow-swatch baseline" aria-hidden="true"></span> Baseline Raisd Demo (before deepen)</li>
+      <li><span class="flow-swatch today" aria-hidden="true"></span> Added / deepened (Demo Existing)</li>
+      <li><span class="flow-swatch gap" aria-hidden="true"></span> Still Live later (CAP-53 write-back)</li>
+      <li><span class="flow-swatch out" aria-hidden="true"></span> Out of M4 (HR / LMS / Website / Library / Mail)</li>
+    </ul>
+
+    <h3>1. Admissions &amp; enrolment journey</h3>
+    <p class="flow-note">Raisd portals + Portal API (Demo). Newer CMS has the same desks as a single Admin product — Raisd splits Applicant / Staff / Student / Control.</p>
+    <pre class="mermaid">
+flowchart LR
+  subgraph Applicant["Applicant portal"]
+    A1[Sign-in / Keychain]
+    A2[Draft &amp; submit]
+    A3[Fee proof LSL]
+    A4[Confirm eligibility]
+    A5[Accept Offer]
+    A6[Enrolment Accepted]
+    A1 --> A2 --> A3 --> A4 --> A5 --> A6
+  end
+  subgraph Staff["Staff desks · Lesotho"]
+    B1[Bursary verify payment]
+    F1[Faculty open queue]
+    F2[Set rank / score]
+    F3[Faculty recommendation]
+    Q1[QA document review]
+    Q2[LGCSE extract]
+    Q3[Verify documents]
+    R1[Registry release Offer]
+    B1 --> F1 --> F2 --> F3 --> Q1 --> Q2 --> Q3 --> R1
+  end
+  subgraph After["After enrolment"]
+    S1[Student modules + NMDS]
+    S2[Bursary / Faculty clearance]
+    S3[Student finance / CAF]
+    SPON[Sponsorship master]
+    G1[Registry 12-tab file]
+    GRAD[Graduations desk]
+    CERT[Certificates / QR]
+    REM[Remarks queue]
+    ACAD[Academic overview]
+    AN[Analytics cards]
+    DISC[Discipline list]
+    TT[Timetable generator / venues]
+    Y1[Year Leader read file]
+    S1 --> S2 --> S3
+    S2 --> SPON
+    G1 --> GRAD --> CERT
+    G1 --> REM
+    G1 --> ACAD
+    G1 --> AN
+    G1 --> DISC
+    ACAD --> TT
+    G1 -.-> Y1
+  end
+  subgraph Control["Control"]
+    C1[Lesotho Admissions Flows]
+    C2[Desk review flags]
+    C3[Demo catalogues]
+    C4[Position / role seeds]
+    C1 --> C2 --> C3
+    C1 --> C4
+  end
+  A3 -.-> B1
+  R1 -.-> A4
+  Q3 -.-> A4
+  A5 --> S1
+  C2 -.-> F2
+  C2 -.-> Q2
+  classDef baseline fill:#d6e4f5,stroke:#3d6a9e,color:#122033
+  classDef today fill:#c8ebe0,stroke:#0f6b5d,color:#0a3d36
+  classDef gap fill:#fde8d8,stroke:#c45c26,color:#5c2e10
+  class A1,A2,A3,A4,A5,A6,B1,R1,S1,S2,S3,C1,C3,C4,Y1 baseline
+  class F1,F2,F3,Q1,Q2,Q3,C2,G1,SPON,GRAD,CERT,REM,ACAD,AN,DISC,TT today
+    </pre>
+
+    <h3>2. Newer Lesotho CMS coverage vs Raisd modules</h3>
+    <p class="flow-note">What the newer CMS Admin already ships (screenshot benchmark) mapped to Raisd FM-01…FM-18. Green = Demo Existing / deepened; blue = baseline Demo; amber = Live later only.</p>
+    <pre class="mermaid">
+flowchart TB
+  subgraph RaisdHave["Raisd already had Demo"]
+    FM01[FM-01 Identity / SSO]
+    FM02[FM-02 Applicant journey]
+    FM06[FM-06 Student portal]
+    FM09[FM-09 Fees preview / payments]
+    FM13[FM-13 Notify]
+    FM14[FM-14 Lesotho hosts]
+    FM15[FM-15 Keychain desk roles]
+  end
+  subgraph TodayAdd["Enabled / filled today"]
+    FM03[FM-03 Faculty desks + n/3]
+    FM04[FM-04 QA extract / verify]
+    FM05[FM-05 Desk review flags + policy]
+    FM07[FM-07 Registry file Academics / Sponsors]
+    FM08[FM-08 NMDS + Sponsorship master]
+    FM10[FM-10 Graduation / ceremony]
+    FM11[FM-11 Remarks queue]
+    FM12[FM-12 Print / QR Demo]
+    FM16[FM-16 Academic + timetable / venues]
+    FM17[FM-17 Analytics cards]
+    FM18[FM-18 Discipline list]
+  end
+  subgraph Gaps["Still Live later / out of Demo deepen"]
+    CAP53[Live CAP-53 write-back]
+  end
+  subgraph Out["Out of M4"]
+    HR[HRMS]
+    LMS[LMS]
+    WEB[Website]
+    LIB[Library]
+    MAIL[Mail client]
+  end
+  NewerCMS[Newer Lesotho CMS Admin] --> RaisdHave
+  NewerCMS --> TodayAdd
+  NewerCMS --> Gaps
+  NewerCMS --> Out
+  classDef baseline fill:#d6e4f5,stroke:#3d6a9e,color:#122033
+  classDef today fill:#c8ebe0,stroke:#0f6b5d,color:#0a3d36
+  classDef gap fill:#fde8d8,stroke:#c45c26,color:#5c2e10
+  classDef out fill:#eceff3,stroke:#8a93a0,color:#3a4450
+  class FM01,FM02,FM06,FM09,FM13,FM14,FM15 baseline
+  class FM03,FM04,FM05,FM07,FM08,FM10,FM11,FM12,FM16,FM17,FM18 today
+  class CAP53 gap
+  class HR,LMS,WEB,LIB,MAIL out
+    </pre>
+
+    <h3>3. Remaining after Demo deepen</h3>
+    <div class="flow-gap-grid">
+      <div class="flow-gap-card"><strong>Live CAP-53</strong><span>Registry file is Demo graph projection; Live SoR read/write-back still mapped only.</span></div>
+      <div class="flow-gap-card"><strong>Out of M4</strong><span>HRMS, LMS, Website, Library, in-portal Mail — leave on newer CMS / other systems.</span></div>
+      <div class="flow-gap-card"><strong>Live timetable solver</strong><span>Demo generator places modules into venues; Live conflict / capacity solver stays later.</span></div>
+    </div>
+  </section>
+
+  <div id="playback-slot">
+    <div class="playback" id="playback-root" aria-label="Role-by-role Demo playback">
+      <aside class="side-stack">
+        <div>
+          <h2 class="side-heading type-section">Roles</h2>
+          <p class="side-era-hint">Blue number/box = existing only · Green = includes new desks</p>
+          <div id="role-list" class="role-list" role="listbox" aria-label="Demo roles"></div>
+        </div>
+        <div>
+          <h2 class="side-heading type-section">Features</h2>
+          <p class="side-era-hint">Blue code/box = existing only · Green = includes new desks</p>
+          <div id="feature-list" class="fm-list" role="listbox" aria-label="Feature modules"></div>
+        </div>
+      </aside>
+      <div id="player-main">
+        <div id="stage" class="stage" aria-live="polite">
+          <div class="stage-top">
+            <span id="role-badge" class="stage-badge">Role</span>
+            <a id="portal" class="stage-portal" target="_blank" rel="noopener noreferrer"></a>
+            <span id="account" class="stage-account"></span>
+          </div>
+          <nav class="step-progress" aria-label="Playback progress">
+            <div class="step-progress-head">
+              <strong id="step-progress-role">Section</strong>
+              <span id="step-progress-count">Step —</span>
+            </div>
+            <div class="section-progress" id="section-progress" role="tablist" aria-label="Roles"></div>
+            <ol class="step-progress-track" id="step-progress-track" aria-label="Steps in this role"></ol>
+          </nav>
+          <ul class="screen-era-legend" aria-label="Border colour legend">
+            <li><span class="screen-era-swatch baseline" aria-hidden="true"></span> Blue · baseline existing Demo (steps, roles, borders)</li>
+            <li><span class="screen-era-swatch today" aria-hidden="true"></span> Green · desks enabled / deepened today</li>
+          </ul>
+          <div class="screen-shell" id="screen-shell" aria-label="Demo scene screenshot" data-era="baseline" data-loading="true">
+            <button type="button" class="screen-nav screen-nav-prev" id="btn-prev" aria-label="Previous step">‹</button>
+            <img id="scene-screen" alt="Demo scene screenshot" />
+            <button type="button" class="screen-nav screen-nav-next" id="btn-next" aria-label="Next step">›</button>
+            <div class="screen-loading" id="screen-loading" aria-live="polite">
+              <div class="screen-spinner" aria-hidden="true"></div>
+              <span>Loading screen…</span>
+            </div>
+            <div id="screen-missing" class="screen-missing" hidden>
+              <strong>Screen not captured yet</strong>
+              <div>Scene <code data-missing-id></code> — re-run <code>record-playback-videos.mjs --screens-only</code>.</div>
+            </div>
+          </div>
+          <div class="screen-toolbar">
+            <p id="screen-status" class="stage-account" style="margin:0">Idle</p>
+            <span style="display:flex;gap:14px;align-items:center">
+              <button type="button" class="linkish" id="btn-expand">Expand fullscreen</button>
+              <a id="btn-open-portal" href="#" target="_blank" rel="noopener noreferrer">Open portal</a>
+            </span>
+          </div>
+          <div class="stage-narration">
+            <p id="route" class="stage-route"></p>
+            <h2 id="scene-title">Loading…</h2>
+            <p id="scene-body" class="stage-body"></p>
+            <p id="scene-detail" class="stage-detail"></p>
+            <div class="scene-journey" id="scene-journey" aria-label="Journey sequence for this screenshot">
+              <div class="journey-head">
+                <strong>Sequence · Demo journey</strong>
+                <p class="journey-here" id="journey-here">Traveling…</p>
+              </div>
+              <div class="journey-mermaid-wrap">
+                <pre class="mermaid journey-mermaid" id="journey-mermaid"></pre>
+              </div>
+            </div>
+            <div id="scene-steps" class="exec-panel"></div>
+            <div id="scene-fm" class="stage-fm"></div>
+          </div>
+        </div>
+        <div class="controls">
+          <button type="button" class="primary" id="btn-play">Auto</button>
+          <button type="button" id="btn-pause">Pause</button>
+          <button type="button" id="btn-speed" title="Auto-advance speed">1×</button>
+          <span class="kbd">← → on image · Space auto · Esc exit expand</span>
+        </div>
+        <div class="bars">
+          <div class="bar-label"><span>This role</span><span id="status-line" class="status-line" style="margin:0"></span></div>
+          <div class="bar" role="progressbar" aria-label="Progress in current role" aria-valuemin="0"><span id="progress-role"></span></div>
+          <div class="bar-label"><span>All roles</span></div>
+          <div class="bar" role="progressbar" aria-label="Overall playback progress" aria-valuemin="0"><span id="progress-all"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <dialog id="player-modal" class="player-modal" aria-label="Demo playback fullscreen">
+    <div class="player-modal-chrome">
+      <strong>Demo role playback · fullscreen</strong>
+      <button type="button" id="btn-collapse">Close</button>
+    </div>
+    <div class="player-modal-body" id="player-modal-body"></div>
+  </dialog>
+</main>
+  <script src="../abbr-tooltips.js"></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+    import { createPlayer } from "./demo-role-playback.js?v=20261028-seq1"
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "neutral",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true, wrappingWidth: 160 },
+      sequence: { actorMargin: 28, messageMargin: 28, mirrorActors: false },
+    })
+
+    let mermaidId = 0
+    async function renderMermaid(node) {
+      if (!node) return
+      const source = node.textContent || ""
+      const id = `journey-seq-${++mermaidId}`
+      const { svg } = await mermaid.render(id, source)
+      node.innerHTML = svg
+      node.removeAttribute("data-processed")
+    }
+
+    createPlayer({
+      roleListEl: document.getElementById("role-list"),
+      featureListEl: document.getElementById("feature-list"),
+      stageEl: document.getElementById("stage"),
+      roleBadgeEl: document.getElementById("role-badge"),
+      portalEl: document.getElementById("portal"),
+      accountEl: document.getElementById("account"),
+      routeEl: document.getElementById("route"),
+      titleEl: document.getElementById("scene-title"),
+      bodyEl: document.getElementById("scene-body"),
+      detailEl: document.getElementById("scene-detail"),
+      journeyEl: document.getElementById("scene-journey"),
+      journeyMermaidEl: document.getElementById("journey-mermaid"),
+      journeyHereEl: document.getElementById("journey-here"),
+      renderMermaid,
+      stepsEl: document.getElementById("scene-steps"),
+      fmEl: document.getElementById("scene-fm"),
+      screenEl: document.getElementById("scene-screen"),
+      screenShellEl: document.getElementById("screen-shell"),
+      missingEl: document.getElementById("screen-missing"),
+      screenStatusEl: document.getElementById("screen-status"),
+      openPortalBtn: document.getElementById("btn-open-portal"),
+      expandBtn: document.getElementById("btn-expand"),
+      collapseBtn: document.getElementById("btn-collapse"),
+      playbackRootEl: document.getElementById("playback-root"),
+      playbackSlotEl: document.getElementById("playback-slot"),
+      modalEl: document.getElementById("player-modal"),
+      modalBodyEl: document.getElementById("player-modal-body"),
+      stepProgressRoleEl: document.getElementById("step-progress-role"),
+      stepProgressCountEl: document.getElementById("step-progress-count"),
+      stepProgressTrackEl: document.getElementById("step-progress-track"),
+      sectionProgressEl: document.getElementById("section-progress"),
+      progressRoleEl: document.getElementById("progress-role"),
+      progressAllEl: document.getElementById("progress-all"),
+      statusEl: document.getElementById("status-line"),
+      playBtn: document.getElementById("btn-play"),
+      pauseBtn: document.getElementById("btn-pause"),
+      prevBtn: document.getElementById("btn-prev"),
+      nextBtn: document.getElementById("btn-next"),
+      speedBtn: document.getElementById("btn-speed"),
+    })
+  </script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+  <script src="../keychain-access.js" defer></script>
+</body>
+</html>
