@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd — Guidance · Online class</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* Docs stay light; classrooms.raisd.co is dark-only separately. */
+    .guide-subnav { display:flex; flex-wrap:wrap; gap:8px 14px; margin:0 0 1.25rem; }
+    .guide-subnav a { font-size:14px; }
+    .callout {
+      border-left:4px solid var(--accent,#1a4f8b);
+      background: var(--accent-soft,#e8f0f8);
+      padding:12px 14px; border-radius:0 8px 8px 0; margin:0 0 1.25rem;
+    }
+    .callout.warn { border-left-color: var(--warn,#b45309); background: var(--warn-bg,#fff7ed); }
+    .tags { margin: 0 0 1rem; }
+    .tag { display:inline-block; font-size:.72rem; font-weight:700; padding:.12rem .45rem; border-radius:4px; margin:0 6px 6px 0; }
+    .tag.demo { background:#dcfce7; color:#166534; }
+    .tag.gap { background:#fee2e2; color:#991b1b; }
+    .role-grid { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); margin:0 0 1.5rem; }
+    .role-card {
+      border:1px solid var(--line); border-radius:12px; padding:14px 16px;
+      background:#fff;
+    }
+    .role-card h3 { margin:0 0 8px; font-size:1.05rem; }
+    .role-card ol { margin:0; padding-left:1.2rem; }
+    .role-card li { margin:0 0 6px; font-size:.92rem; line-height:1.4; }
+    .video-block {
+      margin:0 0 1.5rem; padding:16px; border:1px solid var(--line);
+      border-radius:14px; background: var(--surface,#fff);
+    }
+    .video-block h3 { margin:0 0 10px; font-size:1.05rem; }
+    .video-block .meta { margin:10px 0 0; font-size:.9rem; color: var(--muted); }
+    .video-player {
+      position:relative; border-radius:10px; overflow:hidden; background:#0f1c20;
+      aspect-ratio:16 / 9; max-height:560px;
+    }
+    .video-player video {
+      display:block; width:100%; height:100%; max-height:560px; object-fit:contain; background:#0f1c20;
+    }
+    .video-cover {
+      position:absolute; inset:0; z-index:2; margin:0; padding:0; border:0; cursor:pointer;
+      width:100%; height:100%; display:grid; grid-template-rows:1fr auto 1fr;
+      align-items:center; justify-items:center;
+      text-align:center; color:#fff; font:inherit;
+      background-size:cover; background-position:center;
+    }
+    .video-cover::before {
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(8,14,20,.55) 0%, rgba(8,14,20,.72) 45%, rgba(8,14,20,.82) 100%);
+    }
+    .video-cover-inner {
+      position:relative; z-index:1; grid-row:1; align-self:end;
+      display:flex; flex-direction:column; align-items:center;
+      gap:8px; max-width:40rem; padding:0 1.5rem 18px;
+    }
+    .video-cover-kicker {
+      font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#b4d2ff;
+    }
+    .video-cover-title {
+      font-size:clamp(1.2rem, 2.5vw, 1.75rem); font-weight:700; line-height:1.25; margin:0;
+      text-shadow:0 2px 16px rgba(0,0,0,.45);
+    }
+    .video-cover-desc {
+      font-size:clamp(.92rem, 1.7vw, 1.08rem); line-height:1.45; color:rgba(255,255,255,.9); margin:0;
+      text-shadow:0 1px 10px rgba(0,0,0,.4);
+    }
+    .video-cover-play {
+      position:relative; z-index:1; grid-row:2; width:78px; height:78px; border-radius:999px;
+      background: var(--accent,#1a4f8b); border:3px solid rgba(255,255,255,.95);
+      display:grid; place-items:center; box-shadow:0 12px 32px rgba(0,0,0,.4);
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .video-cover-play::before {
+      content:""; display:block; width:0; height:0;
+      border-style:solid; border-width:12px 0 12px 20px;
+      border-color:transparent transparent transparent #fff;
+      margin-left:4px;
+    }
+    .video-cover:hover .video-cover-play,
+    .video-cover:focus-visible .video-cover-play { transform: scale(1.06); filter:brightness(1.08); }
+    .video-cover:focus-visible { outline:3px solid #93c5fd; outline-offset:3px; }
+    .video-player.is-playing .video-cover { display:none; }
+    .video-open {
+      margin-top:10px; font: inherit; cursor:pointer;
+      border-radius:8px; border:1px solid var(--line);
+      background: var(--accent,#1a4f8b); color:#fff; padding:8px 12px;
+    }
+    .video-open:hover { filter: brightness(.95); }
+    .demo-shot-list { display:flex; flex-direction:column; gap:1.25rem; }
+    .demo-shot-row {
+      display:grid;
+      grid-template-columns:minmax(0,1.7fr) minmax(220px,.9fr);
+      gap:1.1rem 1.4rem;
+      align-items:start;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: var(--surface,#fff);
+    }
+    .demo-shot-media { margin:0; min-width:0; }
+    /* Classroom shot chrome mirrors the portal modal (dark product UI on a light docs page). */
+    .modal-frame {
+      border:1px solid var(--line);
+      border-radius:12px;
+      overflow:hidden;
+      background: #0f0f0f;
+      box-shadow: 0 12px 32px rgba(15,23,42,.16);
+    }
+    .modal-frame-chrome {
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 12px; background: #1c1c1c;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .modal-frame-chrome strong { font-size:.82rem; color: #fafafa; }
+    .modal-frame-chrome span {
+      font-size:.72rem; color: #a3a3a3;
+      border:1px solid rgba(255,255,255,.16); border-radius:999px; padding:2px 8px;
+    }
+    .demo-shot-media a,
+    .demo-shot-media button.shot-open {
+      display:block; width:100%; padding:0; margin:0; border:0; cursor:zoom-in;
+      border-radius:0; overflow:hidden; background:#0f1c20; color:inherit; text-align:left;
+    }
+    .demo-shot-media:not(.is-modal) a,
+    .demo-shot-media:not(.is-modal) button.shot-open {
+      border-radius:10px; border:1px solid var(--line);
+    }
+    .demo-shot-media img { display:block; width:100%; height:auto; }
+    .demo-shot-copy .lab {
+      font-size:.7rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      color:#9a6418; margin:0 0 8px;
+    }
+    .demo-shot-copy h3 { margin:0 0 8px; font-size:1.05rem; line-height:1.3; }
+    .demo-shot-copy p { margin:0 0 8px; font-size:.92rem; line-height:1.45; color: var(--muted); }
+    .demo-shot-copy .file { margin:10px 0 0; font-size:.8rem; color: var(--muted); }
+    .section { margin:0 0 2rem; }
+    .section h2 { margin:0 0 .75rem; }
+    .hosts { width:100%; border-collapse:collapse; font-size:.92rem; }
+    .hosts th, .hosts td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+    .hosts th { background: var(--accent-soft,#e8f0f8); }
+    .guide-lightbox {
+      border:0; padding:0; margin:0; width:min(1100px,96vw); max-width:96vw;
+      max-height:92vh; background: #fff; color: #0f172a;
+      border-radius:14px; overflow:hidden;
+    }
+    .guide-lightbox::backdrop { background: rgba(15,23,42,.55); }
+    .guide-lightbox[open] { display:flex; flex-direction:column; }
+    .guide-lightbox-chrome {
+      flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px; border-bottom:1px solid var(--line); background: #f8fafc;
+    }
+    .guide-lightbox-chrome strong { font-size:.95rem; }
+    .guide-lightbox-chrome button {
+      font:inherit; cursor:pointer; border-radius:8px; border:1px solid var(--line);
+      background: #fff; color: #0f172a; padding:8px 12px;
+    }
+    .guide-lightbox-body {
+      flex:1 1 auto; min-height:0; overflow:auto; padding:12px; background:#0f1c20;
+    }
+    .guide-lightbox-body img,
+    .guide-lightbox-body video {
+      display:block; width:100%; height:auto; max-height:min(78vh,900px); object-fit:contain; margin:0 auto;
+      background:#000; border-radius:8px;
+    }
+    @media (max-width:860px) {
+      .demo-shot-row { grid-template-columns:1fr; }
+    }
+  </style>
+  <script src="../site-auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <button type="button" class="site-search-trigger" aria-label="Search documentation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../index.html">Diagrams hub</a>
+            <a href="../index.html#progress">Project progress</a>
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+            <a href="../index.html#endpoints">Public endpoints</a>
+            <a href="https://keychain.raisd.co/">Demo Keychain</a>
+            <a href="../distributed-cms-architecture.html">Distributed CMS</a>
+            <a href="../architecture.html">Architecture</a>
+            <a href="../lms.html">LMS research</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features</a>
+            <a href="../lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="../lms-reference/features.html">LMS feature steps</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
+            <a href="../migration.html">Migration</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../campus-configurability.html">Campus configurability help</a>
+            <a href="../architecture.html#services">Microservices</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+            <a href="../architecture.html#cicd">CI/CD pipeline</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../distributed-cms-architecture.html" aria-haspopup="true" aria-expanded="false">Distributed CMS</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../distributed-cms-architecture.html">Target architecture</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../distributed-cms-architecture.html#phase-ideal">Ideal state</a>
+              <a href="../distributed-cms-architecture.html#tenancy">White-label &amp; flags</a>
+              <a href="../migration.html">M1–M5 migration</a>
+              </div>
+            </div>
+            <a href="../lms.html">LMS research posture</a>
+            <a href="../lms-architecture.html">LMS architecture</a>
+            <a href="../lms-features.html">LMS features F01–F37</a>
+            <a href="../lms-reference/index.html">Moodle + Classroom map</a>
+            <a href="../lms-reference/features.html">LMS feature steps</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
+            <a href="../architecture.html#sdd">SDD &amp; ADR catalogue</a>
+            <a href="../architecture.html#acl">SoR / ACL</a>
+            <a href="../architecture.html#academic">Academic model</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../migration.html" aria-haspopup="true" aria-expanded="false">Migration</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../migration.html">Plan overview</a>
+              <a href="../migration.html#sequence">Milestone sequence</a>
+              <a href="../distributed-cms-architecture.html#journey">Current → ideal</a>
+              <a href="../migration.html#m1">M1–M5 detail</a>
+              <a href="../migration.html#hosting">Hosting stages</a>
+              <a href="../migration.html#critical">Critical path</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../raisd-cms/index.html">Raisd CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../raisd-cms/index.html">Raisd CMS hub</a>
+            <a href="../raisd-cms/student-portal.html">Student portal</a>
+            <a href="../raisd-cms/student-portal-screenshots.html">Screenshots</a>
+            <a href="../raisd-cms/student-portal-guide.html">Use guides</a>
+            <a href="../raisd-cms/student-portal-manual.html">User manual</a>
+            <a href="../erd.html">ERD</a>
+            <a href="../canonical-schema-confirmations.html">Schema confirmations</a>
+            <a href="../dfd.html">DFD</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../old-cms/index.html">LUCT CMS</a>
+          <div class="nav-dd-menu" role="menu">
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="index.html" aria-haspopup="true" aria-expanded="false">Guidance</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="index.html">User guidance</a>
+              <a href="online-class.html">Online class</a>
+              <a href="website-ai-should.html">AI should</a>
+              <a href="website-ai-should-not.html">AI should not</a>
+              <a href="website-ai-decisions.html">AI decisions</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-lesotho/index.html" aria-haspopup="true" aria-expanded="false">Lesotho (pilot)</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-lesotho/newer-cms.html">Newer CMS mind map</a>
+              <a href="../old-cms-lesotho/newer-cms-manual.html">Newer CMS user manual</a>
+              <a href="../old-cms-lesotho/newer-cms-gap.html">Newer CMS gap vs Raisd</a>
+              <a href="../old-cms-lesotho/workflow-control-improvements.html">Workflow &amp; control (Faid)</a>
+              <a href="../old-cms-lesotho/feature-modules.html">Feature modules</a>
+              <a href="../old-cms-lesotho/demo-role-playback.html">Demo role playback</a>
+              <a href="../old-cms-lesotho/wireframes/index.html">Demo desk wireframes</a>
+              <a href="../old-cms-lesotho/newer-cms-screenshots.html">Newer CMS screenshots</a>
+              <a href="../old-cms-lesotho/newer-cms-exports.html">Newer CMS exports</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho">Newer CMS Obsidian 3D</a>
+              <a href="../old-cms-lesotho/index.html">Feature analysis</a>
+              <a href="../old-cms-lesotho/cms-vs-applicant.html">CMS vs Applicant</a>
+              <a href="../old-cms-lesotho/fee-payment-sps.html">Fee / payment SPs</a>
+              <a href="../old-cms-lesotho/campus-finance-profile.html">Finance profile (Faid)</a>
+              <a href="../old-cms-lesotho/cap53-online-enrolment.html">CAP-53 online-enrol</a>
+              <a href="../old-cms-lesotho/dynamic-fee-calculation.html">Dynamic fee calc</a>
+              <a href="../old-cms/obsidian.html?campus=lesotho-screenshot">Obsidian 3D screenshot FSD</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Flows</a>
+              <a href="../old-cms-lesotho/index.html#why">Why pilot</a>
+              <a href="../old-cms-lesotho/index.html#admissions">Admissions</a>
+              <a href="../old-cms-lesotho/index.html#registry">Registry / NMDS</a>
+              <a href="../old-cms-lesotho/index.html#cap">CAP seed</a>
+              <a href="../old-cms-lesotho/index.html#db-gap">Database gap</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms/index.html" aria-haspopup="true" aria-expanded="false">Cyberjaya</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms/index.html">E2E hub</a>
+              <a href="../old-cms/online-registration.html">Online registration</a>
+              <a href="../old-cms/online-registration-gap.html">Registration FE gaps</a>
+              <a href="../old-cms/cross-campus-fee-amounts.html">Cross-campus fee amounts</a>
+              <a href="../old-cms/fee-calculation-simulation.html">Fee calculation simulation</a>
+              <a href="../old-cms/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cyberjaya">Obsidian 3D</a>
+              <a href="../old-cms/index.html#flows">Flows</a>
+              <a href="../old-cms/index.html#erd">ERD</a>
+              <a href="../old-cms/index.html#database">Database</a>
+              <a href="../old-cms/index.html#compare">Comparison</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-eswatini/index.html" aria-haspopup="true" aria-expanded="false">Eswatini</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-eswatini/index.html">E2E hub</a>
+              <a href="../old-cms-eswatini/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=eswatini">Obsidian 3D</a>
+              <a href="../old-cms-eswatini/index.html#flows">Flows</a>
+              <a href="../old-cms-eswatini/index.html#integrations">Integrations</a>
+              <a href="../old-cms-eswatini/index.html#erd">ERD</a>
+              <a href="../old-cms-eswatini/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-cambodia/index.html" aria-haspopup="true" aria-expanded="false">Cambodia</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-cambodia/index.html">E2E hub</a>
+              <a href="../old-cms-cambodia/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=cambodia">Obsidian 3D</a>
+              <a href="../old-cms-cambodia/index.html#flows">Flows</a>
+              <a href="../old-cms-cambodia/index.html#integrations">Integrations</a>
+              <a href="../old-cms-cambodia/certificate-qr.html">Certificate QR</a>
+              <a href="../old-cms-cambodia/index.html#erd">ERD</a>
+              <a href="../old-cms-cambodia/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-botswana/index.html" aria-haspopup="true" aria-expanded="false">Botswana</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-botswana/index.html">E2E hub</a>
+              <a href="../old-cms-botswana/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=botswana">Obsidian 3D</a>
+              <a href="../old-cms-botswana/index.html#flows">Flows</a>
+              <a href="../old-cms-botswana/index.html#integrations">Integrations</a>
+              <a href="../old-cms-botswana/index.html#erd">ERD</a>
+              <a href="../old-cms-botswana/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">AI inventory</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="../old-cms-sierra-leone/index.html" aria-haspopup="true" aria-expanded="false">Sierra Leone</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="../old-cms-sierra-leone/index.html">E2E hub</a>
+              <a href="../old-cms-sierra-leone/index.html#fsd">FSD</a>
+              <a href="../old-cms/obsidian.html?campus=sierra-leone">Obsidian 3D</a>
+              <a href="../old-cms-sierra-leone/index.html#flows">Flows</a>
+              <a href="../old-cms-sierra-leone/index.html#integrations">Integrations</a>
+              <a href="../old-cms-sierra-leone/index.html#erd">ERD</a>
+              <a href="../old-cms-sierra-leone/database.html">Database</a>
+              <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">AI inventory</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../design-system/index.html">Design system</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../design-system/index.html">Design system hub</a>
+            <a href="../../design-system/email-templates.html">Email templates</a>
+            <a href="../../design-system/foundations.html">Foundations</a>
+            <a href="../../design-system/shared-controls.html">Shared controls</a>
+            <a href="../../design-system/shared-patterns.html">Shared patterns</a>
+            <a href="../../design-system/student-components.html">Student components</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../ai/index.html">AI knowledge</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../ai/index.html">AI hub</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/AGENTS.md">AGENTS.md</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/overview.md">Architecture overview</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lesotho-pilot.md">Lesotho pilot approach</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/distributed-cms-target.md">Distributed CMS target</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms.md">LMS research posture</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md">LMS online-class options</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-video-feature-comparison.md">LMS video feature comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-lesson-ux.md">LMS online-lesson UX</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md">Portal API</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md">Portal API plan</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md">Portal API deployment</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md">VPS topology</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md">CI/CD pipeline</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md">Argo CD GitOps</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/cms-feature-comparison.md">CMS comparison</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration.md">LUCT online registration</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md">Registration FE gaps</a>
+            <a href="../old-cms-lesotho/newer-cms-manual.html">Lesotho newer CMS manual</a>
+            <a href="../old-cms-lesotho/newer-cms-screenshots.html">Lesotho newer CMS screenshots</a>
+            <a href="../old-cms-lesotho/newer-cms-exports.html">Lesotho newer CMS exports</a>
+            <a href="../old-cms/obsidian.html?campus=lesotho">Lesotho newer CMS Obsidian 3D</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-lesotho.md">Lesotho CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-db-gap.md">Lesotho DB gap</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cms-vs-applicant-portal.md">Lesotho CMS vs Applicant</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/lesotho-cap53-read-adapter.md">Lesotho CAP-53 reads</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md" target="_blank" rel="noopener noreferrer">Lesotho analysis briefing</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-eswatini.md">Eswatini CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-cambodia.md">Cambodia CMS inventory</a>
+            <a href="../old-cms-cambodia/certificate-qr.html">Cambodia certificate QR</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-botswana.md">Botswana CMS inventory</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/old-cms-sierra-leone.md">Sierra Leone CMS inventory</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer">Reports hub</a>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Week summaries</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-19.html" target="_blank" rel="noopener noreferrer">W01 · 18–19 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-09-26.html" target="_blank" rel="noopener noreferrer">W02 · 20–26 Sep</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-03.html" target="_blank" rel="noopener noreferrer">W03 · 27 Sep–3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly/2026-10-10.html" target="_blank" rel="noopener noreferrer">W04 · 4–10 Oct (current)</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Weekly packs</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-03/Raisd-Campus-Weekly-Progress-2026-10-03.html" target="_blank" rel="noopener noreferrer">Baseline pack · 3 Oct</a>
+              <a href="https://docs.raisd.co/reports/weekly-progress-2026-10-10/Raisd-Campus-Weekly-Progress-2026-10-10.html" target="_blank" rel="noopener noreferrer">Current pack · 10 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">Executive &amp; briefings</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-05/Raisd-Campus-Executive-Progress-Review-2026-10-05.html" target="_blank" rel="noopener noreferrer">Executive review · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/executive-progress-review-2026-10-07/Raisd-Campus-Executive-Progress-Summary-2026-10-07.html" target="_blank" rel="noopener noreferrer">Executive summary · 7 Oct</a>
+              <a href="https://docs.raisd.co/reports/lesotho-cms-analysis-2026-10-05/Raisd-Lesotho-CMS-Analysis-Briefing-2026-10-05.html" target="_blank" rel="noopener noreferrer">Lesotho CMS briefing · 5 Oct</a>
+              <a href="https://docs.raisd.co/reports/database-recreation-2026-10-22/" target="_blank" rel="noopener noreferrer">Database recreation · 22 Oct</a>
+              <a href="https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/" target="_blank" rel="noopener noreferrer">CMS standup updates · 30 Oct</a>
+              </div>
+            </div>
+            <div class="nav-sub">
+              <a class="nav-sub-trigger" href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer" aria-haspopup="true" aria-expanded="false">End to End Demo</a>
+              <div class="nav-sub-menu" role="menu">
+              <a href="https://docs.raisd.co/reports/e2e-applicant-staff-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo enrol · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-module-enrol-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo modules · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-student-learning-lms-2026-10-11/" target="_blank" rel="noopener noreferrer">E2E Demo LMS learning · 11 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-control-2026-10-21/" target="_blank" rel="noopener noreferrer">E2E access control · 21 Oct</a>
+              <a href="https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/" target="_blank" rel="noopener noreferrer">E2E access templates · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/applicant-list-review-2026-10-20/" target="_blank" rel="noopener noreferrer">Applicant list review · 20 Oct</a>
+              <a href="https://docs.raisd.co/reports/joint-granular-access-2026-10-20/" target="_blank" rel="noopener noreferrer">Joint granular access · 20 Oct</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../sdd/index.html">SDD</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../sdd/index.html">SDD hub</a>
+            <a href="../../sdd/15-nomenclature.html">Nomenclature</a>
+            <a href="../../sdd/11-capability-catalog.html">Capability catalogue</a>
+            <a href="../../sdd/03-delivery-milestones.html">Milestones</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../../openapi.html">OpenAPI</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../../openapi.html">Swagger UI</a>
+            <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml">openapi.yaml</a>
+          </div>
+        </div>
+      </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="meta"><a href="index.html">← User guidance</a> · <a href="../lms-online-class-options.html">Online-class options</a> · <a href="../lms-reference/live-class-plugnmeet/">Walkthrough captures</a></p>
+
+  <h1>Online class — user guide</h1>
+  <p class="lead">Step-by-step Demo Partial guide for lecturers and students: start or join a live class on Lesotho Raisd portals, open the dark Raisd Classroom, use host tools (locks, waiting room, breakouts, whiteboard, notepad, polls, chat file share, recording, RTMP, AI), leave or end the session, and review Past Class. Screenshots and videos from the GRD301 walkthrough.</p>
+
+  <div class="tags">
+    <span class="tag demo">Demo Partial</span>
+    <span class="tag gap">Not Live CAP-26</span>
+  </div>
+
+  <div class="callout warn">
+    <strong>Demo ≠ Live.</strong> Sample / session data only. Join media uses Raisd classrooms (<code>classrooms.raisd.co</code>).
+    Do not treat this as Live production training. Markdown SoT:
+    <code>docs/ai/frontend/online-class-user-guide.md</code>.
+  </div>
+
+  <nav class="guide-subnav" aria-label="On this page">
+    <a href="#quick-start">Quick start</a>
+    <a href="#hosts">Hosts</a>
+    <a href="#videos">Videos</a>
+    <a href="#lecturer">Lecturer steps</a>
+    <a href="#student">Student steps</a>
+    <a href="#conversation">In the room</a>
+    <a href="#file-share">File upload &amp; share</a>
+    <a href="#features">Host features</a>
+    <a href="#participant">Participant &amp; room</a>
+    <a href="#collaboration">Collaboration</a>
+    <a href="#recording-ai">Recording &amp; AI</a>
+    <a href="#end">Leave / End</a>
+    <a href="#demo-vs-live">Demo vs Live</a>
+  </nav>
+
+  <section class="section" id="quick-start">
+    <h2>Quick start</h2>
+    <div class="role-grid">
+      <div class="role-card">
+        <h3>Lecturer (host)</h3>
+        <ol>
+          <li>Sign in at <a href="https://staff.lesotho.raisd.co">staff.lesotho.raisd.co</a></li>
+          <li>Open <strong>Classrooms</strong> → module (e.g. GRD301) → <strong>Live class</strong></li>
+          <li>Click <strong>Start class</strong></li>
+          <li>Virtual classroom modal opens → set mic/cam → join</li>
+          <li>Use lobby <strong>End class</strong> when finished</li>
+        </ol>
+      </div>
+      <div class="role-card">
+        <h3>Student (participant)</h3>
+        <ol>
+          <li>Sign in at <a href="https://student.lesotho.raisd.co">student.lesotho.raisd.co</a></li>
+          <li>Open <strong>Academic</strong> → <strong>Modules</strong> → module → <strong>Live class</strong></li>
+          <li>When Join is enabled, click <strong>Join</strong></li>
+          <li>Virtual classroom modal opens → set mic/cam → join</li>
+          <li>Click lobby <strong>Leave class</strong> when finished</li>
+        </ol>
+      </div>
+    </div>
+    <p class="meta">Prefer Keychain <strong>Open filled</strong> (Lesotho) into SSO. Demo accounts in captures: Adam Watson (lecturer) · Rizal Hakim (student).</p>
+  </section>
+
+  <section class="section" id="hosts">
+    <h2>Hosts and paths</h2>
+    <table class="hosts">
+      <thead>
+        <tr><th>Role</th><th>Portal</th><th>Path</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lecturer</td>
+          <td><a href="https://staff.lesotho.raisd.co">staff.lesotho.raisd.co</a></td>
+          <td>Classrooms → module → Live class</td>
+        </tr>
+        <tr>
+          <td>Student</td>
+          <td><a href="https://student.lesotho.raisd.co">student.lesotho.raisd.co</a></td>
+          <td>Academic → Modules → module → Live class</td>
+        </tr>
+        <tr>
+          <td>Sign-in</td>
+          <td colspan="2"><a href="https://sso.raisd.co/login">sso.raisd.co/login</a> · <a href="https://keychain.raisd.co">keychain.raisd.co</a></td>
+        </tr>
+        <tr>
+          <td>Classroom media</td>
+          <td colspan="2"><code>https://classrooms.raisd.co</code> (plugNmeet client; Shape&nbsp;B token from Portal API)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="videos">
+    <h2>Video guides</h2>
+    <p class="meta" style="margin:0 0 1rem">Tap the cover play button to start. Watch end-to-end first, then the role-specific clips.</p>
+
+    <div class="video-block" id="video-full">
+      <h3>Full walkthrough — lecturer Start + student Join</h3>
+      <div class="video-player">
+        <video controls preload="none" playsinline poster="../lms-reference/live-class-plugnmeet/video/covers/cover-walkthrough-full.png?v=20261107n">
+          <source src="../lms-reference/live-class-plugnmeet/video/walkthrough-full.webm?v=20261107n" type="video/webm" />
+        </video>
+        <button type="button" class="video-cover" style="background-image:url('../lms-reference/live-class-plugnmeet/video/covers/cover-walkthrough-full.png?v=20261107n')" aria-label="Play full walkthrough video">
+          <span class="video-cover-inner">
+            <span class="video-cover-kicker">Online class · Full path</span>
+            <span class="video-cover-title">Lecturer Start + student Join</span>
+            <span class="video-cover-desc">End-to-end Demo: staff Start class, open Raisd Classroom, student Join, then Leave / End.</span>
+          </span>
+          <span class="video-cover-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="meta"><a href="../lms-reference/live-class-plugnmeet/video/walkthrough-full.webm?v=20261107n"><code>walkthrough-full.webm</code></a> (~2 min at 2×)</p>
+    </div>
+
+    <div class="video-block" id="video-lecturer">
+      <h3>Lecturer path only</h3>
+      <div class="video-player">
+        <video controls preload="none" playsinline poster="../lms-reference/live-class-plugnmeet/video/covers/cover-walkthrough-lecturer.png?v=20261107n">
+          <source src="../lms-reference/live-class-plugnmeet/video/walkthrough-lecturer-and-media.webm?v=20261107n" type="video/webm" />
+        </video>
+        <button type="button" class="video-cover" style="background-image:url('../lms-reference/live-class-plugnmeet/video/covers/cover-walkthrough-lecturer.png?v=20261107n')" aria-label="Play lecturer path video">
+          <span class="video-cover-inner">
+            <span class="video-cover-kicker">Online class · Lecturer</span>
+            <span class="video-cover-title">Lecturer path only</span>
+            <span class="video-cover-desc">Staff portal → Live class lobby → Start → virtual classroom modal and host controls.</span>
+          </span>
+          <span class="video-cover-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="meta"><a href="../lms-reference/live-class-plugnmeet/video/walkthrough-lecturer-and-media.webm?v=20261107n"><code>walkthrough-lecturer-and-media.webm</code></a> (2×)</p>
+    </div>
+
+    <div class="video-block" id="video-student">
+      <h3>Student path only</h3>
+      <div class="video-player">
+        <video controls preload="none" playsinline poster="../lms-reference/live-class-plugnmeet/video/covers/cover-walkthrough-student.png?v=20261107n">
+          <source src="../lms-reference/live-class-plugnmeet/video/walkthrough-student-and-media.webm?v=20261107n" type="video/webm" />
+        </video>
+        <button type="button" class="video-cover" style="background-image:url('../lms-reference/live-class-plugnmeet/video/covers/cover-walkthrough-student.png?v=20261107n')" aria-label="Play student path video">
+          <span class="video-cover-inner">
+            <span class="video-cover-kicker">Online class · Student</span>
+            <span class="video-cover-title">Student path only</span>
+            <span class="video-cover-desc">Student Community → Live class lobby → Join → enter Raisd Classroom as participant.</span>
+          </span>
+          <span class="video-cover-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="meta"><a href="../lms-reference/live-class-plugnmeet/video/walkthrough-student-and-media.webm?v=20261107n"><code>walkthrough-student-and-media.webm</code></a> (2×)</p>
+    </div>
+
+    <div class="video-block" id="video-conversation">
+      <h3>In-room conversation (both peers + chat)</h3>
+      <div class="video-player">
+        <video controls preload="none" playsinline poster="../lms-reference/live-class-plugnmeet/video/covers/cover-conversation.png?v=20261107r">
+          <source src="../lms-reference/live-class-plugnmeet/video/conversation-online.webm?v=20261107r" type="video/webm" />
+        </video>
+        <button type="button" class="video-cover" style="background-image:url('../lms-reference/live-class-plugnmeet/video/covers/cover-conversation.png?v=20261107r')" aria-label="Play conversation video">
+          <span class="video-cover-inner">
+            <span class="video-cover-kicker">Online class · Conversation</span>
+            <span class="video-cover-title">Both peers + Public Chat</span>
+            <span class="video-cover-desc">Host and student together in the room with a live Public Chat exchange.</span>
+          </span>
+          <span class="video-cover-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="meta"><a href="../lms-reference/live-class-plugnmeet/video/conversation-online.webm?v=20261107r"><code>conversation-online.webm</code></a> (~1.5 min at 2×)</p>
+    </div>
+  
+    <div class="video-block" id="video-features">
+      <h3>Host features walkthrough — locks, waiting room, breakouts, whiteboard, recording, AI</h3>
+      <div class="video-player">
+        <video controls preload="none" playsinline poster="../lms-reference/live-class-plugnmeet/video/covers/cover-features.png?v=20261107n">
+          <source src="../lms-reference/live-class-plugnmeet/video/features-walkthrough.webm?v=20261107n" type="video/webm" />
+        </video>
+        <button type="button" class="video-cover" style="background-image:url('../lms-reference/live-class-plugnmeet/video/covers/cover-features.png?v=20261107n')" aria-label="Play host features video">
+          <span class="video-cover-inner">
+            <span class="video-cover-kicker">Online class · Host features</span>
+            <span class="video-cover-title">Locks, breakouts, whiteboard &amp; more</span>
+            <span class="video-cover-desc">Waiting room, mute everyone, breakouts, whiteboard, notepad, polls, REC, stream, and AI tools.</span>
+          </span>
+          <span class="video-cover-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="meta"><a href="../lms-reference/live-class-plugnmeet/video/features-walkthrough.webm?v=20261107n"><code>features-walkthrough.webm</code></a> (~3.5 min at 2×)
+        · moderator reference:
+        <a href="https://www.youtube.com/watch?v=nDsB9fSMzYM" target="_blank" rel="noopener noreferrer">plugNmeet Moderator Guide (YouTube)</a>
+        · <a href="https://www.plugnmeet.org/docs/user-guide/moderator" target="_blank" rel="noopener noreferrer">Moderator docs</a></p>
+    </div>
+
+  </section>
+
+  <section class="section" id="lecturer">
+    <h2>Lecturer — step by step</h2>
+    <div class="callout">
+      After <strong>Start class</strong>, the virtual classroom opens in a full-viewport modal. Keep the lobby behind it for roster and <strong>End class</strong>.
+      Use <strong>Open classroom</strong> to reopen; closing the modal does not end the class. If mic/cam fails in the iframe, use <strong>Open in new tab</strong>.
+    </div>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s01">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/01-lecturer-workspace.png?v=20261107d" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/01-lecturer-workspace.png?v=20261107d" alt="Lecturer workspace after SSO" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Staff Portal · Adam</p>
+          <h3>1 · Sign in as lecturer</h3>
+          <p>Open staff.lesotho.raisd.co after Raisd SSO (Keychain Open filled).</p>
+          <p class="file"><code>01-lecturer-workspace.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s02">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/02-lecturer-lobby.png?v=20261107d" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/02-lecturer-lobby.png?v=20261107d" alt="Lecturer Live class lobby before Start" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Classrooms · GRD301 · Live class</p>
+          <h3>2 · Open Live class lobby</h3>
+          <p>Confirm the timetable window and session, then click <strong>Start class</strong>.</p>
+          <p class="file"><code>02-lecturer-lobby.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s03">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/03-lecturer-in-session.png?v=20261107p" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/03-lecturer-in-session.png?v=20261107p" alt="Lecturer class started — Virtual classroom modal with host camera on" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">In session · modal</p>
+          <h3>3 · Class started</h3>
+          <p>After <strong>Start class</strong>, the Virtual classroom opens in a full-viewport modal with the host camera on. Lobby stays behind for roster and <strong>End class</strong>; use <strong>Open classroom</strong> to reopen.</p>
+          <p class="file"><code>03-lecturer-in-session.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s04">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/04-plugnmeet-host-prejoin.png?v=20261107q" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/04-plugnmeet-host-prejoin.png?v=20261107q" alt="Host plugNmeet microphone and camera preferences" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Virtual classroom</p>
+          <h3>4 · Host pre-join</h3>
+          <p>Choose microphone and camera preferences — preview shows Adam — then join (or join as listener).</p>
+          <p class="file"><code>04-plugnmeet-host-prejoin.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s05">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/05-plugnmeet-host-room.png?v=20261107o" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/05-plugnmeet-host-room.png?v=20261107o" alt="Host Adam Watson in the Raisd Classroom with camera on" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Virtual classroom</p>
+          <h3>5 · Enter the room</h3>
+          <p>Host camera is on (Adam Watson tile). Tools may include waiting room, mute/lock, breakouts, whiteboard, notepad, polls, screen share, recording, and AI chat/summary (Demo Partial).</p>
+          <p class="file"><code>05-plugnmeet-host-room.png</code></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="student">
+    <h2>Student — step by step</h2>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s06">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/06-student-home.png?v=20261107d" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/06-student-home.png?v=20261107d" alt="Student Community home" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Student Portal · Rizal</p>
+          <h3>1 · Sign in as student</h3>
+          <p>Open student.lesotho.raisd.co after SSO.</p>
+          <p class="file"><code>06-student-home.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s07">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/07-student-lobby.png?v=20261107d" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/07-student-lobby.png?v=20261107d" alt="Student Live class lobby with Join" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Modules · Live class</p>
+          <h3>2 · Open Live class lobby</h3>
+          <p><strong>Join</strong> enables after the lecturer has started the session.</p>
+          <p class="file"><code>07-student-lobby.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s08">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/08-student-in-session.png?v=20261107p" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/08-student-in-session.png?v=20261107p" alt="Student joined — Virtual classroom modal with Adam and Rizal on camera" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">In session · modal</p>
+          <h3>3 · Joined</h3>
+          <p>After <strong>Join</strong>, the Virtual classroom opens in a full-viewport modal. Both peers are in the room with cameras on (Adam + Rizal).</p>
+          <p class="file"><code>08-student-in-session.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s09">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/09-plugnmeet-student-prejoin.png?v=20261107q" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/09-plugnmeet-student-prejoin.png?v=20261107q" alt="Student pre-join with Rizal Hakim camera preview" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Virtual classroom</p>
+          <h3>4 · Student pre-join</h3>
+          <p>Same device-preferences surface as the host — camera preview shows Rizal before <strong>Enable Microphone and Camera</strong> or join as listener.</p>
+          <p class="file"><code>09-plugnmeet-student-prejoin.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s10">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/10-plugnmeet-student-room.png?v=20261107r" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/10-plugnmeet-student-room.png?v=20261107r" alt="Student in room with Adam and Rizal on camera" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Virtual classroom</p>
+          <h3>5 · Enter the room</h3>
+          <p>Both peers are on camera (Adam + Rizal). Use chat, reactions, and other participant tools. See <a href="#conversation">In the room</a> for the Public Chat walkthrough.</p>
+          <p class="file"><code>10-plugnmeet-student-room.png</code></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="conversation">
+    <h2>In the room — both peers + chat</h2>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s18">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/18-conversation-host-chat.png?v=20261107r" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/18-conversation-host-chat.png?v=20261107r" alt="Lecturer Public Chat open with Adam and Rizal video tiles" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Online conversation</p>
+          <h3>Lecturer opens Public Chat</h3>
+          <p>Video tiles stay on (Adam + Rizal) while Public Chat opens. Host message: welcome to GRD301 live session.</p>
+          <p class="file"><code>18-conversation-host-chat.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s19">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/19-conversation-student-chat.png?v=20261107r" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/19-conversation-student-chat.png?v=20261107r" alt="Student chat reply in the room" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Online conversation</p>
+          <h3>Student replies</h3>
+          <p>Rizal replies in Public Chat; both participants stay listed.</p>
+          <p class="file"><code>19-conversation-student-chat.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s20">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/20-conversation-host-with-peer.png?v=20261107r" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/20-conversation-host-with-peer.png?v=20261107r" alt="Host view with student peer present" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Online conversation</p>
+          <h3>Both peers present (host view)</h3>
+          <p>Participants (2), mic on, conversation recorded in the walkthrough video.</p>
+          <p class="file"><code>20-conversation-host-with-peer.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s21">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/21-conversation-student-with-peer.png?v=20261107r" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/21-conversation-student-with-peer.png?v=20261107r" alt="Student view with host peer present" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Online conversation</p>
+          <h3>Both peers present (student view)</h3>
+          <p>Student side of the same live room.</p>
+          <p class="file"><code>21-conversation-student-with-peer.png</code></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="file-share">
+    <h2>File upload &amp; sharing</h2>
+    <p class="lead" style="font-size:1rem;margin:0 0 1rem">Everyone can share files in <strong>Public Chat</strong> (unless the host locks file share). Use the paperclip, paste an image, or drag-and-drop into the composer. Allowed types include images, PDF, Office docs, zip, and common audio/video — up to 50&nbsp;MB. Hosts can also attach office files on the whiteboard. Lock path: More options → Meeting Lock Settings → chat files.</p>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s49">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/49-chat-file-attach.png?v=20261107h" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/49-chat-file-attach.png?v=20261107h" alt="Public Chat with paperclip attach control" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">File share</p>
+          <h3>Attach from Public Chat</h3>
+          <p>Open chat → paperclip (or drop a file into the composer). Placeholder: “Send a message, paste an image, or drop a file here.”</p>
+          <p class="file"><code>49-chat-file-attach.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s50">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/50-chat-file-shared.png?v=20261107h" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/50-chat-file-shared.png?v=20261107h" alt="Host shared a file in Public Chat" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">File share</p>
+          <h3>File shared (host)</h3>
+          <p>After upload, the file appears as a downloadable chat card; success toasts confirm “File uploaded successfully” / “File is ready!”</p>
+          <p class="file"><code>50-chat-file-shared.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s51">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/51-chat-file-student.png?v=20261107h" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/51-chat-file-student.png?v=20261107h" alt="Student sees shared file in Public Chat" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">File share</p>
+          <h3>File received (student)</h3>
+          <p>Peers see the same attachment in Public Chat and can download it during the session.</p>
+          <p class="file"><code>51-chat-file-student.png</code></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <h2>Host features — detailed walkthrough</h2>
+    <p class="lead" style="font-size:1rem;margin:0 0 1rem">As the lecturer (host / admin) in Raisd Classroom, open the footer <strong>More options</strong> menu for participant controls, collaboration tools, recording, streaming, and AI. Classroom UI is <strong>dark-only</strong>. Full vendor workflows:
+      <a href="https://www.youtube.com/watch?v=nDsB9fSMzYM" target="_blank" rel="noopener noreferrer">Moderator Guide video</a> ·
+      <a href="https://www.plugnmeet.org/docs/user-guide/moderator" target="_blank" rel="noopener noreferrer">plugNmeet Moderator docs</a>.
+      Demo Partial on DIV — recording/AI quality is not Live CAP-26.</p>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s30">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/30-host-toolbar.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/30-host-toolbar.png?v=20261107f" alt="Footer tools" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Host toolbar</p>
+          <h3>Footer tools</h3>
+          <p>Share Screen, Whiteboard, Raise Hand, <strong>REC</strong>, and <strong>More options</strong> (locks, waiting room, breakouts, polls, notepad, stream, AI).</p>
+          <p class="file"><code>30-host-toolbar.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s48">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/48-more-options-menu.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/48-more-options-menu.png?v=20261107f" alt="Host feature catalogue" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">More options</p>
+          <h3>Host feature catalogue</h3>
+          <p>AI Tools, Live Stream, Transcription &amp; Translation, Polls, External Video/Link, Shared Notepad, Mute Everyone, Meeting Lock Settings, Waiting Room, Breakout Rooms.</p>
+          <p class="file"><code>48-more-options-menu.png</code></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="participant">
+    <h2>Participant &amp; room management</h2>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s31">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/31-room-lock-settings.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/31-room-lock-settings.png?v=20261107f" alt="Meeting Lock Settings" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Room locks</p>
+          <h3>Meeting Lock Settings</h3>
+          <p>Restrict microphones, cameras, screen sharing, whiteboard, shared notepad, reactions, and chat (public / send / files / private) for everyone. Hosts stay unlocked.</p>
+          <p class="file"><code>31-room-lock-settings.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s32">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/32-waiting-room-student.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/32-waiting-room-student.png?v=20261107f" alt="Student pending approval" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Waiting room</p>
+          <h3>Student pending approval</h3>
+          <p>When waiting room is active, participants wait until a host admits them.</p>
+          <p class="file"><code>32-waiting-room-student.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s33">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/33-waiting-room-host.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/33-waiting-room-host.png?v=20261107f" alt="Manage Waiting Room" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Waiting room</p>
+          <h3>Manage Waiting Room</h3>
+          <p>Approve, Reject, or Deny &amp; Block individuals; Admit All / Remove All; optional waiting message.</p>
+          <p class="file"><code>33-waiting-room-host.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s34">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/34-waiting-room-admitted.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/34-waiting-room-admitted.png?v=20261107f" alt="Admit attendees" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Waiting room</p>
+          <h3>Admit attendees</h3>
+          <p>After Approve / Admit All, the student enters the live room.</p>
+          <p class="file"><code>34-waiting-room-admitted.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s35">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/35-student-admitted-room.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/35-student-admitted-room.png?v=20261107f" alt="Student after admit" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Waiting room</p>
+          <h3>Student after admit</h3>
+          <p>Participant view once admitted from the waiting room.</p>
+          <p class="file"><code>35-student-admitted-room.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s36">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/36-mute-everyone.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/36-mute-everyone.png?v=20261107f" alt="Mute Everyone" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Mute controls</p>
+          <h3>Mute Everyone</h3>
+          <p>Mute all participants at once from More options (per-user mute also available on each participant row).</p>
+          <p class="file"><code>36-mute-everyone.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s37">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/37-breakout-rooms.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/37-breakout-rooms.png?v=20261107f" alt="Manage Breakout Rooms" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Breakouts</p>
+          <h3>Manage Breakout Rooms</h3>
+          <p>Create private sub-rooms, assign participants manually or randomly, set timers / duration, allow return to main room.</p>
+          <p class="file"><code>37-breakout-rooms.png</code></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="collaboration">
+    <h2>Collaboration &amp; presentation</h2>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s38">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/38-whiteboard.png?v=20261107j" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/38-whiteboard.png?v=20261107j" alt="Interactive Whiteboard" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Whiteboard</p>
+          <h3>Interactive Whiteboard</h3>
+          <p>Excalidraw canvas — draw, shapes, office-file attach, export; AI text-to-diagram when Insights AI is enabled. For handouts to the whole class, prefer <a href="#file-share">Public Chat file share</a>.</p>
+          <p class="file"><code>38-whiteboard.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s39">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/39-shared-notepad.png?v=20261107g" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/39-shared-notepad.png?v=20261107g" alt="Shared Notepad (BlockNote)" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Notepad</p>
+          <h3>Shared Notepad (BlockNote)</h3>
+          <p>Realtime collaborative notes / documents for the room.</p>
+          <p class="file"><code>39-shared-notepad.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s40">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/40-polls.png?v=20261107g" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/40-polls.png?v=20261107g" alt="Polls &amp; Surveys" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Polls</p>
+          <h3>Polls &amp; Surveys</h3>
+          <p>Enable polls, launch questions (quiz / anonymous modes), track live responses.</p>
+          <p class="file"><code>40-polls.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s41">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/41-external-video.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/41-external-video.png?v=20261107f" alt="Play External Video" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">External media</p>
+          <h3>Play External Video</h3>
+          <p>Play an external video display inside the classroom.</p>
+          <p class="file"><code>41-external-video.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s42">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/42-external-link.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/42-external-link.png?v=20261107f" alt="Share External Link" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">External link</p>
+          <h3>Share External Link</h3>
+          <p>Embed an external website via iframe for the room.</p>
+          <p class="file"><code>42-external-link.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s43">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/43-screen-share.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/43-screen-share.png?v=20261107f" alt="Screen Sharing" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Screen share</p>
+          <h3>Screen Sharing</h3>
+          <p>Share desktop or window (browser permission required).</p>
+          <p class="file"><code>43-screen-share.png</code></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="recording-ai">
+    <h2>Recording, streaming &amp; AI</h2>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s44">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/44-recording.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/44-recording.png?v=20261107f" alt="Cloud / local MP4 recording" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Recording</p>
+          <h3>Cloud / local MP4 recording</h3>
+          <p>Tap <strong>REC</strong> for cloud (server recorder) or local browser recording. Analytics can export when the room closes (Demo Partial on DIV).</p>
+          <p class="file"><code>44-recording.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s45">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/45-live-stream.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/45-live-stream.png?v=20261107f" alt="RTMP / WHIP live streaming" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Streaming</p>
+          <h3>RTMP / WHIP live streaming</h3>
+          <p>Broadcast to YouTube, Facebook, or bring studio feeds via RTMP/WHIP / OBS.</p>
+          <p class="file"><code>45-live-stream.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s46">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/46-ai-tools.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/46-ai-tools.png?v=20261107f" alt="Insights AI settings" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">AI agent</p>
+          <h3>Insights AI settings</h3>
+          <p>Enable AI Assistant chat and Meeting summarization (DIV MLX / configured providers — Demo Partial).</p>
+          <p class="file"><code>46-ai-tools.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s47">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/47-transcription.png?v=20261107f" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/47-transcription.png?v=20261107f" alt="Transcription &amp; Translation" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Transcription</p>
+          <h3>Transcription &amp; Translation</h3>
+          <p>Captions, spoken-language translation, and related Insights controls when the media host has AI wired.</p>
+          <p class="file"><code>47-transcription.png</code></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="end">
+    <h2>Leave, End, and Past Class</h2>
+    <div class="demo-shot-list">
+      <article class="demo-shot-row" id="s12">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/12-student-past-class.png?v=20261107d" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/12-student-past-class.png?v=20261107d" alt="Student Past Class after Leave" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Student lobby</p>
+          <h3>Student · Leave class</h3>
+          <p>Close the modal if you want, then click <strong>Leave class</strong>. Past Class stub appears (recording may show unavailable in Demo).</p>
+          <p class="file"><code>12-student-past-class.png</code></p>
+        </div>
+      </article>
+      <article class="demo-shot-row" id="s13">
+        <figure class="demo-shot-media"><a href="../lms-reference/live-class-plugnmeet/screenshots/13-lecturer-ended.png?v=20261107d" target="_blank" rel="noopener"><img src="../lms-reference/live-class-plugnmeet/screenshots/13-lecturer-ended.png?v=20261107d" alt="Lecturer ended class with Past Class stub" loading="lazy" /></a></figure>
+        <div class="demo-shot-copy">
+          <p class="lab">Staff lobby</p>
+          <h3>Lecturer · End class</h3>
+          <p>Ends the live phase for everyone and records a Past Class stub on the lecturer side.</p>
+          <p class="file"><code>13-lecturer-ended.png</code></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="demo-vs-live">
+    <h2>Demo vs Live</h2>
+    <table class="hosts">
+      <thead>
+        <tr><th>Demo (today)</th><th>Live (not claimed)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Shape B tokens + classrooms.raisd.co</td>
+          <td>Production media VPS + Live CAP-26</td>
+        </tr>
+        <tr>
+          <td>Process-memory lobby / attendance overlay</td>
+          <td>Durable live_class_* + CMS SoT</td>
+        </tr>
+        <tr>
+          <td>Recording / AI Partial on DIV</td>
+          <td>Policy-backed recording + STT providers</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Related</h2>
+    <ul>
+      <li>Markdown SoT — <a href="../../ai/frontend/online-class-user-guide.md">online-class-user-guide.md</a></li>
+      <li>Capture set — <a href="../lms-reference/live-class-plugnmeet/">live-class-plugnmeet/</a></li>
+      <li>Lesotho portal guide — <a href="index.html">User guidance</a> · <a href="../../ai/frontend/lesotho-user-guide.md">lesotho-user-guide.md</a></li>
+      <li>Research / options — <a href="../lms-online-class-options.html">Online-class options</a></li>
+      <li>Classrooms API — <a href="../../ai/backend/classrooms.md">classrooms.md</a></li>
+      <li>plugNmeet Moderator Guide (YouTube) — <a href="https://www.youtube.com/watch?v=nDsB9fSMzYM" target="_blank" rel="noopener noreferrer">watch</a></li>
+      <li>plugNmeet Moderator docs — <a href="https://www.plugnmeet.org/docs/user-guide/moderator" target="_blank" rel="noopener noreferrer">docs</a></li>
+    </ul>
+  </section>
+</main>
+
+<dialog id="guide-lightbox" class="guide-lightbox" aria-label="Screenshot or video viewer">
+  <div class="guide-lightbox-chrome">
+    <strong id="guide-lightbox-title">Virtual classroom</strong>
+    <button type="button" id="guide-lightbox-close">Close</button>
+  </div>
+  <div class="guide-lightbox-body" id="guide-lightbox-body"></div>
+</dialog>
+
+<script>
+(function () {
+  var dialog = document.getElementById("guide-lightbox");
+  var titleEl = document.getElementById("guide-lightbox-title");
+  var bodyEl = document.getElementById("guide-lightbox-body");
+  var closeBtn = document.getElementById("guide-lightbox-close");
+  if (!dialog || !bodyEl) return;
+
+  function closeLightbox() {
+    dialog.close();
+    bodyEl.innerHTML = "";
+  }
+
+  function openLightbox(title, node) {
+    titleEl.textContent = title || "Virtual classroom";
+    bodyEl.innerHTML = "";
+    bodyEl.appendChild(node);
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+  }
+
+  closeBtn && closeBtn.addEventListener("click", closeLightbox);
+  dialog.addEventListener("click", function (e) {
+    if (e.target === dialog) closeLightbox();
+  });
+  dialog.addEventListener("close", function () { bodyEl.innerHTML = ""; });
+
+  /* Present classroom media as portal modal chrome + open full viewer on click */
+  document.querySelectorAll(".demo-shot-media").forEach(function (fig) {
+    var link = fig.querySelector("a[href]");
+    if (!link) return;
+    var img = link.querySelector("img");
+    if (!img) return;
+    var href = link.getAttribute("href") || "";
+    var row = fig.closest(".demo-shot-row");
+    var heading = row && row.querySelector(".demo-shot-copy h3");
+    var title = (heading && heading.textContent.trim()) || img.getAttribute("alt") || "Screenshot";
+    var isClassroom = /plugnmeet|conversation|prejoin|host-room|student-room|with-peer/i.test(href + " " + (img.getAttribute("alt") || ""));
+
+    var openBtn = document.createElement("button");
+    openBtn.type = "button";
+    openBtn.className = "shot-open";
+    openBtn.setAttribute("aria-label", "Open in modal: " + title);
+    openBtn.appendChild(img.cloneNode(true));
+    openBtn.addEventListener("click", function () {
+      var full = document.createElement("img");
+      full.src = href;
+      full.alt = img.getAttribute("alt") || title;
+      openLightbox(title, full);
+    });
+
+    if (isClassroom) {
+      fig.classList.add("is-modal");
+      var frame = document.createElement("div");
+      frame.className = "modal-frame";
+      frame.innerHTML =
+        '<div class="modal-frame-chrome"><strong>Virtual classroom</strong><span>Portal modal</span></div>';
+      frame.appendChild(openBtn);
+      fig.innerHTML = "";
+      fig.appendChild(frame);
+    } else {
+      fig.innerHTML = "";
+      fig.appendChild(openBtn);
+    }
+  });
+
+  document.querySelectorAll(".video-block").forEach(function (block) {
+    var player = block.querySelector(".video-player");
+    var video = block.querySelector("video");
+    var source = video && video.querySelector("source");
+    var cover = block.querySelector(".video-cover");
+    if (!video || !source) return;
+    var heading = block.querySelector("h3");
+    var title = (heading && heading.textContent.trim()) || "Walkthrough video";
+
+    function startPlayback() {
+      if (player) player.classList.add("is-playing");
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () { /* autoplay may require gesture; cover click is the gesture */ });
+      }
+    }
+
+    if (cover) {
+      cover.addEventListener("click", function () {
+        startPlayback();
+      });
+    }
+    video.addEventListener("play", function () {
+      if (player) player.classList.add("is-playing");
+    });
+    video.addEventListener("ended", function () {
+      if (player) player.classList.remove("is-playing");
+      try { video.currentTime = 0; } catch (e) { /* ignore */ }
+    });
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "video-open";
+    btn.textContent = "Open video in modal";
+    btn.addEventListener("click", function () {
+      var v = document.createElement("video");
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      var s = document.createElement("source");
+      s.src = source.getAttribute("src");
+      s.type = source.getAttribute("type") || "video/webm";
+      v.appendChild(s);
+      openLightbox(title, v);
+    });
+    block.appendChild(btn);
+  });
+})();
+</script>
+  <script src="../nav-dropdown.js" defer></script>
+  <script src="../site-search.js" defer></script>
+  <script src="../keychain-access.js" defer></script>
+</body>
+</html>
+

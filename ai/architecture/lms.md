@@ -57,6 +57,7 @@ Full domain × CAP × Demo × milestone: [lms-features.html](../../diagrams/lms-
 - Do not imply Raisd is Moodle or Moodle feature parity is the delivery contract.
 - Demo ≠ Live for assignments, quizzes, live class, and file delivery.
 - Do not treat [lms-online-class-options.md](lms-online-class-options.md) vendor shortlists as a Live CAP-26 decision until WG / Faid / Manna confirm.
+- CAP-26 **Demo Partial stub lobby** (5 Nov 2026): Student + Lecturer Raisd lobbies talk only to Portal API Classrooms RPC; stub join URL only — no Live media vendor and no Live CAP-26 claim. See [lms-online-class-options.md](lms-online-class-options.md) §6 and [classrooms.md](../backend/classrooms.md).
 
 ## Related
 

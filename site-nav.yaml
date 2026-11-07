@@ -68,6 +68,7 @@ targets:
   luct-ls-wireframes: diagrams/old-cms-lesotho/wireframes/index.html
   luct-ls-newer-cms-obsidian: diagrams/old-cms/obsidian.html
   guidance: diagrams/guidance/index.html
+  guidance-online-class: diagrams/guidance/online-class.html
   guidance-ai-should: diagrams/guidance/website-ai-should.html
   guidance-ai-should-not: diagrams/guidance/website-ai-should-not.html
   guidance-ai-decisions: diagrams/guidance/website-ai-decisions.html
@@ -268,6 +269,8 @@ path_rules:
     section: migration
   - match: { exact: diagrams/index.html }
     section: overview
+  - match: { prefix: diagrams/guidance/, file: online-class.html }
+    section: guidance-online-class
   - match: { prefix: diagrams/guidance/, file: website-ai-should.html }
     section: guidance-ai-should
   - match: { prefix: diagrams/guidance/, file: website-ai-should-not.html }
@@ -407,6 +410,7 @@ menu:
       - luct-ls-wireframes
       - luct-ls-newer-cms-obsidian
       - guidance
+      - guidance-online-class
       - guidance-ai-should
       - guidance-ai-should-not
       - guidance-ai-decisions
@@ -424,6 +428,7 @@ menu:
         href: guidance
         children:
           - { label: User guidance, href: guidance }
+          - { label: Online class, href: guidance-online-class }
           - { label: AI should, href: guidance-ai-should }
           - { label: AI should not, href: guidance-ai-should-not }
           - { label: AI decisions, href: guidance-ai-decisions }
@@ -719,6 +724,12 @@ search:
     section: Guidance
     summary: Lesotho Demo user guidance — hosts, journeys, and step-by-step how-tos for each Staff Admin desk screenshot.
     keywords: [guidance, lesotho, user guide, demo, hosts, journeys, desks, how-to, applicants, payments, registrations]
+
+  - title: Guidance · Online class
+    href: guidance-online-class
+    section: Guidance
+    summary: Demo Partial online-class user guide — lecturer Start and student Join with screenshots and video walkthroughs.
+    keywords: [online class, live class, plugnmeet, classrooms, lecturer, student, video, screenshots, CAP-26, GRD301, guidance]
 
   - title: Guidance · Website AI should
     href: guidance-ai-should

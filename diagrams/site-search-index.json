@@ -208,6 +208,25 @@
       "path": "diagrams/guidance/index.html"
     },
     {
+      "title": "Guidance \u00b7 Online class",
+      "summary": "Demo Partial online-class user guide \u2014 lecturer Start and student Join with screenshots and video walkthroughs.",
+      "section": "Guidance",
+      "keywords": [
+        "online class",
+        "live class",
+        "plugnmeet",
+        "classrooms",
+        "lecturer",
+        "student",
+        "video",
+        "screenshots",
+        "CAP-26",
+        "GRD301",
+        "guidance"
+      ],
+      "path": "diagrams/guidance/online-class.html"
+    },
+    {
       "title": "Guidance \u00b7 Website AI should",
       "summary": "What AI agents should do on Raisd websites.",
       "section": "Guidance",
@@ -1144,11 +1163,11 @@
         "lms",
         "live class",
         "online class",
-        "online lessons",
         "zoom",
         "bigbluebutton",
         "openvidu",
         "jitsi",
+        "livekit",
         "whereby",
         "daily",
         "realtimekit",
@@ -1158,15 +1177,16 @@
         "recording",
         "self-paced",
         "cost",
-        "lobby",
-        "screen share",
-        "request queue",
-        "faid",
-        "ux",
         "cap-26",
         "cap-24",
         "f12",
-        "f13"
+        "f13",
+        "ux",
+        "lobby",
+        "screen share",
+        "faid",
+        "oss",
+        "feature comparison"
       ],
       "path": "diagrams/lms-online-class-options.html"
     },

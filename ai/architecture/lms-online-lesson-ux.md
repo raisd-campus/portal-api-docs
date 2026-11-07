@@ -2,7 +2,7 @@
 
 **Source pack:** Faid / Limkokwing “7.0 Chat” `online-lessons.zip` (2 Nov 2026) — 21 curated screens under [`docs/diagrams/lms-reference/online-lessons/`](../../diagrams/lms-reference/online-lessons/).  
 **Published gallery:** embedded in [`lms-online-class-options.html#ux-pack`](../../diagrams/lms-online-class-options.html#ux-pack) · vendor research [`lms-online-class-options.md`](lms-online-class-options.md).  
-**Status:** **Proposed / research** — absorb **behaviours**, do **not** clone Limkokwing chrome into Raisd portals ([website-ai-guidance.md](../website-ai-guidance.md)). Demo ≠ Live.  
+**Status:** **Proposed / research** behaviours; **Demo Partial stub lobby** (OL-10–14) shipped 5 Nov 2026 without a media vendor — see [lms-online-class-options.md](lms-online-class-options.md) §6. Absorb behaviours; do **not** clone Limkokwing chrome into Raisd portals ([website-ai-guidance.md](../website-ai-guidance.md)). Demo ≠ Live; CAP-26 not Live.  
 **Raisd anchors:** F12 / CAP-26 · CAP-12 attendance · CAP-18 materials · F13 / CAP-24 quizzes (archive tags only in this pack).
 
 ---

@@ -11,6 +11,7 @@
 | Any AI agent (Cursor, Claude, Codex, Copilot, etc.) | [AGENTS.md](AGENTS.md) |
 | Website AI should / should not | [website-ai-guidance.md](website-ai-guidance.md) · [Guidance HTML](https://docs.raisd.co/diagrams/guidance/) |
 | Lesotho user guide | [frontend/lesotho-user-guide.md](frontend/lesotho-user-guide.md) · [Guidance HTML](https://docs.raisd.co/diagrams/guidance/) |
+| Online class (lecturer + student) | [frontend/online-class-user-guide.md](frontend/online-class-user-guide.md) · [HTML](https://docs.raisd.co/diagrams/guidance/online-class.html) |
 | Machine catalog / tooling | [MANIFEST.yaml](MANIFEST.yaml) |
 | Human onboarding | This file, then [../sdd/README.md](../sdd/README.md) |
 | CAP / milestone IDs (`CAP-*`, `M1`–`M5`) | [../sdd/15-nomenclature.md](../sdd/15-nomenclature.md) |

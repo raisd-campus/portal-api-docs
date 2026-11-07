@@ -41,7 +41,7 @@ Captured from Read.ai chapters *Online-Class Designs and Requirements*, *Open-So
 |---|---|---|
 | **S1** | Breakout rooms | Discussed earlier; not in Faid pack; nice-to-have for CAP-26 MVP |
 | **S2** | Whiteboard / presentation | Strong teaching signal; BBB leads |
-| **S3** | Self-host vs managed | Prefer **not** on shared Demo k3s; dedicated media VPS or managed host |
+| **S3** | Self-host vs managed | Prefer **not** on shared Demo k3s; dedicated media VPS or managed host. Confirmed 6 Nov 2026: Demo node is **3 vCPU / 3.8 GiB (~80% RAM used)** — **insufficient memory**; BBB / OpenVidu / plugNmeet all **fail** co-location. Spike host: MGP DIV Mac Mini (48 GB; contingent MLX contention) — see [lms-video-infra-test.md](lms-video-infra-test.md) §1.1 |
 | **S4** | Self-developed SFU (LiveKit / mediasoup / Janus) | Meeting lean: lowest opex, highest eng; speed is the constraint |
 | **S5** | LMS vs CMS one product | Explicitly undecided 3 Nov — out of scope for vendor pick |
 

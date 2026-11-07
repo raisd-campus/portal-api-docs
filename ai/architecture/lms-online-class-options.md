@@ -11,6 +11,11 @@
 - *Faid Zamin will test scenarios for how the flow behaves when a review step is disabled.* (UNIFC — not LMS)  
 - *Mohammad Aslam Khan will compile Iman’s materials and present them to the boss.*
 
+**Standup actions (Read.ai 5 Nov 2026):**  
+- *Iman Suherman will investigate BigBlueButton, OpenVidu, and Plug and Meet for possible testing on the available infrastructure.* → **[lms-video-infra-test.md](lms-video-infra-test.md)** (Demo VPS: **insufficient memory — do not co-install**; plugNmeet spike on **MGP DIV** Mac Mini, then clean Ubuntu media VPS for Live)  
+- *Mohd. Paramasvara will test Plug and Meet and assess embed in the video experience.* (paired with infra-test)  
+- Alta Host capacity-alert follow-ups remain separate (Iman timestamps / Aslam which server).
+
 **Raisd anchors:** [lms.md](lms.md) · [lms-moodle-classroom-map.md](lms-moodle-classroom-map.md) · F12 / CAP-26 · F13 / CAP-24 · [SDD-11](../../sdd/11-capability-catalog.md)  
 **Status:** **Proposed / research** — not Live. Demo ≠ Live for live class, quizzes, and recording delivery.  
 **Meeting constraints to honour:** feel integrated (not a separate product); **portal SSO**; students join as **participants**; access gated by **timetable**; join/leave for **attendance**; **automatic recording** + later playback; **transcription** expected (Raisd or add-on pipeline); quizzes attach at module / study-planner setup (Raisd-native SoT); self-paced unlock may differ from teaching-week release; Faid → Manna requirements summary still expected.
@@ -412,12 +417,53 @@ These are **Raisd product capabilities** (F03/F12/F13), not video-vendor feature
 
 Aligned to design-pack journeys ([lms-online-lesson-ux.md](lms-online-lesson-ux.md) OL-10–14, OL-30–33, OL-22, OL-60):
 
-1. Add Portal API `live_class_sessions` (proposed) — offering id, starts/ends, provider, join mode.  
-2. Raisd **lobby** (Week / module / programme / Materials Download / mic-cam prep) → Lecturer Start or Student Join only inside window → host vs viewer token.  
-3. Persist join/leave; show roster **present/enrolled** for attendance Demo (CAP-12).  
-4. On `recording.ready`, attach Past Class / Materials-style learning item (session-only Demo OK).  
-5. Optional Demo stub: screen-share **request** toast + host Accept/Decline queue (OL-40–43) even if v1 only allows host share on the provider.  
-6. Document provider secrets in control-plane credentials — never in portals.
+**Status (5 Nov 2026):** **Demo Partial stub shipped** — Raisd lobby + Portal API Classrooms RPC (`listLiveClassSessions` / `startLiveClass` / `joinLiveClass` / `leaveLiveClass` / `endLiveClass`) with timetable gate, stub join URL (`https://stub.raisd.demo/live/…`), join/leave roster, CAP-12 Demo attendance overlay on leave/end, and Past Class stub (“Recording unavailable in Demo”). Surfaces: Student module **Live class** tab + Lecturer Classrooms **Live class** tab. Advertised on `GET /v1/meta/lms` as Partial. **No media vendor** (BBB / LiveKit / Meet / Whereby still undecided). CAP-26 remains **not Live**. Demo ≠ Live.
+
+**Hosted Demo screenshots + flow:** [lms-reference/live-class-stub/](../../diagrams/lms-reference/live-class-stub/) · published gallery [`#demo-stub`](../../diagrams/lms-online-class-options.html#demo-stub) (Lecturer Start → Student Join → Leave / End → Past Class).  
+**plugNmeet on DIV (6 Nov 2026):** walkthrough page [live-class-plugnmeet/index.html](../../diagrams/lms-reference/live-class-plugnmeet/index.html) · gallery [`#demo-plugnmeet`](../../diagrams/lms-online-class-options.html#demo-plugnmeet) · [README](../../diagrams/lms-reference/live-class-plugnmeet/README.md) — Shape B join URLs + pre-join + **online conversation** (`conversation-online.webm`, Public Chat Adam↔Rizal); real webcam quality still Partial pending Ubuntu media VPS.
+
+**Walkthrough (Demo accounts Adam / Rizal · GRD301):**
+
+```text
+Lecturer Classrooms → GRD301 → Live class → Start class
+  → Student Academic → Modules → GRD301 → Live class → Join → Leave
+  → Lecturer → End class → Past Class stub
+```
+
+| # | Screen | Path | What’s new |
+|---|---|---|---|
+| 01 | Lecturer workspace | `staff.lesotho.raisd.co` → Adam SSO | Baseline teaching desk |
+| 02 | Lecturer Live class lobby | Classrooms → GRD301 → **Live class** | Raisd lobby OL-10–14; session list; Start gated; modal iframe classroom (new-tab fallback) |
+| 03 | Lecturer in session + roster | **Start class** (window open) | `startLiveClass` → host stub URL + roster |
+| 04 | Student Community home | `student.lesotho.raisd.co` → Rizal SSO | Entry only |
+| 05 | Student Live class lobby | Academic → Modules → GRD301 → **Live class** | Same lobby; Join waits for host; not-Live copy |
+| 06 | Student joined stub | **Join** while host live | `joinLiveClass` → participant stub URL |
+| 07 | Student after leave / Past Class | **Leave class** | `leaveLiveClass` + CAP-12 Demo attendance present |
+| 08 | Lecturer End + Past Class | **End class** | `endLiveClass` → Past Class stub (“Recording unavailable in Demo”) |
+
+Per-screen how-to: [live-class-stub/README.md](../../diagrams/lms-reference/live-class-stub/README.md) · published gallery with large shot + explanation beside each frame [`#demo-stub-guide`](../../diagrams/lms-online-class-options.html#demo-stub-guide).
+
+```mermaid
+sequenceDiagram
+  participant L as Lecturer portal
+  participant S as Student portal
+  participant API as Portal API
+  L->>API: startLiveClass(sessionId)
+  API-->>L: stubJoinUrl host + roster
+  S->>API: joinLiveClass(sessionId)
+  API-->>S: stubJoinUrl participant
+  S->>API: leaveLiveClass
+  API-->>S: attendance present + Past Class stub
+  L->>API: endLiveClass
+  API-->>L: Past Class stub
+```
+
+Remaining spike items:
+
+1. Replace stub join URL with a chosen provider behind Portal API (session-only Demo OK until durable tables exist).  
+2. On `recording.ready`, attach Past Class / Materials-style learning item (today: unavailable-demo note only).  
+3. Optional Demo stub: screen-share **request** toast + host Accept/Decline queue (OL-40–43).  
+4. Document provider secrets in control-plane credentials — never in portals.
 
 ---
 
@@ -434,3 +480,5 @@ Aligned to design-pack journeys ([lms-online-lesson-ux.md](lms-online-lesson-ux.
 | F12 / F13 steps | [lms-feature-steps.md](lms-feature-steps.md) · [features.html](../../diagrams/lms-reference/features.html) |
 | CAP-24 / CAP-26 | [SDD-11](../../sdd/11-capability-catalog.md) |
 | Classrooms Demo today | [backend/classrooms.md](../backend/classrooms.md) |
+| CAP-26 stub lobby screenshots | [live-class-stub/](../../diagrams/lms-reference/live-class-stub/) · [#demo-stub](../../diagrams/lms-online-class-options.html#demo-stub) |
+| CAP-26 + plugNmeet DIV walkthrough | [index.html](../../diagrams/lms-reference/live-class-plugnmeet/index.html) · [#demo-plugnmeet](../../diagrams/lms-online-class-options.html#demo-plugnmeet) · `video/walkthrough-full.webm` |

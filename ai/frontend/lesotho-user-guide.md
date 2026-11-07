@@ -209,6 +209,7 @@ Status words: [status-language.md](../process/status-language.md).
 | Material | Path |
 |---|---|
 | Guidance HTML (docs.raisd.co) | [diagrams/guidance/](../../diagrams/guidance/) |
+| Online class (lecturer + student) | [online-class-user-guide.md](online-class-user-guide.md) · [HTML](../../diagrams/guidance/online-class.html) |
 | Desk wireframes | [wireframes/](../../diagrams/old-cms-lesotho/wireframes/) |
 | Role playback | [demo-role-playback.html](../../diagrams/old-cms-lesotho/demo-role-playback.html) |
 | Feature modules | [lesotho-feature-modules.md](../backend/lesotho-feature-modules.md) |

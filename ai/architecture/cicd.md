@@ -28,10 +28,11 @@ Jenkins Kaniko Job                     Jenkins deploy stage
 
 | Stage | Owner | When |
 |---|---|---|
-| **Build / publish image** | **Jenkins** Kaniko Job (`ci/build-ghcr-image.sh` → `/ci/build-ghcr-image.sh` in the controller) | Push/merge to `main` for `keychain`, `sso`, `notifications` |
+| **Build / publish image** | **Jenkins** Kaniko Job (`ci/build-ghcr-image.sh` → `/ci/build-ghcr-image.sh` in the controller) | Push/merge to `main` for `keychain`, `sso`, `notifications`, `plugnmeet-client` |
 | **Deploy trigger** | **Jenkins** Generic Webhook Trigger | GitHub `push` event; **only** `refs/heads/main` runs the pipeline |
 | **Cluster sync** | **Argo CD** Applications under [`gitops/apps/`](../../../gitops/) | Jenkins annotates refresh; Argo auto-syncs `main` |
 | **Static portals/API/docs (transitional)** | Jenkins bounded hostPath build jobs | Exact source checkout, build, retained release directories and affected-workload rollout |
+| **Classroom client → DIV (exception)** | Jenkins Job `deploy-plugnmeet-div.sh` after GHCR build | `raisd-campus/plugnmeet-client` `main` only — syncs static client into MGP DIV Colima (`~/src/plugnmeet-raisd/client/dist`). Not Argo/k3s media. Needs `jenkins/div-ssh` + reverse SSH tunnel `:18022`. Public UI: `https://classrooms.raisd.co`. |
 
 There are **no GitHub Actions image workflows** for Demo services. GHA billing is not part of the Demo path.
 
