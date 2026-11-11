@@ -43,7 +43,7 @@ Join media host: `https://classrooms.raisd.co` (Raisd-branded plugNmeet client, 
 1. Sign in with the correct role (lecturer vs student).  
 2. Use a module that has a **timetable window open** for live class (Demo includes a rolling window).  
 3. Allow camera/microphone when the browser asks (or join as listener).  
-4. If the classroom modal cannot use mic/cam, use **Open in new tab** — that **transfers** the call (closes the portal embed, then opens `classrooms.raisd.co` and joins automatically; the classroom tab always keeps the join identity).
+4. **Open classroom** shows a preload (“Connecting to virtual classroom…”) while plugNmeet loads in the modal. If the classroom modal cannot use mic/cam, use **Open in new tab** — that **transfers** the call (closes the portal embed, then opens `classrooms.raisd.co` and joins automatically; the classroom tab always keeps the join identity).
 
 ---
 
