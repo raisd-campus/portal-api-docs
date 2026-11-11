@@ -137,6 +137,7 @@ info:
     | `getChatConversation` | `conversationId, optional ProgrammeEnrolmentReadInput` | `ConversationDetailResponse` | chat | Chat thread |
     | `markChatConversationRead` | `conversationId, optional ProgrammeEnrolmentReadInput` | `ConversationSummary` | chat | Mark read |
     | `sendChatMessage` | `SendChatMessageInput` | `ChatMutationResult` | chat | Send message |
+    | `editChatMessage` | `conversationId, messageId, EditChatMessageInput` | `ChatMutationResult` | chat | Edit own message |
     | `deleteChatMessage` | `conversationId, messageId, optional ProgrammeEnrolmentReadInput` | `ChatMutationResult` | chat | Delete message |
 
     Shared optional scope on many reads:
@@ -242,7 +243,72 @@ paths:
   /v1/control/flows/academic-curriculum/versions/{configurationId}: {"get":{"operationId":"academicFlowConfiguration","tags":["Academic"],"summary":"Read current, draft, immutable flow history and audit","security":[{"bearerAuth":[]}],"parameters":[{"in":"path","name":"configurationId","required":true,"schema":{"type":"string","const":"academic-default"}}],"responses":{"200":{"description":"Successful local administration operation; not a Live CMS acknowledgement.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AcademicFlowConfiguration"}}}},"400":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"422":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"503":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
   /v1/control/flows/academic-curriculum/versions/{configurationId}/{action}: {"post":{"operationId":"academicFlowChange","tags":["Academic"],"summary":"Save General metadata, draft, or publish mandatory independent review policy","security":[{"bearerAuth":[]}],"parameters":[{"in":"path","name":"configurationId","required":true,"schema":{"type":"string","const":"academic-default"}},{"in":"path","name":"action","required":true,"schema":{"enum":["general","draft","publish"]}}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","required":["expectedRevision","requestId"],"properties":{"expectedRevision":{"type":"integer","minimum":0},"requestId":{"type":"string"},"name":{"type":"string"},"campusIds":{"type":"array","items":{"type":"string"}},"settings":{"$ref":"#/components/schemas/AcademicFlowSettings"}}}}}},"responses":{"200":{"description":"Successful local administration operation; not a Live CMS acknowledgement.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/AcademicFlowConfiguration"}}}},"400":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"422":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"503":{"description":"Request rejected without partial state; the client retains its edits.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
 # END ACADEMIC CATALOGUE PATHS
-  /v1/meta/classrooms: {"get":{"operationId":"classroomsCapability","tags":["Classrooms","Meta"],"summary":"Advertise the shared memory Classrooms Demo","security":[],"responses":{"200":{"description":"Enabled only alongside the isolated memory Materials service.","content":{"application/json":{"schema":{"type":"object","required":["enabled","version","persistence","chunkBytes","maxFileBytes"],"properties":{"enabled":{"type":"boolean"},"version":{"const":1},"persistence":{"const":"memory"},"chunkBytes":{"const":1048576},"maxFileBytes":{"const":52428800}}}}}}}}}
+  /v1/meta/classrooms: {"get":{"operationId":"classroomsCapability","tags":["Classrooms","Meta"],"summary":"Advertise the shared memory Classrooms Demo","security":[],"responses":{"200":{"description":"Enabled only alongside the isolated memory Materials service.","content":{"application/json":{"schema":{"type":"object","required":["enabled","version","persistence","chunkBytes","maxFileBytes"],"properties":{"enabled":{"type":"boolean"},"version":{"const":1},"persistence":{"const":"memory"},"chunkBytes":{"const":1048576},"maxFileBytes":{"const":52428800},"liveClassChatMirror":{"type":"boolean","description":"True when Demo Community ingest of Raisd Classroom Public Chat is configured."}}}}}}}}}
+  /v1/live-class/chat-mirror:
+    post:
+      operationId: liveClassChatMirror
+      tags: [Classrooms, Community]
+      summary: Mirror Raisd Classroom Public Chat into the module Community conversation
+      description: |
+        Demo Partial. Authenticated with `X-Raisd-Mirror-Token` minted into the Classroom join URL
+        (`raisd_mirror` + `raisd_api`). Only the token subject's own public messages are accepted.
+        Idempotent ids use `pnm:{externalId}`. Private DMs are rejected. Stub CMS ack — not Live.
+      security: []
+      parameters:
+        - in: header
+          name: X-Raisd-Mirror-Token
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [sessionId, moduleOfferingId, messages]
+              additionalProperties: false
+              properties:
+                sessionId: { type: string, minLength: 1, maxLength: 128 }
+                moduleOfferingId: { type: string, minLength: 1, maxLength: 128 }
+                messages:
+                  type: array
+                  minItems: 1
+                  maxItems: 100
+                  items:
+                    type: object
+                    required: [externalId, senderId, body, sentAt]
+                    additionalProperties: false
+                    properties:
+                      externalId: { type: string, minLength: 1, maxLength: 128 }
+                      senderId: { type: string, minLength: 1, maxLength: 128 }
+                      body: { type: string, maxLength: 20000 }
+                      sentAt: { type: string, minLength: 1, maxLength: 64 }
+                      isPrivate: { type: boolean }
+      responses:
+        "200":
+          description: Insert/skip counts for the module Community conversation
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result, cms]
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      inserted: { type: integer }
+                      skipped: { type: integer }
+                      conversationId: { type: ["string", "null"] }
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged: { type: boolean }
+                      mode: { type: string }
+                      note: { type: string }
+        "401":
+          description: Missing or invalid mirror token
+        "404":
+          description: Mirror unavailable in this API configuration
   /v1/classrooms/workspace: {"post":{"operationId":"classroomsWorkspace","tags":["Classrooms"],"summary":"Assigned Lecturer classroom/session/roster/assessment workspace; body is empty","description":"Assigned Lecturer classroom/session/roster/assessment workspace; body is empty. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","additionalProperties":false}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"$ref":"#/components/schemas/ClassroomsWorkspace"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
   /v1/classrooms/saveAttendance: {"post":{"operationId":"classroomsSaveAttendance","tags":["Classrooms"],"summary":"Save explicit Present/Absent entries; corrections require reasons","description":"Save explicit Present/Absent entries; corrections require reasons. Never turns unrecorded into absent. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SaveClassroomAttendance"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
   /v1/classrooms/saveLog: {"post":{"operationId":"classroomsSaveLog","tags":["Classrooms"],"summary":"Save private, revision-checked teaching session delivery notes","description":"Save private, revision-checked teaching session delivery notes. Shared process-memory Demo only; no CMS write. Lecturer writes reject completed classes and future/cancelled session writes. Private drafts/logs are never Student-visible. Revision conflicts retain client edits; request UUID retries reject changed bodies.","security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SaveClassroomLog"}}}},"responses":{"200":{"description":"Successful Demo operation. Write results carry the new revision, updated count, upload identifier, offset or discarded acknowledgement as appropriate. finish/deleteSubmission use AcademicModuleMaterialsResponse.","content":{"application/json":{"schema":{"type":"object","required":["result"],"properties":{"result":{"type":"object"}}}}}},"400":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"401":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"403":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"404":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"409":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"413":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}},"429":{"description":"Request rejected with an explanatory error; no mock fallback.","content":{"application/json":{"schema":{"type":"object","required":["error"],"properties":{"error":{"type":"string"}}}}}}}}}
@@ -3207,6 +3273,46 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
 
+  /v1/portal/editChatMessage:
+    post:
+      tags: [Chat]
+      operationId: portal_editChatMessage
+      summary: Edit own chat message text
+      description: |
+        `args`: `[conversationId, messageId, EditChatMessageInput]`.
+        Only the sender can edit. Attachments are unchanged. Result is wrapped with stub CMS acknowledgement.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalCallRequest"
+            example:
+              args:
+                - conv-1
+                - msg-1
+                - text: Updated text
+                  requestId: 00000000-0000-4000-8000-000000000001
+      responses:
+        "200":
+          description: Method succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalCallResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Unknown or blocked method
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+
   /v1/portal/deleteChatMessage:
     post:
       tags: [Chat]
@@ -3798,6 +3904,85 @@ paths:
                 $ref: '#/components/schemas/ErrorBody'
         '413':
           description: Request exceeds two MiB body bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '503':
+          description: Demo shared Community is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+  /v1/community/editChatMessage:
+    post:
+      tags:
+      - Chat
+      operationId: community_editChatMessage
+      summary: Edit only a message authored by the current identity
+      description: Edit only a message authored by the current identity. Text-only body change; attachments stay.
+        Requires advertised Community version 1. Accepts Student or Lecturer bearer sessions.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                args:
+                  type: array
+                  prefixItems:
+                  - type: string
+                    minLength: 1
+                  - type: string
+                    minLength: 1
+                  - $ref: '#/components/schemas/CommunityEditInput'
+                  items: false
+                  minItems: 3
+                  maxItems: 3
+              required:
+              - args
+      responses:
+        '200':
+          description: Demo result; no Live CMS write.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/CommunityMutationResult'
+                  cms:
+                    type: object
+                    properties:
+                      acknowledged:
+                        const: true
+                      mode:
+                        const: stub
+                      note:
+                        type: string
+                required:
+                - result
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Current membership or ownership required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: Unknown operation/resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: Conflicting retry ID.
           content:
             application/json:
               schema:
@@ -6518,6 +6703,7 @@ components:
         - getChatConversation
         - markChatConversationRead
         - sendChatMessage
+        - editChatMessage
         - deleteChatMessage
 
     HealthResponse:
@@ -7193,6 +7379,22 @@ components:
         programmeEnrolmentId:
           type: ["string", "null"]
 
+    EditChatMessageInput:
+      type: object
+      required: [text]
+      properties:
+        text:
+          type: string
+          maxLength: 20000
+        requestId:
+          type: string
+          format: uuid
+        programmeEnrolmentId:
+          type: ["string", "null"]
+      description: |
+        Text-only edit of an own message. Empty text is allowed when the message
+        still has attachments. Unchanged text is a no-op.
+
     PortalCallRequest:
       type: object
       required: [args]
@@ -7266,6 +7468,8 @@ components:
           $ref: "#/components/schemas/DeleteFinancePaymentProofInput"
         sendChatMessageInput:
           $ref: "#/components/schemas/SendChatMessageInput"
+        editChatMessageInput:
+          $ref: "#/components/schemas/EditChatMessageInput"
         chatTarget:
           $ref: "#/components/schemas/ChatTarget"
         personalAddress:
@@ -8794,8 +8998,9 @@ components:
       type: object
       description: |
         Demo LMS role surface on Portal API — callable Materials / assignment /
-        lecturer-review methods, Demo Postgres collections they touch, and deferred CAP
-        gaps (quiz, live class, forum, feedback). Not a Live LMS product (BASE-44).
+        lecturer-review methods, Demo Postgres collections they touch, CAP-26 stub
+        live-class lobby methods (Classrooms RPC; Demo Partial, no media vendor),
+        and deferred CAP gaps (quiz, forum, feedback). Not a Live LMS product (BASE-44).
       required: [status, note, methods, deferredMethods, collections]
       properties:
         status:
@@ -12282,6 +12487,11 @@ components:
                   - sent
                   - read
                 - type: 'null'
+              editedAt:
+                type:
+                - string
+                - 'null'
+                format: date-time
               attachments:
                 type: array
                 items:
@@ -12645,6 +12855,24 @@ components:
       - requestId
       description: Text or attachment required. Five resources, 25 MiB each, 75 MiB total. Session-derived author and
         canonical context. Exact request-ID retries are idempotent; differing content returns 409.
+    CommunityEditInput:
+      type: object
+      properties:
+        text:
+          type: string
+          maxLength: 20000
+        requestId:
+          type: string
+          format: uuid
+        programmeEnrolmentId:
+          type:
+          - string
+          - 'null'
+      required:
+      - text
+      - requestId
+      description: Own-message text edit only. Attachments unchanged. Empty text allowed when attachments remain.
+        Exact request-ID retries are idempotent; differing content returns 409.
     CommunityFileChunk:
       type: object
       properties:
