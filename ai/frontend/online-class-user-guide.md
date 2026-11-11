@@ -43,7 +43,7 @@ Join media host: `https://classrooms.raisd.co` (Raisd-branded plugNmeet client, 
 1. Sign in with the correct role (lecturer vs student).  
 2. Use a module that has a **timetable window open** for live class (Demo includes a rolling window).  
 3. Allow camera/microphone when the browser asks (or join as listener).  
-4. If the classroom modal cannot use mic/cam, use **Open in new tab**.
+4. If the classroom modal cannot use mic/cam, use **Open in new tab** — that **transfers** the call (closes the portal embed, then opens `classrooms.raisd.co`; the classroom tab always keeps the join identity).
 
 ---
 
@@ -178,7 +178,7 @@ Steps:
    - **Re-watch** → click **Re-watch** → recording plays in the Past Class modal.
    - **Notes** → click **Open notes** → notes open in the modal.
    - **Shared materials** → review the listed files, then click **Open material** → the file opens in the modal.
-5. Use **Open in new tab** in the modal if you prefer a separate window, or **Close** to return to the lobby.
+5. Use **Open in new tab** in the modal to move the call into `classrooms.raisd.co` (portal embed closes; classroom tab trumps), or **Close** to return to the lobby without ending the class.
 6. If a button is missing, that asset has no downloadable `mediaId` yet (status may still be processing or unavailable-demo).
 
 Evidence screenshots: `12b`–`12d` (student re-watch / notes / materials modals), `13b`–`13d` (lecturer).
