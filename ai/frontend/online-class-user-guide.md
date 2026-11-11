@@ -108,6 +108,7 @@ During a live class, chat stays in sync both ways for the matching **module** Co
 - **Classroom → Community:** each sender’s own **Public Chat** line posts via `POST /v1/live-class/chat-mirror` (signed `raisd_mirror` on the Classroom join URL).
 - **Community → Classroom:** module Community sends enqueue an outbox; Raisd Classroom pulls `GET /v1/live-class/community-chat` and injects into Public Chat.
 - **Start notification:** when the lecturer starts, Community gets an OL-24 system line with a portal Join path. The student dock shows **Lecturer started the live class** + **Join live class**, which opens the Live class lobby.
+- **End clears Join:** after the host **End class** system line (`Class ended …`), the Community **Join live class** CTA is removed so students cannot rejoin that meeting. Lobby **Open classroom** / **Join** also clear once the session phase is `ended` (API already rejects join/start on ended sessions).
 
 Private DMs are not mirrored. Chat stays in Community after End class; Past Class holds transferred media.
 
@@ -160,11 +161,11 @@ You can open Past Class **before** a live session (Demo completed timetable fixt
 
 ### 7.2 How to open recordings, notes, and shared materials
 
-Each Past Class row shows week, date/time, duration, recording status, and Lecture / Quiz / Assignment tags. Under the row, assets are grouped:
+Each Past Class row shows week, date/time, duration, recording status, and Lecture / Quiz / Assignment tags. Under the row, assets are grouped. Each asset line is a title with its action button aligned in a shared right column (group headings already name the kind):
 
 | Group | Button label | What opens |
 |---|---|---|
-| **Re-watch** | **Re-watch** | Class recording in a **modal player** (Demo sample video, or cloud recording after End class with plugNmeet) |
+| **Re-watch** | **Re-watch** | Class recording in a **modal player** (Portal-hosted Demo MP4, or cloud recording after End class with plugNmeet via Portal media proxy) |
 | **Notes** | **Open notes** | Shared lecture notes in a **modal** (Demo PDF, or transferred notepad/artifact when available) |
 | **Shared materials** | **Open material** | Listed files such as an assignment brief in a **modal** (Demo PDF list; live artifacts when transferred) |
 
