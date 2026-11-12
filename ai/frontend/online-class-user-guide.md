@@ -43,7 +43,7 @@ Join media host: `https://classrooms.raisd.co` (Raisd-branded plugNmeet client, 
 1. Sign in with the correct role (lecturer vs student).  
 2. Use a module that has a **timetable window open** for live class (Demo includes a rolling window).  
 3. Allow camera/microphone when the browser asks (or join as listener).  
-4. **Open classroom** shows a preload (“Connecting to virtual classroom…”) while plugNmeet loads in the modal. If the classroom modal cannot use mic/cam, use **Open in new tab** — that **transfers** the call (closes the portal embed, then opens `classrooms.raisd.co` and joins automatically; the classroom tab always keeps the join identity).
+4. **Open classroom** shows a preload (“Connecting to virtual classroom…”) while plugNmeet loads in the modal. If the classroom modal cannot use mic/cam, use **Open in new tab** — that **transfers** the call (closes the portal embed, then opens `classrooms.raisd.co` and joins automatically; the classroom tab always keeps the join identity). Auto cloud recording already in progress is **not** restarted by that transfer.
 
 ---
 
@@ -133,7 +133,7 @@ INCLUDE_SCREENSHOTS=1 node docs/diagrams/lms-reference/live-class-plugnmeet/capt
 
 | Feature | How (host) | Capture |
 |---|---|---|
-| **Auto cloud recording** | Starts when host joins (`enable_auto_cloud_recording`) | `44a-auto-recording.png` |
+| **Auto cloud recording** | Starts when host joins (`enable_auto_cloud_recording`); everyone sees header + on-stage **REC** indicators while recording | `44a-auto-recording.png` |
 | **Cloud / local MP4 recording** | Footer **REC** — cloud (DIV recorder) or local browser recording | `44-recording.png` |
 | **RTMP / WHIP live streaming** | More options → Start Live Stream | `45-live-stream.png` |
 | **AI Meeting Agent** | More options → AI Tools | `46-ai-tools.png` |
