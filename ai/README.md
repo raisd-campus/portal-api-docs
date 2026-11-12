@@ -25,7 +25,7 @@ docs/ai/
 ├── AGENTS.md                 ← campus-wide agent instructions (read first)
 ├── website-ai-guidance.md    ← website should / should not (standup 29 Oct)
 ├── MANIFEST.yaml             ← machine-readable index
-├── architecture/             ← system, microservices, repos, deployment, VPS topology
+├── architecture/             ← system, microservices, repos, deployment, VPS topology, UltaHost self-defence
 ├── backend/                  ← Portal API, existing CMS inventory, CAP comparison
 ├── frontend/                 ← per-portal agent knowledge
 │   └── student-portal/       ← extracted from raisd-campus/student-portal

@@ -79,7 +79,7 @@ Local checkouts are siblings under `~/src/raisd/`. See [architecture/repositorie
 - Portal API write success only after the CMS acknowledges the write (when Live/CMS-connected).
 - Authorisation is server-enforced. Client-side role hiding is not security.
 - Evidence, assignments, and payment proofs need a durable file store for Live; metadata-only demos are not Live.
-- Hosting: UltaHost VPS + k3s (ADR-2 / ADR-3). Current Demo topology: [architecture/vps-topology.md](architecture/vps-topology.md). Staged Live growth: [architecture/deployment.md](architecture/deployment.md) and [SDD-12](../sdd/12-deployment-architecture.md). Do not invent a greenfield cloud topology without an ADR update.
+- Hosting: UltaHost VPS + k3s (ADR-2 / ADR-3). Current Demo topology: [architecture/vps-topology.md](architecture/vps-topology.md). Self-defence / TCP-OK TLS-hang + cool-down before recording/deploy retries: [architecture/ultahost-vps-self-defence.md](architecture/ultahost-vps-self-defence.md). Staged Live growth: [architecture/deployment.md](architecture/deployment.md) and [SDD-12](../sdd/12-deployment-architecture.md). Do not invent a greenfield cloud topology without an ADR update.
 - CAP IDs are shared across portals: the same CAP on two portals is one capability, two role surfaces ([SDD-11](../sdd/11-capability-catalog.md)). Quick links: [SDD-15](../sdd/15-nomenclature.md).
 
 ## 5. Documentation duties

@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-11-07
+updated: 2026-11-11
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,8 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-11-11: Recaptured portal lobby/Past Class chrome (01–02, 06–07, 12–13) via local SSO+portal-api Demo while UltaHost VPS SSH banner remains intermittent; classrooms public edge still depends on VPS Traefik.
+  - 2026-11-11: Online-class journeys screenshot-only; recaptured host features/conversation/file-share/auto-recording on DIV Tailscale; removed walkthrough videos; portal lobby/Past Class chrome pending VPS+SSO.
   - 2026-11-07: Online-class user guide (Demo Partial) — frontend/online-class-user-guide.md + diagrams/guidance/online-class.html with lecturer/student screenshots and video; site-nav Guidance → Online class.
   - 2026-11-07: Recaptured Online-class guide media from Staff/Student portals + classrooms.raisd.co (modal chrome, dark Raisd Classroom room UI, Public Chat) — live-class-plugnmeet/ screenshots 01–21 + walkthrough/conversation videos.
   - 2026-11-07: plugnmeet-client dark-only lock (no light theme/switcher; html/body .dark at boot) + full Online-class guide media recapture.
@@ -121,6 +123,7 @@ notes:
   - 2026-11-04: Expanded OSS video catalogue — plugNmeet, Apache OpenMeetings, edumeet, Galène, Nextcloud Talk, MiroTalk SFU (+ Ion DIY) across lms-oss-video-requirements.md, lms-online-class-options.md/.html, lms-video-feature-comparison.md.
   - 2026-11-04: OSS video vs stated requirements (standup 3 Nov R1–R12) — architecture/lms-oss-video-requirements.md; diagrams/lms-online-class-options.html#oss-req (BBB / OpenVidu / Jitsi / LiveKit implementation).
   - 2026-11-04: OSS + commercial feature-by-feature comparison for review — architecture/lms-video-feature-comparison.md; diagrams/lms-online-class-options.html#feature-compare.
+  - 2026-11-11: Past Class history area enabled (OL-60-lite) — auto-seed completed/ended sessions with week, duration, tags, recording status; Student/Lecturer Past Class panels; backend/classrooms.md · online-class-user-guide.md. Demo Partial ≠ Live.
   - 2026-11-05: CAP-26 Demo Partial stub lobby shipped — Portal API live-class Classrooms RPC + Student/Lecturer Raisd lobbies; stub join URL; timetable gate; Past Class stub; no media vendor; not Live. architecture/lms-online-class-options.md §6 · backend/classrooms.md · GET /v1/meta/lms.
   - 2026-11-05: Hosted Demo live-class stub screenshots + flow gallery — diagrams/lms-reference/live-class-stub/ + lms-online-class-options.html#demo-stub (Lecturer Start → Student Join → Past Class).
   - 2026-11-05: Per-screen Demo stub guide (01–08 how-to + what’s new) — live-class-stub/README.md · #demo-stub-guide (large shot + explanation beside each frame) · options.md §6 · classrooms.md links.
@@ -336,6 +339,9 @@ architecture:
   - path: architecture/vps-topology.md
     topics: [vps, ultahost, k3s, traefik, postgres, dns, cloudflare, campus, topology]
     pages: ../diagrams/architecture.html
+  - path: architecture/ultahost-vps-self-defence.md
+    topics: [ultahost, vps, self-defence, overload, traefik, ssh, tls, timeout, cooldown, recording, demo]
+    note: Observed 12–13 Nov 2026 — TCP OK / TLS hang; self-recover; cool-down before recording/deploy retries.
   - path: architecture/cicd.md
     topics: [cicd, jenkins, webhook, main, deploy, ghcr, argocd, github]
     code: https://github.com/raisd-campus/control-plane/blob/main/ci/Jenkinsfile
@@ -767,12 +773,16 @@ process:
     topics: [sdd, pdf, openapi, knowledge-sync]
   - path: process/status-language.md
     topics: [demo, live, partial, placeholder]
+    topics: [operator, adam, email, gmail-draft, legaladvice-html, hugeshop]
+    notes: Imported from hugeshop-infra-iac practice; not campus Notifications.
 
 rules:
   - path: rules/cms-student-portal.mdc
   - path: rules/portal-sidebar.mdc
   - path: rules/portal-api.mdc
     mirrored_to: raisd-campus/portal-api/.cursor/rules/portal-api.mdc
+    topics: [operator, adam, email, html-style]
+    topics: [operator, adam, email, gmail-draft]
 
 admissions_increment:
   - path: frontend/applicant-portal/mock-api.md

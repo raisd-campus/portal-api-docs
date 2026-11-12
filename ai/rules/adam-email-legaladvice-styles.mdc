@@ -1,0 +1,78 @@
+---
+description: Always use LegalAdvice HTML email font and table styles for any email to Adam
+alwaysApply: true
+---
+
+# Adam emails — LegalAdvice font & table styles (always)
+
+Whenever drafting, composing, or revising **any email to Adam** (HugeShop, LegalAdvice, MGP/DIV, or other projects) — including Gmail drafts, HTML reply files, and “keep as draft” packs — use the **LegalAdvice reply HTML style**. Do not use plain monospace dumps, markdown-only tables, or WhatsApp-style bullet walls as the sendable email body.
+
+Full process (pack layout + Mail.app draft placement): `docs/ai/process/adam-email-drafts.md`.
+
+**Contact:** prefer `adam@hugeshop.com` for HugeShop; follow project-specific Adam contact rules when set.
+
+**Delivery:** always From **`iman.suherman@gmail.com`**; always place in **Gmail Drafts** — never send to Adam from the agent. See `docs/ai/rules/adam-email-gmail-draft-only.mdc`.
+
+## Canonical layout
+
+Reference examples:
+
+- `legaladvice-foundation/docs/evidence/2026-11-09-adam-followup/adam-reply-draft.html`
+- `legaladvice-foundation/docs/evidence/2026-11-06-recovery/adam-reply-draft.html`
+- HugeShop packs under `hugeshop-infra-iac/tmp/**/adam-reply-draft.html`
+
+### Shell
+
+```html
+<body style="margin:0;padding:0;background:#ffffff;color:#1a1a1a;">
+<div style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.55;color:#1a1a1a;max-width:720px;margin:0;padding:8px 4px;">
+  <!-- content -->
+</div>
+</body>
+```
+
+### Type
+
+| Role | Style |
+|---|---|
+| Body copy / paragraphs | Georgia, Times New Roman, serif · 15px · line-height 1.55 · `#1a1a1a` · `margin:0 0 14px` (section closing paras often `0 0 22px`) |
+| Numbered section headings | Arial, Helvetica, sans-serif · 14px · font-weight 700 · `margin:0 0 10px` |
+| Tables / dense data | Arial, Helvetica, sans-serif · 13px · line-height 1.4 |
+| Sign-off | Same Georgia body; `Kind regards,` then `Iman Suherman` |
+
+### Tables
+
+```html
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
+  style="border-collapse:collapse;margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.4;">
+  <tr>
+    <th align="left" style="border:1px solid #c5d0da;background:#f4f7fa;padding:9px 10px;">…</th>
+  </tr>
+  <tr>
+    <td style="border:1px solid #c5d0da;padding:9px 10px;vertical-align:top;">…</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #c5d0da;padding:9px 10px;vertical-align:top;background:#fafbfc;">…</td>
+  </tr>
+</table>
+```
+
+- Header cells: border `#c5d0da`, background `#f4f7fa`, padding `9px 10px`
+- Body cells: same border/padding; alternate rows with background `#fafbfc`
+- Muted secondary notes: `color:#555`
+- Prefer HTML tables for status / ownership / checkpoint grids; keep short prose in Georgia paragraphs
+
+### Structure habits
+
+1. Open with `Hi Adam,` (or `Dear Adam,` only when matching his formal register).
+2. Numbered sections with Arial bold headings.
+3. Put evidence, owners, amounts, URLs, and status in tables.
+4. List screenshot/PDF attachment filenames explicitly when evidence is attached.
+5. Keep a plain-text companion only as a fallback; the **HTML draft is the source of truth** for send.
+6. Always leave as **Gmail Draft** for `iman.suherman@gmail.com` — even if the user asks to send; the human sends from Gmail/Mail.
+
+## Do not
+
+- Inter / Roboto / system-ui / purple-gradient “marketing” email templates
+- Card-heavy or multi-column newsletter layouts
+- Replacing this style with WhatsApp chat formatting for email bodies

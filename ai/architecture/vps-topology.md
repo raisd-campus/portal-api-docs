@@ -152,6 +152,7 @@ Full table: [microservices.md](microservices.md).
 | Portal API runtime detail | [../backend/portal-api-deployment.md](../backend/portal-api-deployment.md) |
 | **Argo CD / GitOps (preferred)** | [argocd.md](argocd.md) · `gitops/` — day-to-day deploys without SSH rsync |
 | SSH recovery (console) | `gitops/bootstrap/recover-sshd.sh` (opens port **2222** as well as 22) |
+| **Self-defence / overload hang** | [ultahost-vps-self-defence.md](ultahost-vps-self-defence.md) — TCP OK, TLS/SSH hang; cool-down before retries |
 
 `scripts/deploy-vps.sh` remains the fallback for static hostPath portals until each SPA has a GHCR image. Services (`sso`, `notifications`) move to Argo + GHCR first.
 

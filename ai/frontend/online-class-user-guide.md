@@ -146,7 +146,7 @@ INCLUDE_SCREENSHOTS=1 node docs/diagrams/lms-reference/live-class-plugnmeet/capt
 | Who | Action | Result |
 |---|---|---|
 | Student | **Leave class** | Leaves roster; Past Class history updates |
-| Lecturer | **End class** | Ends live phase; media room ends; recordings/artifacts transfer into Past Class; Community gets an end notice (chat already mirrored live) |
+| Lecturer | **End class** | Ends live phase; media room ends; recordings/artifacts transfer into Past Class (processing shows a **% progress** bar until ready); Community gets an end notice (chat already mirrored live) |
 
 ### 7.1 Where Past Class lives
 

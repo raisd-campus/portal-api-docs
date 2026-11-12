@@ -1,0 +1,39 @@
+---
+description: Adam emails always from iman.suherman@gmail.com and always Gmail Drafts — never send
+alwaysApply: true
+---
+
+# Adam emails — Gmail account + draft only (always)
+
+Applies to **every** email to Adam Canceri across HugeShop, LegalAdvice, MGP/DIV, and any other project.
+
+Full process (HTML style + Mail.app placement): `docs/ai/process/adam-email-drafts.md`.
+
+## From account (hard)
+
+- **Always** use **`iman.suherman@gmail.com`** as From / Mail.app Gmail account.
+- Do **not** send or draft Adam mail from `suherman.fb@gmail.com`, `admin@hugeshop.com`, `support@hugeshop.com`, or any other mailbox unless Adam explicitly asks for a different From address in writing.
+
+## Never send (hard)
+
+- **Never** send email to Adam from the agent — not via Mail.app Send, SMTP, `gog gmail send`, Gmail API send, or any other path.
+- If the user says **send**, **email Adam**, **reply to Adam**, or similar: create or update a **Gmail Draft** only, then tell the user it is ready in Drafts for them to review and send.
+- Do **not** interpret “send” / “ship the email” / “go ahead” as permission for the agent to click Send. Human sends from Gmail/Mail.
+
+## Draft placement
+
+1. Compose in LegalAdvice HTML style (`docs/ai/rules/adam-email-legaladvice-styles.mdc`).
+2. Put the message in **Gmail → Drafts** for `iman.suherman@gmail.com` (Mail.app account name `Gmail` is fine) — typically via AppleScript `html content` + `save` on an outgoing message (see process doc).
+3. Attachments belong on that draft.
+4. Confirm: From, To, Subject, attachment names, and that status is **draft / not sent**.
+
+## HugeShop To address
+
+- Prefer **`adam@hugeshop.com`** for HugeShop.
+- Do not use Adam’s other work emails for HugeShop unless he explicitly asks.
+
+## Related
+
+- Style: `docs/ai/rules/adam-email-legaladvice-styles.mdc`
+- Process: `docs/ai/process/adam-email-drafts.md`
+- HugeShop billing/contact (source repo): `hugeshop-infra-iac/.cursor/rules/adam-hugeshop-billing.mdc`

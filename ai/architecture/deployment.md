@@ -21,7 +21,7 @@ Running on a **single UltaHost VPS** (`38.127.216.221`):
 - Eight campus-scoped landings and portals: `{slug}.raisd.co` and `{apply,student,admin,staff,api}.{slug}.raisd.co` (`teach.{slug}` 301-redirects to `staff.{slug}`)
 - Shared: `control.raisd.co`, `keychain.raisd.co`, `docs.raisd.co`, `db-admin.raisd.co`, `api.raisd.co`, `sso.raisd.co`, `notify.raisd.co`
 
-Full diagram and host table: [vps-topology.md](vps-topology.md). Catalogue: [demo-campuses.yaml](demo-campuses.yaml).
+Full diagram and host table: [vps-topology.md](vps-topology.md). Catalogue: [demo-campuses.yaml](demo-campuses.yaml). When the Demo VPS accepts TCP but hangs TLS/SSH (self-defence), follow [ultahost-vps-self-defence.md](ultahost-vps-self-defence.md) — cool down before recording or heavy deploy retries.
 
 ## Live growth stages (SDD-12)
 
