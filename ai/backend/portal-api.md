@@ -44,7 +44,7 @@ On 22 October 2026 an empty PostgreSQL 16 database on `127.0.0.1` was recreated 
 
 - Bearer demo sessions and `POST /v1/portal/:method` for every student `PortalApi` method.
 - Sessions still use the **student-portal mock engine** via `STUDENT_PORTAL_ROOT`.
-- CMS writes are **stubbed** until CAP-53. Lesotho **read** mapping (Phase R1): [lesotho-cap53-read-adapter.md](lesotho-cap53-read-adapter.md).
+- CMS writes are **stubbed** until CAP-53. Target Integration path: multi-campus [CMS bridge](../architecture/cms-bridge.md) on UltaHost against mock DB dumps over VPN tunnels ([diagrams](../../diagrams/cms-bridge/index.html)). Lesotho **read** mapping (Phase R1): [lesotho-cap53-read-adapter.md](lesotho-cap53-read-adapter.md).
 - Local Swagger: `http://127.0.0.1:8080/docs` when the service is running.
 - Demo **flow response shapes** for Immigration, Graduation, Module Registration, Online Forms, and Finance are named OpenAPI components on those operations (still validated by student-portal Zod at runtime).
 - Scenario switches over HTTP use `POST /v1/auth/scenario`; logout uses `POST /v1/auth/logout`.

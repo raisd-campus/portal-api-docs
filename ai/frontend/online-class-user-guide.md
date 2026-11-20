@@ -1,10 +1,11 @@
 # Online class — user guide (Demo Partial)
 
-**As of:** 11 November 2026  
+**As of:** 20 November 2026  
 **Status:** **Demo Partial** — not Live CAP-26. Sample / session data only.  
 **Browse (docs.raisd.co):** [Online class user guide](https://docs.raisd.co/diagrams/guidance/online-class.html)  
 **Walkthrough captures:** [live-class-plugnmeet/](../../diagrams/lms-reference/live-class-plugnmeet/)  
 **Capability:** [CAP-26](../../sdd/11-capability-catalog.md) · Classrooms API: [classrooms.md](../backend/classrooms.md)  
+**Interim SFU issues (20 Nov):** [ultahost interim SFU audit](../architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md)  
 **Moderator reference:** [plugNmeet Moderator Guide (YouTube)](https://www.youtube.com/watch?v=nDsB9fSMzYM) · [Moderator docs](https://www.plugnmeet.org/docs/user-guide/moderator)
 
 ---
@@ -17,7 +18,7 @@ Use this guide to run a **Demo online class** on Lesotho Raisd portals and the d
 2. Both open the **virtual classroom** (plugNmeet)  
 3. Host uses **participant, collaboration, recording & AI** tools  
 4. **Student** joins (waiting room when enabled) from the module Live class tab  
-5. Leave / End and open **Past Class** materials (**Re-watch** / **Open notes** / **Open material**)  
+5. Leave / End and open **Past Class** materials (Re-watch table with recorded timestamps / **Open notes** / **Open material**)  
 6. See **Public Chat → Community** sync during the live session (Demo Partial)
 
 Do **not** treat this as Live production training. Media is Demo Partial on borrowed DIV + `classrooms.raisd.co`. Journeys are **screenshot-only** (walkthrough videos removed).
@@ -107,7 +108,7 @@ During a live class, chat stays in sync both ways for the matching **module** Co
 
 - **Classroom → Community:** each sender’s own **Public Chat** line posts via `POST /v1/live-class/chat-mirror` (signed `raisd_mirror` on the Classroom join URL).
 - **Community → Classroom:** module Community sends enqueue an outbox; Raisd Classroom pulls `GET /v1/live-class/community-chat` and injects into Public Chat.
-- **Start notification:** when the lecturer starts, Community gets an OL-24 system line with a portal Join path. The student dock shows **Lecturer started the live class** + **Join live class**, which opens the Live class lobby.
+- **Start notification:** when the lecturer starts, Community gets an OL-24 system line with a portal Join path. The student dock shows **Lecturer started the live class** + **Join live class** pinned under the conversation header while scrolling, which opens the Live class lobby. Until the classroom embed finishes loading, the lobby shows a **Still connecting — not in the live class yet** banner with a spinner, Join/Open stay on **Connecting…**, and the lecturer roster lists those students as **still connecting (not in class yet)** rather than in class.
 - **End clears Join:** after the host **End class** system line (`Class ended …`), the Community **Join live class** CTA is removed so students cannot rejoin that meeting. Lobby **Open classroom** / **Join** also clear once the session phase is `ended` (API already rejects join/start on ended sessions).
 
 Private DMs are not mirrored. Chat stays in Community after End class; Past Class holds transferred media.
@@ -133,7 +134,7 @@ INCLUDE_SCREENSHOTS=1 node docs/diagrams/lms-reference/live-class-plugnmeet/capt
 
 | Feature | How (host) | Capture |
 |---|---|---|
-| **Auto cloud recording** | Starts when host joins (`enable_auto_cloud_recording`); everyone sees header + on-stage **REC** indicators while recording | `44a-auto-recording.png` |
+| **Auto cloud recording** | Starts when host joins (`enable_auto_cloud_recording`); everyone sees a single title-bar **REC** chip while recording | `44a-auto-recording.png` |
 | **Cloud / local MP4 recording** | Footer **REC** — cloud (DIV recorder) or local browser recording | `44-recording.png` |
 | **RTMP / WHIP live streaming** | More options → Start Live Stream | `45-live-stream.png` |
 | **AI Meeting Agent** | More options → AI Tools | `46-ai-tools.png` |
@@ -146,7 +147,7 @@ INCLUDE_SCREENSHOTS=1 node docs/diagrams/lms-reference/live-class-plugnmeet/capt
 | Who | Action | Result |
 |---|---|---|
 | Student | **Leave class** | Leaves roster; Past Class history updates |
-| Lecturer | **End class** | Ends live phase; media room ends; recordings/artifacts transfer into Past Class (processing shows a **% progress** bar until ready); Community gets an end notice (chat already mirrored live) |
+| Lecturer | **End class** | Ends live phase; media room ends; recordings/artifacts copy into Past Class (lobbies show a visible **Copying recording to the campus server… N%** progress banner until ready); Community gets an end notice (chat already mirrored live) |
 
 ### 7.1 Where Past Class lives
 
@@ -161,18 +162,18 @@ You can open Past Class **before** a live session (Demo completed timetable fixt
 
 ### 7.2 How to open recordings, notes, and shared materials
 
-Each Past Class row shows week, date/time, duration, recording status, and Lecture / Quiz / Assignment tags. Under the row, assets are grouped. Each asset line is a title with its action button aligned in a shared right column (group headings already name the kind):
+Each Past Class row shows week, date/time, duration, recording status, and Lecture / Quiz / Assignment tags. Under the row, assets are grouped. Each asset line is a title with its action button aligned in a shared right column (group headings already name the kind). **Date sort (19 Nov 2026):** Past Class defaults to **Newest first** (sessions by start time; Re-watch / Notes / materials by recorded date). Use the panel **Newest first / Oldest first** control, or the **Recorded ↓ / Added ↓** control beside each asset group, to reverse order.
 
 | Group | Button label | What opens |
 |---|---|---|
 | **Re-watch** | **Re-watch** | Class recording in a **modal player** (Portal-hosted Demo MP4, or cloud recording after End class with plugNmeet via Portal media proxy) |
-| **Notes** | **Open notes** | Shared lecture notes in a **modal** (Demo PDF, or transferred notepad/artifact when available) |
-| **Shared materials** | **Open material** | Listed files such as an assignment brief in a **modal** (Demo PDF list; live artifacts when transferred) |
+| **Notes** | **Open notes** | Whiteboard / shared notepad from the live class in a **modal** when plugNmeet transferred an artifact; otherwise the Notes group is empty (no Demo template) |
+| **Shared materials** | **Open material** | Week-scoped files for that class only (no invented Demo brief / other-week catalogue); live artifacts when transferred |
 
 Steps:
 
 1. Open the module **Live class** lobby (paths above).
-2. Scroll to the **Past Class** panel.
+2. Scroll to the **Past Class** panel (optional: set **Newest first** or **Oldest first**).
 3. Find the completed session (Demo history shows earlier GRD301 fixtures without needing End class first).
 4. Under that session, use the group that matches what you need:
    - **Re-watch** → click **Re-watch** → recording plays in the Past Class modal.
@@ -183,7 +184,7 @@ Steps:
 
 Evidence screenshots: `12b`–`12d` (student re-watch / notes / materials modals), `13b`–`13d` (lecturer).
 
-**Demo Partial note:** without plugNmeet, completed fixtures use openable Demo sample assets (`ready-stub`). After **End class** with live media, cloud recordings and artifacts replace those samples when transfer finishes.
+**Demo Partial note:** without plugNmeet, completed fixtures (including finished terms such as FDN101 2025-JAN) keep a Demo **re-watch** stub in Past Class (`ready-stub`). Past Class does **not** invent Shared notes / assignment-brief HTML. After **End class** with live media, cloud recordings and whiteboard / notepad artifacts appear when transfer lists them.
 
 ---
 
@@ -216,13 +217,28 @@ When `classrooms.raisd.co` is unreachable, set `PLUGNMEET_JOIN_BASE=https://100.
 
 ---
 
-## 9. Demo vs Live
+## 9. Known issues — UltaHost interim SFU (20 Nov 2026)
+
+Demo Partial media now runs on the Demo UltaHost VPS (not only DIV). During the cutover:
+
+| Issue | What to do |
+|---|---|
+| “Connection interrupted. Reconnecting…” looping | Close the classroom modal/tab completely, then **Open classroom** again (loads the LOST-neuter client). Audit: [2026-11-20-ultahost-interim-sfu-reconnect.md](../architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md) |
+| Mic or camera turns off by itself | Side effect of the same reconnect leave (track unpublished). Re-open after the client fix; click mic/cam if still off |
+| Cloud REC / “No recorder” | Expected on this interim box — chromedp recorder stays **off** so the host session stays stable. See [SFU vs chromedp diagram](../../diagrams/classroom-sfu-recorder/) |
+| After a Classroom deploy | Always hard-reopen; do not rely on a tab that stayed open |
+
+Compose on the VPS raises LiveKit CPU shares / memory reservation; Jenkins is scaled down during live proof. A dedicated media VPS + UDP TURN remains the Live path.
+
+---
+
+## 10. Demo vs Live
 
 | Demo (today) | Live (not claimed) |
 |---|---|
-| Shape B tokens + `classrooms.raisd.co` | Production media VPS + Live CAP-26 |
+| Shape B tokens + `classrooms.raisd.co` (interim UltaHost SFU) | Production media VPS + Live CAP-26 |
 | Process-memory lobby / attendance overlay | Durable `live_class_*` + CMS SoT |
-| Auto recording + Past Class history Partial on DIV | Policy-backed recording + STT providers |
+| Auto recording + Past Class history Partial (REC deferred on UltaHost interim) | Policy-backed recording + STT providers |
 
 Status words: [status-language.md](../process/status-language.md).
 
@@ -233,6 +249,7 @@ Status words: [status-language.md](../process/status-language.md).
 | Material | Path |
 |---|---|
 | HTML user guide | [diagrams/guidance/online-class.html](../../diagrams/guidance/online-class.html) |
+| Interim SFU reconnect audit | [2026-11-20-ultahost-interim-sfu-reconnect.md](../architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md) |
 | Capture README | [live-class-plugnmeet/README.md](../../diagrams/lms-reference/live-class-plugnmeet/README.md) |
 | Lesotho portal guide | [lesotho-user-guide.md](lesotho-user-guide.md) |
 | Online-class options / research | [lms-online-class-options.md](../architecture/lms-online-class-options.md) |

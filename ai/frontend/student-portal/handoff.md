@@ -1,5 +1,17 @@
 # Cross-session handoff
 
+## Waiting-room admit only after video + Join — 20 November 2026
+
+Read.ai 19 Nov: lecturer admit/reject notify must not fire until the student clicks Classroom **Join** (then waiting). `plugnmeet-client` defers NATS/`USER_JOINED` until Landing Join (`app` `verified` status → `startServerConn`); camera preferred but not hard-required (listen-only remains). **Post-admit Connection Error / lecturer never sees student (20 Nov):** ICE still fails for public students (UDP not forwarded; TCP `:7881` candidate advertised but not selected — e.g. GRD301 `student-rizal`); client skips healthy waiting-room NATS reconnect + 45s PC timeout. Docs: `backend/classrooms.md`, capacity audit.
+
+## Classroom recording button red when active — 20 November 2026
+
+Read.ai 19 Nov: footer REC button is **always solid red** while recording (light + dark). Change in `plugnmeet-client` `footer/icons/recording.tsx`. Preparing stays amber until the cloud recorder bot is ready; local capture goes red immediately. Docs: `backend/classrooms.md`.
+
+## Live-class standup close-out — 17 November 2026
+
+Standup actions (Read.ai 16 Nov): Community **Join live class** CTA sticks with the conversation header. Lobby shows a spinner **Still connecting — not in the live class yet** banner while Join/Open stay on **Connecting…**; modal preload keeps the same message until the embed loads. Roster uses `mediaConnected` via `reportLiveClassMediaConnected` and labels **still connecting (not in class yet)** vs **in class**. Past Class shared materials are week-scoped (no invented Demo assignment-brief beside recordings). Recording transfer shows a visible **Copying recording to the campus server… N%** banner on Virtual Classroom and Past Class. Screen-share capture: room flags + cloud composite expected; 16 Nov GRD301 sample was whiteboard-black (not a screen-share proof) — see `architecture/audits/2026-11-17-screen-share-recording.md`. Recurring join errors (Read.ai 17 Nov): Demo VPS RAM can hang the edge; dominant student media fail is public ICE/TURN (LiveKit Tailscale-only `node_ip`, TURN off) — see `architecture/audits/2026-11-18-class-connection-capacity.md`. Invoice bank/SWIFT to Aslam remains open.
+
 ## Study Plan terminology — 30 October 2026
 
 Display terminology is **Study Plan** throughout Academic tabs, actions, breadcrumbs, review flow and feedback. Existing routes, flow/step IDs, API/schema keys, saved record names and recorded audit values are preserved. The built-in Academic Curriculum configuration name has a display-only Academic Study Plan alias; loading it does not change the stored name or create unsaved edits. Student empty-state, validation and admissions-continuation copy follow this terminology; data and handoff shapes are unchanged.

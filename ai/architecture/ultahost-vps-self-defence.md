@@ -1,7 +1,7 @@
 # UltaHost Demo VPS — self-defence / protective overload behaviour
 
-**Status:** Observed Demo ops knowledge — 12–13 November 2026.  
-**Host:** UltaHost Singapore VPS `38.127.216.221` · k3s node `srv113287766` (~3 vCPU / ~3.8 GiB RAM, no swap).  
+**Status:** Observed Demo ops knowledge — 12–13 November 2026 (pattern); host resized **20 Nov 2026**.  
+**Host:** UltaHost Singapore VPS `38.127.216.221` · k3s node `srv113287766` (**4 vCPU / ~8 GiB RAM**, no swap — was ~3 / 3.8 GiB). Evidence: [2026-11-19-ultahost-vps-upgrade](../../evidence/2026-11-19-ultahost-vps-upgrade/).  
 **Topology:** [vps-topology.md](vps-topology.md) · recovery: `gitops/bootstrap/recover-sshd.sh`.
 
 When this box is under extreme load (Jenkins/Kaniko builds, Traefik saturation, near-OOM), it often does **not** go fully offline. Instead it enters a **protective / self-defence** mode: L3/L4 still answer, but application TLS/HTTP/SSH stop completing. It can later **self-recover** without an UltaHost console reboot. Treat that pattern as first-class ops knowledge — not as “DNS is wrong” or “SSO app is broken.”
@@ -32,6 +32,8 @@ Sibling hosts on the same IP (`sso`, `api`, `staff.*`, `docs`, …) fail togethe
 
 MANIFEST already noted intermittent SSH banner (11 Nov). Capacity alerts: confirm which UltaHost node with Aslam ([lms-video-infra-test.md](lms-video-infra-test.md)).
 
+**UltaHost ticket (Aslam, 13 Nov 2026):** `2026111344860` — https://bill.ultahost.com/supporttickets.php — opened to check resource usage; evidence pack [`docs/evidence/2026-11-13-ultahost-vps-outage/`](../../evidence/2026-11-13-ultahost-vps-outage/).
+
 ## 3. Agent / operator rules (mandatory)
 
 1. **Do not** treat this as an SSO, Portal API, or Cloudflare DNS regression when the signature in §1 matches.
@@ -44,11 +46,25 @@ MANIFEST already noted intermittent SSH banner (11 Nov). Capacity alerts: confir
 5. After cool-down, re-check: `https://sso.raisd.co/` TLS, `https://api.raisd.co/health`, SSH `uptime` + `free -h`, then media (`https://classrooms.raisd.co/`).
 6. Classroom client: failed `START_RECORDING` applies a **90s** client cool-down before auto re-attempt (see `plugnmeet-client` `raisdRecorderJoin` / recording footer). Manual retry should still respect VPS cool-down in §3.4 when the edge just recovered from self-defence.
 
-## 4. Related
+## 4. Interim Classroom SFU on this VPS (20 Nov 2026)
+
+Demo Partial cutover runs plugNmeet/LiveKit on this host (`/opt/raisd-classroom`, public edge `classrooms.raisd.co` → Traefik → tunnel-proxy → Caddy `:18480`, LiveKit UDP `50000–50100` + TCP `:7882`). That **does** put media on the Demo edge — contrary to the earlier “media off this box” preference — as an interim until a dedicated media VPS.
+
+| Observation | Action |
+|---|---|
+| LiveKit containers had **no** Docker CPU/RAM caps; idle use is tiny | Raising limits does nothing; use **cpu_shares / mem_reservation / nice** instead |
+| Mid-class LOST→reconnect (~17s) + mic/cam flip | Client LOST neuter + toast suppress; see [interim SFU audit](audits/2026-11-20-ultahost-interim-sfu-reconnect.md) |
+| Chromedp recorder ~180% CPU + steal | Keep **recorder stopped** on this box during host proof |
+| Jenkins on same node | Scale `jenkins` deploy to **0** during live Demo; restore after |
+
+Compose knobs applied on VPS `docker-compose.ultahost.yaml`: LiveKit `cpu_shares: 2048`, `mem_reservation: 1g`, `shm_size: 512mb`, `oom_score_adj: -500`; plugNmeet/NATS raised shares + reservations.
+
+## 5. Related
 
 | Topic | Doc |
 |---|---|
 | Topology / hostPath | [vps-topology.md](vps-topology.md) |
 | CI/CD load on same node | [cicd.md](cicd.md) |
 | Classrooms + recording | [../backend/classrooms.md](../backend/classrooms.md) |
+| Interim SFU reconnect / mic-cam | [audits/2026-11-20-ultahost-interim-sfu-reconnect.md](audits/2026-11-20-ultahost-interim-sfu-reconnect.md) |
 | Evidence pack (Aslam ticket draft) | [`docs/evidence/2026-11-13-ultahost-vps-outage/`](../../evidence/2026-11-13-ultahost-vps-outage/) |

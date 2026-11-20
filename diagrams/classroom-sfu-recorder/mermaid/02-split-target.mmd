@@ -1,0 +1,22 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Arial, Helvetica, sans-serif"}}}%%
+flowchart LR
+  HOST["Lecturer / student browsers"]
+
+  subgraph MEDIA["Dedicated media VPS — SFU only"]
+    SFU["LiveKit SFU<br/>live class A/V"]
+  end
+
+  subgraph RECBOX["Separate host — recorder only"]
+    CHROME["chromedp recorder bot<br/>joins as hidden viewer<br/>writes cloud MP4"]
+  end
+
+  EDGE["Demo UltaHost VPS<br/>portals · Traefik · docs<br/>no live SFU fight"]
+
+  HOST -->|"publish / subscribe"| SFU
+  SFU -->|"subscribe tracks"| CHROME
+  HOST -.->|"HTTPS / WSS edge"| EDGE
+  EDGE -.->|"signal / API"| SFU
+
+  OK["SFU stays stable for class<br/>REC CPU stays off the SFU box"]
+  SFU --> OK
+  CHROME --> OK

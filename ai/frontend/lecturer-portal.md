@@ -1,5 +1,9 @@
 # Staff portal — current agent knowledge
 
+## Teaching Dashboard layout — 19 November 2026
+
+Staff `/` follows the Student dashboard section rhythm with released design-system page sections (`ContentSection type="page" plain`), `CardGrid`, `IssueCard` and `SummaryCard`. Sequence: **Action required** (when present) → **Next class** (single soonest enrolled session — one SummaryCard) → **Classrooms** (`CardGrid` module cards with next-time line and issue chips). Avoids Demo open-window floods and the previous multi-card Next up stack. Welcome copy is removed; identity stays in `PortalAccount`. Pin remains 0.30.0.
+
 ## Shared field consistency — 0.26.0
 
 Staff pins the exact released `@raisd-campus/design-system` 0.26.0 registry package. Shared text fields use measured truncation tooltips; normal field dimensions and existing page compositions remain owned by the shared defaults. The optional `DetailField.description` and `labelWidth="wide"` APIs are available when a form needs them; this upgrade adds no local field overrides or data behavior changes.
@@ -164,7 +168,7 @@ Materials remains **read-only**, using configured teaching-week start at campus-
 | Route | Current purpose |
 |---|---|
 | `/sign-in` | Existing Demo Lecturer login |
-| `/` | Empty Dashboard |
+| `/` | Dashboard — Action required, one Next class, classroom cards |
 | `/classrooms` | Today / All selector; `view=timetable` retains combined timetable |
 | `/classrooms/:moduleOfferingId` | Attendance-first tabbed workspace; selector, session and assessment in query |
 | `/classrooms/:moduleOfferingId/materials/:materialItemId` | Read-only Materials detail |
@@ -284,7 +288,7 @@ Saved connected attendance/logs/feedback/files belong to API memory and survive 
 | Route | Purpose |
 |---|---|
 | `/sign-in` | SSO handoff only (auto-redirect to `sso.raisd.co/login` with campus landing `returnUrl`) |
-| `/` | Empty Dashboard inside the shared shell |
+| `/` | Dashboard — Action required, one Next class, classroom cards inside the shared shell |
 | `/modules` | Assigned module offerings grouped by programme, using shared clickable `LinkedList` cards |
 | `/modules/:moduleOfferingId` | Offering Overview, Students (N) and browser Demo Materials tabs |
 | `/modules/:moduleOfferingId/materials/new` | Add a browser Demo resource or Faculty-linked assignment brief |

@@ -39,7 +39,7 @@ UltaHost VPS · Singapore · 38.127.216.221 · k3s
 | Layer | Choice |
 |---|---|
 | Region | Singapore (ADR-2) |
-| Compute | Single UltaHost VPS, IPv4 `38.127.216.221` |
+| Compute | Single UltaHost VPS, IPv4 `38.127.216.221` (**4 vCPU / ~8 GiB / ~250 GB** from 20 Nov 2026; was ~3 / 3.8 GiB / 72G) |
 | Runtime | k3s, namespace `campus` (ADR-3) |
 | Ingress | Traefik (k3s) + cert-manager `letsencrypt-prod` |
 | DNS | Cloudflare zone `raisd.co`, **DNS-only** A records → VPS |

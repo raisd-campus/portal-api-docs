@@ -1,0 +1,19 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Arial, Helvetica, sans-serif"}}}%%
+flowchart TB
+  subgraph VPS["Demo UltaHost VPS · 4 vCPU / 8 GiB — SAME BOX"]
+    direction TB
+    SFU["LiveKit SFU<br/>forwards live A/V"]
+    CHROME["chromedp recorder bot<br/>headless Chrome · cloud REC<br/>can use ~180% CPU"]
+    OTHER["k3s · Jenkins · portals · steal"]
+    SFU --- CHROME
+    SFU --- OTHER
+  end
+
+  HOST["Lecturer / student browsers"]
+  HOST -->|"publish mic + cam"| SFU
+  SFU -->|"composite for MP4"| CHROME
+
+  FIGHT["Fight for CPU / iowait<br/>→ LOST quality → reconnect<br/>→ mic/cam unpublished"]
+  CHROME -.-> FIGHT
+  OTHER -.-> FIGHT
+  FIGHT -.-> SFU

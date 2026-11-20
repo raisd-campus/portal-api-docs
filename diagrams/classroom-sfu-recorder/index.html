@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SFU vs chromedp recorder — co-location</title>
+  <link rel="stylesheet" href="../styles.css?v=keychain-float-1" />
+  <style>
+    .hero {
+      margin: 0 0 1.25rem;
+      padding: 1.1rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #f4faf8 0%, #eef3f6 100%);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 0.65rem; }
+    .chip {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px;
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.02em;
+      background: #fff6e8; color: #9a6418; border: 1px solid #f0e0c4;
+    }
+    .chip.ok { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+    .chip.bad { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+    .figure {
+      margin: 0 0 1.5rem;
+      padding: 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .figure figcaption {
+      margin-top: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .defs {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .defs th, .defs td {
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.65rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    .defs th { background: #f4f7fa; }
+    .defs tr:nth-child(even) td { background: #fafbfc; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a href="../lms-online-class-options.html">Online-class options</a>
+            <a href="../classroom-media-bridge/">Classroom media bridge</a>
+            <a class="active" href="index.html">SFU vs chromedp</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../guidance/">Guidance</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../guidance/online-class.html">Online class</a>
+            <a href="../guidance/online-class.html#known-issues">Known issues</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="chips">
+        <span class="chip">Demo Partial</span>
+        <span class="chip bad">Do not co-locate</span>
+        <span class="chip ok">Split target</span>
+      </div>
+      <h1 style="margin:0 0 0.4rem;font-size:1.45rem">SFU not co-located with chromedp</h1>
+      <p style="margin:0;color:var(--muted);max-width:52rem">
+        Plain meaning: the <strong>live class media server</strong> (LiveKit SFU) and the
+        <strong>cloud recording bot</strong> (chromedp / headless Chrome) should not run on the same small VPS.
+        When they share one box, recording CPU fights the live session — reconnect loops and mic/cam drop.
+      </p>
+    </div>
+
+    <h2>Terms</h2>
+    <table class="defs">
+      <thead>
+        <tr><th>Term</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SFU</strong></td>
+          <td>Selective Forwarding Unit — LiveKit server that forwards everyone’s live audio/video in the classroom.</td>
+        </tr>
+        <tr>
+          <td><strong>chromedp</strong></td>
+          <td>Headless Chrome bot used by plugNmeet cloud REC. It joins the room like a hidden viewer and captures the composite to MP4.</td>
+        </tr>
+        <tr>
+          <td><strong>Co-located</strong></td>
+          <td>Both processes on the <em>same</em> machine (today: Demo UltaHost 4 vCPU). Bad for Demo proof when REC is on.</td>
+        </tr>
+        <tr>
+          <td><strong>Not co-located</strong></td>
+          <td>SFU on a dedicated media host; recorder on a different host. Live class CPU stays free of chromedp load.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="colocated">1. Bad — co-located (interim Demo risk)</h2>
+    <figure class="figure">
+      <img src="images/01-colocated-bad.png" alt="Diagram: LiveKit SFU and chromedp recorder on the same UltaHost VPS fighting for CPU" width="1400" height="auto" loading="lazy" />
+      <figcaption>
+        Same 4 vCPU Demo VPS runs LiveKit <strong>and</strong> the recorder bot. Chromedp can use ~180% CPU → host steal/iowait →
+        LiveKit marks publisher quality LOST → full reconnect → mic/cam unpublished.
+        That is why cloud REC is <strong>deferred</strong> on the UltaHost interim SFU.
+      </figcaption>
+    </figure>
+
+    <h2 id="split">2. Target — SFU and chromedp on separate hosts</h2>
+    <figure class="figure">
+      <img src="images/02-split-target.png" alt="Diagram: LiveKit SFU on a media VPS and chromedp recorder on a separate host" width="1400" height="auto" loading="lazy" />
+      <figcaption>
+        Live class stays on the media VPS. The recorder joins over the network from another machine.
+        Demo edge (portals / Traefik / docs) no longer shares CPU with chromedp during class.
+      </figcaption>
+    </figure>
+
+    <h2>Related</h2>
+    <ul>
+      <li>Audit — <a href="../../ai/architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md">2026-11-20 UltaHost interim SFU reconnect</a></li>
+      <li>Online class known issues — <a href="../guidance/online-class.html#known-issues">guidance</a></li>
+      <li>Classroom media bridge — <a href="../classroom-media-bridge/">proposal diagrams</a></li>
+      <li>Classrooms API — <a href="../../ai/backend/classrooms.md">classrooms.md</a></li>
+    </ul>
+  </main>
+
+  <script src="../site-auth.js"></script>
+  <script src="../nav-dropdown.js" defer></script>
+</body>
+</html>

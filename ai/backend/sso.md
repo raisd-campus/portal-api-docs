@@ -160,13 +160,19 @@ Never commit SMTP passwords, notify tokens, or reset/magic-link tokens.
 ## Integrated Demo bridge verification — 15 October 2026
 
 The original bridge maps explicitly known Student emails, allocated Lecturer
-accounts and Registry/Bursary desks. Since 29 October 2026, authenticated Applicants
-with `portal.applicant` instead receive a persistent person-and-assigned-campus
-principal and start empty; they do not require a Demo email-map entry. The five
-registered Demo Applicant identities retain their compatibility path and reset
-allowlist. Other active but unlinked identities get 403; unknown password-login
-emails get 401. No role or email can fall back to a different default person.
-Lecturer responses retain staffMemberId and recorded
+accounts and Registry/Bursary desks. **13 November 2026:** every Demo classroom
+graph person is SSO-loginable for E2E — scenario students (alya / mei / rizal /
+nadia), nine peer roster students (`*.@raisd.demo` → explicit `studentProfileId`
+on exchange), and all five teaching staff (adam / laura / nicolas / louisa /
+jerry). Peer students open the mid-programme graph shell with their own profile
+id so Classrooms / Live class authz match the roster. Catalog: Portal API
+`demo-classroom-sso.ts` + SSO `seed.ts` + Keychain. Since 29 October 2026,
+authenticated Applicants with `portal.applicant` instead receive a persistent
+person-and-assigned-campus principal and start empty; they do not require a Demo
+email-map entry. The five registered Demo Applicant identities retain their
+compatibility path and reset allowlist. Other active but unlinked identities get
+403; unknown password-login emails get 401. No role or email can fall back to a
+different default person. Lecturer responses retain staffMemberId and recorded
 academicTitle, and the portal preserves its HTTP runtime/session on restore.
 
 All four portal sign-in effects share one in-flight code exchange under React

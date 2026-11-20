@@ -9,6 +9,14 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-11-20: UltaHost interim SFU — LiveKit LOST→full reconnect ~17s (mic/cam flip + “Connection interrupted”); client LOST neuter + toast off + AdaptiveMedia off; compose cpu_shares/mem_reservation for LiveKit; Jenkins scaled 0; cloud REC deferred on this box. Audit architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md · classrooms.md · online-class guide known issues.
+  - 2026-11-20: Diagram “SFU not co-located with chromedp” — docs/diagrams/classroom-sfu-recorder/ on docs.raisd.co (bad same-VPS vs split media/recorder hosts).
+  - 2026-11-20: Waiting-room admit notify deferred until student sets camera + Classroom Join (NATS no longer on iframe load) — plugnmeet-client Landing/app verified gate; classrooms.md + handoff.
+  - 2026-11-20: Demo UltaHost VPS resized in place to 4 vCPU / 8 GiB / ~250 GB (IP 38.127.216.221 unchanged) — closes Read.ai 19 Nov 8 GB finance ask; guest ~4.9 GiB available. Evidence docs/evidence/2026-11-19-ultahost-vps-upgrade/; capacity audit + self-defence host line updated. Media still off this box; ICE/TURN remains dominant student media fail.
+  - 2026-11-18: Class connection vs capacity (Read.ai 17 Nov) — Demo VPS ~78% RAM edge risk (pre-upgrade); DIV SFU idle OK; dominant student fail = public ICE/TURN missing (Tailscale-only LiveKit node_ip). Audit architecture/audits/2026-11-18-class-connection-capacity.md.
+  - 2026-11-20: Post-admit Connection Error / lecturer never sees student — LiveKit signal OK then SIGNAL_SOURCE_CLOSE (UDP closed; TCP :7881 not selected). Client: skip healthy waiting-room NATS reconnect + 45s peerConnectionTimeout. Audit row + classrooms.md / handoff.
+  - 2026-11-20: CMS bridge architecture for WG — UltaHost multi-campus connector + mock DB dumps + WireGuard tunnels; architecture/cms-bridge.md + diagrams/cms-bridge/ (8 Mermaid PNGs) on docs.raisd.co.
+  - 2026-11-20: Classroom media bridge proposal for WG review — architecture/classroom-media-bridge.md + diagrams/classroom-media-bridge/ (5 Mermaid PNGs) on docs.raisd.co.
   - 2026-11-11: Recaptured portal lobby/Past Class chrome (01–02, 06–07, 12–13) via local SSO+portal-api Demo while UltaHost VPS SSH banner remains intermittent; classrooms public edge still depends on VPS Traefik.
   - 2026-11-11: Online-class journeys screenshot-only; recaptured host features/conversation/file-share/auto-recording on DIV Tailscale; removed walkthrough videos; portal lobby/Past Class chrome pending VPS+SSO.
   - 2026-11-07: Online-class user guide (Demo Partial) — frontend/online-class-user-guide.md + diagrams/guidance/online-class.html with lecturer/student screenshots and video; site-nav Guidance → Online class.
@@ -239,6 +247,20 @@ architecture:
     related:
       - backend/old-cms-lesotho.md
       - backend/lesotho-db-gap.md
+  - path: architecture/cms-bridge.md
+    topics: [cap-53, cms-bridge, mock-server, db-dump, wireguard, vpn, tunnel, multi-campus, portal-api, ultahost, integration]
+    pages:
+      - ../diagrams/cms-bridge/index.html
+    related:
+      - architecture/distributed-cms-target.md
+      - backend/cms-feature-comparison.md
+      - backend/lesotho-cap53-read-adapter.md
+      - backend/lesotho-cap53-online-enrolment-write.md
+      - backend/portal-api.md
+      - sdd/08-shared-platform.md
+      - architecture/vps-topology.md
+    status: proposed
+    note: 20 Nov 2026 — CAP-53 Integration path via UltaHost multi-campus bridge + sanitized mock dumps + S2S VPN; not Live production CMS.
   - path: architecture/distributed-cms-target.md
     topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state, lesotho]
     pages: ../diagrams/distributed-cms-architecture.html
@@ -920,3 +942,27 @@ pre_push_audit_2026_11_02:
 main_integration_2026_11_04:
   - path: architecture/audits/2026-11-04-main-integration.md
     topics: [main, merge, integration, regression, source-fingerprint, data-preservation]
+
+screen_share_recording_2026_11_17:
+  - path: architecture/audits/2026-11-17-screen-share-recording.md
+    topics: [classrooms, recording, screen-share, whiteboard, plugnmeet, verification]
+
+class_connection_capacity_2026_11_18:
+  - path: architecture/audits/2026-11-18-class-connection-capacity.md
+    topics: [classrooms, capacity, ice, turn, livekit, plugnmeet, ultahost, div]
+
+ultahost_interim_sfu_reconnect_2026_11_20:
+  - path: architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md
+    topics: [classrooms, livekit, reconnect, lost, microphone, camera, ultahost, compose, capacity, recorder, demo-partial]
+    related:
+      - architecture/audits/2026-11-18-class-connection-capacity.md
+      - architecture/ultahost-vps-self-defence.md
+      - backend/classrooms.md
+      - frontend/online-class-user-guide.md
+
+classroom_sfu_recorder_diagrams_2026_11_20:
+  - path: ../diagrams/classroom-sfu-recorder/index.html
+    topics: [classrooms, sfu, livekit, chromedp, recorder, co-location, diagram, demo-partial]
+    note: Published https://docs.raisd.co/diagrams/classroom-sfu-recorder/
+    related:
+      - architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md
