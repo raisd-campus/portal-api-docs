@@ -188,13 +188,11 @@
 
     <h2 id="secrets">4. Secrets and channel enablement</h2>
     <figure class="figure">
-      <img src="images/04-secrets-and-enable.png" alt="Diagram: gitignored credentials file to K8s sso-secrets to SSO pod enabling Google in meta and login UI" width="1400" height="auto" loading="lazy" />
+      <img src="images/04-secrets-and-enable.png" alt="Sequence diagram: operator credentials through deploy-vps and K8s secrets to SSO pod enabling Google in meta and login UI" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        Operators keep <code>.credentials/google-oauth-raisd-sso.env</code> gitignored.
-        <code>deploy-vps.sh sso</code> refreshes K8s <code>sso-secrets</code>; gitops mounts
-        <code>GOOGLE_CLIENT_ID</code> / <code>SECRET</code> / <code>REDIRECT_URI</code> via optional
-        <code>secretKeyRef</code>. When both client id and secret are present,
-        <code>/v1/meta</code> reports <code>google.enabled: true</code> and the login UI shows the Google button.
+        Sequence: gitignored <code>.credentials/google-oauth-raisd-sso.env</code> →
+        <code>deploy-vps.sh sso</code> → K8s <code>sso-secrets</code> → Deployment
+        <code>secretKeyRef</code> → pod → <code>/v1/meta</code> enables the Google button → start redirects to Google.
       </figcaption>
     </figure>
 
