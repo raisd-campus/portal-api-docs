@@ -157,9 +157,10 @@
     <figure class="figure">
       <img src="images/01-sso-in-stack.png" alt="Diagram: portals and landing redirect to SSO; SSO talks to Google OAuth and state file; Portal API introspects SSO" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        Left-to-right spine: browsers → landing/portals → SSO → Google OIDC →
-        <code>SSO_STATE_FILE</code> → Portal API introspect → Notifications.
-        Portals never trust a client-minted role; people/roles/passkeys live on the hostPath volume.
+        Campus landing and portals send users to SSO with an allowlisted <code>returnUrl</code>.
+        Keychain can prefill password Demo accounts. Portal API never trusts a client-minted role —
+        it introspects the Bearer against SSO. People, roles, and passkeys live in
+        <code>SSO_STATE_FILE</code> on the hostPath volume.
       </figcaption>
     </figure>
 
@@ -167,18 +168,21 @@
     <figure class="figure">
       <img src="images/02-login-channels.png" alt="Diagram: password, passkey, and Google channels converge on invite-only person match then redirectAfterLogin" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        Strict left-to-right spine (no vertical forks): login UI → channels → invite-only match →
-        deny / <code>redirectAfterLogin</code> → single-role <code>?code=</code> or multi-role picker.
+        One left-to-right pipeline: login UI → channels (password · passkey · google) → invite-only person check →
+        <code>redirectAfterLogin</code> → single-role <code>?code=</code> or multi-role campus picker.
+        Unknown Google emails get <code>/login?googleError=…</code> — no auto-provision.
       </figcaption>
     </figure>
 
     <h2 id="google">3. Google OAuth sequence</h2>
     <figure class="figure">
-      <img src="images/03-google-oauth-sequence.png" alt="Left-to-right Google OAuth steps from portal through callback to invite-only match" width="1400" height="auto" loading="lazy" />
+      <img src="images/03-google-oauth-sequence.png" alt="Left-to-right flow of Google OAuth start, callback, userinfo, invite-only match, and portal continuation" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        Strict left-to-right: start → authorize → callback → token → userinfo → invite-only match →
-        deny or <code>redirectAfterLogin</code>. Redirect URI:
+        Left to right: <code>GET /v1/auth/channels/google/start?returnUrl=…</code> → Google authorize →
+        callback <code>/v1/auth/channels/google/callback</code> → token exchange → OpenID userinfo →
+        <code>findPersonByEmail</code>. Redirect URI:
         <code>https://sso.raisd.co/v1/auth/channels/google/callback</code>.
+        OAuth app is External / Testing until WG adds test users or publishes.
       </figcaption>
     </figure>
 
@@ -186,8 +190,11 @@
     <figure class="figure">
       <img src="images/04-secrets-and-enable.png" alt="Diagram: gitignored credentials file to K8s sso-secrets to SSO pod enabling Google in meta and login UI" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        Strict left-to-right: gitignored credentials → <code>deploy-vps.sh sso</code> →
-        <code>sso-secrets</code> → Deployment → pod → <code>/v1/meta</code> → login UI → Google OAuth.
+        Operators keep <code>.credentials/google-oauth-raisd-sso.env</code> gitignored.
+        <code>deploy-vps.sh sso</code> refreshes K8s <code>sso-secrets</code>; gitops mounts
+        <code>GOOGLE_CLIENT_ID</code> / <code>SECRET</code> / <code>REDIRECT_URI</code> via optional
+        <code>secretKeyRef</code>. When both client id and secret are present,
+        <code>/v1/meta</code> reports <code>google.enabled: true</code> and the login UI shows the Google button.
       </figcaption>
     </figure>
 

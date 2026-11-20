@@ -1,8 +1,33 @@
 flowchart LR
-  U[User / Keychain]
-  --> P[Landing / portals<br/>returnUrl]
-  --> S[SSO<br/>sso.raisd.co]
-  --> G[Google OAuth<br/>OIDC]
-  --> ST[SSO_STATE_FILE<br/>people · roles · passkeys]
-  --> API[Portal API<br/>Bearer + introspect]
-  --> N[Notifications<br/>password_reset]
+  subgraph browsers [Browsers]
+    U[User]
+    K[Keychain]
+  end
+
+  subgraph edge [Demo edge · UltaHost]
+    LAND[Campus landing<br/>lesotho.raisd.co]
+    PORTALS[Portals<br/>apply / student / staff / control]
+    SSO[SSO<br/>sso.raisd.co]
+    API[Portal API<br/>api.raisd.co]
+    NOTIFY[Notifications<br/>notify.raisd.co]
+  end
+
+  subgraph idp [External IdP]
+    GOOGLE[Google OAuth<br/>raisd-sso project]
+  end
+
+  subgraph store [Identity store]
+    STATE[(SSO_STATE_FILE<br/>people · roles · passkeys)]
+  end
+
+  U --> K
+  U --> LAND
+  U --> PORTALS
+  LAND -->|"returnUrl"| SSO
+  PORTALS -->|"returnUrl"| SSO
+  K -.->|"Open filled"| SSO
+  SSO <-->|"OIDC"| GOOGLE
+  SSO --> STATE
+  SSO -->|"password_reset"| NOTIFY
+  PORTALS -->|"Bearer"| API
+  API -->|"introspect"| SSO
