@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raisd SSO — identity, channels, Google OAuth</title>
+  <link rel="stylesheet" href="../styles.css?v=keychain-float-1" />
+  <style>
+    .hero {
+      margin: 0 0 1.25rem;
+      padding: 1.1rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #f4faf8 0%, #eef3f6 100%);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 0.65rem; }
+    .chip {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px;
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.02em;
+      background: #fff6e8; color: #9a6418; border: 1px solid #f0e0c4;
+    }
+    .chip.ok { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+    .figure {
+      margin: 0 0 1.5rem;
+      padding: 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .figure figcaption {
+      margin-top: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .defs {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .defs th, .defs td {
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.65rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    .defs th { background: #f4f7fa; }
+    .defs tr:nth-child(even) td { background: #fafbfc; }
+    .toc { margin: 0 0 1.25rem; padding-left: 1.2rem; }
+    .toc li { margin: 0.25rem 0; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../assets/raisd-logo.svg" width="80" height="22" alt="Raisd" />
+        <strong>Documentation</strong>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../index.html">Overview</a>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main active" href="../architecture.html">Architecture</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../architecture.html">Architecture home</a>
+            <a class="active" href="index.html">SSO</a>
+            <a href="../access-module-hierarchy.html">Access module hierarchy</a>
+            <a href="../cms-bridge/">CMS bridge</a>
+            <a href="../architecture.html#vps">VPS topology</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a class="nav-dd-main" href="../guidance/">Guidance</a>
+          <div class="nav-dd-menu" role="menu">
+            <a href="../guidance/#sign-in">Sign-in</a>
+            <a href="../guidance/online-class.html">Online class</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="chips">
+        <span class="chip">Demo</span>
+        <span class="chip ok">password · passkey · google</span>
+        <span class="chip">Invite-only email</span>
+      </div>
+      <h1 style="margin:0 0 0.4rem;font-size:1.45rem">Raisd SSO — identity, channels, Google OAuth</h1>
+      <p style="margin:0;color:var(--muted);max-width:52rem">
+        SSO owns login and RBAC at <a href="https://sso.raisd.co/login">sso.raisd.co</a>.
+        Portals never open Postgres for identity — they redirect here with a
+        <code>returnUrl</code>, then call Portal API with a Bearer token that API
+        introspects against SSO.
+      </p>
+      <p style="margin:0.75rem 0 0;font-size:0.9rem">
+        <strong>Markdown SoT:</strong>
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/sso.md">backend/sso.md</a>
+        · <strong>Contract:</strong>
+        <a href="https://github.com/raisd-campus/control-plane/blob/main/openapi-sso.yaml">openapi-sso.yaml</a>
+        · <strong>Live:</strong>
+        <a href="https://sso.raisd.co/login">login</a>
+        ·
+        <a href="https://sso.raisd.co/v1/meta">/v1/meta</a>
+      </p>
+    </div>
+
+    <p><strong>Figures:</strong> pre-rendered Mermaid PNGs (sources under <code>mermaid/</code>). Demo ≠ Live.</p>
+    <ol class="toc">
+      <li><a href="#stack">SSO in the Demo stack</a></li>
+      <li><a href="#channels">Login channels</a></li>
+      <li><a href="#google">Google OAuth sequence</a></li>
+      <li><a href="#secrets">Secrets and channel enablement</a></li>
+    </ol>
+
+    <h2>Channels (Demo)</h2>
+    <table class="defs">
+      <thead>
+        <tr><th>Channel</th><th>Status</th><th>Mechanism</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>password</code></td>
+          <td>On</td>
+          <td>Email + scrypt hash. Forgot-password via Notifications.</td>
+        </tr>
+        <tr>
+          <td><code>passkey</code></td>
+          <td>On</td>
+          <td>WebAuthn on <code>sso.raisd.co</code>. Create after email+password; then sign in with passkey alone.</td>
+        </tr>
+        <tr>
+          <td><code>google</code></td>
+          <td>On when <code>GOOGLE_CLIENT_*</code> mounted</td>
+          <td>OIDC (<code>openid email profile</code>). Invite-only: Google email must already match a person with roles. GCP project <code>raisd-sso</code> under Workspace <code>contentcreation.com.my</code>.</td>
+        </tr>
+        <tr>
+          <td><code>email_magic_link</code></td>
+          <td>Off</td>
+          <td>Returns <code>410</code>. Template retained for a future Live reopen.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="stack">1. SSO in the Demo stack</h2>
+    <figure class="figure">
+      <img src="images/01-sso-in-stack.png" alt="Diagram: portals and landing redirect to SSO; SSO talks to Google OAuth and state file; Portal API introspects SSO" width="1400" height="auto" loading="lazy" />
+      <figcaption>
+        Campus landing and portals send users to SSO with an allowlisted <code>returnUrl</code>.
+        Keychain can prefill password Demo accounts. Portal API never trusts a client-minted role —
+        it introspects the Bearer against SSO. People, roles, and passkeys live in
+        <code>SSO_STATE_FILE</code> on the hostPath volume.
+      </figcaption>
+    </figure>
+
+    <h2 id="channels">2. Login channels → continuation</h2>
+    <figure class="figure">
+      <img src="images/02-login-channels.png" alt="Diagram: password, passkey, and Google channels converge on invite-only person match then redirectAfterLogin" width="1400" height="auto" loading="lazy" />
+      <figcaption>
+        The login UI shows password first, then a side-by-side <strong>Google</strong> + <strong>Passkey</strong> row when those channels are enabled.
+        Every channel resolves to the same email identity. Unknown Google emails get
+        <code>/login?googleError=…</code> — no auto-provision. One role continues with
+        <code>?code=</code>; several roles open the campus landing picker.
+      </figcaption>
+    </figure>
+
+    <h2 id="google">3. Google OAuth sequence</h2>
+    <figure class="figure">
+      <img src="images/03-google-oauth-sequence.png" alt="Sequence diagram of Google OAuth start, callback, userinfo, invite-only match, and portal continuation" width="1400" height="auto" loading="lazy" />
+      <figcaption>
+        Start: <code>GET /v1/auth/channels/google/start?returnUrl=…</code> → Google authorize →
+        callback <code>/v1/auth/channels/google/callback</code> → token exchange → OpenID userinfo →
+        <code>findPersonByEmail</code>. Redirect URI:
+        <code>https://sso.raisd.co/v1/auth/channels/google/callback</code>.
+        OAuth app is External / Testing until WG adds test users or publishes.
+      </figcaption>
+    </figure>
+
+    <h2 id="secrets">4. Secrets and channel enablement</h2>
+    <figure class="figure">
+      <img src="images/04-secrets-and-enable.png" alt="Diagram: gitignored credentials file to K8s sso-secrets to SSO pod enabling Google in meta and login UI" width="1400" height="auto" loading="lazy" />
+      <figcaption>
+        Operators keep <code>.credentials/google-oauth-raisd-sso.env</code> gitignored.
+        <code>deploy-vps.sh sso</code> refreshes K8s <code>sso-secrets</code>; gitops mounts
+        <code>GOOGLE_CLIENT_ID</code> / <code>SECRET</code> / <code>REDIRECT_URI</code> via optional
+        <code>secretKeyRef</code>. When both client id and secret are present,
+        <code>/v1/meta</code> reports <code>google.enabled: true</code> and the login UI shows the Google button.
+      </figcaption>
+    </figure>
+
+    <h2>Related</h2>
+    <ul>
+      <li>Knowledge — <a href="https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/sso.md">backend/sso.md</a></li>
+      <li>Access hierarchy — <a href="../access-module-hierarchy.html">diagram</a></li>
+      <li>Guidance sign-in — <a href="../guidance/#sign-in">Keychain → SSO</a></li>
+      <li>Architecture microservices — <a href="../architecture.html#services">architecture.html#services</a></li>
+      <li>Service repo — <a href="https://github.com/raisd-campus/sso">raisd-campus/sso</a></li>
+    </ul>
+  </main>
+
+  <script src="../site-auth.js"></script>
+  <script src="../nav-dropdown.js" defer></script>
+</body>
+</html>

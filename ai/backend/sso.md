@@ -28,11 +28,12 @@ Accept Enrolment replaces Applicant access with Student access for the same SSO 
 Control roles receive the targeted flows.configure capability upgrade; persisted identities, passkeys and unrelated grants are retained. IO and SSD add desk.international_office and desk.student_services capabilities without assigning them to existing people. An active Control role is required to configure policies; active campus Admin review roles remain separate. The fixed Applicant role and upstream permission ceilings/hierarchy are unchanged. Isolated tests verify the upgrade, custom-role definition/membership retention and passkey persistence. Node HTTP/persistence suites run under npm run test:api; Playwright collects auth.e2e.ts only. npm run check runs both suites after the build. See [University Flows](university-flows.md).
 
 
-**Status:** Demo — 17 October 2026.  
+**Status:** Demo — 21 November 2026 (Google channel enabled when OAuth secrets mounted).  
 **Host:** `https://sso.raisd.co`  
 **Service repo:** [`raisd-campus/sso`](https://github.com/raisd-campus/sso) (sibling `~/src/raisd/sso`)  
 **Contract:** [`openapi-sso.yaml`](../../../openapi-sso.yaml)  
-**Topology:** [../architecture/vps-topology.md](../architecture/vps-topology.md)
+**Topology:** [../architecture/vps-topology.md](../architecture/vps-topology.md)  
+**Published diagrams:** [docs.raisd.co/diagrams/sso/](https://docs.raisd.co/diagrams/sso/) · sources [`docs/diagrams/sso/`](../../diagrams/sso/)
 
 ## Intent
 
@@ -50,25 +51,35 @@ ADR-1 (CMS as Live SoR) still holds: Demo people are Raisd-local (`cmsPersonRef`
 
 ## Channels
 
-Pluggable `AuthChannel` registry. **Enabled in Demo:** `password` and `passkey`.
+Pluggable `AuthChannel` registry. **Enabled in Demo:** `password`, `passkey`, and `google` when OAuth secrets are mounted.
 
 | Channel id | Demo | Notes |
 |---|---|---|
 | `password` | On | Email + password; scrypt hashes (`scrypt$salt$hash`) in seed; forgot-password reset |
 | `passkey` | On | WebAuthn on `https://sso.raisd.co/login`. Create a passkey with email + password, then sign in with the passkey alone. People, passwords, roles, and passkeys are written to `SSO_STATE_FILE` (`/var/lib/sso/state.json` on the node path `/var/lib/raisd-sso`) and survive a pod restart. Sign-in challenges stay in memory for their short lifetime. |
 | `email_magic_link` | **Off** | API returns `410`; UI removed. Template retained for Live reopen |
-| `google` | Off | Stub — needs GCP OAuth client (WG action) |
+| `google` | On when `GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET` are set | OAuth 2.0 / OpenID Connect. Start `GET /v1/auth/channels/google/start?returnUrl=…` → Google → callback. Invite-only: Google email must already match a person with roles. Secrets live in K8s `sso-secrets` (from `.credentials/google-oauth-raisd-sso.env`). Redirect URI: `https://sso.raisd.co/v1/auth/channels/google/callback`. GCP project `raisd-sso` under Workspace `contentcreation.com.my`. |
 | `facebook` | Off | Stub |
 | `instagram` | Off | Stub |
 | `apple` | Off | Stub |
 
-Login identity is **email** (not a separate user id). Password login returns `401` on mismatch. Demo seeds an allowlist of people; first-login create is invite-only.
+Login identity is **email** (not a separate user id). Password login returns `401` on mismatch. Google login redirects back to `/login?googleError=…` when the email is unknown. Demo seeds an allowlist of people; first-login create is invite-only.
 
-**Single login UI:** `https://sso.raisd.co/login` is the only password surface. Portals redirect here with `returnUrl` = campus apex (`https://{slug}.raisd.co/?sso=1`) so multi-role accounts see the landing picker. Control uses `https://control.raisd.co/sign-in?sso=1`.
+**Single login UI:** `https://sso.raisd.co/login` is the only password surface. Portals redirect here with `returnUrl` = campus apex (`https://{slug}.raisd.co/?sso=1`) so multi-role accounts see the landing picker. Control uses `https://control.raisd.co/sign-in?sso=1`. Below the password form, enabled channels show a side-by-side **Google** + **Passkey** row (icons); “Create a passkey” stays under the row.
 
 Password login: `POST /v1/auth/channels/password/login` `{ email, password, returnUrl }` → always `{ redirectTo }`. Single-role continues with `?code=`; multi-role returns to the **campus landing** with `?step=roles&session=…`.
 
 Passkey login uses the same redirect. `POST /v1/auth/channels/passkey/login/options` then `…/login/verify`. Registration is `…/register/options` (email + password) then `…/register/verify`. Relying party id is the `SSO_PUBLIC_URL` hostname (`sso.raisd.co`).
+
+### Google OAuth (21 Nov 2026)
+
+1. Channel enables only when both `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are mounted on the SSO Deployment (`secretKeyRef` from `sso-secrets`).
+2. Browser: `GET /v1/auth/channels/google/start?returnUrl=…` (allowlisted) → Google authorize (`openid email profile`, `prompt=select_account`) with CSRF `state`.
+3. Callback: `GET /v1/auth/channels/google/callback` exchanges the code, loads OpenID userinfo, requires a verified email.
+4. Invite-only: `findPersonByEmail` must return a person with roles; otherwise redirect `/login?googleError=…` (audit `login.google.denied`).
+5. Success uses the same `redirectAfterLogin` path as password/passkey.
+
+Architecture figures: [diagrams/sso/](../../diagrams/sso/) · [published](https://docs.raisd.co/diagrams/sso/).
 
 The SSO image runs as uid 1000. Before the process starts, an init container chowns `/var/lib/sso` to that user so passkey writes succeed on the hostPath volume.
 

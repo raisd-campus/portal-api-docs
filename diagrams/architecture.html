@@ -33,6 +33,7 @@
             <a href="lms-reference/index.html">Moodle + Classroom map</a>
             <a href="lms-reference/features.html">LMS feature steps</a>
             <a href="lms-online-class-options.html">Online-class options</a>
+            <a href="sso/index.html">SSO</a>
             <a href="migration.html">Migration</a>
             <a href="architecture.html#services">Microservices</a>
             <a href="architecture.html#vps">VPS topology</a>
@@ -43,6 +44,7 @@
           <a class="nav-dd-main active" href="architecture.html">Architecture</a>
           <div class="nav-dd-menu" role="menu">
             <a href="architecture.html">Architecture home</a>
+            <a href="sso/index.html">SSO</a>
             <a href="access-module-hierarchy.html">Access module hierarchy</a>
             <a href="campus-configurability.html">Campus configurability help</a>
             <a href="architecture.html#services">Microservices</a>
@@ -517,7 +519,7 @@ flowchart TB
             <tr>
               <td>SSO</td>
               <td><a href="https://sso.raisd.co">sso.raisd.co</a></td>
-              <td>Identity · sessions · RBAC</td>
+              <td>Identity · sessions · RBAC · <a href="sso/">channels / Google OAuth diagrams</a></td>
               <td>GHCR + Argo <code>sso</code></td>
             </tr>
             <tr>
@@ -1085,6 +1087,8 @@ flowchart TB
       <p class="lead">
         Not a 1:1 table access layer. Legacy meaning lives across tables, views,
         stored procedures, and old PHP. Domain handlers must not embed arbitrary legacy SQL.
+        Integration path (20 Nov 2026): multi-campus <a href="cms-bridge/index.html">CMS bridge</a> on Raisd UltaHost
+        against mock servers restored from sanitized dumps (not adapters on production CMS hosts).
       </p>
       <div class="card">
         <div class="card-head">

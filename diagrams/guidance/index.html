@@ -556,11 +556,12 @@
     <a href="#applicant-student">Applicant &amp; Student</a>
     <a href="#out-of-scope">Out of scope</a>
     <a href="#demo-vs-live">Demo vs Live</a>
+    <a href="online-class.html">Online class</a>
     <a href="website-ai-should.html">AI should</a>
     <a href="website-ai-should-not.html">AI should not</a>
     <a href="website-ai-decisions.html">AI decisions</a>
   </nav>
-  <div class="callout"><strong>Demo ≠ Live.</strong> Sample / session data only. Flows below use <a href="../old-cms-lesotho/newer-cms-screenshots.html">Lesotho newer CMS screenshots</a> only. Markdown SoT: <code>docs/ai/frontend/lesotho-user-guide.md</code>.</div>
+  <div class="callout"><strong>Demo ≠ Live.</strong> Sample / session data only. Flows below use <a href="../old-cms-lesotho/newer-cms-screenshots.html">Lesotho newer CMS screenshots</a> only. Markdown SoT: <code>docs/ai/frontend/lesotho-user-guide.md</code>. Live class (lecturer + student): <a href="online-class.html">Online class user guide</a>.</div>
   <div class="guide-shell">
 
   <aside class="guide-hang" aria-label="Section navigation">
@@ -586,7 +587,12 @@
     <a href="#desk-certificates">Certificates</a>
     <a href="#desk-remarks">Remark Requests</a>
     <p class="hang-group">Academic</p>
-    <a href="#desk-academic">Attendance &amp; Lecturers</a>
+    <a href="#desk-academic">Academic</a>
+    <a href="#desk-academic-modules">Modules</a>
+    <a href="#desk-academic-assessments">Assessments</a>
+    <a href="#desk-academic-schools">Schools</a>
+    <a href="#desk-academic-curriculum">Curriculum</a>
+    <a href="#desk-academic-calendar">Calendar</a>
     <a href="#desk-timetable">Timetable</a>
     <p class="hang-group">Analytics &amp; discipline</p>
     <a href="#desk-analytics">Campus reports</a>
@@ -595,7 +601,9 @@
     <a href="#applicant-student">Applicant &amp; Student</a>
     <a href="#out-of-scope">Out of scope</a>
     <a href="#demo-vs-live">Demo vs Live</a>
+    <a href="#online-class">Online class</a>
     <a href="#website-ai">Website AI</a>
+    <a class="hang-ext" href="online-class.html">Online class guide →</a>
     <a class="hang-ext" href="website-ai-should.html">AI should →</a>
     <a class="hang-ext" href="website-ai-should-not.html">AI should not →</a>
     <a class="hang-ext" href="website-ai-decisions.html">AI decisions →</a>
@@ -648,6 +656,7 @@
       <li><strong>Open filled</strong> on the role you need (Applicant → Bursary → Registry → Student…).</li>
       <li>SSO continues to the landing picker or portal.</li>
     </ol>
+    <p>Channels on Demo: password, passkey, and Google (invite-only email when OAuth secrets are mounted). Architecture diagrams: <a href="../sso/">SSO</a>.</p>
     <p>Full role walkthrough with posters: <a href="../old-cms-lesotho/demo-role-playback.html">demo-role-playback.html</a>.</p>
   </section>
 
@@ -733,7 +742,7 @@
           <tr><td>Admissions</td><td>Review · Applicants · Admissions Payments · Document Review</td><td><code>/admissions/admissions-review</code> · <code>/admissions/applicants</code> · <code>/admissions/payments</code> · <code>/admissions/documents</code></td></tr>
           <tr><td>Registry</td><td>Students · Registration requests · Graduations · Certificates · Remark Requests</td><td><code>/registry/students</code> · <code>/registry/registration/requests</code> · graduations / certificates / remark-requests</td></tr>
           <tr><td>Finance</td><td>Sponsors · Fees and Fines · Payment Plans</td><td><code>/finance/sponsors</code> · <code>/finance/pricing/fees-and-fines</code></td></tr>
-          <tr><td>Academic</td><td>Attendance · Lecturers · Modules · Timetable</td><td><code>/academic/...</code> · <code>/timetable/...</code></td></tr>
+          <tr><td>Academic</td><td>Lecturers · Assessments · Attendance · Modules · Schools · Curriculum · Timetable · Calendar</td><td><code>/academic/...</code> · <code>/timetable/...</code></td></tr>
           <tr><td>Discipline</td><td>Academic Dishonesty · Suspensions · Blocked Students</td><td><code>/registry/academic-dishonesty</code> · suspensions · blocked-students</td></tr>
           <tr><td>Analytics</td><td>Enrollments · Graduations · Attendance · Senate / BoE</td><td><code>/reports/...</code></td></tr>
         </tbody>
@@ -758,7 +767,12 @@
       <a href="#desk-graduations">Graduations</a>
       <a href="#desk-certificates">Certificates</a>
       <a href="#desk-remarks">Remark Requests</a>
-      <a href="#desk-academic">Attendance & Lecturers</a>
+      <a href="#desk-academic">Academic</a>
+      <a href="#desk-academic-modules">Modules</a>
+      <a href="#desk-academic-assessments">Assessments</a>
+      <a href="#desk-academic-schools">Schools</a>
+      <a href="#desk-academic-curriculum">Curriculum</a>
+      <a href="#desk-academic-calendar">Calendar</a>
       <a href="#desk-timetable">Timetable</a>
       <a href="#desk-analytics">Campus reports</a>
       <a href="#desk-discipline">Dishonesty, Suspensions, Blocked</a>
@@ -3794,14 +3808,20 @@
     
   </section>
   <section class="section" id="desk-academic">
-    <h2>Academic · Attendance & Lecturers</h2>
+    <h2>Academic</h2>
     <div class="desk-meta">
       <span class="tag">Academic</span>
       <span class="tag">Newer CMS</span>
       <span>Who: Lecturers / Academic Admin</span>
-      <span>Route: <code>/academic/attendance · assigned-modules · modules</code></span>
+      <span>Route: <code>/academic/...</code> · <code>/timetable/...</code></span>
     </div>
-    <p>Class attendance, teaching assignment, then the student attendance tab.</p>
+    <div class="callout">
+      <strong>CMS vs Raisd Demo.</strong> Flows below are the <em>Lesotho newer CMS</em> Academic menu (screenshot how-tos).
+      Raisd Staff Admin <code>/admin/academic</code> today is attendance rollup + gradebook Demo only (FM-16 deepen later).
+      Timetable Demo lives under Raisd <code>/admin/timetable</code> — see <a href="#desk-timetable">Timetable</a>.
+      FiveDays / Fortinet stay <a href="#out-of-scope">out of scope</a>.
+    </div>
+    <p>Class attendance, teaching assignment, student attendance tab, then Modules · Assessments · Schools · Curriculum · Calendar.</p>
     <div class="flow-block">
       <h3>Flow A — Class attendance</h3>
       <div class="flow-about">
@@ -4000,7 +4020,373 @@
       </article>
     </div>
 
-    
+    <div class="flow-block" id="desk-academic-modules">
+      <h3>Flow D — Modules file</h3>
+      <div class="flow-about">
+        <p class="who"><strong>Who:</strong> Academic Admin · Registry</p>
+        <p>Academic → Modules is the module master (list → file). Tabs: Overview · Curriculum · Lecturers · Enrollments · Audit. The Lecturers tab is also step 3 of <a href="#desk-academic">Flow B</a> (assign modules) — use that shot there; do not treat it as a separate Raisd desk today.</p>
+        <p><strong>Raisd Demo:</strong> not on <code>/admin/academic</code> yet (FM-16 deepen).</p>
+      </div>
+<div class="flow-chart">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Modules Overview
+  C-->>-U: done
+  U->>+C: Open Curriculum tab
+  C-->>-U: done
+  U->>+C: Open Enrollments tab
+  C-->>-U: done
+  U->>+C: Open Audit tab
+  C-->>-U: done</pre>
+        <p class="chart-cap">Full sequence — scroll the screenshots for step-by-step (each builds on the last).</p>
+      </div>
+
+<article class="shot-step">
+        <p class="step-label">Step 1</p>
+        <p class="step-explain">Open Academic → <strong>Modules</strong> and select a module · <strong>Overview</strong> (code, name, status).</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/134--Academic---Modules---Overview.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/134--Academic---Modules---Overview.png" alt="Modules · Overview" loading="lazy" />
+          </a>
+          <figcaption>Modules · Overview — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 1">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  rect rgb(210, 232, 226)
+    Note right of U: Step 1 of 4 - you are here
+    U->>+C: Open Modules Overview
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;1 in order (step 1 of 4 highlighted)</p>
+      </div>
+      </article>
+      <article class="shot-step">
+        <p class="step-label">Step 2</p>
+        <p class="step-explain">Open the <strong>Curriculum</strong> tab — programme structures, semester, type, credits.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/135--Academic---Modules---Curriculum.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/135--Academic---Modules---Curriculum.png" alt="Modules · Curriculum" loading="lazy" />
+          </a>
+          <figcaption>Modules · Curriculum — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 2">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Modules Overview
+  C-->>-U: done
+  rect rgb(210, 232, 226)
+    Note right of U: Step 2 of 4 - you are here
+    U->>+C: Open Curriculum tab
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;2 in order (step 2 of 4 highlighted)</p>
+      </div>
+      </article>
+      <article class="shot-step">
+        <p class="step-label">Step 3</p>
+        <p class="step-explain">Open the <strong>Enrollments</strong> tab for the module roster.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/137--Academic---Modules---Enrollments.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/137--Academic---Modules---Enrollments.png" alt="Modules · Enrollments" loading="lazy" />
+          </a>
+          <figcaption>Modules · Enrollments — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 3">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Modules Overview
+  C-->>-U: done
+  U->>+C: Open Curriculum tab
+  C-->>-U: done
+  rect rgb(210, 232, 226)
+    Note right of U: Step 3 of 4 - you are here
+    U->>+C: Open Enrollments tab
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;3 in order (step 3 of 4 highlighted)</p>
+      </div>
+      </article>
+      <article class="shot-step">
+        <p class="step-label">Step 4</p>
+        <p class="step-explain">Open the <strong>Audit</strong> tab for change history on the module.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/138--Academic---Modules---Audit.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/138--Academic---Modules---Audit.png" alt="Modules · Audit" loading="lazy" />
+          </a>
+          <figcaption>Modules · Audit — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 4">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Modules Overview
+  C-->>-U: done
+  U->>+C: Open Curriculum tab
+  C-->>-U: done
+  U->>+C: Open Enrollments tab
+  C-->>-U: done
+  rect rgb(210, 232, 226)
+    Note right of U: Step 4 of 4 - you are here
+    U->>+C: Open Audit tab
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;4 in order (step 4 of 4 highlighted)</p>
+      </div>
+      </article>
+      <p class="flow-about"><strong>Lecturers tab:</strong> see Flow B step 3 — <a href="../old-cms-lesotho/screenshots/136--Academic---Modules---Lecturers.png" target="_blank" rel="noopener">136 · Modules · Lecturers</a>.</p>
+    </div>
+
+    <div class="flow-block" id="desk-academic-assessments">
+      <h3>Flow E — Assessments catalogue</h3>
+      <div class="flow-about">
+        <p class="who"><strong>Who:</strong> Academic Admin · exam office</p>
+        <p>Assessments is the assessment instance list/detail. Assessment Types is the shared type catalogue (Article, Assignment, Class Test, …).</p>
+        <p><strong>Raisd Demo:</strong> not on <code>/admin/academic</code> yet (gradebook rows only).</p>
+      </div>
+<div class="flow-chart">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Assessments
+  C-->>-U: done
+  U->>+C: Open Assessment Types
+  C-->>-U: done</pre>
+        <p class="chart-cap">Full sequence — scroll the screenshots for step-by-step (each builds on the last).</p>
+      </div>
+
+<article class="shot-step">
+        <p class="step-label">Step 1</p>
+        <p class="step-explain">Open Academic → <strong>Assessments</strong> (list + detail; empty state until a row is selected).</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/131--Academic---Assessments.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/131--Academic---Assessments.png" alt="Assessments" loading="lazy" />
+          </a>
+          <figcaption>Assessments — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 1">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  rect rgb(210, 232, 226)
+    Note right of U: Step 1 of 2 - you are here
+    U->>+C: Open Assessments
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;1 in order (step 1 of 2 highlighted)</p>
+      </div>
+      </article>
+      <article class="shot-step">
+        <p class="step-label">Step 2</p>
+        <p class="step-explain">Open Academic → <strong>Assessment Types</strong> and select a type (name · status).</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/132--Academic---Assessment-Types.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/132--Academic---Assessment-Types.png" alt="Assessment Types" loading="lazy" />
+          </a>
+          <figcaption>Assessment Types — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 2">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Assessments
+  C-->>-U: done
+  rect rgb(210, 232, 226)
+    Note right of U: Step 2 of 2 - you are here
+    U->>+C: Open Assessment Types
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;2 in order (step 2 of 2 highlighted)</p>
+      </div>
+      </article>
+    </div>
+
+    <div class="flow-block" id="desk-academic-schools">
+      <h3>Flow F — Schools</h3>
+      <div class="flow-about">
+        <p class="who"><strong>Who:</strong> Academic Admin · Registry</p>
+        <p>Schools lists faculties (code · name · short name · group · status). School Groups organises faculties into larger groups used by Curriculum Builder.</p>
+        <p><strong>Raisd Demo:</strong> not claimed on Staff Admin Academic.</p>
+      </div>
+<div class="flow-chart">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Schools
+  C-->>-U: done
+  U->>+C: Open School Groups
+  C-->>-U: done</pre>
+        <p class="chart-cap">Full sequence — scroll the screenshots for step-by-step (each builds on the last).</p>
+      </div>
+
+<article class="shot-step">
+        <p class="step-label">Step 1</p>
+        <p class="step-explain">Open Academic → <strong>Schools</strong> (Schools tab).</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/139--Academic---Schools---Schools.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/139--Academic---Schools---Schools.png" alt="Schools" loading="lazy" />
+          </a>
+          <figcaption>Schools — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 1">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  rect rgb(210, 232, 226)
+    Note right of U: Step 1 of 2 - you are here
+    U->>+C: Open Schools
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;1 in order (step 1 of 2 highlighted)</p>
+      </div>
+      </article>
+      <article class="shot-step">
+        <p class="step-label">Step 2</p>
+        <p class="step-explain">Switch to <strong>School Groups</strong>.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/140--Academic---Schools---Schools---School-Groups.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/140--Academic---Schools---Schools---School-Groups.png" alt="School Groups" loading="lazy" />
+          </a>
+          <figcaption>School Groups — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 2">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Schools
+  C-->>-U: done
+  rect rgb(210, 232, 226)
+    Note right of U: Step 2 of 2 - you are here
+    U->>+C: Open School Groups
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;2 in order (step 2 of 2 highlighted)</p>
+      </div>
+      </article>
+    </div>
+
+    <div class="flow-block" id="desk-academic-curriculum">
+      <h3>Flow G — Curriculum Builder</h3>
+      <div class="flow-about">
+        <p class="who"><strong>Who:</strong> Academic Admin</p>
+        <p>Curriculum Builder opens with a school picker (“Select a school to manage its program structures”), then programme structures for that faculty. Module-level curriculum links also appear on Modules → Curriculum (Flow D step 2).</p>
+        <p><strong>Raisd Demo:</strong> not claimed on Staff Admin Academic.</p>
+      </div>
+<div class="flow-chart">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Curriculum Builder
+  C-->>-U: done</pre>
+        <p class="chart-cap">Full sequence — scroll the screenshots for step-by-step (each builds on the last).</p>
+      </div>
+
+<article class="shot-step">
+        <p class="step-label">Step 1</p>
+        <p class="step-explain">Open Academic → <strong>Curriculum</strong> and choose a school card.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/141--Academic---Curriculum---Curriculum-Builder.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/141--Academic---Curriculum---Curriculum-Builder.png" alt="Curriculum Builder" loading="lazy" />
+          </a>
+          <figcaption>Curriculum Builder — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 1">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  rect rgb(210, 232, 226)
+    Note right of U: Step 1 of 1 - you are here
+    U->>+C: Open Curriculum Builder
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;1 in order (step 1 of 1 highlighted)</p>
+      </div>
+      </article>
+    </div>
+
+    <div class="flow-block" id="desk-academic-calendar">
+      <h3>Flow H — Academic Calendar</h3>
+      <div class="flow-about">
+        <p class="who"><strong>Who:</strong> Academic Admin · Registry</p>
+        <p>Academic Calendar holds campus term/event dates. Add Event creates a calendar entry. FM-16 later with academic deepen — <strong>not</strong> Raisd Demo today.</p>
+      </div>
+<div class="flow-chart">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Academic Calendar
+  C-->>-U: done
+  U->>+C: Add Event
+  C-->>-U: done</pre>
+        <p class="chart-cap">Full sequence — scroll the screenshots for step-by-step (each builds on the last).</p>
+      </div>
+
+<article class="shot-step">
+        <p class="step-label">Step 1</p>
+        <p class="step-explain">Open <strong>Academic Calendar</strong>.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/090--Academic-Calendar.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/090--Academic-Calendar.png" alt="Academic Calendar" loading="lazy" />
+          </a>
+          <figcaption>Academic Calendar — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 1">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  rect rgb(210, 232, 226)
+    Note right of U: Step 1 of 2 - you are here
+    U->>+C: Open Academic Calendar
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;1 in order (step 1 of 2 highlighted)</p>
+      </div>
+      </article>
+      <article class="shot-step">
+        <p class="step-label">Step 2</p>
+        <p class="step-explain">Choose <strong>Add Event</strong>.</p>
+        <figure class="has-seq">
+          <a href="../old-cms-lesotho/screenshots/092--Academic-Calendar---Add-Event.png" target="_blank" rel="noopener">
+            <img src="../old-cms-lesotho/screenshots/092--Academic-Calendar---Add-Event.png" alt="Academic Calendar · Add Event" loading="lazy" />
+          </a>
+          <figcaption>Academic Calendar · Add Event — click for full size</figcaption>
+        </figure>
+      <div class="seq-under" aria-label="Sequence through step 2">
+        <pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as Academic
+  participant C as Admin CMS
+  U->>+C: Open Academic Calendar
+  C-->>-U: done
+  rect rgb(210, 232, 226)
+    Note right of U: Step 2 of 2 - you are here
+    U->>+C: Add Event
+    C-->>-U: screen ready
+  end</pre>
+        <p class="chart-cap">Steps 1&ndash;2 in order (step 2 of 2 highlighted)</p>
+      </div>
+      </article>
+    </div>
+
   </section>
   <section class="section" id="desk-timetable">
     <h2>Academic · Timetable</h2>
@@ -4916,6 +5302,12 @@
       </table>
     </div></div>
     <p>Status words: <code>docs/ai/process/status-language.md</code>.</p>
+  </section>
+
+  <section class="section" id="online-class">
+    <h2>Online class</h2>
+    <p>Demo Partial live-class guide for lecturers and students (screenshots + videos): <a href="online-class.html">Online class user guide</a>.</p>
+    <p>Markdown SoT: <code>docs/ai/frontend/online-class-user-guide.md</code></p>
   </section>
 
   <section class="section" id="website-ai">

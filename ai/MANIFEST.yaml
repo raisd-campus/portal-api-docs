@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-11-11
+updated: 2026-11-21
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,7 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-11-21: SSO Google OIDC channel (invite-only email) + architecture diagrams on docs.raisd.co/diagrams/sso/ — password/passkey/google channels, OAuth sequence, secrets enablement. Knowledge backend/sso.md.
   - 2026-11-20: UltaHost interim SFU — LiveKit LOST→full reconnect ~17s (mic/cam flip + “Connection interrupted”); client LOST neuter + toast off + AdaptiveMedia off; compose cpu_shares/mem_reservation for LiveKit; Jenkins scaled 0; cloud REC deferred on this box. Audit architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md · classrooms.md · online-class guide known issues.
   - 2026-11-20: Diagram “SFU not co-located with chromedp” — docs/diagrams/classroom-sfu-recorder/ on docs.raisd.co (bad same-VPS vs split media/recorder hosts).
   - 2026-11-20: Waiting-room admit notify deferred until student sets camera + Classroom Join (NATS no longer on iframe load) — plugnmeet-client Landing/app verified gate; classrooms.md + handoff.
@@ -377,11 +378,12 @@ architecture:
 
 backend:
   - path: backend/sso.md
-    topics: [sso, identity, rbac, magic-link, auth, channels, cap-01]
+    topics: [sso, identity, rbac, magic-link, auth, channels, google, oauth, passkey, cap-01]
     openapi: ../../openapi-sso.yaml
     code: https://github.com/raisd-campus/sso
     local_code: ../../../sso/
-    note: Demo 15 Oct 2026 — email magic link enabled; other channels stubbed.
+    diagram: ../../diagrams/sso/
+    note: Demo 21 Nov 2026 — password + passkey on; google OIDC when GOOGLE_CLIENT_* mounted (invite-only email).
   - path: backend/access-module-hierarchy.md
     topics: [access, rbac, permissions, modules, menus, student, staff, lecturer, admin, applicant]
     contract: ../contracts/access-module-hierarchy.yaml
