@@ -1,13 +1,28 @@
-flowchart LR
-  U[User] --> P[Portal / landing]
-  P -->|"returnUrl"| LOGIN[SSO /login]
-  LOGIN --> START["Google start<br/>channel enabled?"]
-  START --> AUTH["Google authorize<br/>openid email profile"]
-  AUTH --> PICK[Account picker]
-  PICK --> CB["SSO callback<br/>code + state"]
-  CB --> TOKEN[Token exchange]
-  TOKEN --> INFO[userinfo<br/>email + sub]
-  INFO --> MATCH{Invited person<br/>with roles?}
-  MATCH -->|no| DENY["/login?googleError"]
-  MATCH -->|yes| CONT[redirectAfterLogin]
-  CONT --> DONE["returnUrl?code=<br/>or role picker"]
+sequenceDiagram
+  autonumber
+  actor U as User
+  participant P as Portal / landing
+  participant S as SSO
+  participant G as Google OAuth
+  participant ST as SSO_STATE_FILE
+
+  U->>P: Open campus / portal
+  P->>S: Redirect /login?returnUrl=…
+  U->>S: Sign in with Google
+  S->>S: Channel enabled?<br/>GOOGLE_CLIENT_ID + SECRET
+  S->>G: /o/oauth2/v2/auth<br/>openid email profile + state
+  G-->>U: Account picker
+  U->>G: Consent
+  G->>S: /v1/auth/channels/google/callback?code&state
+  S->>G: Exchange code → access_token
+  G-->>S: token
+  S->>G: userinfo
+  G-->>S: email + sub (verified)
+  S->>ST: findPersonByEmail(email)
+  alt Unknown or no roles
+    S-->>U: /login?googleError=…
+  else Invited person
+    S->>S: Session + redirectAfterLogin
+    S-->>U: returnUrl?code= or role picker
+    U->>P: Exchange code / continue
+  end
