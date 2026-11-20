@@ -1,17 +1,9 @@
 flowchart LR
   LOGIN["SSO login UI<br/>sso.raisd.co/login"]
-
-  LOGIN --> PW["password<br/>email + scrypt"]
-  LOGIN --> PK["passkey<br/>WebAuthn"]
-  LOGIN --> GO["google<br/>OIDC · env-gated"]
-
-  PW --> MATCH{Person exists<br/>with roles?}
-  PK --> MATCH
-  GO --> MATCH
-
+  --> CH["Channels<br/>password · passkey · google"]
+  --> MATCH{Person exists<br/>with roles?}
   MATCH -->|no| DENY["Deny / googleError<br/>invite-only"]
   MATCH -->|yes| CONT["redirectAfterLogin"]
-
-  CONT --> ONE{Role count}
+  --> ONE{Role count}
   ONE -->|1| CODE["returnUrl?code="]
   ONE -->|2+| PICK["Campus landing<br/>step=roles"]

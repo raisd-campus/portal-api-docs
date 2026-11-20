@@ -168,10 +168,9 @@
     <figure class="figure">
       <img src="images/02-login-channels.png" alt="Diagram: password, passkey, and Google channels converge on invite-only person match then redirectAfterLogin" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        The login UI shows password first, then a side-by-side <strong>Google</strong> + <strong>Passkey</strong> row when those channels are enabled.
-        Every channel resolves to the same email identity. Unknown Google emails get
-        <code>/login?googleError=…</code> — no auto-provision. One role continues with
-        <code>?code=</code>; several roles open the campus landing picker.
+        One left-to-right pipeline: login UI → channels (password · passkey · google) → invite-only person check →
+        <code>redirectAfterLogin</code> → single-role <code>?code=</code> or multi-role campus picker.
+        Unknown Google emails get <code>/login?googleError=…</code> — no auto-provision.
       </figcaption>
     </figure>
 
