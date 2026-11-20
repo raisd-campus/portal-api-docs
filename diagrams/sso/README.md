@@ -4,7 +4,7 @@
 **Markdown SoT:** [docs/ai/backend/sso.md](../../ai/backend/sso.md)  
 **Contract:** [openapi-sso.yaml](../../../openapi-sso.yaml)
 
-How Demo SSO authenticates (password, passkey, Google OIDC), stays invite-only on email identity, and hands portals a code / role picker.
+How Demo SSO authenticates (password, passkey, Google OIDC), stays invite-only on email identity, and hands portals a code / role picker. All flowcharts are left-to-right (`flowchart LR`).
 
 ## Render PNGs
 

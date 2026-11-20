@@ -177,9 +177,9 @@
 
     <h2 id="google">3. Google OAuth sequence</h2>
     <figure class="figure">
-      <img src="images/03-google-oauth-sequence.png" alt="Sequence diagram of Google OAuth start, callback, userinfo, invite-only match, and portal continuation" width="1400" height="auto" loading="lazy" />
+      <img src="images/03-google-oauth-sequence.png" alt="Left-to-right flow of Google OAuth start, callback, userinfo, invite-only match, and portal continuation" width="1400" height="auto" loading="lazy" />
       <figcaption>
-        Start: <code>GET /v1/auth/channels/google/start?returnUrl=…</code> → Google authorize →
+        Left to right: <code>GET /v1/auth/channels/google/start?returnUrl=…</code> → Google authorize →
         callback <code>/v1/auth/channels/google/callback</code> → token exchange → OpenID userinfo →
         <code>findPersonByEmail</code>. Redirect URI:
         <code>https://sso.raisd.co/v1/auth/channels/google/callback</code>.
