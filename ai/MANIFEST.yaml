@@ -9,6 +9,9 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-11-21: CMS bridge service (`raisd-campus/cms-bridge`) deployed on UltaHost — `/bridge/v1` + Swagger, Lesotho R1 reads against `mysql-lesotho-mock`; openapi-cms-bridge.yaml + backend/cms-bridge.md.
+  - 2026-11-21: Lesotho old-CMS mock MySQL on UltaHost (`mysql-lesotho-mock`) + local 3307 pack; db-admin.raisd.co Server dropdown (Postgres Demo + Lesotho CMS mock); docs backend/cms-mock-lesotho.md.
+  - 2026-11-21: Lesotho old-CMS local mock MySQL — restore campus2_lesotho structure (369/351/52) + sanitized portal_* seed on 127.0.0.1:3307; pack under raisd/_local/cms-mock-lesotho/; docs backend/cms-mock-lesotho.md.
   - 2026-11-21: SSO Google OIDC channel (invite-only email) + architecture diagrams on docs.raisd.co/diagrams/sso/ — password/passkey/google channels, OAuth sequence, secrets enablement. Knowledge backend/sso.md.
   - 2026-11-20: UltaHost interim SFU — LiveKit LOST→full reconnect ~17s (mic/cam flip + “Connection interrupted”); client LOST neuter + toast off + AdaptiveMedia off; compose cpu_shares/mem_reservation for LiveKit; Jenkins scaled 0; cloud REC deferred on this box. Audit architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md · classrooms.md · online-class guide known issues.
   - 2026-11-20: Diagram “SFU not co-located with chromedp” — docs/diagrams/classroom-sfu-recorder/ on docs.raisd.co (bad same-VPS vs split media/recorder hosts).
@@ -202,6 +205,9 @@ sibling_repos:
   - design-system
   - portal-api-docs
   - db-admin
+  - cms-bridge
+  - notifications
+  - sso
 
 guidance:
   - path: website-ai-guidance.md
@@ -255,6 +261,7 @@ architecture:
     related:
       - architecture/distributed-cms-target.md
       - backend/cms-feature-comparison.md
+      - backend/cms-mock-lesotho.md
       - backend/lesotho-cap53-read-adapter.md
       - backend/lesotho-cap53-online-enrolment-write.md
       - backend/portal-api.md
@@ -262,6 +269,15 @@ architecture:
       - architecture/vps-topology.md
     status: proposed
     note: 20 Nov 2026 — CAP-53 Integration path via UltaHost multi-campus bridge + sanitized mock dumps + S2S VPN; not Live production CMS.
+  - path: backend/cms-mock-lesotho.md
+    topics: [cap-53, cms-bridge, mock-server, lesotho, campus2_lesotho, portal-student, local-dev, mysql]
+    related:
+      - architecture/cms-bridge.md
+      - backend/old-cms-lesotho.md
+      - backend/lesotho-cap53-read-adapter.md
+      - backend/lesotho-db-gap.md
+    status: available
+    note: 21 Nov 2026 — UltaHost mysql-lesotho-mock + local 127.0.0.1:3307; structure from Vara dump + synthetic @raisd.demo portal seed; browse via db-admin Server dropdown.
   - path: architecture/distributed-cms-target.md
     topics: [distributed-db, multi-country, white-label, feature-flags, identity, m5, ideal-state, lesotho]
     pages: ../diagrams/distributed-cms-architecture.html
@@ -378,12 +394,12 @@ architecture:
 
 backend:
   - path: backend/sso.md
-    topics: [sso, identity, rbac, magic-link, auth, channels, google, oauth, passkey, cap-01]
+    topics: [sso, identity, rbac, magic-link, auth, channels, google, facebook, instagram, oauth, passkey, cap-01]
     openapi: ../../openapi-sso.yaml
     code: https://github.com/raisd-campus/sso
     local_code: ../../../sso/
     diagram: ../../diagrams/sso/
-    note: Demo 21 Nov 2026 — password + passkey on; google OIDC when GOOGLE_CLIENT_* mounted (invite-only email).
+    note: Demo 21 Nov 2026 — password + passkey on; google OIDC when GOOGLE_CLIENT_* mounted; facebook+instagram when FACEBOOK_APP_* mounted (invite-only email).
   - path: backend/access-module-hierarchy.md
     topics: [access, rbac, permissions, modules, menus, student, staff, lecturer, admin, applicant]
     contract: ../contracts/access-module-hierarchy.yaml
@@ -412,6 +428,16 @@ backend:
     code: https://github.com/raisd-campus/notifications
     local_code: ../../../notifications/
     note: Demo 15 Oct 2026 — CMS noreply@raisd.co via mail.raisd.co; host notify.raisd.co.
+  - path: backend/cms-bridge.md
+    topics: [cap-53, cms-bridge, mock, lesotho, mysql, swagger, openapi, ack]
+    openapi: ../../openapi-cms-bridge.yaml
+    code: https://github.com/raisd-campus/cms-bridge
+    local_code: ../../../cms-bridge/
+    related:
+      - architecture/cms-bridge.md
+      - backend/cms-mock-lesotho.md
+      - backend/lesotho-cap53-read-adapter.md
+    note: Demo 21 Nov 2026 — private /bridge/v1 against mysql-lesotho-mock; Swagger at /bridge/v1/docs.
   - path: backend/classrooms.md
     topics: [classrooms, lecturer, student, attendance, submissions, feedback, teaching-logs, memory-demo, local-verification, local-activation]
   - path: backend/community-chat.md
@@ -442,8 +468,9 @@ backend:
       - architecture/lesotho-pilot.md
       - backend/lesotho-db-gap.md
       - backend/lesotho-newer-cms.md
+      - backend/cms-mock-lesotho.md
     pages: ../diagrams/old-cms-lesotho/
-    note: Newer CMS screenshots + old CMS campus2_lesotho structure (369/351/51/6) inventoried 5 Oct 2026; dump outside git; first pilot campus 3 Oct 2026. 23 Oct Admin walk is lesotho-newer-cms.md.
+    note: Newer CMS screenshots + old CMS campus2_lesotho structure (369/351/51/6) inventoried 5 Oct 2026; dump outside git; first pilot campus 3 Oct 2026. 23 Oct Admin walk is lesotho-newer-cms.md. Local mock → cms-mock-lesotho.md.
   - path: backend/lesotho-newer-cms.md
     topics: [lesotho, pilot, m4, newer-cms, user-manual, mind-map, gap, admissions, registry, finance, rbac]
     related:

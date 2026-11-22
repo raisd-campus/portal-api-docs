@@ -104,7 +104,7 @@ Rules (unchanged from SDD-02 / SDD-12; detail in [microservices.md](microservice
 | `jenkins.raisd.co` | Jenkins CI — deploy trigger on push to **main** only ([cicd.md](cicd.md)) |
 | `keychain.raisd.co` | Demo Keychain |
 | `docs.raisd.co` | Documentation + OpenAPI UI (site gate + Sign out) |
-| `db-admin.raisd.co` | Read-only DB admin (team) |
+| `db-admin.raisd.co` | Read-only DB admin (team) — Server dropdown: Demo Postgres + Lesotho CMS mock MySQL |
 | `mail.raisd.co` | UltaCP mail (SMTP/IMAP) — **not** on the VPS; DNS-only A → mail host |
 
 ### Per Demo campus
@@ -132,6 +132,8 @@ Live flat names in SDD-12 (`apply.raisd.co`, `student.raisd.co`, …) remain the
 | `portal-api` | Argo Application · hostPath Node (→ GHCR) | Fastify; CORS allowlist includes all campus origins |
 | `sso` | Argo · GHCR `ghcr.io/raisd-campus/sso:main` | Fastify; DB `sso`; [../backend/sso.md](../backend/sso.md) |
 | `notifications` | Argo · GHCR `ghcr.io/raisd-campus/notifications:main` | SMTP → `mail.raisd.co`; [../backend/notifications.md](../backend/notifications.md) |
+| `cms-bridge` | hostPath Node (`deploy-vps.sh cms-bridge`) | CAP-53 → `mysql-lesotho-mock`; [../backend/cms-bridge.md](../backend/cms-bridge.md) |
+| `mysql-lesotho-mock` | Deployment + PVC | Lesotho old-CMS mock; [../backend/cms-mock-lesotho.md](../backend/cms-mock-lesotho.md) |
 | `postgres` | StatefulSet | Demo DBs `portal_api` + `sso` |
 | Role portals + admin + landing | Argo Applications · hostPath nginx | Hostname pins `campusId` |
 | `keychain` | Argo · GHCR | Demo login launcher |

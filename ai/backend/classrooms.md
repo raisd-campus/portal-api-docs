@@ -73,6 +73,8 @@ Lecturer `/classrooms` replaces the former Modules workspace. Today shows schedu
 
 Each exact module offering contains Overview, Attendance, Assignments, Lesson plan, Materials and Students. Old `/modules` and nested material URLs redirect, retaining query state; old authoring URLs still normalize to read-only Materials. Community stays mounted; follow-up actions open its existing student conversation.
 
+**Community Classrooms ↔ Dashboard (23 Nov 2026):** Lecturer Community module groups use the same teaching-assignment offering set as `POST /v1/classrooms/workspace` (no faculty-campus re-filter). Staff Community also intersects those groups with the loaded workspace and sorts by module code/title so the sidebar list matches Dashboard Classrooms.
+
 Only Faculty-owned definitions, canonical sessions, registrations, teaching weeks and applied Materials versions are used. The current canonical graph has topics but no approved lesson-plan body or structured outcomes: the UI explicitly reports those omissions. No session or assessment is invented. Missing calendars block affected assignment/material setup and are explained. Module setup, material editing, scheduling writes, moderation, extensions, leave approvals, announcements, booking and risk scoring remain deferred.
 
 ## Shared state and access
@@ -117,7 +119,7 @@ No API restart, commit, push, migration, publication or deployment was performed
 
 ## Attendance and delivery logs
 
-Present/Absent are the only saved attendance states. Missing records stay Not recorded. Assigned lecturers explicitly save individual or bulk entries for an existing non-cancelled session whose start has arrived. Completed classes are read-only. Corrections require a reason and retain before/after, staff name and server timestamp. Student module attendance and timetable reads apply the same exact-registration overlay and refresh on focus/revisit.
+Present/Absent are the only saved attendance states. Missing records stay Not recorded. Assigned lecturers explicitly save individual or bulk entries for an existing non-cancelled session whose start has arrived. Attendance stays editable until **24 hours after the session ends** (server-enforced on `saveAttendance`); after that window the session is read-only. Completed classrooms remain read-only even inside the window. Corrections require a reason and retain before/after, staff name and server timestamp. Student module attendance and timetable reads apply the same exact-registration overlay and refresh on focus/revisit.
 
 Session delivery logs contain topics covered, unfinished work and follow-up notes. They are revision-checked and restricted to assigned teaching staff. Saving or errors are displayed in PageActionBar; no student read endpoint exposes these notes.
 
@@ -184,6 +186,8 @@ Demo Partial media path moved onto the Demo UltaHost VPS (`/opt/raisd-classroom`
 | “Increase container CPU/RAM” | Containers already had **no** Docker caps; LiveKit idle use is tiny — use `cpu_shares` / `mem_reservation` / stop Jenkins+recorder instead |
 
 **Mitigations shipped:** client LOST reconnect neutered in the served i18n bundle + reconnect toast suppressed + `enableAdaptiveMedia: false`; LiveKit compose `cpu_shares: 2048`, `mem_reservation: 1g`, `shm_size: 512mb`, `oom_score_adj: -500`, `nice -10`; Jenkins scaled to 0 during proof; lecturer lobby skips 15s/3s polls while the Classroom embed is open. After any client deploy, hosts must **close and reopen** the classroom (cached JS keeps the old loop). Full audit: [2026-11-20-ultahost-interim-sfu-reconnect.md](../architecture/audits/2026-11-20-ultahost-interim-sfu-reconnect.md). **SFU vs chromedp co-location diagram:** [classroom-sfu-recorder/](../../diagrams/classroom-sfu-recorder/) (LiveKit and the cloud-REC bot must not share the same small VPS). Dedicated media VPS + UDP TURN remain the Live path ([capacity audit](../architecture/audits/2026-11-18-class-connection-capacity.md)).
+
+**Cloud REC from DIV (21 Nov 2026):** UltaHost keeps the interim SFU; DIV `plugnmeet-recorder` (`node_01`) registers to UltaHost NATS (`4222`) + API (`8080`) allowed only from DIV egress `144.6.46.239`. Recorder `join_host` is `https://classrooms.raisd.co/?access_token=`. MP4s land on DIV then rsync to `/opt/raisd-classroom/recording_files` (`co.raisd.classroom-recording-sync`). Portal API `enable_auto_cloud_recording` is **on** again. UltaHost on-box recorder stays stopped.
 
 **Hosted Demo proof (Lesotho):** Lecturer Start → modal classroom → Student Join → modal classroom → Leave / End → Past Class stub. Per-screen guide: [live-class-stub/README.md](../../diagrams/lms-reference/live-class-stub/README.md) · gallery [lms-online-class-options.html#demo-stub](../../diagrams/lms-online-class-options.html#demo-stub).
 **User guide (screenshots + video):** [online-class-user-guide.md](../frontend/online-class-user-guide.md) · [HTML](../../diagrams/guidance/online-class.html).

@@ -11,6 +11,7 @@ Windows workspace (21 October 2026): `D:/Coding/raisd/`. The physical Student ch
 | [`portal-api`](https://github.com/raisd-campus/portal-api) | `~/src/raisd/portal-api` | Portal API microservice (Fastify, RPC) | SDD-02, SDD-08, SDD-12 | [../backend/portal-api.md](../backend/portal-api.md) |
 | [`sso`](https://github.com/raisd-campus/sso) | `~/src/raisd/sso` | SSO identity, channels, sessions, RBAC | SDD-02, CAP-01 | [../backend/sso.md](../backend/sso.md) |
 | [`notifications`](https://github.com/raisd-campus/notifications) | `~/src/raisd/notifications` | Outbound email (CMS noreply) | SDD-02 | [../backend/notifications.md](../backend/notifications.md) |
+| [`cms-bridge`](https://github.com/raisd-campus/cms-bridge) | `~/src/raisd/cms-bridge` | CAP-53 multi-campus CMS connector | SDD-08 / CAP-53 | [../backend/cms-bridge.md](../backend/cms-bridge.md), [cms-bridge.md](cms-bridge.md) |
 | [`applicant-portal`](https://github.com/raisd-campus/applicant-portal) | `~/src/raisd/applicant-portal` | Apply, evidence, track, enrol | [SDD-04](../../sdd/04-applicant-portal.md) | [../frontend/applicant-portal.md](../frontend/applicant-portal.md) |
 | [`student-portal`](https://github.com/raisd-campus/student-portal) | `~/src/raisd/student-portal` | Study, register, pay, results, support | [SDD-05](../../sdd/05-student-portal.md) | [../frontend/student-portal/AGENTS.md](../frontend/student-portal/AGENTS.md) |
 | [`lecturer-portal`](https://github.com/raisd-campus/lecturer-portal) | `~/src/raisd/lecturer-portal` | Staff portal — teaching menus for `lecturer`, Admin menus at `/admin` for `admin` (`staff.{slug}.raisd.co`) | [SDD-06](../../sdd/06-lecturer-portal.md), [SDD-07](../../sdd/07-admin-staff-cms.md) | [../frontend/lecturer-portal.md](../frontend/lecturer-portal.md) |
@@ -25,9 +26,9 @@ Service boundaries and call graph: [microservices.md](microservices.md).
 
 ## Ownership rules
 
-- **Control plane** owns authentication/session **design**, RBAC design, campus configuration, the Portal API / SSO / Notifications **contracts** (`openapi.yaml`, `openapi-sso.yaml`, `openapi-notifications.yaml`), GitOps (`gitops/`), platform manifests, and this knowledge base.
+- **Control plane** owns authentication/session **design**, RBAC design, campus configuration, the Portal API / SSO / Notifications / CMS bridge **contracts** (`openapi.yaml`, `openapi-sso.yaml`, `openapi-notifications.yaml`, `openapi-cms-bridge.yaml`), GitOps (`gitops/`), platform manifests, and this knowledge base.
 - **portal-api** owns the Portal API microservice: handlers, CMS adapters, persistence, image/CI. Canonical agent docs stay here under `docs/ai/backend/portal-api*.md`.
-- **sso** owns identity runtime (channels, sessions, RBAC APIs). **notifications** owns outbound email send.
+- **sso** owns identity runtime (channels, sessions, RBAC APIs). **notifications** owns outbound email send. **cms-bridge** owns CAP-53 mock/live CMS acknowledgement routing.
 - **Portal / admin / landing / keychain repos** own their web UX. They authenticate via SSO and call Portal API (Admin → SSO only). They do not embed CMS credentials or call Notifications.
 - **portal-api-docs** mirrors `control-plane/openapi.yaml` for public browsing. Spec source of truth remains `control-plane/openapi.yaml`.
 - **design-system** owns the versioned `@raisd-campus/design-system` React package and email templates. See [the component library guide](../design/component-library.md).

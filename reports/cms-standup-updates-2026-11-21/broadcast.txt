@@ -1,0 +1,24 @@
+Hi all — SSO update (21 Nov).
+
+1) Google SSO — live on Demo
+Password + Passkey + Google are enabled on https://sso.raisd.co/login (invite-only: Google email must already match a Raisd person with roles). Google channel turns on when GOOGLE_CLIENT_* are mounted. OAuth client is under GCP project raisd-sso (Workspace sso@contentcreation.com.my — thanks Aslam).
+
+2) SSO mechanism + diagrams published
+https://docs.raisd.co/diagrams/sso/
+Covers password/passkey, Google OIDC sequence, and how returnUrl / role picker work. Login UI shows Google + Passkey side-by-side with icons.
+
+3) Facebook + Instagram SSO — code ready, blocked on Meta verify
+Implementation is done (same invite-only email pattern). Both channels use Meta Facebook Login (email + public_profile) because Instagram consumer Login does not return email. Env-gated on FACEBOOK_APP_ID / FACEBOOK_APP_SECRET; separate start/callback URIs per channel.
+
+Blocker: Meta for Developers requires mobile SMS (or credit card) to finish developer registration before we can create the app and get App ID / Secret. Facebook personal account “Raisd Sso” is already created and email-confirmed on sso@contentcreation.com.my. I will reach out to Aslam separately for a company mobile (or approved card) so we can complete Meta verify and turn Facebook + Instagram on.
+
+4) Still open
+• Facebook + Instagram — unblock Meta developer verify with Aslam, then mount secrets and enable on Demo
+• Apple SSO — still needs Apple Developer account access (standup carry-over)
+
+Try:
+• Login https://sso.raisd.co/login
+• SSO diagrams https://docs.raisd.co/diagrams/sso/
+• Note https://docs.raisd.co/reports/cms-standup-updates-2026-11-21/
+
+Demo ≠ Live. — Iman

@@ -14,6 +14,7 @@
 (`https://drive.google.com/file/d/1Kgo43-vYpEpTyAg-6B-toAA6cdu3Wtjo/view?usp=sharing`).  
 Local copy under `raisd/_local/lesotho-cms-2026-10-05/` (**never commit** source/SQL/PII).  
 MySQL schema in dumps: **`campus2_lesotho`**. Structure counts: **369 tables · 351 views · 51 procedures · 6 functions**.  
+**Local mock DB** (structure + sanitized seed, no live PII): [cms-mock-lesotho.md](cms-mock-lesotho.md) — `raisd/_local/cms-mock-lesotho/` on `127.0.0.1:3307`.  
 Confirmed **LUCT PHPMaker family** (~83% table-name overlap with Botswana, ~81% with Cyberjaya). Gap detail: [lesotho-db-gap.md](lesotho-db-gap.md).
 
 This file inventories what we can already see. It does **not** authorise committing live student data. Screenshot evidence and the Drive pack stay outside the repo.

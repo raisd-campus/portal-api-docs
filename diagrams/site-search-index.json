@@ -1776,12 +1776,34 @@
       "title": "openapi.yaml",
       "summary": "Canonical OpenAPI 3.1 source for the Raisd Portal API.",
       "section": "OpenAPI",
+      "keywords": [],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml"
+    },
+    {
+      "title": "CMS bridge Swagger UI",
+      "summary": "Private CAP-53 CMS bridge OpenAPI \u2014 campuses, tunnel, Lesotho R1 reads, ack envelope.",
+      "section": "OpenAPI",
+      "keywords": [
+        "cms-bridge",
+        "swagger",
+        "openapi",
+        "cap-53",
+        "lesotho",
+        "mock",
+        "ack"
+      ],
+      "path": "openapi-cms-bridge.html"
+    },
+    {
+      "title": "openapi-cms-bridge.yaml",
+      "summary": "Canonical OpenAPI 3.1 source for the Raisd CMS bridge.",
+      "section": "OpenAPI",
       "keywords": [
         "yaml",
         "contract",
         "schema"
       ],
-      "path": "https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml"
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/openapi-cms-bridge.yaml"
     },
     {
       "title": "VPS topology",
@@ -1800,6 +1822,24 @@
         "deploy"
       ],
       "path": "diagrams/architecture.html#vps"
+    },
+    {
+      "title": "UltaHost VPS self-defence",
+      "summary": "Demo UltaHost protective overload \u2014 TCP OK / TLS hang, self-recover, cool-down before recording and deploy retries.",
+      "section": "Architecture",
+      "keywords": [
+        "ultahost",
+        "vps",
+        "self-defence",
+        "overload",
+        "traefik",
+        "ssh",
+        "tls",
+        "timeout",
+        "cooldown",
+        "recording"
+      ],
+      "path": "https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/ultahost-vps-self-defence.md"
     },
     {
       "title": "CI/CD pipeline",

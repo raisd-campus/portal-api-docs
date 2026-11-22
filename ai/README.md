@@ -50,6 +50,7 @@ Agents running in a portal repo should resolve the knowledge base as a **sibling
 ├── campus-landing/    ← Per-campus apex chooser (SSO picker)
 ├── sso/
 ├── notifications/
+├── cms-bridge/        ← CAP-53 multi-campus CMS connector (mock/live ack)
 ├── portal-api/        ← Portal API service (docs/ are generated working copies)
 ├── design-system/
 ├── db-admin/

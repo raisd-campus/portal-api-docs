@@ -38,6 +38,8 @@ targets:
   lms-feature-steps: diagrams/lms-reference/features.html
   lms-online-class: diagrams/lms-online-class-options.html
   lms-online-lessons-ux: diagrams/lms-online-class-options.html#ux-pack
+  classroom-media-bridge: diagrams/classroom-media-bridge/index.html
+  cms-bridge: diagrams/cms-bridge/index.html
   dfd: diagrams/dfd.html
   luct: diagrams/old-cms/index.html
   luct-comparison: diagrams/old-cms/comparison.html
@@ -98,6 +100,7 @@ targets:
   sdd-11: sdd/11-capability-catalog.html
   sdd-03: sdd/03-delivery-milestones.html
   openapi: openapi.html
+  openapi-cms-bridge: openapi-cms-bridge.html
   vps-topology: diagrams/architecture.html#vps
   cicd: diagrams/architecture.html#cicd
   microservices: diagrams/architecture.html#services
@@ -130,6 +133,8 @@ external:
   ai-lms-online-class: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-class-options.md
   ai-lms-video-features: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-video-feature-comparison.md
   ai-lms-online-lesson-ux: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/lms-online-lesson-ux.md
+  ai-classroom-media-bridge: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/classroom-media-bridge.md
+  ai-cms-bridge: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cms-bridge.md
   ai-portal-api: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api.md
   ai-portal-api-plan: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-development-plan.md
   ai-portal-api-deploy: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/portal-api-deployment.md
@@ -148,7 +153,9 @@ external:
   ai-luct-online-reg-gap: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/backend/luct-online-registration-fe-gap.md
   report-lesotho-analysis: https://github.com/raisd-campus/control-plane/blob/main/docs/reports/lesotho-cms-analysis-2026-10-05/README.md
   openapi-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi.yaml
+  openapi-cms-bridge-yaml: https://github.com/raisd-campus/control-plane/blob/main/openapi-cms-bridge.yaml
   ai-vps-topology-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/vps-topology.md
+  ai-ultahost-self-defence-md: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/ultahost-vps-self-defence.md
   ai-cicd: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/cicd.md
   ai-argocd: https://github.com/raisd-campus/control-plane/blob/main/docs/ai/architecture/argocd.md
   keychain: https://keychain.raisd.co/
@@ -157,6 +164,8 @@ external:
 path_rules:
   - match: { exact: openapi.html }
     section: openapi
+  - match: { exact: openapi-cms-bridge.html }
+    section: openapi-cms-bridge
   - match: { exact: diagrams/distributed-cms-architecture.html }
     section: distributed
   - match: { prefix: diagrams/old-cms-lesotho/, file: cms-vs-applicant.html }
@@ -259,6 +268,10 @@ path_rules:
     section: lms-features
   - match: { file: lms-online-class-options.html }
     section: lms-online-class
+  - match: { path_contains: classroom-media-bridge }
+    section: classroom-media-bridge
+  - match: { path_contains: cms-bridge }
+    section: cms-bridge
   - match: { path_contains: lms-reference, file: online-lessons.html }
     section: lms-online-class
   - match: { path_contains: lms-reference, file: features.html }
@@ -324,6 +337,8 @@ menu:
       - { label: Moodle + Classroom map, href: lms-reference }
       - { label: LMS feature steps, href: lms-feature-steps }
       - { label: Online-class options, href: lms-online-class }
+      - { label: Classroom media bridge, href: classroom-media-bridge }
+      - { label: CMS bridge, href: cms-bridge }
       - { label: Migration, href: migration }
       - { label: Microservices, href: microservices }
       - { label: "VPS topology", href: vps-topology }
@@ -331,7 +346,7 @@ menu:
 
   - label: Architecture
     href: architecture
-    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features, lms-reference, lms-feature-steps, lms-online-class]
+    active: [architecture, access-hierarchy, campus-config, distributed, migration, microservices, vps-topology, cicd, lms, lms-architecture, lms-features, lms-reference, lms-feature-steps, lms-online-class, classroom-media-bridge, cms-bridge]
     children:
       - { label: Architecture home, href: architecture }
       - { label: Access module hierarchy, href: access-hierarchy }
@@ -353,6 +368,8 @@ menu:
       - { label: Moodle + Classroom map, href: lms-reference }
       - { label: LMS feature steps, href: lms-feature-steps }
       - { label: Online-class options, href: lms-online-class }
+      - { label: Classroom media bridge, href: classroom-media-bridge }
+      - { label: CMS bridge, href: cms-bridge }
       - { label: "SDD & ADR catalogue", href: "architecture#sdd" }
       - { label: "SoR / ACL", href: "architecture#acl" }
       - { label: Academic model, href: "architecture#academic" }
@@ -542,10 +559,13 @@ menu:
       - { label: LMS online-class options, href: ai-lms-online-class }
       - { label: LMS video feature comparison, href: ai-lms-video-features }
       - { label: LMS online-lesson UX, href: ai-lms-online-lesson-ux }
+      - { label: Classroom media bridge, href: ai-classroom-media-bridge }
+      - { label: CMS bridge, href: ai-cms-bridge }
       - { label: Portal API, href: ai-portal-api }
       - { label: Portal API plan, href: ai-portal-api-plan }
       - { label: Portal API deployment, href: ai-portal-api-deploy }
       - { label: VPS topology, href: ai-vps-topology-md }
+      - { label: UltaHost VPS self-defence, href: ai-ultahost-self-defence-md }
       - { label: CI/CD pipeline, href: ai-cicd }
       - { label: Argo CD GitOps, href: ai-argocd }
       - { label: CMS comparison, href: ai-cms-comparison }
@@ -628,10 +648,12 @@ menu:
 
   - label: OpenAPI
     href: openapi
-    active: [openapi]
+    active: [openapi, openapi-cms-bridge]
     children:
-      - { label: Swagger UI, href: openapi }
+      - { label: Portal API Swagger, href: openapi }
       - { label: openapi.yaml, href: openapi-yaml }
+      - { label: CMS bridge Swagger, href: openapi-cms-bridge }
+      - { label: openapi-cms-bridge.yaml, href: openapi-cms-bridge-yaml }
 
 # Keychain is the fixed top-right embed (keychain-access.js), same as portals — not a nav chip.
 
@@ -1353,6 +1375,15 @@ search:
     href: openapi-yaml
     section: OpenAPI
     summary: Canonical OpenAPI 3.1 source for the Raisd Portal API.
+  - title: CMS bridge Swagger UI
+    href: openapi-cms-bridge
+    section: OpenAPI
+    summary: Private CAP-53 CMS bridge OpenAPI — campuses, tunnel, Lesotho R1 reads, ack envelope.
+    keywords: [cms-bridge, swagger, openapi, cap-53, lesotho, mock, ack]
+  - title: openapi-cms-bridge.yaml
+    href: openapi-cms-bridge-yaml
+    section: OpenAPI
+    summary: Canonical OpenAPI 3.1 source for the Raisd CMS bridge.
     keywords: [yaml, contract, schema]
 
   - title: VPS topology
@@ -1360,6 +1391,12 @@ search:
     section: Architecture
     summary: Current Demo on UltaHost k3s — Cloudflare DNS, Traefik, campus-scoped hosts, Portal API, VPS Postgres.
     keywords: [vps, ultahost, k3s, traefik, postgres, dns, cloudflare, topology, campus, deploy]
+
+  - title: UltaHost VPS self-defence
+    href: ai-ultahost-self-defence-md
+    section: Architecture
+    summary: Demo UltaHost protective overload — TCP OK / TLS hang, self-recover, cool-down before recording and deploy retries.
+    keywords: [ultahost, vps, self-defence, overload, traefik, ssh, tls, timeout, cooldown, recording]
 
   - title: CI/CD pipeline
     href: cicd

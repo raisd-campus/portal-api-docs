@@ -1,9 +1,10 @@
 # CMS bridge — mock-server connector on Raisd UltaHost (group review)
 
-**Status:** Architecture for CAP-53 Demo / Integration · **not Live** against production campus MySQL  
-**Date:** 20 Nov 2026  
+**Status:** Architecture + Demo service for CAP-53 Integration · **not Live** against production campus MySQL  
+**Date:** 20 Nov 2026 (service scaffold 21 Nov 2026)  
 **Published page:** [diagrams/cms-bridge/](../../diagrams/cms-bridge/index.html) · https://docs.raisd.co/diagrams/cms-bridge/  
-**Related:** [CAP-53](../../sdd/11-capability-catalog.md#cap-53) · [SDD-08 §3](../../sdd/08-shared-platform.md) · [cms-feature-comparison.md](../backend/cms-feature-comparison.md) · [lesotho-cap53-read-adapter.md](../backend/lesotho-cap53-read-adapter.md) · [portal-api.md](../backend/portal-api.md) · [vps-topology.md](vps-topology.md)
+**Service:** [`raisd-campus/cms-bridge`](https://github.com/raisd-campus/cms-bridge) · [backend/cms-bridge.md](../backend/cms-bridge.md) · contract [`openapi-cms-bridge.yaml`](../../../openapi-cms-bridge.yaml)  
+**Related:** [CAP-53](../../sdd/11-capability-catalog.md#cap-53) · [SDD-08 §3](../../sdd/08-shared-platform.md) · [cms-feature-comparison.md](../backend/cms-feature-comparison.md) · [lesotho-cap53-read-adapter.md](../backend/lesotho-cap53-read-adapter.md) · [cms-mock-lesotho.md](../backend/cms-mock-lesotho.md) · [portal-api.md](../backend/portal-api.md) · [vps-topology.md](vps-topology.md)
 
 ---
 
@@ -40,7 +41,7 @@ The Demo UltaHost VPS (`38.127.216.221`, 4 vCPU / ~8 GiB) already hosts Traefik,
 | Campus key | Schema / family | Mock role |
 |---|---|---|
 | `cyberjaya` | `cmscbj` | Malaysia / Cyberjaya reference |
-| `lesotho` | `campus2_lesotho` | M4 pilot SoR / CAP-53 R1–W1 |
+| `lesotho` | `campus2_lesotho` | M4 pilot SoR / CAP-53 R1–W1 — mock: [cms-mock-lesotho.md](../backend/cms-mock-lesotho.md) (UltaHost `mysql-lesotho-mock` + local `:3307`; [db-admin](https://db-admin.raisd.co)) |
 | `sierra-leone` | ICA Sierra Leone dump | M5 pattern |
 | `botswana` | Botswana dump (+ DTEF) | M5 + scholarship sync |
 | `eswatini` | `campus2_eswatini` (LUCT CMS) | M5 |
@@ -103,6 +104,9 @@ Diagram: Figure 2 — target topology · Figure 4 — tunnel mesh.
 ## 5. APIs the bridge exposes (for the new stack to consume)
 
 Portal API is the only public contract for portals. The **bridge API** is **private** (cluster DNS / mTLS). Indicative surface (versioned under `/bridge/v1`):
+
+**Demo (21 Nov 2026):** service [`raisd-campus/cms-bridge`](https://github.com/raisd-campus/cms-bridge) is live in mock mode against `mysql-lesotho-mock`.  
+**Swagger:** https://docs.raisd.co/openapi-cms-bridge.html · contract [`openapi-cms-bridge.yaml`](../../../openapi-cms-bridge.yaml) · service notes [backend/cms-bridge.md](../backend/cms-bridge.md).
 
 ### 5.1 Control / health
 

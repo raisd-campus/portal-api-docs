@@ -51,7 +51,7 @@ ADR-1 (CMS as Live SoR) still holds: Demo people are Raisd-local (`cmsPersonRef`
 
 ## Channels
 
-Pluggable `AuthChannel` registry. **Enabled in Demo:** `password`, `passkey`, and `google` when OAuth secrets are mounted.
+Pluggable `AuthChannel` registry. **Enabled in Demo:** `password`, `passkey`, `google` when Google OAuth secrets are mounted, and `facebook` + `instagram` when Meta `FACEBOOK_APP_*` are mounted.
 
 | Channel id | Demo | Notes |
 |---|---|---|
@@ -59,13 +59,13 @@ Pluggable `AuthChannel` registry. **Enabled in Demo:** `password`, `passkey`, an
 | `passkey` | On | WebAuthn on `https://sso.raisd.co/login`. Create a passkey with email + password, then sign in with the passkey alone. People, passwords, roles, and passkeys are written to `SSO_STATE_FILE` (`/var/lib/sso/state.json` on the node path `/var/lib/raisd-sso`) and survive a pod restart. Sign-in challenges stay in memory for their short lifetime. |
 | `email_magic_link` | **Off** | API returns `410`; UI removed. Template retained for Live reopen |
 | `google` | On when `GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET` are set | OAuth 2.0 / OpenID Connect. Start `GET /v1/auth/channels/google/start?returnUrl=…` → Google → callback. Invite-only: Google email must already match a person with roles. Secrets live in K8s `sso-secrets` (from `.credentials/google-oauth-raisd-sso.env`). Redirect URI: `https://sso.raisd.co/v1/auth/channels/google/callback`. GCP project `raisd-sso` under Workspace `contentcreation.com.my`. |
-| `facebook` | Off | Stub |
-| `instagram` | Off | Stub |
+| `facebook` | On when `FACEBOOK_APP_ID` + `FACEBOOK_APP_SECRET` are set | Facebook Login (`email,public_profile`). Start `GET /v1/auth/channels/facebook/start?returnUrl=…` → Meta dialog → callback. Invite-only email match. Secrets in K8s `sso-secrets` (from `.credentials/facebook-oauth-raisd-sso.env`). Redirect URI: `https://sso.raisd.co/v1/auth/channels/facebook/callback`. |
+| `instagram` | On when same Meta app secrets are set | Same Facebook Login flow (Instagram consumer Login does not return email). Separate channel id + redirect URI `https://sso.raisd.co/v1/auth/channels/instagram/callback` so the login button and audits stay distinct. |
 | `apple` | Off | Stub |
 
-Login identity is **email** (not a separate user id). Password login returns `401` on mismatch. Google login redirects back to `/login?googleError=…` when the email is unknown. Demo seeds an allowlist of people; first-login create is invite-only.
+Login identity is **email** (not a separate user id). Password login returns `401` on mismatch. OAuth channels redirect back to `/login?{channel}Error=…` when the email is unknown. Demo seeds an allowlist of people; first-login create is invite-only.
 
-**Single login UI:** `https://sso.raisd.co/login` is the only password surface. Portals redirect here with `returnUrl` = campus apex (`https://{slug}.raisd.co/?sso=1`) so multi-role accounts see the landing picker. Control uses `https://control.raisd.co/sign-in?sso=1`. Below the password form, enabled channels show a side-by-side **Google** + **Passkey** row (icons); “Create a passkey” stays under the row.
+**Single login UI:** `https://sso.raisd.co/login` is the only password surface. Portals redirect here with `returnUrl` = campus apex (`https://{slug}.raisd.co/?sso=1`) so multi-role accounts see the landing picker. Control uses `https://control.raisd.co/sign-in?sso=1`. Below the password form, enabled channels show in a grid (**Google**, **Passkey**, **Facebook**, **Instagram** with icons); “Create a passkey” stays under the row.
 
 Password login: `POST /v1/auth/channels/password/login` `{ email, password, returnUrl }` → always `{ redirectTo }`. Single-role continues with `?code=`; multi-role returns to the **campus landing** with `?step=roles&session=…`.
 
@@ -78,6 +78,14 @@ Passkey login uses the same redirect. `POST /v1/auth/channels/passkey/login/opti
 3. Callback: `GET /v1/auth/channels/google/callback` exchanges the code, loads OpenID userinfo, requires a verified email.
 4. Invite-only: `findPersonByEmail` must return a person with roles; otherwise redirect `/login?googleError=…` (audit `login.google.denied`).
 5. Success uses the same `redirectAfterLogin` path as password/passkey.
+
+### Facebook + Instagram (Meta) OAuth (21 Nov 2026)
+
+1. Both channels enable when `FACEBOOK_APP_ID` and `FACEBOOK_APP_SECRET` are mounted (`secretKeyRef` from `sso-secrets`).
+2. Browser: `GET /v1/auth/channels/{facebook|instagram}/start?returnUrl=…` → Facebook Login dialog (`email,public_profile`) with CSRF `state` and a per-channel redirect URI.
+3. Callback exchanges the code at Graph `/{version}/oauth/access_token`, then `/{version}/me?fields=id,name,email`.
+4. Invite-only: email must match a person with roles; otherwise `/login?facebookError=…` or `/login?instagramError=…` (audit `login.{channel}.denied`).
+5. Instagram uses Facebook Login for email (Instagram consumer Login does not expose email for Raisd invite matching).
 
 Architecture figures: [diagrams/sso/](../../diagrams/sso/) · [published](https://docs.raisd.co/diagrams/sso/).
 
