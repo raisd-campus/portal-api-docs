@@ -105,6 +105,7 @@ Rules (unchanged from SDD-02 / SDD-12; detail in [microservices.md](microservice
 | `keychain.raisd.co` | Demo Keychain |
 | `docs.raisd.co` | Documentation + OpenAPI UI (site gate + Sign out) |
 | `db-admin.raisd.co` | Read-only DB admin (team) — Server dropdown: Demo Postgres + Lesotho CMS mock MySQL |
+| `cms-bridge.raisd.co` | CAP-53 CMS bridge demo console + private API (Bearer token) — Demo ≠ Live |
 | `mail.raisd.co` | UltaCP mail (SMTP/IMAP) — **not** on the VPS; DNS-only A → mail host |
 
 ### Per Demo campus

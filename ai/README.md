@@ -16,6 +16,7 @@
 | Human onboarding | This file, then [../sdd/README.md](../sdd/README.md) |
 | CAP / milestone IDs (`CAP-*`, `M1`–`M5`) | [../sdd/15-nomenclature.md](../sdd/15-nomenclature.md) |
 | Documentation generation | [process/generate-documentation.md](process/generate-documentation.md) |
+| WG WhatsApp decisions index | [process/working-group-cms-2026-whatsapp.md](process/working-group-cms-2026-whatsapp.md) · [HTML](https://docs.raisd.co/reports/working-group-cms-2026-chat-analysis/) |
 
 ## Layout
 

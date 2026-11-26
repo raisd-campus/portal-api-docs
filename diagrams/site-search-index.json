@@ -189,6 +189,25 @@
       "path": "https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/"
     },
     {
+      "title": "Working Group CMS 2026 WhatsApp analysis \u00b7 26 Nov 2026",
+      "summary": "Chat-derived index of WG decisions, phases (Sep\u2013Nov), theme weight, open items, and Uganda GradeFlow review context.",
+      "section": "Reports",
+      "keywords": [
+        "whatsapp",
+        "working group",
+        "cms",
+        "decisions",
+        "adr",
+        "lesotho",
+        "pilot",
+        "uganda",
+        "gradeflow",
+        "analysis",
+        "standup"
+      ],
+      "path": "https://docs.raisd.co/reports/working-group-cms-2026-chat-analysis/"
+    },
+    {
       "title": "Guidance \u00b7 User guidance",
       "summary": "Lesotho Demo user guidance \u2014 hosts, journeys, and step-by-step how-tos for each Staff Admin desk screenshot.",
       "section": "Guidance",

@@ -106,6 +106,7 @@ Diagram: Figure 2 — target topology · Figure 4 — tunnel mesh.
 Portal API is the only public contract for portals. The **bridge API** is **private** (cluster DNS / mTLS). Indicative surface (versioned under `/bridge/v1`):
 
 **Demo (21 Nov 2026):** service [`raisd-campus/cms-bridge`](https://github.com/raisd-campus/cms-bridge) is live in mock mode against `mysql-lesotho-mock`.  
+**Demo console (23 Nov 2026):** https://cms-bridge.raisd.co/bridge/v1/demo — E2E runner + Portal API path probe. Portal API `CMS_MODE=mock` overlays Lesotho R1 identity on mapped students (`student-lesotho` → `LS2601001`).  
 **Swagger:** https://docs.raisd.co/openapi-cms-bridge.html · contract [`openapi-cms-bridge.yaml`](../../../openapi-cms-bridge.yaml) · service notes [backend/cms-bridge.md](../backend/cms-bridge.md).
 
 ### 5.1 Control / health

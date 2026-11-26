@@ -120,6 +120,7 @@ targets:
   report-e2e-access-control-2026-10-21: https://docs.raisd.co/reports/e2e-access-control-2026-10-21/
   report-database-recreation-2026-10-22: https://docs.raisd.co/reports/database-recreation-2026-10-22/
   report-cms-standup-updates-2026-10-30: https://docs.raisd.co/reports/cms-standup-updates-2026-10-30/
+  report-wg-cms-2026-chat-analysis: https://docs.raisd.co/reports/working-group-cms-2026-chat-analysis/
   report-e2e-access-control-2026-10-20: https://docs.raisd.co/reports/e2e-access-control-2026-10-20/
   report-e2e-access-templates-2026-10-20: https://docs.raisd.co/reports/e2e-access-templates-2026-10-20/
 
@@ -601,6 +602,7 @@ menu:
       - report-lesotho-briefing
       - report-database-recreation-2026-10-22
       - report-cms-standup-updates-2026-10-30
+      - report-wg-cms-2026-chat-analysis
       - report-e2e-enrol-2026-10-11
       - report-e2e-module-enrol-2026-10-11
       - report-e2e-learning-lms-2026-10-11
@@ -624,6 +626,7 @@ menu:
           - { label: Executive review · 5 Oct, href: report-exec-2026-10-05 }
           - { label: Executive summary · 7 Oct, href: report-exec-2026-10-07 }
           - { label: Lesotho CMS briefing · 5 Oct, href: report-lesotho-briefing }
+          - { label: "WG WhatsApp analysis · 26 Nov", href: report-wg-cms-2026-chat-analysis }
           - { label: "Database recreation · 22 Oct", href: report-database-recreation-2026-10-22 }
           - { label: "CMS standup updates · 30 Oct", href: report-cms-standup-updates-2026-10-30 }
       - label: End to End Demo
@@ -740,6 +743,12 @@ search:
     section: Reports
     summary: Working Group update closing 29 Oct actions — website AI guidance, Staff Admin nav/workflows, Lesotho guidance on docs.raisd.co.
     keywords: [standup, cms, updates, admin, navigation, lesotho, guide, ai guidance, working group]
+
+  - title: Working Group CMS 2026 WhatsApp analysis · 26 Nov 2026
+    href: report-wg-cms-2026-chat-analysis
+    section: Reports
+    summary: Chat-derived index of WG decisions, phases (Sep–Nov), theme weight, open items, and Uganda GradeFlow review context.
+    keywords: [whatsapp, working group, cms, decisions, adr, lesotho, pilot, uganda, gradeflow, analysis, standup]
 
   - title: Guidance · User guidance
     href: guidance

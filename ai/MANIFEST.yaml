@@ -1,7 +1,7 @@
 # Raisd AI knowledge base — machine-readable index
 # Any agent or doc generator should load this file first after AGENTS.md.
 version: 1
-updated: 2026-11-21
+updated: 2026-11-26
 canonical_repo: raisd-campus/control-plane
 canonical_path: docs/ai
 decision:
@@ -9,6 +9,7 @@ decision:
   source: Working Group CMS 2026 standup
   summary: Faid Zamin suggested a central AI knowledge base for backend, frontend, and architecture under control-plane docs.
 notes:
+  - 2026-11-26: Working Group CMS 2026 WhatsApp export analysed (18 Sep–25 Nov) — process/working-group-cms-2026-whatsapp.md + reports/working-group-cms-2026-chat-analysis/ on docs.raisd.co. Raw chat/credentials not in git.
   - 2026-11-21: CMS bridge service (`raisd-campus/cms-bridge`) deployed on UltaHost — `/bridge/v1` + Swagger, Lesotho R1 reads against `mysql-lesotho-mock`; openapi-cms-bridge.yaml + backend/cms-bridge.md.
   - 2026-11-21: Lesotho old-CMS mock MySQL on UltaHost (`mysql-lesotho-mock`) + local 3307 pack; db-admin.raisd.co Server dropdown (Postgres Demo + Lesotho CMS mock); docs backend/cms-mock-lesotho.md.
   - 2026-11-21: Lesotho old-CMS local mock MySQL — restore campus2_lesotho structure (369/351/52) + sanitized portal_* seed on 127.0.0.1:3307; pack under raisd/_local/cms-mock-lesotho/; docs backend/cms-mock-lesotho.md.
@@ -824,8 +825,10 @@ process:
     topics: [sdd, pdf, openapi, knowledge-sync]
   - path: process/status-language.md
     topics: [demo, live, partial, placeholder]
-    topics: [operator, adam, email, gmail-draft, legaladvice-html, hugeshop]
-    notes: Imported from hugeshop-infra-iac practice; not campus Notifications.
+  - path: process/working-group-cms-2026-whatsapp.md
+    topics: [working-group, whatsapp, decisions, adr, lesotho, uganda, gradeflow, standup]
+    pages: ../reports/working-group-cms-2026-chat-analysis/index.html
+    note: Chat-derived WG index; raw export stays out of git.
 
 rules:
   - path: rules/cms-student-portal.mdc
